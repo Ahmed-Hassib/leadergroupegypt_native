@@ -37,7 +37,6 @@ if (isset($_SESSION['UserName'])) {
 } 
 // check if user comming from http request ..
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
-
   // get request info
   $username   = $_POST["username"];
   $pass       = $_POST["pass"];
@@ -49,8 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
   $query = "SELECT 
               `users`.*,
               $users_permission_columns,
-              `companies`.`company_name`,
-              `companies`.`company_alias`
+              `companies`.`company_name`
           FROM `users` 
           LEFT JOIN `users_permissions` ON `users`.`UserID` = `users_permissions`.`UserID`
           LEFT JOIN `companies` ON `companies`.`company_id` = `users`.`company_id`

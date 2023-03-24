@@ -24,15 +24,6 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
           <span><?php echo language('NOTE', @$_SESSION['systemLang']) ?>:</span>&nbsp;
           <span><?php echo language('THIS SIGN * IS REFERE TO REQUIRED FIELDS', @$_SESSION['systemLang']) ?></span>
         </h6>
-
-        <?php if (isset($_SERVER['HTTP_REFERER'])) { ?>
-          <div class="mb-2 me-auto">
-            <a href="<?php echo $_SERVER['HTTP_REFERER'] ?>" class="btn btn-outline-primary py-1 fs-12 text-capitalize">
-              <i class="bi bi-arrow-return-left"></i>
-              <?php echo language('BACK', @$_SESSION['systemLang']) ?>
-            </a>
-          </div>
-        <?php } ?>
       </div>
       <!-- start piece info -->
       <div class="mb-3 row row-cols-sm-1 row-cols-md-2 g-3 align-items-stretch justify-content-start">
@@ -354,8 +345,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
                     <div class="mb-sm-2 mb-md-3 row">
                       <label for="password" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('PASSWORD', @$_SESSION['systemLang']) ?></label>
                       <div class="col-sm-12 col-md-8">
-                        <input type="password" class="form-control" id="password" name="password" placeholder="<?php echo language('PASSWORD', @$_SESSION['systemLang']) ?>" value="<?php echo $piece_data['password'] ?>" autocomplete="off" required />
-                        <i class="bi bi-eye-slash show-pass <?php echo @$_SESSION['systemLang'] == 'ar' ? 'show-pass-left' : 'show-pass-right' ?>" onclick="showPass(this)"></i>
+                        <input type="text" class="form-control" id="password" name="password" placeholder="<?php echo language('PASSWORD', @$_SESSION['systemLang']) ?>" value="<?php echo $piece_data['password'] ?>" autocomplete="off" required />
                         <div id="passHelp" class="form-text text-warning "><?php echo language('DON`T SHARE THIS PASSWORD WITH ANYONE', @$_SESSION['systemLang']) ?></div>
                       </div>
                     </div>
@@ -412,7 +402,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
       </div>
 
       <!-- submit -->
-      <div class="hstack gap-2">
+      <div class="hstack gap-3">
         <button type="button" form="update-piece-info" class="btn btn-primary text-capitalize bg-gradient fs-12 p-1 <?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" id="edit-piece" <?php if ($_SESSION['pcs_add'] == 0) {echo 'disabled';} ?> onclick="form_validation(this.form, 'submit')">
           <i class="bi bi-check-all"></i>
           <?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
@@ -422,15 +412,6 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
             <i class="bi bi-trash"></i>
             <?php echo language('DELETE', @$_SESSION['systemLang']); ?>
         </button>
-
-        <?php if (isset($_SERVER['HTTP_REFERER'])) { ?>
-          <div class="">
-            <a href="<?php echo $_SERVER['HTTP_REFERER'] ?>" class="btn btn-outline-primary py-1 fs-12 text-capitalize">
-              <i class="bi bi-arrow-return-left"></i>
-              <?php echo language('BACK', @$_SESSION['systemLang']) ?>
-            </a>
-          </div>
-        <?php } ?>
       </div>
     </form>
     <!-- end form -->

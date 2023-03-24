@@ -34,22 +34,10 @@ foreach ($rows as $row) {
   <!-- end header -->
 </div>
 <?php if (count($data) > 0) { ?>
-
   <!-- start showing directions tree -->
   <div class="genealogy-body genealogy-scroll">
     <div class="genealogy-tree text-center">
       <?php build_direction_tree($data, 0); ?>
-    </div>
-    
-    <div class="genealogy-scroll-btn">
-      <!-- scroll left button -->
-      <button type="button" role="button" class="scroll-button scroll-prev scroll-prev-right">
-        <i class="carousel-control-prev-icon"></i>
-      </button>
-      <!-- scroll right button -->
-      <button type="button" role="button" class="scroll-button scroll-next <?php echo $_SESSION['systemLang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
-        <i class="carousel-control-next-icon"></i>
-      </button>
     </div>
   </div>
   <!-- end showing directions tree -->

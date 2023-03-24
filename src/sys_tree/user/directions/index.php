@@ -33,7 +33,6 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
       $file_name = 'show-direction.php';
       $no_footer = true;
       $preloader = true;
-      
       break;
 
     case "update-direction-info":

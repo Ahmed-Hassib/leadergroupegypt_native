@@ -80,7 +80,7 @@
   // check if empty form error
   if (empty($form_error)) {
     // check if user is exist in database or not
-    $checkPcs     = $pcs_obj->count_records("`id`", "`pieces_info`", "WHERE `full_name` = $full_name AND `company_id` = ". $_SESSION['company_id']);
+    $checkPcs     = $pcs_obj->is_exist("`full_name`", "`pieces_info`", $full_name);
     $is_exist_mac = !empty($macAdd) ? $pcs_obj->is_exist("`mac_add`", "`pieces_mac_add`", $mac_add) : 0;
     $is_exist_ip  = $ip == '0.0.0.0' ? 0 : $pcs_obj->count_records("`id`", "`pieces_info`", "WHERE `ip` = '$ip' AND `direction_id` = $dir_id");
     // check piece name

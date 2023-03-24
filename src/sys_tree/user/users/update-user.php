@@ -26,36 +26,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // password trick
   $pass = empty($passwd) ? $_POST['old-password'] : sha1($passwd);
   
-  // get company alias
-  $company_alias = $user_obj->select_specific_column("`company_alias`", "`companies`", "WHERE `company_id` = " . $_SESSION['company_id'])[0]['company_alias'];
-
   // validate the form
   $formErorr = array();   // error array 
 
   // validate username
-  if (empty($username)) {
-    $formErorr[] = 'username cannot be empty';
+  if (strlen($username) < 4) {
+    $formErorr[] = 'username cannot be less than <strong>4 characters.</strong>';
   }
-  
+  if (empty($username)) {
+    $formErorr[] = 'username cannot be <strong>empty.</strong>';
+  }
 
   // validate fullname
   if (empty($fullname)) {
-    $formErorr[] = 'full name cannot be empty';
+      $formErorr[] = 'full name cannot be <strong>empty.</strong>';
   }
+
+  // // validate email
+  // if (empty($email)) {
+  //     $formErorr[] = 'email cannot be <strong>empty.</strong>';
+  // }
   
   $msg = "";
 
   // check if empty form error
   if (empty($formErorr)) {
     // get user that have the same username
-    $is_exist = $user_obj->count_records("`UserID`", "`users`", "WHERE `UserName` = $username AND `UserID` != $userid AND `company_id` = ".$_SESSION['company_id']);
+    $checkStmt = $con->prepare("SELECT *FROM `users` WHERE `UserName` = ? AND `UserID` != ?");
+    $checkStmt->execute(array($username, $userid));
+    $count = $checkStmt->rowCount();
     // check if username is exist
-    if ($is_exist > 0) {
-      // echo success message
-      $msg = '<div class="alert alert-warning text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;';
-      $msg .= language('THIS USERNAME IS ALREADY EXIST', @$_SESSION['systemLang']).'..<br>';
-      $msg .= language('PLEASE, TRY ANOTHER USERNAME', @$_SESSION['systemLang']);
-      $msg .= '</div>';
+    if ($count == 1) {
+        // echo success message
+        $msg = '<div class="alert alert-warning text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;';
+        $msg .= language('THIS USERNAME IS ALREADY EXIST', @$_SESSION['systemLang']).'..<br>';
+        $msg .= language('PLEASE, TRY ANOTHER USERNAME', @$_SESSION['systemLang']);
+        $msg .= '</div>';
     } else {
       // array of user info
       $user_info = array();

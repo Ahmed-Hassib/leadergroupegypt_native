@@ -24,18 +24,12 @@ if ($dir_id != -1 && $src_id != -1) {
     <!-- start header -->
     <header class="header mb-3">
       <div class="hstack gap-2">
-        <div class="<?php if ($_SESSION['pcs_add'] == 0) {echo 'd-none';} ?>">
-          <a href="?name=pieces&do=add-new-piece" class="btn btn-outline-primary py-1 fs-12">
-            <i class="bi bi-plus"></i>
-            <?php echo language('ADD NEW PIECE', @$_SESSION['systemLang']) ?>
-          </a>
-        </div>
         <!-- edit current piece -->
         <div>
           <!-- Button trigger modal -->
-          <a class="btn btn-outline-primary fs-12 py-1" href="?name=pieces&do=edit-piece&piece-id=<?php echo $src_id; ?>">
+          <a class="btn btn-outline-success fs-12 py-1" href="?name=pieces&do=edit-piece&piece-id=<?php echo $src_id; ?>">
             <i class="bi bi-pencil d-sm-block d-md-none"></i>
-            <span class="d-none d-md-block"><?php echo language("EDIT PIECE", @$_SESSION['systemLang']) ?></span>
+            <span class="d-none d-md-block"><?php echo language("EDIT CURRENT PIECE", @$_SESSION['systemLang']) ?></span>
           </a>
         </div>
         <!-- edit current piece -->

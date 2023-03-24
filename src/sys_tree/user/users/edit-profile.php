@@ -115,7 +115,7 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
                 <div class="mb-4 row">
                   <label for="username" class="col-sm-12 col-md-3 col-form-label text-capitalize"><?php echo language('USERNAME', @$_SESSION['systemLang']) ?></label>
                   <div class="col-sm-12 col-md-9">
-                    <input type="text" class="form-control" name="username" id="username" placeholder="<?php echo language('USERNAME TO LOGIN INTO THE SYSTEM', @$_SESSION['systemLang']) ?>" autocomplete="off" value="<?php echo $user['UserName'] ?>" required readonly>
+                    <input type="text" class="form-control" name="username" id="username" placeholder="<?php echo language('USERNAME TO LOGIN INTO THE SYSTEM', @$_SESSION['systemLang']) ?>" autocomplete="off" value="<?php echo $user['UserName'] ?>"  required readonly>
                     <div id="usernameHelp" class="form-text"><?php echo language('USERNAME TO LOGIN INTO THE SYSTEM', @$_SESSION['systemLang']) ?></div>
                   </div>
                 </div>

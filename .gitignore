@@ -1,0 +1,7 @@
+# here we list all files that we want to ignore tracking it
+data/
+docs/*
+layout/node_modules/*
+layout/plugins/*
+sql/*
+etc/local-conf.php

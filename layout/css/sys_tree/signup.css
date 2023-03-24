@@ -79,8 +79,7 @@
 }
 
 .contentBox .formBox .signup-form input,
-.contentBox .formBox .signup-form button,
-.contentBox .formBox .signup-form a.btn {
+.contentBox .formBox .signup-form button {
   border-radius: 6px;
 }
 
@@ -127,10 +126,6 @@
   .contentBox .formBox {
     width: 100%;
   }
-}
-
-.form-check .form-check-input {
-  float: none;
 }
 
 /* End Login Form */

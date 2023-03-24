@@ -2,10 +2,10 @@
 // user name
 $username = isset($_GET['username']) ? $_GET['username'] : '';
 // query statement
-$query = "SELECT count(`UserID`) FROM `users` WHERE `UserName` = ? AND `company_id` = ?";
+$query = "SELECT count(`UserID`) FROM `users` WHERE `UserName` LIKE ?";
 // prepare statement
 $stmt = $con->prepare($query);
-$stmt->execute(array($username, $_SESSION['company_id']));
+$stmt->execute(array($username));
 // get all rows
 $result = $stmt->fetchColumn();
 // 

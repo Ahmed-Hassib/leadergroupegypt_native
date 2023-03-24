@@ -15,14 +15,6 @@ if ($counter > 0) {
   <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
     <!-- start header -->
     <header class="header mb-3">
-      <div class="hstack gap-2">
-        <div class="<?php if ($_SESSION['pcs_add'] == 0) {echo 'd-none';} ?>">
-          <a href="?name=clients&do=add-new-piece" class="btn btn-outline-primary py-1 fs-12">
-            <i class="bi bi-plus"></i>
-            <?php echo language('ADD NEW CLIENT', @$_SESSION['systemLang']) ?>
-          </a>
-        </div>
-      </div>
       <h4 class="h4"><?php echo language('SHOW ALL CLIENTS', @$_SESSION['systemLang']) ?></h4>
     </header>
     

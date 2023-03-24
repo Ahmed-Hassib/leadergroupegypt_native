@@ -24,71 +24,67 @@ $nav_level = 1;
 // refere to that this page have tables
 $is_contain_table = true;
 // initial configration of system
-include_once str_repeat("../", $level) . "etc/pre-conf.php";
+include_once str_repeat("../", $level) . "etc/init.php";
 // check username in SESSION variable
 if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
-  // check if Get request do is set or not
-  $query = isset($_GET['do']) ? $_GET['do'] : 'manage';
-  
-  switch($query) {
+    
+    // check if Get request do is set or not
+    $query = isset($_GET['do']) ? $_GET['do'] : 'manage';
+    
     // start manage page
-    case "manage":       // manage page
-      // include malfunction dashboard page
-      $file_name = 'dashboard.php';
-      break;
+    if ($query == "manage" && $_SESSION['mal_show'] == 1) {       // manage page
+        
+        // include malfunction dashboard page
+        include_once 'dashboard.php';
+        
+    } elseif ($query == "showMalfunctionDetails" && $_SESSION['mal_show'] == 1) {
+        
+        // include malfunction details page
+        include_once 'malfunctions-details.php';
+        
+    } elseif ($query == "addMalfunction" && $_SESSION['mal_add'] == 1) {
+        
+        // include malfunction details page
+        include_once 'add-malfunction.php';
+        
+    } elseif ($query == "insertMalfunctions" && $_SESSION['mal_add'] == 1) {     // edit piece page
+        
+        // include malfunction details page
+        include_once 'insert-malfunction.php';
+        
+    } elseif ($query == 'editMalfunction' && $_SESSION['mal_show'] == 1) {
+        
+        // include malfunction details page
+        include_once 'edit-malfunction.php';
+        
+    } elseif ($query == 'updateMalfunction' && $_SESSION['mal_update'] == 1) {
+        
+        // include malfunction details page
+        include_once 'update-malfunction.php';
+        
+    } elseif ($query == 'deleteMal' && $_SESSION['mal_delete'] == 1) {
+        
+        // include malfunction details page
+        include_once 'delete-malfunction.php';
+        
+    } elseif ($query == 'showPiecesMal' && $_SESSION['mal_show'] == 1) {
+        
+        // include malfunction details page
+        include_once 'piece-malfunctions.php';
 
-    case "showMalfunctionDetails":
-      // include malfunction details page
-      $file_name = 'malfunctions-details.php';
-      break;
-
-    case "addMalfunction":
-      // include malfunction details page
-      $file_name = 'add-malfunction.php';
-      break;
-
-    case "insertMalfunctions":     // edit piece page
-      // include malfunction details page
-      $file_name = 'insert-malfunction.php';
-      break;
-
-    case 'editMalfunction':
-      // include malfunction details page
-      $file_name = 'edit-malfunction.php';
-      break;
-
-    case 'updateMalfunction':
-      // include malfunction details page
-      $file_name = 'update-malfunction.php';
-      break;
-
-    case 'deleteMal':
-      // include malfunction details page
-      $file_name = 'delete-malfunction.php';
-      break;
-
-    case 'showPiecesMal':
-      // include malfunction details page
-      $file_name = 'piece-malfunctions.php';
-      break;
-
-    default:
-      // include page error module
-      $file_name = $globmod . 'page-error.php';
-      break;
-  }
-  
+    } else {
+        
+        // include page error module
+        include_once $globmod . 'page-error.php';
+        
+    }
+    
 } else {
-  
-  // include permission error module
-  $file_name = $globmod . 'permission-error.php';
-  
+    
+    // include permission error module
+    include_once $globmod . 'permission-error.php';
+    
 }
-
-// initial configration of system
-include_once str_repeat("../", $level) . "etc/init.php";
-// include file name
-include_once $file_name;
 
 // include footer
 include_once $tpl . "footer.php"; 

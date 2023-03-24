@@ -215,12 +215,6 @@
       </ul>
       <!-- end blank sub menu -->
     </li>
-    <li>
-      <a href="<?php echo $sys_tree ?>logout.php" class="logout-btn">
-        <i class="bi bi-box-arrow-right"></i>
-        <span class="link-name"><?php echo language('LOG OUT', @$_SESSION['systemLang']) ?></span>
-      </a>
-    </li>
     <!-- start setting nav link -->
     <?php if (isset($_SESSION['UserName'])) { ?>
     <!-- start profile details nav link -->
@@ -233,22 +227,27 @@
         </div>
           <div class="name-job">
             <div class="profile-name"><?php echo $_SESSION['UserName'] ?></div>
-            <?php if (!empty($_SESSION['job_title_id'])) { ?>
-              <div class="profile-job">
-                <?php 
-                  // create an object of Database class
-                  $db_obj = new Database();
-                  // get job title
-                  echo $db_obj->select_specific_column("`job_title_name`", "`users_job_title`", "WHERE `job_title_id` = " . $_SESSION['job_title_id'])[0]['job_title_name'] ?>
-              </div>
+            <?php if (!empty($_SESSION['job_title'])) { ?>
+              <div class="profile-job"><?php echo $_SESSION['job_title'] ?></div>
             <?php } ?>
           </div>
         </a>
+        <a href="<?php echo $sys_tree ?>logout.php" class="logout-btn"><i class="bi bi-box-arrow-right"></i></a>
       </div>
       <!-- end profile details -->
     </li>
     <!-- start profile details nav link -->
     <?php } ?>
+    <!-- start website -->
+    <li>
+      <a href="<?php echo $up_level ?>index.php" target="_blank">
+        <i class="bi bi-paperclip"></i>
+        <span class="link-name">
+          <?php echo language('WEBSITE', @$_SESSION['systemLang']) ?>
+        </span>
+      </a>
+    </li>
+    <!-- start website -->
   </ul>
   <!-- end sidebar menu content -->
 </div>

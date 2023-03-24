@@ -47,4 +47,4 @@
 
 
 <!-- PAGE ICON -->
-<link rel="icon" href="<?php echo $assets ?>leadergroupegypt.ico">
+<link rel="icon" href="<?php echo $assets ?>leadergroupegypt.jpg">

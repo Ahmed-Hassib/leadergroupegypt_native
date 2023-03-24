@@ -7,12 +7,21 @@ ob_start();
 session_start();
 // regenerate session id
 session_regenerate_id();
+
+// no header
+$noHeader = true;
+// no navbar
+$noNavBar = "any";
+// page title
+$page_title = "";
 // level
 $level = 4;
 // nav level
 $nav_level = 1;
 // pre configration of system
 include_once str_repeat("../", $level) . "etc/pre-conf.php";
+// initial configration of system
+include_once str_repeat("../", $level) . "etc/init.php";
 
 // check if Get request do is set or not
 $query = isset($_GET['do']) ? $_GET['do'] : '';
@@ -61,22 +70,7 @@ switch ($query) {
   case "check-direction":
     $file_name = 'check-direction-name.php';
     break;
-
-  case "check-company-alias":
-    $file_name = 'check-company-alias.php';
-    break;
 }
 
-// no header
-$noHeader = true;
-// no navbar
-$noNavBar = "any";
-// page title
-$page_title = "";
-
-
-// initial configration of system
-include_once str_repeat("../", $level) . "etc/init.php";
-// include file name
 include_once $file_name;
 

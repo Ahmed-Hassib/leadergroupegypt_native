@@ -1,7 +1,6 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  // create an object of User class
-  $user_obj = new User();
+
   // GET EMPLOYEE GENERAL INFO
   // get full name
   $fullname = isset($_POST['fullname']) && !empty($_POST['fullname']) ? $_POST['fullname'] : '';
@@ -9,8 +8,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $username = isset($_POST['username']) && !empty($_POST['username']) ? $_POST['username'] : '';
   // get company id 
   $company_id = $_SESSION['company_id'];
-  // get company alias
-  $company_alias = $user_obj->select_specific_column("`company_alias`", "`companies`", "WHERE `company_id` = " . $_SESSION['company_id'])[0]['company_alias'];
   // get employee password
   $pass = isset($_POST['password']) && !empty($_POST['password']) ? $_POST['password'] : '';
   // get employee email
@@ -71,6 +68,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $formErorr = array();   // error array 
 
   // validate username
+  if (strlen($username) < 4) {
+    $formErorr[] = 'username cannot be less than 4 characters';
+  }
+
   if (empty($username)) {
     $formErorr[] = 'username cannot be empty';
   }
@@ -92,10 +93,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   
   // check if empty form error
   if (empty($formErorr)) {
+    // create an object of User class
+    $user_obj = new User();
     // check if user is exist in database or not
-    $is_exist_user  = $user_obj->count_records("`UserName`", "`users`", "WHERE `UserName` = $username AND `company_id` = " . $_SESSION['company_id']);
+    $is_exist_user  = $user_obj->is_exist("`UserName`", "`users`", $username);
     // check the counter
-    if ($is_exist_user > 0) {
+    if ($is_exist_user == true) {
       // show erroe message
       $msg = '<div class="alert alert-warning text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;'. language('THIS USERNAME IS ALREADY EXIST', @$_SESSION['systemLang']) .'</div>';
     } else {
@@ -136,5 +139,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   </div>
 <?php } else {
     // include_once permission error module
-    include_once $globmod . 'permission-error.php';
+    include_once $globmod . '/permission-error.php';
 } ?>

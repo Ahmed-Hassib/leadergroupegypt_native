@@ -61,13 +61,6 @@ if (isset($_SESSION['UserName'])) {
                 <input class="form-control w-100" type="text" name="company-name" id="company-name" placeholder="<?php echo language("COMPANY NAME", @$_SESSION['systemLang']) ?>" onkeyup="is_valid(this, 'company');" required>
               </div>
             </div>
-            <!-- company alias -->
-            <div class="mb-sm-2 mb-md-3 row">
-              <label for="company-alias" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language("COMPANY ALIAS", @$_SESSION['systemLang']) ?></label>
-              <div class="col-sm-12 col-md-8">
-                <input class="form-control w-100" type="text" name="company-alias" id="company-alias" placeholder="<?php echo language("COMPANY ALIAS", @$_SESSION['systemLang']) ?>" onkeyup="change_company_alias(this);" maxlength="11" required>
-              </div>
-            </div>
             <!-- manager name -->
             <div class="mb-sm-2 mb-md-3 row">
               <label for="manager-name" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language("MANAGER NAME", @$_SESSION['systemLang']) ?></label>
@@ -142,24 +135,13 @@ if (isset($_SESSION['UserName'])) {
                 </select>
               </div>
             </div>
-
-            <div class="mb-sm-2 mb-md-3 row">
-              <label for="username" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('USERNAME', @$_SESSION['systemLang']) ?></label>
-              <div class="col-sm-12 col-md-8">
-                <div class="input-group flex-nowrap" dir="ltr">
-                  <input type="text" class="form-control input-group-text" name="username" id="username" placeholder="<?php echo language('USERNAME', @$_SESSION['systemLang']) ?>" onkeyup="username_validation(this)" required data-no-astrisk="true">
-                  <span class="input-group-text" id="addon-wrapping"></span>
-                </div>
-              </div>
-            </div>
-
             <!-- admin username -->
-            <!-- <div class="mb-sm-2 mb-md-3 row">
+            <div class="mb-sm-2 mb-md-3 row">
               <label for="username" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language("USERNAME", @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 col-md-8">
                 <input class="form-control w-100" type="text" name="username" id="username" placeholder="<?php echo language("USERNAME", @$_SESSION['systemLang']) ?>" onkeyup="is_valid(this, 'username');" required>
               </div>
-            </div> -->
+            </div>
             
             <div class="mb-sm-2 mb-md-3 row">
               <label for="password" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language("PASSWORD", @$_SESSION['systemLang']) ?></label>
@@ -172,29 +154,14 @@ if (isset($_SESSION['UserName'])) {
           </div>
         </div>
         
-
-        <div class="mb-3 hstack gap-2">
-          <!-- submit -->
-          <div>
-            <button form="signup-form" class="btn btn-primary text-capitalize bg-gradient py-1 fs-12 <?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" id="signup-form-btn"  onclick="form_validation(this.form, 'submit')">
-              <?php echo language('SIGNUP', @$_SESSION['systemLang']) ?>
-            </button>
-          </div>
-
-          <!-- login -->
-          <div>
-            <a href="./login.php" class="btn btn-outline-secondary text-capitalize bg-gradient py-1 fs-12" id="login-form-btn">
-              <?php echo language('LOGIN', @$_SESSION['systemLang']) ?>
-            </a>
-          </div>
-
-          <!-- instruction button -->
-          <div>
-            <button type="button" role="button" class="btn btn-outline-secondary text-capitalize bg-gradient py-1 fs-12 <?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" data-bs-toggle="modal" data-bs-target="#signup-instruction" id="instruction-btn">
-              <?php echo language('THE INSTRUCTIONS', @$_SESSION['systemLang']) ?>
-            </button>
-          </div>
-        </div>
+        <!-- submit -->
+        <button type="button" form="signup-form" class="btn btn-primary text-capitalize bg-gradient py-1 <?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" id="signup-form-btn"  onclick="form_validation(this.form, 'submit')">
+          <?php echo language('SIGNUP', @$_SESSION['systemLang']) ?>
+        </button>
+        <!-- submit -->
+        <a href="./login.php" class="btn btn-outline-secondary text-capitalize bg-gradient py-1 <?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" id="login-form-btn">
+          <?php echo language('LOGIN', @$_SESSION['systemLang']) ?>
+        </a>
       </form>
       <hr>
 
@@ -211,7 +178,6 @@ if (isset($_SESSION['UserName'])) {
   </div>
 </div>
 
-<?php
-  include_once $globmod . "signup-instruct-modal.php";
+<?php 
   include_once $tpl . "js-includes.php";
 ?>
