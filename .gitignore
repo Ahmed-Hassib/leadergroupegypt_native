@@ -5,3 +5,4 @@ layout/node_modules/*
 layout/plugins/*
 sql/*
 etc/local-conf.php
+src/sys_tree/user/_backup/*
