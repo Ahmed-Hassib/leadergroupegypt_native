@@ -1,0 +1,33 @@
+.login-section {
+  margin: 40px auto;
+  padding: 1rem .5rem;
+  position: relative;
+}
+
+.login-section .main-title {
+  margin: 0 auto 30px;
+}
+
+.login-section .blog-login-container {
+  position: relative;
+  width: 400px;
+  margin: auto;
+}
+
+.blog-login-form input {
+  position: relative;
+}
+
+.blog-login-form .show-pass {
+  position: absolute;
+  top: 7px;
+  left: 5%;
+  cursor: pointer;
+}
+
+.alerts-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}

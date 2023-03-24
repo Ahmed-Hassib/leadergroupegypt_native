@@ -1,0 +1,33 @@
+
+
+.blog .main-title {
+  margin: 0 auto 30px;
+}
+
+.blog .blog-articles {
+  position: relative;
+}
+
+.blog .blog-articles-title {
+  padding: 0.75rem 2rem;
+  background-color: #4a13d6;
+  color: #FFF;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.blog .blog-articles>.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.blog .blog-articles .article {
+  margin-bottom: .5rem;
+  padding: .5rem 1rem;
+  background-color: #f3f3f3;
+}
+
+.blog .blog-articles .article img {
+  width: 100px;
+  margin: auto;
+}

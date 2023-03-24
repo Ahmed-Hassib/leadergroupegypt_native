@@ -1,0 +1,7 @@
+[admin@21/10/2022 01:12pm ~ info msg]:logout from system.
+[admin@21/10/2022 01:26pm ~ info msg]:logout from system.
+[admin@21/10/2022 01:35pm ~ info msg]:logout from system.
+[admin@21/10/2022 01:37pm ~ info msg]:logout from system.
+[admin@21/10/2022 02:04pm ~ info msg]:logout from system.
+[admin@21/10/2022 02:10pm ~ info msg]:logout from system.
+[admin@21/10/2022 02:16pm ~ info msg]:logout from system.

@@ -1,0 +1,29 @@
+[hassib@13/03/2023 11:14am ~ info msg]:loginning to system.
+[hassib@13/03/2023 12:07pm ~ info msg]:Update user info -> username: hassib..
+[hassib@13/03/2023 12:07pm ~ info msg]:Update user info -> username: hassib..
+[hassib@13/03/2023 12:08pm ~ info msg]:Update user info -> username: hassib..
+[hassib@13/03/2023 12:09pm ~ info msg]:Update user info -> username: hassib..
+[hassib@13/03/2023 12:09pm ~ info msg]:Update user info -> username: hassib..
+[hassib@13/03/2023 12:10pm ~ info msg]:Update user info -> username: hassib..
+[hassib@13/03/2023 03:27pm ~ info msg]:Update piece or client info with name `hassib`.
+[hassib@13/03/2023 04:02pm ~ info msg]:Update user info -> username: hassib..
+[hassib@13/03/2023 04:18pm ~ info msg]:Update user info -> username: hassib..
+[hassib@13/03/2023 04:19pm ~ info msg]:Users dept:: A new user was added succefully!.
+[hassib@13/03/2023 04:29pm ~ info msg]:Users dept:: user deleted successfully..
+[elzaeem@13/03/2023 04:36pm ~ info msg]:loginning to system.
+[hassib@13/03/2023 04:41pm ~ info msg]:loginning to system.
+[hassib@13/03/2023 04:49pm ~ info msg]:loginning to system.
+[hassib@13/03/2023 05:05pm ~ info msg]:Users dept:: A new user was added succefully!.
+[hassib@13/03/2023 05:06pm ~ info msg]:Update user info -> username: test_1..
+[hassib@13/03/2023 05:07pm ~ info msg]:Update user info -> username: test_1..
+[hassib@13/03/2023 05:30pm ~ info msg]:Update piece or client info with name `hassib`.
+[elzaeem@13/03/2023 05:38pm ~ info msg]:loginning to system.
+[elzaeem@13/03/2023 05:39pm ~ info msg]:Update piece or client info with name `محمد فاروق عبد الجايد`.
+[elzaeem@13/03/2023 05:40pm ~ info msg]:Update piece or client info with name `محمد فاروق عبد الجايد`.
+[elzaeem@13/03/2023 10:07pm ~ info msg]:loginning to system.
+[elzaeem@13/03/2023 10:45pm ~ info msg]:Update piece or client info with name `7100 الهنا`.
+[elzaeem@13/03/2023 10:45pm ~ info msg]:Update piece or client info with name `مباشر الهنا2`.
+[elzaeem@13/03/2023 10:46pm ~ info msg]:Update piece or client info with name `مباشر الهنا2`.
+[elzaeem@13/03/2023 10:47pm ~ info msg]:Update piece or client info with name `برج الهنا`.
+[elzaeem@13/03/2023 10:56pm ~ info msg]:Update piece or client info with name `سهير محمد علي`.
+[elzaeem@13/03/2023 11:31pm ~ info msg]:Update piece or client info with name `test2`.

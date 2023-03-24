@@ -1,0 +1,254 @@
+`users_permissions`.`companies_add`,`users_permissions`.`companies_show`,`users_permissions`.`companies_update`,`users_permissions`.`companies_delete`,
+
+<!-- start table container -->
+                <div class="table-responsive-sm">
+                    <!-- strst users table -->
+                    <table class="table table-bordered  display compact table-style text-center" id="showEmployees">
+                        <thead class="primary text-capitalize">
+                            <tr>
+                                <th data-order="asc" data-col-type="number" class="fs-10-sm" style="max-width: 25px">#</th>
+                                <th data-order="asc" data-col-type="string" class="fs-10-sm" style="max-width: 100px;"><?php echo language('USERNAME', @$_SESSION['systemLang']) ?></th>
+                                <?php if ($_SESSION['points_show'] == 1) { ?>
+                                    <th data-order="asc" data-col-type="string" class="fs-10-sm" style="min-width: 50px;"><?php echo language('POSITIVE POINTS', @$_SESSION['systemLang']) ?></th>
+                                    <th data-order="asc" data-col-type="string" class="fs-10-sm" style="min-width: 50px;"><?php echo language('NEGATIVE POINTS', @$_SESSION['systemLang']) ?></th>
+                                <?php } ?>
+                                <th data-order="asc" data-col-type="string" class="fs-10-sm" style="min-width: 50px;"><?php echo language('MISSION TODAY', @$_SESSION['systemLang']) ?></th>
+                                <?php if ($_SESSION['sugg_show'] == 1) { ?>
+                                    <th data-order="asc" data-col-type="string" class="fs-10-sm" style="min-width: 50px;"><?php echo language('COMPLAINTS & SUGGESTIONS', @$_SESSION['systemLang']) ?></th>
+                                <?php } ?>
+                                <th class="fs-10-sm" ><?php echo language('CONTROL', @$_SESSION['systemLang']) ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($rows as $index => $row) { ?>
+                                <tr>
+                                    <td class="fs-10-sm"><?php echo ($index + 1) ?></td>
+                                    <td style="text-align: left" class="fs-10-sm">
+                                        <!-- if the current user have the permission to show users -->
+                                        <?php if ($_SESSION['user_show'] == 1) { ?>
+                                            <a href="?do=editUser&userid=<?php echo $row['UserID'] ?>"><?php echo $row['UserName'] ?></a>
+                                        <?php } else { ?>
+                                            <span><?php echo $row['UserName'] ?></span>
+                                        <?php } ?>
+                                        <!-- is trust user or not -->
+                                        <?php if ($row['TrustStatus'] == 1) { ?>
+                                            <i class="bi bi-patch-check-fill text-primary"></i>
+                                        <?php } ?>
+                                        <!-- status -->
+                                        <i class="bi bi-circle-fill fs-5-sm <?php if ($row['isOnline']) {echo "online";} else {echo "offline";} ?>"></i>
+                                    </td>
+                                    <td dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>" class="fs-10-sm">
+                                        <?php
+                                            $posPoints = selectSpecificColumn("`points`", "`users_points`", "WHERE `points_type` = 1 AND `UserID` = " . $row['UserID']);
+                                            $points = 0;
+                                            // loop on it
+                                            if (count($posPoints) > 0) {
+                                                foreach($posPoints as $index => $point) {
+                                                    $points += $point['points'];
+                                                }
+                                                echo $points . " " . ($points > 1 ? language('POINTS', @$_SESSION['systemLang']) : language('POINT', @$_SESSION['systemLang']));
+                                            } else {
+                                                echo language('THERE IS NO POINTS TO SHOW', @$_SESSION['systemLang']);
+                                            }
+                                        ?>
+                                    </td>
+                                    <td dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>" class="fs-10-sm">
+                                        <?php
+                                            $negPoints = selectSpecificColumn("`points`", "`users_points`", "WHERE `points_type` = 0 AND `UserID` = ".$row['UserID']);
+                                            $points = 0;
+                                            // loop on it
+                                            if (count($negPoints) > 0) {
+                                                foreach($negPoints as $index => $point) {
+                                                    $points += $point['points'];
+                                                }
+                                                echo $points . " " . ($points > 1 ? language('POINTS', @$_SESSION['systemLang']) : language('POINT', @$_SESSION['systemLang']));
+                                            } else {
+                                                echo language('THERE IS NO POINTS TO SHOW', @$_SESSION['systemLang']);
+                                            }
+                                        ?>
+                                    </td>
+                                    <td dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>" class="fs-10-sm">
+                                        <?php
+                                            // count malfunctions mission
+                                            $malMissions = countRecords("`mal_id`", "`malfunctions`", "WHERE `tech_id` = '".$row["UserID"]. "' AND `added_date` = CURRENT_DATE() AND `mal_status` = 0");
+                                            // count combinations mission
+                                            $combMissions = countRecords("`comb_id`", "`combinations`", "WHERE `UserID` = '".$row["UserID"]. "' AND `added_date` = CURRENT_DATE() AND `isFinished` = 0");
+                                            // total missions
+                                            $missions = $malMissions + $combMissions;
+                                            // check the counter
+                                            if ($missions < 1) {
+                                                echo language('NO MISSIONS TODAY', @$_SESSION['systemLang']);
+                                            } else {
+                                                echo $missions." ". ($missions > 1 ? language('MISSIONS', @$_SESSION['systemLang']) : language('MISSION', @$_SESSION['systemLang']));
+                                            }
+                                        ?>
+                                    </td>
+                                    <td dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>" class="fs-10-sm">
+                                        <?php
+                                            $sugg = countRecords("`UserID`", "`comp_sugg`", "WHERE `UserID` = ".$row["UserID"]." AND `type` = 0");
+                                            $comp = countRecords("`UserID`", "`comp_sugg`", "WHERE `UserID` = ".$row["UserID"]." AND `type` = 1");
+                                            // show the result
+                                            echo $sugg . " " . ($sugg > 1 ? language('SUGGESTIONS', @$_SESSION['systemLang']) : language('SUGGESTION', @$_SESSION['systemLang'])) . " - ";
+                                            echo $comp . " " . ($sugg > 1 ? language('COMPLAINTS', @$_SESSION['systemLang']) : language('COMPLAINT', @$_SESSION['systemLang']));
+                                        ?>
+                                    </td>
+                                    <td style="text-align:center">
+                                        <a href='?do=editUser&userid=<?php echo $row['UserID'] ?>' class='me-1 btn btn-success text-capitalize fs-12 fs-10-sm <?php if ($_SESSION['user_update'] == 0) {echo 'disabled';} ?>'><i class='bi bi-pencil-square'></i><!-- <?php echo language('SHOW', @$_SESSION['systemLang'])." ".language('THE DETAILS', @$_SESSION['systemLang']) ?> --> </a>
+                                        <button type="button" data-bs-toggle="modal" data-bs-target="#deleteUserModal" class='my-1 me-1 btn btn-danger text-capitalize fs-12 <?php if ($_SESSION['user_delete'] == 0) {echo 'disabled';} ?> fs-10-sm' onclick="show_delete_user_modal(this)" data-username="<?php echo $row['UserName'] ?>" data-userid="<?php echo $row['UserID'] ?>"><i class='bi bi-trash'></i><!-- <?php echo language('DELETE', @$_SESSION['systemLang']) ?> --></button>
+                                        <a href='?do=motivationPoints&userid=<?php echo $row['UserID'] ?>' class='me-1 btn btn-info text-capitalize fs-12 text-white <?php if ($_SESSION['points_show'] == 0) {echo 'disabled';} ?> fs-10-sm'><i class='bi bi-award'></i><!-- <?php echo language('MOTIVATION POINTS', @$_SESSION['systemLang']) ?> --></a>
+                                        <?php if ($row['RegStatus'] == 0) { ?>
+                                            <a href='?do=activate&userid=<?php echo$row['UserID']?>' class='my-1 me-1 btn btn-info text-white text-capitalize fs-12 fs-10-sm <?php if ($_SESSION['user_update'] == 0) {echo 'disabled';} ?>'><i class='bi bi-person-check me-1'></i><?php echo language('ACTIVATE', @$_SESSION['systemLang']) ?></button>
+                                        <?php } ?>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                    <!-- end users table -->
+                </div>
+                <!-- end table container -->
+
+
+
+                <div class="col-12">
+                            <div class="section-block">
+                                <header class="section-header">
+                                    <h5 class="text-capitalize "><?php echo language('ADDITIONAL INFO', @$_SESSION['systemLang']) ?></h5>
+                                    <hr>
+                                </header>
+                                <!-- strat malfunctions counter -->
+                                <div class="mb-4 row">
+                                    <div class="col-sm-12 col-md-3 text-capitalize"><?php echo language('MALFUNCTIONS COUNTER', @$_SESSION['systemLang']) ?></div>
+                                    <div class="col-sm-12 col-md-9 text-capitalize">
+                                        <?php $malCounter = countRecords("`mal_id`", "`malfunctions`", "WHERE `tech_id` = " . $row['UserID']) ?>
+                                        <span dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>">
+                                            <?php echo $malCounter . " " . ($malCounter > 2 ? language("MALFUNCTIONS", @$_SESSION['systemLang']) : language("MALFUNCTION", @$_SESSION['systemLang'])) ?>
+                                        </span>
+                                    </div>
+                                </div>
+                                <!-- end malfunctions counter -->
+                                <!-- strat malfunctions counter success rate -->
+                                <div class="mb-4 row">
+                                    <div class="col-sm-12 col-md-3 text-capitalize"><?php echo language('MALFUNCTIONS SUCCESS RATE', @$_SESSION['systemLang']) ?></div>
+                                    <div class="col-sm-12 col-md-9 text-capitalize">
+                                        <?php $malCounter = countRecords("`mal_id`", "`malfunctions`", "WHERE `tech_id` = " . $row['UserID']) ?>
+                                        <?php $malCounterSuccess = countRecords("`mal_id`", "`malfunctions`", "WHERE `tech_id` = " . $row['UserID'] . " AND `mal_status` = 1") ?>
+                                        <?php $malCounterSuccessRate = $malCounter > 0 ? number_format(($malCounterSuccess / $malCounter) * 100, 2, ".", "") : 0 ?>
+                                        <!-- progress -->
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: <?php echo $malCounterSuccessRate  ?>%" aria-valuenow="<?php echo $malCounterSuccessRate ?>" aria-valuemin="0" aria-valuemax="100"><?php echo $malCounterSuccessRate ?>%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end malfunctions counter success rate -->
+                                <!-- strat combinations counter -->
+                                <div class="mb-4 row">
+                                    <div class="col-sm-12 col-md-3 text-capitalize"><?php echo language('COMBINATIONS COUNTER', @$_SESSION['systemLang']) ?></div>
+                                    <div class="col-sm-12 col-md-9 text-capitalize">
+                                        <?php $malCounter = countRecords("`comb_id`", "`combinations`", "WHERE `UserID` = " . $row['UserID']) ?>
+                                        <span dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>">
+                                            <?php echo $malCounter . " " . ($malCounter > 2 ? language("COMBINATIONS", @$_SESSION['systemLang']) : language("COMBINATION", @$_SESSION['systemLang'])) ?>
+                                        </span>
+                                    </div>
+                                </div>
+                                <!-- end combinations counter -->
+                                <!-- strat combinations counter rate -->
+                                <div class="mb-4 row">
+                                    <div class="col-sm-12 col-md-3 text-capitalize"><?php echo language('COMBINATIONS SUCCESS RATE', @$_SESSION['systemLang']) ?></div>
+                                    <div class="col-sm-12 col-md-9 text-capitalize">
+                                        <?php $combCounter = countRecords("`comb_id`", "`combinations`", "WHERE `UserID` = " . $row['UserID']) ?>
+                                        <?php $combCounterSuccess = countRecords("`comb_id`", "`combinations`", "WHERE `UserID` = " . $row['UserID'] . " AND `isFinished` = 1") ?>
+                                        <?php $combCounterSuccessRate = $combCounter > 0 ? number_format(($combCounterSuccess / $combCounter) * 100, 2, ".", "") : 0 ?>
+                                        <!-- progress -->
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: <?php echo $combCounterSuccessRate  ?>%" aria-valuenow="<?php echo $combCounterSuccessRate ?>" aria-valuemin="0" aria-valuemax="100"><?php echo $combCounterSuccessRate ?>%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end combinations counter rate -->
+                            </div>
+                        </div>
+
+
+
+
+
+                        <?php if ($_SESSION['restore_backup'] == 1) { ?>
+            <!-- backup duration -->
+            <div class="col-12">
+                <div class="section-block">
+                    <!-- section header -->
+                    <div class="section-header" >
+                        <h5 class="text-capitalize "><?php echo language('BACKUP MANAGEMENT', @$_SESSION['systemLang']) ?></h5>
+                        <hr />
+                    </div>
+                    <!-- backup form -->
+                    <form action="requests.php?do=updateBackupInfo" method="POST" name="backup_duration_form">
+                        <!-- strat backup field -->
+                        <div class="mb-2 row">
+                            <label for="backup_duration" class="col-sm-12 col-md-6 col-form-label text-capitalize"><?php echo language('CHOOSE DURATION', @$_SESSION['systemLang']) ?></label>
+                            <div class="col-sm-12 col-md-6">
+                                <select class="form-select" name="backup_duration" id="backup_duration" required>
+                                    <option value="default" selected disabled><?php echo language('CHOOSE DURATION', @$_SESSION['systemLang']) ?></option>
+                                    <option value="1" <?php echo $_SESSION['backup_duration'] == 1 ? 'selected' : '' ?>><?php echo language('HALF AN HOUR', @$_SESSION['systemLang']) ?></option>
+                                    <option value="2" <?php echo $_SESSION['backup_duration'] == 2 ? 'selected' : '' ?>><?php echo language('HOUR', @$_SESSION['systemLang']) ?></option>
+                                    <option value="3" <?php echo $_SESSION['backup_duration'] == 3 ? 'selected' : '' ?>><?php echo language('6 HOURS', @$_SESSION['systemLang']) ?></option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- end backup field -->
+                        <!-- start last backup time -->
+                        <div class="mb-2 row">
+                            <label for="last_backup_time" class="col-sm-12 col-md-6 col-fom-label text-capitalize"><?php echo language('LAST BACKUP TIME', @$_SESSION['systemLang']) ?></label>
+                            <div class="col-sm-12 col-md-6">
+                                <input type="time" class="form-control" name="last_backup_time" id="last_backup_time" value="<?php echo $_SESSION['last_backup_time'] ?>" disabled>
+                            </div>
+                        </div>
+                        <!-- end last backup time -->
+                        <!-- start next backup time -->
+                        <div class="mb-2 row">
+                            <label for="next_backup_time" class="col-sm-12 col-md-6 col-fom-label text-capitalize"><?php echo language('NEXT BACKUP TIME', @$_SESSION['systemLang']) ?></label>
+                            <div class="col-sm-12 col-md-6">
+                                <input type="time" class="form-control" name="next_backup_time" id="next_backup_time" value="<?php echo $_SESSION['next_backup_time'] ?>" disabled>
+                            </div>
+                        </div>
+                        <!-- end next backup time -->
+                        <!-- strat submit -->
+                        <div class="hstack gap-3">
+                            <button type="submit" class="me-auto btn btn-primary text-capitalize"><i class="bi bi-check-all me-1"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?></button>
+                        </div>
+                        <!-- end submit -->
+                    </form>
+                </div>
+            </div>
+            <?php } ?>
+
+
+            <?php if ($_SESSION['restore_backup'] == 1 && $_SESSION['isLicenseExpired'] == 0) { ?>
+            <!-- restore tha backups -->
+            <div class="col-12">
+                <div class="section-block">
+                    <!-- section header -->
+                    <div class="section-header" >
+                        <h5 class="text-capitalize "><?php echo language('RESTORE BACKUP', @$_SESSION['systemLang']) ?></h5>
+                        <hr />
+                    </div>
+                    <!-- backup form -->
+                    <form action="settings.php?do=restoreBackup" method="POST" enctype="multipart/form-data">
+                        <!-- strat backup field -->
+                        <div class="mb-3 row">
+                            <label for="backup" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('CHOOSE BACKUP', @$_SESSION['systemLang']) ?></label>
+                            <div class="col-sm-12 col-md-8">
+                                <input type="file" name="backup" id="backup">
+                            </div>
+                        </div>
+                        <!-- end backup field -->
+                        <!-- strat submit -->
+                        <div class="hstack gap-3">
+                            <button type="submit" class="me-auto btn btn-primary text-capitalize"><i class="bi bi-upload me-1"></i>&nbsp;<?php echo language('RESTORE', @$_SESSION['systemLang']) ?></button>
+                        </div>
+                        <!-- end submit -->
+                    </form>
+                </div>
+            </div>
+            <?php } ?>

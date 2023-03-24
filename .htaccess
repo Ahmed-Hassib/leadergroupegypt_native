@@ -1,0 +1,5 @@
+# Prevent DIrectory Listing
+
+options -Indexes
+
+ErrorDocument 403 "Hello can`t have the permission to access this directory"
