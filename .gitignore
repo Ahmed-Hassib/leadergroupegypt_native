@@ -1,13 +1,25 @@
 # here we list all files that we want to ignore tracking it
-data/backups/*
-data/description/*
-data/json/*
-data/log/*
-data/uploads/*
-docs/*.txt
-docs/*.docx
+
+# ignoring all text files
+*.txt
+
+# ignoring all docs files
+*.docx
+
+# ignoring all data directory content
+data/*
+
+# ignoring node_modules directory
 layout/node_modules/*
+
+# ignoring plugins directory
 layout/plugins/*
+
+# ignoring sql directory
 sql/*
+
+# ignoring local configration directory
 etc/local-conf.php
+
+# ignoring sys_tree/user/_backup directory
 src/sys_tree/user/_backup/*
