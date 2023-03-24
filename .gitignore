@@ -1,6 +1,11 @@
 # here we list all files that we want to ignore tracking it
-data/
-docs/*
+data/backups/*
+data/description/*
+data/json/*
+data/log/*
+data/uploads/*
+docs/*.txt
+docs/*.docx
 layout/node_modules/*
 layout/plugins/*
 sql/*
