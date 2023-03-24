@@ -1,2 +1,0 @@
-[test_123@20/02/2023 04:36pm ~ info msg]:loginning to system.
-[elzaeem@20/02/2023 04:48pm ~ info msg]:loginning to system.
