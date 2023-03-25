@@ -18,6 +18,7 @@ function languageAr($phrase)
     'HI'                    => 'اهــلاً',
     'APP NAME'              => 'اسم التطبيق',
     'COMPANY NAME'          => 'اسم الشركة',
+    'COMPANY ALIAS'         => 'الاسم المختصر للشركة',
     'ADD'                   => 'اضافة',
     'ADDED'                 => 'اضيفت',
     'TOTAL'                 => 'اجمالي',
@@ -103,6 +104,10 @@ function languageAr($phrase)
     'READ MORE'             => 'قراءة المزيد',
     'WEBSITE'               => 'الموقع',
     'FROM HERE'             => 'من هنا',
+    'INSTRUCTIONS'          => 'تعليمات',
+    'SIGNUP INSTRUCTIONS'   => 'تعليمات التسجيل الجديد',
+    'THE INSTRUCTIONS'      => 'التعليمات',
+    'UNDERSTAND'            => 'فهمت',
     
     
     /**
@@ -318,7 +323,7 @@ function languageAr($phrase)
     'EDIT CONNECTION TYPES'             => 'تعديل انواع الاتصال',
     'DELETE CONNECTION TYPE'            => 'حذف نوع اتصال',
     'EDIT PIECE'                        => 'تعديل جهاز',
-    'EDIT CURRENT PIECE'                => 'تعديل الجهاز الحالية',
+    'EDIT CURRENT PIECE'                => 'تعديل الجهاز',
     'NUMBER OF PIECES'                  => 'عدد الأجهزة',
     'SINCE'                             => 'منذ',
     'SINCE MORE THAN 30 DAYS'           => 'منذ اكثر من 30 يوم',
@@ -644,6 +649,7 @@ function languageAr($phrase)
     /**
      * SOME SEQUENCES
      */
+    'DON`T SHOW THIS AGAIN'                                                         => 'لا تعرض هذا مرة اخرى!',
     'DON`T HAVE AN ACCOUNT?'                                                        => 'لا تمتلك حساب؟',
     'SORRY, THE PAGE IS UNDER DEVELOPING'                                           => 'هذه الصفحة تحت التطوير',
     'THIS PROGRAM HELPS YOU TO MANAGE YOUR NETWORK OF CLIENTS'                      => 'يساعدك هذا البرنامج لادارة شبكة الاجهزة العملاء الخاصين بك',
@@ -856,20 +862,36 @@ function languageAr($phrase)
     'THERE IS NO DEVICES TO SELECT PLEASE ADD SOME DEVICES'                         => 'لا يوجد أي اجهزة للاختيار برجاء اضافة بعض الاجهزة',
     'THERE IS NO MODELS TO SELECT PLEASE ADD SOME DEVICES MODELS'                   => 'لا يوجد أي موديلات للاختيار برجاء اضافة بعض الموديلات',
     'SORRY, THIS PAGE IS SUSPENDED TODAY DUE TO DEVELOPMENT WORK'                   => 'هذة الصفحة معلقة اليوم بسبب اعمال التطوير',
-    
-    'MALFUNCTIONS RATING IS DEPENDING ON COMPARE BETWEEN FINISHED, UNFINISHED AND DELAYED AND ALL MALFUNCTIONS'                         => 'يعتمد تقييم الاعطال علي المقارنة بين الاعطال المنتهية، الغير منتهية، المؤجلة واجمالى الاعطال',
-    'COMBINATIONS RATING IS DEPENDING ON COMPARE BETWEEN REPAIRED, UNREPAIRED AND DELAYED AND ALL COMBINATIONS'                         => 'يعتمد تقييم التركيبات علي المقارنة بين التركيبات المنتهية، الغير منتهية، المؤجلة واجمالى التركيبات',
-    'YOU ENTERED USERNAME OR PASSWORD MORE THAN 3 TIMES WAIT A 30 SECOND AND TRY AGAIN'                                                 => 'لقد قمت بادخال اسم المستخدم او كلمة المرور اكثر من 3 مرات برجاء الانتظار 30 ثانية ثم اعد المحاولة',
-    'THE TECHNICAL MAN DIDN`T REPAIR THE MALFUNCTION TO CALCULATE THE MALFUNCTION REPAIRED PERIOD'                                      => 'الفني لم يقم باصلاح العطل لكي يتم حساب الوقت المستغرق لحله، برجاء الانتظار حتي يتم اصلاح العطل',
-    'THE TECHNICAL MAN DIDN`T FINISH THE COMBINATION TO CALCULATE THE COMBINATION FINISHED PERIOD'                                      => 'الفني لم ينتهي من التركيبة لكي يتم حساب الوقت المستغرق لانهاء التركيبة',
-    'IS A SERVICE PROVIDED FROM OUR COMPNAY TO MAKE IT EASY FOR YOU TO ORGANIZE AND MANAGE YOUR NETWORK DEVICES AND CLIENTS'            => 'هي خدمة تقدمها الشركة لتسهل عليك عملية تنظيم وإدارة شبكة الأجهزة والعملاء الخاصة بك',  
-    'IF YOU WANT TO CHANGE THE DIRECTION OF THIS PIECE, THE DIRECTION OF ALL CHILDREN OF THIS PIECE -IF EXIST- WILL BE CHANGE TOO'      => 'عند قيامك بتغيير اتجاه هذة الجهاز سوف يتم تغيير اتجاه كل الأجهزة المتواجده عليها -اذا وجد- الي الاتجاه الجديد',
+    'IT SHOULD NOT CONTAIN SPACES'                                                  => 'ألا يحتوى علي مسافات',
+    'IT SHOULD NOT CONTAIN SPECIAL CHARACTERS'                                      => 'ألا يحتوى علي حروف خاصة',
+    'IT CAN ONLY CONTAIN UNDERSCORE "_"'                                            => ' يمكن أن تحتوي فقط على "_"',
+    'COMPANY ALIAS NAME WAS ADDED SUCCESSFULLY'                                     => 'تم اضافة الاسم المختصر للشركة بنجاح',
+    'ALL EMPLOYEES` USERNAME WERE UPDATED SUCCESSFULLY'                             => 'تم تعديل اسم المستخدم لجميع الموظفين بنجاح',
     
     
     
-    'THIS BLOG HELPS YOU TO IDENTIFY THE PROBLEMS THAT SOME PEOPLE FACE AND SOLVE THEM, AND YOU CAN ALSO DISPLAY THE PROBLEMS THAT YOU FACE, AND YOU WILL BE ANSWERED BY SOME SPECIALIZED PEOPLE'   => 'يساعدك هذا المنتدي علي التعرف علي المشاكل التي تواجه بعض الناس وحلها ويمكنك ايضاً عرض المشاكل التي تواجهك وسوف يتم الرد عليك من بعض الاشخاص المتخصصين',
-    'THIS STORE HELPS YOU TO BROWSE ALL THE ELECTRONIC DEVICES THAT ENABLE YOU TO ENSURE GOOD COMMUNICATION BETWEEN YOU AND YOUR CUSTOMERS IN YOUR NETWORK'                                         => 'يساعدك هذا المتجر علي تصفح جميع الاجهزة الالكترونية التي تمكنك من ضمان الاتصال الجيد بينك وبين عملائك في شبكتك',
-    'THIS PROGRAM ENABLES YOU TO MANAGE YOUR NETWORK, CUSTOMERS AND EMPLOYEES OF YOUR COMPANY IN ADDITION TO SOME OTHER FEATURES THAT YOU CAN VIEW THROUGH THE FOLLOWING LINK'                      => 'يمكنك هذا البرنامج من ادارة شبكتك وعملائك وموظفين شركتك بالاضافة الي بعض المميزات الخرى التي يمكنك الاطلاع عليها من خلال الرابط التالي',
+    
+    
+    'WHEN REGISTERING THE ABBRERVIATED NAME OF THE COMPANY AND THE USERNAME OF ADMIN, PLEASE NOTE THE FOLLOWING'                          => 'عند تسجيل الاسم المختصر للشركة واسم المستخدم للأدمن برجاء مراعاة التالي',
+    'WHEN LOGGING IN, BE SURE TO WRITE THE USERNAME FOLLOWED BY "@" SIGN, THEN THE COMPANY`S ABBREVIATED NAME'                            => 'عند تسجيل الدخول يجب مراعاة كتابة اسم المستخدم متبوعاً بعلامة "@" ثم الاسم المختصر للشركة',
+    'WHEN REGISTERING THE ABBRERVIATED NAME OF THE COMPANY, IT MUST BE TAKEN INTO ACCOUNT THAT ITS LENGTH DOES NOT EXCEED 11 CHARACTERS'  => 'عند تسجيل الاسم المختصر للشركة يجب مراعاة ألا يتعدي طوله عن 11 حرف',
+    'MALFUNCTIONS RATING IS DEPENDING ON COMPARE BETWEEN FINISHED, UNFINISHED AND DELAYED AND ALL MALFUNCTIONS'                           => 'يعتمد تقييم الاعطال علي المقارنة بين الاعطال المنتهية، الغير منتهية، المؤجلة واجمالى الاعطال',
+    'COMBINATIONS RATING IS DEPENDING ON COMPARE BETWEEN REPAIRED, UNREPAIRED AND DELAYED AND ALL COMBINATIONS'                           => 'يعتمد تقييم التركيبات علي المقارنة بين التركيبات المنتهية، الغير منتهية، المؤجلة واجمالى التركيبات',
+    'YOU ENTERED USERNAME OR PASSWORD MORE THAN 3 TIMES WAIT A 30 SECOND AND TRY AGAIN'                                                   => 'لقد قمت بادخال اسم المستخدم او كلمة المرور اكثر من 3 مرات برجاء الانتظار 30 ثانية ثم اعد المحاولة',
+    'THE TECHNICAL MAN DIDN`T REPAIR THE MALFUNCTION TO CALCULATE THE MALFUNCTION REPAIRED PERIOD'                                        => 'الفني لم يقم باصلاح العطل لكي يتم حساب الوقت المستغرق لحله، برجاء الانتظار حتي يتم اصلاح العطل',
+    'THE TECHNICAL MAN DIDN`T FINISH THE COMBINATION TO CALCULATE THE COMBINATION FINISHED PERIOD'                                        => 'الفني لم ينتهي من التركيبة لكي يتم حساب الوقت المستغرق لانهاء التركيبة',
+    'IS A SERVICE PROVIDED FROM OUR COMPNAY TO MAKE IT EASY FOR YOU TO ORGANIZE AND MANAGE YOUR NETWORK DEVICES AND CLIENTS'              => 'هي خدمة تقدمها الشركة لتسهل عليك عملية تنظيم وإدارة شبكة الأجهزة والعملاء الخاصة بك',  
+    'IF YOU WANT TO CHANGE THE DIRECTION OF THIS PIECE, THE DIRECTION OF ALL CHILDREN OF THIS PIECE -IF EXIST- WILL BE CHANGE TOO'        => 'عند قيامك بتغيير اتجاه هذة الجهاز سوف يتم تغيير اتجاه كل الأجهزة المتواجده عليها -اذا وجد- الي الاتجاه الجديد',
+    
+    
+    
+    'PLEASE NOTE THAT YOU DID NOT ENTER THE ABBRERVIATED NAME OF THE COMPANY, PLEASE THE ABBRERVIATED NAME OF NO MORE THAN 11 CHARACHTERS IN ORDER TO BE ABLE TO USE THE PROGRAM'                       => 'يرجى العلم انك لم تقم بادخال الاسم المختصر للشركة برجاء ادخال اسم مختصر لايزيد عن 11 حرف حتي تتمكن من استخدام البرنامج',
+    'WHEN LOGGING IN THE NEXT TIME IT IS NECESSARY TO TAKE INTO CONSIDERATION WRITING THE USERNAME ACCOMPANIED BY THE "@" SIGN THEN THE ABBRERVIATED NAME OF THE COMPANY AS FOR EXAMPLE AHMED@FACEBOOK' => 'عند تسجيل الدخول في المرة القادمة لابد من الاخذ في الاعتبار من كتابة اسم المستخدم مصحوباً بعلامة "@" ثم الاسم المختصر للشركة كما المثال : ahmed@facebook',
+    'THIS BLOG HELPS YOU TO IDENTIFY THE PROBLEMS THAT SOME PEOPLE FACE AND SOLVE THEM, AND YOU CAN ALSO DISPLAY THE PROBLEMS THAT YOU FACE, AND YOU WILL BE ANSWERED BY SOME SPECIALIZED PEOPLE'       => 'يساعدك هذا المنتدي علي التعرف علي المشاكل التي تواجه بعض الناس وحلها ويمكنك ايضاً عرض المشاكل التي تواجهك وسوف يتم الرد عليك من بعض الاشخاص المتخصصين',
+    'THIS STORE HELPS YOU TO BROWSE ALL THE ELECTRONIC DEVICES THAT ENABLE YOU TO ENSURE GOOD COMMUNICATION BETWEEN YOU AND YOUR CUSTOMERS IN YOUR NETWORK'                                             => 'يساعدك هذا المتجر علي تصفح جميع الاجهزة الالكترونية التي تمكنك من ضمان الاتصال الجيد بينك وبين عملائك في شبكتك',
+    'THIS PROGRAM ENABLES YOU TO MANAGE YOUR NETWORK, CUSTOMERS AND EMPLOYEES OF YOUR COMPANY IN ADDITION TO SOME OTHER FEATURES THAT YOU CAN VIEW THROUGH THE FOLLOWING LINK'                          => 'يمكنك هذا البرنامج من ادارة شبكتك وعملائك وموظفين شركتك بالاضافة الي بعض المميزات الخرى التي يمكنك الاطلاع عليها من خلال الرابط التالي',
+  
+  
   );
   // return the word
   return $lang[$phrase];

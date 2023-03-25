@@ -40,6 +40,16 @@
 
 /************/
 
+.modal-header .btn-close.btn-close-right {
+	margin: -.5rem -.5rem -.5rem auto;
+}
+
+.modal-header .btn-close.btn-close-left {
+	margin: -.5rem auto -.5rem -.5rem;
+}
+
+/************/
+
 a.stretched-link {
 	text-decoration: none;
 	color: #000;

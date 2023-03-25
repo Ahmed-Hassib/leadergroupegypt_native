@@ -1,11 +1,13 @@
 <?php 
 
 $preloader = false;
+$is_sorted = false;
 
 switch($action){
   case 'manage':
     $action_file = 'pieces-conn-types/dashboard.php';
     $preloader = true;
+    $is_sorted = true;
     break;
     
   case 'show-pieces-conn':
@@ -16,6 +18,7 @@ switch($action){
     $action_file = 'pieces-conn-types/show-pieces-conn.php';
     $is_contain_table = true;
     $preloader = true;
+    $is_stored = true;
     break;
     
   case 'insert-piece-conn-type':

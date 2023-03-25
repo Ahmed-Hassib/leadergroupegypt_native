@@ -22,6 +22,30 @@
     })
   }
 
+  // get previous button
+  let prev_btn = document.querySelector(".scroll-button.scroll-prev");
+  // get next button
+  let next_btn = document.querySelector(".scroll-button.scroll-next");
+
+  if (prev_btn != null && next_btn != null) {
+    // add event when click on previous button
+    prev_btn.addEventListener("click", (evt) => {
+      evt.preventDefault();
+      // get tree container
+      let tree_container = next_btn.parentElement.parentElement;
+      // increase scroll left value
+      tree_container.scrollLeft -= 100;
+    })
+    // add event when click on previous button
+    next_btn.addEventListener("click", (evt) => {
+      evt.preventDefault();
+      // get tree container
+      let tree_container = next_btn.parentElement.parentElement;
+      // increase scroll left value
+      tree_container.scrollLeft += 100;
+    })
+  }
+
 })()
 
 /**

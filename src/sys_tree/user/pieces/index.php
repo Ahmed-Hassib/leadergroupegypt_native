@@ -15,6 +15,9 @@ $level = 4;
 $nav_level = 1;
 // pre configration of system
 include_once str_repeat("../", $level) . "etc/pre-conf.php";
+
+$is_stored = true;
+
 // check username in SESSION variable
 if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
   // check if Get request do is set or not
@@ -22,66 +25,61 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
   $preloader = true;
 
   // start manage page
-  switch ($query) {
-    case 'manage':
-      $file_name = 'dashboard.php';
-      break;
-
-    case 'show-all-pieces':
-      $file_name = 'show-all-pieces.php';
-      $is_contain_table = true;
-      break;
-      
-    case 'show-all-clients':
-      $file_name = 'show-all-clients.php';
-      $is_contain_table = true;
-      break;
+  if ($query == 'manage' && $_SESSION['pcs_show'] == 1){
+    $file_name = 'dashboard.php';
+    $is_contain_table = true;
+    
+  } elseif ($query == 'show-all-pieces' && $_SESSION['pcs_show'] == 1) {
+    $file_name = 'show-all-pieces.php';
+    $is_contain_table = true;
+    
+  } elseif ($query == 'show-all-clients' && $_SESSION['pcs_show'] == 1) {
+    $file_name = 'show-all-clients.php';
+    $is_contain_table = true;
+    
+  } elseif ($query == 'add-new-piece' && $_SESSION['pcs_add'] == 1) {
+    $file_name = 'add-new-piece.php';
+    
+  } elseif ($query == 'insert-piece-info' && $_SESSION['pcs_add'] == 1) {
+    $file_name = 'insert-piece-info.php';
+    $preloader = false;
+    $is_stored = false;
+    
+  } elseif ($query == 'edit-piece' && $_SESSION['pcs_update'] == 1) {
+    $file_name = 'edit-piece.php';
+    
+  } elseif ($query == 'update-piece-info' && $_SESSION['pcs_update'] == 1) {
+    $file_name = 'update-piece-info.php';
+    $preloader = false;
+    $is_stored = false;
+    
+  } elseif ($query == 'delete-piece' && $_SESSION['pcs_delete'] == 1) {
+    $file_name = 'delete-piece.php';
+    $preloader = false;
+    $is_stored = false;
+    
+  } elseif ($query == 'show-piece' && $_SESSION['pcs_show'] == 1) {
+    $file_name = 'show-piece.php';
+    $is_contain_table = true;
+    
+  } elseif ($query == 'devices-companies' && $_SESSION['pcs_show'] == 1) {
+    // cehck if action is set or not
+    $action = isset($_GET['action']) & !empty($_GET['action']) ? $_GET['action'] : 'manage';
+    $file_name = include_once 'devices-companies.php';
+    
+  } elseif ($query == 'show-connections-types' && $_SESSION['pcs_show'] == 1) {
+    // cehck if action is set or not
+    $action = isset($_GET['action']) & !empty($_GET['action']) ? $_GET['action'] : 'manage';
+    $file_name = include_once 'pieces-connection-types.php';
+    
+  } else {
+    $file_name = $globmod . 'page-error.php';
+    $is_stored = false;
+  }    
   
-    case 'add-new-piece':
-      $file_name = 'add-new-piece.php';
-      break;
-  
-    case 'insert-piece-info':
-      $file_name = 'insert-piece-info.php';
-      $preloader = false;
-      break;
-  
-    case 'edit-piece':
-      $file_name = 'edit-piece.php';
-      break;
-  
-    case 'update-piece-info':
-      $file_name = 'update-piece-info.php';
-      $preloader = false;
-      break;
-  
-    case 'delete-piece':
-      $file_name = 'delete-piece.php';
-      $preloader = false;
-      break;
-  
-    case 'show-piece':
-      $file_name = 'show-piece.php';
-      $is_contain_table = true;
-      break;
-
-    case 'devices-companies':
-      // cehck if action is set or not
-      $action = isset($_GET['action']) & !empty($_GET['action']) ? $_GET['action'] : 'manage';
-      $file_name = include_once 'devices-companies.php';
-      break;
-
-    case 'show-connections-types':
-      // cehck if action is set or not
-      $action = isset($_GET['action']) & !empty($_GET['action']) ? $_GET['action'] : 'manage';
-      $file_name = include_once 'pieces-connection-types.php';
-      break;
-
-    default:    
-      $file_name = $globmod . 'page-error.php';
-  }
 } else {
   $file_name = $globmod . 'permission-error.php';
+  $is_stored = false;
 }
 
 // page title
@@ -98,6 +96,13 @@ include_once str_repeat("../", $level) . "etc/init.php";
 
 // include file name
 include_once $file_name;
+
+// check if page able to store url or not
+if ($is_stored == true) {
+  $referer_url = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+  // referer url
+  $_SESSION['HTTP_REFERER'] = $referer_url;
+}
 
 // include footer
 include_once $tpl . "footer.php"; 

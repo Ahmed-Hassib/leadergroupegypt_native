@@ -16,6 +16,7 @@ include_once str_repeat("../", $level) . "etc/pre-conf.php";
 if (isset($_SESSION['UserName'])) {
   // check the request
   $query = isset($_GET['do']) ? $_GET['do'] : 'manage';
+  $is_stored = true;
   // check
   if ($query == 'manage') {
     // check the version
@@ -40,6 +41,12 @@ if (isset($_SESSION['UserName'])) {
   // include file name
   include_once $file_name;
 
+  // check if page able to store url or not
+  if ($is_stored == true) {
+    $referer_url = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+    // referer url
+    $_SESSION['HTTP_REFERER'] = $referer_url;
+  }
   // footer
   include_once $tpl . "footer.php"; 
   include_once $tpl . "js-includes.php";

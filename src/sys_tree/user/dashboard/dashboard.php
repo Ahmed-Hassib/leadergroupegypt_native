@@ -211,7 +211,7 @@
               <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } else { echo 'bg-primary';} ?> bg-gradient">
                 <div class="card-body">
                   <i class="bi bi-archive"></i>
-                   -->
+                  -->
                   <!-- <h5 class="card-title text-capitalize"></h5> -->
                   <!-- <span>
                     <a href="<?php echo $nav_up_level ?>archives/index.php" class="stretched-link text-capitalize">

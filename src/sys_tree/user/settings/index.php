@@ -12,23 +12,21 @@ $nav_level = 1;
 // pre configration of system
 include_once str_repeat("../", $level) . "etc/pre-conf.php";
 
+$is_sorted = false;
+
 // check username in SESSION variable
 if (isset($_SESSION['UserName']))  {
 
   // start dashboard page
   // check if Get request do is set or not
   $query = isset($_GET['do']) ? $_GET['do'] : 'manage';
+  
   // start manage page
   if ($query == 'manage') {
     // include dashboard
     $file_name = "dashboard.php";
+    $is_stored = true;
 
-  } elseif ($query == "restoreBackup" && $_SESSION['restore_backup'] == 1) { 
-    // get backup id
-    $backupFileInfo = isset($_FILES['backup']) ? $_FILES['backup'] : 0;
-    // include restore nackup
-    $file_name = "restore-backup.php";
-    
   } elseif ($query == "change-lang") {
     // include change-language file
     $file_name = "change-language.php";
@@ -54,6 +52,13 @@ $dependencies_folder = "sys_tree/";
 include_once str_repeat("../", $level) . "etc/init.php";
 // include file name
 include_once $file_name;
+
+// check if page able to store url or not
+if ($is_stored == true) {
+  $referer_url = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+  // referer url
+  $_SESSION['HTTP_REFERER'] = $referer_url;
+}
 
 include_once $tpl . "footer.php"; 
 include_once $tpl . "js-includes.php";

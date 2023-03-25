@@ -1,6 +1,7 @@
 <?php
 
 $preloader = false;
+$is_stored = false;
 
 // chekc action
 switch($action) {
@@ -8,18 +9,19 @@ switch($action) {
     // include pieces types dashboard
     $action_file = 'devices-companies/dashboard.php';
     $preloader = true;
+    $is_stored = true;
     break;
     
   case 'insert-man-company':
     // include insert pieces types module
     $action_file = 'devices-companies/insert-man-company.php';
     break;
-
+    
   case 'update-man-company':
     // include update pieces types module
     $action_file = 'devices-companies/update-man-company.php';
     break;
-
+      
   case 'delete-man-company':
     // include delete pieces types module
     $action_file = 'devices-companies/delete-man-company.php';
@@ -36,15 +38,16 @@ switch($action) {
     // check entered data
     if ($company_id == 0) {
       // data missing
-      $action_file = $globmod . "no-data-founded-no-redirect.php";
+    $action_file = $globmod . "no-data-founded-no-redirect.php";
     } else {
       // include sho pieces types module
       $action_file = 'devices-companies/show-devices-companies.php';
     }
 
+    $is_stored = true;
     $preloader = true;
     break;
-  
+    
   case 'show-device':
     // get device id
     $device_id = isset($_GET['device-id']) && !empty($_GET['device-id']) ? $_GET['device-id'] : 0;
@@ -56,7 +59,8 @@ switch($action) {
       // include sho pieces types module
       $action_file = 'devices-companies/show-device.php';
     }
-
+    
+    $is_stored = true;
     $preloader = true;
     break;
     

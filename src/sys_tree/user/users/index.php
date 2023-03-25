@@ -21,48 +21,45 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
   // check if Get request do is set or not
   $query = isset($_GET['do']) ? $_GET['do'] : 'manage';
   $preloader = true;
-
-  switch ($query) {
-    case 'manage':
-      $file_name = 'dashboard.php';
-      break;
+  $is_stored = true;
+  
+  if ($query == 'manage' && $_SESSION['user_show'] == 1) {
+    $file_name = 'dashboard.php';
     
-    case 'add-new-user':
-      $file_name = 'add-new-user.php';
-      break;
-      
-    case 'insert-user':
-      $file_name = 'insert-user.php';
-      $preloader = false;
-      break;
-
-    case 'show-profile':
-      $file_name = 'show-profile.php';
-      break;
-
-    case 'edit-user-info':
-      $file_name = 'edit-profile.php';
-      break;
-
-    case 'update-user-info':
-      $file_name = 'update-user.php';
-      $preloader = false;
-      break;
-
-    case 'delete-user-info':
-      $file_name = 'delete-user.php';
-      $preloader = false;
-      break;
-      
-    default:
-      $file_name = $globmod . 'page-error.php';
-      $preloader = false;
-      break;
+  } elseif ($query == 'add-new-user' && $_SESSION['user_add'] == 1) {
+    $file_name = 'add-new-user.php';
+    
+  } elseif ($query == 'insert-user' && $_SESSION['user_add'] == 1) {
+    $file_name = 'insert-user.php';
+    $preloader = false;
+    $is_stored = false;
+    
+  } elseif ($query == 'show-profile' && $_SESSION['user_show'] == 1) {
+    $file_name = 'show-profile.php';
+    
+  } elseif ($query == 'edit-user-info' && $_SESSION['user_update'] == 1) {
+    $file_name = 'edit-profile.php';
+    
+  } elseif ($query == 'update-user-info' && $_SESSION['user_update'] == 1) {
+    $file_name = 'update-user.php';
+    $preloader = false;
+    $is_stored = false;
+    
+  } elseif ($query == 'delete-user-info' && $_SESSION['user_delete'] == 1) {
+    $file_name = 'delete-user.php';
+    $preloader = false;
+    $is_stored = false;
+    
+  } else {
+    $file_name = $globmod . 'page-error.php';
+    $preloader = false;
+    $is_stored = false;
   }
 } else {
   // include permission error module
   $file_name = $globmod . 'permission-error.php';  
   $preloader = false;
+  $is_stored = false;
 }
 
 
@@ -79,6 +76,13 @@ include_once str_repeat("../", $level) . "etc/init.php";
 
 // include file name
 include_once $file_name;
+
+// check if page able to store url or not
+if ($is_stored == true) {
+  $referer_url = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+  // referer
+  $_SESSION['HTTP_REFERER'] = $referer_url;
+}
 
 // include footer
 include_once $tpl . "footer.php"; 

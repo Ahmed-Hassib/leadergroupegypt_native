@@ -52,8 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // check if empty form error
   if (empty($formErorr)) {
     // get user that have the same username
-    $checkStmt = $con->prepare("SELECT *FROM `users` WHERE `UserName` = ? AND `UserID` != ?");
-    $checkStmt->execute(array($username, $userid));
+    $checkStmt = $con->prepare("SELECT *FROM `users` WHERE `UserName` = ? AND `UserID` != ? AND `company_id` = ?");
+    $checkStmt->execute(array($username, $userid, $_SESSION['company_id']));
     $count = $checkStmt->rowCount();
     // check if username is exist
     if ($count == 1) {

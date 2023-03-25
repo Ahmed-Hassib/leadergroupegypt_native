@@ -3,10 +3,16 @@
 
 <!-- GET GLOBAL JS FILES -->
 <?php $global_js_files = get_page_dependencies('global', 'js'); ?>
+<?php $global_node_js_files = get_page_dependencies('global', 'node')['js']; ?>
 
 <!-- INCLUDE GLOBAL JS FILES -->
 <?php foreach ($global_js_files as $global_js_file) { ?>
   <script src="<?php echo $js . $global_js_file; ?>"></script>
+<?php } ?>
+
+<!-- INCLUDE GLOBAL JS FILES -->
+<?php foreach ($global_node_js_files as $global_node_js_file) { ?>
+  <script src="<?php echo $node . $global_node_js_file; ?>"></script>
 <?php } ?>
 
 <!-- CHECK IF PAGE CONTAIIN TABLES -->

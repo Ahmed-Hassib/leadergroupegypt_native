@@ -10,19 +10,17 @@ function get_page_dependencies($page_role, $file_type) {
     'global' => [
       'css' => [
         '1' => 'normalize.css',
-        '2' => 'bootstrap.min.css',
-        // '3' => 'animation.css',
       ],
-      'js' => [
-        '1' => 'jquery-3.5.1.min.js',
-        '2' => 'bootstrap.min.js',
-        // '3' => 'global.js',
-      ],
+      'js' => [],
       'node' => [
         'css' => [
-          '1' => 'bootstrap-icons/font/bootstrap-icons.css'
+          '1' => 'bootstrap/dist/css/bootstrap.min.css',
+          '2' => 'bootstrap-icons/font/bootstrap-icons.css',
         ],
-        'js' => []
+        'js' => [
+          '1' => 'jquery/dist/jquery.min.js',
+          '2' => 'bootstrap/dist/js/bootstrap.min.js',
+        ]
       ],
       'fonts' => [
         '1' => 'cairo.css'
@@ -141,7 +139,8 @@ function get_page_dependencies($page_role, $file_type) {
       'js' => [
         '1' => 'global.js',
         '2' => 'sidebar-menu.js',
-        '3' => 'validation.js'
+        '3' => 'validation.js',
+        '4' => 'history.js',
       ],
       'node' => [
         'css' => [],
