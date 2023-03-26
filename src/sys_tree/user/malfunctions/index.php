@@ -19,6 +19,7 @@ include_once str_repeat('../', $level) . 'etc/pre-conf.php';
 
 $possible_back = true;
 $preloader = true;
+$is_contain_table = false;
 
 // check username in SESSION variable
 if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
@@ -50,7 +51,7 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
     // include malfunction details page
     $file_name = 'edit-malfunction.php';
     
-  } elseif ($query == 'update-malfunction-info' && $_SESSION['mal_update'] == 1) {
+  } elseif ($query == 'update-malfunction-info' ) {
     // include malfunction details page
     $file_name = 'update-malfunction.php';
     $possible_back = false;
@@ -65,10 +66,11 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
   } elseif ($query == 'show-pieces-malfunctions' && $_SESSION['mal_show'] == 1) {
     // include malfunction details page
     $file_name = 'piece-malfunctions.php';
+    $is_contain_table = true;
     
   } else {
     // include page error module
-    $file_name = $globmod . 'page-error.php';
+    $file_name = $globmod . 'page-permission-error.php';
     $possible_back = false;
     $preloader = false;
   }

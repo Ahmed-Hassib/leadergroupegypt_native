@@ -25,6 +25,8 @@ if (isset($_SESSION['UserName'])) {
   } elseif ($query == 'version-info') {
     // check the version
     $file_name = 'version-info.php';
+  } else {
+    $file_name = $globmod . 'page-permission-error.php';
   }
 
   // title page

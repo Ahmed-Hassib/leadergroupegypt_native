@@ -73,13 +73,15 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
     $file_name = include_once 'pieces-connection-types.php';
     
   } else {
-    $file_name = $globmod . 'page-error.php';
+    $file_name = $globmod . 'page-permission-error.php';
     $possible_back = false;
+    $preloader = false;
   }    
   
 } else {
   $file_name = $globmod . 'permission-error.php';
   $possible_back = false;
+  $preloader = false;
 }
 
 // page title

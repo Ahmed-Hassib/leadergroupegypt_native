@@ -163,6 +163,14 @@ $rows = $stmt->fetchAll();      // fetch data
 $count = $stmt->rowCount();     // get row count
 ?>
 <div class="container mb-0" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
+  <div class="mb-3 <?php if ($_SESSION['mal_add'] == 0) {echo 'd-none';} ?>">
+    <a href="?do=add-new-malfunction" class="btn btn-outline-primary py-1 shadow-sm">
+      <h6 class="h6 mb-0 text-center text-capitalize fs-12">
+        <i class="bi bi-plus"></i>
+        <?php echo language('ADD NEW MALFUNCTION', @$_SESSION['systemLang']) ?>
+      </h6>
+    </a>
+  </div>
   <!-- start header -->
   <header class="header mb-3">
     <h4 class="h4 text-capitalize"><?php echo language($title, @$_SESSION['systemLang']) ?></h4>
@@ -250,7 +258,7 @@ $count = $stmt->rowCount();     // get row count
             </td>
             <td class="text-center">
               <a href="?do=edit-malfunction-info&malid=<?php echo $row['mal_id'] ?>" class="btn btn-outline-primary fs-12 <?php if ($_SESSION['mal_show'] == 0) {echo 'disabled';} ?>"><i class="bi bi-eye"></i></a>
-              <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 <?php if ($_SESSION['mal_delete'] == 0) {echo 'disabled';} ?>" data-bs-toggle="modal" data-bs-target="#deleteMalModal" id="delete-mal" data-mal-id="<?php echo $row['mal_id'] ?>"><i class="bi bi-trash"></i></button>
+              <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 <?php if ($_SESSION['mal_delete'] == 0) {echo 'disabled';} ?>" data-bs-toggle="modal" data-bs-target="#delete-malfunction-modal" id="delete-mal" data-mal-id="<?php echo $row['mal_id'] ?>"><i class="bi bi-trash"></i></button>
             </td>
           </tr>
         <?php

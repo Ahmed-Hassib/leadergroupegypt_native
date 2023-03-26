@@ -22,3 +22,5 @@ sql/*
 etc/local-conf.php
 
 classes/Database.class.php
+
+hh*

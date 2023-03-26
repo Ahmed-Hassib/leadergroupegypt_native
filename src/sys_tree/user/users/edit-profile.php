@@ -1,8 +1,4 @@
 <?php
-// check if Get request userid is numeric and get the integer value
-$user_id = isset($_GET['userid']) && is_numeric($_GET['userid']) ? intval($_GET['userid']) : 0;
-// action
-$action = isset($_GET['action']) && is_numeric($_GET['action']) ? intval($_GET['action']) : 0;
 // check the current users
 if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
   // create an object of Users class

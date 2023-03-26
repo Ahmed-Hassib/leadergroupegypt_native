@@ -41,7 +41,7 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
     $file_name = 'delete-direction.php';
 
   } else {
-    $file_name = $globmod . 'page-error.php';
+    $file_name = $globmod . 'page-permission-error.php';
   }
 } else {
   // include permission error page

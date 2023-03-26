@@ -1,37 +1,45 @@
 <?php
-$is_contain_table = true;
 // get piece / client id
 $pieceid = isset($_GET['pieceid']) && !empty($_GET['pieceid']) ? $_GET['pieceid'] : 0;
+// create an object of Malfunction class
+$mal_obj = new Malfunction();
 // check the piece id 
-$pieceIsExist = checkItem("`id`", "`pieces_info`", $pieceid);
+$is_exist_piece = $mal_obj->is_exist("`id`", "`pieces_info`", $pieceid);
 // check if there are malfunctions of this piece / client
-$malIsExist = $pieceIsExist > 0 ? checkItem("`client_id`", "`malfunctions`", $pieceid) : 0;
+$is_exist_mal = $is_exist_piece == true ? $mal_obj->is_exist("`client_id`", "`malfunctions`", $pieceid) : 0;
+// check
+if ($is_exist_piece) { 
+  // get piece info
+  $piece_info = $mal_obj->select_specific_column("`is_client`, `full_name`", "`pieces_info`", "WHERE `id` = $pieceid AND `company_id` = " . $_SESSION['company_id']);
+  // get piece type
+  $piece_type = $piece_info[0]['is_client'] == 1 ? 'clients' : 'pieces';
+  // get piece name
+  $piece_name = $piece_info[0]['full_name'];
+}
 ?>
 <!-- start add new user page -->
 <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
+  <div class="mb-3 <?php if ($_SESSION['mal_add'] == 0) {echo 'd-none';} ?>">
+    <a href="?do=add-new-malfunction" class="btn btn-outline-primary py-1 shadow-sm">
+      <h6 class="h6 mb-0 text-center text-capitalize fs-12">
+        <i class="bi bi-plus"></i>
+        <?php echo language('ADD NEW MALFUNCTION', @$_SESSION['systemLang']) ?>
+      </h6>
+    </a>
+  </div>
   <!-- start header -->
-  <header class="header mb-5">
+  <header class="header mb-1">
+    <!-- title -->
     <h4 class="h4 text-capitalize text-secondary ">
       <?php echo language('SHOW MALFUNCTIONS OF PIECE/CLIENT', @$_SESSION['systemLang']) ?>
     </h4>
-    <?php if ($pieceIsExist > 0) { ?>
+    <!-- piece name and link -->
     <h5 class="h5 text-capitalize text-secondary ">
-      <a href="<?php echo $nav_up_level ?>pieces/index.php?do=edit-piece&piece-id=<?php echo $pieceid ?>">
-        <?php echo selectSpecificColumn("`full_name`", "`pieces_info`", "WHERE `id` = $pieceid")[0]['full_name'] ?>
-      </a>
+      <a href="<?php echo $nav_up_level ?>pieces/index.php?name=<?php echo $piece_type ?>&do=edit-piece&piece-id=<?php echo $pieceid ?>"><?php echo $piece_name ?></a>
     </h5>
-      <?php if ($malIsExist == 0) { ?>
-        <h6 class="h6 text-capitalize text-danger "><?php echo language('THERE IS NO MALFUNCTIONS TO SHOW', @$_SESSION['systemLang']) ?></h6>
-      <?php } ?>
-    <?php } else { ?>
-      <h6 class="h6 text-capitalize text-danger ">
-        <?php echo language("THERE IS NO ID LIKE THAT", @$_SESSION['systemLang'])?>
-      </h6>
-      <a href="index.php"><?php echo language("BACK", @$_SESSION['systemLang']) ?></a>
-    <?php } ?>
   </header>
   <!-- end header -->
-  <?php if ($malIsExist > 0) { ?>
+  <?php if ($is_exist_mal == true) { ?>
     <?php
       $query = "SELECT *FROM `malfunctions` WHERE `client_id` = $pieceid";
       // prepaire the query

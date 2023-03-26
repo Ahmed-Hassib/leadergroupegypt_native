@@ -25,6 +25,8 @@ $level = 4;
 $nav_level = 1;
 // 
 $is_contain_table = true;
+// pre-configration of system
+include_once str_repeat("../", $level) . "etc/pre-conf.php";
 // initial configration of system
 include_once str_repeat("../", $level) . "etc/init.php";
 // check username in SESSION variable

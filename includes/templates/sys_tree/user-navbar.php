@@ -263,16 +263,13 @@
         <span class="badge bg-danger"><?php echo language("TRIAL", @$_SESSION['systemLang']) ?></span>
       </span>
     <?php } ?>
+
+    <?php if ($possible_back == true) { ?>
+      <button class="btn btn-outline-light text-capitalize py-1 fs-12 <?php echo $_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" onclick="history_control()">
+        <i class="bi bi-arrow-return-left"></i>
+      </button>
+    <?php } ?>
   </div>
 </div>
 
 <div class="main-content">
-
-  <?php if ($possible_back == true) { ?>
-  <div class="container mb-1">
-    <button class="btn btn-outline-primary text-capitalize py-1 fs-12" onclick="history_control()">
-      <?php echo language('BACK', @$_SESSION['systemLang']) ?>
-      <i class="bi bi-arrow-return-left"></i>
-    </button>
-  </div>
-  <?php } ?>

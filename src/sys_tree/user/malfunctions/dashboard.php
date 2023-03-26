@@ -22,7 +22,7 @@ if ($_SESSION['mal_show'] == 1) {
   <!-- start stats -->
   <div class="stats">
     <div class="mb-3 <?php if ($_SESSION['mal_add'] == 0) {echo 'd-none';} ?>">
-      <a href="?do=addMalfunction" class="btn btn-outline-primary py-1 shadow-sm">
+      <a href="?do=add-new-malfunction" class="btn btn-outline-primary py-1 shadow-sm">
         <h6 class="h6 mb-0 text-center text-capitalize fs-12">
           <i class="bi bi-plus"></i>
           <?php echo language('ADD NEW MALFUNCTION', @$_SESSION['systemLang']) ?>

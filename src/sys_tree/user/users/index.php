@@ -34,13 +34,18 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
     $preloader = false;
     $possible_back = false;
     
-  } elseif ($query == 'show-profile' && $_SESSION['user_show'] == 1) {
+  } elseif ($query == 'show-profile') {
     $file_name = 'show-profile.php';
     
-  } elseif ($query == 'edit-user-info' && $_SESSION['user_update'] == 1) {
+  } elseif ($query == 'edit-user-info') {
+    // check if Get request userid is numeric and get the integer value
+    $user_id = isset($_GET['userid']) && is_numeric($_GET['userid']) ? intval($_GET['userid']) : 0;
     $file_name = 'edit-profile.php';
+    if ($user_id != $_SESSION['UserID'] || $_SESSION['user_show'] != 1) {
+      $preloader = false;
+    }
     
-  } elseif ($query == 'update-user-info' && $_SESSION['user_update'] == 1) {
+  } elseif ($query == 'update-user-info') {
     $file_name = 'update-user.php';
     $preloader = false;
     $possible_back = false;
@@ -51,7 +56,7 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
     $possible_back = false;
     
   } else {
-    $file_name = $globmod . 'page-error.php';
+    $file_name = $globmod . 'page-permission-error.php';
     $preloader = false;
     $possible_back = false;
   }

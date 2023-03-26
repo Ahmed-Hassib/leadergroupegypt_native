@@ -363,6 +363,8 @@
 	height: 60px;
 	display: flex;
 	align-items: center;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .top-navbar .top-navbar-content .bi-list {
