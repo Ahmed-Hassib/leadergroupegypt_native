@@ -8,7 +8,7 @@ $pcs_counter = $db_obj->count_records("`id`", "`pieces_info`", "WHERE `company_i
 <!-- start add new user page -->
 <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
     <!-- start form -->
-    <form class="custom-form" action="?do=insertMalfunctions" method="POST" id="add-malfunction">
+    <form class="custom-form" action="?do=insert-new-malfunction" method="POST" id="add-malfunction">
         <!-- horzontal stack -->
         <div class="vstack gap-1">
             <!-- note for required inputs -->

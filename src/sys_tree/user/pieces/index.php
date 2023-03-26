@@ -16,7 +16,7 @@ $nav_level = 1;
 // pre configration of system
 include_once str_repeat("../", $level) . "etc/pre-conf.php";
 
-$is_stored = true;
+$possible_back = true;
 
 // check username in SESSION variable
 if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
@@ -43,7 +43,7 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
   } elseif ($query == 'insert-piece-info' && $_SESSION['pcs_add'] == 1) {
     $file_name = 'insert-piece-info.php';
     $preloader = false;
-    $is_stored = false;
+    $possible_back = false;
     
   } elseif ($query == 'edit-piece' && $_SESSION['pcs_update'] == 1) {
     $file_name = 'edit-piece.php';
@@ -51,12 +51,12 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
   } elseif ($query == 'update-piece-info' && $_SESSION['pcs_update'] == 1) {
     $file_name = 'update-piece-info.php';
     $preloader = false;
-    $is_stored = false;
+    $possible_back = false;
     
   } elseif ($query == 'delete-piece' && $_SESSION['pcs_delete'] == 1) {
     $file_name = 'delete-piece.php';
     $preloader = false;
-    $is_stored = false;
+    $possible_back = false;
     
   } elseif ($query == 'show-piece' && $_SESSION['pcs_show'] == 1) {
     $file_name = 'show-piece.php';
@@ -74,12 +74,12 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
     
   } else {
     $file_name = $globmod . 'page-error.php';
-    $is_stored = false;
+    $possible_back = false;
   }    
   
 } else {
   $file_name = $globmod . 'permission-error.php';
-  $is_stored = false;
+  $possible_back = false;
 }
 
 // page title
@@ -96,13 +96,6 @@ include_once str_repeat("../", $level) . "etc/init.php";
 
 // include file name
 include_once $file_name;
-
-// check if page able to store url or not
-if ($is_stored == true) {
-  $referer_url = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-  // referer url
-  $_SESSION['HTTP_REFERER'] = $referer_url;
-}
 
 // include footer
 include_once $tpl . "footer.php"; 

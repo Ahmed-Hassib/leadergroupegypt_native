@@ -20,3 +20,5 @@ sql/*
 
 # ignoring local configration directory
 etc/local-conf.php
+
+classes/Database.class.php

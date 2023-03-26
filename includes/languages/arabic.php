@@ -418,6 +418,7 @@ function languageAr($phrase)
     'TECH STATUS'                           => 'موقف الفنى',
     'MOST CLIENTS WHO HAVE MALFUNCTIONS'    => 'اكثر العملاء الذين لديهم اعطال',
     'LATEST MALFUNCTION DATE'               => 'تاريخ آخر عطل',
+    'ADD NEW PHOTO/VIDEO'                   => 'اضافة صورة/فيديو جديد',
     
     
     /**

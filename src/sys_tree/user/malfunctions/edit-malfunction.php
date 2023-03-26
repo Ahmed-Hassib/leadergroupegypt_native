@@ -23,7 +23,7 @@ if ($count > 0) {
     <!-- start add new user page -->
     <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
         <!-- start form -->
-        <form class="py-3 my-5 custom-form needs-validation" action="?do=updateMalfunction" method="POST" enctype="multipart/form-data">
+        <form class="custom-form" action="?do=update-malfunction-info" method="POST" enctype="multipart/form-data" id="edit-malfunction-info">
             <div class="mb-5 row row-cols-sm-1 row-cols-md-2 g-3">
                 <!-- the employees that responsible for the malfunctions -->
                 <div class="col-12">
@@ -125,10 +125,10 @@ if ($count > 0) {
                             <label for="client-name" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('CLIENT NAME', @$_SESSION['systemLang']) ?></label>
                             <div class="col-sm-12 col-md-8 position-relative">
                                 <?php
-                                    $clientDetails = selectSpecificColumn("`piece_id`, `piece_name`, `piece_ip`", "`pieces`", "WHERE `piece_id` = '" . $malrows['client_id'] . "' LIMIT 1");
+                                    $clientDetails = selectSpecificColumn("`id`, `full_name`, `ip`", "`pieces_info`", "WHERE `id` = '" . $malrows['client_id'] . "' LIMIT 1");
                                 ?>
                                 <input type="hidden" name="client-id" id="client-id" class="form-control w-100" placeholder="Client ID" value="<?php echo $malrows['client_id'] ?>" />
-                                <input type="text" name="client-name" id="client-name" class="form-control w-100" placeholder="<?php echo language('CLIENT NAME', @$_SESSION['systemLang']) ?>" value="<?php echo $clientDetails[0]['piece_name'] ?>" required readonly onkeyup="search(this)"  />
+                                <input type="text" name="client-name" id="client-name" class="form-control w-100" placeholder="<?php echo language('CLIENT NAME', @$_SESSION['systemLang']) ?>" value="<?php echo $clientDetails[0]['full_name'] ?>" required readonly onkeyup="search(this)"  />
                                 <div class="result w-100">
                                     <ul class="clients-names" id="clients-names"></ul>
                                 </div>
@@ -139,7 +139,7 @@ if ($count > 0) {
                             <label for="client-addr" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('THE ADDRESS', @$_SESSION['systemLang']) ?></label>
                             <div class="col-sm-12 col-md-8 position-relative">
                                 <?php
-                                    $clientAddr = selectSpecificColumn("`address`", "`pieces_addr`", "WHERE `piece_id` = '" . $malrows['client_id'] . "' LIMIT 1");
+                                    $clientAddr = selectSpecificColumn("`address`", "`pieces_addr`", "WHERE `id` = '" . $malrows['client_id'] . "' LIMIT 1");
                                 ?>
                                 <input type="text" name="client-addr" id="client-addr" class="form-control w-100" placeholder="No address" value="<?php if (!empty($clientAddr)) { echo $clientAddr[0]['address'];} ?>" required readonly />
                             </div>
@@ -149,7 +149,7 @@ if ($count > 0) {
                             <label for="client-addr" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('PHONE', @$_SESSION['systemLang']) ?></label>
                             <div class="col-sm-12 col-md-8 position-relative">
                                 <?php
-                                    $clientPhone = selectSpecificColumn("`phone`", "`pieces_phone`", "WHERE `piece_id` = '" . $malrows['client_id'] . "' LIMIT 1");
+                                    $clientPhone = selectSpecificColumn("`phone`", "`pieces_phones`", "WHERE `id` = '" . $malrows['client_id'] . "' LIMIT 1");
                                 ?>
                                 <input type="text" name="client-addr" id="client-addr" class="form-control w-100" placeholder="No phone" value="<?php if (!empty($clientPhone)) {echo $clientPhone[0]['phone'];} ?>" required readonly />
                             </div>
@@ -158,7 +158,7 @@ if ($count > 0) {
                         <div class="mb-sm-2 mb-md-3 row">
                             <label for="client-ip" class="col-sm-12 col-md-4 col-form-label text-capitalize"><span class="text-uppercase"><?php echo language('IP', @$_SESSION['systemLang']) ?></span></label>
                             <div class="col-sm-12 col-md-8 position-relative">
-                                <input type="text" name="client-ip" id="client-ip" class="form-control w-100" placeholder="Client IP" value="<?php echo $clientDetails[0]['piece_ip'] != 1 ? $clientDetails[0]['piece_ip'] : "No IP" ?>" required readonly />
+                                <input type="text" name="client-ip" id="client-ip" class="form-control w-100" placeholder="Client IP" value="<?php echo $clientDetails[0]['ip'] != 1 ? $clientDetails[0]['ip'] : "No IP" ?>" required readonly />
                             </div>
                         </div>
                         <!-- malfunctions counter -->
@@ -167,7 +167,7 @@ if ($count > 0) {
                             <label for="malfunction-counter" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('MALFUNCTIONS COUNTER', @$_SESSION['systemLang']) ?></label>
                             <div class="col-sm-12 col-md-8">
                                 <span class="mt-2 me-5 text-start" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo $malCounter . " " . ($malCounter > 2 ? language("MALFUNCTIONS", @$_SESSION['systemLang']) : language("MALFUNCTION", @$_SESSION['systemLang'])) ?></span>
-                                <a href="?do=showPiecesMal&pieceid=<?php echo $malrows['client_id'] ?>" class="mt-2 text-start" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo language("SHOW DETAILS", @$_SESSION['systemLang']) ?></a>
+                                <a href="?do=show-pieces-malfunctions&pieceid=<?php echo $malrows['client_id'] ?>" class="mt-2 text-start" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo language("SHOW DETAILS", @$_SESSION['systemLang']) ?></a>
                             </div>
                         </div>
                     </div>
@@ -362,7 +362,7 @@ if ($count > 0) {
                         <div class="mb-sm-2 mb-md-3 row">
                             <label for="review-comment" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('REVIEW COMMENT', @$_SESSION['systemLang']) ?></label>
                             <div class="col-sm-12 col-md-8">
-                                <textarea name="review-comment" id="review-comment" title="review comment" class="form-control w-100" style="height: 5rem; resize: none; direction: <?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>" required  <?php if ($_SESSION['mal_review'] == 0 || ($malrows['mal_status'] == 0 && $_SESSION['isTech'] == 0) || $malrows['isReviewed'] == 1) {echo 'disabled';} ?> ><?php echo $malrows['qty_comment'] ?></textarea>
+                                <textarea name="review-comment" id="review-comment" title="review comment" class="form-control w-100" style="height: 5rem; resize: none; direction: <?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>"  <?php if ($_SESSION['mal_review'] == 0 || ($malrows['mal_status'] == 0 && $_SESSION['isTech'] == 0) || $malrows['isReviewed'] == 1) {echo 'disabled';} ?> ><?php echo $malrows['qty_comment'] ?></textarea>
                             </div>
                         </div>
                         <?php if ($malrows['isReviewed']) { ?>
@@ -389,67 +389,20 @@ if ($count > 0) {
                     </div>
                 </div>
             </div>
-            <!-- slider for images -->
-            <div class="my-3 row">
-                <div class="mb-0 section-header">
-                    <h5><?php echo language('MALFUNCTION MEDIA', @$_SESSION['systemLang']) ?></h5>
-                    <hr />
-                </div>
-                <div class="mt-0 row row-cols-sm-1 row-cols-md-3 g-4">
-                    <?php 
-                        // get malfunction photos and videos
-                        $malMedia = selectSpecificColumn("*", "`malfunctions_media`", "WHERE `mal_id` = ".$malrows['mal_id']);
-                        // check teh result
-                        if (!empty($malMedia) ) { ?>
-                        <?php foreach ($malMedia as $key => $mal) { ?>
-                            <div class="col-12">
-                                <?php if ($mal['type'] == "img") { ?>
-                                    <img src="<?php echo $uploads."//malfunctions/".$mal['media'] ?>" class="w-100 h-100" alt="<?php echo $mal['media'] ?>">
-                                <?php } else { ?>
-                                    <video class="w-100 h-100" controls autoplay muted>
-                                        <source src="<?php echo $uploads."//malfunctions/".$mal['media'] ?>" type="video/mp4">
-                                        <source src="<?php echo $uploads."//malfunctions/".$mal['media'] ?>" type="video/mov">
-                                        <source src="<?php echo $uploads."//malfunctions/".$mal['media'] ?>" type="video/webm">
-                                        <source src="<?php echo $uploads."//malfunctions/".$mal['media'] ?>" type="video/ogg">
-                                        <?php echo language('YOUR BROWSER IS NOT SUPPORT THIS TYPE OF VIDEO', @$_SESSION['systemLang']) ?>
-                                    </video>
-                                <?php } ?>
-                            </div>
-                        <?php } ?>
-                    <?php } elseif (empty($malMedia) && $_SESSION['isTech'] == 1) { ?>
-                        <!-- malfunction photo -->
-                        <div class="col-12 w-100">
-                            <div class="mb-sm-2 mb-md-3 row">
-                                <label for="photo" class="col-sm-12 col-md-4 col-form-label text-capitalize btn btn-outline-primary">choose malfunction photo</label>
-                                <div class="col-sm-12 col-md-8">
-                                    <input type="file" class="form-control invisible" id="photo" name="mal-photos[]" placeholder="malfunction photo" onchange="showPreview(this)" multiple/>
-                                </div>
-                            </div>
-                            <!-- show media -->
-                            <div class="mt-3 row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 g-3" id="showPreviewPhoto"></div>
-                        </div>
-                    <!-- box to preview the photos -->
-                    <?php } elseif (empty($malMedia) && $_SESSION['isTech'] == 0) { ?>
-                        <!-- malfunction photo -->
-                        <div class="col-12 w-100">
-                            <h4 class="h4 text-danger "><?php echo language("THERE IS NO MEDIA TO SHOW", @$_SESSION['systemLang']) ?></h4>
-                        </div>
-                    <?php } ?>
-                </div>
-            </div>
+            
 
             <!-- submit -->
             <div class="hstack gap-2">
-                <div class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
-                    <button type="submit" class="btn btn-primary text-capitalize form-control bg-gradient fs-12" id="update-malfunctions" <?php if ($_SESSION['mal_update'] == 0 && $malrows['isReviewed'] == 1) {echo 'disabled';} ?>>
-                        <i class="bi bi-check-all"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
-                    </button>
-                </div>
-                <div>
-                    <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deleteMalModal" <?php if ($_SESSION['mal_delete'] == 0) {echo 'readonly';} ?> >
-                        <i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?>
-                    </button>
-                </div>
+              <div class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
+                <button type="submit" form="edit-malfunction-info" class="btn btn-primary text-capitalize form-control bg-gradient fs-12" id="update-malfunctions" <?php if ($_SESSION['mal_update'] == 0 && $malrows['isReviewed'] == 1) {echo 'disabled';} ?>>
+                  <i class="bi bi-check-all"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
+                </button>
+              </div>
+              <div>
+                <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deleteMalModal" <?php if ($_SESSION['mal_delete'] == 0) {echo 'readonly';} ?> >
+                  <i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?>
+                </button>
+              </div>
             </div>
         </form>
         <!-- end form -->

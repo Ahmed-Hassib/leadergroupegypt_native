@@ -15,7 +15,7 @@ $level = 4;
 $nav_level = 1;
 // pre configration of system
 include_once str_repeat('../', $level) . 'etc/pre-conf.php';
-$is_stored = false;
+$possible_back = false;
 // check username in SESSION variable
 if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
   // check if Get request do is set or not
@@ -23,7 +23,7 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
   
   if ($query == 'manage' && $_SESSION['dir_show'] == 1) {
     $file_name = 'dashboard.php';
-    $is_stored = true;
+    $possible_back = true;
     
   } elseif ($query == 'insert-new-direction' && $_SESSION['dir_add'] == 1) {
     $file_name = 'insert-direction.php';
@@ -32,7 +32,7 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
     $file_name = 'show-direction.php';
     $no_footer = true;
     $preloader = true;
-    $is_stored = true;
+    $possible_back = true;
 
   } elseif ($query == 'update-direction-info' && $_SESSION['dir_update'] == 1) {
     $file_name = 'update-direction.php';
@@ -60,8 +60,6 @@ $dependencies_folder = 'sys_tree/';
 include_once str_repeat('../', $level) . 'etc/init.php';
 // include file name
 include_once $file_name;
-
-
 
 // check if contains no footer variables or not
 if (!isset($no_footer)) {

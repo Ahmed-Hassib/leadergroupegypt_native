@@ -18,7 +18,6 @@ var client_id_search = document.querySelector("#client-id");
 var client_name_search = document.querySelector("#client-name");
 var client_name_result = document.getElementById("clients-names");
 var choosePhoto = document.getElementById("photo");
-var previewPhoto = document.getElementById("showPreviewPhoto");
 var suggCompBox = document.getElementById("sugg-comp-box");
 var technicalID = document.getElementById("technical-id");
 var technicalIDVal = document.getElementById("technical-id-value");
@@ -452,63 +451,7 @@ function getUserPermission(selected) {
   sibling.value = selValue;
 }
 
-/**
- * 
- */
-function showPreview(evt) {
-  previewPhoto.innerHTML = "";
-  // loop on files of the form
-  for (let i = 0; i < evt.files.length; i++) {
-    // uploaded type
-    let type = evt.files[i]['type'].includes("video") ? "video" : "img";
-    // create the image src
-    var src = URL.createObjectURL(evt.files[i]);
-    // create a colomn to append the image
-    let col = document.createElement('div');
-    col.classList.add("col-12");
-    // element that will append to the preview box
-    let element;
-    // switch ... case ...
-    switch (type) {
-      case "video":
-        // create video
-        element = document.createElement("video");
-        element.setAttribute("class", "w-100 h-100");
-        element.setAttribute("autoplay", "autoplay");
-        element.setAttribute("controls", "controls");
-        element.setAttribute("muted", "muted");
-        // element.setAttribute("loop", "loop");
-        // create source tag
-        videoSrc = document.createElement("source");
-        videoSrc.setAttribute("src", src);
-        videoSrc.setAttribute("type", `video/mp4`);
-        element.appendChild(videoSrc);
-        // create source tag
-        videoSrc = document.createElement("source");
-        videoSrc.setAttribute("src", src);
-        videoSrc.setAttribute("type", `video/mov`);
-        element.appendChild(videoSrc);
-        // create source tag
-        videoSrc = document.createElement("source");
-        videoSrc.setAttribute("src", src);
-        videoSrc.setAttribute("type", `video/webm`);
-        element.appendChild(videoSrc);
-        // append video source
-        break;
 
-      case "img":
-        // create image
-        element = document.createElement("img");
-        element.setAttribute("src", src);
-        element.setAttribute("class", "w-100 h-100");
-        break;
-    }
-    // append image into column
-    col.appendChild(element);
-    // append column into the preview box
-    previewPhoto.appendChild(col)
-  }
-}
 
 /**
  * show avatar

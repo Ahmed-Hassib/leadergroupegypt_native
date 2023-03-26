@@ -17,7 +17,8 @@ $nav_level = 1;
 // initial configration of system
 include_once str_repeat('../', $level) . 'etc/pre-conf.php';
 
-$is_stored = true;
+$possible_back = true;
+$preloader = true;
 
 // check username in SESSION variable
 if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
@@ -40,10 +41,10 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
     // include malfunction details page
     $file_name = 'add-malfunction.php';
 
-  } elseif ($query == 'insert-new-malfunctions' && $_SESSION['mal_add'] == 1) {
+  } elseif ($query == 'insert-new-malfunction' && $_SESSION['mal_add'] == 1) {
     // include malfunction details page
     $file_name = 'insert-malfunction.php';
-    $is_stored = false;
+    $possible_back = false;
     
   } elseif ($query == 'edit-malfunction-info' && $_SESSION['mal_show'] == 1) {
     // include malfunction details page
@@ -52,12 +53,14 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
   } elseif ($query == 'update-malfunction-info' && $_SESSION['mal_update'] == 1) {
     // include malfunction details page
     $file_name = 'update-malfunction.php';
-    $is_stored = false;
+    $possible_back = false;
+    $preloader = false;
     
   } elseif ($query == 'delete-malfunction' && $_SESSION['mal_delete'] == 1) {
     // include malfunction details page
     $file_name = 'delete-malfunction.php';
-    $is_stored = false;
+    $possible_back = false;
+    $preloader = false;
     
   } elseif ($query == 'show-pieces-malfunctions' && $_SESSION['mal_show'] == 1) {
     // include malfunction details page
@@ -66,12 +69,14 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
   } else {
     // include page error module
     $file_name = $globmod . 'page-error.php';
-    $is_stored = false;
+    $possible_back = false;
+    $preloader = false;
   }
 } else {
   // include permission error module
   $file_name = $globmod . 'permission-error.php';
-  $is_stored = false;
+  $possible_back = false;
+  $preloader = false;
 }
 
 // page title
@@ -79,7 +84,7 @@ $page_title = 'The malfunctions';
 // page category
 $page_category = 'sys_tree';
 // page role
-$page_role = 'sys_tree_user';
+$page_role = 'sys_tree_malfunction';
 // folder name of dependendies
 $dependencies_folder = 'sys_tree/';
 
@@ -87,13 +92,6 @@ $dependencies_folder = 'sys_tree/';
 include_once str_repeat('../', $level) . 'etc/init.php';
 // include file name
 include_once $file_name;
-
-// check if page able to store url or not
-if ($is_stored == true) {
-  $referer_url = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-  // referer url
-  $_SESSION['HTTP_REFERER'] = $referer_url;
-}
 
 // include footer
 include_once $tpl . 'footer.php'; 

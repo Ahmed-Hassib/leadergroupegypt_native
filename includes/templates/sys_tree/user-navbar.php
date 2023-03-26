@@ -166,7 +166,7 @@
           </a>
         </li>
         <li>
-          <a href="<?php echo $nav_up_level ?>malfunctions/index.php?do=addMalfunction" class="<?php if ($_SESSION['mal_add'] == 0) {echo 'disabled';} ?>">
+          <a href="<?php echo $nav_up_level ?>malfunctions/index.php?do=add-new-malfunction" class="<?php if ($_SESSION['mal_add'] == 0) {echo 'disabled';} ?>">
             <span class="link-name"><?php echo language('ADD NEW MALFUNCTION', @$_SESSION['systemLang']) ?></span>
           </a>
         </li>
@@ -267,9 +267,12 @@
 </div>
 
 <div class="main-content">
+
+  <?php if ($possible_back == true) { ?>
   <div class="container mb-1">
     <button class="btn btn-outline-primary text-capitalize py-1 fs-12" onclick="history_control()">
-      <i class="bi bi-arrow-left"></i>
       <?php echo language('BACK', @$_SESSION['systemLang']) ?>
+      <i class="bi bi-arrow-return-left"></i>
     </button>
   </div>
+  <?php } ?>
