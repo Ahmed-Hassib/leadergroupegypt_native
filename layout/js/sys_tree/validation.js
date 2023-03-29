@@ -103,7 +103,7 @@ function input_validation(input) {
  * fullname_validation function
  * used for full name validation  
  */
-function fullname_validation(input, id = null) {
+function fullname_validation(input, id = null, is_combination = false) {
   // get input value
   let value = input.value;
 
@@ -113,9 +113,9 @@ function fullname_validation(input, id = null) {
     let is_valid = false;
     // check id is set
     if (id != null) {
-      url_content = `../requests/index.php?do=check-piece-fullname&full_name=${value}&id=${id}`;
+      url_content = `../requests/index.php?do=check-piece-fullname&fullname=${value}&id=${id}`;
     } else {
-      url_content = `../requests/index.php?do=check-piece-fullname&full_name=${value}`;
+      url_content = `../requests/index.php?do=check-piece-fullname&fullname=${value}`;
     }
     // get request to check if full name is exist or not
     $.get(url_content, (res) => {
@@ -138,8 +138,17 @@ function fullname_validation(input, id = null) {
       }
     });
   } else {
-    input.classList.remove('is-valid', 'is-invalid');
+    input.classList.remove('is-valid', 'is-invalid')
+    input.dataset.valid = '';;
   }
+
+  setTimeout(() => {
+    // if this is a combination check 
+    // check client name in combinations
+    if (is_combination) {
+      check_combination_client_name(input)
+    }
+  }, 100);
 }
 
 /**
@@ -194,7 +203,8 @@ function ip_validation(input, id = null) {
       input.dataset.valid = "false";
     }
   } else {
-    input.classList.remove('is-valid', 'is-invalid');
+    input.classList.remove('is-valid', 'is-invalid')
+    input.dataset.valid = '';;
   }
 }
 
@@ -244,7 +254,8 @@ function mac_validation(input, id = null) {
       input.dataset.valid = "false";
     }
   } else {
-    input.classList.remove('is-valid', 'is-invalid');
+    input.classList.remove('is-valid', 'is-invalid')
+    input.dataset.valid = '';;
   }
 }
 
@@ -263,40 +274,42 @@ function double_input_validation(input) {
       input.dataset.valid = "false";
     }
   } else {
-    input.classList.remove('is-valid', 'is-invalid');
-  }
-}
-
-
-// function to check if username is exist
-function check_username(input, company_alias, id = null) {
-  // get input value
-  let value = `${input.value}@${company_alias}`;
-  // check value
-  if (value.length > 0) {
-    // get request to check if username is exits
-    $.get(`../requests/index.php?do=check-username&username=${value}`, (res) => {
-      // converted res
-      let result = $.parseJSON(res);
-      // is_exist
-      let is_exist = result[0];
-      // counter
-      let counter = result[1];
-      // check data length
-      if (is_exist == true && counter > 0) {
-        input.classList.contains('is-valid') ? input.classList.replace('is-valid', 'is-invalid') : input.classList.add('is-invalid');
-        input.dataset.valid = "false";
-        input.form.dataset.valid = "false";
-      } else {
-        input.classList.contains('is-invalid') ? input.classList.replace('is-invalid', 'is-valid') : input.classList.add('is-valid')
-        input.dataset.valid = "true";
-        input.form.dataset.valid = "true";
-      }
-    })
-  } else {
     input.classList.remove('is-valid', 'is-invalid')
+    input.dataset.valid = '';;
   }
 }
+
+
+// // function to check if username is exist
+// function check_username(input, company_alias, id = null) {
+//   // get input value
+//   let value = `${input.value}@${company_alias}`;
+//   // check value
+//   if (value.length > 0) {
+//     // get request to check if username is exits
+//     $.get(`../requests/index.php?do=check-username&username=${value}`, (res) => {
+//       // converted res
+//       let result = $.parseJSON(res);
+//       // is_exist
+//       let is_exist = result[0];
+//       // counter
+//       let counter = result[1];
+//       // check data length
+//       if (is_exist == true && counter > 0) {
+//         input.classList.contains('is-valid') ? input.classList.replace('is-valid', 'is-invalid') : input.classList.add('is-invalid');
+//         input.dataset.valid = "false";
+//         input.form.dataset.valid = "false";
+//       } else {
+//         input.classList.contains('is-invalid') ? input.classList.replace('is-invalid', 'is-valid') : input.classList.add('is-valid')
+//         input.dataset.valid = "true";
+//         input.form.dataset.valid = "true";
+//       }
+//     })
+//   } else {
+//     input.classList.remove('is-valid', 'is-invalid')
+input.dataset.valid = '';
+//   }
+// }
 
 function direction_validation(input) {
   // get input value
@@ -334,6 +347,7 @@ function direction_validation(input) {
     })
   } else {
     input.classList.remove('is-valid', 'is-invalid')
+    input.dataset.valid = '';
   }
 }
 
@@ -387,5 +401,45 @@ function change_company_alias(input) {
     }
     // remove all classes
     input.classList.remove('is-valid', 'is-invalid')
+    input.dataset.valid = '';
   }
 }
+
+
+function check_combination_client_name(input) {
+  // get input value
+  let value = input.value;
+
+  // check vallue
+  if (value.length > 0) {
+    // type of message
+    let is_valid = false;
+
+    // url content
+    url_content = `../requests/index.php?do=check-combination-client-name&client-name=${value}`;
+    // get request to check if full name is exist or not
+    $.get(url_content, (res) => {
+      // convert result
+      let result = $.parseJSON(res);
+      // is_exist variable
+      let is_exist = result[0];
+      // counter variable
+      let counter = result[1];
+      // check if exist
+      if (is_exist == true && counter > 0) {
+        // add invalid class to input
+        input.classList.contains('is-valid') ? input.classList.replace('is-valid', 'is-invalid') : input.classList.add('is-invalid')
+        // set boolean variable false
+        input.dataset.valid = "false";
+      } else {
+        input.classList.contains('is-invalid') ? input.classList.replace('is-invalid', 'is-valid') : input.classList.add('is-valid')
+        // set boolean variable true
+        input.dataset.valid = "true";
+      }
+    });
+  } else {
+    input.classList.remove('is-valid', 'is-invalid')
+    input.dataset.valid = '';;
+  }
+}
+

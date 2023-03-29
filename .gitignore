@@ -18,7 +18,7 @@ layout/plugins/*
 # ignoring sql directory
 sql/*
 
-# ignoring local configration directory
+# ignoring local configration file
 etc/local-conf.php
 
 classes/Database.class.php

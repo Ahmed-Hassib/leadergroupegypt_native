@@ -8,7 +8,7 @@ $company_id = $_SESSION['company_id'];
 // create an object of Direction class
 $dir_obj = new Direction();
 // query statement
-$query = isset($_GET['id']) && !empty($_GET['id']) ? "SELECT COUNT(`direction_id`) FROM `direction` WHERE `direction_name` LIKE ? AND `company_id` = ? AND `direction_id` != ?"  : "SELECT COUNT(`direction_id`) FROM `direction` WHERE `direction_name` LIKE ? AND `company_id` = ?";
+$query = isset($_GET['id']) && !empty($_GET['id']) ? "SELECT COUNT(`direction_id`) FROM `direction` WHERE `direction_name` = ? AND `company_id` = ? AND `direction_id` != ?"  : "SELECT COUNT(`direction_id`) FROM `direction` WHERE `direction_name` = ? AND `company_id` = ?";
 // prepare statement
 $stmt = $con->prepare($query);
 $stmt->execute(isset($_GET['id']) && !empty($_GET['id']) ? array($direction_name, $company_id, $id) : array($direction_name, $company_id));

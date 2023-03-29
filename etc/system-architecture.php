@@ -10,6 +10,7 @@ function get_page_dependencies($page_role, $file_type) {
     'global' => [
       'css' => [
         '1' => 'normalize.css',
+        '2' => 'animation.css'
       ],
       'js' => [],
       'node' => [
@@ -186,8 +187,18 @@ function get_page_dependencies($page_role, $file_type) {
     
     'sys_tree_user' => [
       'css' => [],
+      'js' => [],
+      'node' => [
+        'css' => [],
+        'js' => []
+      ],
+      'fonts' => [],  
+    ],
+
+    'sys_tree_devices' => [
+      'css' => [],
       'js' => [
-        '2' => 'devices.js'
+        '1' => 'devices.js'
       ],
       'node' => [
         'css' => [],
@@ -214,6 +225,18 @@ function get_page_dependencies($page_role, $file_type) {
       'css' => [],
       'js' => [
         '1' => 'malfunction.js'
+      ],
+      'node' => [
+        'css' => [],
+        'js' => []
+      ],
+      'fonts' => [],  
+    ],
+    
+    'sys_tree_combination' => [
+      'css' => [],
+      'js' => [
+        '1' => 'combination.js'
       ],
       'node' => [
         'css' => [],

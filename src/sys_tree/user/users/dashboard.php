@@ -5,8 +5,8 @@
     <!-- first row -->
     <div class="mb-3">
       <a href="?do=add-new-user" class="btn btn-outline-primary py-1 fs-12">
-        <?php echo language('ADD NEW EMPLOYEE', @$_SESSION['systemLang']) ?>
         <i class="bi bi-person-plus"></i>
+        <?php echo language('ADD NEW EMPLOYEE', @$_SESSION['systemLang']) ?>
       </a>
     </div>
   <?php } ?>

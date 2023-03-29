@@ -54,6 +54,10 @@ switch ($query) {
   case "check-piece-fullname":
     $file_name = 'check-piece-fullname.php';
     break;
+  
+  case "check-combination-client-name":
+    $file_name = 'check-combination-client-name.php';
+    break;
 
   case "check-piece-ip":
     $file_name = 'check-piece-ip.php';

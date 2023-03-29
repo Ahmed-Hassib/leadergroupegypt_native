@@ -424,7 +424,7 @@ if ($_SESSION['mal_show'] == 1) {
                     </td>
                     <td style="width: 50px">
                       <a href="?do=edit-malfunction-info&malid=<?php echo $mal['mal_id'] ?>" target="" class="btn btn-outline-primary me-1 fs-12 <?php if ($_SESSION['mal_show'] == 0) {echo 'disabled';} ?>"><i class="bi bi-eye"></i></a>
-                      <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 <?php if ($_SESSION['comb_delete'] == 0) {echo 'disabled';} ?>" data-bs-toggle="modal" data-bs-target="#deleteMalModal" id="delete-mal" data-mal-id="<?php echo $mal['mal_id'] ?>"><i class="bi bi-trash"></i></button>
+                      <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 <?php if ($_SESSION['comb_delete'] == 0) {echo 'disabled';} ?>" data-bs-toggle="modal" data-bs-target="#delete-malfunction-modal" id="delete-mal" data-mal-id="<?php echo $mal['mal_id'] ?>"><i class="bi bi-trash"></i></button>
                     </td>
                   </tr>
 
@@ -528,7 +528,7 @@ if ($_SESSION['mal_show'] == 1) {
                     </td>
                     <td style="width: 50px">
                       <a href="?do=edit-malfunction-info&malid=<?php echo $mal['mal_id'] ?>" target="" class="btn btn-outline-primary me-1 fs-12 <?php if ($_SESSION['mal_show'] == 0) {echo 'disabled';} ?>"><i class="bi bi-eye"></i></a>
-                      <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 <?php if ($_SESSION['comb_delete'] == 0) {echo 'disabled';} ?>" data-bs-toggle="modal" data-bs-target="#deleteMalModal" id="delete-mal" data-mal-id="<?php echo $mal['mal_id'] ?>"><i class="bi bi-trash"></i></button>
+                      <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 <?php if ($_SESSION['comb_delete'] == 0) {echo 'disabled';} ?>" data-bs-toggle="modal" data-bs-target="#delete-malfunction-modal" id="delete-mal" data-mal-id="<?php echo $mal['mal_id'] ?>"><i class="bi bi-trash"></i></button>
                     </td>
                   </tr>
                 <?php } ?>

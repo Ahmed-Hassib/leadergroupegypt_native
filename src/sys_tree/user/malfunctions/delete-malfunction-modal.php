@@ -10,8 +10,8 @@
         <p id="test"></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary fs-12" data-bs-dismiss="modal"><?php echo language('CLOSE', @$_SESSION['systemLang']) ?></button>
         <a class="btn btn-danger text-capitalize fs-12 <?php if ($_SESSION['mal_delete'] == 0) {echo 'disabled';} ?>" id="confirm-delete-malfunction"><i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?></a>
+        <button type="button" class="btn btn-outline-secondary fs-12" data-bs-dismiss="modal"><?php echo language('CLOSE', @$_SESSION['systemLang']) ?></button>
       </div>
     </div>
   </div>

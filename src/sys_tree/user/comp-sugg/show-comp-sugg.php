@@ -133,7 +133,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : -1;
                                     <td><?php echo ($index + 1) ?></td>
                                     <td>
                                         <?php if ($_SESSION['user_show'] == 1) { ?>
-                                            <a href="<?php echo $nav_up_level ?>users/index.php?do=editUser&userid=<?php echo $row['UserID'] ?>">
+                                            <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $row['UserID'] ?>">
                                                 <?php echo selectSpecificColumn("`UserName`", "`users`", "WHERE `UserID` = ".$row['UserID'])[0]['UserName'] ?>
                                             </a>
                                         <?php } else { ?> 
@@ -280,7 +280,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : -1;
                                     <td><?php echo ($index + 1) ?></td>
                                     <td>
                                         <?php if ($_SESSION['user_show'] == 1) { ?>
-                                            <a href="users.php?do=editUser&userid=<?php echo $row['UserID'] ?>">
+                                            <a href="users.php?do=edit-user-info&userid=<?php echo $row['UserID'] ?>">
                                                 <?php echo selectSpecificColumn("`UserName`", "`users`", "WHERE `UserID` = ".$row['UserID'])[0]['UserName'] ?>
                                             </a>
                                         <?php } else { ?> 

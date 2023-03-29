@@ -67,9 +67,19 @@
       if ($is_updated) {
         $msg = '<div class="alert alert-success text-capitalize"><i class="bi bi-check-circle-fill"></i>&nbsp;'.language("MALFUNCTION WAS UPDATED SUCCESSFULLY", @$_SESSION['systemLang']).'</div>';
       } else {
-        $msg = '<div class="alert alert-success text-capitalize"><i class="bi bi-check-circle-fill"></i>&nbsp;'.language("A PROBLEM WAS HAPPENED WHILE UPDATING THE MALFUNCTION", @$_SESSION['systemLang']).'</div>';
+        $msg = '<div class="alert alert-danger text-capitalize"><i class="bi bi-check-exclamation-triangle-fill"></i>&nbsp;'.language("A PROBLEM WAS HAPPENED WHILE UPDATING THE MALFUNCTION", @$_SESSION['systemLang']).'</div>';
       }
-    }
+    } ?>
+
+    <!-- start edit profile page -->
+    <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
+      <!-- start header -->
+      <header class="header">
+        <?php  redirectHome($msg, 'back'); ?>
+      </header>
+    </div>
+  
+  <?php
   } else {
     // include no data founded
     include_once $globmod . 'no-data-founded.php';
@@ -79,13 +89,6 @@
   include_once $globmod . 'permission-error.php';
 }
 ?>
-<!-- start edit profile page -->
-<div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-  <!-- start header -->
-  <header class="header">
-    <?php  redirectHome($msg, 'back'); ?>
-  </header>
-</div>
 
 
 <?php

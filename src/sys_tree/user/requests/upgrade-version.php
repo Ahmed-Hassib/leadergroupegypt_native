@@ -1,39 +1,39 @@
 <?php 
 // check permission
 if (isset($_SESSION) && $_SESSION['isTech'] == 0) {
-    // get new version id
-    $new_version_id = $_GET['new-version-id'];
-    // compare between current version and new version
-    if ($new_version_id != $_SESSION['curr_version_id']) {
-        // create an object of Companies class
-        $cmp_obj = new Company();
-        // call upgrade version function
-        $upgrade_info = $cmp_obj->upgrade_version($new_version_id, $_SESSION['company_id']);
-        // is_upgraded
-        $is_upgraded = $upgrade_info[0];
-        // number of effected rows
-        $eff_rows = $upgrade_info[1];
-        // check if upgraded
-        if ($is_upgraded == true) {
-            $msg = '<div>'.language('THE VERSION HAS BEEN UPGRADED SUCCESSFULLY', @$_SESSION['systemLang']).'</div>';
-        } else {
-            $msg = '<div>'.language('A PROPLEM HAS BEEN HAPPEND WHILE UPGRADING VERSION', @$_SESSION['systemLang']).'</div>';
-        }
-        // create an object of Session class
-        $session_obj = new Session();
-        // get user info
-        $user_info = $session_obj->get_user_info($_SESSION['UserID']);
-        // check if done
-        if ($user_info[0] == true) {
-            // set user session
-            $session_obj->set_user_session($user_info[1]);
-        }
+  // get new version id
+  $new_version_id = $_GET['new-version-id'];
+  // compare between current version and new version
+  if ($new_version_id != $_SESSION['curr_version_id']) {
+    // create an object of Companies class
+    $cmp_obj = new Company();
+    // call upgrade version function
+    $upgrade_info = $cmp_obj->upgrade_version($new_version_id, $_SESSION['company_id']);
+    // is_upgraded
+    $is_upgraded = $upgrade_info[0];
+    // number of effected rows
+    $eff_rows = $upgrade_info[1];
+    // check if upgraded
+    if ($is_upgraded == true) {
+      $msg = '<div>'.language('THE VERSION HAS BEEN UPGRADED SUCCESSFULLY', @$_SESSION['systemLang']).'</div>';
     } else {
-        $msg = '<div>'.language('THE VERSION IS UP TO DATE', @$_SESSION['systemLang']).'</div>';
+      $msg = '<div>'.language('A PROPLEM HAS BEEN HAPPEND WHILE UPGRADING VERSION', @$_SESSION['systemLang']).'</div>';
     }
-    // call redirect home function
-    redirectHome($msg, "back");
+    // create an object of Session class
+    $session_obj = new Session();
+    // get user info
+    $user_info = $session_obj->get_user_info($_SESSION['UserID']);
+    // check if done
+    if ($user_info[0] == true) {
+      // set user session
+      $session_obj->set_user_session($user_info[1]);
+    }
+  } else {
+    $msg = '<div>'.language('THE VERSION IS UP TO DATE', @$_SESSION['systemLang']).'</div>';
+  }
+  // call redirect home function
+  redirectHome($msg, "back");
 } else {
-    // include_once error page 
-    include_once $globmod . 'permission-error.php';
+  // include_once error page 
+  include_once $globmod . 'permission-error.php';
 }

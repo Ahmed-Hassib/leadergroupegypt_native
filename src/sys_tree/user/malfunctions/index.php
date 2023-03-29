@@ -17,8 +17,8 @@ $nav_level = 1;
 // initial configration of system
 include_once str_repeat('../', $level) . 'etc/pre-conf.php';
 
-$possible_back = true;
-$preloader = true;
+$possible_back = false;
+$preloader = false;
 $is_contain_table = false;
 
 // check username in SESSION variable
@@ -33,52 +33,53 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
     $file_name = 'dashboard.php';
     // refere to that this page have tables
     $is_contain_table = true;
+    $possible_back = true;
+    $preloader = true;
     
   } elseif ($query == 'show-malfunction-details' && $_SESSION['mal_show'] == 1) {
     // include malfunction details page
     $file_name = 'malfunctions-details.php';
+    $possible_back = true;
+    $preloader = true;
     
   } elseif ($query == 'add-new-malfunction' && $_SESSION['mal_add'] == 1) {
     // include malfunction details page
     $file_name = 'add-malfunction.php';
+    $possible_back = true;
+    $preloader = true;
 
   } elseif ($query == 'insert-new-malfunction' && $_SESSION['mal_add'] == 1) {
     // include malfunction details page
     $file_name = 'insert-malfunction.php';
-    $possible_back = false;
     
   } elseif ($query == 'edit-malfunction-info' && $_SESSION['mal_show'] == 1) {
     // include malfunction details page
     $file_name = 'edit-malfunction.php';
+    $possible_back = true;
+    $preloader = true;
     
   } elseif ($query == 'update-malfunction-info' ) {
     // include malfunction details page
     $file_name = 'update-malfunction.php';
-    $possible_back = false;
-    $preloader = false;
     
   } elseif ($query == 'delete-malfunction' && $_SESSION['mal_delete'] == 1) {
     // include malfunction details page
     $file_name = 'delete-malfunction.php';
-    $possible_back = false;
-    $preloader = false;
     
   } elseif ($query == 'show-pieces-malfunctions' && $_SESSION['mal_show'] == 1) {
     // include malfunction details page
     $file_name = 'piece-malfunctions.php';
     $is_contain_table = true;
+    $possible_back = true;
+    $preloader = true;
     
   } else {
     // include page error module
     $file_name = $globmod . 'page-permission-error.php';
-    $possible_back = false;
-    $preloader = false;
   }
 } else {
   // include permission error module
   $file_name = $globmod . 'permission-error.php';
-  $possible_back = false;
-  $preloader = false;
 }
 
 // page title

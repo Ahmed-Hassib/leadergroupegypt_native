@@ -95,10 +95,19 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
               <hr />
             </div>
             <!-- notes -->
-            <div class="row">
+            <div class="mb-3 row">
               <label for="notes" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('THE NOTES', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 col-md-8">
                 <textarea name="notes" id="notes" title="put some notes hete if exist" class="form-control w-100" style="height: 10rem; resize: none; direction: <?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>" placeholder="<?php echo language('PUT YOUR NOTES HERE', @$_SESSION['systemLang']) ?>"><?php echo $piece_data['notes']  ?></textarea>
+              </div>
+            </div>
+            <!-- malfunctions counter -->
+            <?php $malCounter = countRecords("`mal_id`", "`malfunctions`", "WHERE `client_id` = ".$piece_data['id']) ?>
+            <div class="mb-3 row">
+              <label for="malfunction-counter" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('MALFUNCTIONS COUNTER', @$_SESSION['systemLang']) ?></label>
+              <div class="col-sm-12 col-md-8">
+                <span class="mt-2 me-5 text-start" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo $malCounter . " " . ($malCounter > 2 ? language("MALFUNCTIONS", @$_SESSION['systemLang']) : language("MALFUNCTION", @$_SESSION['systemLang'])) ?></span>
+                <a href="<?php echo $nav_up_level ?>malfunctions/index.php?do=show-pieces-malfunctions&pieceid=<?php echo $piece_data['id'] ?>" class="mt-2 text-start" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo language("SHOW DETAILS", @$_SESSION['systemLang']) ?></a>
               </div>
             </div>
           </div>

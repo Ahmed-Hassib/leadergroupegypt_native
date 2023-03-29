@@ -4,8 +4,8 @@
     <div class="stats">
         <div class="mb-3 hstack gap-3">
             <div class="<?php if ($_SESSION['pcs_add'] == 0) {echo 'd-none';} ?>">
-                <a href="?name=clients&do=add-new-piece" class="btn btn-outline-primary py-1">
-                    <h6 class="h6 mb-0 text-center text-capitalize fs-12">
+                <a href="?name=clients&do=add-new-piece" class="btn btn-outline-primary py-1 fs-12">
+                    <h6 class="h6 mb-0 text-center text-capitalize ">
                         <i class="bi bi-person-plus"></i>
                         <?php echo language('ADD NEW CLIENT', @$_SESSION['systemLang']) ?>
                     </h6>

@@ -52,7 +52,7 @@
             </li>
             <?php if ($_SESSION['isLicenseExpired'] == 0) { ?>
               <li>
-                <a class="dropdown-item" href="<?php echo $nav_up_level ?>users/index.php?do=editUser&userid=<?php echo $_SESSION['UserID']; ?>">
+                <a class="dropdown-item" href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $_SESSION['UserID']; ?>">
                   <i class="bi bi-sliders"></i>
                   <span><?php echo language('PROFILE', @$_SESSION['systemLang']) ?></span>
                 </a>

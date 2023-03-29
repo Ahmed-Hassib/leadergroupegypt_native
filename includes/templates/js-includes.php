@@ -59,16 +59,11 @@ if ($page_category == 'sys_tree' && $page_role != 'sys_tree_login' && $page_role
 }
 ?>
 
+<script>localStorage['systemLang']  = '<?php echo @$_SESSION['systemLang'] ?>';</script>
 
 <!-- save system language to local storage -->
 <?php if (isset($is_website_pages) && $is_website_pages == true) { ?>
-  <script>
-    // assign systemLang to local storage
-    localStorage['systemLang']  = '<?php echo @$_SESSION['systemLang'] ?>';
-    // check current language
-    document.body.style.direction = localStorage['systemLang'] == 'ar' ? 'rtl' : 'ltr';
-  </script>
-
+  <script>document.body.style.direction = localStorage['systemLang'] == 'ar' ? 'rtl' : 'ltr';</script>
 <?php } ?>
 
 <?php if (isset($preloader) && $preloader == true) {?>

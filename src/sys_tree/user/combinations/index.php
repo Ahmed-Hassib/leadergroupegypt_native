@@ -9,22 +9,21 @@ ob_start();
 session_start();
 // regenerate session id
 session_regenerate_id();
-// page title
-$page_title = "The combinations";
-// page category
-$page_category = "sys_tree";
-// page role
-$page_role = "sys_tree_user";
-// folder name of dependendies
-$dependencies_folder = "sys_tree/";
+
 // level
 $level = 4;
 // nav level
 $nav_level = 1;
+// pre-configration of system
+include_once str_repeat("../", $level) . "etc/pre-conf.php";
+
+// some page flages
+$possible_back = true;
+$preloader = true;
+$is_contain_table = false;
 // refere to that this page have tables
-$is_contain_table = true;
-// initial configration of system
-include_once str_repeat("../", $level) . "etc/init.php";
+$is_contain_table = false;
+
 // check username in SESSION variable
 if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
 
@@ -33,53 +32,69 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
   
   // start manage page
   if ($query == "manage" && $_SESSION['comb_show'] == 1) {       // manage page
-
     // include combination dashboard
-    include_once 'dashboard.php';
+    $file_name = 'dashboard.php';
+    $is_contain_table = true;
     
-  } elseif ($query == "showCombinationDetails" && $_SESSION['comb_show'] == 1) {
-
+  } elseif ($query == "show-combination-details" && $_SESSION['comb_show'] == 1) {
     // include combination details page
-    include_once 'combinations-details.php';
+    $file_name = 'combinations-details.php';
+    $is_contain_table = true;
     
-  } elseif ($query == "addCombinations" && $_SESSION['comb_add'] == 1) {
-    
+  } elseif ($query == "add-new-combination" && $_SESSION['comb_add'] == 1) {
     // include add combination page
-    include_once 'add-combination.php';
+    $file_name = 'add-combination.php';
     
-  } elseif ($query == "insertCombination" && $_SESSION['comb_add'] == 1) {     // edit piece page
-    
+  } elseif ($query == "insert-combination-info" && $_SESSION['comb_add'] == 1) {     // edit piece page
     // include isert combination page
-    include_once 'insert-combination.php';
+    $file_name = 'insert-combination.php';
+    $possible_back = false;
+    $preloader = false;
     
-  } elseif ($query == 'editCombination' && $_SESSION['comb_show'] == 1) {
-    
+  } elseif ($query == 'edit-combination' && $_SESSION['comb_show'] == 1) {
     // include edit combination page
-    include_once 'edit-combination.php';
+    $file_name = 'edit-combination.php';
     
-  } elseif ($query == 'updateCombination' && $_SESSION['comb_update'] == 1) {
-    
+  } elseif ($query == 'update-combination-info' && $_SESSION['comb_update'] == 1) {
     // include update combination page
-    include_once 'update-combination.php';
+    $file_name = 'update-combination.php';
+    $possible_back = false;
+    $preloader = false;
     
-  } elseif ($query == 'deleteComb' && $_SESSION['comb_delete'] == 1) {
-    
+  } elseif ($query == 'delete-combination' && $_SESSION['comb_delete'] == 1) {
     // include delete combination page
-    include_once 'delete-combination.php';
+    $file_name = 'delete-combination.php';
+    $possible_back = false;
+    $preloader = false;
     
   } else {
-    
     // include page error module
-    include_once $globmod . 'page-error.php';
-    
+    $file_name = $globmod . 'page-permission-error.php';
+    $possible_back = false;
+    $preloader = false;
   }
   
 } else {
-  
   // include permission error module
-  include_once $globmod . 'permission-error.php';
-  
+  $file_name = $globmod . 'permission-error.php';
+  $possible_back = false;
+  $preloader = false;
 }
+
+
+// page title
+$page_title = "The combinations";
+// page category
+$page_category = "sys_tree";
+// page role
+$page_role = "sys_tree_combination";
+// folder name of dependendies
+$dependencies_folder = "sys_tree/";
+
+// initial configration of system
+include_once str_repeat('../', $level) . 'etc/init.php';
+// include file name
+include_once $file_name;
 
 // include footer
 include_once $tpl . "footer.php"; 

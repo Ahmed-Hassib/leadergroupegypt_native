@@ -20,7 +20,7 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
       <!-- start edit profile -->
       <div class="row row-cols-sm-1 row-cols-lg-2 g-3">
         <!-- start add new user form -->
-        <form class="profile-form" action="?do=update-user-info" method="POST" id="editUser" onchange="form_validation(this)">
+        <form class="profile-form" action="?do=update-user-info" method="POST" id="edit-user-info" onchange="form_validation(this)">
           <!-- horzontal stack -->
           <div class="hstack gap-3">
             <h6 class="h6 text-decoration-underline text-capitalize text-danger fw-bold">
@@ -212,7 +212,7 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
           <div class="hstack gap-3">
             <div class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
               <!-- edit button -->
-              <button type="button" form="editUser" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'ltr' : 'rtl' ?>" class="btn btn-primary text-capitalize fs-12" <?php if ($_SESSION['user_update'] == 0 && $user['UserID'] != $_SESSION['UserID']) {echo 'disabled';} ?> onclick="form_validation(this.form, 'submit')"><i class="bi bi-check-all"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?></button>
+              <button type="button" form="edit-user-info" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'ltr' : 'rtl' ?>" class="btn btn-primary text-capitalize fs-12" <?php if ($_SESSION['user_update'] == 0 && $user['UserID'] != $_SESSION['UserID']) {echo 'disabled';} ?> onclick="form_validation(this.form, 'submit')"><i class="bi bi-check-all"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?></button>
               
               <?php if ($user['isRoot'] != 1 && $user['TrustStatus'] != 1 && $user['job_title_id'] != 1 && $_SESSION['user_delete'] == 1) { ?>
                 <!-- delete button -->

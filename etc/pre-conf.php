@@ -4,7 +4,7 @@
 // require_once 'server-conf.php';
 require_once 'local-conf.php';
 // developer name
-$developerName = "ahmed hassib";
+$developerName = "ahmed hassib khalil";
 // company name
 $appName = "sys tree";
 // is app suspended

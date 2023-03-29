@@ -29,8 +29,7 @@ var nextBtn = document.getElementById('nextBtn');
 var tree = document.querySelectorAll(".tree span");
 var reportSections = document.querySelectorAll(".reports .section-header");
 var arrowUpBtn = document.querySelector(".arrow-up");
-var delete_comb_btn = document.querySelectorAll('#delete-comb');
-var confirm_delete_combination = document.querySelector("#confirm-delete-combination");
+
 
 
 // self invoke function .
