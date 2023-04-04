@@ -533,7 +533,7 @@
 	padding-top: var(--main-padding);
 	padding-bottom: var(--main-padding);
 	position: relative;
-	background-color: var(--section-color);
+	background-color: #fff;
 }
 
 .services .container {

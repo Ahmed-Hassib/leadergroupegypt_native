@@ -89,7 +89,7 @@ $page_title = isset($_GET['name']) ? $_GET['name'] : 'NOT ASSIGNED';
 // page category
 $page_category = "sys_tree";
 // page role
-$page_role = "sys_tree_user";
+$page_role = "sys_tree_pieces";
 // folder name of dependendies
 $dependencies_folder = "sys_tree/";
 

@@ -40,6 +40,17 @@
 
 /************/
 
+.bg-event-img {
+	position: fixed;
+	bottom: -25px;
+	left: -15px;
+	width: 130px;
+	filter: contrast(0) invert(0);
+	z-index: 99999;
+}
+
+/************/
+
 .modal-header .btn-close.btn-close-right {
 	margin: -.5rem -.5rem -.5rem auto;
 }
@@ -94,7 +105,7 @@ body::-webkit-scrollbar {
 }
 
 .dataTables_scrollBody::-webkit-scrollbar {
-	height: 10px;
+	height: 15px;
 }
 
 body::-webkit-scrollbar-track,
@@ -636,6 +647,35 @@ thead.primary {
 }
 
 /* end users page */
+
+.scroll-button {
+	position: fixed;
+	top: 80px;
+	width: 50px;
+	height: calc(100% - 120px);
+	z-index: 999;
+	background: rgba(0, 0, 0, 0.1);
+	border: none;
+	transition: all .5s ease-in-out;
+}
+
+.scroll-button:hover {
+	background: rgba(0, 0, 0, 0.5);
+}
+
+.scroll-prev {
+	left: 0;
+}
+
+.scroll-next {
+	right: 80px;
+}
+
+@media (max-width: 576px) {
+	.scroll-next {
+		right: 0;
+	}
+}
 
 /* start pieces page */
 

@@ -32,11 +32,11 @@ include_once str_repeat("../", $level) . "etc/init.php";
 
 // include landing page content
 include_once $website_src . "landing/landing.php";
-include_once $website_src . "landing/articles.php";
-include_once $website_src . "landing/gallery.php";
-include_once $website_src . "landing/features.php";
+// include_once $website_src . "landing/articles.php";
+// include_once $website_src . "landing/gallery.php";
+// include_once $website_src . "landing/features.php";
 include_once $website_src . "landing/services.php";
-include_once $website_src . "landing/team-members.php";
+// include_once $website_src . "landing/team-members.php";
 include_once $website_src . "landing/testimonials.php";
 
 // include js files

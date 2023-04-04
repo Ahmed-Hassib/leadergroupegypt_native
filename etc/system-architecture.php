@@ -130,7 +130,6 @@ function get_page_dependencies($page_role, $file_type) {
       'fonts' => []
     ],
 
-
     // for blog login
     'sys_tree_global' => [
       'css' => [
@@ -198,7 +197,20 @@ function get_page_dependencies($page_role, $file_type) {
     'sys_tree_devices' => [
       'css' => [],
       'js' => [
-        '1' => 'devices.js'
+        '1' => 'devices.js',
+      ],
+      'node' => [
+        'css' => [],
+        'js' => []
+      ],
+      'fonts' => [],  
+    ],
+    
+    'sys_tree_pieces' => [
+      'css' => [],
+      'js' => [
+        '1' => 'pieces.js',
+        '2' => 'devices.js',
       ],
       'node' => [
         'css' => [],

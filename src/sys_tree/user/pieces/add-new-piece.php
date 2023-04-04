@@ -314,7 +314,7 @@
                   <div class="mb-sm-2 mb-md-3 row">
                     <label for="frequency" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('FREQUENCY', @$_SESSION['systemLang']) ?></label>
                     <div class="col-sm-12 col-md-8">
-                        <input type="text" class="form-control" id="frequency" name="frequency" placeholder="<?php echo language('FREQUENCY', @$_SESSION['systemLang']) ?>" onkeyup="double_input_validation(this)"  />
+                        <input type="text" class="form-control" id="frequency" name="frequency" placeholder="<?php echo language('FREQUENCY', @$_SESSION['systemLang']) ?>" onkeyup="integer_input_validation(this)"  />
                     </div>
                   </div>
                 </div>
@@ -323,7 +323,7 @@
                   <div class="mb-sm-2 mb-md-3 row">
                     <label for="wave" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('THE WAVE', @$_SESSION['systemLang']) ?></label>
                     <div class="col-sm-12 col-md-8">
-                      <input type="text" class="form-control" id="wave" name="wave" placeholder="<?php echo language('THE WAVE', @$_SESSION['systemLang']) ?>" onkeyup="double_input_validation(this)" />
+                      <input type="text" class="form-control" id="wave" name="wave" placeholder="<?php echo language('THE WAVE', @$_SESSION['systemLang']) ?>" onkeyup="integer_input_validation(this)" />
                     </div>
                   </div>
                 </div>

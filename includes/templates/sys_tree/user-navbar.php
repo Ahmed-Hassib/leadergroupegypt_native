@@ -256,8 +256,7 @@
 
 <div class="top-navbar top-navbar-<?php echo @$_SESSION['systemLang'] == 'ar' ? 'right' : 'left' ?>">
   <div class="top-navbar-content">
-    <i class="bi bi-list sidebar-menubtn"></i>
-    <!-- <span class="top-navbar-text">demo text</span> -->  
+    <i class="bi bi-list sidebar-menubtn"></i>  
     <?php if (isset($_SESSION['isTrial']) && $_SESSION['isTrial'] == 1) {?>
       <span class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?> mx-3">
         <span class="badge bg-danger"><?php echo language("TRIAL", @$_SESSION['systemLang']) ?></span>
@@ -273,3 +272,4 @@
 </div>
 
 <div class="main-content">
+  <img src="<?php echo $assets ?>ramadan-karem.png" class="bg-event-img" alt="">

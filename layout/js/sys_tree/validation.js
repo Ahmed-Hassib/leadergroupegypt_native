@@ -1,5 +1,3 @@
-
-
 /**
  * form_validation function
  * is used to check the required fields in form
@@ -64,6 +62,9 @@ function form_validation(form = null, btn = null) {
     errorArray.forEach(el => {
       if ((el.hasAttribute('onkeyup') && el.value.length == 0) || el.dataset.valid != "true") {
         input_validation(el);
+      } else if (el.hasAttribute('onkeyup') && el.value.length > 0) {
+        el.focus();
+        el.blur();
       }
     })
 
@@ -87,7 +88,7 @@ function form_validation(form = null, btn = null) {
  */
 function input_validation(input) {
   // if input is empty
-  if (input.value.length == 0 || input.selectedIndex == 0 || (input.hasAttribute('onkeyup') && input.dataset.valid != "true")) {
+  if ((input.tagName.toLowerCase() == 'input' && input.value.length == 0) || (input.tagName.toLowerCase() == 'select' && input.selectedIndex == 0 )) {
     // check if have an valid class
     input.classList.contains('is-valid') ? input.classList.replace('is-valid', 'is-invalid') : input.classList.add('is-invalid');
     input.dataset.valid = "false";
@@ -279,6 +280,26 @@ function double_input_validation(input) {
   }
 }
 
+function integer_input_validation(input) {
+  // get input value
+  let value = input.value;
+
+  // check value length
+  if (value.length > 0) {
+    // check value
+    if (/^\d{0,5}$/.test(value)) {
+      input.classList.contains('is-invalid') ? input.classList.replace('is-invalid', 'is-valid') : input.classList.add('is-valid')
+      input.dataset.valid = "true";
+    } else {
+      input.classList.contains('is-valid') ? input.classList.replace('is-valid', 'is-invalid') : input.classList.add('is-invalid')
+      input.dataset.valid = "false";
+    }
+  } else {
+    input.classList.remove('is-valid', 'is-invalid')
+    input.dataset.valid = '';;
+  }
+}
+
 
 // // function to check if username is exist
 // function check_username(input, company_alias, id = null) {
@@ -307,7 +328,7 @@ function double_input_validation(input) {
 //     })
 //   } else {
 //     input.classList.remove('is-valid', 'is-invalid')
-input.dataset.valid = '';
+// input.dataset.valid = '';
 //   }
 // }
 

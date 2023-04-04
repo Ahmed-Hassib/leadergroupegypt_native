@@ -34,7 +34,7 @@
                 </a>
               </div>
               <!-- employee image -->
-              <img src="<?php echo $uploads."/employees-img/male-avatar.svg" ?>" class="card-img-top shadow" alt="">
+              <img src="<?php echo $uploads . "employees-img/male-avatar.svg" ?>" class="card-img-top shadow" alt="">
               <!-- employee details -->
               <div class="card-body">
               <!-- vstack for employee info -->

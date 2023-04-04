@@ -40,7 +40,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
             <div class="mb-sm-2 mb-md-3 row">
               <label for="full-name" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('FULLNAME', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 col-md-8">
-                <input type="text" class="form-control" id="full-name" name="full-name" placeholder="<?php echo language('FULLNAME', @$_SESSION['systemLang']) ?>" onkeyup="fullname_validation(this, <?php echo $piece_data['id'] ?>)" value="<?php echo $piece_data['full_name'] ?>" autocomplete="off" required />
+                <input type="text" class="form-control" id="full-name" name="full-name" placeholder="<?php echo language('FULLNAME', @$_SESSION['systemLang']) ?>" onkeyup="fullname_validation(this, <?php echo $piece_data['id'] ?>)" onblur="fullname_validation(this, <?php echo $piece_data['id'] ?>)" value="<?php echo $piece_data['full_name'] ?>" autocomplete="off" required />
               </div>
             </div>
 
@@ -64,7 +64,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
             <div class="mb-sm-2 mb-md-3 row">
               <label for="is-client" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('THE TYPE', @$_SESSION['systemLang']) ?></label>
               <div class="mt-2 col-sm-12 col-md-8">
-                <?php if ($page_title == 'pieces') { ?>
+                <?php if ($piece_data['is_client'] <= 0) { ?>
                   <!-- TRANSMITTER -->
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="is-client" id="piece" value="1" <?php echo $piece_data['is_client'] == 0 && $piece_data['device_type'] == 1 ? 'checked' : '' ?>>
@@ -75,7 +75,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
                     <input class="form-check-input" type="radio" name="is-client" id="client" value="2" <?php echo $piece_data['is_client'] == 0 && $piece_data['device_type'] == 2 ? 'checked' : '' ?>>
                     <label class="form-check-label text-capitalize" for="client"><?php echo language('RECEIVER', @$_SESSION['systemLang']) ?></label>
                   </div>
-                <?php } elseif ($page_title == 'clients') { ?>
+                <?php } elseif ($piece_data['is_client'] == 1) { ?>
                   <!-- CLIENT -->
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="is-client" id="client" value="0" <?php echo $piece_data['is_client'] == 1 ? 'checked' : '' ?>>
@@ -103,6 +103,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
             </div>
             <!-- malfunctions counter -->
             <?php $malCounter = countRecords("`mal_id`", "`malfunctions`", "WHERE `client_id` = ".$piece_data['id']) ?>
+            <?php if ($malCounter > 0) { ?>
             <div class="mb-3 row">
               <label for="malfunction-counter" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('MALFUNCTIONS COUNTER', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 col-md-8">
@@ -110,6 +111,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
                 <a href="<?php echo $nav_up_level ?>malfunctions/index.php?do=show-pieces-malfunctions&pieceid=<?php echo $piece_data['id'] ?>" class="mt-2 text-start" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo language("SHOW DETAILS", @$_SESSION['systemLang']) ?></a>
               </div>
             </div>
+            <?php } ?>
           </div>
         </div>
       </div>
@@ -175,7 +177,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
                           if ($sources_count) { ?>
                             <option value="default" disabled selected><?php echo language('SELECT', @$_SESSION['systemLang'])." ". language('THE SOURCE', @$_SESSION['systemLang']) ?></option>
                             <?php foreach ($sources_data as $source) { ?>
-                              <option value="<?php echo $source['id'] ?>" <?php echo $piece_data['source_id'] == $source['id'] || ($piece_data['source_id'] == 0 && $piece_data['ip'] == $source['ip']) ? 'selected' : ''  ?>>
+                              <option value="<?php echo $source['id'] ?>" <?php if ($piece_data['source_id'] == $source['id'] || ($piece_data['source_id'] == 0 && $piece_data['ip'] == $source['ip']) ) echo 'selected';  ?>>
                                 <?php echo  $source['full_name'] . " - " . $source['ip'] ?>
                               </option>
                             <?php } ?>
@@ -196,7 +198,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
                           <?php if ($sources_count) { ?>
                             <option value="default" selected disabled><?php echo language('SELECT', @$_SESSION['systemLang'])." ". language('ALTERNATIVE SOURCE', @$_SESSION['systemLang']) ?></option>
                             <?php foreach ($sources_data as $alt_source) { ?>
-                              <option value="<?php echo $alt_source['id'] ?>" <?php echo $piece_data['alt_source_id'] == $alt_source['id'] || ($piece_data['alt_source_id'] == 0 && $piece_data['ip'] == $alt_source['ip']) ? 'selected' : ''  ?>>
+                              <option value="<?php echo $alt_source['id'] ?>" <?php if ($piece_data['alt_source_id'] == $alt_source['id'] || ($piece_data['alt_source_id'] == 0 && $piece_data['ip'] == $alt_source['ip'])) echo 'selected'; ?>>
                                 <?php echo  $alt_source['full_name'] . " - " . $alt_source['ip'] ?>
                               </option>
                             <?php } ?>
@@ -323,7 +325,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
                     <div class="mb-sm-2 mb-md-3 row">
                       <label for="ip" class="col-sm-12 col-md-4 col-form-label"><span class="text-uppercase"><?php echo language('IP', @$_SESSION['systemLang']) ?></span></label>
                       <div class="col-sm-12 col-md-8">
-                        <input type="text" class="form-control" id="ip" name="ip" placeholder="xxx.xxx.xxx.xxx" onkeyup="ip_validation(this, <?php echo $piece_data['id'] ?>)" value="<?php echo $piece_data['ip'] ?>" autocomplete="off" required />
+                        <input type="text" class="form-control" id="ip" name="ip" placeholder="xxx.xxx.xxx.xxx" onkeyup="ip_validation(this, <?php echo $piece_data['id'] ?>)" onblur="ip_validation(this, <?php echo $piece_data['id'] ?>)" value="<?php echo $piece_data['ip'] ?>" autocomplete="off" required />
                         <div id="ipHelp" class="form-text text-warning"><?php echo language('IF PIECE/CLIENT NOT HAVE AN IP PRESS 0.0.0.0', @$_SESSION['systemLang']) ?></div>
                       </div>
                     </div>
@@ -334,7 +336,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
                     <div class="mb-sm-2 mb-md-3 row">
                       <label for="mac-add" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('MAC ADD', @$_SESSION['systemLang']) ?></label>
                       <div class="col-sm-12 col-md-8">
-                        <input type="text" class="form-control" id="mac-add" name="mac-add" onkeyup="mac_validation(this, <?php echo $piece_data['id'] ?>)" placeholder="<?php echo language('MAC ADD', @$_SESSION['systemLang']) ?>" value="<?php echo $piece_data['mac_add'] ?>" />
+                        <input type="text" class="form-control" id="mac-add" name="mac-add" onkeyup="mac_validation(this, <?php echo $piece_data['id'] ?>)" onblur="mac_validation(this, <?php echo $piece_data['id'] ?>)" placeholder="<?php echo language('MAC ADD', @$_SESSION['systemLang']) ?>" value="<?php echo $piece_data['mac_add'] ?>" />
                       </div>
                     </div>
                   </div>
@@ -354,7 +356,8 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
                     <div class="mb-sm-2 mb-md-3 row">
                       <label for="password" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('PASSWORD', @$_SESSION['systemLang']) ?></label>
                       <div class="col-sm-12 col-md-8">
-                        <input type="text" class="form-control" id="password" name="password" placeholder="<?php echo language('PASSWORD', @$_SESSION['systemLang']) ?>" value="<?php echo $piece_data['password'] ?>" autocomplete="off" required />
+                        <input type="password" class="form-control" id="password" name="password" placeholder="<?php echo language('PASSWORD', @$_SESSION['systemLang']) ?>" value="<?php echo $piece_data['password'] ?>" autocomplete="off" required />
+                        <i class="bi bi-eye-slash show-pass <?php echo @$_SESSION['systemLang'] == 'ar' ? 'show-pass-left' : 'show-pass-right' ?>" onclick="showPass(this)"></i>
                         <div id="passHelp" class="form-text text-warning "><?php echo language('DON`T SHARE THIS PASSWORD WITH ANYONE', @$_SESSION['systemLang']) ?></div>
                       </div>
                     </div>
@@ -390,7 +393,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
                     <div class="mb-sm-2 mb-md-3 row">
                       <label for="frequency" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('FREQUENCY', @$_SESSION['systemLang']) ?></label>
                       <div class="col-sm-12 col-md-8">
-                          <input type="text" class="form-control" id="frequency" name="frequency" placeholder="<?php echo language('FREQUENCY', @$_SESSION['systemLang']) ?>" value="<?php echo $piece_data['frequency'] ?>"  onkeyup="double_input_validation(this)" />
+                          <input type="text" class="form-control" id="frequency" name="frequency" placeholder="<?php echo language('FREQUENCY', @$_SESSION['systemLang']) ?>" value="<?php echo $piece_data['frequency'] ?>"  onkeyup="integer_input_validation(this)" onblur="integer_input_validation(this)" />
                       </div>
                     </div>
                   </div>
@@ -399,7 +402,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
                     <div class="mb-sm-2 mb-md-3 row">
                       <label for="wave" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('THE WAVE', @$_SESSION['systemLang']) ?></label>
                       <div class="col-sm-12 col-md-8">
-                        <input type="text" class="form-control" id="wave" name="wave" placeholder="<?php echo language('THE WAVE', @$_SESSION['systemLang']) ?>" value="<?php echo $piece_data['wave'] ?>" onkeyup="double_input_validation(this)" />
+                        <input type="text" class="form-control" id="wave" name="wave" placeholder="<?php echo language('THE WAVE', @$_SESSION['systemLang']) ?>" value="<?php echo $piece_data['wave'] ?>" onkeyup="integer_input_validation(this)" onblur="integer_input_validation(this)" />
                       </div>
                     </div>
                   </div>

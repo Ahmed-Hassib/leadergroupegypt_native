@@ -9,7 +9,7 @@
             <img src="<?php echo $assets ?>leadergroupegypt-removebg.png" alt="Leader Group Egypt">
         </div>
     </div>
-    <a href="#articles" class="go-down">
+    <a href="#services" class="go-down">
         <i class="bi bi-chevron-double-down"></i>
     </a>
 </div>
