@@ -29,7 +29,38 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
             </h6>
           </div>
           <!-- start new design -->
-          <div class="mb-3 row g-3 justify-content-start align-items-stretch">            
+          <div class="mb-3 row g-3 justify-content-start align-items-stretch">
+            <!-- employee general info -->
+            <div class="col-sm-12">
+              <div class="section-block">
+                <!-- start profile image -->
+                <div class="mb-4 row" id="profile-image-container">
+                  <?php $profile_img_name = empty($user['profile_img']) ? 'male-avatar.svg' : $user['profile_img']; ?>
+                  <img src="<?php echo $uploads . "employees-img/$profile_img_name" ?>" class="profile-img" alt="">
+                </div>
+                <!-- end profile image -->
+                <!-- start control buttons -->
+                <div class="hstack gap-3">
+                  <div class="mx-auto">
+                    <!-- edit image button -->
+                    <button type="button" role="button" class="btn btn-outline-primary fs-12 py-1 text-capitalize" onclick="change_profile_image()">
+                      <i class="bi bi-pencil-square"></i>
+                      <?php echo language('CHANGE IMAGE', @$_SESSION['systemLang']) ?>
+                    </button>
+                    
+                    <!-- delete image button -->
+                    <button type="button" role="button" class="btn btn-danger fs-12 py-1 text-capitalize">
+                      <i class="bi bi-trash"></i>
+                      <?php echo language('DELETE IMAGE', @$_SESSION['systemLang']) ?>
+                    </button>
+                  </div>
+                </div>
+                <!-- end control buttons -->
+              </div>
+            </div>
+          </div> 
+          
+          <div class="mb-3 row g-3 justify-content-start align-items-stretch"> 
             <!-- employee general info -->
             <div class="col-sm-12 col-lg-6">
               <div class="section-block">
@@ -40,7 +71,6 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
                 </header>
                 <!-- user id -->
                 <input type="hidden" name="userid" value="<?php echo $user['UserID'] ?>">
-                
                 <!-- start full name field -->
                 <div class="mb-4 row">
                   <label for="fullname" class="col-sm-12 col-md-3 col-form-label text-capitalize" autocomplete="off"><?php echo language('FULLNAME', @$_SESSION['systemLang']) ?></label>

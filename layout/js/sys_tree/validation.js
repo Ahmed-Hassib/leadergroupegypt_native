@@ -149,7 +149,7 @@ function fullname_validation(input, id = null, is_combination = false) {
     if (is_combination) {
       check_combination_client_name(input)
     }
-  }, 100);
+  }, 10);
 }
 
 /**

@@ -37,7 +37,7 @@ if ($count > 0) {
                   <!-- malfunctions id -->
                   <input type="hidden" name="mal-id" id="mal-id" value="<?php echo $malrows['mal_id'] ?>">
                   <!-- Administrator name -->
-                  <div class="mb-sm-2 mb-md-3 row">
+                  <div class="mb-sm-2 mb-md-3 row align-items-center">
                     <label for="admin-name" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('ADMIN NAME', @$_SESSION['systemLang']) ?></label>
                     <div class="col-sm-12 col-md-8">
                       <?php $admin_name = selectSpecificColumn("`UserName`", "`users`", "WHERE `UserID` = '" . $malrows['mng_id'] . "' LIMIT 1")[0]['UserName']; ?>
@@ -46,30 +46,22 @@ if ($count > 0) {
                     </div>
                   </div>
                   <!-- Technical name -->
-                  <div class="mb-sm-2 mb-md-3 row">
+                  <div class="mb-sm-2 mb-md-3 row align-items-center">
                     <label for="technical-id" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('TECHNICAL NAME', @$_SESSION['systemLang']) ?></label>
                     <div class="col-sm-12 col-md-8">
                       <!-- select tag for technical -->
                       <select class="form-select" id="technical-id" name="tech-id" <?php if ($_SESSION['isTech'] == 1 || $_SESSION['mal_update'] == 0 || $malrows['mal_status'] == 1) {echo 'disabled';} ?>>
                         <option  value="default" disabled selected><?php echo language('SELECT', @$_SESSION['systemLang'])." ".language('THE TECHNICAL', @$_SESSION['systemLang']) ?></option>
-                        <?php
-                        // get all technical men
-                        $usersRows = selectSpecificColumn("`UserID`, `UserName`", "`users`", "WHERE `isTech` = 1");
-
-                        if (count($usersRows) > 0) {
-                          // loop on result ..
-                          foreach ($usersRows as $userRow) {
-                            // get all information of users..
-                        ?>
+                        <?php $usersRows = selectSpecificColumn("`UserID`, `UserName`", "`users`", "WHERE `isTech` = 1 AND `company_id` = " . $_SESSION['company_id']); ?>
+                        <?php if (count($usersRows) > 0) { ?>
+                          <?php foreach ($usersRows as $userRow) { ?>
                             <option value="<?php echo $userRow['UserID'] ?>" <?php if ($userRow['UserID'] == $malrows['tech_id']) { echo 'selected'; } ?>>
                               <?php echo $userRow['UserName']; ?>
-                            </option>";
-                        <?php
-                          }
-                        } else {
-                          echo "<option>Not available now</option>";
-                        }
-                        ?>
+                            </option>
+                          <?php } ?>
+                        <?php } else { ?>
+                          <option><?php echo language('NOT AVAILABLE NOW', @$_SESSION['systemLang']) ?></option>
+                        <?php } ?>
                       </select>
                       <input type="hidden" name="technical-id" id="technical-id-value" value="">
                     </div>
@@ -83,7 +75,7 @@ if ($count > 0) {
                   <hr>
                 </header>
                 <!-- status -->
-                <div class="mb-sm-2 mb-md-3 row">
+                <div class="mb-sm-2 mb-md-3 row align-items-center">
                   <label for="mal-status" class="col-sm-12 col-md-4 col-form-label text-capitalize pt-0"><?php echo language('STATUS', @$_SESSION['systemLang']) ?></label>
                   <div class="col-sm-12 col-md-8" id="mal-status">
                     <select name="mal-status" id="mal-status" class="form-select" <?php if ($_SESSION['isTech'] == 0 || $malrows['mal_status'] == 1) {echo 'disabled';} ?>>
@@ -95,7 +87,7 @@ if ($count > 0) {
                   </div>
                 </div>
                 <!-- tech_status -->
-                <div class="mb-sm-2 mb-md-3 row">
+                <div class="mb-sm-2 mb-md-3 row align-items-center">
                   <label for="tech-status" class="col-sm-12 col-md-4 col-form-label text-capitalize pt-0"><?php echo language('TECH STATUS', @$_SESSION['systemLang']) ?></label>
                   <div class="col-sm-12 col-md-8" id="tech-status">
                     <select name="tech-status" id="tech-status" class="form-select" <?php if ($_SESSION['isTech'] == 0 || $malrows['mal_status'] == 1) {echo 'disabled';} ?>>
@@ -118,53 +110,57 @@ if ($count > 0) {
               <h5><?php echo language('PIECE/CLIENT INFO', @$_SESSION['systemLang']) ?></h5>
               <hr />
             </div>
+            
             <!-- client name -->
-            <div class="mb-sm-2 mb-md-3 row">
+            <div class="mb-1 row align-items-center">
               <label for="client-name" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('CLIENT NAME', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 col-md-8 position-relative">
-                <?php
-                  $clientDetails = selectSpecificColumn("`id`, `full_name`, `ip`", "`pieces_info`", "WHERE `id` = '" . $malrows['client_id'] . "' LIMIT 1");
-                ?>
+                <?php $client_details = selectSpecificColumn("`id`, `full_name`, `ip`", "`pieces_info`", "WHERE `id` = '" . $malrows['client_id'] . "' LIMIT 1")[0]; ?>
                 <input type="hidden" name="client-id" id="client-id" class="form-control w-100" placeholder="Client ID" value="<?php echo $malrows['client_id'] ?>" />
-                <input type="text" name="client-name" id="client-name" class="form-control w-100" placeholder="<?php echo language('CLIENT NAME', @$_SESSION['systemLang']) ?>" value="<?php echo $clientDetails[0]['full_name'] ?>" required disabled  />
-                <div class="result w-100">
-                  <ul class="clients-names" id="clients-names"></ul>
-                </div>
+                <a class="text-primary" href="<?php echo $nav_up_level ?>pieces/index.php?name=pieces&do=edit-piece&piece-id=<?php echo $malrows['client_id']?>" target="_blank"><?php echo $client_details['full_name'] ?></a>
               </div>
             </div>
             <!-- client address -->
-            <div class="mb-sm-2 mb-md-3 row">
+            <div class="mb-1 row align-items-center">
               <label for="client-addr" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('THE ADDRESS', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 col-md-8 position-relative">
-                <?php
-                  $clientAddr = selectSpecificColumn("`address`", "`pieces_addr`", "WHERE `id` = '" . $malrows['client_id'] . "' LIMIT 1");
-                ?>
-                <input type="text" name="client-addr" id="client-addr" class="form-control w-100" placeholder="No address" value="<?php if (!empty($clientAddr)) { echo $clientAddr[0]['address'];} ?>" required disabled />
+                <?php $client_addr = selectSpecificColumn("`address`", "`pieces_addr`", "WHERE `id` = '" . $malrows['client_id'] . "' LIMIT 1"); ?>
+                <?php if (!empty($client_addr)) { ?> 
+                  <span class="text-primary"><?php echo $client_addr['address']; ?></span>
+                <?php } else { ?>
+                  <span class="text-danger"><?php echo language('NO DATA ENTERED', @$_SESSION['systemLang']); ?></span>
+                <?php } ?>
               </div>
             </div>
             <!-- client address -->
-            <div class="mb-sm-2 mb-md-3 row">
+            <div class="mb-1 row align-items-center">
               <label for="client-addr" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('PHONE', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 col-md-8 position-relative">
-                <?php
-                  $clientPhone = selectSpecificColumn("`phone`", "`pieces_phones`", "WHERE `id` = '" . $malrows['client_id'] . "' LIMIT 1");
-                ?>
-                <input type="text" name="client-addr" id="client-addr" class="form-control w-100" placeholder="No phone" value="<?php if (!empty($clientPhone)) {echo $clientPhone[0]['phone'];} ?>" required disabled />
+                <?php $client_phone = selectSpecificColumn("`phone`", "`pieces_phones`", "WHERE `id` = '" . $malrows['client_id'] . "' LIMIT 1"); ?>
+                <?php if (!empty($client_phone)) { ?> 
+                  <span class="text-primary"><?php echo $client_phone['phone']; ?></span>
+                <?php } else { ?>
+                  <span class="text-danger"><?php echo language('NO DATA ENTERED', @$_SESSION['systemLang']); ?></span>
+                <?php } ?>
               </div>
             </div>
             <!-- client ip -->
-            <div class="mb-sm-2 mb-md-3 row">
+            <div class="mb-1 row align-items-center">
               <label for="client-ip" class="col-sm-12 col-md-4 col-form-label text-capitalize"><span class="text-uppercase"><?php echo language('IP', @$_SESSION['systemLang']) ?></span></label>
               <div class="col-sm-12 col-md-8 position-relative">
-                <input type="text" name="client-ip" id="client-ip" class="form-control w-100" placeholder="Client IP" value="<?php echo $clientDetails[0]['ip'] != 1 ? $clientDetails[0]['ip'] : "No IP" ?>" required disabled />
+                <?php if (!empty($client_details['ip'] != 1)) { ?> 
+                  <span class="text-primary"><?php echo $client_details['ip']; ?></span>
+                <?php } else { ?>
+                  <span class="text-danger"><?php echo language('NO DATA ENTERED', @$_SESSION['systemLang']); ?></span>
+                <?php } ?>
               </div>
             </div>
             <!-- malfunctions counter -->
             <?php $malCounter = countRecords("`mal_id`", "`malfunctions`", "WHERE `client_id` = ".$malrows['client_id']) ?>
-            <div class="mb-sm-2 mb-md-3 row">
+            <div class="mb-1 row align-items-center">
               <label for="malfunction-counter" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('MALFUNCTIONS COUNTER', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 col-md-8">
-                <span class="mt-2 me-5 text-start" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo $malCounter . " " . ($malCounter > 2 ? language("MALFUNCTIONS", @$_SESSION['systemLang']) : language("MALFUNCTION", @$_SESSION['systemLang'])) ?></span>
+                <span class="text-start" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo $malCounter . " " . ($malCounter > 2 ? language("MALFUNCTIONS", @$_SESSION['systemLang']) : language("MALFUNCTION", @$_SESSION['systemLang'])) ?></span>
                 <a href="?do=show-pieces-malfunctions&pieceid=<?php echo $malrows['client_id'] ?>" class="mt-2 text-start" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo language("SHOW DETAILS", @$_SESSION['systemLang']) ?></a>
               </div>
             </div>
@@ -179,66 +175,66 @@ if ($count > 0) {
               <hr />
             </div>
             <!-- added date -->
-            <div class="mb-sm-2 mb-md-3 row">
+            <div class="mb-1 row align-items-center">
               <label for="added-date" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('ADDED DATE', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 col-md-8">
-                <input type="date" class="form-control text-center" id="added-date" name="added-date" placeholder="malfunction date" value="<?php echo $malrows['added_date'] ?>" autocomplete="off" required disabled/>
+                <span class="text-primary" dir='ltr'><?php echo date_format(date_create($malrows['added_date']), 'd/m/Y') ?></span>
               </div>
             </div>
             <!-- added time -->
-            <div class="mb-sm-2 mb-md-3 row">
+            <div class="mb-1 row align-items-center">
               <label for="added-time" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('ADDED TIME', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 col-md-8">
-                <input type="time" class="form-control text-center" id="added-time" name="added-time" placeholder="malfunction time" value="<?php echo $malrows['added_time'] ?>" autocomplete="off" required disabled/>
+                <span class="text-primary" dir='ltr'><?php echo date_format(date_create($malrows['added_time']), 'h:i a') ?></span>
               </div>
             </div>
             <!-- showed date -->
-            <div class="mb-sm-2 mb-md-3 row">
+            <div class="mb-1 row align-items-center">
               <label for="showed-date" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('SHOWED DATE', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 col-md-8">
                 <?php if ($malrows['isShowed']) { ?>
-                  <input type="date" class="form-control text-center" id="repaired-date" name="repaired-date" placeholder="malfunction date" value="<?php echo $malrows['showed_date'] ?>" autocomplete="off" disabled/>
+                  <span class="text-primary" dir='ltr'><?php echo date_format(date_create($malrows['showed_date']), 'd/m/Y') ?></span>
                 <?php } else { ?>
-                  <input type="text" class="form-control text-center" id="msg-repaired-date" name="msg-repaired-date" placeholder="malfunction date message" value="Malfunction is not showed" autocomplete="off" disabled/>
+                  <span class="pt-2 text-danger"><?php echo language('NOT SHOWED BY THE TECHNICAL', @$_SESSION['systemLang']) ?></span>
                 <?php } ?>
               </div>
             </div>
             <!-- showed time -->
-            <div class="mb-sm-2 mb-md-3 row">
+            <div class="mb-1 row align-items-center">
               <label for="showed-time" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('SHOWED TIME', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 col-md-8">
                 <?php if ($malrows['isShowed']) { ?>
-                  <input type="time" class="form-control text-center" id="repaired-time" name="repaired-time" placeholder="malfunction time" value="<?php echo $malrows['showed_time'] ?>" autocomplete="off" disabled/>
+                  <span class="text-primary" dir='ltr'><?php echo date_format(date_create($malrows['showed_time']), 'h:i a') ?></span>
                 <?php } else { ?>
-                  <input type="text" class="form-control text-center" id="msg-repaired-time" name="msg-repaired-time" placeholder="malfunction time message" value="Malfunction is not showed" autocomplete="off" disabled/>
+                  <span class="pt-2 text-danger"><?php echo language('NOT SHOWED BY THE TECHNICAL', @$_SESSION['systemLang']) ?></span>
                 <?php } ?>
               </div>
             </div>
             <!-- repaired date -->
-            <div class="mb-sm-2 mb-md-3 row">
+            <div class="mb-1 row align-items-center">
               <label for="repaired-date" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('REPAIRED DATE', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 col-md-8">
                 <?php if ($malrows['mal_status']) { ?>
-                  <input type="date" class="form-control text-center" id="repaired-date" name="repaired-date" placeholder="malfunction date" value="<?php echo $malrows['repaired_date'] ?>" autocomplete="off" disabled/>
+                  <span class="text-primary" dir='ltr'><?php echo date_format(date_create($malrows['repaired_date']), 'd/m/Y') ?></span>
                 <?php } else { ?>
-                  <input type="text" class="form-control text-center" id="msg-repaired-date" name="msg-repaired-date" placeholder="malfunction date message" value="Not assigned" autocomplete="off" disabled/>
+                  <span class="pt-2 text-danger"><?php echo language('NOT REPAIRED BY THE TECHNICAL', @$_SESSION['systemLang']) ?></span>
                 <?php } ?>
               </div>
             </div>
             <!-- repaired time -->
-            <div class="mb-sm-2 mb-md-3 row">
+            <div class="mb-1 row align-items-center">
               <label for="repaired-time" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('REPAIRED TIME', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 col-md-8">
                 <?php if ($malrows['mal_status']) { ?>
-                  <input type="time" class="form-control text-center" id="repaired-date" name="repaired-date" placeholder="malfunction date" value="<?php echo $malrows['repaired_time'] ?>" autocomplete="off" disabled/>
+                  <span class="text-primary" dir='ltr'><?php echo date_format(date_create($malrows['repaired_time']), 'h:i a') ?></span>
                 <?php } else { ?>
-                  <input type="text" class="form-control text-center" id="msg-repaired-date" name="msg-repaired-date" placeholder="malfunction date message" value="Not assigned" autocomplete="off" disabled/>
+                  <span class="text-danger"><?php echo language('NOT REPAIRED BY THE TECHNICAL', @$_SESSION['systemLang']) ?></span>
                 <?php } ?>
               </div>
             </div>
             <?php if ($malrows['mal_status'] == 1) { ?>
               <!-- diff time -->
-              <div class="mb-sm-2 mb-md-3 row">
+              <div class="mb-1 row align-items-center">
                 <label for="showed-time" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('REPAIRED PERIOD', @$_SESSION['systemLang']) ?></label>
                 <div class="col-sm-12 col-md-8 pt-2">
                   <?php
@@ -259,11 +255,11 @@ if ($count > 0) {
                       $minutes = $diff_time->i;
                       $seconds = $diff_time->s;
                   ?>
-                    <span class="mt-2">
-                      <?php echo "$days " . language($days > 1 ? 'DAYS' : 'DAY', @$_SESSION['systemLang']) . ", $hours " . language($hours > 1 ? 'HOURS' : 'HOUR', @$_SESSION['systemLang']) . ", $minutes " . language($minutes > 1 ? 'MINUTES' : 'MINUTE', @$_SESSION['systemLang']) . ", $seconds " . language($seconds > 1 ? 'SECONDS' : 'SECOND', @$_SESSION['systemLang']) ?>
+                    <span class="text-primary">
+                      <?php echo ($days > 0 ? "$days " . language($days > 1 ? 'DAYS' : 'DAY', @$_SESSION['systemLang']).", " : '') . ($hours > 0 ? " $hours " . language($hours > 1 ? 'HOURS' : 'HOUR', @$_SESSION['systemLang']) . ", " : '') . ($minutes > 0 ? " $minutes " . language($minutes > 1 ? 'MINUTES' : 'MINUTE', @$_SESSION['systemLang']).", " : '') . ($seconds > 0 ? " $seconds " . language($seconds > 1 ? 'SECONDS' : 'SECOND', @$_SESSION['systemLang']).". " : '') ?>
                     </span>
                   <?php } else { ?>
-                    <span class="text-info"><?php echo language('THE TECHNICAL MAN DIDN`T REPAIR THE MALFUNCTION TO CALCULATE THE MALFUNCTION REPAIRED PERIOD', @$_SESSION['systemLang']) ?></span>
+                    <span class="text-danger"><?php echo language('THE TECHNICAL MAN DIDN`T REPAIR THE MALFUNCTION TO CALCULATE THE MALFUNCTION REPAIRED PERIOD', @$_SESSION['systemLang']) ?></span>
                   <?php } ?>
                 </div>
               </div>
@@ -278,25 +274,25 @@ if ($count > 0) {
               <hr />
             </div>
             <!-- description -->
-            <div class="mb-sm-2 mb-md-3 row">
+            <div class="mb-sm-2 mb-md-3 row align-items-center">
               <label for="descreption" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('MALFUNCTION DESCRIPTION', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 col-md-8">
                 <textarea name="descreption" id="descreption" title="describe the malfunction" class="form-control w-100" style="height: 7rem; resize: none; direction: <?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>" placeholder="Describe the malfunction" required <?php if ($_SESSION['isTech'] == 1 || $malrows['mal_status']) {echo 'disabled';} ?>><?php echo $malrows['descreption'] ?></textarea>
               </div>
             </div>
             <!-- technical man comment -->
-            <div class="mb-sm-2 mb-md-3 row">
+            <div class="mb-sm-2 mb-md-3 row align-items-center">
               <label for="comment" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('TECHNICAL MAN COMMENT', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 col-md-8">
                 <textarea name="comment" id="comment" title="describe the malfunction" class="form-control w-100" style="height: 7rem; resize: none; direction: <?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>" <?php if ($_SESSION['isTech'] == 0 || $malrows['mal_status']) {echo 'disabled';} ?>><?php echo empty($malrows['tech_comment']) && $malrows['mal_status'] ? "لا يوجد تعليق من الفني" : $malrows['tech_comment']; ?></textarea>
               </div>
             </div>
             <!-- cost -->
-            <div class="mb-sm-2 mb-md-3 row">
+            <div class="mb-sm-2 mb-md-3 row align-items-center">
               <label for="cost" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('MALFUNCTION COST', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 col-md-8">
                 <div class="row">
-                  <div class="col-3">
+                  <div class="col-4">
                     <input name="cost" id="cost" class="form-control"  placeholder="<?php echo language('MALFUNCTION COST', @$_SESSION['systemLang']) ?>" value="<?php echo $malrows['cost'] ?>" <?php if ($_SESSION['isTech'] == 0 || $malrows['mal_status'] == 1) {echo 'disabled';} ?> >
                   </div>
                   <div class="mt-2 col">
@@ -315,7 +311,7 @@ if ($count > 0) {
               <hr />
             </div>
             <!-- quality of employee -->
-            <div class="mb-sm-2 mb-md-3 row">
+            <div class="mb-sm-2 mb-md-3 row align-items-center">
               <label for="technical-qty" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('QUALITY OF TECHNICAL MAN', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 col-md-8">
                 <select name="technical-qty" id="technical-qty" class="form-select" <?php if ($_SESSION['mal_review'] == 0 || ($malrows['mal_status'] == 0 && $_SESSION['isTech'] == 0) || $malrows['isReviewed'] == 1) {echo 'disabled';} ?> >
@@ -327,7 +323,7 @@ if ($count > 0) {
               </div>
             </div>
             <!-- quality of service -->
-            <div class="mb-sm-2 mb-md-3 row">
+            <div class="mb-sm-2 mb-md-3 row align-items-center">
               <label for="service-qty" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('QUALITY OF SERVICE', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 col-md-8">
                 <select name="service-qty" id="service-qty" class="form-select" <?php if ($_SESSION['mal_review'] == 0 || ($malrows['mal_status'] == 0 && $_SESSION['isTech'] == 0) || $malrows['isReviewed'] == 1) {echo 'disabled';} ?> >
@@ -339,7 +335,7 @@ if ($count > 0) {
               </div>
             </div>
             <!-- money review -->
-            <div class="mb-sm-2 mb-md-3 row">
+            <div class="mb-sm-2 mb-md-3 row align-items-center">
               <label for="money-review" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('COST REVIEW', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 col-md-8">
                 <select name="money-review" id="money-review" class="form-select" <?php if ($_SESSION['mal_review'] == 0 || ($malrows['mal_status'] == 0 && $_SESSION['isTech'] == 0) || $malrows['isReviewed'] == 1) {echo 'disabled';} ?> >
@@ -350,30 +346,30 @@ if ($count > 0) {
               </div>
             </div>
             <!-- employee review comment -->
-            <div class="mb-sm-2 mb-md-3 row">
+            <div class="mb-sm-2 mb-md-3 row align-items-center">
               <label for="review-comment" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('REVIEW COMMENT', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 col-md-8">
                 <textarea name="review-comment" id="review-comment" title="review comment" class="form-control w-100" style="height: 5rem; resize: none; direction: <?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>"  <?php if ($_SESSION['mal_review'] == 0 || ($malrows['mal_status'] == 0 && $_SESSION['isTech'] == 0) || $malrows['isReviewed'] == 1) {echo 'disabled';} ?> ><?php echo $malrows['qty_comment'] ?></textarea>
               </div>
             </div>
             <?php if ($malrows['isReviewed']) { ?>
-            <!-- reviewed time -->
-            <div class="mb-sm-2 mb-md-3 row">
-              <label for="reviewed-time" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('REVIEWED TIME', @$_SESSION['systemLang']) ?></label>
-              <div class="col-sm-12 col-md-8">
-                <input type="time" class="form-control text-center" id="repaired-time" name="repaired-time" placeholder="malfunction time" value="<?php echo $malrows['reviewed_time'] ?>" autocomplete="off" disabled/>
+              <!-- reviewed date -->
+              <div class="mb-1 row align-items-center">
+                <label for="reviewed-date" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('REVIEWED DATE', @$_SESSION['systemLang']) ?></label>
+                <div class="col-sm-12 col-md-8">
+                  <span class="text-primary" dir='ltr'><?php echo date_format(date_create($malrows['reviewed_date']), 'd/m/Y') ?></span>
+                </div>
               </div>
-            </div>
-            <!-- reviewed date -->
-            <div class="mb-sm-2 mb-md-3 row">
-              <label for="reviewed-date" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('REVIEWED DATE', @$_SESSION['systemLang']) ?></label>
-              <div class="col-sm-12 col-md-8">
-                <input type="date" class="form-control text-center" id="repaired-date" name="repaired-date" placeholder="malfunction date" value="<?php echo $malrows['reviewed_date'] ?>" autocomplete="off" disabled/>
+              <!-- reviewed time -->
+              <div class="mb-1 row align-items-center">
+                <label for="reviewed-time" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('REVIEWED TIME', @$_SESSION['systemLang']) ?></label>
+                <div class="col-sm-12 col-md-8">
+                  <span class="text-primary" dir='ltr'><?php echo date_format(date_create($malrows['reviewed_time']), 'h:i a') ?></span>
+                </div>
               </div>
-            </div>
             <?php } ?>
             <?php if ($malrows['isReviewed'] != 0 && $malrows['mal_status'] == 0 && $_SESSION['isTech'] == 0) { ?> 
-              <div class="mb-sm-2 mb-md-3 row">
+              <div class="mb-1 row align-items-center">
                 <span class="text-info" dir="<?php echo @$_SESSION['systemLang'] == 0 ? 'rtl' : 'ltr' ?>" style="text-align: <?php echo @$_SESSION['systemLang'] == 0 ? 'right' : 'left' ?>"><?php echo language('THAT IS NOT POSSIBLE TO REVIEW THE MALFUNCTION BERFORE REPAIR IT', @$_SESSION['systemLang']) ?></span>
               </div>
             <?php } ?>

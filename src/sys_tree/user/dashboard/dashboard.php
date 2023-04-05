@@ -149,7 +149,7 @@
                     </a>
                   </span>
                 </div>
-                <?php $newMalCounter = $db_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id']); ?>
+                <?php $newMalCounter = $db_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] . " $techMalCondition"); ?>
                 <?php if ($newMalCounter > 0) { ?>
                   <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
                     <span><?php echo $newMalCounter ?></span>
@@ -167,7 +167,7 @@
                     </a>
                   </span>
                 </div>
-                <?php $newCombCounter = $db_obj->count_records("`comb_id`", "`combinations`", "WHERE `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id']); ?>
+                <?php $newCombCounter = $db_obj->count_records("`comb_id`", "`combinations`", "WHERE `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] . " $techCombCondition"); ?>
                 <?php if ($newCombCounter > 0) { ?>
                   <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
                     <span><?php echo $newCombCounter ?></span>

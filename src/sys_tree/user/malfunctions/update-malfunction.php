@@ -24,8 +24,6 @@
       // get new malfunction info
       $manager_id   = $_POST['admin-id'];
       $tech_id      = $_POST['technical-id'];
-      // is updated flag
-      $is_updated = false;
       // chekc malfunction status
       if ($mal_info['mal_status'] == 0) {
         // check who is doing the update
@@ -37,10 +35,7 @@
             */
           case 1:
           case 3:
-            // check who is doing the updates
-            if ($update_owner_id == $manager_id || $update_owner_job_id == 1) {
-              $is_updated = do_manager_updates($_POST);
-            }
+            do_manager_updates($_POST);
             break;
           /**
            * updates for:
@@ -49,26 +44,19 @@
           case 2:
             // check who is doing the updates
             if ($update_owner_id == $tech_id) {
-              $is_updated = do_technical_updates($_POST);
+              do_technical_updates($_POST);
             }
             break;
         }
       } else {
-        // check who is doing the update
-        if ($update_owner_job_id == 4 || $update_owner_job_id == 1 || $_SESSION['mal_update'] == 1) {
-          /**
-           * updates for:
-           * [1] After Sales Man
-           */
-          $is_updated = do_after_sales_updates($_POST);
-        }
+        /**
+         * updates for:
+         * [1] After Sales Man
+         */
+        do_after_sales_updates($_POST);
       }
-      // check if was updated
-      if ($is_updated) {
-        $msg = '<div class="alert alert-success text-capitalize"><i class="bi bi-check-circle-fill"></i>&nbsp;'.language("MALFUNCTION WAS UPDATED SUCCESSFULLY", @$_SESSION['systemLang']).'</div>';
-      } else {
-        $msg = '<div class="alert alert-danger text-capitalize"><i class="bi bi-check-exclamation-triangle-fill"></i>&nbsp;'.language("A PROBLEM WAS HAPPENED WHILE UPDATING THE MALFUNCTION", @$_SESSION['systemLang']).'</div>';
-      }
+      // success message
+      $msg = '<div class="alert alert-success text-capitalize"><i class="bi bi-check-circle-fill"></i>&nbsp;'.language("MALFUNCTION WAS UPDATED SUCCESSFULLY", @$_SESSION['systemLang']).'</div>';
     } ?>
 
     <!-- start edit profile page -->
@@ -110,13 +98,11 @@ function do_manager_updates($info) {
   // compare new tech with the old
   if ($tech_id == $prev_tech_id) {
     // update all malfunction info
-    $is_updated = $mal_obj->update_malfunction_mng(array($descreption, $mal_id));
+    $mal_obj->update_malfunction_mng(array($descreption, $mal_id));
   } else {
     // reset malfunction info
-    $is_updated = $mal_obj->reset_malfunction_info(array($tech_id, $descreption, $mal_id));
+    $mal_obj->reset_malfunction_info(array($tech_id, $descreption, $mal_id));
   }
-  // return updated status
-  return $is_updated;
 }
 ?>
 
@@ -139,9 +125,7 @@ function do_technical_updates($info) {
   // create an object of Malfunction class
   $mal_obj = new Malfunction();
   // get updated status
-  $is_updated = $mal_obj->update_malfunction_tech(array($mal_status, $cost, $tech_comment, $tech_status, $mal_id));
-  // return updated status
-  return $is_updated;
+  $mal_obj->update_malfunction_tech(array($mal_status, $cost, $tech_comment, $tech_status, $mal_id));
 }
 ?>
 
@@ -162,14 +146,12 @@ function do_after_sales_updates($info) {
   // get review comment
   $review_comment = isset($info['review-comment']) ? $info['review-comment'] : '';
   // check if will review
-  if ($tech_qty != 0 && $service_qty != 0 && $money_review != 0 && !empty($review_comment)) {
+  if ($tech_qty != 0 && $service_qty != 0 && $money_review != 0) {
     // create an object of Malfunction class
     $mal_obj = new Malfunction();
     // get updated status
-    $is_updated = $mal_obj->update_malfunction_review(array($money_review, $service_qty, $tech_qty, $review_comment, $mal_id));
+    $mal_obj->update_malfunction_review(array($money_review, $service_qty, $tech_qty, $review_comment, $mal_id));
   }
-  // return updated status
-  return $is_updated;
 }
 ?>
 

@@ -368,8 +368,8 @@ if ($_SESSION['mal_show'] == 1) {
                 foreach ($todayMal as $index => $mal) {
                   // get client info
                   $clientName     = $mal_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = ".$mal['client_id'])[0]['full_name'];
-                  $clientAddr     = $mal_obj->select_specific_column("`address`", "`pieces_addr`", "WHERE `piece_id` = ".$mal['client_id']);
-                  $clientPhone    = $mal_obj->select_specific_column("`phone`", "`pieces_phone`", "WHERE `piece_id` = ".$mal['client_id']);
+                  $clientAddr     = $mal_obj->select_specific_column("`address`", "`pieces_addr`", "WHERE `id` = ".$mal['client_id']);
+                  $clientPhone    = $mal_obj->select_specific_column("`phone`", "`pieces_phones`", "WHERE `id` = ".$mal['client_id']);
                   $technicalName  = $mal_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$mal['tech_id'])[0]['UserName'];
                 ?>
                   <tr>
@@ -473,8 +473,8 @@ if ($_SESSION['mal_show'] == 1) {
                 foreach ($latestMal as $index => $mal) {
                   // get client info
                   $clientName     = $mal_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = ".$mal['client_id'])[0]['full_name'];
-                  $clientAddr     = $mal_obj->select_specific_column("`address`", "`pieces_addr`", "WHERE `piece_id` = ".$mal['client_id']);
-                  $clientPhone    = $mal_obj->select_specific_column("`phone`", "`pieces_phone`", "WHERE `piece_id` = ".$mal['client_id']);
+                  $clientAddr     = $mal_obj->select_specific_column("`address`", "`pieces_addr`", "WHERE `id` = ".$mal['client_id']);
+                  $clientPhone    = $mal_obj->select_specific_column("`phone`", "`pieces_phones`", "WHERE `id` = ".$mal['client_id']);
                   $technicalName  = $mal_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$mal['tech_id'])[0]['UserName'];
                 ?>
                   <tr>

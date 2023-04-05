@@ -78,7 +78,7 @@ class Malfunction extends Database {
   
   // update Malfunction info
   public function reset_malfunction_info($info) {
-    $update_query = "UPDATE `malfunctions` SET `tech_id` = ?, `descreption` = ?, `added_date` = CURRENT_DATE, `added_time` = CURRENT_TIME, `mal_status` =  0,`cost` =  0, `repaired_date` = '0000-00-00', `repaired_time` = '00:00:00', `tech_comment` = '', `isShowed` = 0, `showed_date` = '0000-00-00', `showed_time` = '00:00:00', `isAccepted` = -1, `isReviewed` = 0, `reviewed_date` = '0000-00-00', `reviewed_time` = '00:00:00', `money_review` = 0, `qty_service` = 0, `qty_emp` = 0, `qty_comment` = '',  WHERE `mal_id` = ?";
+    $update_query = "UPDATE `malfunctions` SET `tech_id` = ?, `descreption` = ?, `added_date` = CURRENT_DATE, `added_time` = CURRENT_TIME, `mal_status` =  0,`cost` =  0, `repaired_date` = '0000-00-00', `repaired_time` = '00:00:00', `tech_comment` = '', `isShowed` = 0, `showed_date` = '0000-00-00', `showed_time` = '00:00:00', `isAccepted` = -1, `isReviewed` = 0, `reviewed_date` = '0000-00-00', `reviewed_time` = '00:00:00', `money_review` = 0, `qty_service` = 0, `qty_emp` = 0, `qty_comment` = '' WHERE `mal_id` = ?";
     // prepare the query
     $stmt = $this->con->prepare($update_query);
     $stmt->execute($info);

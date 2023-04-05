@@ -185,8 +185,12 @@ function get_page_dependencies($page_role, $file_type) {
     ],
     
     'sys_tree_user' => [
-      'css' => [],
-      'js' => [],
+      'css' => [
+        '1' => 'users.css',
+      ],
+      'js' => [
+        '1' => 'users.js',
+      ],
       'node' => [
         'css' => [],
         'js' => []

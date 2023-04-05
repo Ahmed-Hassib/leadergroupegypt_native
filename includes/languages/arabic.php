@@ -262,7 +262,8 @@ function languageAr($phrase)
     'AFTER SALES'                   => 'خدمة ما بعد البيع',
     'ACCOUNTANT'                    => 'محاسب',
     'STOREKEEPER'                   => 'أمين مخزن',
-
+    'CHANGE IMAGE'                  => 'تغيير الصورة',
+    'DELETE IMAGE'                  => 'حذف الصورة',
 
     /**
      * CLIENTS & PIECES PAGE WORDS
@@ -402,8 +403,8 @@ function languageAr($phrase)
     'QUALITY OF TECHNICAL MAN'              => 'جودة الفني المختص',
     'QUALITY OF SERVICE'                    => 'جودة الخدمة',
     'COST REVIEW'                           => 'مراجعة الحساب',
-    'REVIEWED DATE'                         => 'وقت المراجعة',
-    'REVIEWED TIME'                         => 'تاريخ المراجعة',
+    'REVIEWED DATE'                         => 'تاريخ المراجعة',
+    'REVIEWED TIME'                         => 'وقت المراجعة',
     'MALFUNCTION MEDIA'                     => 'الصور والفيديوهات الخاصه بالعطل',
     'BAD'                                   => 'سيئ',
     'GOOD'                                  => 'جيد',
@@ -419,6 +420,9 @@ function languageAr($phrase)
     'MOST CLIENTS WHO HAVE MALFUNCTIONS'    => 'اكثر العملاء الذين لديهم اعطال',
     'LATEST MALFUNCTION DATE'               => 'تاريخ آخر عطل',
     'ADD NEW PHOTO/VIDEO'                   => 'اضافة صورة/فيديو جديد',
+    'NOT SHOWED BY THE TECHNICAL'           => 'لم يتم رؤيتها من قبل الفنى',
+    'NOT REPAIRED BY THE TECHNICAL'         => 'لم يتم حل العطل من قبل الفنى',
+    'MALFUNCTION WAS ADDED SUCCESSFULLY'    => 'تم اضافة العطل بنجاح',
     
     
     /**
