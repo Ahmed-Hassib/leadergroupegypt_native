@@ -61,10 +61,15 @@
 
     <!-- start edit profile page -->
     <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
+      <pre dir="ltr">
+        <?php print_r($_POST) ?>
+        <?php print_r($_FILES) ?>
+      </pre>
       <!-- start header -->
       <header class="header">
-        <?php  redirectHome($msg, 'back'); ?>
+        <?php  redirectHome($msg, 'back', 1000000); ?>
       </header>
+
     </div>
   
   <?php

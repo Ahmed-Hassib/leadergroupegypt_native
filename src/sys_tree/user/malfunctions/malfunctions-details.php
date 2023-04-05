@@ -182,20 +182,20 @@ $count = $stmt->rowCount();     // get row count
   <!-- start table container -->
   <div class="table-responsive-sm">
     <!-- strst users table -->
-    <table class="table table-bordered  display compact table-style w-100" id="malfunctions">
+    <table class="table table-striped table-bordered  display compact table-style" id="malfunctions">
       <thead class="primary text-capitalize">
         <tr>
-          <th class="text-center" style="max-width: 50px">#</th>
-          <th class="text-center" style="width: 150px"><?php echo language('ADMIN NAME', @$_SESSION['systemLang']) ?></th>
-          <th class="text-center" style="width: 150px"><?php echo language('TECHNICAL NAME', @$_SESSION['systemLang']) ?></th>
-          <th class="text-center" style="width: 150px"><?php echo language('PIECE NAME', @$_SESSION['systemLang'])." / ".language('THE CLIENT', @$_SESSION['systemLang']) ?></th>
-          <th class="text-center" style="max-width: 200px"><?php echo language('MALFUNCTION DESCRIPTION', @$_SESSION['systemLang']) ?></th>
-          <th class="text-center" style="max-width: 200px"><?php echo language('TECHNICAL MAN COMMENT', @$_SESSION['systemLang']) ?></th>
-          <th class="text-center" style="width: 100px"><?php echo language('ADDED DATE', @$_SESSION['systemLang']) ?></th>
-          <th class="text-center" style="width: 100px"><?php echo language('ADDED TIME', @$_SESSION['systemLang']) ?></th>
-          <th class="text-center" style="width: 70px"><?php echo language('STATUS', @$_SESSION['systemLang']) ?></th>
-          <th class="text-center fs-10-sm" style="width: 70px"><?php echo language('TECH STATUS', @$_SESSION['systemLang']) ?></th>
-          <th class="text-center" style="width: 75px"><?php echo language('CONTROL', @$_SESSION['systemLang']) ?></th>
+          <th data-order="asc" data-col-type="number" class="text-center" style="width: 20px">#</th>
+          <th data-order="asc" data-col-type="string" class="text-center" style="width: 150px"><?php echo language('ADMIN NAME', @$_SESSION['systemLang']) ?></th>
+          <th data-order="asc" data-col-type="string" class="text-center" style="width: 150px"><?php echo language('TECHNICAL NAME', @$_SESSION['systemLang']) ?></th>
+          <th data-order="asc" data-col-type="string" class="text-center" style="width: 250px"><?php echo language('PIECE NAME', @$_SESSION['systemLang'])." / ".language('CLIENT NAME', @$_SESSION['systemLang']) ?></th>
+          <th data-order="asc" data-col-type="string" class="text-center" style="width: 200px"><?php echo language('MALFUNCTION DESCRIPTION', @$_SESSION['systemLang']) ?></th>
+          <th data-order="asc" data-col-type="string" class="text-center" style="width: 200px"><?php echo language('TECHNICAL MAN COMMENT', @$_SESSION['systemLang']) ?></th>
+          <th data-order="asc" data-col-type="string" class="text-center" style="width: 100px"><?php echo language('ADDED DATE', @$_SESSION['systemLang']) ?></th>
+          <th data-order="asc" data-col-type="string" class="text-center" style="width: 100px"><?php echo language('ADDED TIME', @$_SESSION['systemLang']) ?></th>
+          <th data-order="asc" data-col-type="string" class="text-center fs-10-sm" style="width: 50px"><?php echo language('STATUS', @$_SESSION['systemLang']) ?></th>
+          <th data-order="asc" data-col-type="string" class="text-center fs-10-sm" style="width: 50px"><?php echo language('TECH STATUS', @$_SESSION['systemLang']) ?></th>
+          <th class="text-center" style="width: 70px;"><?php echo language('CONTROL', @$_SESSION['systemLang']) ?></th>
         </tr>
       </thead>
       <tbody>
@@ -204,22 +204,46 @@ $count = $stmt->rowCount();     // get row count
         ?>
           <tr>
             <td class="text-center"><?php echo ($index + 1) ?></td>
+
             <td class="text-center">
               <?php $adminName = $mal_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$row['mng_id'])[0]['UserName']; ?>
               <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $row['mng_id'];?>"><?php echo $adminName ?></a>
             </td>
+
             <td class="text-center">
               <?php $techName = $mal_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$row['tech_id'])[0]['UserName']; ?>
               <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $row['tech_id'];?>"><?php echo $techName ?></a>
             </td>
+
             <td class="text-center">
               <?php $clientnName = $mal_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = " . $row['client_id'] . " LIMIT 1")[0]['full_name']; ?>
               <a href="<?php echo $nav_up_level ?>pieces/index.php?do=edit-piece&piece-id=<?php echo $row['client_id'];?>"><?php echo $clientnName ?></a>
             </td>
-            <td class="text-center"><?php echo $row['descreption'] ?></td>
-            <td class="text-center <?php echo empty($row['tech_comment']) ? 'text-danger ' : '' ?>"><?php echo !empty($row['tech_comment']) ? $row['tech_comment'] : language('THERE IS NO COMMENT OR NOTE TO SHOW', @$_SESSION['systemLang']) ?></td>
+
+            <td class="text-center">
+              <?php if (strlen($row['descreption']) > 40) {
+                echo trim(substr($row['descreption'], 0, 40), '') . "...";
+              } else {
+                echo $row['descreption'];
+              } ?>
+            </td>
+
+            <td class="text-center <?php echo empty($row['tech_comment']) ? 'text-danger' : '' ?>">
+              <?php if (!empty($row['tech_comment'])) {
+                if (strlen($row['tech_comment']) > 40) {
+                  echo trim(substr($row['tech_comment'], 0, 40), '') . "...";
+                } else {
+                  echo $row['tech_comment'];
+                }
+              } else {
+                echo language('THERE IS NO COMMENT OR NOTE TO SHOW', @$_SESSION['systemLang']);
+              } ?>
+            </td>
+
             <td class="text-center"><?php echo date_format(date_create($row['added_date']), "Y-m-d") ?></td>
+
             <td class="text-center"><?php echo date_format(date_create($row['added_time']), "h:i a") ?></td>
+
             <td class="text-center">
               <?php
               if ($row['mal_status'] == 0) {
@@ -238,6 +262,7 @@ $count = $stmt->rowCount();     // get row count
               ?>
               <i class="bi <?php echo $iconStatus ?>" title="<?php echo $titleStatus ?>"></i>
             </td>
+
             <td class="text-center">
               <?php
                 if ($row['isAccepted'] == 0) {
@@ -256,6 +281,7 @@ $count = $stmt->rowCount();     // get row count
               ?>
               <i class="bi <?php echo $iconStatus ?>" title="<?php echo $titleStatus ?>"></i>
             </td>
+
             <td class="text-center">
               <a href="?do=edit-malfunction-info&malid=<?php echo $row['mal_id'] ?>" class="btn btn-outline-primary fs-12 <?php if ($_SESSION['mal_show'] == 0) {echo 'disabled';} ?>"><i class="bi bi-eye"></i></a>
               <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 <?php if ($_SESSION['mal_delete'] == 0) {echo 'disabled';} ?>" data-bs-toggle="modal" data-bs-target="#delete-malfunction-modal" id="delete-mal" data-mal-id="<?php echo $row['mal_id'] ?>"><i class="bi bi-trash"></i></button>

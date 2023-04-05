@@ -1,0 +1,32 @@
+.media-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.col-media {
+  position: relative;
+  height: 250px;
+}
+
+.col-media img,
+.col-media video {
+  padding: 0px;
+  border: 5px solid #0d6efd;
+  border-radius: 16px;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.col-media .control-btn {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
+.col-media:hover .control-btn {
+  display: block;
+}

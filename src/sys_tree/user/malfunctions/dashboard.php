@@ -367,25 +367,31 @@ if ($_SESSION['mal_show'] == 1) {
                 // loop on data
                 foreach ($todayMal as $index => $mal) {
                   // get client info
-                  $clientName     = $mal_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = ".$mal['client_id'])[0]['full_name'];
-                  $clientAddr     = $mal_obj->select_specific_column("`address`", "`pieces_addr`", "WHERE `id` = ".$mal['client_id']);
-                  $clientPhone    = $mal_obj->select_specific_column("`phone`", "`pieces_phones`", "WHERE `id` = ".$mal['client_id']);
-                  $technicalName  = $mal_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$mal['tech_id'])[0]['UserName'];
+                  $client_name  = $mal_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = ".$mal['client_id'])[0]['full_name'];
+                  $client_type  = $mal_obj->select_specific_column("`is_client`", "`pieces_info`", "WHERE `id` = ".$mal['client_id'])[0]['is_client'];
+                  $client_addr  = $mal_obj->select_specific_column("`address`", "`pieces_addr`", "WHERE `id` = ".$mal['client_id']);
+                  $client_phone = $mal_obj->select_specific_column("`phone`", "`pieces_phones`", "WHERE `id` = ".$mal['client_id']);
+                  $tech_name    = $mal_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$mal['tech_id'])[0]['UserName'];
                 ?>
                   <tr>
                     <td><?php echo ++$index; ?></td>
+
                     <td style="width: 100px">
-                      <a href="<?php echo $nav_up_level ?>pieces/index.php?do=edit-piece&piece-id=<?php echo $mal['client_id'] ?>">
-                        <?php echo !empty($clientName) ? $clientName : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>
+                      <a href="<?php echo $nav_up_level ?>pieces/index.php?name=<?php echo $client_type > 0 ? 'clients' : 'pieces' ?>&do=edit-piece&piece-id=<?php echo $mal['client_id'] ?>">
+                        <?php echo !empty($client_name) ? $client_name : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>
                       </a>
                     </td>
-                    <td style="width: 100px" class="<?php echo empty($clientAddr) ? 'text-danger ' : '' ?>"><?php echo !empty($clientAddr) ? $clientAddr[0]['address'] : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?></td>
-                    <td style="width: 100px" class="<?php echo empty($clientPhone) ? 'text-danger ' : '' ?>"><?php echo !empty($clientPhone) ? $clientPhone[0]['phone'] : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?></td>
+
+                    <td style="width: 100px" class="<?php echo empty($client_addr) ? 'text-danger ' : '' ?>"><?php echo !empty($client_addr) ? $client_addr[0]['address'] : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?></td>
+
+                    <td style="width: 100px" class="<?php echo empty($client_phone) ? 'text-danger ' : '' ?>"><?php echo !empty($client_phone) ? $client_phone[0]['phone'] : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?></td>
+
                     <td style="width: 100px">
                       <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $mal['tech_id'] ?>">
-                        <?php echo !empty($technicalName)   ? $technicalName    : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>
+                        <?php echo !empty($tech_name)   ? $tech_name    : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>
                       </a>
                     </td>
+
                     <td style="width: 50px">
                     <?php
                     if ($mal['mal_status'] == 0) {
@@ -404,6 +410,7 @@ if ($_SESSION['mal_show'] == 1) {
                     ?>
                     <i class="bi <?php echo $iconStatus ?>" title="<?php echo $titleStatus ?>"></i>
                     </td>
+
                     <td style="width: 50px">
                     <?php
                       if ($mal['isAccepted'] == 0) {
@@ -422,12 +429,12 @@ if ($_SESSION['mal_show'] == 1) {
                     ?>
                     <i class="bi <?php echo $iconStatus ?>" title="<?php echo $titleStatus ?>"></i>
                     </td>
+
                     <td style="width: 50px">
                       <a href="?do=edit-malfunction-info&malid=<?php echo $mal['mal_id'] ?>" target="" class="btn btn-outline-primary me-1 fs-12 <?php if ($_SESSION['mal_show'] == 0) {echo 'disabled';} ?>"><i class="bi bi-eye"></i></a>
                       <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 <?php if ($_SESSION['comb_delete'] == 0) {echo 'disabled';} ?>" data-bs-toggle="modal" data-bs-target="#delete-malfunction-modal" id="delete-mal" data-mal-id="<?php echo $mal['mal_id'] ?>"><i class="bi bi-trash"></i></button>
                     </td>
                   </tr>
-
                 <?php } ?>
               </tbody>
             </table>
@@ -440,12 +447,8 @@ if ($_SESSION['mal_show'] == 1) {
     </div>
     <?php } ?>
 
-    <?php 
-      // get malfunctions of today
-      $latestMal = $mal_obj->select_specific_column("*", "`malfunctions`", "WHERE `company_id` = ".$_SESSION['company_id'] ." $techCondition1 ORDER BY `added_time` DESC LIMIT 5");
-      // check if array not empty
-      if (!empty($latestMal)) {
-    ?>
+    <?php $latestMal = $mal_obj->select_specific_column("*", "`malfunctions`", "WHERE `company_id` = ".$_SESSION['company_id'] ." $techCondition1 ORDER BY `added_time` DESC LIMIT 5"); ?>
+    <?php if (!empty($latestMal)) { ?>
     <div class="mb-3 row">
       <div class="col-12">
         <div class="section-block">
@@ -472,24 +475,29 @@ if ($_SESSION['mal_show'] == 1) {
                 // loop on data
                 foreach ($latestMal as $index => $mal) {
                   // get client info
-                  $clientName     = $mal_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = ".$mal['client_id'])[0]['full_name'];
-                  $clientAddr     = $mal_obj->select_specific_column("`address`", "`pieces_addr`", "WHERE `id` = ".$mal['client_id']);
-                  $clientPhone    = $mal_obj->select_specific_column("`phone`", "`pieces_phones`", "WHERE `id` = ".$mal['client_id']);
-                  $technicalName  = $mal_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$mal['tech_id'])[0]['UserName'];
+                  $client_name  = $mal_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = ".$mal['client_id'])[0]['full_name'];
+                  $client_type  = $mal_obj->select_specific_column("`is_client`", "`pieces_info`", "WHERE `id` = ".$mal['client_id'])[0]['is_client'];
+                  $client_addr  = $mal_obj->select_specific_column("`address`", "`pieces_addr`", "WHERE `id` = ".$mal['client_id']);
+                  $client_phone = $mal_obj->select_specific_column("`phone`", "`pieces_phones`", "WHERE `id` = ".$mal['client_id']);
+                  $tech_name    = $mal_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$mal['tech_id'])[0]['UserName'];
                 ?>
                   <tr>
                     <td style="width: 150px">
-                      <a href="<?php echo $nav_up_level ?>pieces/index.php?do=edit-piece&piece-id=<?php echo $mal['client_id'] ?>">
-                        <?php echo !empty($clientName) ? $clientName : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>
+                      <a href="<?php echo $nav_up_level ?>pieces/index.php?name=<?php echo $client_type > 0 ? 'clients' : 'pieces' ?>&do=edit-piece&piece-id=<?php echo $mal['client_id'] ?>">
+                        <?php echo !empty($client_name) ? $client_name : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>
                       </a>
                     </td>
-                    <td style="width: 200px" class="<?php echo empty($clientAddr) ? 'text-danger ' : '' ?>"><?php echo !empty($clientAddr) ? $clientAddr[0]['address'] : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?></td>
-                    <td style="width: 100px" class="<?php echo empty($clientPhone) ? 'text-danger ' : '' ?>"><?php echo !empty($clientPhone) ? $clientPhone[0]['phone'] : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?></td>
+
+                    <td style="width: 200px" class="<?php echo empty($client_addr) ? 'text-danger ' : '' ?>"><?php echo !empty($client_addr) ? $client_addr[0]['address'] : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?></td>
+
+                    <td style="width: 100px" class="<?php echo empty($client_phone) ? 'text-danger ' : '' ?>"><?php echo !empty($client_phone) ? $client_phone[0]['phone'] : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?></td>
+
                     <td style="width: 50px">
                       <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $mal['tech_id'] ?>">
-                        <?php echo !empty($technicalName)   ? $technicalName    : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>
+                        <?php echo !empty($tech_name)   ? $tech_name    : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>
                       </a>
                     </td>
+
                     <td style="width: 25px">
                     <?php
                     if ($mal['mal_status'] == 0) {
@@ -508,6 +516,7 @@ if ($_SESSION['mal_show'] == 1) {
                     ?>
                     <i class="bi <?php echo $iconStatus ?>" title="<?php echo $titleStatus ?>"></i>
                     </td>
+
                     <td style="width: 25px">
                     <?php
                       if ($mal['isAccepted'] == 0) {
@@ -526,6 +535,7 @@ if ($_SESSION['mal_show'] == 1) {
                     ?>
                     <i class="bi <?php echo $iconStatus ?>" title="<?php echo $titleStatus ?>"></i>
                     </td>
+
                     <td style="width: 50px">
                       <a href="?do=edit-malfunction-info&malid=<?php echo $mal['mal_id'] ?>" target="" class="btn btn-outline-primary me-1 fs-12 <?php if ($_SESSION['mal_show'] == 0) {echo 'disabled';} ?>"><i class="bi bi-eye"></i></a>
                       <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 <?php if ($_SESSION['comb_delete'] == 0) {echo 'disabled';} ?>" data-bs-toggle="modal" data-bs-target="#delete-malfunction-modal" id="delete-mal" data-mal-id="<?php echo $mal['mal_id'] ?>"><i class="bi bi-trash"></i></button>

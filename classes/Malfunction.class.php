@@ -31,6 +31,19 @@ class Malfunction extends Database {
     
   }
 
+  // get malfunction media
+  public function get_malfunction_media($mal_id) {
+    // select query
+    $select_query = "SELECT *FROM `malfunctions_media` WHERE `mal_id` = ?;";
+    // prepare the query
+    $stmt = $this->con->prepare($select_query);
+    $stmt->execute(array($mal_id));
+    $mal_media = $stmt->fetchAll();
+    $media_count =  $stmt->rowCount();       // count effected rows
+    // return result
+    return $media_count > 0 ? $mal_media : null;
+  }
+
   // insert a new Malfunction
   public function insert_new_malfunction($info) {
      // INSERT INTO malfunctions

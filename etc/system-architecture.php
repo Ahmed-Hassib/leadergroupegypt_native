@@ -238,7 +238,9 @@ function get_page_dependencies($page_role, $file_type) {
     ],
     
     'sys_tree_malfunction' => [
-      'css' => [],
+      'css' => [
+        '1' => 'malfunction.css',
+      ],
       'js' => [
         '1' => 'malfunction.js'
       ],
