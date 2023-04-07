@@ -112,4 +112,26 @@ class Malfunction extends Database {
     // return result
     return $mal_count > 0 ? true : false;
   }
+
+  public function upload_media($mal_id, $media_name, $type) {
+    // delete query
+    $insert_query  = "INSERT INTO `malfunctions_media`(`mal_id`, `media`, `type`) VALUES (?, ?, ?)";
+    // prepare query
+    $stmt = $this->con->prepare($insert_query);
+    $stmt->execute(array($mal_id, $media_name, $type));
+    $mal_count =  $stmt->rowCount();       // count effected rows
+    // return result
+    return $mal_count > 0 ? true : false;
+  }
+
+  public function delete_media($media_id) {
+    // delete query
+    $delete_query  = "DELETE FROM `malfunctions_media` WHERE `id` = ?";
+    // prepare query
+    $stmt = $this->con->prepare($delete_query);
+    $stmt->execute(array($media_id));
+    $mal_count =  $stmt->rowCount();       // count effected rows
+    // return result
+    return $mal_count > 0 ? true : false;
+  }
 }

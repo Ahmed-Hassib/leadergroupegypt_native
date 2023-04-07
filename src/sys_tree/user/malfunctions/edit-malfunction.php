@@ -405,10 +405,12 @@ if ($is_exist_mal == true) {
             <div class="section-header">
               <h5><?php echo language('MALFUNCTION MEDIA', @$_SESSION['systemLang']) ?></h5>
               <!-- add new malfunction -->
+              <?php if ($_SESSION['isTech'] == 1) {?>
               <button type="button" role="button" class="btn btn-outline-primary py-1 fs-12 media-button" onclick="add_new_media()">
                 <i class="bi bi-card-image"></i>
-                <?php echo language('ADD NEW PHOTO/VIDEO', @$_SESSION['systemLang']) ?>
+                <?php echo language('ADD NEW PHOTO', @$_SESSION['systemLang']) ?>
               </button>
+              <?php } ?>
               <hr />
             </div>
             <!-- malfunction media -->
@@ -416,12 +418,26 @@ if ($is_exist_mal == true) {
             <div class="row row-cols-sm-1 row-cols-md-3 justify-content-center align-items-stretched g-3" id="media-container">
             <?php if ($mal_media != null && count($mal_media) > 0) { ?>
               <?php foreach ($mal_media as $key => $media) { ?>
-                <div class="col-12 col-media">
-                  <?php if ($media['type'] == 'img') { ?>
-                    <img src="<?php echo $uploads ?>malfunctions/<?php echo $media['media'] ?>" alt="">
-                  <?php } else { ?>
-                  <?php } ?>
-                </div>
+                <?php $media_source = $uploads . "malfunctions/" . $_SESSION['company_id'] ."/". $media['media'] ?>
+                <?php if (file_exists($media_source)) { ?>
+                  <div class="col-12 col-media">
+                    <?php if ($media['type'] == 'img') { ?>
+                      <img src="<?php echo $media_source ?>" alt="">
+                    <?php } ?>
+                    <?php if ($_SESSION['isTech'] == 1) { ?>
+                    <div class="control-btn">
+                      <button type="button" class="btn btn-danger py-1 ms-1" onclick="delete_media(this)" data-media-id="<?php echo $media['id']; ?>" data-media-name="<?php echo $media['media']; ?>"><i class="bi bi-trash"></i></button>
+                    </div>
+                    <?php } ?>
+                  </div>
+                <?php } else { ?>
+                  <div class="alert alert-danger">
+                    <h6 class="h6 text-danger fw-bold">
+                      <i class="bi bi-exclamation-triangle-fill"></i>
+                      <?php echo language('THERE IS NO MEDIA TO SHOW', @$_SESSION['systemLang']) ?>
+                    </h6>
+                  </div>
+                <?php } ?>
               <?php } ?>
             <?php } else { ?>
               <div class="alert alert-danger">
@@ -433,7 +449,7 @@ if ($is_exist_mal == true) {
             <?php } ?>
             </div>
             <!-- malfunction media file info -->
-            <div class="" id="file-inputs"></div>
+            <div class="d-none" id="file-inputs"></div>
           </div>
         </div>
       </div>

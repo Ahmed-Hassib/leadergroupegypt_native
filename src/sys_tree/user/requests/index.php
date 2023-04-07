@@ -74,6 +74,10 @@ switch ($query) {
   case "check-direction":
     $file_name = 'check-direction-name.php';
     break;
+  
+  case "delete-malfunction-media":
+    $file_name = 'delete-malfunction-media.php';
+    break;
 }
 
 include_once $file_name;

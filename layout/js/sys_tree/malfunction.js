@@ -76,12 +76,18 @@ function search_name(input) {
  * 
  */
 function show_media_preview(evt) {
+  // total size
+  let total_size = 0;
   // get media container
   let media_container = document.querySelector('#media-container');
+  // file inputs container
+  let file_inputs_container = document.querySelector('#file-inputs');
   // loop on files of the form
   for (let i = 0; i < evt.files.length; i++) {
     // uploaded type
     let type = evt.files[i]['type'].includes('video') ? 'video' : 'img';
+    // get size
+    total_size += evt.files[i]['size'];
     // create the image src
     var src = URL.createObjectURL(evt.files[i]);
     // create a colomn to append the image
@@ -93,7 +99,6 @@ function show_media_preview(evt) {
     switch (type) {
       case 'video':
         element = create_video_element(src);
-        // append video source
         break;
 
       case 'img':
@@ -105,12 +110,23 @@ function show_media_preview(evt) {
     }
     // append image into column
     col.appendChild(element);
-    // // create a control button
-    // let delete_btn = create_control_buttons(element);
-    // // append control buttons
-    // col.appendChild(delete_btn);
+    // create a control button
+    let delete_btn = create_control_buttons(element);
+    // append control buttons
+    col.appendChild(delete_btn);
     // append column into the preview box
     media_container.appendChild(col)
+  }
+
+  console.log(total_size)
+
+  if (total_size > 45000000) {
+    // show alert
+    alert('حجم الملفات كبير! برجاء مسح بعض منها!!');
+    // delete all file inputs
+    file_inputs_container.innerHTML = '';
+    // delete all media
+    media_container.innerHTML = '<div class="alert alert-danger"><h6 class="h6 text-danger fw-bold"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;لا يوجد صور او فيديوهات لعرضها</h6 ></div>';
   }
 }
 
@@ -156,14 +172,18 @@ function add_new_media() {
     // media container element
     let element = media_container.children[0];
     // remove all container element
-    if (element.tagName.toLocaleLowerCase() == 'div') media_container.innerHTML = ''
+    if (element.classList.contains('alert')) {
+      setTimeout(() => {
+        media_container.innerHTML = '';
+      }, 2000);
+    }
   }
   // create file input
   let file_input = create_input_file();
   // append file input into media container
-  file_inputs_container.append(file_input)
+  file_inputs_container.append(file_input);
   // fire click
-  file_input.click()
+  file_input.click();
 }
 
 function create_input_file() {
@@ -173,60 +193,64 @@ function create_input_file() {
   input.name = 'mal-media[]';   // input name
   input.setAttribute('multiple', 'multiple');
   input.setAttribute('form', 'edit-malfunction-info');
+  input.setAttribute('accept', 'image/*')
   // input.classList.add('d-none');
   // add event
   input.addEventListener('change', (evt) => {
     evt.preventDefault();
-    // show media
-    show_media_preview(input);
+    // check files
+    if (input.files.length > 0) {
+      // show media
+      show_media_preview(input);
+    }
   })
   // return input
   return input;
 }
 
-function create_control_buttons(el_parent) {
+function create_control_buttons() {
   // create delete button
-  let delete_button = document.createElement('button')
+  let delete_button = document.createElement('button');
   delete_button.type = 'button';
-  delete_button.classList.add('btn', 'btn-danger', 'py-1', 'ms-1')
+  delete_button.classList.add('btn', 'btn-danger', 'py-1', 'ms-1');
   delete_button.innerHTML = "<i class='bi bi-trash'></i>";
-  // create view button
-  let view_button = document.createElement('button')
-  view_button.type = 'button';
-  view_button.classList.add('btn', 'btn-primary', 'py-1', 'me-1')
-  view_button.innerHTML = "<i class='bi bi-eye'></i>";
-
-  view_button.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    openFullscreen(el_parent);
-  })
   // create buttons container
   let btn_container = document.createElement('div');
   btn_container.classList.add('control-btn');
+  // add event to delete button
+  delete_button.addEventListener('click', (evt) => {
+    evt.preventDefault()
+    delete_button.parentElement.parentElement.remove();
+  })
   // append buttons
   btn_container.appendChild(delete_button);
-  btn_container.appendChild(view_button);
   // return button
   return btn_container;
 }
 
 
-function openFullscreen(el) {
-  if (el.requestFullscreen) {
-    el.requestFullscreen();
-  } else if (el.webkitRequestFullscreen) { /* Safari */
-    el.webkitRequestFullscreen();
-  } else if (el.msRequestFullscreen) { /* IE11 */
-    el.msRequestFullscreen();
-  }
-}
-
-function closeFullscreen() {
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  } else if (document.webkitExitFullscreen) { /* Safari */
-    document.webkitExitFullscreen();
-  } else if (document.msExitFullscreen) { /* IE11 */
-    document.msExitFullscreen();
-  }
+function delete_media(btn) {
+  // get media id
+  let media_id = btn.dataset.mediaId;
+  let media_name = btn.dataset.mediaName;
+  // request url
+  let url_content = `../requests/index.php?do=delete-malfunction-media&media-id=${media_id}&media-name=${media_name}`;
+  // make a request to delete media
+  $.get(url_content, (result) => {
+    // convert result
+    let res = $.parseJSON(result)
+    // check result
+    if (res) {
+      setTimeout(() => {
+        // show message
+        alert('تم حذف الصورة بنجاح');
+      }, 500);
+      // delete image from dom
+      btn.parentElement.parentElement.remove();
+    } else {
+      // show message
+      alert('حدث خطأ اثناء حذف الصورة');
+    }
+  })
+  
 }

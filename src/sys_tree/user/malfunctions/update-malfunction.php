@@ -11,6 +11,7 @@
   $update_owner_job_id = $_SESSION['job_title_id'];
   // get malfunction id
   $mal_id = isset($_POST['mal-id']) && !empty($_POST['mal-id']) ? $_POST['mal-id']: 0;
+
   // check if malfunction is exist or not
   if ($mal_obj->is_exist("`mal_id`", "`malfunctions`", $mal_id)) {
     // get malfunction basics info
@@ -45,6 +46,11 @@
             // check who is doing the updates
             if ($update_owner_id == $tech_id) {
               do_technical_updates($_POST);
+              // check if upload media
+              if (count($_FILES) > 0) {
+                $path = $uploads . "//malfunctions/" . $_SESSION['company_id'] . "/";
+                upload_malfunction_media($_FILES, $mal_id, $path);
+              }
             }
             break;
         }
@@ -61,17 +67,11 @@
 
     <!-- start edit profile page -->
     <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-      <pre dir="ltr">
-        <?php print_r($_POST) ?>
-        <?php print_r($_FILES) ?>
-      </pre>
       <!-- start header -->
       <header class="header">
-        <?php  redirectHome($msg, 'back', 1000000); ?>
+        <?php redirectHome($msg, 'back'); ?>
       </header>
-
     </div>
-  
   <?php
   } else {
     // include no data founded
@@ -133,6 +133,48 @@ function do_technical_updates($info) {
   $mal_obj->update_malfunction_tech(array($mal_status, $cost, $tech_comment, $tech_status, $mal_id));
 }
 ?>
+
+<?php 
+/**
+ * upload_malfunction_media function
+ * used to upload media to database
+ */
+function upload_malfunction_media($media_files, $mal_id, $path) {
+  // create an object of Malfunction class
+  $mal_obj = new Malfunction();
+  // files names
+  $files_names = $media_files['mal-media']['name'];
+  // files tmp name
+  $files_tmp_name = $media_files['mal-media']['tmp_name'];
+  // files types
+  $files_types = $media_files['mal-media']['type'];
+  // files error
+  $files_error = $media_files['mal-media']['error'];
+  // files size
+  $files_size = $media_files['mal-media']['size'];
+
+  if (!file_exists($path)) {
+    mkdir($path);
+  }
+
+  // loop on it
+  for ($i=0; $i < count($files_names); $i++) {
+    // media temp
+    $media_temp = [];
+    // check if not empty
+    if (!empty($files_names[$i]) && $files_error[$i] == 0) {
+      $media_temp = explode('.', $files_names[$i]);
+      $media_temp[0] = date('dmY') .'_'. $mal_id .'_'. rand(00000000, 99999999) .'_'.($i + 1);
+      $media_name = join('.',$media_temp);
+      move_uploaded_file($files_tmp_name[$i], $path.$media_name);
+
+      // upload files info into database
+      $mal_obj->upload_media($mal_id, $media_name, strpos($files_types[$i], 'image') >= 0 ? 'img' : 'video' );
+    }
+  }
+}
+?>
+
 
 <?php
 /**

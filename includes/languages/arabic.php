@@ -420,6 +420,7 @@ function languageAr($phrase)
     'MOST CLIENTS WHO HAVE MALFUNCTIONS'    => 'اكثر العملاء الذين لديهم اعطال',
     'LATEST MALFUNCTION DATE'               => 'تاريخ آخر عطل',
     'ADD NEW PHOTO/VIDEO'                   => 'اضافة صورة/فيديو جديد',
+    'ADD NEW PHOTO'                         => 'اضافة صورة جديدة',
     'NOT SHOWED BY THE TECHNICAL'           => 'لم يتم رؤيتها من قبل الفنى',
     'NOT REPAIRED BY THE TECHNICAL'         => 'لم يتم حل العطل من قبل الفنى',
     'MALFUNCTION WAS ADDED SUCCESSFULLY'    => 'تم اضافة العطل بنجاح',
