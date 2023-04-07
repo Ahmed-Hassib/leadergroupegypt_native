@@ -39,6 +39,7 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
                   <img src="<?php echo $uploads . "employees-img/$profile_img_name" ?>" class="profile-img" alt="">
                 </div>
                 <!-- end profile image -->
+                <?php if ($_SESSION['UserID'] == $user['UserID']) { ?>
                 <!-- start control buttons -->
                 <div class="hstack gap-3">
                   <div class="mx-auto">
@@ -49,13 +50,14 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
                     </button>
                     
                     <!-- delete image button -->
-                    <button type="button" role="button" class="btn btn-danger fs-12 py-1 text-capitalize">
+                    <button type="button" role="button" class="btn btn-danger fs-12 py-1 text-capitalize" onclick="delete_profile_image()">
                       <i class="bi bi-trash"></i>
                       <?php echo language('DELETE IMAGE', @$_SESSION['systemLang']) ?>
                     </button>
                   </div>
                 </div>
                 <!-- end control buttons -->
+                <?php } ?>
               </div>
             </div>
           </div> 

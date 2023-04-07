@@ -51,6 +51,16 @@ if ($is_exist_piece) {
 
     <!-- start table container -->
     <div class="table-responsive-sm">
+      <div class="fixed-scroll-btn">
+        <!-- scroll left button -->
+        <button type="button" role="button" class="scroll-button scroll-prev scroll-prev-right">
+          <i class="carousel-control-prev-icon"></i>
+        </button>
+        <!-- scroll right button -->
+        <button type="button" role="button" class="scroll-button scroll-next <?php echo $_SESSION['systemLang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
+          <i class="carousel-control-next-icon"></i>
+        </button>
+      </div>
       <!-- strst users table -->
       <table class="table table-striped table-bordered  display compact table-style" id="malfunctions">
         <thead class="primary text-capitalize">
@@ -149,8 +159,13 @@ if ($is_exist_piece) {
               </td>
 
               <td class="text-center">
-                <a href="?do=edit-malfunction-info&malid=<?php echo $row['mal_id'] ?>" class="btn btn-outline-primary fs-12 <?php if ($_SESSION['mal_show'] == 0) {echo 'disabled';} ?>"><i class="bi bi-eye"></i></a>
-              <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 <?php if ($_SESSION['mal_delete'] == 0) {echo 'disabled';} ?>" data-bs-toggle="modal" data-bs-target="#delete-malfunction-modal" id="delete-mal" data-mal-id="<?php echo $row['mal_id'] ?>"><i class="bi bi-trash"></i></button>              </td>
+                <?php if ($_SESSION['mal_show'] == 1) { ?>
+                  <a href="?do=edit-malfunction-info&malid=<?php echo $row['mal_id'] ?>" target="" class="btn btn-outline-primary me-1 fs-12"><i class="bi bi-eye"></i></a>
+                <?php } ?>
+                <?php if ($_SESSION['comb_delete'] == 1) { ?>
+                  <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#delete-malfunction-modal" id="delete-mal" data-mal-id="<?php echo $row['mal_id'] ?>"><i class="bi bi-trash"></i></button>
+                <?php } ?>
+              </td>
             </tr>
           <?php } ?>
         </tbody>

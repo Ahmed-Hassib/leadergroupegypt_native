@@ -324,12 +324,12 @@
 	border-radius: 16px;
 	margin: 0 14px 0 12px;
 	background: #1d1b31;
-	padding: 5px;
 	transition: all 0.3s ease;
 }
 
 .sidebar-menu.close .profile-details img {
 	padding: 10px;
+	border: 5px solid #0d6efd;
 }
 
 .sidebar-menu .profile-details a i,

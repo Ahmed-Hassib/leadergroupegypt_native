@@ -229,7 +229,8 @@
       <div class="profile-details">
         <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $_SESSION['UserID']; ?>">
         <div class="profile-content">
-          <img src="<?php echo $assets . "jsl.jpeg" ?>" class="profile-img">
+          <?php $profile_img = $uploads . "employees-img/" . (empty($_SESSION['profile_img']) ? "male-avatar.svg" : "/".$_SESSION['company_id']."/".$_SESSION['profile_img']) ;?>
+          <img src="<?php echo $profile_img ?>" class="profile-img">
         </div>
           <div class="name-job">
             <div class="profile-name"><?php echo $_SESSION['UserName'] ?></div>

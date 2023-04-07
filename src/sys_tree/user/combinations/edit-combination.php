@@ -17,7 +17,7 @@ if ($is_exist == true) {
   // update comb status
   if ($comb_info['isShowed'] == 0) {
     if($_SESSION['UserID'] == $comb_info['UserID']) {
-      $updateQ = "UPDATE `combinations` SET `isShowed` = 1, `showed_date` = CURRENT_DATE(), `showed_time` = CURRENT_TIME() WHERE `comb_id` = ?";
+      $updateQ = "UPDATE `combinations` SET `isShowed` = 1, `showed_date` = CURRENT_DATE, `showed_time` = now() WHERE `comb_id` = ?";
       $stmtUp = $con->prepare($updateQ);     // select all directions
       $stmtUp->execute(array($comb_id));               // execute data
     }

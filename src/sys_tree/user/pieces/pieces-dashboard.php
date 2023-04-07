@@ -45,7 +45,7 @@
                     <a href="?name=pieces&do=show-all-pieces" class="num stretched-link text-black" data-goal="<?php echo $pieces; ?>">0</a>
                   </span>
                 </div>
-                <?php $newPcsCounter = $db_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `added_date` = CURRENT_DATE() AND `company_id` = ".$_SESSION['company_id']); ?>
+                <?php $newPcsCounter = $db_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id']); ?>
                 <?php if ($newPcsCounter > 0) { ?>
                   <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
                     <span><?php echo $newPcsCounter ?></span>
@@ -137,6 +137,16 @@
         <!-- get latest added pieces -->
         <?php $latest_added_pcs = $pcs_obj->get_latest_records("*", "`pieces_info`", "WHERE `is_client` = 0 AND `company_id` = ".$_SESSION['company_id'], "`id`", 10); ?>
           <div class="table-responsive-sm">
+            <div class="fixed-scroll-btn">
+              <!-- scroll left button -->
+              <button type="button" role="button" class="scroll-button scroll-prev scroll-prev-right">
+                <i class="carousel-control-prev-icon"></i>
+              </button>
+              <!-- scroll right button -->
+              <button type="button" role="button" class="scroll-button scroll-next <?php echo $_SESSION['systemLang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
+                <i class="carousel-control-next-icon"></i>
+              </button>
+            </div>
             <table class="table table-striped table-bordered  display compact table-style w-100" id="latest-pieces">
               <thead class="primary text-capitalize">
                 <tr>

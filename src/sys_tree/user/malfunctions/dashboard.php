@@ -42,7 +42,7 @@ if ($_SESSION['mal_show'] == 1) {
           <div class="row row-cols-sm-2 g-3">
             <div class="col-6">
               <div class="card card-stat bg-total bg-gradient">
-                <?php $all_mal_today = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `added_date` = CURRENT_DATE() AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
+                <?php $all_mal_today = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><?php echo language('TOTAL', @$_SESSION['systemLang']) ?></h5>
                   <span class="nums">
@@ -53,7 +53,7 @@ if ($_SESSION['mal_show'] == 1) {
             </div>
             <div class="col-6">
               <div class="card card-stat bg-danger bg-gradient">
-                <?php $unrep_mal_today = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE (`mal_status` = 0 AND `isAccepted` <> 2) AND `added_date` = CURRENT_DATE() AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
+                <?php $unrep_mal_today = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE (`mal_status` = 0 AND `isAccepted` <> 2) AND `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><?php echo language('UNREPAIRED', @$_SESSION['systemLang']) ?></h5>
                   <span class="nums">
@@ -64,7 +64,7 @@ if ($_SESSION['mal_show'] == 1) {
             </div>
             <div class="col-6">
               <div class="card card-stat bg-success bg-gradient">
-                <?php $rep_mal_today = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `mal_status` = 1 AND `added_date` = CURRENT_DATE() AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
+                <?php $rep_mal_today = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `mal_status` = 1 AND `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><?php echo language('REPAIRED', @$_SESSION['systemLang']) ?></h5>
                   <span class="nums">
@@ -75,7 +75,7 @@ if ($_SESSION['mal_show'] == 1) {
             </div>
             <div class="col-6">
               <div class="card card-stat bg-warning bg-gradient">
-                <?php $del_mal_today = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE (`mal_status` = 2 OR `isAccepted` = 2) AND `added_date` = CURRENT_DATE() AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
+                <?php $del_mal_today = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE (`mal_status` = 2 OR `isAccepted` = 2) AND `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><?php echo language('DELAYED', @$_SESSION['systemLang']) ?></h5>
                   <span class="nums">
@@ -431,8 +431,12 @@ if ($_SESSION['mal_show'] == 1) {
                     </td>
 
                     <td style="width: 50px">
-                      <a href="?do=edit-malfunction-info&malid=<?php echo $mal['mal_id'] ?>" target="" class="btn btn-outline-primary me-1 fs-12 <?php if ($_SESSION['mal_show'] == 0) {echo 'disabled';} ?>"><i class="bi bi-eye"></i></a>
-                      <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 <?php if ($_SESSION['comb_delete'] == 0) {echo 'disabled';} ?>" data-bs-toggle="modal" data-bs-target="#delete-malfunction-modal" id="delete-mal" data-mal-id="<?php echo $mal['mal_id'] ?>"><i class="bi bi-trash"></i></button>
+                      <?php if ($_SESSION['mal_show'] == 1) { ?>
+                        <a href="?do=edit-malfunction-info&malid=<?php echo $mal['mal_id'] ?>" target="" class="btn btn-outline-primary me-1 fs-12"><i class="bi bi-eye"></i></a>
+                      <?php } ?>
+                      <?php if ($_SESSION['comb_delete'] == 1) { ?>
+                        <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#delete-malfunction-modal" id="delete-mal" data-mal-id="<?php echo $mal['mal_id'] ?>"><i class="bi bi-trash"></i></button>
+                      <?php } ?>
                     </td>
                   </tr>
                 <?php } ?>
@@ -537,8 +541,12 @@ if ($_SESSION['mal_show'] == 1) {
                     </td>
 
                     <td style="width: 50px">
-                      <a href="?do=edit-malfunction-info&malid=<?php echo $mal['mal_id'] ?>" target="" class="btn btn-outline-primary me-1 fs-12 <?php if ($_SESSION['mal_show'] == 0) {echo 'disabled';} ?>"><i class="bi bi-eye"></i></a>
-                      <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 <?php if ($_SESSION['comb_delete'] == 0) {echo 'disabled';} ?>" data-bs-toggle="modal" data-bs-target="#delete-malfunction-modal" id="delete-mal" data-mal-id="<?php echo $mal['mal_id'] ?>"><i class="bi bi-trash"></i></button>
+                      <?php if ($_SESSION['mal_show'] == 1) { ?>
+                        <a href="?do=edit-malfunction-info&malid=<?php echo $mal['mal_id'] ?>" target="" class="btn btn-outline-primary me-1 fs-12"><i class="bi bi-eye"></i></a>
+                      <?php } ?>
+                      <?php if ($_SESSION['comb_delete'] == 1) { ?>
+                        <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#delete-malfunction-modal" id="delete-mal" data-mal-id="<?php echo $mal['mal_id'] ?>"><i class="bi bi-trash"></i></button>
+                      <?php } ?>
                     </td>
                   </tr>
                 <?php } ?>

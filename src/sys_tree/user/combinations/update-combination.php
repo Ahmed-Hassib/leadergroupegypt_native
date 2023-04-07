@@ -215,5 +215,5 @@ function do_after_sales_updates($info) {
   //       //   }
   //       // }
   //       // query to update the malfunction
-  //       $query .= "UPDATE `malfunctions` SET `mal_status` = ?, `isAccepted` = ?, `cost` = ?, `repaired_date` = CURRENT_DATE, `repaired_time` = CURRENT_TIME, `tech_comment` = ? WHERE `comb_id` = ?;";
+  //       $query .= "UPDATE `malfunctions` SET `mal_status` = ?, `isAccepted` = ?, `cost` = ?, `repaired_date` = CURRENT_DATE, `repaired_time` = now(), `tech_comment` = ? WHERE `comb_id` = ?;";
   ?>

@@ -184,6 +184,16 @@ $count = $stmt->rowCount();     // get row count
   ?>
     <!-- start table container -->
     <div class="table-responsive-sm">
+      <div class="fixed-scroll-btn">
+        <!-- scroll left button -->
+        <button type="button" role="button" class="scroll-button scroll-prev scroll-prev-right">
+          <i class="carousel-control-prev-icon"></i>
+        </button>
+        <!-- scroll right button -->
+        <button type="button" role="button" class="scroll-button scroll-next <?php echo $_SESSION['systemLang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
+          <i class="carousel-control-next-icon"></i>
+        </button>
+      </div>
       <!-- strst users table -->
       <table class="table table-bordered  display compact table-style w-100" id="combinations">
         <thead class="primary text-capitalize">

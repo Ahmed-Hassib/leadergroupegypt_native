@@ -52,7 +52,7 @@ if (isset($_SESSION['UserName'])) {
                 <?php echo language('THE COMPANIES', @$_SESSION['systemLang']) ?>
               </a>
             </div>
-            <?php $newEmpCounter = countRecords("`company_id`", "`companies`", "WHERE `joined_date` = 'CURRENT_DATE()' AND `company_id` <> 1"); ?>
+            <?php $newEmpCounter = countRecords("`company_id`", "`companies`", "WHERE `joined_date` = 'CURRENT_DATE' AND `company_id` <> 1"); ?>
             <?php if ($newEmpCounter > 0) { ?>
               <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
                 <span><?php echo $newEmpCounter ?></span>

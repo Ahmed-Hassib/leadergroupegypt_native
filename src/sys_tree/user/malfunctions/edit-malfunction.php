@@ -21,7 +21,7 @@ if ($is_exist_mal == true) {
   if ($mal_info['isShowed'] == 0) {
     if ($_SESSION['UserID'] == $mal_info['tech_id']) {
       // update some info of this malfunction
-      $q = "UPDATE `malfunctions` SET `isShowed` = 1, `showed_date` = CURRENT_DATE, `showed_time` = CURRENT_TIME WHERE `mal_id` = ? AND `company_id` = ?";
+      $q = "UPDATE `malfunctions` SET `isShowed` = 1, `showed_date` = CURRENT_DATE, `showed_time` = now() WHERE `mal_id` = ? AND `company_id` = ?";
       $stmt = $con->prepare($q);     
       $stmt->execute(array($mal_id,  $_SESSION['company_id']));               // execute data 
     }
@@ -34,7 +34,7 @@ if ($is_exist_mal == true) {
       <!-- submit -->
       <div class="mb-3 hstack gap-2">
         <div class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
-        <button type="submit" form="edit-malfunction-info" class="btn btn-primary text-capitalize form-control bg-gradient fs-12 py-1" id="update-malfunctions" <?php if ($_SESSION['mal_update'] == 0 && $mal_info['isReviewed'] == 1) {echo 'disabled';} ?>>
+        <button type="submit" form="edit-malfunction-info" class="btn btn-primary text-capitalize form-control bg-gradient fs-12 py-1" id="update-malfunctions" <?php if (($_SESSION['mal_update'] == 0 && $mal_info['isReviewed'] == 1) || $_SESSION['UserID'] != $mal_info['tech_id']) {echo 'disabled';} ?>>
           <i class="bi bi-check-all"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
         </button>
         </div>
@@ -136,9 +136,9 @@ if ($is_exist_mal == true) {
             <div class="mb-1 row align-items-center">
               <label for="client-name" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('CLIENT NAME', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 col-md-8 position-relative">
-                <?php $client_details = $mal_obj->select_specific_column("`id`, `full_name`, `ip`", "`pieces_info`", "WHERE `id` = '" . $mal_info['client_id'] . "' LIMIT 1")[0]; ?>
+                <?php $client_details = $mal_obj->select_specific_column("`id`, `full_name`, `ip`, `is_client`", "`pieces_info`", "WHERE `id` = '" . $mal_info['client_id'] . "' LIMIT 1")[0]; ?>
                 <input type="hidden" name="client-id" id="client-id" class="form-control w-100" placeholder="Client ID" value="<?php echo $mal_info['client_id'] ?>" />
-                <a class="text-primary" href="<?php echo $nav_up_level ?>pieces/index.php?name=pieces&do=edit-piece&piece-id=<?php echo $mal_info['client_id']?>" target="_blank"><?php echo $client_details['full_name'] ?></a>
+                <a class="text-primary" href="<?php echo $nav_up_level ?>pieces/index.php?name=<?php echo $client_details['is_client'] == 1 ? 'clients' : 'pieces' ?>&do=edit-piece&piece-id=<?php echo $mal_info['client_id']?>" target="_blank"><?php echo $client_details['full_name'] ?></a>
               </div>
             </div>
             <!-- client address -->
@@ -457,14 +457,14 @@ if ($is_exist_mal == true) {
       <!-- submit -->
       <div class="hstack gap-2">
         <div class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
-        <button type="submit" form="edit-malfunction-info" class="btn btn-primary text-capitalize form-control bg-gradient fs-12 py-1" id="update-malfunctions" <?php if ($_SESSION['mal_update'] == 0 && $mal_info['isReviewed'] == 1) {echo 'disabled';} ?>>
-          <i class="bi bi-check-all"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
-        </button>
+          <button type="submit" form="edit-malfunction-info" class="btn btn-primary text-capitalize form-control bg-gradient fs-12 py-1" id="update-malfunctions" <?php if (($_SESSION['mal_update'] == 0 && $mal_info['isReviewed'] == 1) || $_SESSION['UserID'] != $mal_info['tech_id']) {echo 'disabled';} ?>>
+            <i class="bi bi-check-all"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
+          </button>
         </div>
         <div>
-        <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 py-1" data-bs-toggle="modal" data-bs-target="#deleteMalModal" <?php if ($_SESSION['mal_delete'] == 0) {echo 'readonly';} ?> >
-          <i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?>
-        </button>
+          <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 py-1" data-bs-toggle="modal" data-bs-target="#deleteMalModal" <?php if ($_SESSION['mal_delete'] == 0) {echo 'readonly';} ?> >
+            <i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?>
+          </button>
         </div>
       </div>
     </form>
@@ -478,14 +478,16 @@ if ($is_exist_mal == true) {
           </div>
           <div class="modal-body">
             <?php if ($_SESSION['mal_delete'] == 0) { ?>
-              <h4 class="h4 text-danger " dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr"; ?>"><?php echo language("YOU DON`T HAVE THE PERMISSION TO DELETE THIS MALFUNCTION", @$_SESSION['systemLang']) ?></h4>
+              <h5 class="h5 text-danger" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr"; ?>"><?php echo language("YOU DON`T HAVE THE PERMISSION TO DELETE THIS MALFUNCTION", @$_SESSION['systemLang']) ?></h5>
             <?php } else { ?> 
-              <h4 class="h4 text-warning " dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr"; ?>"><?php echo language('ARE YOU SURE TO DELETE', @$_SESSION['systemLang'])." ".language('THE MALFUNCTION', @$_SESSION['systemLang'])." ".( @$_SESSION['systemLang'] == "ar" ? "؟" : "?" )?> </h4>
+              <h5 class="h5 text-primary " dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr"; ?>"><?php echo language('ARE YOU SURE TO DELETE', @$_SESSION['systemLang'])." ".language('THE MALFUNCTION', @$_SESSION['systemLang'])." ".( @$_SESSION['systemLang'] == "ar" ? "؟" : "?" )?> </h5>
             <?php } ?>
           </div>
           <div class="modal-footer">
-            <a href="?do=deleteMal&malid=<?php echo $mal_info['mal_id'] ?>" class="btn btn-danger text-capitalize fs-12 <?php if ($_SESSION['mal_delete'] == 0) {echo 'disabled';} ?>" ><i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?></a>
-            <button type="button" class="btn btn-secondary fs-12" data-bs-dismiss="modal">Close</button>
+            <?php if ($_SESSION['mal_delete'] == 1) { ?>
+            <a href="?do=deleteMal&malid=<?php echo $mal_info['mal_id'] ?>" class="btn btn-danger text-capitalize fs-12" ><i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?></a>
+            <?php } ?>
+            <button type="button" class="btn btn-secondary fs-12" data-bs-dismiss="modal"><?php echo language('CLOSE', @$_SESSION['systemLang']) ?></button>
           </div>
         </div>
       </div>

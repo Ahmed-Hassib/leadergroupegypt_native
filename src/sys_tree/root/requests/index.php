@@ -108,7 +108,7 @@ if ($query == 'ping') {
 } else if ($query == "noti") {
 
     // select it
-    $query = "SELECT COUNT(`mal_id`) FROM `malfunctions` WHERE `added_date` = CURRENT_DATE()";
+    $query = "SELECT COUNT(`mal_id`) FROM `malfunctions` WHERE `added_date` = CURRENT_DATE";
     $stmt = $con->prepare($query);
     $stmt->execute();
     $rows = $stmt->fetch();

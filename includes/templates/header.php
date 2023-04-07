@@ -13,7 +13,7 @@
 <body>
 <?php 
 // set the default timezone to use.
-date_default_timezone_set('Africa/Cairo');  
+// date_default_timezone_set('Africa/Cairo');
 // check if page have a preloader variable or not
 if (isset($preloader) && $preloader == true) {
   include_once 'preloader.php';

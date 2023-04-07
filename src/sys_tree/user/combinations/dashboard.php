@@ -39,7 +39,7 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
             <div class="col-6">
               <div class="card card-stat bg-total bg-gradient">
                 <div class="card-body">
-                  <?php $all_comb_today = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE `added_date` = CURRENT_DATE() AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
+                  <?php $all_comb_today = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                   <h5 class="card-title text-capitalize"><?php echo language('TOTAL', @$_SESSION['systemLang']) ?></h5>
                   <span class="nums">
                     <a href="?do=show-combination-details&period=today&combStatus=-1" class="num stretched-link" data-goal="<?php echo $all_comb_today ?>">0</a>
@@ -50,7 +50,7 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
             <div class="col-6">
               <div class="card card-stat bg-danger bg-gradient">
                 <div class="card-body">
-                  <?php $unfinished_comb_today = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE (`isFinished` = 0 AND `isAccepted` <> 2) AND added_date = CURRENT_DATE() AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
+                  <?php $unfinished_comb_today = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE (`isFinished` = 0 AND `isAccepted` <> 2) AND added_date = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                   <h5 class="card-title text-capitalize"><?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="nums">
                     <a href="?do=show-combination-details&period=today&combStatus=unfinished" class="num stretched-link" data-goal="<?php echo $unfinished_comb_today ?>">0</a>
@@ -61,7 +61,7 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
             <div class="col-6">
               <div class="card card-stat bg-success bg-gradient">
                 <div class="card-body">
-                  <?php $finished_comb_today = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE `isFinished` = 1 AND added_date = CURRENT_DATE() AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
+                  <?php $finished_comb_today = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE `isFinished` = 1 AND added_date = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                   <h5 class="card-title text-capitalize"><?php echo language('FINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="nums">
                     <a href="?do=show-combination-details&period=today&combStatus=finished" class="num stretched-link" data-goal="<?php echo $finished_comb_today ?>">0</a>
@@ -72,7 +72,7 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
             <div class="col-6">
               <div class="card card-stat bg-warning bg-gradient">
                 <div class="card-body">
-                  <?php $delayed_comb_today = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE (`isAccepted` = 2 OR `isFinished` = 2) AND added_date = CURRENT_DATE() AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
+                  <?php $delayed_comb_today = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE (`isAccepted` = 2 OR `isFinished` = 2) AND added_date = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                   <h5 class="card-title text-capitalize"><?php echo language('DELAYED', @$_SESSION['systemLang']) ?></h5>
                   <span class="nums">
                     <a href="?do=show-combination-details&period=today&accepted=delayed" class="num stretched-link" data-goal="<?php echo $delayed_comb_today ?>">0</a>
@@ -338,7 +338,7 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
           </header>
           <?php
           // get `combinations` of today of the cureent employee
-          $today_comb = $comb_obj->select_specific_column("*", "`combinations`", "WHERE `added_date` = CURRENT_DATE() AND `company_id` = ".$_SESSION['company_id'] . "  " . $techCondition1." ORDER BY `added_date` DESC LIMIT 5");
+          $today_comb = $comb_obj->select_specific_column("*", "`combinations`", "WHERE `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] . "  " . $techCondition1." ORDER BY `added_date` DESC LIMIT 5");
           ?>
           <div class="table-responsive-sm">
             <table class="table table-striped table-bordered  display compact w-100">

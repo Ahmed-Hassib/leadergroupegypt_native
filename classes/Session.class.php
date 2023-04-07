@@ -42,6 +42,7 @@ class Session extends Database {
   public function set_user_session($info) {
     // get basics info
     $_SESSION['UserID']             = $info['UserID'];          // assign userid to session
+    $_SESSION['profile_img']        = $info['profile_img'];
     $_SESSION['company_id']         = $info['company_id'];      // assign company id to session
     $_SESSION['company_name']       = $info['company_name'];    // assign company name to session
     $_SESSION['company_alias']      = $info['company_alias'];    // assign company name to session
