@@ -424,7 +424,10 @@ function languageAr($phrase)
     'NOT SHOWED BY THE TECHNICAL'           => 'لم يتم رؤيتها من قبل الفنى',
     'NOT REPAIRED BY THE TECHNICAL'         => 'لم يتم حل العطل من قبل الفنى',
     'MALFUNCTION WAS ADDED SUCCESSFULLY'    => 'تم اضافة العطل بنجاح',
-    
+    'REASONS FOR REJECTION OR POSTPONEMENT' => 'اسباب الرفض او التأجيل',
+    'DELAYED TIME'                          => 'وقت التأجيل',
+    'DELAYED DATE'                          => 'تاريخ التأجيل',
+
     
     /**
      * COMBINATIONS PAGE WORDS

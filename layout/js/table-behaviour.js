@@ -15,12 +15,21 @@ $(document).ready(function () {
       ],
       dom: '<"#datatables-buttons.w-auto mb-2"B><".row g-3"<".col-sm-12 col-lg-6"f><".col-sm-12 col-lg-6 text-start"l>>ti<".pagination-right"p>',
       buttons: [
-        { extend: 'excel', className: 'btn btn-outline-primary', text: 'Excel' },
-        { extend: 'colvis', className: 'btn btn-outline-primary', columns: ':not(.noVis)' }
+        { extend: 'excel', className: 'btn btn-outline-primary fs-12 py-1', text: 'Excel' },
+        { extend: 'colvis', className: 'btn btn-outline-primary fs-12 py-1', columns: ':not(.noVis)' }
       ],
       columnDefs: [{ targets: [0, -1], className: 'noVis' }],
     });
   }
+
+  // select all data tables controls
+  let dataTable_control_btn = $('.dt-buttons button');
+  // loop on it
+  dataTable_control_btn.each(function () {
+    if (dataTable_control_btn.hasClass('btn-secondary')) {
+      dataTable_control_btn.removeClass('btn-secondary')
+    }
+  })
 
   // get previous button
   let prev_btn = $('button.scroll-prev');

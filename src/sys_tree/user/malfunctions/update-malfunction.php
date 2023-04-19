@@ -46,6 +46,8 @@
             // check who is doing the updates
             if ($update_owner_id == $tech_id) {
               do_technical_updates($_POST);
+
+              
               // check if upload media
               if (count($_FILES) > 0) {
                 $path = $uploads . "//malfunctions/" . $_SESSION['company_id'] . "/";
@@ -117,20 +119,23 @@ function do_manager_updates($info) {
  * used to do only technical updates
  */
 function do_technical_updates($info) {
+  // return $info['mal-status'] == 1 ? true : false; 
   // get malfunction id
   $mal_id = $info['mal-id'];
   // get malfunction status
   $mal_status = $info['mal-status'];
   // get technical status
-  $tech_status = $info['tech-status'];
+  $tech_status = $info['mal-status'] == 1 ? 1 : $info['tech-status'];
   // get technical man comment
   $tech_comment = isset($info['comment']) ? $info['comment'] : '';
+  // get technical man status comment
+  $tech_comment_status = isset($info['tech-status-comment']) ? $info['tech-status-comment'] : '';
   // get malfunction cost
   $cost = $_POST['cost'];
   // create an object of Malfunction class
   $mal_obj = new Malfunction();
   // get updated status
-  $mal_obj->update_malfunction_tech(array($mal_status, $cost, $tech_comment, $tech_status, $mal_id));
+  $mal_obj->update_malfunction_tech(array($mal_status, $cost, $tech_comment, $tech_comment_status, $tech_status, $mal_id));
 }
 ?>
 

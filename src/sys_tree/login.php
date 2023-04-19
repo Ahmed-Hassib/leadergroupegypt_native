@@ -141,22 +141,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && !empty($_GET)) {
         <div class="mb-2">
           <button type="submit" class="btn btn-primary w-100 text-capitalize <?php # echo $_SESSION['loginErrorCounter'] > 3 ? 'disabled' : '' ?>" style="border-radius: 6px"><?php echo language('LOGIN') ?></button>
         </div>
-        <div class="mb-2" dir="rtl">
-          <span><?php echo language("DON`T HAVE AN ACCOUNT?") ?>&nbsp;</span>
-          <a href="signup.php" class="text-capitalize <?php # echo $_SESSION['loginErrorCounter'] > 3 ? 'disabled' : '' ?>" style="border-radius: 6px"><?php echo language('SIGNUP') ?></a>
-        </div>
-        <div class="mb-4" dir="rtl">
-          <a href="<?php echo $website_pages_desc ?>sys_tree/index.php" class="text-capitalize" style="border-radius: 6px">
-            <span><?php echo language("SYS TREE DESCRIPTION") ?>&nbsp;</span>
-            <i class="bi bi-arrow-up-left-square"></i>
-          </a>
+        <div class="hstack gap-1 my-2" dir="rtl">
+          <div>
+            <span><?php echo language("DON`T HAVE AN ACCOUNT?") ?>&nbsp;</span>
+            <a href="signup.php" class="text-capitalize <?php # echo $_SESSION['loginErrorCounter'] > 3 ? 'disabled' : '' ?>" style="border-radius: 6px"><?php echo language('SIGNUP') ?></a>
+          </div>
+          <div class="me-auto">
+            <a href="<?php echo $website_pages_desc ?>sys_tree/index.php" class="text-capitalize" style="border-radius: 6px">
+              <span><?php echo language("SYS TREE DESCRIPTION") ?>&nbsp;</span>
+              <i class="bi bi-arrow-up-left-square"></i>
+            </a>
+          </div>
         </div>
         <div class="mb-4">
-        <?php 
-          if (isset($_SESSION['loginError']) && $_SESSION['loginError'] == 1) {
-            echo "<span class='text-danger text-capitalize'>" . language("SORRY, USERNAME OR PASSWORD IS WRONG PLEASE TRY LATER") . "</span>";
-          }
-        ?>
+        <?php if (isset($_SESSION['loginError']) && $_SESSION['loginError'] == 1) { ?>
+          <span class='text-danger text-capitalize'><?php echo language("SORRY, USERNAME OR PASSWORD IS WRONG PLEASE TRY LATER") ?></span>
+        <?php } ?>
         </div>
       </form>
       <hr>

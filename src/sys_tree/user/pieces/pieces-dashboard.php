@@ -137,16 +137,6 @@
         <!-- get latest added pieces -->
         <?php $latest_added_pcs = $pcs_obj->get_latest_records("*", "`pieces_info`", "WHERE `is_client` = 0 AND `company_id` = ".$_SESSION['company_id'], "`id`", 10); ?>
           <div class="table-responsive-sm">
-            <div class="fixed-scroll-btn">
-              <!-- scroll left button -->
-              <button type="button" role="button" class="scroll-button scroll-prev scroll-prev-right">
-                <i class="carousel-control-prev-icon"></i>
-              </button>
-              <!-- scroll right button -->
-              <button type="button" role="button" class="scroll-button scroll-next <?php echo $_SESSION['systemLang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
-                <i class="carousel-control-next-icon"></i>
-              </button>
-            </div>
             <table class="table table-striped table-bordered  display compact table-style w-100" id="latest-pieces">
               <thead class="primary text-capitalize">
                 <tr>

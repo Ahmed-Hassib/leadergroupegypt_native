@@ -2,7 +2,7 @@
 
 // array of used classes to include_once it
 $classes_arr = [
-    'Database', 'Login', 'User', 'Direction',
+    'Database', 'Login', 'User', 'Direction', 'Registration',
     'ManufuctureCompanies', 'Devices', 'Models',
     'Pieces', 'PiecesConn', 
     'Malfunction', 'Combination',

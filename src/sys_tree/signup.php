@@ -56,22 +56,22 @@ if (isset($_SESSION['UserName'])) {
           <div class="row row-cols-sm-1 row-cols-lg-2 g-2">
             <!-- company name -->
             <div class="mb-sm-2 mb-md-3 row">
-              <label for="company-name" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language("COMPANY NAME", @$_SESSION['systemLang']) ?></label>
-              <div class="col-sm-12 col-md-8">
+              <label for="company-name" class="col-sm-12 col-form-label text-capitalize"><?php echo language("COMPANY NAME", @$_SESSION['systemLang']) ?></label>
+              <div class="col-sm-12">
                 <input class="form-control w-100" type="text" name="company-name" id="company-name" placeholder="<?php echo language("COMPANY NAME", @$_SESSION['systemLang']) ?>" onkeyup="is_valid(this, 'company');" required>
               </div>
             </div>
             <!-- manager name -->
             <div class="mb-sm-2 mb-md-3 row">
-              <label for="manager-name" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language("MANAGER NAME", @$_SESSION['systemLang']) ?></label>
-              <div class="col-sm-12 col-md-8">
+              <label for="manager-name" class="col-sm-12 col-form-label text-capitalize"><?php echo language("MANAGER NAME", @$_SESSION['systemLang']) ?></label>
+              <div class="col-sm-12">
                 <input class="form-control w-100" type="text" name="manager-name" id="manager-name" placeholder="<?php echo language("MANAGER NAME", @$_SESSION['systemLang']) ?>" required>
               </div>
             </div>
             <!-- company country -->
             <div class="mb-sm-2 mb-md-3 row">
-              <label for="country" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language("COUNTRY", @$_SESSION['systemLang']) ?></label>
-              <div class="col-sm-12 col-md-8">
+              <label for="country" class="col-sm-12 col-form-label text-capitalize"><?php echo language("COUNTRY", @$_SESSION['systemLang']) ?></label>
+              <div class="col-sm-12">
                 <?php 
                 // create an object of Countries class
                 $countries_obj = new countries();
@@ -93,24 +93,22 @@ if (isset($_SESSION['UserName'])) {
                 </select>
               </div>
             </div>
-            
             <!-- address -->
             <div class="mb-sm-2 mb-md-3 row">
-              <label for="address" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language("THE ADDRESS", @$_SESSION['systemLang']) ?></label>
-              <div class="col-sm-12 col-md-8">
+              <label for="address" class="col-sm-12 col-form-label text-capitalize"><?php echo language("THE ADDRESS", @$_SESSION['systemLang']) ?></label>
+              <div class="col-sm-12">
                 <input class="form-control w-100" type="text" name="address" id="address" placeholder="<?php echo language("THE ADDRESS", @$_SESSION['systemLang']) ?>" required>
               </div>
             </div>
             <!-- manager phone -->
             <div class="mb-sm-2 mb-md-3 row">
-              <label for="manager-phone" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language("PHONE", @$_SESSION['systemLang']) ?></label>
-              <div class="col-sm-12 col-md-8">
+              <label for="manager-phone" class="col-sm-12 col-form-label text-capitalize"><?php echo language("PHONE", @$_SESSION['systemLang']) ?></label>
+              <div class="col-sm-12">
                 <input class="form-control w-100" type="text"  name="manager-phone" id="manager-phone" placeholder="<?php echo language("PHONE", @$_SESSION['systemLang']) ?>" required>
               </div>
             </div>
           </div>
         </div>
-
         <!-- second row that contain company info -->
         <div class="row row-cols-sm-1">
           <div class="section-header">
@@ -119,15 +117,15 @@ if (isset($_SESSION['UserName'])) {
           <div class="row row-cols-sm-1 row-cols-lg-2 g-2">
             <!-- admin fullname -->
             <div class="mb-sm-2 mb-md-3 row">
-              <label for="fullname" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language("FULLNAME", @$_SESSION['systemLang']) ?></label>
-              <div class="col-sm-12 col-md-8">
+              <label for="fullname" class="col-sm-12 col-form-label text-capitalize"><?php echo language("FULLNAME", @$_SESSION['systemLang']) ?></label>
+              <div class="col-sm-12">
                 <input class="form-control w-100" type="text" name="fullname" id="fullname" placeholder="<?php echo language("FULLNAME", @$_SESSION['systemLang']) ?>" required>
               </div>
             </div>
             <!-- admin gender -->
             <div class="mb-sm-2 mb-md-3 row">
-              <label for="gender" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language("GENDER", @$_SESSION['systemLang']) ?></label>
-              <div class="col-sm-12 col-md-8">
+              <label for="gender" class="col-sm-12 col-form-label text-capitalize"><?php echo language("GENDER", @$_SESSION['systemLang']) ?></label>
+              <div class="col-sm-12">
                 <select class="form-select" name="gender" id="gender" required>
                   <option value="default" disabled selected><?php echo language("SELECT", @$_SESSION['systemLang']) ." ".language("GENDER", @$_SESSION['systemLang']) ?></option>
                   <option value="0"><?php echo language("MALE", @$_SESSION['systemLang']) ?></option>
@@ -137,20 +135,19 @@ if (isset($_SESSION['UserName'])) {
             </div>
             <!-- admin username -->
             <div class="mb-sm-2 mb-md-3 row">
-              <label for="username" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language("USERNAME", @$_SESSION['systemLang']) ?></label>
-              <div class="col-sm-12 col-md-8">
+              <label for="username" class="col-sm-12 col-form-label text-capitalize"><?php echo language("USERNAME", @$_SESSION['systemLang']) ?></label>
+              <div class="col-sm-12">
                 <input class="form-control w-100" type="text" name="username" id="username" placeholder="<?php echo language("USERNAME", @$_SESSION['systemLang']) ?>" onkeyup="is_valid(this, 'username');" required>
               </div>
             </div>
             
             <div class="mb-sm-2 mb-md-3 row">
-              <label for="password" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language("PASSWORD", @$_SESSION['systemLang']) ?></label>
-              <div class="col-sm-12 col-md-8">
+              <label for="password" class="col-sm-12 col-form-label text-capitalize"><?php echo language("PASSWORD", @$_SESSION['systemLang']) ?></label>
+              <div class="col-sm-12 position-relative">
                 <input class="form-control w-100" type="password" name="password" id="password" placeholder="<?php echo language("PASSWORD", @$_SESSION['systemLang']) ?>" required>
                 <i class="bi bi-eye-slash show-pass show-pass-left text-dark" id="show-pass" onclick="showPass(this)"></i>
               </div>
             </div>
-
           </div>
         </div>
         
@@ -164,7 +161,6 @@ if (isset($_SESSION['UserName'])) {
         </a>
       </form>
       <hr>
-
       <div>
         <p>
           <span>
@@ -173,11 +169,8 @@ if (isset($_SESSION['UserName'])) {
           <a href="../../index.php"><?php echo language('FROM HERE', @$_SESSION['systemLang']) ?></a>
         </p>
       </div>
-
     </div>
   </div>
 </div>
 
-<?php 
-  include_once $tpl . "js-includes.php";
-?>
+<?php include_once $tpl . "js-includes.php"; ?>

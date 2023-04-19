@@ -58,7 +58,7 @@ class Malfunction extends Database {
 
   // update Malfunction info
   public function update_malfunction_tech($info) {
-    $update_query = "UPDATE `malfunctions` SET `mal_status`= ?, `cost`=?, `repaired_date`= CURRENT_DATE, `repaired_time`= now(), `tech_comment`= ?, `isAccepted`= ? WHERE `mal_id` = ?";
+    $update_query = "UPDATE `malfunctions` SET `mal_status` = ?, `cost` = ?, `repaired_date` = CURRENT_DATE, `repaired_time` = now(), `tech_comment` = ?, `tech_status_comment` = ?, `isAccepted`= ? WHERE `mal_id` = ?";
     // prepare the query
     $stmt = $this->con->prepare($update_query);
     $stmt->execute($info);

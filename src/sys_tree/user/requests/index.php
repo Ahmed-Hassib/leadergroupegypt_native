@@ -43,7 +43,7 @@ switch ($query) {
     $file_name = 'get-user-info.php';
     break;
 
-  case "updateSession":
+  case "update-session":
     $file_name = 'update-session.php';
     break;
 

@@ -25,7 +25,6 @@ class Session extends Database {
           `companies`.`company_name`
         FROM `users` 
         LEFT JOIN  `users_permissions` ON `users`.`UserID` = `users_permissions`.`UserID`
-        LEFT JOIN  `users_pieces_columns` ON `users`.`UserID` = `users_pieces_columns`.`UserID`
         LEFT JOIN `companies` ON `companies`.`company_id` = `users`.`company_id`
         WHERE `users`.`UserID` = ? LIMIT 1";
         
@@ -45,7 +44,6 @@ class Session extends Database {
     $_SESSION['profile_img']        = $info['profile_img'];
     $_SESSION['company_id']         = $info['company_id'];      // assign company id to session
     $_SESSION['company_name']       = $info['company_name'];    // assign company name to session
-    $_SESSION['company_alias']      = $info['company_alias'];    // assign company name to session
     $_SESSION['UserName']           = $info['UserName'];        // assign username to session
     $_SESSION['job_title_id']       = $info['job_title_id'];        // assign job title to session
     $_SESSION['isTech']             = $info['isTech'];          // is technical man or not (0 -> not || 1 -> technical)
@@ -123,42 +121,6 @@ class Session extends Database {
     return $ver_info;
   }
 
-  // get user control columns
-  public function get_user_columns_control($id) {
-    $select_query = "SELECT *FROM `users_pieces_columns` WHERE `UserID` = ?";
-    $stmt = $this->con->prepare($select_query);
-    $stmt->execute(array($id));
-    $rows = $stmt->fetchAll();
-    $count = $stmt->rowCount();
-    // check the count
-    return $count > 0 ? [true, $rows] : [false, null];
-  }
-
-  // set user control columns
-  public function set_user_columns_control ($controls) {
-    $_SESSION['ip_col']          = $controls['ip'];
-    $_SESSION['mac_add_col']     = $controls['mac_add'];
-    $_SESSION['piece_name_col']  = $controls['piece_name'];
-    $_SESSION['username_col']    = $controls['username'];
-    $_SESSION['password_col']    = $controls['password'];
-    $_SESSION['direction_col']   = $controls['direction'];
-    $_SESSION['source_col']      = $controls['source'];
-    $_SESSION['ssid_col']        = $controls['ssid'];
-    $_SESSION['pass_conn_col']   = $controls['pass_conn'];
-    $_SESSION['frequency_col']   = $controls['frequency'];
-    $_SESSION['dev_type_col']    = $controls['dev_type'];
-    $_SESSION['conn_type_col']   = $controls['conn_type'];
-    $_SESSION['address_col']     = $controls['address'];
-    $_SESSION['phone_col']       = $controls['phone'];
-    $_SESSION['type_col']        = $controls['type'];
-    $_SESSION['notes_col']       = $controls['notes'];
-    $_SESSION['avg_ping_col']    = $controls['avg_ping'];
-    $_SESSION['packet_loss_col'] = $controls['packet_loss'];
-    $_SESSION['conn_col']        = $controls['conn'];
-    $_SESSION['added_date_col']  = $controls['added_date'];
-    $_SESSION['added_by_col']    = $controls['added_by'];
-  }
-
   public function set_version_info($company_id, $user_id) {
     // get version id
     $curr_version_id                = $this->get_version_id($company_id);
@@ -172,20 +134,25 @@ class Session extends Database {
       $_SESSION['curr_version_is_working']    = $version_info['is_working'];
       $_SESSION['curr_version_is_developing'] = $version_info['is_developing'];
     }
-
-    // check the system version
-    if ($curr_version_id == 2) {
-      // get user columns control
-      $user_controls = $this->get_user_columns_control($user_id);
-      // chekc if exist
-      if ($user_controls[0] == true) {
-        // set user controls
-        $this->set_user_columns_control(...$user_controls[1]);
-      }
-    }
   }
 
   public function print_session() {
     print_r($_SESSION);
+  }
+  
+  public function update_session($user_id) {
+    // get user data
+    $user_data = $this->get_user_info($user_id);
+    // get count
+    $user_count = $user_data[0];
+    // check count
+    if ($user_count > 0) {
+      // get user info
+      $user_info = $user_data[1];
+      // update user info
+      $this->set_user_session($user_info);
+    } else {
+      return null;
+    }
   }
 }

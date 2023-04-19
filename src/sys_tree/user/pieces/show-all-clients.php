@@ -17,7 +17,14 @@ if ($counter > 0) {
     <header class="header mb-3">
       <h4 class="h4"><?php echo language('SHOW ALL CLIENTS', @$_SESSION['systemLang']) ?></h4>
     </header>
-    
+    <div class="mb-3 hstack gap-3">
+      <div class="<?php if ($_SESSION['pcs_add'] == 0) {echo 'd-none';} ?>">
+        <a href="?name=clients&do=add-new-piece" class="btn btn-outline-primary py-1 fs-12">
+          <i class="bi bi-plus"></i>
+          <?php echo language('ADD NEW CLIENT', @$_SESSION['systemLang']) ?>
+        </a>
+      </div>
+    </div>
     <!-- start table container -->
     <div class="table-responsive-sm">
       <div class="fixed-scroll-btn">
@@ -64,12 +71,16 @@ if ($counter > 0) {
               
               <!-- piece name -->
               <td>
-                <a class="<?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="?name=<?php echo $name ?>&do=edit-piece&piece-id=<?php echo $piece['id']; ?>" target="">
-                  <?php echo trim($piece['full_name'], ' ') ?>
-                  <?php if ($piece['direction_id'] == 0) { ?>
-                      <i class="bi bi-exclamation-triangle-fill text-danger" title="<?php echo language("DIRECTION NO DATA ENTERED", @$_SESSION['systemLang']) ?>"></i>
-                  <?php } ?>
-                </a>
+                <?php if ($_SESSION['pcs_update'] == 1) { ?>
+                  <a href="?name=<?php echo $name ?>&do=edit-piece&piece-id=<?php echo $piece['id']; ?>" target="">
+                    <?php echo trim($piece['full_name'], ' ') ?>
+                  </a>
+                <?php } else {?>
+                  <span><?php echo trim($piece['full_name'], ' ') ?></span>
+                <?php } ?>
+                <?php if ($piece['direction_id'] == 0) { ?>
+                  <i class="bi bi-exclamation-triangle-fill text-danger" title="<?php echo language("DIRECTION NO DATA ENTERED", @$_SESSION['systemLang']) ?>"></i>
+                <?php } ?>
                 <?php if ($piece['added_date'] == date('Y-m-d')) { ?>
                   <span class="badge bg-danger p-1 <?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-1' : 'ms-1' ?>"><?php echo language('NEW', @$_SESSION['systemLang']) ?></span>
                 <?php } ?>
@@ -77,17 +88,24 @@ if ($counter > 0) {
 
               <!-- piece username -->
               <td class="text-capitalize">
+                <?php if ($_SESSION['pcs_update'] == 1) { ?>
                 <a href="?name=<?php echo $name ?>&do=edit-piece&piece-id=<?php echo $piece['id']; ?>">
                   <?php echo $piece['username']; ?>
                 </a>
+                <?php } else {?>
+                  <span><?php echo $piece['username']; ?></span>
+                <?php } ?>
               </td>
 
               <!-- piece direction -->
               <td class="text-capitalize" >
-                <?php if ($piece['direction_id'] != 0) { ?>
+                <?php $dir_name = $db_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = ".$piece['direction_id'])[0]['direction_name']; ?>
+                <?php if ($piece['direction_id'] != 0 && $_SESSION['dir_update'] == 1) { ?>
                   <a href="<?php echo $nav_up_level ?>directions/index.php?do=show-direction-tree&dir-id=<?php echo $piece['direction_id']; ?>">
-                      <?php echo $db_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = ".$piece['direction_id'])[0]['direction_name']; ?>
+                    <?php echo $dir_name ?>
                   </a>
+                <?php } elseif ($_SESSION['dir_update'] == 0) { ?>
+                  <span><?php echo $dir_name ?></span>
                 <?php } else { ?>
                   <span class="text-danger"><?php echo language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></span>
                 <?php } ?>

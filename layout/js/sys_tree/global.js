@@ -84,6 +84,8 @@ var arrowUpBtn = document.querySelector(".arrow-up");
       }
     }
 
+    
+
   };
 
 
@@ -185,9 +187,12 @@ function addAstrisk(inputs) {
       if (localStorage['systemLang'] == 'ar') {
         // add some classes
         astrisk.classList.add("astrisk-left");
-      } else {
+      } else if (localStorage['systemLang'] == 'en') {
         // add some classes
         astrisk.classList.add("astrisk-right");
+      } else {
+        // add some classes
+        astrisk.classList.add("astrisk-left");
       }
       astrisk.textContent = "*";
       // append astrisk

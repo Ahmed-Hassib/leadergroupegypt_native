@@ -1,19 +1,19 @@
 (function () {
 
-  // get instruction button
-  let instruction_btn = document.querySelector('#instruction-btn');
-  // get showing instruction check box
-  let showing_instruction_checkbox = document.querySelector('#show-instructions');
+  // // get instruction button
+  // let instruction_btn = document.querySelector('#instruction-btn');
+  // // get showing instruction check box
+  // let showing_instruction_checkbox = document.querySelector('#show-instructions');
 
-  // check 'showing_instruction' variable in local storage
-  if (localStorage.getItem('showing_instruction') == 'false') {
-    // trigger click event on instruction button
-    instruction_btn.click()
-  } else {
-    if (showing_instruction_checkbox != null) {
-      showing_instruction_checkbox.checked = true;
-    }
-  }
+  // // check 'showing_instruction' variable in local storage
+  // if (localStorage.getItem('showing_instruction') == 'false') {
+  //   // trigger click event on instruction button
+  //   instruction_btn.click()
+  // } else {
+  //   if (showing_instruction_checkbox != null) {
+  //     showing_instruction_checkbox.checked = true;
+  //   }
+  // }
 
 })()
 
@@ -67,7 +67,7 @@ function username_validation(input) {
   // check value length
   if (value.length > 0) {
     // check if name has a white space
-    if (value.match(/^[a-z]+\-*$/)) {
+    if (value.match(/^[a-z\-]+$/)) {
       // put company alias into addo wrapping
       // addon_wrapping.textContent = `@${value.trim()}`;
       // add valid class to input

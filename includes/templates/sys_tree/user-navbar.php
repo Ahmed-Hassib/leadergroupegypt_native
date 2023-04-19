@@ -263,8 +263,11 @@
         <span class="badge bg-danger"><?php echo language("TRIAL", @$_SESSION['systemLang']) ?></span>
       </span>
     <?php } ?>
-
+    
     <?php if ($possible_back == true) { ?>
+      <a href="<?php echo $nav_up_level ?>requests/index.php?do=update-session&user-id=<?php echo $_SESSION['UserID'] ?>" class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?> mx-3">
+        <span><?php echo language('REFRESH') ?></span>
+      </a>
       <button class="btn btn-outline-light text-capitalize py-1 fs-12 <?php echo $_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" onclick="history_control()">
         <i class="bi bi-arrow-return-left"></i>
       </button>
