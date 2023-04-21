@@ -15,29 +15,61 @@
       <div class="col-12">
         <div class="section-block">
           <div class="section-header">
-            <h5><?php echo language('PERSONAL INFO', @$_SESSION['systemLang']) ?></h5>
+            <h5>
+              <?php 
+              if ($page_title == 'clients') {
+                echo language('PERSONAL INFO', @$_SESSION['systemLang']);
+              } else {
+                echo language('PIECE INFO', @$_SESSION['systemLang']);
+              }
+              ?>
+            </h5>
             <hr />
           </div>
           <!-- full name -->
           <div class="mb-sm-2 mb-md-3 row">
-            <label for="full-name" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('FULLNAME', @$_SESSION['systemLang']) ?></label>
-            <div class="col-sm-12 col-md-8">
+            <label for="full-name" class="col-sm-12 col-form-label text-capitalize">
+              <?php 
+              if ($page_title == 'clients') {
+                echo language('FULLNAME', @$_SESSION['systemLang']);
+              } else {
+                echo language('PIECE NAME', @$_SESSION['systemLang']);
+              }
+              ?>
+            </label>
+            <div class="col-sm-12 position-relative">
               <input type="text" class="form-control" id="full-name" name="full-name" placeholder="<?php echo language('FULLNAME', @$_SESSION['systemLang']) ?>" onkeyup="fullname_validation(this)" autocomplete="off" required />
             </div>
           </div>
 
           <!-- address -->
           <div class="mb-sm-2 mb-md-3 row">
-            <label for="address" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('THE ADDRESS', @$_SESSION['systemLang']) ?></label>
-            <div class="col-sm-12 col-md-8">
+            <label for="address" class="col-sm-12 col-form-label text-capitalize">
+              <?php 
+              if ($page_title == 'clients') {
+                echo language('THE ADDRESS', @$_SESSION['systemLang']);
+              } else {
+                echo language('THE PROPERTY ADDRESS', @$_SESSION['systemLang']);
+              }
+              ?>
+            </label>
+            <div class="col-sm-12 position-relative">
               <input type="text" name="address" id="address" class="form-control w-100" placeholder="<?php echo language('THE ADDRESS', @$_SESSION['systemLang']) ?>" />
             </div>
           </div>
 
           <!-- phone -->
           <div class="mb-sm-2 mb-md-3 row">
-            <label for="phone-number" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('PHONE', @$_SESSION['systemLang']) ?></label>
-            <div class="col-sm-12 col-md-8">
+            <label for="phone-number" class="col-sm-12 col-form-label text-capitalize">
+              <?php
+              if ($page_title == 'clients') {
+                echo language('PHONE', @$_SESSION['systemLang']);
+              } else {
+                echo language('THE PROPERTY GUARD PHONE', @$_SESSION['systemLang']);
+              }
+              ?>
+            </label>
+            <div class="col-sm-12 position-relative">
               <input type="text" name="phone-number" id="phone-number" class="form-control w-100" placeholder="<?php echo language('PHONE', @$_SESSION['systemLang']) ?>" />
             </div>
           </div>
@@ -78,8 +110,8 @@
           </div>
           <!-- notes -->
           <div class="row">
-            <label for="notes" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('THE NOTES', @$_SESSION['systemLang']) ?></label>
-            <div class="col-sm-12 col-md-8">
+            <label for="notes" class="col-sm-12 col-form-label text-capitalize"><?php echo language('THE NOTES', @$_SESSION['systemLang']) ?></label>
+            <div class="col-sm-12 position-relative">
                 <textarea name="notes" id="notes" title="put some notes hete if exist" class="form-control w-100" style="height: 10rem; resize: none; direction: <?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>" placeholder="<?php echo language('PUT YOUR NOTES HERE', @$_SESSION['systemLang']) ?>"></textarea>
             </div>
           </div>
@@ -104,8 +136,8 @@
                 <!-- direction -->
                 <div class="col-12">
                   <div class="mb-sm-2 mb-md-3 row">
-                    <label for="direction" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('THE DIRECTION', @$_SESSION['systemLang']) ?></label>
-                    <div class="col-sm-12 col-md-8">
+                    <label for="direction" class="col-sm-12 col-form-label text-capitalize"><?php echo language('THE DIRECTION', @$_SESSION['systemLang']) ?></label>
+                    <div class="col-sm-12 position-relative">
                       <select class="form-select" id="direction" name="direction" required onchange="get_sources(this, <?php echo $_SESSION['company_id'] ?>, '<?php echo $dirs . $_SESSION['company_name'] ?>', ['sources', 'alternative-sources']);">
                         <?php
                         // create an object of Direction class
@@ -135,8 +167,8 @@
                 <!-- source -->
                 <div class="col-12">
                   <div class="mb-3 row">
-                    <label for="sources" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('THE SOURCE', @$_SESSION['systemLang']) ?></label>
-                    <div class="col-sm-12 col-md-8">
+                    <label for="sources" class="col-sm-12 col-form-label text-capitalize"><?php echo language('THE SOURCE', @$_SESSION['systemLang']) ?></label>
+                    <div class="col-sm-12 position-relative">
                       <select class="form-select" id="sources" name="source-id" required>
                         <option  value="default" selected disabled><?php echo language('SELECT', @$_SESSION['systemLang'])." ". language('THE SOURCE', @$_SESSION['systemLang']) ?></option>
                       </select>
@@ -147,8 +179,8 @@
                 <!-- alternative source -->
                 <div class="col-12">
                   <div class="mb-3 row">
-                    <label for="alternative-sources" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('ALTERNATIVE SOURCE', @$_SESSION['systemLang']) ?></label>
-                    <div class="col-sm-12 col-md-8">
+                    <label for="alternative-sources" class="col-sm-12 col-form-label text-capitalize"><?php echo language('ALTERNATIVE SOURCE', @$_SESSION['systemLang']) ?></label>
+                    <div class="col-sm-12 position-relative">
                       <select class="form-select" id="alternative-sources" name="alt-source-id">
                         <option value="default" selected disabled><?php echo language('SELECT', @$_SESSION['systemLang'])." ". language('ALTERNATIVE SOURCE', @$_SESSION['systemLang']) ?></option>
                       </select>
@@ -164,8 +196,8 @@
                 <!-- device type -->
                 <div class="col-12">
                   <div class="mb-sm-2 mb-md-3 row">
-                    <label for="device-id" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('DEVICE TYPE', @$_SESSION['systemLang']) ?></label>
-                    <div class="col-sm-12 col-md-8">
+                    <label for="device-id" class="col-sm-12 col-form-label text-capitalize"><?php echo language('DEVICE TYPE', @$_SESSION['systemLang']) ?></label>
+                    <div class="col-sm-12 position-relative">
                       <?php
                       $dev_query = "SELECT `devices_info`.*, `manufacture_companies`.`company_id` FROM `devices_info` LEFT JOIN `manufacture_companies` ON `manufacture_companies`.`man_company_id` = `devices_info`.`device_company_id` WHERE `manufacture_companies`.`company_id` = ?;";
                       $stmt = $con->prepare($dev_query);
@@ -195,8 +227,8 @@
                 <!-- device model -->
                 <div class="col-12">
                   <div class="mb-3 row">
-                    <label for="device-model" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('DEVICE MODEL', @$_SESSION['systemLang']) ?></label>
-                    <div class="mt-1 col-sm-12 col-md-8">
+                    <label for="device-model" class="col-sm-12 col-form-label text-capitalize"><?php echo language('DEVICE MODEL', @$_SESSION['systemLang']) ?></label>
+                    <div class="mt-1 col-sm-12">
                       <select class="form-select" name="device-model" id="device-model">
                         <option value="default" disabled selected><?php echo language('SELECT', @$_SESSION['systemLang'])." ". language('DEVICE MODEL', @$_SESSION['systemLang']) ?></option>
                       </select>
@@ -207,8 +239,8 @@
                 <!-- connection type -->
                 <div class="col-12">
                   <div class="mb-sm-2 mb-md-3 row">
-                    <label for="conn-type" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('CONNECTION TYPE', @$_SESSION['systemLang']) ?></label>
-                    <div class="col-sm-12 col-md-8">
+                    <label for="conn-type" class="col-sm-12 col-form-label text-capitalize"><?php echo language('CONNECTION TYPE', @$_SESSION['systemLang']) ?></label>
+                    <div class="col-sm-12 position-relative">
                       <?php $conn_type_data = $db_obj->select_specific_column("*", "`connection_types`", "WHERE `company_id` = ".$_SESSION['company_id']); ?>
                       <select class="form-select text-uppercase" name="conn-type" id="conn-type">
                         <option value="default" selected disabled><?php echo language('SELECT', @$_SESSION['systemLang'])." ". language('CONNECTION TYPE', @$_SESSION['systemLang']) ?></option>
@@ -245,8 +277,8 @@
                 <!-- IP -->
                 <div class="col-12">
                   <div class="mb-sm-2 mb-md-3 row">
-                    <label for="ip" class="col-sm-12 col-md-4 col-form-label"><span class="text-uppercase"><?php echo language('IP', @$_SESSION['systemLang']) ?></span></label>
-                    <div class="col-sm-12 col-md-8">
+                    <label for="ip" class="col-sm-12 col-form-label"><span class="text-uppercase"><?php echo language('IP', @$_SESSION['systemLang']) ?></span></label>
+                    <div class="col-sm-12 position-relative">
                       <input type="text" class="form-control" id="ip" name="ip" placeholder="xxx.xxx.xxx.xxx" onkeyup="ip_validation(this)" autocomplete="off" required />
                       <div id="ipHelp" class="form-text text-warning"><?php echo language('IF PIECE/CLIENT NOT HAVE AN IP PRESS 0.0.0.0', @$_SESSION['systemLang']) ?></div>
                     </div>
@@ -256,8 +288,8 @@
                 <!-- MAC ADD -->
                 <div class="col-12">
                   <div class="mb-sm-2 mb-md-3 row">
-                    <label for="mac-add" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('MAC ADD', @$_SESSION['systemLang']) ?></label>
-                    <div class="col-sm-12 col-md-8">
+                    <label for="mac-add" class="col-sm-12 col-form-label text-capitalize"><?php echo language('MAC ADD', @$_SESSION['systemLang']) ?></label>
+                    <div class="col-sm-12 position-relative">
                       <input type="text" class="form-control" id="mac-add" name="mac-add" onkeyup="mac_validation(this)" placeholder="<?php echo language('MAC ADD', @$_SESSION['systemLang']) ?>" />
                     </div>
                   </div>
@@ -266,8 +298,8 @@
                 <!-- user name -->
                 <div class="col-12">
                   <div class="mb-sm-2 mb-md-3 row">
-                    <label for="user-name" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('USERNAME', @$_SESSION['systemLang']) ?></label>
-                    <div class="col-sm-12 col-md-8">
+                    <label for="user-name" class="col-sm-12 col-form-label text-capitalize"><?php echo language('USERNAME', @$_SESSION['systemLang']) ?></label>
+                    <div class="col-sm-12 position-relative">
                       <input type="text" class="form-control" id="user-name" name="user-name" placeholder="<?php echo language('USERNAME', @$_SESSION['systemLang']) ?>" autocomplete="off" required />
                     </div>
                   </div>
@@ -276,8 +308,8 @@
                 <!-- password -->
                 <div class="col-12">
                   <div class="mb-sm-2 mb-md-3 row">
-                    <label for="password" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('PASSWORD', @$_SESSION['systemLang']) ?></label>
-                    <div class="col-sm-12 col-md-8">
+                    <label for="password" class="col-sm-12 col-form-label text-capitalize"><?php echo language('PASSWORD', @$_SESSION['systemLang']) ?></label>
+                    <div class="col-sm-12 position-relative">
                       <input type="password" class="form-control" id="password" name="password" placeholder="<?php echo language('PASSWORD', @$_SESSION['systemLang']) ?>" autocomplete="off" required />
                       <i class="bi bi-eye-slash show-pass <?php echo @$_SESSION['systemLang'] == 'ar' ? 'show-pass-left' : 'show-pass-right' ?>" onclick="showPass(this)"></i>
                       <div id="passHelp" class="form-text text-warning "><?php echo language('DON`T SHARE THIS PASSWORD WITH ANYONE', @$_SESSION['systemLang']) ?></div>
@@ -293,8 +325,8 @@
                 <!-- password-connection -->
                 <div class="col-12">
                   <div class="mb-sm-2 mb-md-3 row">
-                    <label for="password-connection" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('PASSWORD CONNECTION', @$_SESSION['systemLang']) ?></label>
-                    <div class="col-sm-12 col-md-8">
+                    <label for="password-connection" class="col-sm-12 col-form-label text-capitalize"><?php echo language('PASSWORD CONNECTION', @$_SESSION['systemLang']) ?></label>
+                    <div class="col-sm-12 position-relative">
                       <input type="password" class="form-control" id="password-connection" name="password-connection" placeholder="<?php echo language('PASSWORD CONNECTION', @$_SESSION['systemLang']) ?>"  />
                       <i class="bi bi-eye-slash show-pass <?php echo @$_SESSION['systemLang'] == 'ar' ? 'show-pass-left' : 'show-pass-right' ?>" onclick="showPass(this)"></i>
                       <div id="passHelp" class="form-text text-warning "><?php echo language('DON`T SHARE THIS PASSWORD WITH ANYONE', @$_SESSION['systemLang']) ?></div>
@@ -304,8 +336,8 @@
                 <!-- ssid -->
                 <div class="col-12">
                   <div class="mb-sm-2 mb-md-3 row">
-                    <label for="ssid" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('SSID', @$_SESSION['systemLang']) ?></label>
-                    <div class="col-sm-12 col-md-8">
+                    <label for="ssid" class="col-sm-12 col-form-label text-capitalize"><?php echo language('SSID', @$_SESSION['systemLang']) ?></label>
+                    <div class="col-sm-12 position-relative">
                       <input type="text" class="form-control" id="ssid" name="ssid" placeholder="<?php echo language('SSID', @$_SESSION['systemLang']) ?>" />
                     </div>
                   </div>
@@ -313,8 +345,8 @@
                 <!-- frequency -->
                 <div class="col-12">
                   <div class="mb-sm-2 mb-md-3 row">
-                    <label for="frequency" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('FREQUENCY', @$_SESSION['systemLang']) ?></label>
-                    <div class="col-sm-12 col-md-8">
+                    <label for="frequency" class="col-sm-12 col-form-label text-capitalize"><?php echo language('FREQUENCY', @$_SESSION['systemLang']) ?></label>
+                    <div class="col-sm-12 position-relative">
                         <input type="text" class="form-control" id="frequency" name="frequency" placeholder="<?php echo language('FREQUENCY', @$_SESSION['systemLang']) ?>" onkeyup="integer_input_validation(this)"  />
                     </div>
                   </div>
@@ -322,8 +354,8 @@
                 <!-- wave -->
                 <div class="col-12">
                   <div class="mb-sm-2 mb-md-3 row">
-                    <label for="wave" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('THE WAVE', @$_SESSION['systemLang']) ?></label>
-                    <div class="col-sm-12 col-md-8">
+                    <label for="wave" class="col-sm-12 col-form-label text-capitalize"><?php echo language('THE WAVE', @$_SESSION['systemLang']) ?></label>
+                    <div class="col-sm-12 position-relative">
                       <input type="text" class="form-control" id="wave" name="wave" placeholder="<?php echo language('THE WAVE', @$_SESSION['systemLang']) ?>" onkeyup="integer_input_validation(this)" />
                     </div>
                   </div>

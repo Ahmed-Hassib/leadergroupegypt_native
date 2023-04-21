@@ -80,11 +80,11 @@
   // check if empty form error
   if (empty($form_error)) {
     // check if user is exist in database or not
-    $checkPcs     = $pcs_obj->is_exist("`full_name`", "`pieces_info`", $full_name);
-    $is_exist_mac = !empty($macAdd) ? $pcs_obj->is_exist("`mac_add`", "`pieces_mac_add`", $mac_add) : 0;
-    $is_exist_ip  = $ip == '0.0.0.0' ? 0 : $pcs_obj->count_records("`id`", "`pieces_info`", "WHERE `ip` = '$ip' AND `direction_id` = $dir_id");
+    $is_exist_name  = $pcs_obj->count_records("`id`", "`pieces_info`", "WHERE `full_name` = $full_name AND `company_id` = " . $_SESSION['company_id']);
+    $is_exist_mac   = !empty($macAdd) ? $pcs_obj->count_records("`pieces_mac_addr`.`id`", "`pieces_mac_addr`", "LEFT JOIN `pieces_info` ON `pieces_info`.`id` = `pieces_mac_addr`.`id` WHERE `pieces_mac_addr`.`mac_add` = $mac_add AND `pieces_info`.`company_id` = ".$_SESSION['company_id']) : 0;
+    $is_exist_ip    = $ip == '0.0.0.0' ? 0 : $pcs_obj->count_records("`id`", "`pieces_info`", "WHERE `ip` = '$ip' AND `direction_id` = $dir_id AND `company_id` = " . $_SESSION['company_id']);
     // check piece name
-    if ($checkPcs > 0) {
+    if ($is_exist_name > 0) {
       // show erroe message
       $msg = '<div class="alert alert-warning text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;'.language('THIS USERNAME IS ALREADY EXIST', @$_SESSION['systemLang']).'</div>';
     } elseif ($is_exist_mac > 0) {
@@ -119,21 +119,21 @@
         // insert mac_add
         $pcs_obj->insert_mac_add($id, $mac_add);
       }
-        
+
       // check pass_connection
       if (!empty($pass_conn)) {
         // echo "<br>* pass connection is not empty<br>";
         // insert pass_conn
         $pcs_obj->insert_pass_connection($id, $pass_conn);
       }
-        
+      
       // check phones
       if (!empty($phone)) {
         // echo "<br>* phone is not empty<br>";
         // insert phones
         $pcs_obj->insert_phones($id, $phone);
       }
-        
+      
       // check ssid
       if (!empty($ssid)) {
         // echo "<br>* ssid is not empty<br>";

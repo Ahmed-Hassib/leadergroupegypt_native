@@ -265,8 +265,8 @@
     <?php } ?>
     
     <?php if ($possible_back == true) { ?>
-      <a href="<?php echo $nav_up_level ?>requests/index.php?do=update-session&user-id=<?php echo $_SESSION['UserID'] ?>" class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?> mx-3">
-        <span><?php echo language('REFRESH') ?></span>
+      <a href="<?php echo $nav_up_level ?>requests/index.php?do=update-session&user-id=<?php echo $_SESSION['UserID'] ?>" class="btn btn-outline-light py-1 fs-12 <?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?> mx-3">
+        <span><?php echo language('REFRESH SESSION', @$_SESSION['systemLang']) ?></span>
       </a>
       <button class="btn btn-outline-light text-capitalize py-1 fs-12 <?php echo $_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" onclick="history_control()">
         <i class="bi bi-arrow-return-left"></i>
@@ -276,4 +276,4 @@
 </div>
 
 <div class="main-content">
-  <img src="<?php echo $assets ?>ramadan-karem.png" class="bg-event-img" alt="">
+  <img src="<?php echo $assets ?>eid-mobarak-2.png" class="bg-event-img" alt="">

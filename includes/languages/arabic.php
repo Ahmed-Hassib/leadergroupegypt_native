@@ -57,6 +57,7 @@ function languageAr($phrase)
     'UNKNOWN'               => 'غير معروف',
     'BACK'                  => 'عودة',
     'REFRESH'               => 'تحديث',
+    'REFRESH SESSION'       => 'تحديث الجلسة',
     'REPLAY'                => 'الرد',
     'SELECT ALL'            => 'تحديد الكل',
     'DAY'                   => 'يوم',        
@@ -337,6 +338,8 @@ function languageAr($phrase)
     'DEVICE MODEL'                      => 'موديل الجهاز',
     'WAVE'                              => 'موجة',
     'THE WAVE'                          => 'الموجة',
+    'THE PROPERTY ADDRESS'              => 'عنوان العقار',
+    'THE REAL ESTATE AGENT PHONE'       => 'رقم تليفون مسئول العقار',
     
 
     

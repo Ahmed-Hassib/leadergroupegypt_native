@@ -10,8 +10,8 @@
         <form action="<?php echo $sys_tree_user ?>directions/index.php?do=insert-new-direction" method="POST" id="addNewDirection" onchange="form_validation(this)">
           <!-- start direction name field -->
           <div class="mb-sm-2 mb-md-3 row">
-            <label for="direction-name" class="col-sm-12 col-md-4 col-form-label text-capitalize" ><?php echo language('DIRECTION NAME', @$_SESSION['systemLang']) ?></label>
-            <div class="col-sm-12 col-md-8">
+            <label for="direction-name" class="col-sm-12 col-form-label text-capitalize" ><?php echo language('DIRECTION NAME', @$_SESSION['systemLang']) ?></label>
+            <div class="col-sm-12 position-relative">
               <input type="text" class="form-control" name="direction-name" id="direction-name" placeholder="<?php echo language('DIRECTION NAME', @$_SESSION['systemLang']) ?>" onkeyup="direction_validation(this)" required>
               <div id="passHelp" class="form-text"><?php echo language('MAKE SURE YOU ENTER THE FULL NAME OF THE DIRECTION', @$_SESSION['systemLang']) ?></div>
             </div>

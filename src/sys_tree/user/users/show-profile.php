@@ -19,11 +19,9 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
     $stmt = $con->prepare("SELECT *FROM `users_permissions` WHERE `UserID` = ? LIMIT 1");
     $stmt->execute(array($user_id)); // execute query
     $permissions = $stmt->fetch();   // fetch data
-  
+    
     // include_once profile card
     include_once 'profile-card.php';
-  
-  
   } else { 
     // include_once no data founded module
     include_once $globmod . 'no-data-founded.php';

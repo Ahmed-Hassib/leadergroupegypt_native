@@ -18,6 +18,7 @@ $page_title = "";
 $level = 4;
 // nav level
 $nav_level = 1;
+$possible_back = false;
 // pre configration of system
 include_once str_repeat("../", $level) . "etc/pre-conf.php";
 // initial configration of system
@@ -77,6 +78,10 @@ switch ($query) {
   
   case "delete-malfunction-media":
     $file_name = 'delete-malfunction-media.php';
+    break;
+  
+  case "change-profile-img":
+    $file_name = 'change-profile-img.php';
     break;
 }
 

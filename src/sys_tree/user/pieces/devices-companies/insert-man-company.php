@@ -9,11 +9,11 @@
       // create an object of PiecesTypes class
       $dev_company_obj = new ManufuctureCompanies();
       // check if name exist or not
-      $is_exist = $dev_company_obj->is_exist("`man_company_name`", "`manufacture_companies`", $company_name);
+      $is_exist = $dev_company_obj->count_records("`man_company_id`", "`manufacture_companies`", "WHERE `man_company_name` = $company_name AND `company_id` = " . $_SESSION['company_id']);
       // type name validation
       if (!empty($company_name)) {
         // check if type is exist or not
-        if ($is_exist == true) {
+        if ($is_exist > 0) {
           // echo danger message
           $msg = '<div class="alert alert-danger text-capitalize" dir=""><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;' . language('THIS NAME IS ALREADY EXIST', @$_SESSION['systemLang']) . '</div>';
         } else {

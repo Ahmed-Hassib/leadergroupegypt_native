@@ -42,16 +42,16 @@ $pcs_counter = $db_obj->count_records("`id`", "`pieces_info`", "WHERE `company_i
           </div>
           <!-- Administrator name -->
           <div class="mb-sm-2 mb-md-3 row">
-            <label for="admin-name" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('ADMIN NAME', @$_SESSION['systemLang']) ?></label>
-            <div class="col-sm-12 col-md-8">
+            <label for="admin-name" class="col-sm-12 col-form-label text-capitalize"><?php echo language('ADMIN NAME', @$_SESSION['systemLang']) ?></label>
+            <div class="col-sm-12 position-relative">
               <input type="hidden" class="form-control" id="admin-id" name="admin-id" value="<?php echo $_SESSION['UserID'] ?>" autocomplete="off" required />
               <input type="text" class="form-control" id="admin-name" name="admin-name" placeholder="administrator name" value="<?php echo $_SESSION['UserName'] ?>" autocomplete="off" required readonly />
             </div>
           </div>
           <!-- Technical name -->
           <div class="mb-sm-2 mb-md-3 row">
-            <label for="technical-id" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('TECHNICAL NAME', @$_SESSION['systemLang']) ?></label>
-            <div class="col-sm-12 col-md-8">
+            <label for="technical-id" class="col-sm-12 col-form-label text-capitalize"><?php echo language('TECHNICAL NAME', @$_SESSION['systemLang']) ?></label>
+            <div class="col-sm-12 position-relative">
               <select class="form-select" id="technical-id" name="technical-id" required <?php if ($emp_counter == 0) { echo 'disabled'; }?>>
                 <option  value="default" disabled selected><?php echo language('SELECT', @$_SESSION['systemLang'])." ".language('TECHNICAL NAME', @$_SESSION['systemLang']) ?></option>
                 <?php 
@@ -75,8 +75,8 @@ $pcs_counter = $db_obj->count_records("`id`", "`pieces_info`", "WHERE `company_i
           </div>
           <!-- phone -->
           <div class="mb-sm-2 mb-md-3 row">
-            <label for="client-name" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('CLIENT NAME', @$_SESSION['systemLang']) ?></label>
-            <div class="col-sm-12 col-md-8 position-relative">
+            <label for="client-name" class="col-sm-12 col-form-label text-capitalize"><?php echo language('CLIENT NAME', @$_SESSION['systemLang']) ?></label>
+            <div class="col-sm-12 position-relative position-relative">
               <input type="hidden" name="client-id" id="client-id" class="form-control w-100" placeholder="Client ID" />
               <input type="text" name="client-name" id="client-name" class="form-control w-100" placeholder="<?php echo language('ADMIN NAME', @$_SESSION['systemLang']) ?>" onkeyup="search_name(this)" data-company-id="<?php echo $_SESSION['company_id'] ?>" required  <?php if ($pcs_counter == 0) { echo 'disabled'; } ?> />
               <div class="result w-100">
@@ -95,8 +95,8 @@ $pcs_counter = $db_obj->count_records("`id`", "`pieces_info`", "WHERE `company_i
           </div>
           <!-- notes -->
           <div class="mb-sm-2 mb-md-3 row">
-            <label for="descreption" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('MALFUNCTION DESCRIPTION', @$_SESSION['systemLang']) ?></label>
-            <div class="col-sm-12 col-md-8">
+            <label for="descreption" class="col-sm-12 col-form-label text-capitalize"><?php echo language('MALFUNCTION DESCRIPTION', @$_SESSION['systemLang']) ?></label>
+            <div class="col-sm-12 position-relative">
               <textarea name="descreption" id="descreption" title="<?php echo language('MALFUNCTION DESCRIPTION', @$_SESSION['systemLang']) ?>" class="form-control w-100" style="height: 10rem; resize: none; direction: <?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>" placeholder="<?php echo language('MALFUNCTION DESCRIPTION', @$_SESSION['systemLang']) ?>" required></textarea>
             </div>
           </div>

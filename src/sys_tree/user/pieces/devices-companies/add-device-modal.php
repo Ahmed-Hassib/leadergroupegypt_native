@@ -10,16 +10,16 @@
           <input type="hidden" name="company-id" id="company-id" value="<?php echo $dev_company_id ?>">
           <!-- start company name -->
           <div class="mb-sm-2 mb-md-3 row">
-            <label for="company-name" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('COMPANY NAME', @$_SESSION['systemLang']) ?></label>
-            <div class="col-sm-12 col-md-8">
+            <label for="company-name" class="col-sm-12 col-form-label text-capitalize"><?php echo language('COMPANY NAME', @$_SESSION['systemLang']) ?></label>
+            <div class="col-sm-12 position-relative">
               <input type="text" class="form-control" id="company-name" name="company-name" value="<?php echo $dev_company_name ?>" autocomplete="off" required  readonly/>
             </div>
           </div>
           <!-- end company name -->
           <!-- start device name -->
           <div class="mb-sm-2 mb-md-3 row">
-            <label for="device-name" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('PIECE NAME', @$_SESSION['systemLang']) ?></label>
-            <div class="col-sm-12 col-md-8">
+            <label for="device-name" class="col-sm-12 col-form-label text-capitalize"><?php echo language('PIECE NAME', @$_SESSION['systemLang']) ?></label>
+            <div class="col-sm-12 position-relative">
               <input type="text" class="form-control" id="device-name"  name="device-name" autocomplete="off" required />
             </div>
           </div>

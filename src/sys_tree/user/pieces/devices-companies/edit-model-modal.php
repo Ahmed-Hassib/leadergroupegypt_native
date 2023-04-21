@@ -10,16 +10,16 @@
           <input type="hidden" name="model-id" id="model-id">
           <!-- start model name -->
           <div class="mb-sm-2 mb-md-3 row">
-            <label for="old-model-name" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('OLD MODEL NAME', @$_SESSION['systemLang']) ?></label>
-            <div class="col-sm-12 col-md-8">
+            <label for="old-model-name" class="col-sm-12 col-form-label text-capitalize"><?php echo language('OLD MODEL NAME', @$_SESSION['systemLang']) ?></label>
+            <div class="col-sm-12 position-relative">
               <input type="text" class="form-control" id="old-model-name" name="old-model-name" autocomplete="off" required readonly />
             </div>
           </div>
           <!-- end model name -->
           <!-- start model name -->
           <div class="mb-sm-2 mb-md-3 row">
-            <label for="new-model-name" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('NEW MODEL NAME', @$_SESSION['systemLang']) ?></label>
-            <div class="col-sm-12 col-md-8">
+            <label for="new-model-name" class="col-sm-12 col-form-label text-capitalize"><?php echo language('NEW MODEL NAME', @$_SESSION['systemLang']) ?></label>
+            <div class="col-sm-12 position-relative">
               <input type="text" class="form-control" id="new-model-name" name="new-model-name" autocomplete="off" required />
             </div>
           </div>

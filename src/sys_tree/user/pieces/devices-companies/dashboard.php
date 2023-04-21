@@ -6,11 +6,9 @@
     <div class="mb-3 hstack gap-3">
       <div class="<?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>">
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-outline-primary shadow-sm py-1" data-bs-toggle="modal" data-bs-target="#addNewDevCompanyModal">
-          <h6 class="h6 mb-0 text-center text-capitalize fs-12">
-            <i class="bi bi-file-plus"></i>
-            <?php echo language("ADD NEW COMPANY", @$_SESSION['systemLang']) ?>
-          </h6>
+        <button type="button" class="btn btn-outline-primary shadow-sm py-1 fs-12" data-bs-toggle="modal" data-bs-target="#addNewDevCompanyModal">
+          <i class="bi bi-file-plus"></i>
+          <?php echo language("ADD NEW COMPANY", @$_SESSION['systemLang']) ?>
         </button>
       </div>
     </div>
@@ -73,7 +71,7 @@
                   <!-- edit button -->
                   <button type="button" class="btn btn-outline-success py-1 fs-12" data-bs-toggle="modal" data-bs-target="#editDevCompanyModal" data-name="<?php echo $company['man_company_name'] ?>" data-id="<?php echo $company['man_company_id'] ?>" onclick="put_data_into_modal(this, 'edit', 'company-id', 'old-company-name')"><i class="bi bi-pencil-square"></i></button>
                   <!-- show all devices button -->
-                  <a href="?name=pieces&do=devices-companies&action=show-devices&dev-company-id=<?php echo $company['man_company_id'] ?>" class="btn btn-outline-primary py-1 fs-12"><i class="bi bi-eye"></i></a>
+                  <a href="?name=pieces&do=devices-companies&action=show-devices&dev-company-id=<?php echo $company['man_company_id'] ?>" class="btn btn-outline-primary py-1 fs-12" style="width: 50px"><?php echo language('PIECES', @$_SESSION['systemLang']) ?></a>
                   <!-- edit button -->
                   <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deleteDevCompanyModal" data-name="<?php echo $company['man_company_name'] ?>" data-id="<?php echo $company['man_company_id'] ?>" onclick="put_data_into_modal(this, 'delete', 'deleted-company-id', 'deleted-company-name')"><i class="bi bi-trash"></i></button>
                 </td>

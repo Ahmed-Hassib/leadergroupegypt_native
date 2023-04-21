@@ -11,8 +11,8 @@
           <input type="hidden" name="updated-dir-id" id="updated-dir-id">
           <!-- start old direction name -->
           <div class="mb-sm-2 mb-md-3 row">
-            <label for="updated-dir-name" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('THE DIRECTION', @$_SESSION['systemLang']) ?></label>
-            <div class="col-sm-12 col-md-8">
+            <label for="updated-dir-name" class="col-sm-12 col-form-label text-capitalize"><?php echo language('THE DIRECTION', @$_SESSION['systemLang']) ?></label>
+            <div class="col-sm-12 position-relative">
               <?php
                 // create an object of Direction class
                 $dir_obj = new Direction();
@@ -32,8 +32,8 @@
           <!-- end old direction name -->
           <!-- start direction name field -->
           <div class="mb-sm-2 mb-md-3 row">
-              <label for="new-direction-name" class="col-sm-12 col-md-4 col-form-label text-capitalize" ><?php echo language('DIRECTION NAME', @$_SESSION['systemLang']) ?></label>
-              <div class="col-sm-12 col-md-8">
+              <label for="new-direction-name" class="col-sm-12 col-form-label text-capitalize" ><?php echo language('DIRECTION NAME', @$_SESSION['systemLang']) ?></label>
+              <div class="col-sm-12 position-relative">
                 <input type="text" class="form-control" name="new-direction-name" id="new-direction-name" placeholder="<?php echo language('DIRECTION NAME', @$_SESSION['systemLang']) ?>" onkeyup="direction_validation(this)" onblur="direction_validation(this)" required>
                 <div id="passHelp" class="form-text"><?php echo language('MAKE SURE YOU ENTER THE FULL NAME OF THE DIRECTION', @$_SESSION['systemLang']) ?></div>
               </div>

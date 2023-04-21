@@ -9,8 +9,8 @@
         <form action="?name=pieces&do=devices-companies&action=insert-man-company" method="POST" id="addManCompany" onchange="form_validation(this)">
           <!-- start company name -->
           <div class="mb-sm-2 mb-md-3 row">
-            <label for="company-name" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('COMPANY NAME', @$_SESSION['systemLang']) ?></label>
-            <div class="col-sm-12 col-md-8">
+            <label for="company-name" class="col-sm-12 col-form-label text-capitalize"><?php echo language('COMPANY NAME', @$_SESSION['systemLang']) ?></label>
+            <div class="col-sm-12 position-relative">
               <input type="text" class="form-control" id="company-name" name="company-name" autocomplete="off" required />
             </div>
           </div>

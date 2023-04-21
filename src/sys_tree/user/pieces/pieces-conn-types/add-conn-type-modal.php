@@ -9,16 +9,16 @@
         <form action="??name=<?php echo $page_title ?>&do=show-connections-types&action=insert-piece-conn-type" method="POST" id="addPieceConnType" onchange="form_validation(this)">
           <!-- start connection type name -->
           <div class="mb-sm-2 mb-md-3 row">
-            <label for="conn-type-name" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('THE TYPE', @$_SESSION['systemLang']) ?></label>
-            <div class="col-sm-12 col-md-8">
+            <label for="conn-type-name" class="col-sm-12 col-form-label text-capitalize"><?php echo language('THE TYPE', @$_SESSION['systemLang']) ?></label>
+            <div class="col-sm-12 position-relative">
               <input type="text" class="form-control" id="conn-type-name" name="conn-type-name" autocomplete="off" required />
             </div>
           </div>
           <!-- end type name -->
           <!-- start type note -->
           <div class="mb-sm-2 mb-md-3 row">
-            <label for="conn-type-note" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('THE NOTES', @$_SESSION['systemLang']) ?></label>
-            <div class="col-sm-12 col-md-8">
+            <label for="conn-type-note" class="col-sm-12 col-form-label text-capitalize"><?php echo language('THE NOTES', @$_SESSION['systemLang']) ?></label>
+            <div class="col-sm-12 position-relative">
               <textarea class="form-control" style="resize: none" id="conn-type-note" name="conn-type-note"  placeholder="<?php echo language('PUT YOUR NOTES HERE', @$_SESSION['systemLang']) ?>" rows="5" cols="5"></textarea>
             </div>
           </div>

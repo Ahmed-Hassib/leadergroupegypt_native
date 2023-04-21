@@ -20,7 +20,7 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
       <!-- start edit profile -->
       <div class="row row-cols-sm-1 row-cols-lg-2 g-3">
         <!-- start add new user form -->
-        <form class="profile-form" action="?do=update-user-info" method="POST" id="edit-user-info" onchange="form_validation(this)">
+        <form class="profile-form" action="?do=update-user-info" method="POST" enctype="multipart/form-data" id="edit-user-info" onchange="form_validation(this)">
           <!-- horzontal stack -->
           <div class="hstack gap-3">
             <h6 class="h6 text-decoration-underline text-capitalize text-danger fw-bold">
@@ -36,7 +36,9 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
                 <!-- start profile image -->
                 <div class="mb-4 row" id="profile-image-container">
                   <?php $profile_img_name = empty($user['profile_img']) ? 'male-avatar.svg' : $user['profile_img']; ?>
-                  <img src="<?php echo $uploads . "employees-img/$profile_img_name" ?>" class="profile-img" alt="">
+                  <img src="<?php echo $uploads . "employees-img/$profile_img_name" ?>" class="profile-img" alt="" id="profile-img" >
+                  <!-- profile image form -->
+                  <input type="file" class="d-none" name="profile-img-input" id="profile-img-input" onchange="change_profile_img(this)">
                 </div>
                 <!-- end profile image -->
                 <?php if ($_SESSION['UserID'] == $user['UserID']) { ?>
@@ -44,11 +46,10 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
                 <div class="hstack gap-3">
                   <div class="mx-auto">
                     <!-- edit image button -->
-                    <button type="button" role="button" class="btn btn-outline-primary fs-12 py-1 text-capitalize" onclick="change_profile_image()">
+                    <button type="button" role="button" class="btn btn-outline-primary fs-12 py-1 text-capitalize" onclick="click_input()">
                       <i class="bi bi-pencil-square"></i>
                       <?php echo language('CHANGE IMAGE', @$_SESSION['systemLang']) ?>
                     </button>
-                    
                     <!-- delete image button -->
                     <button type="button" role="button" class="btn btn-danger fs-12 py-1 text-capitalize" onclick="delete_profile_image()">
                       <i class="bi bi-trash"></i>
@@ -75,8 +76,8 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
                 <input type="hidden" name="userid" value="<?php echo $user['UserID'] ?>">
                 <!-- start full name field -->
                 <div class="mb-4 row">
-                  <label for="fullname" class="col-sm-12 col-md-3 col-form-label text-capitalize" autocomplete="off"><?php echo language('FULLNAME', @$_SESSION['systemLang']) ?></label>
-                  <div class="col-sm-12 col-md-9">
+                  <label for="fullname" class="col-sm-12 col-form-label text-capitalize" autocomplete="off"><?php echo language('FULLNAME', @$_SESSION['systemLang']) ?></label>
+                  <div class="col-sm-12 position-relative">
                     <input type="text" class="form-control" name="fullname" id="fullname" placeholder="<?php echo language('FULLNAME WILL APPEAR IN PROFILE PAGE', @$_SESSION['systemLang']) ?>" value="<?php echo $user['Fullname'] ?>"  <?php if ($_SESSION['user_update'] == 0 && $_SESSION['UserID'] != $user['UserID']) {echo 'readonly';} ?> required>
                     <div id="fullNameHelp" class="form-text"><?php echo language('FULLNAME WILL APPEAR IN PROFILE PAGE', @$_SESSION['systemLang']) ?></div>
                   </div>
@@ -84,8 +85,8 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
                 <!-- end full name field -->
                 <!-- start gender field -->
                 <div class="mb-4 row">
-                  <label for="gender" class="col-sm-12 col-md-3 col-form-label text-capitalize" autocomplete="off"><?php echo language('GENDER', @$_SESSION['systemLang']) ?></label>
-                  <div class="col-sm-12 col-md-9">
+                  <label for="gender" class="col-sm-12 col-form-label text-capitalize" autocomplete="off"><?php echo language('GENDER', @$_SESSION['systemLang']) ?></label>
+                  <div class="col-sm-12 position-relative">
                     <select class="form-select" name="gender" id="gender" <?php if ($_SESSION['user_update'] == 0 && $_SESSION['UserID'] != $user['UserID']) {echo 'readonly';} ?> required>
                       <option value="default" selected disabled><?php echo language('SELECT GENDER', @$_SESSION['systemLang']) ?></option>
                       <option value="0" <?php echo $user['gender'] == 0 ? 'selected' : '' ?>><?php echo language('MALE', @$_SESSION['systemLang']) ?></option>
@@ -96,8 +97,8 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
                 <!-- end gender field -->
                 <!-- start address field -->
                 <div class="mb-4 row">
-                  <label for="address" class="col-sm-12 col-md-3 col-form-label text-capitalize" autocomplete="off"><?php echo language('THE ADDRESS', @$_SESSION['systemLang']) ?></label>
-                  <div class="col-sm-12 col-md-9">
+                  <label for="address" class="col-sm-12 col-form-label text-capitalize" autocomplete="off"><?php echo language('THE ADDRESS', @$_SESSION['systemLang']) ?></label>
+                  <div class="col-sm-12 position-relative">
                     <input type="text" class="form-control" name="address" id="address" aria-describedby="address" value="<?php echo $user['address'] ?>" placeholder="<?php echo language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>" <?php if ($_SESSION['user_update'] == 0 && $_SESSION['UserID'] != $user['UserID']) {echo 'readonly';} ?>>
                     <!-- <div id="address" class="form-text"><?php echo language('FULLNAME WILL APPEAR IN PROFILE PAGE', @$_SESSION['systemLang']) ?></div> -->
                   </div>
@@ -105,16 +106,16 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
                 <!-- end address field -->
                 <!-- strat phone field -->
                 <div class="mb-4 row">
-                  <label for="phone" class="col-sm-12 col-md-3 col-form-label text-capitalize"><?php echo language('PHONE', @$_SESSION['systemLang']) ?></label>
-                  <div class="col-sm-12 col-md-9">
+                  <label for="phone" class="col-sm-12 col-form-label text-capitalize"><?php echo language('PHONE', @$_SESSION['systemLang']) ?></label>
+                  <div class="col-sm-12 position-relative">
                     <input type="text" maxlength="11" class="form-control" name="phone" id="phone" placeholder="<?php echo language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>" value="<?php echo $user['phone'] ?>" <?php if ($_SESSION['user_update'] == 0 && $_SESSION['UserID'] != $user['UserID']) {echo 'readonly';} ?>>
                   </div>
                 </div>
                 <!-- end phone field -->
                 <!-- strat date of birth field -->
                 <div class="mb-4 row">
-                  <label for="date-of-birth" class="col-sm-12 col-md-3 col-form-label text-capitalize"><?php echo language('DATE OF BIRTH', @$_SESSION['systemLang']) ?></label>
-                  <div class="col-sm-12 col-md-9">
+                  <label for="date-of-birth" class="col-sm-12 col-form-label text-capitalize"><?php echo language('DATE OF BIRTH', @$_SESSION['systemLang']) ?></label>
+                  <div class="col-sm-12 position-relative">
                       <input type="date" class="form-control px-5" name="date-of-birth" id="date-of-birth"  value="<?php echo $user['date_of_birth'] ?>" <?php if ($_SESSION['user_update'] == 0 && $_SESSION['UserID'] != $user['UserID']) {echo 'readonly';} ?>>
                   </div>
                 </div>
@@ -132,8 +133,8 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
                 </header>
                 <!-- strat email field -->
                 <div class="mb-4 row">
-                  <label for="email" class="col-sm-12 col-md-3 col-form-label text-capitalize"><?php echo language('EMAIL', @$_SESSION['systemLang']) ?></label>
-                  <div class="col-sm-12 col-md-9">
+                  <label for="email" class="col-sm-12 col-form-label text-capitalize"><?php echo language('EMAIL', @$_SESSION['systemLang']) ?></label>
+                  <div class="col-sm-12 position-relative">
                     <input type="email" class="form-control" name="email" id="email" placeholder="example@example.com" aria-describedby="emailHelp" value="<?php echo $user['Email'] ?>"  <?php if ($_SESSION['user_update'] == 0 && $_SESSION['UserID'] != $user['UserID']) {echo 'readonly';} ?>>
                     <div id="emailHelp" class="form-text" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo language('WE`LL NEVER SHARE YOUR EMAIL WITH ANYONE ELSE', @$_SESSION['systemLang']) ?></div>
                   </div>
@@ -141,8 +142,8 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
                 <!-- end email field -->
                 <!-- start user name field -->
                 <div class="mb-4 row">
-                  <label for="username" class="col-sm-12 col-md-3 col-form-label text-capitalize"><?php echo language('USERNAME', @$_SESSION['systemLang']) ?></label>
-                  <div class="col-sm-12 col-md-9">
+                  <label for="username" class="col-sm-12 col-form-label text-capitalize"><?php echo language('USERNAME', @$_SESSION['systemLang']) ?></label>
+                  <div class="col-sm-12 position-relative">
                     <input type="text" class="form-control" name="username" id="username" placeholder="<?php echo language('USERNAME TO LOGIN INTO THE SYSTEM', @$_SESSION['systemLang']) ?>" autocomplete="off" value="<?php echo $user['UserName'] ?>"  required readonly>
                     <div id="usernameHelp" class="form-text"><?php echo language('USERNAME TO LOGIN INTO THE SYSTEM', @$_SESSION['systemLang']) ?></div>
                   </div>
@@ -150,8 +151,8 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
                 <!-- end user name field -->
                 <!-- strat password field -->
                 <div class="mb-4 row">
-                  <label for="password" class="col-sm-12 col-md-3 col-form-label text-capitalize"><?php echo language('PASSWORD', @$_SESSION['systemLang']) ?></label>
-                  <div class="col-sm-12 col-md-9">
+                  <label for="password" class="col-sm-12 col-form-label text-capitalize"><?php echo language('PASSWORD', @$_SESSION['systemLang']) ?></label>
+                  <div class="col-sm-12 position-relative">
                     <input type="hidden" name="old-password" value="<?php echo $user['Pass'] ?>">
                     <input type="password" class="form-control" name="password" id="password" placeholder="<?php echo language('ENTER NEW PASSSWORD TO UPDATE IT', @$_SESSION['systemLang']) ?>" aria-describedby="passHelp" autocomplete="new-password"  <?php if ($_SESSION['user_update'] == 0 && $_SESSION['UserID'] != $user['UserID']) {echo 'readonly';} ?>>
                     <i class="bi bi-eye-slash show-pass <?php echo @$_SESSION['systemLang'] == 'ar' ? 'show-pass-left' : 'show-pass-right' ?>" id="show-pass" onclick="showPass(this)"></i>
@@ -172,8 +173,8 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
                 </header>
                 <!-- start job title field -->
                 <div class="mb-4 row">
-                  <label for="job_title_id" class="col-sm-12 col-md-3 col-form-label text-capitalize"><?php echo language('JOB TITLE', @$_SESSION['systemLang']) ?></label>
-                  <div class="col-sm-12 col-md-9">
+                  <label for="job_title_id" class="col-sm-12 col-form-label text-capitalize"><?php echo language('JOB TITLE', @$_SESSION['systemLang']) ?></label>
+                  <div class="col-sm-12 position-relative">
                     <select class="form-select" name="job_title_id" id="job_title_id" <?php if ($_SESSION['user_update'] == 0) {echo 'disabled';} ?> required>
                       <?php 
                         $db_obj = new Database();

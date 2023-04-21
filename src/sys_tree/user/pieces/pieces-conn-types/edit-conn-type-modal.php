@@ -11,8 +11,8 @@
           <input type="hidden" name="conn-type-id" id="conn-type-id">
           <!-- start type name -->
           <div class="mb-sm-2 mb-md-3 row">
-            <label for="old-conn-type-name" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('THE OLD NAME', @$_SESSION['systemLang']) ?></label>
-            <div class="col-sm-12 col-md-8">
+            <label for="old-conn-type-name" class="col-sm-12 col-form-label text-capitalize"><?php echo language('THE OLD NAME', @$_SESSION['systemLang']) ?></label>
+            <div class="col-sm-12 position-relative">
               <?php 
               // create an object of PieceConn class
               $conn_obj = new PiecesConn();
@@ -32,16 +32,16 @@
           <!-- end type name -->
           <!-- start type name -->
           <div class="mb-sm-2 mb-md-3 row">
-            <label for="new-conn-type-name" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('THE NEW NAME', @$_SESSION['systemLang']) ?></label>
-            <div class="col-sm-12 col-md-8">
+            <label for="new-conn-type-name" class="col-sm-12 col-form-label text-capitalize"><?php echo language('THE NEW NAME', @$_SESSION['systemLang']) ?></label>
+            <div class="col-sm-12 position-relative">
               <input type="text" class="form-control" id="new-conn-type-name" name="new-conn-type-name" autocomplete="off" required />
             </div>
           </div>
           <!-- end type name -->
           <!-- start type note -->
           <div class="mb-sm-2 mb-md-3 row">
-            <label for="new-conn-type-note" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('THE NOTES', @$_SESSION['systemLang']) ?></label>
-            <div class="col-sm-12 col-md-8">
+            <label for="new-conn-type-note" class="col-sm-12 col-form-label text-capitalize"><?php echo language('THE NOTES', @$_SESSION['systemLang']) ?></label>
+            <div class="col-sm-12 position-relative">
               <textarea class="form-control" style="resize: none" id="new-conn-type-note" name="new-conn-type-note"  placeholder="<?php echo language('PUT YOUR NOTES HERE', @$_SESSION['systemLang']) ?>" rows="5" cols="5"></textarea>
             </div>
           </div>

@@ -10,16 +10,16 @@
           <input type="hidden" name="company-id" id="company-id">
           <!-- start company name -->
           <div class="mb-sm-2 mb-md-3 row">
-            <label for="old-company-name" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('OLD COMPANY NAME', @$_SESSION['systemLang']) ?></label>
-            <div class="col-sm-12 col-md-8">
+            <label for="old-company-name" class="col-sm-12 col-form-label text-capitalize"><?php echo language('OLD COMPANY NAME', @$_SESSION['systemLang']) ?></label>
+            <div class="col-sm-12 position-relative">
               <input type="text" class="form-control" id="old-company-name" name="old-company-name" autocomplete="off" required readonly />
             </div>
           </div>
           <!-- end company name -->
           <!-- start company name -->
           <div class="mb-sm-2 mb-md-3 row">
-            <label for="new-company-name" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('NEW COMPANY NAME', @$_SESSION['systemLang']) ?></label>
-            <div class="col-sm-12 col-md-8">
+            <label for="new-company-name" class="col-sm-12 col-form-label text-capitalize"><?php echo language('NEW COMPANY NAME', @$_SESSION['systemLang']) ?></label>
+            <div class="col-sm-12 position-relative">
               <input type="text" class="form-control" id="new-company-name" name="new-company-name" autocomplete="off" required />
             </div>
           </div>
