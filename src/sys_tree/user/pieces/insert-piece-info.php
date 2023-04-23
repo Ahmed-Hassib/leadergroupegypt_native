@@ -58,6 +58,7 @@
   $address    = trim($_POST['address'], ' ');
   $conn_type  = isset($_POST['conn-type'])  && !empty($_POST['conn-type']) ? trim($_POST['conn-type'], ' ')  : '';
   $notes      = empty(trim($_POST['notes'], ' ')) ? 'لا توجد ملاحظات' : trim($_POST['notes'], ' ');
+  $visit_time = isset($_POST['visit-time']) ? $_POST['visit-time'] : 1;
   $ssid       = trim($_POST['ssid'], ' ');
   $pass_conn  = trim($_POST['password-connection'], ' ');
   $frequency  = trim($_POST['frequency'], ' ');
@@ -95,7 +96,7 @@
       // create an array of piece info
       $pcs_info = array();
       // push piece info into an array
-      array_push($pcs_info, $full_name, $ip, $username, $password, $conn_type, $dir_id, $source_id, $alt_source_id, $is_client, $device_type, $device_id, $model_id, $_SESSION['UserID'], $_SESSION['company_id'], $notes);
+      array_push($pcs_info, $full_name, $ip, $username, $password, $conn_type, $dir_id, $source_id, $alt_source_id, $is_client, $device_type, $device_id, $model_id, $_SESSION['UserID'], $_SESSION['company_id'], $notes, $visit_time);
       // call insert function
       $is_inserted = $pcs_obj->insert_new_piece($pcs_info);
 

@@ -121,7 +121,7 @@ class Pieces extends Database {
 
   // insert a new Piece
   public function insert_new_piece($info) {
-    $insert_query = "INSERT INTO `pieces_info` (`full_name`, `ip`, `username`, `password`, `connection_type`, `direction_id`, `source_id`, `alt_source_id`, `is_client`, `device_type`, `device_id`, `device_model`, `added_by`, `added_date`, `company_id`, `notes`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now(), ?, ?);";
+    $insert_query = "INSERT INTO `pieces_info` (`full_name`, `ip`, `username`, `password`, `connection_type`, `direction_id`, `source_id`, `alt_source_id`, `is_client`, `device_type`, `device_id`, `device_model`, `added_by`, `added_date`, `company_id`, `notes`, `visit_time`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now(), ?, ?, ?);";
     $stmt = $this->con->prepare($insert_query);
     $stmt->execute($info);
     $pcs_count =  $stmt->rowCount();       // count effected rows
@@ -131,7 +131,7 @@ class Pieces extends Database {
   
   // update Piece info
   public function update_piece_info($info) {
-    $update_query = "UPDATE `pieces_info` SET `full_name` = ?, `ip` = ?, `username` = ?, `password` = ?, `connection_type` = ?, `direction_id` = ?, `source_id` = ?, `alt_source_id` = ?, `is_client` = ?, `device_type` = ?, `device_id` = ?, `device_model` = ?, `notes` = ? WHERE `id` = ?;";
+    $update_query = "UPDATE `pieces_info` SET `full_name` = ?, `ip` = ?, `username` = ?, `password` = ?, `connection_type` = ?, `direction_id` = ?, `source_id` = ?, `alt_source_id` = ?, `is_client` = ?, `device_type` = ?, `device_id` = ?, `device_model` = ?, `notes` = ?, `visit_time` = ? WHERE `id` = ?;";
     $stmt = $this->con->prepare($update_query);
     $stmt->execute($info);
     $pcs_count =  $stmt->rowCount();       // count effected rows

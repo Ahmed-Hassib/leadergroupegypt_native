@@ -101,6 +101,22 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
                 <textarea name="notes" id="notes" title="put some notes hete if exist" class="form-control w-100" style="height: 10rem; resize: none; direction: <?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>" placeholder="<?php echo language('PUT YOUR NOTES HERE', @$_SESSION['systemLang']) ?>"><?php echo $piece_data['notes']  ?></textarea>
               </div>
             </div>
+            <!-- visit time -->
+            <div class="mb-sm-2 mb-md-3 row">
+              <label for="visit-time" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('VISIT TIME', @$_SESSION['systemLang']) ?></label>
+              <div class="mt-2 col-sm-12 col-md-8">
+                <!-- ANY TIME -->
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="visit-time" id="visit-time-piece" value="1" <?php echo $piece_data['visit_time'] == 1 ? 'checked' : '' ?>>
+                  <label class="form-check-label text-capitalize" for="visit-time-piece"><?php echo language('ANY TIME', @$_SESSION['systemLang']) ?></label>
+                </div>
+                <!-- ADVANCE CONNECTION -->
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="visit-time" id="visit-time-client" value="2" <?php echo $piece_data['visit_time'] == 2 ? 'checked' : '' ?>>
+                  <label class="form-check-label text-capitalize" for="visit-time-client"><?php echo language('ADVANCE CONNECTION', @$_SESSION['systemLang']) ?></label>
+                </div>
+              </div>
+            </div>
             <!-- malfunctions counter -->
             <?php $malCounter = countRecords("`mal_id`", "`malfunctions`", "WHERE `client_id` = ".$piece_data['id']) ?>
             <?php if ($malCounter > 0) { ?>

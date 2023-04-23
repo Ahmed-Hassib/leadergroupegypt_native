@@ -65,7 +65,7 @@
               if ($page_title == 'clients') {
                 echo language('PHONE', @$_SESSION['systemLang']);
               } else {
-                echo language('THE PROPERTY GUARD PHONE', @$_SESSION['systemLang']);
+                echo language('THE REAL ESTATE AGENT PHONE', @$_SESSION['systemLang']);
               }
               ?>
             </label>
@@ -109,10 +109,26 @@
             <hr />
           </div>
           <!-- notes -->
-          <div class="row">
+          <div class="mb-sm-2 mb-md-3 row">
             <label for="notes" class="col-sm-12 col-form-label text-capitalize"><?php echo language('THE NOTES', @$_SESSION['systemLang']) ?></label>
             <div class="col-sm-12 position-relative">
-                <textarea name="notes" id="notes" title="put some notes hete if exist" class="form-control w-100" style="height: 10rem; resize: none; direction: <?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>" placeholder="<?php echo language('PUT YOUR NOTES HERE', @$_SESSION['systemLang']) ?>"></textarea>
+              <textarea name="notes" id="notes" title="put some notes hete if exist" class="form-control w-100" style="height: 10rem; resize: none; direction: <?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>" placeholder="<?php echo language('PUT YOUR NOTES HERE', @$_SESSION['systemLang']) ?>"></textarea>
+            </div>
+          </div>
+          <!-- visit time -->
+          <div class="mb-sm-2 mb-md-3 row">
+            <label for="visit-time" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('VISIT TIME', @$_SESSION['systemLang']) ?></label>
+            <div class="mt-2 col-sm-12 col-md-8">
+              <!-- ANY TIME -->
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="visit-time" id="visit-time-piece" value="1">
+                <label class="form-check-label text-capitalize" for="visit-time-piece"><?php echo language('ANY TIME', @$_SESSION['systemLang']) ?></label>
+              </div>
+              <!-- ADVANCE CONNECTION -->
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="visit-time" id="visit-time-client" value="2">
+                <label class="form-check-label text-capitalize" for="visit-time-client"><?php echo language('ADVANCE CONNECTION', @$_SESSION['systemLang']) ?></label>
+              </div>
             </div>
           </div>
         </div>

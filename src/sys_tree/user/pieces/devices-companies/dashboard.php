@@ -1,3 +1,14 @@
+<?php
+// create an object of Database class
+$dev_comp_obj = new ManufuctureCompanies();
+// get all devices companies data
+$devices_companies_data = $dev_comp_obj->get_all_man_companies($_SESSION['company_id']);
+// get counter
+$devices_companies_counter = $devices_companies_data[0];
+// get companies data
+$manufacture_companies = $devices_companies_data[1];
+?>
+
 <!-- start home stats container -->
 <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
   <!-- start stats -->
@@ -11,20 +22,16 @@
           <?php echo language("ADD NEW COMPANY", @$_SESSION['systemLang']) ?>
         </button>
       </div>
+
+      <div class="<?php if ($_SESSION['pcs_add'] == 0) {echo 'd-none';} ?>">
+        <button type="button" class="btn btn-outline-primary py-1 fs-12" data-bs-toggle="modal" data-bs-target="#addNewDevice">
+          <i class="bi bi-plus"></i>
+          <?php echo language('ADD NEW DEVICE', @$_SESSION['systemLang']) ?>
+        </button>
+      </div>
     </div>
 
-    <?php 
-    // create an object of Database class
-    $dev_comp_obj = new ManufuctureCompanies();
-    // get all devices companies data
-    $devices_companies_data = $dev_comp_obj->get_all_man_companies($_SESSION['company_id']);
-    // get counter
-    $devices_companies_counter = $devices_companies_data[0];
-    // get companies data
-    $manufacture_companies = $devices_companies_data[1];
-    // check the counter
-    if ($devices_companies_counter > 0 && $manufacture_companies != null) {
-    ?>
+    <?php if ($devices_companies_counter > 0 && $manufacture_companies != null) { ?>
       <!-- start table container -->
       <div class="table-responsive-sm w-100">
         <!-- strst users table -->
@@ -101,3 +108,5 @@
 <?php include_once 'edit-man-company-modal.php' ?>
 <!-- include delete device company modal -->
 <?php include_once 'delete-man-company-modal.php' ?>
+<!-- include add new device modal -->
+<?php include_once 'add-device-modal.php'; ?>

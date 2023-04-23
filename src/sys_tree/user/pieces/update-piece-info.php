@@ -53,6 +53,7 @@
   $address    = trim($_POST['address'], ' ');
   $conn_type  = isset($_POST['conn-type'])  && !empty($_POST['conn-type']) ? trim($_POST['conn-type'], ' ')  : '';
   $notes      = empty(trim($_POST['notes'], ' ')) ? 'لا توجد ملاحظات' : trim($_POST['notes'], ' ');
+  $visit_time = isset($_POST['visit-time']) ? $_POST['visit-time'] : 1;
   $ssid       = trim($_POST['ssid'], ' ');
   $pass_conn  = trim($_POST['password-connection'], ' ');
   $frequency  = isset($_POST['frequency']) && !empty($_POST['frequency']) ? trim($_POST['frequency'], ' ') : 0;
@@ -90,7 +91,7 @@
       // create an array to collect all basic info
       $basic_info = [];
       // push all basic info in it
-      array_push($basic_info, $full_name, $ip, $username, $password, $conn_type, $dir_id, $source_id, $alt_source_id, $is_client, $device_type, $device_id, $model_id, $notes, $id);
+      array_push($basic_info, $full_name, $ip, $username, $password, $conn_type, $dir_id, $source_id, $alt_source_id, $is_client, $device_type, $device_id, $model_id, $notes, $visit_time, $id);
       // update basic info
       $is_updated = $pcs_obj->update_piece_info($basic_info);
 

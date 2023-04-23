@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <?php redirectHome($msg, "back");  ?>
     </header>
   </div>
-        
+  
 <?php
   } else {
     // include_once permission error module

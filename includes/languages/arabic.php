@@ -340,7 +340,9 @@ function languageAr($phrase)
     'THE WAVE'                          => 'الموجة',
     'THE PROPERTY ADDRESS'              => 'عنوان العقار',
     'THE REAL ESTATE AGENT PHONE'       => 'رقم تليفون مسئول العقار',
-    
+    'VISIT TIME'                        => 'وقت الزيارة',
+    'ANY TIME'                          => 'أى وقت',
+    'ADVANCE CONNECTION'                => 'اتصال مسبق',
 
     
     /**
@@ -656,6 +658,7 @@ function languageAr($phrase)
     'MODELS WAS UPDATED SUCCESSFULLY'   => 'تم تعديل بيانات جميع الموديلات بنجاح',
     'MODELS WAS DELETED SUCCESSFULLY'   => 'تم حذف بيانات جميع الموديلات بنجاح',
     'SHOW ALL DEVICES OF COMPANY'       => 'عرض جميع اجهزة شركة',
+    'SELECT MANUFACTURE COMPANY'        => 'اختر الشركة المصنعة',
 
 
     /**
@@ -886,6 +889,7 @@ function languageAr($phrase)
     'IT CAN ONLY CONTAIN UNDERSCORE "_"'                                            => ' يمكن أن تحتوي فقط على "_"',
     'COMPANY ALIAS NAME WAS ADDED SUCCESSFULLY'                                     => 'تم اضافة الاسم المختصر للشركة بنجاح',
     'ALL EMPLOYEES` USERNAME WERE UPDATED SUCCESSFULLY'                             => 'تم تعديل اسم المستخدم لجميع الموظفين بنجاح',
+    'THERE IS NO COMPANIES TO SELECT PLEASE ADD SOME COMPANIES'                     => 'لا توجد شركات للاختيار برجاء اضافة البعض',
     
     
     
