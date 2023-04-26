@@ -1,4 +1,6 @@
 (function () {
+  // direction tree body
+  let dir_tree_body = document.querySelector('.genealogy-body');
   // get updated dir select box
   let updated_dir = document.getElementById("updated-dir-name");
   // get updated dir id input
@@ -44,6 +46,10 @@
       // increase scroll left value
       tree_container.scrollLeft += 100;
     })
+  }
+
+  if (dir_tree_body != null) {
+    dir_tree_body.scrollLeft = dir_tree_body.offsetWidth / 2 * 3
   }
 
 })()

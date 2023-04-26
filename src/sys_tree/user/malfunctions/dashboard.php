@@ -55,7 +55,7 @@ if ($_SESSION['mal_show'] == 1) {
               <div class="card card-stat bg-danger bg-gradient">
                 <?php $unrep_mal_today = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE (`mal_status` = 0 AND `isAccepted` <> 2) AND `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                 <div class="card-body">
-                  <h5 class="card-title text-capitalize"><?php echo language('UNREPAIRED', @$_SESSION['systemLang']) ?></h5>
+                  <h5 class="card-title text-capitalize"><?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="nums">
                     <a href="?do=show-malfunction-details&period=today&malStatus=unrepaired" class="num stretched-link" data-goal="<?php echo $unrep_mal_today; ?>">0</a>
                   </span>
@@ -66,7 +66,7 @@ if ($_SESSION['mal_show'] == 1) {
               <div class="card card-stat bg-success bg-gradient">
                 <?php $rep_mal_today = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `mal_status` = 1 AND `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                 <div class="card-body">
-                  <h5 class="card-title text-capitalize"><?php echo language('REPAIRED', @$_SESSION['systemLang']) ?></h5>
+                  <h5 class="card-title text-capitalize"><?php echo language('FINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="nums">
                     <a href="?do=show-malfunction-details&period=today&malStatus=repaired" class="stretched-link num" data-goal="<?php echo $rep_mal_today ?>">0</a>
                   </span>
@@ -115,7 +115,7 @@ if ($_SESSION['mal_show'] == 1) {
               <div class="card card-stat bg-danger bg-gradient">
                 <?php $unrep_mal_month = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE (`mal_status` = 0 AND `isAccepted` <> 2) AND `added_date` BETWEEN '".$start_date."' AND '".$end_date."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1"); ?>
                 <div class="card-body">
-                  <h5 class="card-title text-capitalize"><?php echo language('UNREPAIRED', @$_SESSION['systemLang']) ?></h5>
+                  <h5 class="card-title text-capitalize"><?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="nums">
                     <a href="?do=show-malfunction-details&period=month&malStatus=unrepaired" class="num stretched-link" data-goal="<?php echo $unrep_mal_month ?>">0</a>
                   </span>
@@ -126,7 +126,7 @@ if ($_SESSION['mal_show'] == 1) {
               <div class="card card-stat bg-success bg-gradient">
                 <?php $rep_mal_month = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `mal_status` = 1 AND `added_date` BETWEEN '".$start_date."' AND '".$end_date."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1"); ?>
                 <div class="card-body">
-                  <h5 class="card-title text-capitalize"><?php echo language('REPAIRED', @$_SESSION['systemLang']) ?></h5>
+                  <h5 class="card-title text-capitalize"><?php echo language('FINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="nums">
                     <a href="?do=show-malfunction-details&period=month&malStatus=repaired" class="num stretched-link" data-goal="<?php echo $rep_mal_month ?>">0</a>
                   </span>
@@ -180,7 +180,7 @@ if ($_SESSION['mal_show'] == 1) {
               <div class="card card-stat bg-danger bg-gradient">
                 <?php $unrep_prev_month = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE (`mal_status` = 0 AND `isAccepted` <> 2) AND `added_date` BETWEEN '".$start_date."' AND '".$end_date."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1"); ?>
                 <div class="card-body">
-                  <h5 class="card-title text-capitalize"><?php echo language('UNREPAIRED', @$_SESSION['systemLang']) ?></h5>
+                  <h5 class="card-title text-capitalize"><?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="nums">
                     <a href="?do=show-malfunction-details&period=previous-month&malStatus=unrepaired" class="num stretched-link" data-goal="<?php echo $unrep_prev_month ?>">0</a>
                   </span>
@@ -191,7 +191,7 @@ if ($_SESSION['mal_show'] == 1) {
               <div class="card card-stat bg-success bg-gradient">
                 <?php $rep_prev_month = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `mal_status` = 1 AND `added_date` BETWEEN '".$start_date."' AND '".$end_date."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1"); ?>
                 <div class="card-body">
-                  <h5 class="card-title text-capitalize"><?php echo language('REPAIRED', @$_SESSION['systemLang']) ?></h5>
+                  <h5 class="card-title text-capitalize"><?php echo language('FINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="nums">
                     <a href="?do=show-malfunction-details&period=previous-month&malStatus=repaired" class="num stretched-link" data-goal="<?php echo $rep_prev_month ?>">0</a>
                   </span>
@@ -236,7 +236,7 @@ if ($_SESSION['mal_show'] == 1) {
               <div class="card card-stat bg-danger bg-gradient">
                 <?php $total_unrep_mal = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE (`mal_status` = 0 AND `isAccepted` <> 2) AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                 <div class="card-body">
-                  <h5 class="card-title text-capitalize"><?php echo language('UNREPAIRED', @$_SESSION['systemLang']) ?></h5>
+                  <h5 class="card-title text-capitalize"><?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="nums">
                     <a href="?do=show-malfunction-details&period=all&malStatus=unrepaired" class="num stretched-link" data-goal="<?php echo $total_unrep_mal ?>">0</a>
                   </span>
@@ -247,7 +247,7 @@ if ($_SESSION['mal_show'] == 1) {
               <div class="card card-stat bg-success bg-gradient">
                 <?php $total_rep_mal = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `mal_status` = 1 AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                 <div class="card-body">
-                  <h5 class="card-title text-capitalize"><?php echo language('REPAIRED', @$_SESSION['systemLang']) ?></h5>
+                  <h5 class="card-title text-capitalize"><?php echo language('FINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="nums">
                     <a href="?do=show-malfunction-details&period=all&malStatus=repaired" class="num stretched-link" data-goal="<?php echo $total_rep_mal ; ?>">0</a>
                   </span>
@@ -284,7 +284,7 @@ if ($_SESSION['mal_show'] == 1) {
             <div class="col-12">
               <?php $rep_rate = round(($total_rep_mal / $total_mal) * 100, 2); ?>
               <h5 class="card-title text-capitalize text-center">
-                <?php echo language('REPAIRED', @$_SESSION['systemLang']) ?>
+                <?php echo language('FINISHED', @$_SESSION['systemLang']) ?>
                 <div class="badge bg-success p-2 d-inline-block"></div>
               </h5>
               <div class="progress">
@@ -299,7 +299,7 @@ if ($_SESSION['mal_show'] == 1) {
             <div class="col-12">
               <?php $unrep_rate = round(($total_unrep_mal / $total_mal) * 100, 2); ?>
               <h5 class="card-title text-capitalize text-center">
-                <?php echo language('UNREPAIRED', @$_SESSION['systemLang']) ?>
+                <?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?>
                 <div class="badge bg-danger p-2 d-inline-block"></div>
               </h5>
               <div class="progress">
@@ -396,10 +396,10 @@ if ($_SESSION['mal_show'] == 1) {
                     <?php
                     if ($mal['mal_status'] == 0) {
                       $iconStatus   = "bi-x-circle-fill text-danger";
-                      $titleStatus  = language('UNREPAIRED', @$_SESSION['systemLang']);
+                      $titleStatus  = language('UNFINISHED', @$_SESSION['systemLang']);
                     } elseif ($mal['mal_status'] == 1) {
                       $iconStatus   = "bi-check-circle-fill text-success";
-                      $titleStatus  = language('REPAIRED', @$_SESSION['systemLang']);
+                      $titleStatus  = language('FINISHED', @$_SESSION['systemLang']);
                     } elseif ($mal['mal_status'] == 2) {
                       $iconStatus   = "bi-exclamation-circle-fill text-warning";
                       $titleStatus  = language('DELAYED', @$_SESSION['systemLang']);
@@ -506,10 +506,10 @@ if ($_SESSION['mal_show'] == 1) {
                     <?php
                     if ($mal['mal_status'] == 0) {
                       $iconStatus   = "bi-x-circle-fill text-danger";
-                      $titleStatus  = language('UNREPAIRED', @$_SESSION['systemLang']);
+                      $titleStatus  = language('UNFINISHED', @$_SESSION['systemLang']);
                     } elseif ($mal['mal_status'] == 1) {
                       $iconStatus   = "bi-check-circle-fill text-success";
-                      $titleStatus  = language('REPAIRED', @$_SESSION['systemLang']);
+                      $titleStatus  = language('FINISHED', @$_SESSION['systemLang']);
                     } elseif ($mal['mal_status'] == 2) {
                       $iconStatus   = "bi-exclamation-circle-fill text-warning";
                       $titleStatus  = language('DELAYED', @$_SESSION['systemLang']);

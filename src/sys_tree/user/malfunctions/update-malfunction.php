@@ -173,8 +173,8 @@ function upload_malfunction_media($media_files, $mal_id, $path) {
       $media_name = join('.',$media_temp);
       move_uploaded_file($files_tmp_name[$i], $path.$media_name);
 
-      // upload files info into database
-      $mal_obj->upload_media($mal_id, $media_name, strpos($files_types[$i], 'image') >= 0 ? 'img' : 'video' );
+      // // upload files info into database
+      $mal_obj->upload_media($mal_id, $media_name, strpos($files_types[$i], 'image') !== false ? 'img' : 'video' );
     }
   }
 }

@@ -2,11 +2,7 @@
 // create an object of Database class
 $dev_comp_obj = new ManufuctureCompanies();
 // get all devices companies data
-$devices_companies_data = $dev_comp_obj->get_all_man_companies($_SESSION['company_id']);
-// get counter
-$devices_companies_counter = $devices_companies_data[0];
-// get companies data
-$manufacture_companies = $devices_companies_data[1];
+$manufacture_companies = $dev_comp_obj->get_all_man_companies($_SESSION['company_id']);
 ?>
 
 <!-- start home stats container -->
@@ -31,7 +27,7 @@ $manufacture_companies = $devices_companies_data[1];
       </div>
     </div>
 
-    <?php if ($devices_companies_counter > 0 && $manufacture_companies != null) { ?>
+    <?php if ($manufacture_companies != null && count($manufacture_companies) > 0) { ?>
       <!-- start table container -->
       <div class="table-responsive-sm w-100">
         <!-- strst users table -->

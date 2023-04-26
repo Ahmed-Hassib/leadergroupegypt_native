@@ -120,10 +120,19 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
             <!-- malfunctions counter -->
             <?php $malCounter = countRecords("`mal_id`", "`malfunctions`", "WHERE `client_id` = ".$piece_data['id']) ?>
             <?php if ($malCounter > 0) { ?>
-            <div class="mb-3 row">
-              <label for="malfunction-counter" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('MALFUNCTIONS COUNTER', @$_SESSION['systemLang']) ?></label>
+            <div class="mb-3 row align-items-center">
+              <label for="malfunction-counter" class="col-sm-12 col-md-4 col-form-label text-capitalize">
+                <?php 
+                if ($piece_data['is_client'] <= 0) {
+                  $label = 'ALL MALFUNCTION OF THIS PIECE';
+                } else {
+                  $label = 'ALL MALFUNCTION OF THIS CLIENT';
+                }
+                echo language($label, @$_SESSION['systemLang']);
+                ?>
+              </label>
               <div class="col-sm-12 col-md-8 position-relative">
-                <span class="mt-2 me-5 text-start" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo $malCounter . " " . ($malCounter > 2 ? language("MALFUNCTIONS", @$_SESSION['systemLang']) : language("MALFUNCTION", @$_SESSION['systemLang'])) ?></span>
+                <span class="me-5 text-start" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo $malCounter . " " . ($malCounter > 2 ? language("MALFUNCTIONS", @$_SESSION['systemLang']) : language("MALFUNCTION", @$_SESSION['systemLang'])) ?></span>
                 <a href="<?php echo $nav_up_level ?>malfunctions/index.php?do=show-pieces-malfunctions&pieceid=<?php echo $piece_data['id'] ?>" class="mt-2 text-start" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo language("SHOW DETAILS", @$_SESSION['systemLang']) ?></a>
               </div>
             </div>

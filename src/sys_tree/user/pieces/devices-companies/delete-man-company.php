@@ -33,22 +33,19 @@
     // echo success message
     $msg = '<div class="alert alert-success text-capitalize" dir=""><i class="bi bi-check-circle-fill"></i>&nbsp;' . language('COMPANY WAS DELETED SUCCESSFULLY', @$_SESSION['systemLang']) . '</div>';
 ?>
-  <!-- start device company page -->
-  <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-    <!-- start header -->
-    <header class="header mb-3">
-      <?php
-      // redirect to home page
-      redirectHome($msg, "back");
-      ?>
-    </header>
-  </div>
+    <!-- start device company page -->
+    <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
+      <!-- start header -->
+      <header class="header mb-3">
+        <?php redirectHome($msg, "back"); ?>
+      </header>
+    </div>
 <?php 
   } else {
     // include no data founded
     include_once $globmod . 'no-data-founded-no-redirect.php';
   }
 } else {
-    // include_once permission error module
-    include_once $globmod . 'permission-error.php';
+  // include_once permission error module
+  include_once $globmod . 'permission-error.php';
 } ?>

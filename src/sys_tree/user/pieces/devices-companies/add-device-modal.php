@@ -18,7 +18,7 @@
                 <input type="text" class="form-control" id="company-name" name="company-name" value="<?php echo $dev_company_name ?>" autocomplete="off" required  readonly/>
               <?php } else { ?>
                 <select class="form-select" name="company-id" id="company-id" required>
-                  <?php if ($devices_companies_counter > 0 && $manufacture_companies != null) {?>
+                  <?php if (count($manufacture_companies) > 0 && $manufacture_companies != null) {?>
                     <option value="default" disabled selected><?php echo language('SELECT MANUFACTURE COMPANY') ?></option>
                     <?php foreach ($manufacture_companies as $company) { ?>
                       <option value="<?php echo $company['man_company_id'] ?>"><?php echo $company['man_company_name'] ?></option>
@@ -28,7 +28,7 @@
                   <?php } ?>
                 </select>
               <?php } ?>
-              <?php if ($devices_companies_counter == 0 && $manufacture_companies == null) {?>
+              <?php if (count($manufacture_companies) == 0 && $manufacture_companies == null) {?>
                 <div id="man-company-help" class="form-text text-danger"><?php echo language('THERE IS NO COMPANIES TO SELECT PLEASE ADD SOME COMPANIES', @$_SESSION['systemLang']) ?></div>
               <?php } ?>
             </div>

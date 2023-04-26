@@ -20,10 +20,10 @@ class ManufuctureCompanies extends Database {
     $dev_comp_query = "SELECT *FROM `manufacture_companies` WHERE `company_id` = ?";
     $query_stmt = $this->con->prepare($dev_comp_query);
     $query_stmt->execute(array($company_id));
-    $typesRows = $query_stmt->fetchAll();
+    $companies_data = $query_stmt->fetchAll();
     $dev_company_count =  $query_stmt->rowCount();
     // return result
-    return $dev_company_count > 0 ? [$dev_company_count, $typesRows] : [0, null];
+    return $dev_company_count > 0 ? $companies_data : null;
   }
 
   // insert a new piece type
@@ -54,7 +54,7 @@ class ManufuctureCompanies extends Database {
     $dev_company_delete_query = "DELETE FROM `manufacture_companies` WHERE `man_company_id` = ?";
     $query_stmt = $this->con->prepare($dev_company_delete_query);
     $query_stmt->execute(array($company_id));
-    $dev_company_count =  $query_stmt->rowCount();       // count effected rows
+    $dev_company_count = $query_stmt->rowCount();       // count effected rows
     // return result
     return $dev_company_count > 0 ? true : false;
   }

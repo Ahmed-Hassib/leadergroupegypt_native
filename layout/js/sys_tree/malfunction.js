@@ -99,26 +99,26 @@ function show_media_preview(evt) {
     switch (type) {
       case 'video':
         element = create_video_element(src);
+        media_type = 'mp4';
         break;
-
+        
       case 'img':
         // create image
         element = document.createElement('img');
         element.setAttribute('src', src);
         element.setAttribute('class', 'w-100 h-100');
+        media_type = 'jpg';
         break;
     }
     // append image into column
     col.appendChild(element);
     // create a control button
-    let delete_btn = create_control_buttons(element);
+    let control_btns = create_control_buttons(src, media_type);
     // append control buttons
-    col.appendChild(delete_btn);
+    col.appendChild(control_btns);
     // append column into the preview box
     media_container.appendChild(col)
   }
-
-  console.log(total_size)
 
   if (total_size > 45000000) {
     // show alert
@@ -175,7 +175,7 @@ function add_new_media() {
     if (element.classList.contains('alert')) {
       setTimeout(() => {
         media_container.innerHTML = '';
-      }, 2000);
+      }, 1500);
     }
   }
   // create file input
@@ -193,7 +193,7 @@ function create_input_file() {
   input.name = 'mal-media[]';   // input name
   input.setAttribute('multiple', 'multiple');
   input.setAttribute('form', 'edit-malfunction-info');
-  input.setAttribute('accept', 'image/*')
+  // input.setAttribute('accept', 'image/*')
   // input.classList.add('d-none');
   // add event
   input.addEventListener('change', (evt) => {
@@ -208,7 +208,7 @@ function create_input_file() {
   return input;
 }
 
-function create_control_buttons() {
+function create_control_buttons(src, type) {
   // create delete button
   let delete_button = document.createElement('button');
   delete_button.type = 'button';
@@ -222,7 +222,21 @@ function create_control_buttons() {
     evt.preventDefault()
     delete_button.parentElement.parentElement.remove();
   })
+
+  // create delete button
+  let download_button = document.createElement('a');
+  download_button.setAttribute('download', 'download');
+  download_button.classList.add('btn', 'btn-primary', 'py-1', 'ms-1');
+  download_button.innerHTML = "<i class='bi bi-download'></i>";
+  // add event to delete button
+  download_button.addEventListener('click', (evt) => {
+    evt.preventDefault()
+    download_media(src, type)
+  })
+  // < a src = "<?php echo $media_source ?>" download = "<?php echo $media_source ?>" > download</a >
+
   // append buttons
+  btn_container.appendChild(download_button);
   btn_container.appendChild(delete_button);
   // return button
   return btn_container;
@@ -252,5 +266,20 @@ function delete_media(btn) {
       alert('حدث خطأ اثناء حذف الصورة');
     }
   })
-  
+}
+
+function download_media(src, type) {
+
+  let media_name = `malfunction-media.${type}`;
+
+  fetch(src)
+    .then(response => response.blob())
+    .then(blob => {
+      const url = window.URL.createObjectURL(new Blob([blob]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', media_name);
+      document.body.appendChild(link);
+      link.click();
+    });
 }

@@ -34,7 +34,7 @@ if ($is_exist_mal == true) {
       <!-- submit -->
       <div class="mb-3 hstack gap-2">
         <div class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
-        <button type="submit" form="edit-malfunction-info" class="btn btn-primary text-capitalize form-control bg-gradient fs-12 py-1" id="update-malfunctions" <?php if (($_SESSION['mal_update'] == 0 && $mal_info['isReviewed'] == 1) || ($_SESSION['UserID'] != $mal_info['tech_id'] && $_SESSION['mal_update'] == 0)) {echo 'disabled';} ?>>
+        <button type="submit" form="edit-malfunction-info" class="btn btn-primary text-capitalize form-control bg-gradient fs-12 py-1" id="update-malfunctions" <?php if ($_SESSION['mal_update'] == 0 || ($mal_info['mal_status'] == 1 && $mal_info['isReviewed'] == 1) || ($_SESSION['UserID'] != $mal_info['tech_id'] && $_SESSION['isTech'] == 1)) {echo 'disabled';} ?>>
           <i class="bi bi-check-all"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
         </button>
         </div>
@@ -180,7 +180,18 @@ if ($is_exist_mal == true) {
             <!-- malfunctions counter -->
             <?php $malCounter = countRecords("`mal_id`", "`malfunctions`", "WHERE `client_id` = ".$mal_info['client_id']) ?>
             <div class="mb-1 row align-items-center">
-              <label for="malfunction-counter" class="col-sm-12 col-form-label text-capitalize"><?php echo language('MALFUNCTIONS COUNTER', @$_SESSION['systemLang']) ?></label>
+              <label for="malfunction-counter" class="col-sm-12 col-form-label text-capitalize">
+                <?php 
+                $is_client = $mal_obj->select_specific_column("`is_client`", "`pieces_info`", "WHERE `id` = " . $mal_info['client_id'])[0]['is_client'];
+
+                if ($is_client <= 0) {
+                  $label = 'ALL MALFUNCTION OF THIS PIECE';
+                } else {
+                  $label = 'ALL MALFUNCTION OF THIS CLIENT';
+                }
+                echo language($label, @$_SESSION['systemLang']);
+                ?>
+              </label>
               <div class="col-sm-12 position-relative">
                 <span class="text-start" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo $malCounter . " " . ($malCounter > 2 ? language("MALFUNCTIONS", @$_SESSION['systemLang']) : language("MALFUNCTION", @$_SESSION['systemLang'])) ?></span>
                 <a href="?do=show-pieces-malfunctions&pieceid=<?php echo $mal_info['client_id'] ?>" class="mt-2 text-start" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo language("SHOW DETAILS", @$_SESSION['systemLang']) ?></a>
@@ -238,7 +249,7 @@ if ($is_exist_mal == true) {
                 <?php if ($mal_info['mal_status'] == 1 && $mal_info['isAccepted'] != 2) {
                   echo language('REPAIRED DATE', @$_SESSION['systemLang']);
                 } else {
-                  echo language('DELAYED DATE', @$_SESSION['systemLang']);
+                  echo language('DELAYED OR REFUSED DATE', @$_SESSION['systemLang']);
                 } ?>
               </label>
               <div class="col-sm-12 position-relative">
@@ -255,7 +266,7 @@ if ($is_exist_mal == true) {
                 <?php if ($mal_info['mal_status'] == 1 && $mal_info['isAccepted'] != 2) {
                   echo language('REPAIRED TIME', @$_SESSION['systemLang']);
                 } else {
-                  echo language('DELAYED TIME', @$_SESSION['systemLang']);
+                  echo language('DELAYED OR REFUSED TIME', @$_SESSION['systemLang']);
                 } ?>
               </label>
               <div class="col-sm-12 position-relative">
@@ -330,8 +341,8 @@ if ($is_exist_mal == true) {
             </div>
             <!-- cost -->
             <div class="mb-sm-2 mb-md-3 row align-items-center">
-              <label for="cost" class="col-sm-12 col-form-label text-capitalize"><?php echo language('MALFUNCTION COST', @$_SESSION['systemLang']) ?></label>
-              <div class="col-sm-12 position-relative">
+              <label for="cost" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('MALFUNCTION COST', @$_SESSION['systemLang']) ?></label>
+              <div class="col-sm-12 col-md-8 position-relative">
                 <div class="row">
                   <div class="col-4">
                     <input name="cost" id="cost" class="form-control"  placeholder="<?php echo language('MALFUNCTION COST', @$_SESSION['systemLang']) ?>" value="<?php echo $mal_info['cost'] ?>" <?php if ($_SESSION['isTech'] == 0 || $mal_info['mal_status'] == 1) {echo 'disabled';} ?> >
@@ -422,10 +433,10 @@ if ($is_exist_mal == true) {
       <div class="mb-3 row row-cols-sm-1 g-3">
         <div class="col-12">
           <div class="section-block">
-            <div class="section-header">
+            <div class="section-header media-section">
               <h5><?php echo language('MALFUNCTION MEDIA', @$_SESSION['systemLang']) ?></h5>
               <!-- add new malfunction -->
-              <?php if ($_SESSION['isTech'] == 1) {?>
+              <?php if ($_SESSION['isTech'] == 1 && $_SESSION['mal_update'] == 1) {?>
               <button type="button" role="button" class="btn btn-outline-primary py-1 fs-12 media-button" onclick="add_new_media()">
                 <i class="bi bi-card-image"></i>
                 <?php echo language('ADD NEW PHOTO', @$_SESSION['systemLang']) ?>
@@ -435,7 +446,7 @@ if ($is_exist_mal == true) {
             </div>
             <!-- malfunction media -->
             <?php $mal_media = $mal_obj->get_malfunction_media($mal_id); ?>
-            <div class="row row-cols-sm-1 row-cols-md-3 justify-content-center align-items-stretched g-3" id="media-container">
+            <div class="row row-cols-sm-1 <?php echo count($mal_media) > 0 ? 'row-cols-md-3' : 'row-cols-md-2' ?> justify-content-center align-items-stretched g-3" id="media-container">
             <?php if ($mal_media != null && count($mal_media) > 0) { ?>
               <?php foreach ($mal_media as $key => $media) { ?>
                 <?php $media_source = $uploads . "malfunctions/" . $_SESSION['company_id'] ."/". $media['media'] ?>
@@ -443,9 +454,16 @@ if ($is_exist_mal == true) {
                   <div class="col-12 col-media">
                     <?php if ($media['type'] == 'img') { ?>
                       <img src="<?php echo $media_source ?>" alt="">
+                    <?php } else { ?>
+                      <video src="<?php echo $media_source ?>" controls>
+                        <source src="<?php echo $media_source ?>" type="video/*">
+                      </video>
                     <?php } ?>
-                    <?php if ($_SESSION['isTech'] == 1) { ?>
+                    <?php if ($_SESSION['mal_update'] == 1) { ?>
                     <div class="control-btn">
+                      <?php if ($_SESSION['mal_show'] == 1) { ?>
+                        <button type="button" class="btn btn-primary py-1 ms-1" onclick="download_media('<?php echo $media_source ?>', '<?php echo $media['type'] == 'img' ? 'jpg' : 'mp4' ?>')" src="<?php echo $media_source ?>"><i class='bi bi-download'></i></a>
+                      <?php } ?>
                       <button type="button" class="btn btn-danger py-1 ms-1" onclick="delete_media(this)" data-media-id="<?php echo $media['id']; ?>" data-media-name="<?php echo $media['media']; ?>"><i class="bi bi-trash"></i></button>
                     </div>
                     <?php } ?>
@@ -477,7 +495,7 @@ if ($is_exist_mal == true) {
       <!-- submit -->
       <div class="hstack gap-2">
         <div class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
-          <button type="submit" form="edit-malfunction-info" class="btn btn-primary text-capitalize form-control bg-gradient fs-12 py-1" id="update-malfunctions" <?php if ($mal_info['mal_status'] == 1 || ($_SESSION['mal_update'] == 0 && ($mal_info['mal_status'] == 1 && $mal_info['isReviewed'] == 1)) || ($_SESSION['UserID'] != $mal_info['tech_id'] && $_SESSION['mal_update'] == 0)) {echo 'disabled';} ?>>
+          <button type="submit" form="edit-malfunction-info" class="btn btn-primary text-capitalize form-control bg-gradient fs-12 py-1" id="update-malfunctions" <?php if ($_SESSION['mal_update'] == 0 || ($mal_info['mal_status'] == 1 && $mal_info['isReviewed'] == 1) || ($_SESSION['UserID'] != $mal_info['tech_id'] && $_SESSION['isTech'] == 1)) {echo 'disabled';} ?>>
             <i class="bi bi-check-all"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
           </button>
         </div>

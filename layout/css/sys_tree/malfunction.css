@@ -4,6 +4,17 @@
   left: 0;
 }
 
+@media (max-width: 576px) {
+  .media-section h5 {
+    padding-bottom: 3rem;
+  }
+
+  .media-button {
+    bottom: 1rem;
+    top: unset;
+  }
+}
+
 .col-media {
   position: relative;
   height: 250px;

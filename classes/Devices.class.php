@@ -99,4 +99,15 @@ class Devices extends Database {
     // return result
     return $dev_count > 0 ? true : false;
   }
+
+  // delete specific model
+  public function delete_device_models($device_id) {
+    // delete query
+    $model_delete_query = "DELETE FROM `devices_model` WHERE `device_id` = ?";
+    $stmt = $this->con->prepare($model_delete_query);
+    $stmt->execute(array($device_id));
+    $model_count =  $stmt->rowCount();       // count effected rows
+    // return result
+    return $model_count > 0 ? true : false;
+  }
 }
