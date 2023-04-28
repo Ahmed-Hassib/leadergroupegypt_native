@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // create an object of Registration class
     $reg_obj = new Registration();
     // add new company
-    $is_inserted_company = $reg_obj->add_new_company(array($company_name, $manager_name, $manager_phone));
+    $is_inserted_company = $reg_obj->add_new_company(array($company_name, $manager_name, $manager_phone, get_date_now()));
     // echo success message
     $msg = '<div class="alert alert-success text-capitalize fw-bolder text-center">' . language("YOUR COMPANY IS CREATED SUCCESSFULLY!") . '</div>';
     // check if inserted company
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       // expire date
       $expire_date = Date("Y-m-d", strtotime($today. $period));
       // add license
-      $is_inserted_license = $reg_obj->add_company_license($company_id, $expire_date);
+      $is_inserted_license = $reg_obj->add_company_license(array($company_id, get_date_now(), $expire_date));
       // check if inserted license
       if ($is_inserted_license) {
         // echo success message
@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // and license was inserted
         if ($is_inserted_company && $is_inserted_license) {
           // insert admin info
-          $is_inserted_admin_info = $reg_obj->add_company_admin(array($company_id, $username, $enc_password, $full_name, $gender));
+          $is_inserted_admin_info = $reg_obj->add_company_admin(array($company_id, $username, $enc_password, $full_name, $gender, get_date_now()));
           // check if admin info is inserted
           if ($is_inserted_admin_info) {
             // success message

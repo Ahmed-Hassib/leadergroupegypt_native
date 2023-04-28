@@ -336,3 +336,19 @@ function bg_progress($val) {
   // return bg_color
   return $bg_color;
 }
+
+/**
+ * get_time_now function
+ * return the current time
+ */
+function get_time_now() {
+  return date('H:i:s');
+}
+
+/**
+ * get_date_now function
+ * return the current date
+ */
+function get_date_now() {
+  return date('Y-m-d');
+}

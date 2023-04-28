@@ -15,7 +15,7 @@
       $msg = '<div class="alert alert-danger text-capitalize" dir=""><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;' . language('THIS NAME IS ALREADY EXIST', @$_SESSION['systemLang']) . '</div>';
     } else {
       // call insert direction function
-      $dir_obj->insert_new_direction($dir_name, $_SESSION['UserID'], $_SESSION['company_id']);
+      $dir_obj->insert_new_direction(array($dir_name, get_date_now(), $_SESSION['UserID'], $_SESSION['company_id']));
 
       // echo success message
       $msg = '<div class="alert alert-success text-capitalize" dir=""><i class="bi bi-check-circle-fill"></i>&nbsp;' . language('A NEW DIRECTION ADDED SUCCESSFULLY', @$_SESSION['systemLang']) . '</div>';

@@ -51,7 +51,7 @@ class User extends Database {
   public function insert_user_info($info) {
     // query to insert the new user in `users` table
     $insertInfoQuery  = "INSERT INTO `users` (`company_id`, `UserName`, `Pass`, `Email`, `Fullname`, `isTech`, `job_title_id`, `gender`, `address`, `phone`, `date_of_birth`, `TrustStatus`, `addedBy`, `joinedDate`, `twitter`, `facebook`) ";
-    $insertInfoQuery .= "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now(), ?, ?);";
+    $insertInfoQuery .= "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     // insert user info in database
     $stmt = $this->con->prepare($insertInfoQuery); 
     $stmt->execute($info);          // execute the query

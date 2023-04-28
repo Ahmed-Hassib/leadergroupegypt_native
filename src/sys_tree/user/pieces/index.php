@@ -98,6 +98,8 @@ include_once str_repeat("../", $level) . "etc/init.php";
 
 // include file name
 include_once $file_name;
+// include confirmation delete modal
+include_once 'delete-piece-modal.php';
 
 // include footer
 include_once $tpl . "footer.php"; 

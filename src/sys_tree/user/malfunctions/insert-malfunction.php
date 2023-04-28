@@ -41,7 +41,7 @@
         // array of malfunction information
         $mal_info = array();
         // push info into the array
-        array_push($mal_info, $mng_id, $tech_id, $client_id, $descreption, $_SESSION['company_id']);
+        array_push($mal_info, $mng_id, $tech_id, $client_id, $descreption, get_date_now(), get_time_now(), $_SESSION['company_id']);
         // create an object of Malfunction class
         $mal_obj = new Malfunction();
         // call insert function

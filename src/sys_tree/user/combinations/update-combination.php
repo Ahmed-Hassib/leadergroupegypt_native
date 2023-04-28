@@ -115,10 +115,10 @@ function do_manager_updates($info) {
   // compare new tech with the old
   if ($tech_id == $prev_tech_id) {
     // update all compination info
-    $is_updated = $comb_obj->update_compination_mng(array($client_name, $client_phone, $client_address, $comment, $tech_id, $comb_id));
+    $is_updated = $comb_obj->update_compination_mng(array($client_name, $client_phone, $client_address, $comment, $tech_id, get_date_now(), get_time_now(), $comb_id));
   } else {
     // reset compination info
-    $is_updated = $comb_obj->reset_compination_info($tech_id, $comb_id);
+    $is_updated = $comb_obj->reset_compination_info($tech_id, get_date_now(), get_time_now(), $comb_id);
   }
   // return updated status
   return $is_updated;
@@ -144,7 +144,7 @@ function do_technical_updates($info) {
   // create an object of Combination class
   $comb_obj = new Combination();
   // get updated status
-  $is_updated = $comb_obj->update_combination_tech(array($is_finished, $tech_status, $cost, $tech_comment, $comb_id));
+  $is_updated = $comb_obj->update_combination_tech(array($is_finished, $tech_status, get_date_now(), get_time_now(), get_date_now(), get_time_now(), $cost, $tech_comment, $comb_id));
   // return updated status
   return $is_updated;
 }
@@ -171,7 +171,7 @@ function do_after_sales_updates($info) {
     // create an object of Combination class
     $comb_obj = new Combination();
     // get updated status
-    $is_updated = $comb_obj->update_combination_review(array($money_review, $service_qty, $tech_qty, $review_comment, $comb_id));
+    $is_updated = $comb_obj->update_combination_review(array(get_date_now(), get_time_now(), $money_review, $service_qty, $tech_qty, $review_comment, $comb_id));
   } else {
     $is_updated = false;
   }

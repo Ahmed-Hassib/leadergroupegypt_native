@@ -81,7 +81,7 @@
           </a>
         </li>
         <?php } ?>
-        <?php if ($_SESSION['dir_add'] == 0) { ?>
+        <?php if ($_SESSION['dir_add'] == 1) { ?>
         <li>
           <a href="#" data-bs-toggle="modal" data-bs-target="#addNewDirectionModal">
             <span class="link-name"><?php echo language('ADD NEW DIRECTION', @$_SESSION['systemLang']) ?></span>
@@ -318,4 +318,4 @@
 </div>
 
 <div class="main-content">
-  <img src="<?php echo $assets ?>eid-mobarak-2.png" class="bg-event-img" alt="">
+  <!-- <img src="<?php echo $assets ?>eid-mobarak-2.png" class="bg-event-img" alt=""> -->

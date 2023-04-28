@@ -24,8 +24,6 @@
     if (empty($client_addr)) {
       $formErorr[] = 'client address cannot be empty';
     }
-    
-    
 
     // check if empty form error
     if (empty($formErorr)) {
@@ -36,7 +34,7 @@
       $comb_obj = new Combination();
 
       // push info into the array
-      array_push($comb_info, $client_name, $client_phone, $client_addr, $client_notes, $tech_id, $admin_id, $_SESSION['company_id']);
+      array_push($comb_info, $client_name, $client_phone, $client_addr, get_date_now(), get_time_now(), $client_notes, $tech_id, $admin_id, $_SESSION['company_id']);
       
       // call insert_new_combination function
       $is_inserted = $comb_obj->insert_new_combination($comb_info);

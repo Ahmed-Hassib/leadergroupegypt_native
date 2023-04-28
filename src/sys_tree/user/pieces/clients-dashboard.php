@@ -112,6 +112,9 @@
                       <?php if ($client['is_client'] == 0) { ?>
                         <a class="btn btn-outline-primary text-capitalize fs-12 <?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>" href="?do=show-piece&dir-id=<?php echo $client['direction_id'] ?>&srcId=<?php echo $client['id'] ?>" ><i class="bi bi-eye"></i><!-- <?php echo language('SHOW', @$_SESSION['systemLang']).' '.language('PIECES', @$_SESSION['systemLang']) ?> --></a>
                       <?php } ?>
+                      <?php if ($_SESSION['pcs_delete'] == 1) { ?>
+                        <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deletePieceModal" id="delete-piece" data-page-title="<?php echo $page_title ?>" data-piece-id="<?php echo $client['id'] ?>" data-piece-name="<?php echo $client['full_name'] ?>" onclick="confirm_delete_piece(this)"><i class="bi bi-trash"></i></button>
+                      <?php } ?>
                     </td>
                   </tr>
                 <?php } ?>

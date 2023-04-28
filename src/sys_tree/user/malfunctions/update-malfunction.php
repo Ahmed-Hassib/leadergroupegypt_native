@@ -108,7 +108,7 @@ function do_manager_updates($info) {
     $mal_obj->update_malfunction_mng(array($descreption, $mal_id));
   } else {
     // reset malfunction info
-    $mal_obj->reset_malfunction_info(array($tech_id, $descreption, $mal_id));
+    $mal_obj->reset_malfunction_info(array($tech_id, $descreption, get_date_now(), get_time_now(), $mal_id));
   }
 }
 ?>
@@ -135,7 +135,7 @@ function do_technical_updates($info) {
   // create an object of Malfunction class
   $mal_obj = new Malfunction();
   // get updated status
-  $mal_obj->update_malfunction_tech(array($mal_status, $cost, $tech_comment, $tech_comment_status, $tech_status, $mal_id));
+  $mal_obj->update_malfunction_tech(array($mal_status, $cost, get_date_now(), get_time_now(), $tech_comment, $tech_comment_status, $tech_status, $mal_id));
 }
 ?>
 
@@ -202,7 +202,7 @@ function do_after_sales_updates($info) {
     // create an object of Malfunction class
     $mal_obj = new Malfunction();
     // get updated status
-    $mal_obj->update_malfunction_review(array($money_review, $service_qty, $tech_qty, $review_comment, $mal_id));
+    $mal_obj->update_malfunction_review(array(get_date_now(), get_time_now(), $money_review, $service_qty, $tech_qty, $review_comment, $mal_id));
   }
 }
 ?>

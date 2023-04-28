@@ -46,11 +46,11 @@ class Direction extends Database {
   }
 
   // insert a new direction
-  public function insert_new_direction($name, $added_by, $company) {
+  public function insert_new_direction($info) {
     // insert query
-    $insertDirQuery = "INSERT INTO `direction` (`direction_name`, `added_date`, `added_by`, `company_id`) VALUES (?, CURRENT_DATE, ?, ?);";
+    $insertDirQuery = "INSERT INTO `direction` (`direction_name`, `added_date`, `added_by`, `company_id`) VALUES (?, ?, ?, ?);";
     $stmt = $this->con->prepare($insertDirQuery);
-    $stmt->execute(array($name, $added_by, $company));
+    $stmt->execute($info);
     $count = $stmt->rowCount(); // assign all data to variable
     // return result
     return $count > 0 ? true : false;

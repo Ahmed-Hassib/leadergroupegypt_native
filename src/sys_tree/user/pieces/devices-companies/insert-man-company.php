@@ -18,7 +18,7 @@
           $msg = '<div class="alert alert-danger text-capitalize" dir=""><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;' . language('THIS NAME IS ALREADY EXIST', @$_SESSION['systemLang']) . '</div>';
         } else {
           // call insert_new_type function
-          $dev_company_obj->insert_new_man_company($company_name, $_SESSION['UserID'], $_SESSION['company_id']);
+          $dev_company_obj->insert_new_man_company(array($company_name, get_date_now(), $_SESSION['UserID'], $_SESSION['company_id']));
           // echo success message
           $msg = '<div class="alert alert-success text-capitalize" dir=""><i class="bi bi-check-circle-fill"></i>&nbsp;' . language('COMPANY WAS ADDED SUCCESSFULLY', @$_SESSION['systemLang']) . '</div>';
         }

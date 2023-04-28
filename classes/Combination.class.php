@@ -36,7 +36,7 @@ class Combination extends Database {
   // function to insert a new combination
   public function insert_new_combination($comb_info) {
     // INSERT INTO combinations
-    $insert_query = "INSERT INTO `combinations` (`client_name`, `phone`, `address`, `added_date`, `added_time`, `isFinished`, `comment`, `UserID`, `addedBy`, `company_id`) VALUES (?, ?, ?, CURRENT_DATE, now(), 0, ?, ?, ?, ?);";
+    $insert_query = "INSERT INTO `combinations` (`client_name`, `phone`, `address`, `added_date`, `added_time`, `isFinished`, `comment`, `UserID`, `addedBy`, `company_id`) VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?);";
     // insert user info in database
     $stmt = $this->con->prepare($insert_query);
     $stmt->execute($comb_info);
@@ -48,7 +48,7 @@ class Combination extends Database {
 
   public function update_compination_mng($comb_info) {
     // review query
-    $review_query = "UPDATE `combinations` SET `client_name` = ?, `phone` = ?, `address` = ?, `comment` = ?, `UserID` = ?, `lastEditDate`= CURRENT_DATE, `lastEditTime` = now() WHERE `comb_id` = ?";
+    $review_query = "UPDATE `combinations` SET `client_name` = ?, `phone` = ?, `address` = ?, `comment` = ?, `UserID` = ?, `lastEditDate`= ?, `lastEditTime` = ? WHERE `comb_id` = ?";
     // prepare the query
     $stmt = $this->con->prepare($review_query);
     $stmt->execute($comb_info);
@@ -59,7 +59,7 @@ class Combination extends Database {
 
   public function update_combination_tech($comb_info) {
     // review query
-    $review_query = "UPDATE `combinations` SET `isFinished` = ?, `isAccepted` = ?, `finished_date` = CURRENT_DATE, `finished_time` = now(), `lastEditDate` = CURRENT_DATE, `lastEditTime` = now(), `cost` = ?, `tech_comment` = ? WHERE `comb_id` = ?";
+    $review_query = "UPDATE `combinations` SET `isFinished` = ?, `isAccepted` = ?, `finished_date` = ?, `finished_time` = ?, `lastEditDate` = ?, `lastEditTime` = ?, `cost` = ?, `tech_comment` = ? WHERE `comb_id` = ?";
     // prepare the query
     $stmt = $this->con->prepare($review_query);
     $stmt->execute($comb_info);
@@ -81,7 +81,7 @@ class Combination extends Database {
 
   public function reset_compination_info($tech_id, $comb_id) {
     // reset query
-    $reset_query = "UPDATE `combinations` SET `UserID` = ?, `added_date` = CURRENT_DATE, `added_time` = now(), `isFinished` = 0, `cost` = 0, `finished_date` = '0000-00-00', `finished_time` = '00:00:00', `isShowed` = 0, `showed_date` = '0000-00-00', `showed_time` = '00:00:00', `isAccepted` = -1,  `isReviewed` = 0, `reviewed_date` = '0000-00-00', `reviewed_time` = '00:00:00', `money_review` = 0, `qty_service` = 0, `qty_emp` = 0, `qty_comment` = ''  WHERE `comb_id` = ?";
+    $reset_query = "UPDATE `combinations` SET `UserID` = ?, `added_date` = ?, `added_time` = ?, `isFinished` = 0, `cost` = 0, `finished_date` = '0000-00-00', `finished_time` = '00:00:00', `isShowed` = 0, `showed_date` = '0000-00-00', `showed_time` = '00:00:00', `isAccepted` = -1,  `isReviewed` = 0, `reviewed_date` = '0000-00-00', `reviewed_time` = '00:00:00', `money_review` = 0, `qty_service` = 0, `qty_emp` = 0, `qty_comment` = ''  WHERE `comb_id` = ?";
     // prepare the query
     $stmt = $this->con->prepare($reset_query);
     $stmt->execute(array($tech_id, $comb_id));
@@ -101,7 +101,4 @@ class Combination extends Database {
     // return
     return $count > 0 ? true : false;
   }
-
-  
-
 }

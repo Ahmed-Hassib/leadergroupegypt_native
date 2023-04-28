@@ -15,7 +15,7 @@ class Registration extends Database {
 
   public function add_new_company($info) {
     // insertion query for company data
-    $company_query = "INSERT INTO `companies` (`company_name`, `company_manager`, `company_phone`, `version`, `joined_date`) VALUES (?, ?, ?, 3, now())";
+    $company_query = "INSERT INTO `companies` (`company_name`, `company_manager`, `company_phone`, `version`, `joined_date`) VALUES (?, ?, ?, 3, ?)";
     $company_stmt = $this->con->prepare($company_query);
     $company_stmt->execute($info);
     $count = $company_stmt->rowCount();
@@ -23,11 +23,11 @@ class Registration extends Database {
     return $count > 0 ? true : false;
   }
 
-  public function add_company_license($company_id, $expire_date) {
+  public function add_company_license($info) {
     // activate license with month trial
-    $license_info_query = "INSERT INTO `license` (`company_id`, `type`, `start_date`, `expire_date`, `isTrial`) VALUES (?, 1, now(), ?, 1)";
+    $license_info_query = "INSERT INTO `license` (`company_id`, `type`, `start_date`, `expire_date`, `isTrial`) VALUES (?, 1, ?, ?, 1)";
     $license_info_stmt = $this->con->prepare($license_info_query);
-    $license_info_stmt->execute(array($company_id, $expire_date));
+    $license_info_stmt->execute($info);
     $count = $license_info_stmt->rowCount();
     // return statement
     return $count > 0 ? true : false;
@@ -35,7 +35,7 @@ class Registration extends Database {
 
   public function add_company_admin($info) {
     // insert admin info
-    $admin_info_query = "INSERT INTO `users` (`company_id`, `UserName`, `Pass`, `Fullname`, `isTech`, `job_title_id`, `gender`, `TrustStatus`, `addedBy`,  `joinedDate`, `systemLang`) VALUES (?, ?, ?, ?, 0, 1, ?, 1, 1, now(), 0)";
+    $admin_info_query = "INSERT INTO `users` (`company_id`, `UserName`, `Pass`, `Fullname`, `isTech`, `job_title_id`, `gender`, `TrustStatus`, `addedBy`,  `joinedDate`, `systemLang`) VALUES (?, ?, ?, ?, 0, 1, ?, 1, 1, ?, 0)";
     $admin_info_stmt = $this->con->prepare($admin_info_query);
     $admin_info_stmt->execute($info);
     $count = $admin_info_stmt->rowCount();

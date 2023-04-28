@@ -27,11 +27,11 @@ class ManufuctureCompanies extends Database {
   }
 
   // insert a new piece type
-  public function insert_new_man_company($name, $user_id, $company_id) {
+  public function insert_new_man_company($info) {
     // insert query
-    $dev_comp_insert_query = "INSERT INTO `manufacture_companies` (`man_company_name`, `added_date`, `added_by`, `company_id`) VALUES (?, now(), ?, ?);";
+    $dev_comp_insert_query = "INSERT INTO `manufacture_companies` (`man_company_name`, `added_date`, `added_by`, `company_id`) VALUES (?, ?, ?, ?);";
     $query_stmt = $this->con->prepare($dev_comp_insert_query);
-    $query_stmt->execute(array($name, $user_id, $company_id));
+    $query_stmt->execute($info);
     $dev_comp_count =  $query_stmt->rowCount();       // count effected rows
     // return result
     return $dev_comp_count > 0 ? true : false;

@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $msg = '<div class="alert alert-danger text-capitalize" dir=""><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;' . language('THIS NAME IS ALREADY EXIST', @$_SESSION['systemLang']) . '</div>';
     } else {
       // call insert_new_type function
-      $dev_company_obj->insert_new_devices($device_name, $_SESSION['UserID'], $company_id);
+      $dev_company_obj->insert_new_devices(array($device_name, get_date_now(), $_SESSION['UserID'], $company_id));
       // get current device id 
       $curr_device_id = $dev_company_obj->get_latest_records("`device_id`", "`devices_info`", "", "`device_id`", "1")[0]['device_id'];
       // check model length
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           // check model if empty
           if (!empty($model)) {
             // insert model
-            $model_obj->insert_new_model($model, $_SESSION['UserID'], $curr_device_id);
+            $model_obj->insert_new_model(array($model, get_date_now(), $_SESSION['UserID'], $curr_device_id));
             $is_inserted_models = true;
           }
         }

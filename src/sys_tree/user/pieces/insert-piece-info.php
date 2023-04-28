@@ -96,7 +96,7 @@
       // create an array of piece info
       $pcs_info = array();
       // push piece info into an array
-      array_push($pcs_info, $full_name, $ip, $username, $password, $conn_type, $dir_id, $source_id, $alt_source_id, $is_client, $device_type, $device_id, $model_id, $_SESSION['UserID'], $_SESSION['company_id'], $notes, $visit_time);
+      array_push($pcs_info, $full_name, $ip, $username, $password, $conn_type, $dir_id, $source_id, $alt_source_id, $is_client, $device_type, $device_id, $model_id, $_SESSION['UserID'], get_date_now(), $_SESSION['company_id'], $notes, $visit_time);
       // call insert function
       $is_inserted = $pcs_obj->insert_new_piece($pcs_info);
 

@@ -68,11 +68,11 @@ class Devices extends Database {
   }
 
   // insert a new device
-  public function insert_new_devices($name, $user_id, $company_id) {
+  public function insert_new_devices($info) {
     // insert query
-    $dev_insert_query = "INSERT INTO `devices_info` (`device_name`, `added_date`, `added_by`, `device_company_id`) VALUES (?, now(), ?, ?);";
+    $dev_insert_query = "INSERT INTO `devices_info` (`device_name`, `added_date`, `added_by`, `device_company_id`) VALUES (?, ?, ?, ?);";
     $stmt = $this->con->prepare($dev_insert_query);
-    $stmt->execute(array($name, $user_id, $company_id));
+    $stmt->execute($info);
     $dev_comp_count =  $stmt->rowCount();       // count effected rows
     // return result
     return $dev_comp_count > 0 ? true : false;

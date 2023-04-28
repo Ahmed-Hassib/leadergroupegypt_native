@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       // array of user info
       $user_info = array();
       // push user info into array
-      array_push($user_info, $company_id, $username, $hashedPass, $email, $fullname, $isTech, $job_title_id, $gender, $address, $phone, $date_of_birth, $trust_status, $_SESSION['UserID'], $twitter, $facebook);
+      array_push($user_info, $company_id, $username, $hashedPass, $email, $fullname, $isTech, $job_title_id, $gender, $address, $phone, $date_of_birth, $trust_status, $_SESSION['UserID'], get_date_now(), $twitter, $facebook);
       // call isert function
       $user_obj->insert_user_info($user_info);
       // get the new employee ID

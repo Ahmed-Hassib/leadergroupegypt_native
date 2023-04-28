@@ -26,11 +26,11 @@ class Models extends Database {
   }
 
   // insert a new model
-  public function insert_new_model($model_name, $user_id, $device_id) {
+  public function insert_new_model($info) {
     // insert query
-    $model_insert_query = "INSERT INTO `devices_model` (`model_name`, `added_date`, `added_by`, `device_id`) VALUES (?, now(), ?, ?);";
+    $model_insert_query = "INSERT INTO `devices_model` (`model_name`, `added_date`, `added_by`, `device_id`) VALUES (?, ?, ?, ?);";
     $stmt = $this->con->prepare($model_insert_query);
-    $stmt->execute(array($model_name, $user_id, $device_id));
+    $stmt->execute($info);
     $model_count =  $stmt->rowCount();       // count effected rows
     // return result
     return $model_count > 0 ? true : false;

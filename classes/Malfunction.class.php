@@ -47,7 +47,7 @@ class Malfunction extends Database {
   // insert a new Malfunction
   public function insert_new_malfunction($info) {
      // INSERT INTO malfunctions
-    $insert_query = "INSERT INTO `malfunctions` (`mng_id`, `tech_id`, `client_id`, `descreption`, `added_date`, `added_time`, `company_id`) VALUES (?, ?, ?, ?, now(), now(), ?);";
+    $insert_query = "INSERT INTO `malfunctions` (`mng_id`, `tech_id`, `client_id`, `descreption`, `added_date`, `added_time`, `company_id`) VALUES (?, ?, ?, ?, ?, ?, ?);";
     // prepare the query
     $stmt = $this->con->prepare($insert_query);
     $stmt->execute($info);
@@ -58,7 +58,7 @@ class Malfunction extends Database {
 
   // update Malfunction info
   public function update_malfunction_tech($info) {
-    $update_query = "UPDATE `malfunctions` SET `mal_status` = ?, `cost` = ?, `repaired_date` = CURRENT_DATE, `repaired_time` = now(), `tech_comment` = ?, `tech_status_comment` = ?, `isAccepted`= ? WHERE `mal_id` = ?";
+    $update_query = "UPDATE `malfunctions` SET `mal_status` = ?, `cost` = ?, `repaired_date` = ?, `repaired_time` = ?, `tech_comment` = ?, `tech_status_comment` = ?, `isAccepted`= ? WHERE `mal_id` = ?";
     // prepare the query
     $stmt = $this->con->prepare($update_query);
     $stmt->execute($info);
@@ -80,7 +80,7 @@ class Malfunction extends Database {
   
   // update Malfunction info
   public function update_malfunction_review($info) {
-    $update_query = "UPDATE `malfunctions` SET `isReviewed` = 1, `reviewed_date` = CURRENT_DATE, `reviewed_time` = now(), `money_review` = ?, `qty_service` = ?, `qty_emp` = ?, `qty_comment` = ? WHERE `mal_id` = ?";
+    $update_query = "UPDATE `malfunctions` SET `isReviewed` = 1, `reviewed_date` = ?, `reviewed_time` = ?, `money_review` = ?, `qty_service` = ?, `qty_emp` = ?, `qty_comment` = ? WHERE `mal_id` = ?";
     // prepare the query
     $stmt = $this->con->prepare($update_query);
     $stmt->execute($info);
@@ -91,7 +91,7 @@ class Malfunction extends Database {
   
   // update Malfunction info
   public function reset_malfunction_info($info) {
-    $update_query = "UPDATE `malfunctions` SET `tech_id` = ?, `descreption` = ?, `added_date` = CURRENT_DATE, `added_time` = now(), `mal_status` =  0,`cost` =  0, `repaired_date` = '0000-00-00', `repaired_time` = '00:00:00', `tech_comment` = '', `isShowed` = 0, `showed_date` = '0000-00-00', `showed_time` = '00:00:00', `isAccepted` = -1, `isReviewed` = 0, `reviewed_date` = '0000-00-00', `reviewed_time` = '00:00:00', `money_review` = 0, `qty_service` = 0, `qty_emp` = 0, `qty_comment` = '' WHERE `mal_id` = ?";
+    $update_query = "UPDATE `malfunctions` SET `tech_id` = ?, `descreption` = ?, `added_date` = ?, `added_time` = ?, `mal_status` =  0,`cost` =  0, `repaired_date` = '0000-00-00', `repaired_time` = '00:00:00', `tech_comment` = '', `isShowed` = 0, `showed_date` = '0000-00-00', `showed_time` = '00:00:00', `isAccepted` = -1, `isReviewed` = 0, `reviewed_date` = '0000-00-00', `reviewed_time` = '00:00:00', `money_review` = 0, `qty_service` = 0, `qty_emp` = 0, `qty_comment` = '' WHERE `mal_id` = ?";
     // prepare the query
     $stmt = $this->con->prepare($update_query);
     $stmt->execute($info);
