@@ -71,7 +71,7 @@ if ($counter > 0) {
               
               <!-- piece name -->
               <td>
-                <?php if ($_SESSION['pcs_update'] == 1) { ?>
+                <?php if ($_SESSION['pcs_show'] == 1) { ?>
                   <a href="?name=<?php echo $name ?>&do=edit-piece&piece-id=<?php echo $piece['id']; ?>" target="">
                     <?php echo trim($piece['full_name'], ' ') ?>
                   </a>
@@ -88,7 +88,7 @@ if ($counter > 0) {
 
               <!-- piece username -->
               <td class="text-capitalize">
-                <?php if ($_SESSION['pcs_update'] == 1) { ?>
+                <?php if ($_SESSION['pcs_show'] == 1) { ?>
                 <a href="?name=<?php echo $name ?>&do=edit-piece&piece-id=<?php echo $piece['id']; ?>">
                   <?php echo $piece['username']; ?>
                 </a>
@@ -100,11 +100,11 @@ if ($counter > 0) {
               <!-- piece direction -->
               <td class="text-capitalize" >
                 <?php $dir_name = $db_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = ".$piece['direction_id'])[0]['direction_name']; ?>
-                <?php if ($piece['direction_id'] != 0 && $_SESSION['dir_update'] == 1) { ?>
+                <?php if ($piece['direction_id'] != 0 && $_SESSION['dir_show'] == 1) { ?>
                   <a href="<?php echo $nav_up_level ?>directions/index.php?do=show-direction-tree&dir-id=<?php echo $piece['direction_id']; ?>">
                     <?php echo $dir_name ?>
                   </a>
-                <?php } elseif ($_SESSION['dir_update'] == 0) { ?>
+                <?php } elseif ($_SESSION['dir_show'] == 0) { ?>
                   <span><?php echo $dir_name ?></span>
                 <?php } else { ?>
                   <span class="text-danger"><?php echo language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></span>
@@ -188,9 +188,11 @@ if ($counter > 0) {
 
               <!-- control -->
               <td>
-                <a class="btn btn-success text-capitalize fs-12 <?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="?name=<?php echo $name ?>&do=edit-piece&piece-id=<?php echo $piece['id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
-                <?php if ($piece['is_client'] == 0) { ?>
-                  <a class="btn btn-outline-primary text-capitalize fs-12 <?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>" href="?name=<?php echo $name ?>&do=show-piece&dir-id=<?php echo $piece['direction_id'] ?>&src-id=<?php echo $piece['id'] ?>" ><i class="bi bi-eye"></i></a>
+                <?php if ($_SESSION['pcs_show'] == 1) { ?>
+                  <a class="btn btn-success text-capitalize fs-12" href="?name=<?php echo $name ?>&do=edit-piece&piece-id=<?php echo $piece['id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
+                <?php } ?>
+                <?php if ($piece['is_client'] == 0 && $_SESSION['pcs_show'] == 1) { ?>
+                  <a class="btn btn-outline-primary text-capitalize fs-12" href="?name=<?php echo $name ?>&do=show-piece&dir-id=<?php echo $piece['direction_id'] ?>&src-id=<?php echo $piece['id'] ?>" ><i class="bi bi-eye"></i></a>
                 <?php } ?>
                 <?php if ($_SESSION['pcs_delete'] == 1) { ?>
                   <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deletePieceModal" id="delete-piece" data-page-title="<?php echo $name ?>" data-piece-id="<?php echo $piece['id'] ?>" data-piece-name="<?php echo $piece['full_name'] ?>" onclick="confirm_delete_piece(this)"><i class="bi bi-trash"></i></button>

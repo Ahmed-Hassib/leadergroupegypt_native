@@ -283,3 +283,12 @@ function download_media(src, type) {
       link.click();
     });
 }
+
+
+//  < !--reasons for rejection or postponement man comment-- >
+//   <div class="mb-sm-2 mb-md-3 row align-items-center">
+//     <label for="tech-status-comment" class="col-sm-12 col-form-label text-capitalize"><?php echo language('REASONS FOR REJECTION OR POSTPONEMENT', @$_SESSION['systemLang']) ?></label>
+//     <div class="col-sm-12 position-relative">
+//       <textarea name="tech-status-comment" id="tech-status-comment" class="form-control w-100" style="height: 5rem; resize: none; direction: <?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>" <?php if ($_SESSION['isTech'] == 0 || $mal_info['mal_status'] == 1) {echo 'disabled';} ?>><?php echo empty($mal_info['tech_status_comment']) && $mal_info['mal_status'] == 1 ? "لا يوجد تعليق من الفني" : $mal_info['tech_status_comment']; ?></textarea>
+//   </div>
+//             </div >

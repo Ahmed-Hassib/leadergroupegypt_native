@@ -37,10 +37,11 @@ foreach ($rows as $row) {
 
   <!-- start showing directions tree -->
   <div class="genealogy-body genealogy-scroll">
-    <div class="genealogy-tree text-center">
+    <div class="genealogy-tree text-center" id="direction_tree">
       <?php build_direction_tree($data, 0); ?>
     </div>
     
+    <!-- scroll buttons -->
     <div class="fixed-scroll-btn">
       <!-- scroll left button -->
       <button type="button" role="button" class="scroll-button scroll-prev scroll-prev-right">
@@ -51,6 +52,16 @@ foreach ($rows as $row) {
         <i class="carousel-control-next-icon"></i>
       </button>
     </div>
+
+    <!-- zoom buttons -->
+    <div class="fixed-zoom-btn">
+      <div class="btn-group" role="group" aria-label="zoom-btns">
+        <button type="button" class="btn btn-outline-primary" id="zoom_in_btn" onclick="zoom_in(this, zoom_out_btn, direction_tree); add_transform_origin(direction_tree)" data-zoom-value="1"><i class="bi bi-zoom-in"></i></button>
+        <button type="button" class="btn btn-outline-primary" id="reset_zoom" onclick="reset_zoom(zoom_in_btn, zoom_out_btn, direction_tree); remove_transform_origin(direction_tree)"><i class="bi bi-x-lg"></i></button>
+        <button type="button" class="btn btn-outline-primary" id="zoom_out_btn" onclick="zoom_out(this, zoom_in_btn, direction_tree); add_transform_origin(direction_tree)" data-zoom-value="1"><i class="bi bi-zoom-out"></i></button>
+      </div>
+    </div>
+
   </div>
   <!-- end showing directions tree -->
 <?php } else {

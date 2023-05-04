@@ -93,12 +93,10 @@
     } elseif ($is_exist_ip > 0) {
       $msg = '<div class="alert alert-warning text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;'.language('THIS IP ADD IS ALREADY EXIST', @$_SESSION['systemLang']).'</div>';
     } else {
-      // create an array of piece info
-      $pcs_info = array();
-      // push piece info into an array
-      array_push($pcs_info, $full_name, $ip, $username, $password, $conn_type, $dir_id, $source_id, $alt_source_id, $is_client, $device_type, $device_id, $model_id, $_SESSION['UserID'], get_date_now(), $_SESSION['company_id'], $notes, $visit_time);
+      // get current date
+      $date_now = get_date_now();
       // call insert function
-      $is_inserted = $pcs_obj->insert_new_piece($pcs_info);
+      $is_inserted = $pcs_obj->insert_new_piece(array($full_name, $ip, $username, $password, $conn_type, $dir_id, $source_id, $alt_source_id, $is_client, $device_type, $device_id, $model_id, $_SESSION['UserID'], $date_now, $_SESSION['company_id'], $notes, $visit_time));
 
       // check address
       if (!empty($address)) {

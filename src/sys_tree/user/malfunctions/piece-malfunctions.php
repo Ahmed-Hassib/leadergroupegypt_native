@@ -35,13 +35,23 @@ if ($is_exist_piece) {
     </h4>
     <!-- piece name and link -->
     <h5 class="h5 text-capitalize text-secondary ">
-      <a href="<?php echo $nav_up_level ?>pieces/index.php?name=<?php echo $piece_type ?>&do=edit-piece&piece-id=<?php echo $pieceid ?>"><?php echo $piece_name ?></a>
+      <?php if ($_SESSION['pcs_show'] == 1) { ?>
+        <a href="<?php echo $nav_up_level ?>pieces/index.php?name=<?php echo $piece_type ?>&do=edit-piece&piece-id=<?php echo $pieceid ?>"><?php echo $piece_name ?></a>
+      <?php } else { ?>
+        <span class="text-primary"><?php echo $piece_name ?></span>
+      <?php } ?>
     </h5>
+
+    <?php if ($_SESSION['isTech'] == 1) { ?>
+      <p class="text-danger"><?php echo language('THERE IS SOME MALFUNCTION YOU CANNOT SEE', @$_SESSION['systemLang']) ?></p>
+    <?php } ?>
   </header>
   <!-- end header -->
   <?php if ($is_exist_mal == true) { ?>
     <?php
-      $query = "SELECT *FROM `malfunctions` WHERE `client_id` = $pieceid";
+      // if current emp is technical man
+      $tech_condition = $_SESSION['isTech'] == 1 ? 'AND `tech_id` = ' . $_SESSION['UserID'] : '';
+      $query = "SELECT *FROM `malfunctions` WHERE `client_id` = $pieceid $tech_condition";
       // prepaire the query
       $stmt = $con->prepare($query);
       $stmt->execute();               // execute query

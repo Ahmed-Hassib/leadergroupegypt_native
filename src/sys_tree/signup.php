@@ -110,7 +110,7 @@ if (isset($_SESSION['UserName'])) {
           </div>
         </div>
         <!-- second row that contain company info -->
-        <div class="row row-cols-sm-1">
+        <div class="row row-cols-sm-1" id="admin-info">
           <div class="section-header">
             <h4 class="h4"><?php echo language("ADMIN LOGIN INFO", @$_SESSION['systemLang']) ?></h4>
           </div>
@@ -140,11 +140,19 @@ if (isset($_SESSION['UserName'])) {
                 <input class="form-control w-100" type="text" name="username" id="username" placeholder="<?php echo language("USERNAME", @$_SESSION['systemLang']) ?>" onkeyup="is_valid(this, 'username');" required>
               </div>
             </div>
-            
+            <!-- admin password -->
             <div class="mb-sm-2 mb-md-3 row">
               <label for="password" class="col-sm-12 col-form-label text-capitalize"><?php echo language("PASSWORD", @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 position-relative">
-                <input class="form-control w-100" type="password" name="password" id="password" placeholder="<?php echo language("PASSWORD", @$_SESSION['systemLang']) ?>" required>
+                <input class="form-control w-100" type="password" name="password" id="password" placeholder="<?php echo language("PASSWORD", @$_SESSION['systemLang']) ?>" onblur="confirm_password(confirm_pass, this)" data-no-validation="true" required>
+                <i class="bi bi-eye-slash show-pass show-pass-left text-dark" id="show-pass" onclick="showPass(this)"></i>
+              </div>
+            </div>
+            <!-- confirm_pass -->
+            <div class="mb-sm-2 mb-md-3 row">
+              <label for="confirm_pass" class="col-sm-12 col-form-label text-capitalize"><?php echo language("CONFIRM PASSWORD", @$_SESSION['systemLang']) ?></label>
+              <div class="col-sm-12 position-relative">
+                <input class="form-control w-100" type="password" name="confirm_pass" id="confirm_pass" placeholder="<?php echo language("CONFIRM PASSWORD", @$_SESSION['systemLang']) ?>" onblur="confirm_password(this, password)" data-no-validation="true" required>
                 <i class="bi bi-eye-slash show-pass show-pass-left text-dark" id="show-pass" onclick="showPass(this)"></i>
               </div>
             </div>
@@ -166,7 +174,7 @@ if (isset($_SESSION['UserName'])) {
           <span>
             <?php echo language('YOU CAN VISIT OUR WEBSITE TO SHOW MOST RECENT EVENTS, ARTICLES AND TOPICS OF INTEREST TO YOU', @$_SESSION['systemLang']) ?>
           </span>
-          <a href="../../index.php"><?php echo language('FROM HERE', @$_SESSION['systemLang']) ?></a>
+          <a href="../../index.php"><?php echo language('FROM HERE', @$_SESSION['systemLang']) ?>&nbsp;<i class="bi bi-arrow-up-left-square"></i></a>
         </p>
       </div>
     </div>

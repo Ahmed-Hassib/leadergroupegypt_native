@@ -125,7 +125,7 @@ function do_technical_updates($info) {
   // get malfunction status
   $mal_status = $info['mal-status'];
   // get technical status
-  $tech_status = $info['mal-status'] == 1 ? 1 : $info['tech-status'];
+  $tech_status = $info['mal-status'];
   // get technical man comment
   $tech_comment = isset($info['comment']) ? $info['comment'] : '';
   // get technical man status comment

@@ -40,10 +40,9 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
             <div class="mb-sm-2 mb-md-3 row">
               <label for="full-name" class="col-sm-12 col-form-label text-capitalize"><?php echo language('FULLNAME', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 position-relative">
-                <input type="text" class="form-control" id="full-name" name="full-name" placeholder="<?php echo language('FULLNAME', @$_SESSION['systemLang']) ?>" onkeyup="fullname_validation(this, <?php echo $piece_data['id'] ?>)" onblur="fullname_validation(this, <?php echo $piece_data['id'] ?>)" value="<?php echo $piece_data['full_name'] ?>" autocomplete="off" required />
+                <input type="text" class="form-control" id="full-name" name="full-name" placeholder="<?php echo language('FULLNAME', @$_SESSION['systemLang']) ?>" onblur="fullname_validation(this, <?php echo $piece_data['id'] ?>)" onblur="fullname_validation(this, <?php echo $piece_data['id'] ?>)" value="<?php echo $piece_data['full_name'] ?>" autocomplete="off" required />
               </div>
             </div>
-
             <!-- address -->
             <div class="mb-sm-2 mb-md-3 row">
               <label for="address" class="col-sm-12 col-form-label text-capitalize"><?php echo language('THE ADDRESS', @$_SESSION['systemLang']) ?></label>
@@ -51,7 +50,6 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
                 <input type="text" name="address" id="address" class="form-control w-100" value="<?php echo $piece_data['address'] ?>" placeholder="<?php echo language('THE ADDRESS', @$_SESSION['systemLang']) ?>" />
               </div>
             </div>
-
             <!-- phone -->
             <div class="mb-sm-2 mb-md-3 row">
               <label for="phone-number" class="col-sm-12 col-form-label text-capitalize"><?php echo language('PHONE', @$_SESSION['systemLang']) ?></label>
@@ -133,7 +131,9 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
               </label>
               <div class="col-sm-12 col-md-8 position-relative">
                 <span class="me-5 text-start" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo $malCounter . " " . ($malCounter > 2 ? language("MALFUNCTIONS", @$_SESSION['systemLang']) : language("MALFUNCTION", @$_SESSION['systemLang'])) ?></span>
-                <a href="<?php echo $nav_up_level ?>malfunctions/index.php?do=show-pieces-malfunctions&pieceid=<?php echo $piece_data['id'] ?>" class="mt-2 text-start" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo language("SHOW DETAILS", @$_SESSION['systemLang']) ?></a>
+                <?php if ($_SESSION['mal_show']) { ?>
+                  <a href="<?php echo $nav_up_level ?>malfunctions/index.php?do=show-pieces-malfunctions&pieceid=<?php echo $piece_data['id'] ?>" class="mt-2 text-start" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo language("SHOW DETAILS", @$_SESSION['systemLang']) ?>&nbsp;<i class="bi bi-arrow-up-left-square"></i></a>
+                <?php } ?>
               </div>
             </div>
             <?php } ?>
@@ -350,7 +350,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
                     <div class="mb-sm-2 mb-md-3 row">
                       <label for="ip" class="col-sm-12 col-form-label"><span class="text-uppercase"><?php echo language('IP', @$_SESSION['systemLang']) ?></span></label>
                       <div class="col-sm-12 position-relative">
-                        <input type="text" class="form-control" id="ip" name="ip" placeholder="xxx.xxx.xxx.xxx" onkeyup="ip_validation(this, <?php echo $piece_data['id'] ?>)" onblur="ip_validation(this, <?php echo $piece_data['id'] ?>)" value="<?php echo $piece_data['ip'] ?>" autocomplete="off" required />
+                        <input type="text" class="form-control" id="ip" name="ip" placeholder="xxx.xxx.xxx.xxx" onblur="ip_validation(this, <?php echo $piece_data['id'] ?>)" onblur="ip_validation(this, <?php echo $piece_data['id'] ?>)" value="<?php echo $piece_data['ip'] ?>" autocomplete="off" required />
                         <div id="ipHelp" class="form-text text-warning"><?php echo language('IF PIECE/CLIENT NOT HAVE AN IP PRESS 0.0.0.0', @$_SESSION['systemLang']) ?></div>
                       </div>
                     </div>
@@ -361,7 +361,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
                     <div class="mb-sm-2 mb-md-3 row">
                       <label for="mac-add" class="col-sm-12 col-form-label text-capitalize"><?php echo language('MAC ADD', @$_SESSION['systemLang']) ?></label>
                       <div class="col-sm-12 position-relative">
-                        <input type="text" class="form-control" id="mac-add" name="mac-add" onkeyup="mac_validation(this, <?php echo $piece_data['id'] ?>)" onblur="mac_validation(this, <?php echo $piece_data['id'] ?>)" placeholder="<?php echo language('MAC ADD', @$_SESSION['systemLang']) ?>" value="<?php echo $piece_data['mac_add'] ?>" />
+                        <input type="text" class="form-control" id="mac-add" name="mac-add" onblur="mac_validation(this, <?php echo $piece_data['id'] ?>)" onblur="mac_validation(this, <?php echo $piece_data['id'] ?>)" placeholder="<?php echo language('MAC ADD', @$_SESSION['systemLang']) ?>" value="<?php echo $piece_data['mac_add'] ?>" />
                       </div>
                     </div>
                   </div>

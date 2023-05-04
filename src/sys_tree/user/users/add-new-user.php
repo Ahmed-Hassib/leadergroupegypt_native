@@ -106,7 +106,7 @@
           <div class="mb-4 row">
             <label for="username" class="col-sm-12 col-form-label text-capitalize"><?php echo language('USERNAME', @$_SESSION['systemLang']) ?></label>
             <div class="col-sm-12 position-relative">
-              <input type="text" class="form-control" name="username" id="username" placeholder="<?php echo language('USERNAME', @$_SESSION['systemLang']) ?>" autocomplete="off" aria-describedby="usernameHelp" onkeyup="check_username(this);" required>
+              <input type="text" class="form-control" name="username" id="username" placeholder="<?php echo language('USERNAME', @$_SESSION['systemLang']) ?>" autocomplete="off" aria-describedby="usernameHelp" onblur="check_username(this);" required>
               <div id="usernameHelp" class="form-text"><?php echo language('USERNAME TO LOGIN INTO THE SYSTEM', @$_SESSION['systemLang']) ?></div>
             </div>
           </div>

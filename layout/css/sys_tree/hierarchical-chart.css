@@ -29,6 +29,10 @@
 	padding-bottom: 10px;
 }
 
+.genealogy-tree {
+	transform: scale(1);
+}
+
 .genealogy-tree ul {
 	padding-top: 20px;
 	position: relative;
@@ -149,4 +153,9 @@
 
 .member-view-box:hover .member-details span {
 	color: #f1f1f1;
+}
+
+.fixed-zoom-btn {
+	position: fixed;
+	top: 80px;
 }

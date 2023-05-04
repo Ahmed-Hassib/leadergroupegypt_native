@@ -37,7 +37,7 @@ $pcs_counter = $db_obj->count_records("`id`", "`pieces_info`", "WHERE `company_i
       <div class="col-12">
         <div class="section-block">
           <div class="section-header">
-            <h5 class="h5 text-capitalize"><?php echo language('RESPONSIBLE FOR REPAIR INFO', @$_SESSION['systemLang']) ?></h5>
+            <h5 class="h5 text-capitalize"><?php echo language('RESPONSIBLE FOR MALFUNCTION', @$_SESSION['systemLang']) ?></h5>
             <hr />
           </div>
           <!-- Administrator name -->

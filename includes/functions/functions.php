@@ -342,7 +342,8 @@ function bg_progress($val) {
  * return the current time
  */
 function get_time_now() {
-  return date('H:i:s');
+  $timestamp = strtotime(date('H:i:s')) + 60*60;
+  return date('H:i:s', $timestamp);
 }
 
 /**

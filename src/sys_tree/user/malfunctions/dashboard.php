@@ -451,7 +451,7 @@ if ($_SESSION['mal_show'] == 1) {
     </div>
     <?php } ?>
 
-    <?php $latestMal = $mal_obj->select_specific_column("*", "`malfunctions`", "WHERE `company_id` = ".$_SESSION['company_id'] ." $techCondition1 ORDER BY `added_time` DESC LIMIT 5"); ?>
+    <?php $latestMal = $mal_obj->select_specific_column("*", "`malfunctions`", "WHERE `company_id` = ".$_SESSION['company_id'] ." $techCondition1 ORDER BY `added_date` DESC, `added_time` DESC LIMIT 5"); ?>
     <?php if (!empty($latestMal)) { ?>
     <div class="mb-3 row">
       <div class="col-12">

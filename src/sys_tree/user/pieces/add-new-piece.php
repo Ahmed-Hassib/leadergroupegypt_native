@@ -38,7 +38,7 @@
               ?>
             </label>
             <div class="col-sm-12 position-relative">
-              <input type="text" class="form-control" id="full-name" name="full-name" placeholder="<?php echo language('FULLNAME', @$_SESSION['systemLang']) ?>" onkeyup="fullname_validation(this)" autocomplete="off" required />
+              <input type="text" class="form-control" id="full-name" name="full-name" placeholder="<?php echo language('FULLNAME', @$_SESSION['systemLang']) ?>" onblur="fullname_validation(this)" autocomplete="off" required />
             </div>
           </div>
 
@@ -295,7 +295,7 @@
                   <div class="mb-sm-2 mb-md-3 row">
                     <label for="ip" class="col-sm-12 col-form-label"><span class="text-uppercase"><?php echo language('IP', @$_SESSION['systemLang']) ?></span></label>
                     <div class="col-sm-12 position-relative">
-                      <input type="text" class="form-control" id="ip" name="ip" placeholder="xxx.xxx.xxx.xxx" onkeyup="ip_validation(this)" autocomplete="off" required />
+                      <input type="text" class="form-control" id="ip" name="ip" placeholder="xxx.xxx.xxx.xxx" onblur="ip_validation(this)" autocomplete="off" required />
                       <div id="ipHelp" class="form-text text-warning"><?php echo language('IF PIECE/CLIENT NOT HAVE AN IP PRESS 0.0.0.0', @$_SESSION['systemLang']) ?></div>
                     </div>
                   </div>
@@ -306,7 +306,7 @@
                   <div class="mb-sm-2 mb-md-3 row">
                     <label for="mac-add" class="col-sm-12 col-form-label text-capitalize"><?php echo language('MAC ADD', @$_SESSION['systemLang']) ?></label>
                     <div class="col-sm-12 position-relative">
-                      <input type="text" class="form-control" id="mac-add" name="mac-add" onkeyup="mac_validation(this)" placeholder="<?php echo language('MAC ADD', @$_SESSION['systemLang']) ?>" />
+                      <input type="text" class="form-control" id="mac-add" name="mac-add" onblur="mac_validation(this)" placeholder="<?php echo language('MAC ADD', @$_SESSION['systemLang']) ?>" />
                     </div>
                   </div>
                 </div>

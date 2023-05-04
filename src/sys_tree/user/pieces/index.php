@@ -45,7 +45,7 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
     $preloader = false;
     $possible_back = false;
     
-  } elseif ($query == 'edit-piece' && $_SESSION['pcs_update'] == 1) {
+  } elseif ($query == 'edit-piece' && ($_SESSION['pcs_update'] == 1 || $_SESSION['pcs_show'] == 1)) {
     $file_name = 'edit-piece.php';
     
   } elseif ($query == 'update-piece-info' && $_SESSION['pcs_update'] == 1) {

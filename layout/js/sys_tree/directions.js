@@ -111,3 +111,39 @@ function put_deleted_data(btn) {
   deleted_dir_name.value = btn.dataset.directionId;
 }
 
+function zoom_in(input_in, input_out, tree) {
+  // get zoom value
+  let zoom_value = Number(input_in.dataset.zoomValue) + 0.1;
+  // add scale to tree
+  tree.style['transform'] = `scale(${zoom_value})`
+  // update zoom value of zoom in button
+  input_in.dataset.zoomValue = zoom_value;
+  input_out.dataset.zoomValue = zoom_value;
+}
+
+function zoom_out(input_out, input_in, tree) {
+  // get zoom value
+  let zoom_value = Number(input_out.dataset.zoomValue) - 0.1;
+  // add scale to tree
+  tree.style['transform'] = `scale(${zoom_value})`
+  // update zoom value of zoom in button
+  input_in.dataset.zoomValue = zoom_value;
+  input_out.dataset.zoomValue = zoom_value;
+}
+
+function reset_zoom(input_in, input_out, tree) {
+  // get zoom value
+  let zoom_value = 1;
+  // update zoom value of zoom in button
+  input_in.dataset.zoomValue = zoom_value;
+  input_out.dataset.zoomValue = zoom_value;
+  tree.style['transform'] = `scale(${zoom_value})`
+}
+
+function add_transform_origin(tree) {
+  tree.style['transform-origin'] = '0% 0% 0px';
+}
+
+function remove_transform_origin(tree) {
+  tree.style['transform-origin'] = 'unset';
+}

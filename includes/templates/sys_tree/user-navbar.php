@@ -49,7 +49,7 @@
           </a>
         </li>
         <?php } ?>
-        <?php if ($_SESSION['user_add'] == 0) { ?>
+        <?php if ($_SESSION['user_add'] == 1) { ?>
         <li>
           <a href="<?php echo $nav_up_level ?>users/index.php?do=add-new-user">
             <span class="link-name"><?php echo language('ADD NEW EMPLOYEE', @$_SESSION['systemLang']) ?></span>
