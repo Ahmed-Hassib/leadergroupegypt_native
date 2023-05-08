@@ -44,22 +44,23 @@
   }
   
   // get source id
-  $source_id      = isset($_POST['source-id']) ? trim($_POST['source-id'], ' ')   : -1;
-  $alt_source_id  = isset($_POST['alt-source-id']) ? trim($_POST['alt-source-id'], ' ')   : -1;
-  $device_id      = isset($_POST['device-id']) ? trim($_POST['device-id'], ' ')   : -1;
-  $model_id       = isset($_POST['device-model']) ? trim($_POST['device-model'], ' ')   : -1;
-
-  $phone      = trim($_POST['phone-number'], ' ');
-  $address    = trim($_POST['address'], ' ');
-  $conn_type  = isset($_POST['conn-type'])  && !empty($_POST['conn-type']) ? trim($_POST['conn-type'], ' ')  : '';
-  $notes      = empty(trim($_POST['notes'], ' ')) ? 'لا توجد ملاحظات' : trim($_POST['notes'], ' ');
-  $visit_time = isset($_POST['visit-time']) ? $_POST['visit-time'] : 1;
-  $ssid       = trim($_POST['ssid'], ' ');
-  $pass_conn  = trim($_POST['password-connection'], ' ');
-  $frequency  = isset($_POST['frequency']) && !empty($_POST['frequency']) ? trim($_POST['frequency'], ' ') : 0;
-  $wave       = isset($_POST['wave'])     && !empty($_POST['wave']) ? trim($_POST['wave'], ' ') : 0;
-  $mac_add    = trim($_POST['mac-add'], ' ');
-
+  $source_id        = isset($_POST['source-id']) ? trim($_POST['source-id'], ' ')   : -1;
+  $alt_source_id    = isset($_POST['alt-source-id']) ? trim($_POST['alt-source-id'], ' ')   : -1;
+  $device_id        = isset($_POST['device-id']) ? trim($_POST['device-id'], ' ')   : -1;
+  $model_id         = isset($_POST['device-model']) ? trim($_POST['device-model'], ' ')   : -1;
+  
+  $phone            = trim($_POST['phone-number'], ' ');
+  $address          = trim($_POST['address'], ' ');
+  $conn_type        = isset($_POST['conn-type'])  && !empty($_POST['conn-type']) ? trim($_POST['conn-type'], ' ')  : '';
+  $notes            = empty(trim($_POST['notes'], ' ')) ? 'لا توجد ملاحظات' : trim($_POST['notes'], ' ');
+  $visit_time       = isset($_POST['visit-time']) ? $_POST['visit-time'] : 1;
+  $ssid             = trim($_POST['ssid'], ' ');
+  $pass_conn        = trim($_POST['password-connection'], ' ');
+  $frequency        = isset($_POST['frequency']) && !empty($_POST['frequency']) ? trim($_POST['frequency'], ' ') : 0;
+  $wave             = isset($_POST['wave'])     && !empty($_POST['wave']) ? trim($_POST['wave'], ' ') : 0;
+  $mac_add          = trim($_POST['mac-add'], ' ');
+  $internet_source  = trim($_POST['internet-source'], ' ');
+  
   
   $validIP    = !empty($ip) ? preg_match('/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\z/', $ip) : 1;
   $validMac   = !empty($macAdd) ? preg_match('/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/', $macAdd) : 1;
@@ -163,6 +164,16 @@
       } elseif (!$is_exist_wave == true && !empty($wave)) {
         // insert wave
         $pcs_obj->insert_wave($id, $wave);
+      }
+
+      // check if wave was inserted befor
+      $is_exist_internet_source = $pcs_obj->is_exist("`id`", "`pieces_internet_source`", $id);
+      if ($is_exist_internet_source == true) {
+        // update internet source
+        $pcs_obj->update_internet_source($id, $internet_source);
+      } elseif (!$is_exist_internet_source == true && !empty($internet_source)) {
+        // insert internet source
+        $pcs_obj->insert_internet_source($id, $internet_source);
       }
 
       // check type of current piece

@@ -1,6 +1,9 @@
 <?php
 // check the request post
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  // 
+
+  // print_r($_FILES);
   // create an object of User class
   $user_obj = new User();
 
@@ -57,11 +60,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $count = $checkStmt->rowCount();
     // check if username is exist
     if ($count == 1) {
-        // echo success message
-        $msg = '<div class="alert alert-warning text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;';
-        $msg .= language('THIS USERNAME IS ALREADY EXIST', @$_SESSION['systemLang']).'..<br>';
-        $msg .= language('PLEASE, TRY ANOTHER USERNAME', @$_SESSION['systemLang']);
-        $msg .= '</div>';
+      // echo success message
+      $msg = '<div class="alert alert-warning text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;';
+      $msg .= language('THIS USERNAME IS ALREADY EXIST', @$_SESSION['systemLang']).'..<br>';
+      $msg .= language('PLEASE, TRY ANOTHER USERNAME', @$_SESSION['systemLang']);
+      $msg .= '</div>';
     } else {
       // array of user info
       $user_info = array();
@@ -147,10 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </header>
   </div>
 
-<?php 
-} else {
+<?php } else {
   // include_once per
   include_once $globmod . 'permission-error.php';
-}
-
-?>
+} ?>

@@ -26,7 +26,8 @@ class Pieces extends Database {
         `pieces_addr`.`address`, 
         `pieces_mac_addr`.`mac_add`,
         `pieces_frequency`.`frequency`,
-        `pieces_pass_connection`.`password_connection`
+        `pieces_pass_connection`.`password_connection`,
+        `pieces_internet_source`.`internet_source`
     FROM 
         `pieces_info`
     LEFT JOIN `pieces_ssid` ON `pieces_ssid`.`id` = `pieces_info`.`id` 
@@ -36,6 +37,7 @@ class Pieces extends Database {
     LEFT JOIN `pieces_mac_addr` ON `pieces_mac_addr`.`id` = `pieces_info`.`id` 
     LEFT JOIN `pieces_frequency` ON `pieces_frequency`.`id` = `pieces_info`.`id` 
     LEFT JOIN `pieces_pass_connection` ON `pieces_pass_connection`.`id` = `pieces_info`.`id` 
+    LEFT JOIN `pieces_internet_source` ON `pieces_internet_source`.`id` = `pieces_info`.`id`
     WHERE `pieces_info`.`company_id` = ? AND `pieces_info`.`is_client` = ?
     ORDER BY 
         `pieces_info`.`direction_id` ASC, 
@@ -61,7 +63,8 @@ class Pieces extends Database {
         `pieces_addr`.`address`, 
         `pieces_mac_addr`.`mac_add`,
         `pieces_frequency`.`frequency`,
-        `pieces_pass_connection`.`password_connection`
+        `pieces_pass_connection`.`password_connection`,
+        `pieces_internet_source`.`internet_source`
     FROM 
         `pieces_info`
     LEFT JOIN `pieces_ssid` ON `pieces_ssid`.`id` = `pieces_info`.`id` 
@@ -71,6 +74,7 @@ class Pieces extends Database {
     LEFT JOIN `pieces_mac_addr` ON `pieces_mac_addr`.`id` = `pieces_info`.`id` 
     LEFT JOIN `pieces_frequency` ON `pieces_frequency`.`id` = `pieces_info`.`id` 
     LEFT JOIN `pieces_pass_connection` ON `pieces_pass_connection`.`id` = `pieces_info`.`id` 
+    LEFT JOIN `pieces_internet_source` ON `pieces_internet_source`.`id` = `pieces_info`.`id` 
     WHERE `pieces_info`.`id` = ?
     ORDER BY 
         `pieces_info`.`direction_id` ASC, 
@@ -95,7 +99,8 @@ class Pieces extends Database {
         `pieces_addr`.`address`, 
         `pieces_mac_addr`.`mac_add`,
         `pieces_frequency`.`frequency`,
-        `pieces_pass_connection`.`password_connection`
+        `pieces_pass_connection`.`password_connection`,
+        `pieces_internet_source`.`internet_source`
     FROM 
         `pieces_info`
     LEFT JOIN `pieces_ssid` ON `pieces_ssid`.`id` = `pieces_info`.`id` 
@@ -105,6 +110,7 @@ class Pieces extends Database {
     LEFT JOIN `pieces_mac_addr` ON `pieces_mac_addr`.`id` = `pieces_info`.`id` 
     LEFT JOIN `pieces_frequency` ON `pieces_frequency`.`id` = `pieces_info`.`id` 
     LEFT JOIN `pieces_pass_connection` ON `pieces_pass_connection`.`id` = `pieces_info`.`id` 
+    LEFT JOIN `pieces_internet_source` ON `pieces_internet_source`.`id` = `pieces_info`.`id` 
     $condition
     ORDER BY 
         `pieces_info`.`direction_id` ASC, 
@@ -150,6 +156,7 @@ class Pieces extends Database {
     $delete_query .= "DELETE FROM `pieces_phone`            WHERE `id` = ?;";
     $delete_query .= "DELETE FROM `pieces_ssid`             WHERE `id` = ?;";
     $delete_query .= "DELETE FROM `pieces_waves`            WHERE `id` = ?;";
+    $delete_query .= "DELETE FROM `pieces_internet_source`  WHERE `id` = ?;";
     // prepare query
     $stmt = $this->con->prepare($delete_query);
     $stmt->execute(array($id, $id, $id, $id, $id, $id, $id, $id));
@@ -296,6 +303,26 @@ class Pieces extends Database {
     $update_query = "UPDATE `pieces_waves` SET `wave` = ? WHERE `id` = ?;";
     $stmt = $this->con->prepare($update_query);
     $stmt->execute(array($wave, $id));
+    $pcs_count =  $stmt->rowCount();       // count effected rows
+    // return result
+    return $pcs_count > 0 ? true : false;
+  }
+  
+  // insert a new internet source
+  public function insert_internet_source($id, $internet_source) {
+    $insert_query = "INSERT INTO `pieces_internet_source` (`id`, `internet_source`) VALUES (?, ?);";
+    $stmt = $this->con->prepare($insert_query);
+    $stmt->execute(array($id, $internet_source));
+    $pcs_count =  $stmt->rowCount();       // count effected rows
+    // return result
+    return $pcs_count > 0 ? true : false;
+  }
+
+  // update internet source
+  public function update_internet_source($id, $internet_source) {
+    $update_query = "UPDATE `pieces_internet_source` SET `internet_source` = ? WHERE `id` = ?;";
+    $stmt = $this->con->prepare($update_query);
+    $stmt->execute(array($internet_source, $id));
     $pcs_count =  $stmt->rowCount();       // count effected rows
     // return result
     return $pcs_count > 0 ? true : false;

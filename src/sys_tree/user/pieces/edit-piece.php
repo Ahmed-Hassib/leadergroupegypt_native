@@ -92,6 +92,19 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
               <h5><?php echo language('ADDITIONAL INFO', @$_SESSION['systemLang']) ?></h5>
               <hr />
             </div>
+            
+            <?php if ($page_title == 'pieces') { ?>
+            <!-- internet source -->
+            <div class="mb-sm-2 mb-md-3 row">
+              <label for="internet-source" class="col-sm-12 col-form-label text-capitalize">
+                  <?php echo language('INTERNET SOURCE', @$_SESSION['systemLang']); ?>
+              </label>
+              <div class="col-sm-12 position-relative">
+                <input type="text" name="internet-source" id="internet-source" class="form-control w-100" placeholder="<?php echo language('INTERNET SOURCE', @$_SESSION['systemLang']) ?>" value="<?php echo $piece_data['internet_source']  ?>" />
+              </div>
+            </div>
+            <?php } ?>
+
             <!-- notes -->
             <div class="mb-3 row">
               <label for="notes" class="col-sm-12 col-form-label text-capitalize"><?php echo language('THE NOTES', @$_SESSION['systemLang']) ?></label>
@@ -200,9 +213,9 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
                           $sources_data = $sources[1];
                           // check the row sources_count
                           if ($sources_count) { ?>
-                            <option value="default" disabled selected><?php echo language('SELECT', @$_SESSION['systemLang'])." ". language('THE SOURCE', @$_SESSION['systemLang']) ?></option>
+                            <option value="default" disabled><?php echo language('SELECT', @$_SESSION['systemLang'])." ". language('THE SOURCE', @$_SESSION['systemLang']) ?></option>
                             <?php foreach ($sources_data as $source) { ?>
-                              <option value="<?php echo $source['id'] ?>" <?php if ($piece_data['source_id'] == $source['id'] || ($piece_data['source_id'] == 0 && $piece_data['ip'] == $source['ip']) ) echo 'selected';  ?>>
+                              <option value="<?php echo $source['id'] ?>" <?php if ($piece_data['source_id'] == $source['id'] || ($piece_data['source_id'] == 0 && $piece_data['ip'] == $source['ip']) ) {echo 'selected';}  ?>>
                                 <?php echo  $source['full_name'] . " - " . $source['ip'] ?>
                               </option>
                             <?php } ?>

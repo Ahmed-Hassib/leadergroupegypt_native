@@ -108,6 +108,19 @@
             <h5><?php echo language('ADDITIONAL INFO', @$_SESSION['systemLang']) ?></h5>
             <hr />
           </div>
+          
+          <?php if ($page_title == 'pieces') { ?>
+          <!-- internet source -->
+          <div class="mb-sm-2 mb-md-3 row">
+            <label for="internet-source" class="col-sm-12 col-form-label text-capitalize">
+                <?php echo language('INTERNET SOURCE', @$_SESSION['systemLang']); ?>
+            </label>
+            <div class="col-sm-12 position-relative">
+              <input type="text" name="internet-source" id="internet-source" class="form-control w-100" placeholder="<?php echo language('INTERNET SOURCE', @$_SESSION['systemLang']) ?>" />
+            </div>
+          </div>
+          <?php } ?>
+
           <!-- notes -->
           <div class="mb-sm-2 mb-md-3 row">
             <label for="notes" class="col-sm-12 col-form-label text-capitalize"><?php echo language('THE NOTES', @$_SESSION['systemLang']) ?></label>

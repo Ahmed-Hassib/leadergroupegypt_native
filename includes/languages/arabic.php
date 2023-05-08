@@ -344,6 +344,7 @@ function languageAr($phrase)
     'VISIT TIME'                        => 'وقت الزيارة',
     'ANY TIME'                          => 'أى وقت',
     'ADVANCE CONNECTION'                => 'اتصال مسبق',
+    'INTERNET SOURCE'                   => 'مصدر الانترنت',
 
     
     /**

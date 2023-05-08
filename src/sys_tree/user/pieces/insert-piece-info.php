@@ -49,21 +49,22 @@
   }
 
   // get source id
-  $source_id      = isset($_POST['source-id']) ? trim($_POST['source-id'], ' ')   : -1;
-  $alt_source_id  = isset($_POST['alt-source-id']) ? trim($_POST['alt-source-id'], ' ')   : -1;
-  $device_id      = isset($_POST['device-id']) ? trim($_POST['device-id'], ' ')   : -1;
-  $model_id       = isset($_POST['device-model']) ? trim($_POST['device-model'], ' ')   : -1;
+  $source_id        = isset($_POST['source-id']) ? trim($_POST['source-id'], ' ')   : -1;
+  $alt_source_id    = isset($_POST['alt-source-id']) ? trim($_POST['alt-source-id'], ' ')   : -1;
+  $device_id        = isset($_POST['device-id']) ? trim($_POST['device-id'], ' ')   : -1;
+  $model_id         = isset($_POST['device-model']) ? trim($_POST['device-model'], ' ')   : -1;
 
-  $phone      = trim($_POST['phone-number'], ' ');
-  $address    = trim($_POST['address'], ' ');
-  $conn_type  = isset($_POST['conn-type'])  && !empty($_POST['conn-type']) ? trim($_POST['conn-type'], ' ')  : '';
-  $notes      = empty(trim($_POST['notes'], ' ')) ? 'لا توجد ملاحظات' : trim($_POST['notes'], ' ');
-  $visit_time = isset($_POST['visit-time']) ? $_POST['visit-time'] : 1;
-  $ssid       = trim($_POST['ssid'], ' ');
-  $pass_conn  = trim($_POST['password-connection'], ' ');
-  $frequency  = trim($_POST['frequency'], ' ');
-  $wave       = trim($_POST['wave'], ' ');
-  $mac_add    = trim($_POST['mac-add'], ' ');
+  $phone            = trim($_POST['phone-number'], ' ');
+  $address          = trim($_POST['address'], ' ');
+  $conn_type        = isset($_POST['conn-type'])  && !empty($_POST['conn-type']) ? trim($_POST['conn-type'], ' ')  : '';
+  $notes            = empty(trim($_POST['notes'], ' ')) ? 'لا توجد ملاحظات' : trim($_POST['notes'], ' ');
+  $visit_time       = isset($_POST['visit-time']) ? $_POST['visit-time'] : 1;
+  $ssid             = trim($_POST['ssid'], ' ');
+  $pass_conn        = trim($_POST['password-connection'], ' ');
+  $frequency        = trim($_POST['frequency'], ' ');
+  $wave             = trim($_POST['wave'], ' ');
+  $mac_add          = trim($_POST['mac-add'], ' ');
+  $internet_source  = trim($_POST['internet-source'], ' ');
 
   // validate the form
   $form_error = []; // error array
@@ -145,6 +146,13 @@
         // echo "<br>* wave is not empty<br>";
         // insert wave
         $pcs_obj->insert_wave($id, $wave);
+      }
+      
+      // check internet source
+      if (!empty($internet_source)) {
+        // echo "<br>* internet source is not empty<br>";
+        // insert internet source
+        $pcs_obj->insert_internet_source($id, $internet_source);
       }
       
       // echo success message

@@ -38,7 +38,7 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
                   <?php $profile_img_name = empty($user['profile_img']) ? 'male-avatar.svg' : $user['profile_img']; ?>
                   <img src="<?php echo $uploads . "employees-img/$profile_img_name" ?>" class="profile-img" alt="" id="profile-img" >
                   <!-- profile image form -->
-                  <input type="file" class="d-none" name="profile-img-input" id="profile-img-input" onchange="change_profile_img(this)">
+                  <input type="file" class="d-none" name="profile-img-input" id="profile-img-input" onchange="change_profile_img(this)" accept="image/*">
                 </div>
                 <!-- end profile image -->
                 <?php if ($_SESSION['UserID'] == $user['UserID']) { ?>

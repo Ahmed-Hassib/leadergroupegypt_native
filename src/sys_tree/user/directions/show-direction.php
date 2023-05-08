@@ -56,9 +56,9 @@ foreach ($rows as $row) {
     <!-- zoom buttons -->
     <div class="fixed-zoom-btn">
       <div class="btn-group" role="group" aria-label="zoom-btns">
-        <button type="button" class="btn btn-outline-primary" id="zoom_in_btn" onclick="zoom_in(this, zoom_out_btn, direction_tree); add_transform_origin(direction_tree)" data-zoom-value="1"><i class="bi bi-zoom-in"></i></button>
-        <button type="button" class="btn btn-outline-primary" id="reset_zoom" onclick="reset_zoom(zoom_in_btn, zoom_out_btn, direction_tree); remove_transform_origin(direction_tree)"><i class="bi bi-x-lg"></i></button>
-        <button type="button" class="btn btn-outline-primary" id="zoom_out_btn" onclick="zoom_out(this, zoom_in_btn, direction_tree); add_transform_origin(direction_tree)" data-zoom-value="1"><i class="bi bi-zoom-out"></i></button>
+        <button type="button" class="btn btn-outline-primary py-1 fs-12" id="zoom_in_btn" onclick="zoom_in(this, zoom_out_btn, direction_tree); add_transform_origin(direction_tree)" data-zoom-value="1"><i class="bi bi-zoom-in"></i></button>
+        <button type="button" class="btn btn-outline-primary py-1 fs-12" id="reset_zoom" onclick="reset_zoom(zoom_in_btn, zoom_out_btn, direction_tree); remove_transform_origin(direction_tree)"><i class="bi bi-x-lg"></i></button>
+        <button type="button" class="btn btn-outline-primary py-1 fs-12" id="zoom_out_btn" onclick="zoom_out(this, zoom_in_btn, direction_tree); add_transform_origin(direction_tree)" data-zoom-value="1"><i class="bi bi-zoom-out"></i></button>
       </div>
     </div>
 
