@@ -118,11 +118,6 @@
           </a>
         </li>
         <li>
-          <a href="<?php echo $nav_up_level ?>pieces/index.php?name=pieces&do=show-connections-types">
-              <span class="link-name"><?php echo language('MANAGE', @$_SESSION['systemLang'])." ".language('CONNECTION TYPES', @$_SESSION['systemLang']) ?></span>
-          </a>
-        </li>
-        <li>
           <a href="<?php echo $nav_up_level ?>pieces/index.php?name=pieces&do=devices-companies">
               <span class="link-name"><?php echo language('MANAGE', @$_SESSION['systemLang'])." ".language('PIECES TYPES', @$_SESSION['systemLang']) ?></span>
           </a>
@@ -139,6 +134,26 @@
       <!-- end sub menu -->
     </li>
     <!-- end pieces nav link -->
+    <?php } ?>
+    
+    <?php if ($_SESSION['pcs_show'] == 1 || $_SESSION['pcs_add'] == 1) { ?>
+    <!-- start dashboard page link -->
+    <li>
+      <a href="<?php echo $nav_up_level ?>pieces/index.php?name=pieces&do=show-connections-types">
+        <i class="bi bi-hdd-network"></i>
+        <span class="link-name"><?php echo language('MANAGE', @$_SESSION['systemLang'])." ".language('CONNECTION TYPES', @$_SESSION['systemLang']) ?></span>
+      </a>
+      <!-- start blank sub menu -->
+      <ul class="sub-menu blank">
+        <li>
+          <a href="<?php echo $nav_up_level ?>pieces/index.php?name=pieces&do=show-connections-types">
+            <span class="link-name"><?php echo language('MANAGE', @$_SESSION['systemLang'])." ".language('CONNECTION TYPES', @$_SESSION['systemLang']) ?></span>
+          </a>
+        </li>
+      </ul>
+      <!-- end blank sub menu -->
+    </li>
+    <!-- end dashboard page link -->
     <?php } ?>
 
     <?php if ($_SESSION['pcs_show'] == 1 || $_SESSION['pcs_add'] == 1) { ?>
