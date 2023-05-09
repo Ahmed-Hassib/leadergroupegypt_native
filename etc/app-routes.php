@@ -12,7 +12,10 @@ $requests   = $sys_tree   . "requests/";             // Requests Directory
 $includes   = $up_level  . "includes/";                 // Includes Directory
 $lan        = $includes  . "languages/";                // Languages Directory
 $func       = $includes  . "functions/";                // Functions Directory
-$lib        = $includes  . "libraries/";                // Libraries Directory
+
+// Libraries Directory
+$lib        = $includes  . "libraries/";
+$vendor     = $lib       . "vendor/";                   // Vendor Directory
 
 // LAYOUT DIRECTORY
 $layout     = $up_level  . "layout/";                   // layout directory

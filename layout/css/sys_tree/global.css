@@ -53,6 +53,7 @@ label {
 	z-index: 99999;
 }
 
+
 /************/
 
 /************/
@@ -63,6 +64,19 @@ label {
 
 .modal-header .btn-close.btn-close-left {
 	margin: -.5rem auto -.5rem -.5rem;
+}
+
+/************/
+.alert .btn-close {
+	position: absolute;
+}
+
+.alert .btn-close.btn-close-right {
+	right: 10px;
+}
+
+.alert .btn-close.btn-close-left {
+	left: 10px;
 }
 
 /************/

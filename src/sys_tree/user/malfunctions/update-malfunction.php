@@ -46,7 +46,6 @@
             // check who is doing the updates
             if ($update_owner_id == $tech_id) {
               do_technical_updates($_POST);
-
               
               // check if upload media
               if (count($_FILES) > 0) {

@@ -334,3 +334,15 @@
 
 <div class="main-content">
   <!-- <img src="<?php echo $assets ?>eid-mobarak-2.png" class="bg-event-img" alt=""> -->
+
+  <?php if (!empty($_SESSION['phone']) && isset($_SESSION['is_activated_phone']) && $_SESSION['is_activated_phone'] == 0) { ?>
+  <div class="m-auto container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
+    <div class="alert alert-warning" role="alert">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <span><?php echo language('HI', @$_SESSION['systemLang']) . ' ' . $_SESSION['UserName'] ?>,&nbsp;</span>
+      <span><?php echo language('YOUR PHONE NUMBER IS NOT ACTIVATED!', @$_SESSION['systemLang']) ?></span>
+      <a class="alert-link" href="<?php echo $nav_up_level ?>requests/index.php?do=activate-phone-number"><?php echo language('SEND ACTIVATION CODE', @$_SESSION['systemLang']) ?>&nbsp;<i class="bi bi-arrow-up-left-square"></i></a>
+      <button type="button" class="btn-close btn-close-<?php echo @$_SESSION['systemLang'] == 'ar' ? 'left' : 'right' ?>" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  </div>
+  <?php } ?>

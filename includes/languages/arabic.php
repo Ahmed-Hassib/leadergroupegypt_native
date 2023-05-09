@@ -109,6 +109,7 @@ function languageAr($phrase)
     'SIGNUP INSTRUCTIONS'   => 'تعليمات التسجيل الجديد',
     'THE INSTRUCTIONS'      => 'التعليمات',
     'UNDERSTAND'            => 'فهمت',
+    'THUS'                  => 'حيث',
     
     
     /**
@@ -266,6 +267,7 @@ function languageAr($phrase)
     'STOREKEEPER'                   => 'أمين مخزن',
     'CHANGE IMAGE'                  => 'تغيير الصورة',
     'DELETE IMAGE'                  => 'حذف الصورة',
+    'SEND ACTIVATION CODE'          => 'ارسال كود التفعيل',
 
     /**
      * CLIENTS & PIECES PAGE WORDS
@@ -898,8 +900,11 @@ function languageAr($phrase)
     'COMPANY ALIAS NAME WAS ADDED SUCCESSFULLY'                                     => 'تم اضافة الاسم المختصر للشركة بنجاح',
     'ALL EMPLOYEES` USERNAME WERE UPDATED SUCCESSFULLY'                             => 'تم تعديل اسم المستخدم لجميع الموظفين بنجاح',
     'THERE IS NO COMPANIES TO SELECT PLEASE ADD SOME COMPANIES'                     => 'لا توجد شركات للاختيار برجاء اضافة البعض',
-    
-    
+    'YOUR PHONE NUMBER IS NOT ACTIVATED!'                                           => 'رقم التليفون الخاص بك غير مفعل!',
+    'SYS TREE APP TEAM GREATE YOU'                                                  => 'فريق عمل تطبيق SYS TREE يُحييك',
+    'YOUR ACTIVATION CODE IS'                                                       => 'رمز التفعيل الخاص بك هو',
+    'DON`T SHARE THE ACTIVATION CODE WITH ANY ONE ELSE'                             => 'لا تشارك رمز التفعيل مع اي شخص اخر',
+    'YOUR ACTIVATION CODE WILL EXPIRE WITHIN 1 MINUTE'                              => 'تنتهي صلاحية رمز التفعيل الخاص بك في غضون دقيقة واحدة',
     
     
     
@@ -915,13 +920,13 @@ function languageAr($phrase)
     'IF YOU WANT TO CHANGE THE DIRECTION OF THIS PIECE, THE DIRECTION OF ALL CHILDREN OF THIS PIECE -IF EXIST- WILL BE CHANGE TOO'        => 'عند قيامك بتغيير اتجاه هذة الجهاز سوف يتم تغيير اتجاه كل الأجهزة المتواجده عليها -اذا وجد- الي الاتجاه الجديد',
     
     
-    
     'PLEASE NOTE THAT YOU DID NOT ENTER THE ABBRERVIATED NAME OF THE COMPANY, PLEASE THE ABBRERVIATED NAME OF NO MORE THAN 11 CHARACHTERS IN ORDER TO BE ABLE TO USE THE PROGRAM'                       => 'يرجى العلم انك لم تقم بادخال الاسم المختصر للشركة برجاء ادخال اسم مختصر لايزيد عن 11 حرف حتي تتمكن من استخدام البرنامج',
     'WHEN LOGGING IN THE NEXT TIME IT IS NECESSARY TO TAKE INTO CONSIDERATION WRITING THE USERNAME ACCOMPANIED BY THE "@" SIGN THEN THE ABBRERVIATED NAME OF THE COMPANY AS FOR EXAMPLE AHMED@FACEBOOK' => 'عند تسجيل الدخول في المرة القادمة لابد من الاخذ في الاعتبار من كتابة اسم المستخدم مصحوباً بعلامة "@" ثم الاسم المختصر للشركة كما المثال : ahmed@facebook',
     'THIS BLOG HELPS YOU TO IDENTIFY THE PROBLEMS THAT SOME PEOPLE FACE AND SOLVE THEM, AND YOU CAN ALSO DISPLAY THE PROBLEMS THAT YOU FACE, AND YOU WILL BE ANSWERED BY SOME SPECIALIZED PEOPLE'       => 'يساعدك هذا المنتدي علي التعرف علي المشاكل التي تواجه بعض الناس وحلها ويمكنك ايضاً عرض المشاكل التي تواجهك وسوف يتم الرد عليك من بعض الاشخاص المتخصصين',
     'THIS STORE HELPS YOU TO BROWSE ALL THE ELECTRONIC DEVICES THAT ENABLE YOU TO ENSURE GOOD COMMUNICATION BETWEEN YOU AND YOUR CUSTOMERS IN YOUR NETWORK'                                             => 'يساعدك هذا المتجر علي تصفح جميع الاجهزة الالكترونية التي تمكنك من ضمان الاتصال الجيد بينك وبين عملائك في شبكتك',
     'THIS PROGRAM ENABLES YOU TO MANAGE YOUR NETWORK, CUSTOMERS AND EMPLOYEES OF YOUR COMPANY IN ADDITION TO SOME OTHER FEATURES THAT YOU CAN VIEW THROUGH THE FOLLOWING LINK'                          => 'يمكنك هذا البرنامج من ادارة شبكتك وعملائك وموظفين شركتك بالاضافة الي بعض المميزات الخرى التي يمكنك الاطلاع عليها من خلال الرابط التالي',
-  
+    
+    'THE SYS TREE APP TEAM INFORMS YOU THAT THEY ARE WORKING ON A NEW ALGORITHM TO CONFIRM THE PHONE NUMBER, THIS IS A RECORDED MESAGE AND YOU WILL BE NOTIFIED BY THE APPLICATION WHEN IT IS COMPLETED. WE WISH YOU CONTINUED SUCCESS'  => 'يعلمك فريق تطبيق SYS TREE أنه يعمل على خوارزمية جديدة لتأكيد رقم الهاتف، وهذه رسالة مسجلة وسيتم ابلاغك عن طريق التطبيق عند الانتهاء منه. نتمنى لكم دوام التوفيق والنجاح',
   
   );
   // return the word

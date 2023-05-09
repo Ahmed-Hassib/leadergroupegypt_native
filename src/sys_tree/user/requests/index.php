@@ -83,6 +83,10 @@ switch ($query) {
   case "change-profile-img":
     $file_name = 'change-profile-img.php';
     break;
+  
+  case "activate-phone-number":
+    $file_name = 'activate-phone-number.php';
+    break;
 }
 
 include_once $file_name;

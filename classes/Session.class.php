@@ -51,6 +51,8 @@ class Session extends Database {
     @$_SESSION['systemLang']        = $info['systemLang']  == 0 ? 'ar' : 'en';  // assign system display type
     $_SESSION['system_theme']       = $info['system_theme'];  // assign system display type
     $_SESSION['log']                = isset($_SESSION['log']) && $_SESSION['log'] != 0 ? $_SESSION['log'] : 0;  // to create a login log
+    $_SESSION['phone']              = $info['phone'];
+    $_SESSION['is_activated_phone'] = $info['is_activated_phone'];
     // additional info
     $license_id                     = $this->get_license_id($info['company_id']);
     $_SESSION['license_id']         = $license_id;
@@ -58,8 +60,6 @@ class Session extends Database {
     $_SESSION['expire_date']        = $this->select_specific_column("`expire_date`", "`license`", "WHERE `ID` = $license_id")[0]['expire_date'];
     $_SESSION['isLicenseExpired']   = $this->is_expired($expire_date);
     $_SESSION['isTrial']            = $this->select_specific_column("`isTrial`", "`license`", "WHERE `ID` = $license_id")[0]['isTrial'];
-    $_SESSION['rowsPerPage']        = isset($_SESSION['rowsPerPage']) ? $_SESSION['rowsPerPage'] : 50;  // number of rows per page
-    
     // set version info into session
     $this->set_version_info($info['company_id'], $info['UserID']);
 

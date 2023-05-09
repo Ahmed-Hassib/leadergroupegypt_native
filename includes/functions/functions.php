@@ -353,3 +353,16 @@ function get_time_now() {
 function get_date_now() {
   return date('Y-m-d');
 }
+
+/**
+ * random_digits function
+ * accepts length of random digits
+ */
+function random_digits($length){
+  $digits = '';
+  $numbers = range(0,9);
+  shuffle($numbers);
+  for($i = 0;$i < $length;$i++)
+    $digits .= $numbers[$i];
+  return $digits;
+}

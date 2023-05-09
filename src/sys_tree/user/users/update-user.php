@@ -3,7 +3,7 @@
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // 
 
-  // print_r($_FILES);
+  print_r($_FILES);
   // create an object of User class
   $user_obj = new User();
 
@@ -146,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
     <!-- start header -->
     <header class="header">
-      <?php redirectHome($msg, 'back'); ?>
+      <?php redirectHome($msg, 'back', 100000000000000000000); ?>
     </header>
   </div>
 
