@@ -6,7 +6,7 @@
         <h5 class="m-auto modal-title h5 " id="staticBackdropLabel"><?php echo language("ADD NEW CONNECTION TYPE", @$_SESSION['systemLang']) ?></h5>
       </div>
       <div class="modal-body">
-        <form action="??name=<?php echo $page_title ?>&do=show-connections-types&action=insert-piece-conn-type" method="POST" id="addPieceConnType" onchange="form_validation(this)">
+        <form action="?do=insert-piece-conn-type" method="POST" id="addPieceConnType" onchange="form_validation(this)">
           <!-- start connection type name -->
           <div class="mb-sm-2 mb-md-3 row">
             <label for="conn-type-name" class="col-sm-12 col-form-label text-capitalize"><?php echo language('THE TYPE', @$_SESSION['systemLang']) ?></label>

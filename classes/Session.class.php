@@ -13,7 +13,7 @@ class Session extends Database {
     $db_obj = new Database();
     $this->con = $db_obj->con;
     // set user permission columns
-    $this->users_permission_columns = "`users_permissions`.`user_add`,`users_permissions`.`user_update`,`users_permissions`.`user_delete`,`users_permissions`.`user_show`,`users_permissions`.`mal_add`,`users_permissions`.`mal_update`,`users_permissions`.`mal_delete`,`users_permissions`.`mal_show`,`users_permissions`.`mal_review`,`users_permissions`.`comb_add`,`users_permissions`.`comb_update`,`users_permissions`.`comb_delete`,`users_permissions`.`comb_show`,`users_permissions`.`comb_review`,`users_permissions`.`pcs_add`,`users_permissions`.`pcs_update`,`users_permissions`.`pcs_delete`,`users_permissions`.`pcs_show`,`users_permissions`.`dir_add`,`users_permissions`.`dir_update`,`users_permissions`.`dir_delete`,`users_permissions`.`dir_show`,`users_permissions`.`sugg_replay`,`users_permissions`.`sugg_delete`,`users_permissions`.`sugg_show`,`users_permissions`.`points_add`,`users_permissions`.`points_delete`,`users_permissions`.`points_show`,`users_permissions`.`reports_show`,`users_permissions`.`archive_show`,`users_permissions`.`take_backup`,`users_permissions`.`restore_backup`";
+    $this->users_permission_columns = "`users_permissions`.`user_add`,`users_permissions`.`user_update`,`users_permissions`.`user_delete`,`users_permissions`.`user_show`,`users_permissions`.`mal_add`,`users_permissions`.`mal_update`,`users_permissions`.`mal_delete`,`users_permissions`.`mal_show`,`users_permissions`.`mal_review`,`users_permissions`.`comb_add`,`users_permissions`.`comb_update`,`users_permissions`.`comb_delete`,`users_permissions`.`comb_show`,`users_permissions`.`comb_review`,`users_permissions`.`pcs_add`,`users_permissions`.`pcs_update`,`users_permissions`.`pcs_delete`,`users_permissions`.`pcs_show`,`users_permissions`.`dir_add`,`users_permissions`.`dir_update`,`users_permissions`.`dir_delete`,`users_permissions`.`dir_show`,`users_permissions`.`sugg_replay`,`users_permissions`.`sugg_delete`,`users_permissions`.`sugg_show`,`users_permissions`.`points_add`,`users_permissions`.`points_delete`,`users_permissions`.`points_show`,`users_permissions`.`reports_show`,`users_permissions`.`archive_show`,`users_permissions`.`take_backup`,`users_permissions`.`restore_backup`,`users_permissions`.`connection_add`,`users_permissions`.`connection_update`,`users_permissions`.`connection_delete`,`users_permissions`.`connection_show`,`users_permissions`.`permission_update`,`users_permissions`.`permission_show`";
   }
 
   // function to get all user`s info
@@ -71,38 +71,44 @@ class Session extends Database {
    * set_permissions function
    */
   public function set_permissions($permissions) {
-    $_SESSION['user_add']           = $permissions['user_add'];    // permission to add users
-    $_SESSION['user_update']        = $permissions['user_update']; // permission to update users
-    $_SESSION['user_delete']        = $permissions['user_delete']; // permission to delete users
-    $_SESSION['user_show']          = $permissions['user_show'];   // permission to show users
-    $_SESSION['mal_add']            = $permissions['mal_add'];     // permission to add malfunctions
-    $_SESSION['mal_update']         = $permissions['mal_update'];  // permission to update malfunctions
-    $_SESSION['mal_delete']         = $permissions['mal_delete'];  // permission to delete malfunctions
-    $_SESSION['mal_show']           = $permissions['mal_show'];    // permission to show malfunctions
-    $_SESSION['mal_review']         = $permissions['mal_review'];  // permission to review malfunctions
-    $_SESSION['comb_add']           = $permissions['comb_add'];    // permission to add combinations
-    $_SESSION['comb_update']        = $permissions['comb_update']; // permission to update combinations
-    $_SESSION['comb_delete']        = $permissions['comb_delete']; // permission to delete combinations
-    $_SESSION['comb_show']          = $permissions['comb_show'];   // permission to show combinations
-    $_SESSION['comb_review']        = $permissions['comb_review']; // permission to review combinations
-    $_SESSION['pcs_add']            = $permissions['pcs_add'];     // permission to add pieces/clients
-    $_SESSION['pcs_update']         = $permissions['pcs_update'];  // permission to update pieces/clients
-    $_SESSION['pcs_delete']         = $permissions['pcs_delete'];  // permission to delete pieces/clients
-    $_SESSION['pcs_show']           = $permissions['pcs_show'];    // permission to show pieces/clients
-    $_SESSION['dir_add']            = $permissions['dir_add'];     // permission to add directions
-    $_SESSION['dir_update']         = $permissions['dir_update'];  // permission to update directions
-    $_SESSION['dir_delete']         = $permissions['dir_delete'];  // permission to delete directions
-    $_SESSION['dir_show']           = $permissions['dir_show'];    // permission to show directions
-    $_SESSION['sugg_replay']        = $permissions['sugg_replay']; // permission to replay on complaints/suggestions
-    $_SESSION['sugg_delete']        = $permissions['sugg_delete']; // permission to delete complaints/suggestions
-    $_SESSION['sugg_show']          = $permissions['sugg_show'];   // permission to show complaints/suggestions
-    $_SESSION['points_add']         = $permissions['points_add'];  // permission to add motivation points
-    $_SESSION['points_delete']      = $permissions['points_delete'];  // permission to delete motivation points
-    $_SESSION['points_show']        = $permissions['points_show'];    // permission to show motivation points
-    $_SESSION['reports_show']       = $permissions['reports_show'];   // permission to show reports
-    $_SESSION['archive_show']       = $permissions['archive_show'];   // permission to show archive
-    $_SESSION['take_backup']        = $permissions['take_backup'];    // permission to take a backup
-    $_SESSION['restore_backup']     = $permissions['restore_backup']; // permission to restore a backup
+    $_SESSION['user_add']           = $permissions['user_add'];           // permission to add users
+    $_SESSION['user_update']        = $permissions['user_update'];        // permission to update users
+    $_SESSION['user_delete']        = $permissions['user_delete'];        // permission to delete users
+    $_SESSION['user_show']          = $permissions['user_show'];          // permission to show users
+    $_SESSION['mal_add']            = $permissions['mal_add'];            // permission to add malfunctions
+    $_SESSION['mal_update']         = $permissions['mal_update'];         // permission to update malfunctions
+    $_SESSION['mal_delete']         = $permissions['mal_delete'];         // permission to delete malfunctions
+    $_SESSION['mal_show']           = $permissions['mal_show'];           // permission to show malfunctions
+    $_SESSION['mal_review']         = $permissions['mal_review'];         // permission to review malfunctions
+    $_SESSION['comb_add']           = $permissions['comb_add'];           // permission to add combinations
+    $_SESSION['comb_update']        = $permissions['comb_update'];        // permission to update combinations
+    $_SESSION['comb_delete']        = $permissions['comb_delete'];        // permission to delete combinations
+    $_SESSION['comb_show']          = $permissions['comb_show'];          // permission to show combinations
+    $_SESSION['comb_review']        = $permissions['comb_review'];        // permission to review combinations
+    $_SESSION['pcs_add']            = $permissions['pcs_add'];            // permission to add pieces/clients
+    $_SESSION['pcs_update']         = $permissions['pcs_update'];         // permission to update pieces/clients
+    $_SESSION['pcs_delete']         = $permissions['pcs_delete'];         // permission to delete pieces/clients
+    $_SESSION['pcs_show']           = $permissions['pcs_show'];           // permission to show pieces/clients
+    $_SESSION['connection_add']     = $permissions['connection_add'];     // permission to add connection type
+    $_SESSION['connection_update']  = $permissions['connection_update'];  // permission to update connection type
+    $_SESSION['connection_delete']  = $permissions['connection_delete'];  // permission to delete connection type
+    $_SESSION['connection_show']    = $permissions['connection_show'];    // permission to show connection type
+    $_SESSION['dir_add']            = $permissions['dir_add'];            // permission to add directions
+    $_SESSION['dir_update']         = $permissions['dir_update'];         // permission to update directions
+    $_SESSION['dir_delete']         = $permissions['dir_delete'];         // permission to delete directions
+    $_SESSION['dir_show']           = $permissions['dir_show'];           // permission to show directions
+    $_SESSION['sugg_replay']        = $permissions['sugg_replay'];        // permission to replay on complaints/suggestions
+    $_SESSION['sugg_delete']        = $permissions['sugg_delete'];        // permission to delete complaints/suggestions
+    $_SESSION['sugg_show']          = $permissions['sugg_show'];          // permission to show complaints/suggestions
+    $_SESSION['points_add']         = $permissions['points_add'];         // permission to add motivation points
+    $_SESSION['points_delete']      = $permissions['points_delete'];      // permission to delete motivation points
+    $_SESSION['points_show']        = $permissions['points_show'];        // permission to show motivation points
+    $_SESSION['reports_show']       = $permissions['reports_show'];       // permission to show reports
+    $_SESSION['archive_show']       = $permissions['archive_show'];       // permission to show archive
+    $_SESSION['take_backup']        = $permissions['take_backup'];        // permission to take a backup
+    $_SESSION['restore_backup']     = $permissions['restore_backup'];     // permission to restore a backup
+    $_SESSION['permission_update']  = $permissions['permission_update'];  // permission to update permissions
+    $_SESSION['permission_show']    = $permissions['permission_show'];    // permission to show permissions
   }
 
   // function to get version id by his id

@@ -6,7 +6,7 @@
         <h5 class="m-auto modal-title h5 " id="staticBackdropLabel"><?php echo language("DELETE CONNECTION TYPE", @$_SESSION['systemLang']) ?></h5>
       </div>
       <div class="modal-body">
-        <form action="?name=<?php echo $page_title ?>&do=show-connections-types&action=delete-piece-conn-type" method="POST" id="deletePieceConnType" onchange="form_validation(this)">
+        <form action="?do=delete-piece-conn-type" method="POST" id="deletePieceConnType" onchange="form_validation(this)">
           <!-- type id -->
           <input type="hidden" name="deleted-conn-type-id" id="deleted-conn-type-id">
           <!-- start type name -->

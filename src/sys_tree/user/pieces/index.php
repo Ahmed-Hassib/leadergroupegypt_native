@@ -66,12 +66,7 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
     // cehck if action is set or not
     $action = isset($_GET['action']) & !empty($_GET['action']) ? $_GET['action'] : 'manage';
     $file_name = include_once 'devices-companies.php';
-    
-  } elseif ($query == 'show-connections-types' && $_SESSION['pcs_show'] == 1) {
-    // cehck if action is set or not
-    $action = isset($_GET['action']) & !empty($_GET['action']) ? $_GET['action'] : 'manage';
-    $file_name = include_once 'pieces-connection-types.php';
-    
+
   } else {
     $file_name = $globmod . 'page-permission-error.php';
     $possible_back = false;

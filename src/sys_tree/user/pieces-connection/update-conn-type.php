@@ -12,9 +12,9 @@
   // type name validation
   if (!empty($new_conn_name) && $is_exist == true) {
     // check the new name
-    $is_exist_name = $conn_obj->count_records("`connection_name`", "`connection_types`", "WHERE `id` <> $conn_id AND `connection_name` = '$new_conn_name'");
+    $is_exist_name = $conn_obj->count_records("`connection_name`", "`connection_types`", "WHERE `id` != $conn_id AND `connection_name` = '$new_conn_name' AND `company_id` = ".$_SESSION['company_id']);
     // check if new type name is exist or not
-    if ($is_exist_name == true) {
+    if ($is_exist_name > 0) {
       // echo danger message
       $msg = '<div class="alert alert-danger text-capitalize" dir=""><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;' . language('THIS NAME IS ALREADY EXIST', @$_SESSION['systemLang']) . '</div>';
     } else {

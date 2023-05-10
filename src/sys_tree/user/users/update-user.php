@@ -83,6 +83,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $pcsUpdate          = isset($_POST['pcsUpdate'])          ? $_POST['pcsUpdate']          : 0;
         $pcsDelete          = isset($_POST['pcsDelete'])          ? $_POST['pcsDelete']          : 0;
         $pcsShow            = isset($_POST['pcsShow'])            ? $_POST['pcsShow']            : 0;
+        $connectionAdd      = isset($_POST['connectionAdd'])      ? $_POST['connectionAdd']      : 0;
+        $connectionUpdate   = isset($_POST['connectionUpdate'])   ? $_POST['connectionUpdate']   : 0;
+        $connectionDelete   = isset($_POST['connectionDelete'])   ? $_POST['connectionDelete']   : 0;
+        $connectionShow     = isset($_POST['connectionShow'])     ? $_POST['connectionShow']     : 0;
         $dirAdd             = isset($_POST['dirAdd'])             ? $_POST['dirAdd']             : 0;
         $dirUpdate          = isset($_POST['dirUpdate'])          ? $_POST['dirUpdate']          : 0;
         $dirDelete          = isset($_POST['dirDelete'])          ? $_POST['dirDelete']          : 0;
@@ -97,7 +101,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $combDelete         = isset($_POST['combDelete'])         ? $_POST['combDelete']         : 0;
         $combShow           = isset($_POST['combShow'])           ? $_POST['combShow']           : 0;
         $combReview         = isset($_POST['combReview'])         ? $_POST['combReview']         : 0;
-        
+        $permissionUpdate   = isset($_POST['permissionUpdate'])   ? $_POST['permissionUpdate']   : 0;
+        $permissionShow     = isset($_POST['permissionShow'])     ? $_POST['permissionShow']     : 0;
         // check id exist in users_permissions table
         $checkItem = $user_obj->is_exist("`UserID`", "`users_permissions`", $userid);
         // array of permissions
@@ -105,12 +110,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($checkItem == true) {
           // permisssions
-          array_push($permissions, $userAdd, $userUpdate, $userDelete, $userShow, $malAdd, $malUpdate, $malDelete, $malShow, $malReviw, $combAdd, $combUpdate, $combDelete, $combShow, $combReview, $pcsAdd, $pcsUpdate, $pcsDelete, $pcsShow, $dirAdd, $dirUpdate, $dirDelete, $dirShow, $userid);
+          array_push($permissions, $userAdd, $userUpdate, $userDelete, $userShow, $malAdd, $malUpdate, $malDelete, $malShow, $malReviw, $combAdd, $combUpdate, $combDelete, $combShow, $combReview, $pcsAdd, $pcsUpdate, $pcsDelete, $pcsShow, $dirAdd, $dirUpdate, $dirDelete, $dirShow, $connectionAdd, $connectionUpdate, $connectionDelete, $connectionShow, $permissionUpdate, $permissionShow, $userid);
           // call permission update function
           $user_obj->update_user_permissions($permissions);
         } else {
           // permisssions
-          array_push($permissions, $userid, $userAdd, $userUpdate, $userDelete, $userShow, $malAdd, $malUpdate, $malDelete, $malShow, $malReviw, $combAdd, $combUpdate, $combDelete, $combShow, $combReview, $pcsAdd, $pcsUpdate, $pcsDelete, $pcsShow, $dirAdd, $dirUpdate, $dirDelete, $dirShow);
+          array_push($permissions, $userid, $userAdd, $userUpdate, $userDelete, $userShow, $malAdd, $malUpdate, $malDelete, $malShow, $malReviw, $combAdd, $combUpdate, $combDelete, $combShow, $combReview, $pcsAdd, $pcsUpdate, $pcsDelete, $pcsShow, $dirAdd, $dirUpdate, $dirDelete, $dirShow, $connectionAdd, $connectionUpdate, $connectionDelete, $connectionShow, $permissionUpdate, $permissionShow);
           // call permission insert function
           $user_obj->insert_user_permissions($permissions);
         }
@@ -146,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
     <!-- start header -->
     <header class="header">
-      <?php redirectHome($msg, 'back', 100000000000000000000); ?>
+      <?php redirectHome($msg, 'back'); ?>
     </header>
   </div>
 

@@ -4,30 +4,29 @@
   <div class="stats">
     <!-- buttons section -->
     <div class="mb-3 hstack gap-3">
+      <?php if ($_SESSION['connection_add'] == 1) { ?>
       <!-- add new connection type -->
-      <div class="<?php if ($_SESSION['pcs_add'] == 0) {echo 'd-none';} ?>">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-outline-primary shadow-sm py-1 fs-12" data-bs-toggle="modal" data-bs-target="#addNewPieceConnTypeModal">
-          <i class="bi bi-file-plus"></i>
-          <?php echo language("ADD NEW CONNECTION TYPE", @$_SESSION['systemLang']) ?>
-        </button>
-      </div>
+      <button type="button" class="btn btn-outline-primary shadow-sm py-1 fs-12" data-bs-toggle="modal" data-bs-target="#addNewPieceConnTypeModal">
+        <i class="bi bi-file-plus"></i>
+        <?php echo language("ADD NEW CONNECTION TYPE", @$_SESSION['systemLang']) ?>
+      </button>
+      <?php } ?>
+      
+      <?php if ($_SESSION['connection_update'] == 1) { ?>
       <!-- edit connection type -->
-      <div class="<?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-outline-primary shadow-sm py-1 fs-12" data-bs-toggle="modal" data-bs-target="#editPieceConnTypeModal">
-          <i class="bi bi-pencil-square"></i>
-          <?php echo language("EDIT CONNECTION TYPES", @$_SESSION['systemLang']) ?>
-        </button>
-      </div>
+      <button type="button" class="btn btn-outline-primary shadow-sm py-1 fs-12" data-bs-toggle="modal" data-bs-target="#editPieceConnTypeModal">
+        <i class="bi bi-pencil-square"></i>
+        <?php echo language("EDIT CONNECTION TYPES", @$_SESSION['systemLang']) ?>
+      </button>
+      <?php } ?>
+
+      <?php if ($_SESSION['connection_delete'] == 1) { ?>
       <!-- delete connection type -->
-      <div class="<?php if ($_SESSION['pcs_delete'] == 0) {echo 'd-none';} ?>">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-outline-danger shadow-sm py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deletePieceConnTypeModal">
-          <i class="bi bi-pencil-square"></i>
-          <?php echo language("DELETE CONNECTION TYPE", @$_SESSION['systemLang']) ?>
-        </button>
-      </div>
+      <button type="button" class="btn btn-outline-danger shadow-sm py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deletePieceConnTypeModal">
+        <i class="bi bi-pencil-square"></i>
+        <?php echo language("DELETE CONNECTION TYPE", @$_SESSION['systemLang']) ?>
+      </button>
+      <?php } ?>
     </div>
 
       <!-- start new design -->
@@ -68,7 +67,7 @@
                     <div class="card-body">
                       <h5 class="h5 card-title text-uppercase"><?php echo $type['connection_name'] ?></h5>
                       <span class="nums">
-                          <a href="?name=pieces&do=show-connections-types&action=show-pieces-conn&type=1&conn-id=<?php echo $type['id'] ?>" class="num stretched-link text-black" data-goal="<?php echo $pcsCount ?>">0</a>
+                          <a href="?do=show-pieces-conn&type=1&conn-id=<?php echo $type['id'] ?>" class="num stretched-link text-black" data-goal="<?php echo $pcsCount ?>">0</a>
                       </span>
                     </div>
                   </div>
@@ -82,7 +81,7 @@
                     <?php $notAssigned = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `connection_type` = 0 AND `company_id` = ".$_SESSION['company_id']); ?>
                     <h5 class="h5 card-title text-uppercase"><?php echo language('NOT ASSIGNED', @$_SESSION['systemLang']) ?></h5>
                     <span class="nums">
-                      <a href="?name=pieces&do=show-connections-types&action=show-pieces-conn&type=1&conn-id=0" class="num stretched-link text-black" data-goal="<?php echo $notAssigned ?>">0</a>
+                      <a href="?do=show-pieces-conn&type=1&conn-id=0" class="num stretched-link text-black" data-goal="<?php echo $notAssigned ?>">0</a>
                     </span>
                   </div>
                 </div>

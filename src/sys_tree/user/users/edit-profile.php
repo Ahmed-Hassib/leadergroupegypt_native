@@ -109,6 +109,12 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
                   <label for="phone" class="col-sm-12 col-form-label text-capitalize"><?php echo language('PHONE', @$_SESSION['systemLang']) ?></label>
                   <div class="col-sm-12 position-relative">
                     <input type="text" maxlength="11" class="form-control" name="phone" id="phone" placeholder="<?php echo language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>" value="<?php echo $user['phone'] ?>" <?php if ($_SESSION['user_update'] == 0 && $_SESSION['UserID'] != $user['UserID']) {echo 'readonly';} ?>>
+                    <?php if ($user['is_activated_phone'] == 0) { ?>
+                    <div id="passHelp" class="form-text text-danger">
+                      <i class="bi bi-exclamation-triangle-fill"></i>
+                      <?php echo language('YOUR PHONE NUMBER IS NOT ACTIVATED!', @$_SESSION['systemLang']) ?>
+                    </div>
+                    <?php } ?>
                   </div>
                 </div>
                 <!-- end phone field -->
@@ -226,7 +232,8 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
                 <!-- end whatsapp field -->
               </div>
             </div>
-
+            
+            <?php if ($_SESSION['permission_show'] == 1) { ?>
             <!-- employee permission -->
             <div class="col-sm-12">
               <div class="section-block">
@@ -239,6 +246,7 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
                 <!-- end user-permission field -->
               </div>
             </div>
+            <?php } ?>
           </div>
           <!-- end new design -->
           <!-- strat submit -->

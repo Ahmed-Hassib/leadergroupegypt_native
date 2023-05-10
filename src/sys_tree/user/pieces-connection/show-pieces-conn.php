@@ -111,7 +111,7 @@ if ($is_exist) {
               <!-- piece name -->
               <td>
                 <?php if ($_SESSION['pcs_show'] == 1 && $_SESSION['pcs_update'] == 1) { ?>
-                <a href="?name=<?php echo $name ?>&do=edit-piece&piece-id=<?php echo $piece['id']; ?>" target="">
+                <a href="<?php echo $nav_up_level ?>pieces/index.php?name=<?php echo $name ?>&do=edit-piece&piece-id=<?php echo $piece['id']; ?>" target="">
                   <?php echo trim($piece['full_name'], ' ') ?>
                   <?php if ($piece['direction_id'] == 0) { ?>
                     <i class="bi bi-exclamation-triangle-fill text-danger" title="<?php echo language("DIRECTION NO DATA ENTERED", @$_SESSION['systemLang']) ?>"></i>
@@ -128,7 +128,7 @@ if ($is_exist) {
               <!-- piece username -->
               <td class="text-capitalize">
                 <?php if ($_SESSION['pcs_show'] == 1 && $_SESSION['pcs_update'] == 1) { ?>
-                <a href="?name=<?php echo $name ?>&do=edit-piece&piece-id=<?php echo $piece['id']; ?>">
+                <a href="<?php echo $nav_up_level ?>pieces/index.php?name=<?php echo $name ?>&do=edit-piece&piece-id=<?php echo $piece['id']; ?>">
                   <?php echo $piece['username']; ?>
                 </a>
                 <?php } else { ?>
@@ -229,9 +229,9 @@ if ($is_exist) {
 
               <!-- control -->
               <td>
-                <a class="btn btn-success text-capitalize fs-12 <?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="?name=<?php echo $name ?>&do=edit-piece&piece-id=<?php echo $piece['id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
+                <a class="btn btn-success text-capitalize fs-12 <?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="<?php echo $nav_up_level ?>pieces/index.php?name=<?php echo $name ?>&do=edit-piece&piece-id=<?php echo $piece['id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
                 <?php if ($piece['is_client'] == 0) { ?>
-                  <a class="btn btn-outline-primary text-capitalize fs-12 <?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>" href="?name=<?php echo $name ?>&do=show-piece&dir-id=<?php echo $piece['direction_id'] ?>&src-id=<?php echo $piece['id'] ?>" ><i class="bi bi-eye"></i></a>
+                  <a class="btn btn-outline-primary text-capitalize fs-12 <?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>" href="<?php echo $nav_up_level ?>pieces/index.php?name=<?php echo $name ?>&do=show-piece&dir-id=<?php echo $piece['direction_id'] ?>&src-id=<?php echo $piece['id'] ?>" ><i class="bi bi-eye"></i></a>
                 <?php } ?>
               </td>
             </tr>

@@ -6,7 +6,7 @@
         <h5 class="m-auto modal-title h5 " id="staticBackdropLabel"><?php echo language("EDIT CONNECTION TYPES", @$_SESSION['systemLang']) ?></h5>
       </div>
       <div class="modal-body">
-        <form action="??name=<?php echo $page_title ?>&do=show-connections-types&action=update-piece-conn-type" method="POST" id="editPieceConnType" onchange="form_validation(this)">
+        <form action="?do=update-piece-conn-type" method="POST" id="editPieceConnType" onchange="form_validation(this)">
           <!-- type id -->
           <input type="hidden" name="conn-type-id" id="conn-type-id">
           <!-- start type name -->

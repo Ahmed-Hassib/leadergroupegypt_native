@@ -136,17 +136,17 @@
     <!-- end pieces nav link -->
     <?php } ?>
     
-    <?php if ($_SESSION['pcs_show'] == 1 || $_SESSION['pcs_add'] == 1) { ?>
+    <?php if ($_SESSION['connection_add'] == 1 || $_SESSION['connection_show'] == 1) { ?>
     <!-- start dashboard page link -->
     <li>
-      <a href="<?php echo $nav_up_level ?>pieces/index.php?name=pieces&do=show-connections-types">
+      <a href="<?php echo $nav_up_level ?>pieces-connection/index.php">
         <i class="bi bi-hdd-network"></i>
         <span class="link-name"><?php echo language('MANAGE', @$_SESSION['systemLang'])." ".language('CONNECTION TYPES', @$_SESSION['systemLang']) ?></span>
       </a>
       <!-- start blank sub menu -->
       <ul class="sub-menu blank">
         <li>
-          <a href="<?php echo $nav_up_level ?>pieces/index.php?name=pieces&do=show-connections-types">
+          <a href="<?php echo $nav_up_level ?>pieces-connection/index.php">
             <span class="link-name"><?php echo language('MANAGE', @$_SESSION['systemLang'])." ".language('CONNECTION TYPES', @$_SESSION['systemLang']) ?></span>
           </a>
         </li>
@@ -335,7 +335,7 @@
 <div class="main-content">
   <!-- <img src="<?php echo $assets ?>eid-mobarak-2.png" class="bg-event-img" alt=""> -->
 
-  <?php if (!empty($_SESSION['phone']) && isset($_SESSION['is_activated_phone']) && $_SESSION['is_activated_phone'] == 0) { ?>
+  <?php if ($preloader == true && !empty($_SESSION['phone']) && isset($_SESSION['is_activated_phone']) && $_SESSION['is_activated_phone'] == 0) { ?>
   <div class="m-auto container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
     <div class="alert alert-warning" role="alert">
       <i class="bi bi-exclamation-triangle-fill"></i>
