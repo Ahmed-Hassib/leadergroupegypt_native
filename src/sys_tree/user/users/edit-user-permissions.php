@@ -200,6 +200,24 @@
         </div>
       </div>
     </div>
+    <div class="row row-cols-sm-1 row-cols-md-3 align-items-start g-sm-1 gx-md-5">
+      <div class="col-sm-12">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" <?php if ($_SESSION['user_update'] == 0 || $_SESSION['permission_update'] == 0) {echo 'disabled';} ?> <?php if ($permissions['mal_media_delete'] == 1) {echo 'checked';} ?> value="1" name="malMediaDelete" id="malMediaDelete">
+          <label class="form-check-label" for="malMediaDelete">
+            <?php echo language("DELETE MEDIA", @$_SESSION['systemLang']) ?>
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" <?php if ($_SESSION['user_update'] == 0 || $_SESSION['permission_update'] == 0) {echo 'disabled';} ?> <?php if ($permissions['mal_media_download'] == 1) {echo 'checked';} ?> value="1" name="malMediaDownload" id="malMediaDownload">
+          <label class="form-check-label" for="malMediaDownload">
+            <?php echo language("DOWNLOAD MEDIA", @$_SESSION['systemLang']) ?>
+          </label>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <div class="mb-4 row">

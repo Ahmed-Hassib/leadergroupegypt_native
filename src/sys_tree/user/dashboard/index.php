@@ -17,6 +17,7 @@ if (isset($_SESSION['UserName'])) {
   // check the request
   $query = isset($_GET['do']) ? $_GET['do'] : 'manage';
   $possible_back = true;
+  $preloader = true;
   // check
   if ($query == 'manage') {
     // check the version

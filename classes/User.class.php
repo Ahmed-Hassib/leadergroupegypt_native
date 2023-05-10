@@ -63,7 +63,7 @@ class User extends Database {
   // insert a new user permission in specific company
   public function insert_user_permissions($permissions) {
     // query to insert permissions in `users_permissions` table
-    $insertPermissionsQuery  = "INSERT INTO `users_permissions` (`UserID`, `user_add`, `user_update`, `user_delete`, `user_show`, `mal_add`, `mal_update`, `mal_delete`, `mal_show`, `mal_review`, `comb_add`, `comb_update`, `comb_delete`, `comb_show`, `comb_review`, `pcs_add`, `pcs_update`, `pcs_delete`, `pcs_show`, `dir_add`, `dir_update`, `dir_delete`, `dir_show`, `connection_add`, `connection_update`, `connection_delete`, `connection_show`, `permission_update`, `permission_show`)";
+    $insertPermissionsQuery  = "INSERT INTO `users_permissions` (`UserID`, `user_add`, `user_update`, `user_delete`, `user_show`, `mal_add`, `mal_update`, `mal_delete`, `mal_show`, `mal_review`, `mal_media_delete`, `mal_media_download`, `comb_add`, `comb_update`, `comb_delete`, `comb_show`, `comb_review`, `pcs_add`, `pcs_update`, `pcs_delete`, `pcs_show`, `dir_add`, `dir_update`, `dir_delete`, `dir_show`, `connection_add`, `connection_update`, `connection_delete`, `connection_show`, `permission_update`, `permission_show`)";
     $insertPermissionsQuery .= "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     // execute the query to insert the permissions into the table
     $stmt = $this->con->prepare($insertPermissionsQuery);
@@ -91,10 +91,32 @@ class User extends Database {
   // update user info
   public function update_user_info($info) {
     // update personal info
-    $updateInfoQuery = "UPDATE `users` SET `UserName` = ?, `Pass` = ?, `Email` = ?, `Fullname` = ?, `isTech` = ?, `job_title_id` = ?, `gender` = ?, `address` = ?, `phone` = ?, `date_of_birth` = ?, `TrustStatus` = ?,`twitter` = ?, `facebook` = ? WHERE `UserID` = ?";
+    $update_info_query = "UPDATE `users` SET `UserName` = ?, `Pass` = ?, `Email` = ?, `Fullname` = ?, `isTech` = ?, `job_title_id` = ?, `gender` = ?, `address` = ?, `phone` = ?, `date_of_birth` = ?, `TrustStatus` = ?,`twitter` = ?, `facebook` = ? WHERE `UserID` = ?";
     // update the database with this info
-    $stmt = $this->con->prepare($updateInfoQuery);
+    $stmt = $this->con->prepare($update_info_query);
     $stmt->execute($info);
+    $count = $stmt->rowCount();     // get number of effected rows
+    // return
+    return $count > 0 ? true : false;
+  }
+
+  function upload_profile_img($info) {
+    // update query
+    $upload_profile_img_query = "UPDATE `users` SET `profile_img` = ? WHERE `UserID` = ?";
+    // update the database with this info
+    $stmt = $this->con->prepare($upload_profile_img_query);
+    $stmt->execute($info);
+    $count = $stmt->rowCount();     // get number of effected rows
+    // return
+    return $count > 0 ? true : false;
+  }
+  
+  function delete_profile_img($user_id) {
+    // update query
+    $upload_profile_img_query = "UPDATE `users` SET `profile_img` = '' WHERE `UserID` = ?";
+    // update the database with this info
+    $stmt = $this->con->prepare($upload_profile_img_query);
+    $stmt->execute(array($user_id));
     $count = $stmt->rowCount();     // get number of effected rows
     // return
     return $count > 0 ? true : false;
@@ -103,7 +125,7 @@ class User extends Database {
   // update user permissions
   public function update_user_permissions($permissions) {
     // update permissions
-    $permissionsQuery = "UPDATE `users_permissions` SET  `user_add` = ?, `user_update` = ?, `user_delete` = ?, `user_show` = ?, `mal_add` = ?, `mal_update` = ?, `mal_delete` = ?, `mal_show` = ?, `mal_review` = ?, `comb_add` = ?, `comb_update` = ?, `comb_delete` = ?, `comb_show` = ?, `comb_review` = ?, `pcs_add` = ?, `pcs_update` = ?, `pcs_delete` = ?, `pcs_show` = ?, `dir_add` = ?, `dir_update` = ?, `dir_delete` = ?, `dir_show` = ?, `connection_add` = ?, `connection_update` = ?, `connection_delete` = ?, `connection_show` = ?, `permission_update` = ?, `permission_show` = ? WHERE `UserID` = ?";
+    $permissionsQuery = "UPDATE `users_permissions` SET  `user_add` = ?, `user_update` = ?, `user_delete` = ?, `user_show` = ?, `mal_add` = ?, `mal_update` = ?, `mal_delete` = ?, `mal_show` = ?, `mal_review` = ?, `mal_media_delete` = ?, `mal_media_download` = ?, `comb_add` = ?, `comb_update` = ?, `comb_delete` = ?, `comb_show` = ?, `comb_review` = ?, `pcs_add` = ?, `pcs_update` = ?, `pcs_delete` = ?, `pcs_show` = ?, `dir_add` = ?, `dir_update` = ?, `dir_delete` = ?, `dir_show` = ?, `connection_add` = ?, `connection_update` = ?, `connection_delete` = ?, `connection_show` = ?, `permission_update` = ?, `permission_show` = ? WHERE `UserID` = ?";
     $stmt = $this->con->prepare($permissionsQuery);
     $stmt->execute($permissions);
     $count = $stmt->rowCount();               // get number of effected rows

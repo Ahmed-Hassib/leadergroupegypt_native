@@ -339,7 +339,7 @@ function check_username(input, id = null) {
   // delete all alerts
   delete_alerts(container)
   // check value
-  if (value.length > 0) {
+  if (value.length >= 4) {
     // get request to check if username is exits
     $.get(`../requests/index.php?do=check-username&username=${value}`, (res) => {
       // converted res
@@ -364,6 +364,7 @@ function check_username(input, id = null) {
       }
     })
   } else {
+    container.appendChild(create_alert('warn', 'اسم المستخدم لا يمكن ان يقل عن 4 حروف'))
     input.classList.remove('is-valid', 'is-invalid')
     input.dataset.valid = '';
   }

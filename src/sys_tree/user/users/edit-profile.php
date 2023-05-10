@@ -21,6 +21,18 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
       <div class="row row-cols-sm-1 row-cols-lg-2 g-3">
         <!-- start add new user form -->
         <form class="profile-form" action="?do=update-user-info" method="POST" enctype="multipart/form-data" id="edit-user-info" onchange="form_validation(this)">
+          <!-- strat submit -->
+          <div class="hstack gap-3">
+            <div class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
+              <!-- edit button -->
+              <button type="button" form="edit-user-info" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'ltr' : 'rtl' ?>" class="btn btn-primary text-capitalize fs-12" <?php if ($_SESSION['user_update'] == 0 && $user['UserID'] != $_SESSION['UserID']) {echo 'disabled';} ?> onclick="form_validation(this.form, 'submit')"><i class="bi bi-check-all"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?></button>
+              <?php if ($user['isRoot'] != 1 && $user['TrustStatus'] != 1 && $user['job_title_id'] != 1 && $_SESSION['user_delete'] == 1) { ?>
+                <!-- delete button -->
+                <button type="button" data-bs-toggle="modal" data-bs-target="#deleteUserModal" onclick="show_delete_user_modal(this)" data-username="<?php echo $user['UserName'] ?>" data-user-id="<?php echo $user['UserID'] ?>" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'ltr' : 'rtl' ?>" class="btn btn-outline-danger text-capitalize fs-12" <?php if ($_SESSION['user_delete'] == 0 && $user['UserID'] != $_SESSION['UserID']) {echo 'disabled';} ?>><i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?></button>
+              <?php } ?>
+            </div>
+          </div>
+
           <!-- horzontal stack -->
           <div class="hstack gap-3">
             <h6 class="h6 text-decoration-underline text-capitalize text-danger fw-bold">
@@ -36,7 +48,8 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
                 <!-- start profile image -->
                 <div class="mb-4 row" id="profile-image-container">
                   <?php $profile_img_name = empty($user['profile_img']) ? 'male-avatar.svg' : $user['profile_img']; ?>
-                  <img src="<?php echo $uploads . "employees-img/$profile_img_name" ?>" class="profile-img" alt="" id="profile-img" >
+                  <?php $profile_img_path = empty($user['profile_img']) ? $uploads . "employees-img" : $uploads . "employees-img/".$_SESSION['company_id']; ?>
+                  <img src="<?php echo "$profile_img_path/$profile_img_name" ?>" class="profile-img" alt="" id="profile-img" >
                   <!-- profile image form -->
                   <input type="file" class="d-none" name="profile-img-input" id="profile-img-input" onchange="change_profile_img(this)" accept="image/*">
                 </div>
@@ -109,7 +122,7 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
                   <label for="phone" class="col-sm-12 col-form-label text-capitalize"><?php echo language('PHONE', @$_SESSION['systemLang']) ?></label>
                   <div class="col-sm-12 position-relative">
                     <input type="text" maxlength="11" class="form-control" name="phone" id="phone" placeholder="<?php echo language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>" value="<?php echo $user['phone'] ?>" <?php if ($_SESSION['user_update'] == 0 && $_SESSION['UserID'] != $user['UserID']) {echo 'readonly';} ?>>
-                    <?php if ($user['is_activated_phone'] == 0) { ?>
+                    <?php if ($user['is_activated_phone'] == 0 && !empty($user['phone'])) { ?>
                     <div id="passHelp" class="form-text text-danger">
                       <i class="bi bi-exclamation-triangle-fill"></i>
                       <?php echo language('YOUR PHONE NUMBER IS NOT ACTIVATED!', @$_SESSION['systemLang']) ?>
@@ -122,7 +135,7 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
                 <div class="mb-4 row">
                   <label for="date-of-birth" class="col-sm-12 col-form-label text-capitalize"><?php echo language('DATE OF BIRTH', @$_SESSION['systemLang']) ?></label>
                   <div class="col-sm-12 position-relative">
-                      <input type="date" class="form-control px-5" name="date-of-birth" id="date-of-birth"  value="<?php echo $user['date_of_birth'] ?>" <?php if ($_SESSION['user_update'] == 0 && $_SESSION['UserID'] != $user['UserID']) {echo 'readonly';} ?>>
+                    <input type="date" class="form-control px-5" name="date-of-birth" id="date-of-birth"  value="<?php echo $user['date_of_birth'] ?>" <?php if ($_SESSION['user_update'] == 0 && $_SESSION['UserID'] != $user['UserID']) {echo 'readonly';} ?>>
                   </div>
                 </div>
                 <!-- end date of birth field -->

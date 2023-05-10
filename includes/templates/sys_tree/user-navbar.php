@@ -341,7 +341,7 @@
       <i class="bi bi-exclamation-triangle-fill"></i>
       <span><?php echo language('HI', @$_SESSION['systemLang']) . ' ' . $_SESSION['UserName'] ?>,&nbsp;</span>
       <span><?php echo language('YOUR PHONE NUMBER IS NOT ACTIVATED!', @$_SESSION['systemLang']) ?></span>
-      <a class="alert-link" href="<?php echo $nav_up_level ?>requests/index.php?do=activate-phone-number"><?php echo language('SEND ACTIVATION CODE', @$_SESSION['systemLang']) ?>&nbsp;<i class="bi bi-arrow-up-left-square"></i></a>
+      <!-- <a class="alert-link" href="<?php echo $nav_up_level ?>requests/index.php?do=activate-phone-number"><?php # echo language('SEND ACTIVATION CODE', @$_SESSION['systemLang']) ?>&nbsp;<i class="bi bi-arrow-up-left-square"></i></a> -->
       <button type="button" class="btn-close btn-close-<?php echo @$_SESSION['systemLang'] == 'ar' ? 'left' : 'right' ?>" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   </div>

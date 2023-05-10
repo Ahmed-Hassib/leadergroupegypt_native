@@ -443,6 +443,9 @@ function languageAr($phrase)
     'DELAYED OR REFUSED TIME'                   => 'وقت التأجيل او الرفض',
     'DELAYED OR REFUSED DATE'                   => 'تاريخ التأجيل او الرفض',
     'THERE IS SOME MALFUNCTION YOU CANNOT SEE'  => 'توجد بعض الاعطال التي لا يمكنك الاطلاع عليها',
+    'DELETE MEDIA'                              => 'حذف الصور/الفيديوهات',
+    'DOWNLOAD MEDIA'                            => 'تحميل الصور/الفيديوهات',
+    'THE NUMBERS MUST BE IN ENGLISH'            => 'لابد وان تكون الارقام انجليزى',
 
     /**
      * COMBINATIONS PAGE WORDS

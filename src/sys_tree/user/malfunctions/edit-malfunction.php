@@ -34,7 +34,7 @@ if ($is_exist_mal == true) {
       <!-- submit -->
       <div class="mb-3 hstack gap-2">
         <div class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
-        <button type="submit" form="edit-malfunction-info" class="btn btn-primary text-capitalize form-control bg-gradient fs-12 py-1" id="update-malfunctions" <?php if ($_SESSION['mal_update'] == 0 || ($mal_info['mal_status'] == 1 && $mal_info['isReviewed'] == 1) || ($_SESSION['UserID'] != $mal_info['tech_id'] && $_SESSION['isTech'] == 1)) {echo 'disabled';} ?>>
+        <button type="submit" form="edit-malfunction-info" class="btn btn-primary text-capitalize form-control bg-gradient fs-12 py-1" id="update-malfunctions" <?php if ($_SESSION['mal_update'] == 0 || ($_SESSION['UserID'] != $mal_info['tech_id'] && $_SESSION['isTech'] == 1)) {echo 'disabled';} ?>>
           <i class="bi bi-check-all"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
         </button>
         </div>
@@ -354,6 +354,10 @@ if ($is_exist_mal == true) {
                     <span><?php echo language('L.E', @$_SESSION['systemLang']) ?></span>
                   </div>
                 </div>
+                <div id="costHelp" class="form-text text-info">
+                  <i class="bi bi-exclamation-triangle-fill"></i>&nbsp;
+                  <?php echo language('THE NUMBERS MUST BE IN ENGLISH', @$_SESSION['systemLang']) ?>
+                </div>
               </div>
             </div>
           </div>
@@ -463,12 +467,14 @@ if ($is_exist_mal == true) {
                         <source src="<?php echo $media_source ?>" type="video/*">
                       </video>
                     <?php } ?>
-                    <?php if ($_SESSION['mal_update'] == 1) { ?>
+                    <?php if ($_SESSION['mal_media_download'] == 1 || $_SESSION['mal_media_delete'] == 1) { ?>
                     <div class="control-btn">
-                      <?php if ($_SESSION['mal_show'] == 1) { ?>
+                      <?php if ($_SESSION['mal_media_download'] == 1) { ?>
                         <button type="button" class="btn btn-primary py-1 ms-1" onclick="download_media('<?php echo $media_source ?>', '<?php echo $media['type'] == 'img' ? 'jpg' : 'mp4' ?>')" src="<?php echo $media_source ?>"><i class='bi bi-download'></i></a>
                       <?php } ?>
-                      <button type="button" class="btn btn-danger py-1 ms-1" onclick="delete_media(this)" data-media-id="<?php echo $media['id']; ?>" data-media-name="<?php echo $media['media']; ?>"><i class="bi bi-trash"></i></button>
+                      <?php if ($_SESSION['mal_media_delete'] == 1) { ?>
+                        <button type="button" class="btn btn-danger py-1 ms-1" onclick="delete_media(this)" data-media-id="<?php echo $media['id']; ?>" data-media-name="<?php echo $media['media']; ?>"><i class="bi bi-trash"></i></button>
+                      <?php } ?>
                     </div>
                     <?php } ?>
                   </div>
@@ -499,7 +505,7 @@ if ($is_exist_mal == true) {
       <!-- submit -->
       <div class="hstack gap-2">
         <div class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
-          <button type="submit" form="edit-malfunction-info" class="btn btn-primary text-capitalize form-control bg-gradient fs-12 py-1" id="update-malfunctions" <?php if ($_SESSION['mal_update'] == 0 || ($mal_info['mal_status'] == 1 && $mal_info['isReviewed'] == 1) || ($_SESSION['UserID'] != $mal_info['tech_id'] && $_SESSION['isTech'] == 1)) {echo 'disabled';} ?>>
+          <button type="submit" form="edit-malfunction-info" class="btn btn-primary text-capitalize form-control bg-gradient fs-12 py-1" id="update-malfunctions" <?php if ($_SESSION['mal_update'] == 0 || ($_SESSION['UserID'] != $mal_info['tech_id'] && $_SESSION['isTech'] == 1)) {echo 'disabled';} ?>>
             <i class="bi bi-check-all"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
           </button>
         </div>

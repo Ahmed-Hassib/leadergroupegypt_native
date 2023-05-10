@@ -32,28 +32,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $facebook = isset($_POST['facebook']) ? $_POST['facebook'] : '';
 
   // get permissions
-  $userAdd       = isset($_POST['userAdd'])       ? $_POST['userAdd']       : 0;
-  $userUpdate    = isset($_POST['userUpdate'])    ? $_POST['userUpdate']    : 0;
-  $userDelete    = isset($_POST['userDelete'])    ? $_POST['userDelete']    : 0;
-  $userShow      = isset($_POST['userShow'])      ? $_POST['userShow']      : 0;
-  $pcsAdd        = isset($_POST['pcsAdd'])        ? $_POST['pcsAdd']        : 0;
-  $pcsUpdate     = isset($_POST['pcsUpdate'])     ? $_POST['pcsUpdate']     : 0;
-  $pcsDelete     = isset($_POST['pcsDelete'])     ? $_POST['pcsDelete']     : 0;
-  $pcsShow       = isset($_POST['pcsShow'])       ? $_POST['pcsShow']       : 0;
-  $dirAdd        = isset($_POST['dirAdd'])        ? $_POST['dirAdd']        : 0;
-  $dirUpdate     = isset($_POST['dirUpdate'])     ? $_POST['dirUpdate']     : 0;
-  $dirDelete     = isset($_POST['dirDelete'])     ? $_POST['dirDelete']     : 0;
-  $dirShow       = isset($_POST['dirShow'])       ? $_POST['dirShow']       : 0;
-  $malAdd        = isset($_POST['malAdd'])        ? $_POST['malAdd']        : 0;
-  $malUpdate     = isset($_POST['malUpdate'])     ? $_POST['malUpdate']     : 0;
-  $malDelete     = isset($_POST['malDelete'])     ? $_POST['malDelete']     : 0;
-  $malShow       = isset($_POST['malShow'])       ? $_POST['malShow']       : 0;
-  $malReview     = isset($_POST['malReview'])     ? $_POST['malReview']     : 0;
-  $combAdd       = isset($_POST['combAdd'])       ? $_POST['combAdd']       : 0;
-  $combUpdate    = isset($_POST['combUpdate'])    ? $_POST['combUpdate']    : 0;
-  $combDelete    = isset($_POST['combDelete'])    ? $_POST['combDelete']    : 0;
-  $combShow      = isset($_POST['combShow'])      ? $_POST['combShow']      : 0;
-  $combReview    = isset($_POST['combReview'])    ? $_POST['combReview']    : 0;
+  $userAdd            = isset($_POST['userAdd'])            ? $_POST['userAdd']           : 0;
+  $userUpdate         = isset($_POST['userUpdate'])         ? $_POST['userUpdate']        : 0;
+  $userDelete         = isset($_POST['userDelete'])         ? $_POST['userDelete']        : 0;
+  $userShow           = isset($_POST['userShow'])           ? $_POST['userShow']          : 0;
+  $pcsAdd             = isset($_POST['pcsAdd'])             ? $_POST['pcsAdd']            : 0;
+  $pcsUpdate          = isset($_POST['pcsUpdate'])          ? $_POST['pcsUpdate']         : 0;
+  $pcsDelete          = isset($_POST['pcsDelete'])          ? $_POST['pcsDelete']         : 0;
+  $pcsShow            = isset($_POST['pcsShow'])            ? $_POST['pcsShow']           : 0;
+  $connectionAdd      = isset($_POST['connectionAdd'])      ? $_POST['connectionAdd']     : 0;
+  $connectionUpdate   = isset($_POST['connectionUpdate'])   ? $_POST['connectionUpdate']  : 0;
+  $connectionDelete   = isset($_POST['connectionDelete'])   ? $_POST['connectionDelete']  : 0;
+  $connectionShow     = isset($_POST['connectionShow'])     ? $_POST['connectionShow']    : 0;
+  $dirAdd             = isset($_POST['dirAdd'])             ? $_POST['dirAdd']            : 0;
+  $dirUpdate          = isset($_POST['dirUpdate'])          ? $_POST['dirUpdate']         : 0;
+  $dirDelete          = isset($_POST['dirDelete'])          ? $_POST['dirDelete']         : 0;
+  $dirShow            = isset($_POST['dirShow'])            ? $_POST['dirShow']           : 0;
+  $malAdd             = isset($_POST['malAdd'])             ? $_POST['malAdd']            : 0;
+  $malUpdate          = isset($_POST['malUpdate'])          ? $_POST['malUpdate']         : 0;
+  $malDelete          = isset($_POST['malDelete'])          ? $_POST['malDelete']         : 0;
+  $malShow            = isset($_POST['malShow'])            ? $_POST['malShow']           : 0;
+  $malReview          = isset($_POST['malReview'])          ? $_POST['malReview']         : 0;
+  $malMediaDelete     = isset($_POST['malMediaDelete'])     ? $_POST['malMediaDelete']    : 0;
+  $malMediaDownload   = isset($_POST['malMediaDownload'])   ? $_POST['malMediaDownload']  : 0;
+  $combAdd            = isset($_POST['combAdd'])            ? $_POST['combAdd']           : 0;
+  $combUpdate         = isset($_POST['combUpdate'])         ? $_POST['combUpdate']        : 0;
+  $combDelete         = isset($_POST['combDelete'])         ? $_POST['combDelete']        : 0;
+  $combShow           = isset($_POST['combShow'])           ? $_POST['combShow']          : 0;
+  $combReview         = isset($_POST['combReview'])         ? $_POST['combReview']        : 0;
+  $permissionUpdate   = isset($_POST['permissionUpdate'])   ? $_POST['permissionUpdate']  : 0;
+  $permissionShow     = isset($_POST['permissionShow'])     ? $_POST['permissionShow']    : 0;
   // $suggReplay    = isset($_POST['suggReplay'])    ? $_POST['suggReplay']    : 0;
   // $suggDelete    = isset($_POST['suggDelete'])    ? $_POST['suggDelete']    : 0;
   // $suggShow      = isset($_POST['suggShow'])      ? $_POST['suggShow']      : 0;
@@ -68,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $formErorr = array();   // error array 
 
   // validate username
-  if (strlen($username) < 4) {
+  if (strlen($username) < 0) {
     $formErorr[] = 'username cannot be less than 4 characters';
   }
 
@@ -113,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       // array of user permissions
       $user_permissions = array();
       // push user`s permissions into array
-      array_push($user_permissions, $new_emp_id, $userAdd, $userUpdate, $userDelete, $userShow, $malAdd, $malUpdate, $malDelete, $malShow, $malReview, $combAdd, $combUpdate, $combDelete, $combShow, $combReview, $pcsAdd, $pcsUpdate, $pcsDelete, $pcsShow, $dirAdd, $dirUpdate, $dirDelete, $dirShow);
+      array_push($user_permissions, $new_emp_id, $userAdd, $userUpdate, $userDelete, $userShow, $malAdd, $malUpdate, $malDelete, $malShow, $malReview, $malMediaDelete, $malMediaDownload, $combAdd, $combUpdate, $combDelete, $combShow, $combReview, $pcsAdd, $pcsUpdate, $pcsDelete, $pcsShow, $dirAdd, $dirUpdate, $dirDelete, $dirShow, $connectionAdd, $connectionUpdate, $connectionDelete, $connectionShow, $permissionUpdate, $permissionShow);
       // call insert permissions function
       $user_obj->insert_user_permissions($user_permissions);
       

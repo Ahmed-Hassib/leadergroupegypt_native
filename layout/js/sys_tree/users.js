@@ -12,7 +12,7 @@ function change_profile_img(btn) {
   let img_path = URL.createObjectURL(btn.files[0]);
   // upload image
   profile_img.setAttribute("src", img_path);
-  
+
   let profile_img_status = document.querySelector('#profile-img-status');
   if (profile_img_status != null) {
     profile_img_status.textContent = 'تم تغيير الصورة برجاة حفظ التغييرات';
@@ -26,14 +26,20 @@ function change_profile_img(btn) {
 function delete_profile_image() {
   profile_img.setAttribute("src", '../../../../data/uploads/employees-img/male-avatar.svg');
 
-  let profile_img_status = document.querySelector('#profile-img-status');
-  if (profile_img_status != null) {
-    profile_img_status.textContent = 'تم حذف الصورة برجاة حفظ التغييرات';
-    profile_img_status.classList.replace('text-success', 'text-danger')
-  } else {
-    let status = create_profile_img_status('تم حذف الصورة برجاة حفظ التغييرات', 'text-danger');
-    profile_img_container.appendChild(status)
-  }
+  // send request
+  $.get(`../requests/index.php?do=delete-profile-img`, (data) => {
+    if (data) {
+      let profile_img_status = document.querySelector('#profile-img-status');
+      if (profile_img_status != null) {
+        console.log('deleted');
+        profile_img_status.textContent = 'تم حذف الصورة بنجاح!';
+        profile_img_status.classList.replace('text-success', 'text-danger');
+      } else {
+        let status = create_profile_img_status('تم حذف الصورة', 'text-danger');
+        profile_img_container.appendChild(status)
+      }
+    }
+  });
 }
 
 function create_profile_img_status(status_text, text_class) {
