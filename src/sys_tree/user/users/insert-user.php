@@ -62,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $combReview         = isset($_POST['combReview'])         ? $_POST['combReview']        : 0;
   $permissionUpdate   = isset($_POST['permissionUpdate'])   ? $_POST['permissionUpdate']  : 0;
   $permissionShow     = isset($_POST['permissionShow'])     ? $_POST['permissionShow']    : 0;
+  $changeCompanyImg   = isset($_POST['changeCompanyImg'])   ? $_POST['changeCompanyImg']  : 0;
   // $suggReplay    = isset($_POST['suggReplay'])    ? $_POST['suggReplay']    : 0;
   // $suggDelete    = isset($_POST['suggDelete'])    ? $_POST['suggDelete']    : 0;
   // $suggShow      = isset($_POST['suggShow'])      ? $_POST['suggShow']      : 0;
@@ -121,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       // array of user permissions
       $user_permissions = array();
       // push user`s permissions into array
-      array_push($user_permissions, $new_emp_id, $userAdd, $userUpdate, $userDelete, $userShow, $malAdd, $malUpdate, $malDelete, $malShow, $malReview, $malMediaDelete, $malMediaDownload, $combAdd, $combUpdate, $combDelete, $combShow, $combReview, $pcsAdd, $pcsUpdate, $pcsDelete, $pcsShow, $dirAdd, $dirUpdate, $dirDelete, $dirShow, $connectionAdd, $connectionUpdate, $connectionDelete, $connectionShow, $permissionUpdate, $permissionShow);
+      array_push($user_permissions, $new_emp_id, $userAdd, $userUpdate, $userDelete, $userShow, $malAdd, $malUpdate, $malDelete, $malShow, $malReview, $malMediaDelete, $malMediaDownload, $combAdd, $combUpdate, $combDelete, $combShow, $combReview, $pcsAdd, $pcsUpdate, $pcsDelete, $pcsShow, $dirAdd, $dirUpdate, $dirDelete, $dirShow, $connectionAdd, $connectionUpdate, $connectionDelete, $connectionShow, $permissionUpdate, $permissionShow, $changeCompanyImg);
       // call insert permissions function
       $user_obj->insert_user_permissions($user_permissions);
       

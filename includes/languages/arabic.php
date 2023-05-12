@@ -269,6 +269,7 @@ function languageAr($phrase)
     'CHANGE IMAGE'                  => 'تغيير الصورة',
     'DELETE IMAGE'                  => 'حذف الصورة',
     'SEND ACTIVATION CODE'          => 'ارسال كود التفعيل',
+    'CHANGE COMPANY IMAGE'          => 'تغيير شعار الشركة',
 
     /**
      * CLIENTS & PIECES PAGE WORDS

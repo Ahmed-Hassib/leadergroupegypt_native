@@ -268,6 +268,21 @@
   </div>
 </div>
 <div class="mb-4 row">
+  <div class="col-sm-12 col-md-3"><?php echo language('CHANGE COMPANY IMAGE', @$_SESSION['systemLang']) ?></div>
+  <div class="col-sm-12 col-md-8">
+    <div class="row row-cols-sm-1 row-cols-md-3 row-cols-lg-5 align-items-start g-sm-1 gx-md-5">
+      <div class="col-sm-12">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" <?php if ($_SESSION['user_update'] == 0 || $_SESSION['permission_update'] == 0) {echo 'disabled';} ?> <?php if ($permissions['change_company_img'] == 1) {echo 'checked';} ?> value="1" name="changeCompanyImg" id="changeCompanyImg">
+          <label class="form-check-label" for="changeCompanyImg">
+            <?php echo language("EDIT", @$_SESSION['systemLang']) ?>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mb-4 row">
   <div class="col-sm-12 col-md-3"><?php echo language('PERMISSIONS', @$_SESSION['systemLang']) ?></div>
   <div class="col-sm-12 col-md-8">
     <div class="row row-cols-sm-1 row-cols-md-3 row-cols-lg-5 align-items-start g-sm-1 gx-md-5">
