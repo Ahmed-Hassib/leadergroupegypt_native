@@ -15,10 +15,10 @@ function change_profile_img(btn) {
 
   let profile_img_status = document.querySelector('#profile-img-status');
   if (profile_img_status != null) {
-    profile_img_status.textContent = 'تم تغيير الصورة برجاة حفظ التغييرات';
+    profile_img_status.textContent = 'برجاة حفظ التغييرات';
     profile_img_status.classList.replace('text-danger', 'text-success')
   } else {
-    let status = create_profile_img_status('تم تغيير الصورة برجاة حفظ التغييرات', 'text-success');
+    let status = create_profile_img_status('برجاة حفظ التغييرات', 'text-success');
     profile_img_container.appendChild(status)
   }
 }
@@ -26,26 +26,29 @@ function change_profile_img(btn) {
 function delete_profile_image() {
   profile_img.setAttribute("src", '../../../../data/uploads/employees-img/male-avatar.svg');
 
-  // send request
-  $.get(`../requests/index.php?do=delete-profile-img`, (data) => {
-    if (data) {
-      let profile_img_status = document.querySelector('#profile-img-status');
-      if (profile_img_status != null) {
-        console.log('deleted');
-        profile_img_status.textContent = 'تم حذف الصورة بنجاح!';
-        profile_img_status.classList.replace('text-success', 'text-danger');
-      } else {
-        let status = create_profile_img_status('تم حذف الصورة', 'text-danger');
-        profile_img_container.appendChild(status)
+  let confirm_delete = confirm('هل انت متأكد من حذف الصورة؟')
+
+  if (confirm_delete) {
+    // send request
+    $.get(`../requests/index.php?do=delete-profile-img`, (data) => {
+      if (data) {
+        let profile_img_status = document.querySelector('#profile-img-status');
+        if (profile_img_status != null) {
+          console.log('deleted');
+          profile_img_status.textContent = 'تم حذف الصورة بنجاح! برجاء تحديث الجلسة لتطبيق التغييرات';
+          profile_img_status.classList.replace('text-success', 'text-danger');
+        } else {
+          let status = create_profile_img_status('تم حذف الصورة بنجاح! برجاء تحديث الجلسة لتطبيق التغييرات', 'text-danger');
+          profile_img_container.appendChild(status)
+        }
       }
-    }
-  });
+    });
+  }
 }
 
 function create_profile_img_status(status_text, text_class) {
   // append text to save chnges
   let span = document.createElement('span')
-  span.textContent = 'تم تغيير الصورة برجاء حفظ التغييرات';
   span.textContent = status_text;
   span.classList.add('text-center', text_class);
   span.id = 'profile-img-status';

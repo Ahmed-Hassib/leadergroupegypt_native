@@ -63,8 +63,8 @@ class User extends Database {
   // insert a new user permission in specific company
   public function insert_user_permissions($permissions) {
     // query to insert permissions in `users_permissions` table
-    $insertPermissionsQuery  = "INSERT INTO `users_permissions` (`UserID`, `user_add`, `user_update`, `user_delete`, `user_show`, `mal_add`, `mal_update`, `mal_delete`, `mal_show`, `mal_review`, `mal_media_delete`, `mal_media_download`, `comb_add`, `comb_update`, `comb_delete`, `comb_show`, `comb_review`, `pcs_add`, `pcs_update`, `pcs_delete`, `pcs_show`, `dir_add`, `dir_update`, `dir_delete`, `dir_show`, `connection_add`, `connection_update`, `connection_delete`, `connection_show`, `permission_update`, `permission_show`)";
-    $insertPermissionsQuery .= "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    $insertPermissionsQuery  = "INSERT INTO `users_permissions` (`UserID`, `user_add`, `user_update`, `user_delete`, `user_show`, `mal_add`, `mal_update`, `mal_delete`, `mal_show`, `mal_review`, `mal_media_delete`, `mal_media_download`, `comb_add`, `comb_update`, `comb_delete`, `comb_show`, `comb_review`, `pcs_add`, `pcs_update`, `pcs_delete`, `pcs_show`, `dir_add`, `dir_update`, `dir_delete`, `dir_show`, `connection_add`, `connection_update`, `connection_delete`, `connection_show`, `permission_update`, `permission_show`, `change_company_img`)";
+    $insertPermissionsQuery .= "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     // execute the query to insert the permissions into the table
     $stmt = $this->con->prepare($insertPermissionsQuery);
     $stmt->execute($permissions);          // execute the query
@@ -125,7 +125,7 @@ class User extends Database {
   // update user permissions
   public function update_user_permissions($permissions) {
     // update permissions
-    $permissionsQuery = "UPDATE `users_permissions` SET  `user_add` = ?, `user_update` = ?, `user_delete` = ?, `user_show` = ?, `mal_add` = ?, `mal_update` = ?, `mal_delete` = ?, `mal_show` = ?, `mal_review` = ?, `mal_media_delete` = ?, `mal_media_download` = ?, `comb_add` = ?, `comb_update` = ?, `comb_delete` = ?, `comb_show` = ?, `comb_review` = ?, `pcs_add` = ?, `pcs_update` = ?, `pcs_delete` = ?, `pcs_show` = ?, `dir_add` = ?, `dir_update` = ?, `dir_delete` = ?, `dir_show` = ?, `connection_add` = ?, `connection_update` = ?, `connection_delete` = ?, `connection_show` = ?, `permission_update` = ?, `permission_show` = ? WHERE `UserID` = ?";
+    $permissionsQuery = "UPDATE `users_permissions` SET  `user_add` = ?, `user_update` = ?, `user_delete` = ?, `user_show` = ?, `mal_add` = ?, `mal_update` = ?, `mal_delete` = ?, `mal_show` = ?, `mal_review` = ?, `mal_media_delete` = ?, `mal_media_download` = ?, `comb_add` = ?, `comb_update` = ?, `comb_delete` = ?, `comb_show` = ?, `comb_review` = ?, `pcs_add` = ?, `pcs_update` = ?, `pcs_delete` = ?, `pcs_show` = ?, `dir_add` = ?, `dir_update` = ?, `dir_delete` = ?, `dir_show` = ?, `connection_add` = ?, `connection_update` = ?, `connection_delete` = ?, `connection_show` = ?, `permission_update` = ?, `permission_show` = ?, `change_company_img` = ? WHERE `UserID` = ?";
     $stmt = $this->con->prepare($permissionsQuery);
     $stmt->execute($permissions);
     $count = $stmt->rowCount();               // get number of effected rows

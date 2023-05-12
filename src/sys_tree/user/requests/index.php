@@ -80,16 +80,16 @@ switch ($query) {
     $file_name = 'delete-malfunction-media.php';
     break;
   
-  case "change-profile-img":
-    $file_name = 'change-profile-img.php';
-    break;
-  
-  case "activate-phone-number":
-    $file_name = 'activate-phone-number.php';
-    break;
-  
   case "delete-profile-img":
     $file_name = 'delete-profile-img.php';
+    break;
+    
+  case "delete-company-img":
+    $file_name = 'delete-company-img.php';
+    break;
+
+  case "activate-phone-number":
+    $file_name = 'activate-phone-number.php';
     break;
 }
 

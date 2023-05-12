@@ -6,6 +6,7 @@ class Session extends Database {
   // properties
   public $con;    // for Database connection
   public $users_permission_columns;   // for users permission
+  public $company_info_columns;   // for users permission
 
   // constructor
   public function __construct() {
@@ -13,7 +14,9 @@ class Session extends Database {
     $db_obj = new Database();
     $this->con = $db_obj->con;
     // set user permission columns
-    $this->users_permission_columns = "`users_permissions`.`user_add`,`users_permissions`.`user_update`,`users_permissions`.`user_delete`,`users_permissions`.`user_show`,`users_permissions`.`mal_add`,`users_permissions`.`mal_update`,`users_permissions`.`mal_delete`,`users_permissions`.`mal_show`,`users_permissions`.`mal_review`,`users_permissions`.`mal_media_delete`,`users_permissions`.`mal_media_download`,`users_permissions`.`comb_add`,`users_permissions`.`comb_update`,`users_permissions`.`comb_delete`,`users_permissions`.`comb_show`,`users_permissions`.`comb_review`,`users_permissions`.`pcs_add`,`users_permissions`.`pcs_update`,`users_permissions`.`pcs_delete`,`users_permissions`.`pcs_show`,`users_permissions`.`dir_add`,`users_permissions`.`dir_update`,`users_permissions`.`dir_delete`,`users_permissions`.`dir_show`,`users_permissions`.`sugg_replay`,`users_permissions`.`sugg_delete`,`users_permissions`.`sugg_show`,`users_permissions`.`points_add`,`users_permissions`.`points_delete`,`users_permissions`.`points_show`,`users_permissions`.`reports_show`,`users_permissions`.`archive_show`,`users_permissions`.`take_backup`,`users_permissions`.`restore_backup`,`users_permissions`.`connection_add`,`users_permissions`.`connection_update`,`users_permissions`.`connection_delete`,`users_permissions`.`connection_show`,`users_permissions`.`permission_update`,`users_permissions`.`permission_show`";
+    $this->users_permission_columns = "`users_permissions`.`user_add`,`users_permissions`.`user_update`,`users_permissions`.`user_delete`,`users_permissions`.`user_show`,`users_permissions`.`mal_add`,`users_permissions`.`mal_update`,`users_permissions`.`mal_delete`,`users_permissions`.`mal_show`,`users_permissions`.`mal_review`,`users_permissions`.`mal_media_delete`,`users_permissions`.`mal_media_download`,`users_permissions`.`comb_add`,`users_permissions`.`comb_update`,`users_permissions`.`comb_delete`,`users_permissions`.`comb_show`,`users_permissions`.`comb_review`,`users_permissions`.`pcs_add`,`users_permissions`.`pcs_update`,`users_permissions`.`pcs_delete`,`users_permissions`.`pcs_show`,`users_permissions`.`dir_add`,`users_permissions`.`dir_update`,`users_permissions`.`dir_delete`,`users_permissions`.`dir_show`,`users_permissions`.`sugg_replay`,`users_permissions`.`sugg_delete`,`users_permissions`.`sugg_show`,`users_permissions`.`points_add`,`users_permissions`.`points_delete`,`users_permissions`.`points_show`,`users_permissions`.`reports_show`,`users_permissions`.`archive_show`,`users_permissions`.`take_backup`,`users_permissions`.`restore_backup`,`users_permissions`.`connection_add`,`users_permissions`.`connection_update`,`users_permissions`.`connection_delete`,`users_permissions`.`connection_show`,`users_permissions`.`permission_update`,`users_permissions`.`permission_show`,`users_permissions`.`change_company_img`";
+    // get company info
+    $this->company_info_columns = "`companies`.`company_name`,`companies`.`company_img`";
   }
 
   // function to get all user`s info
@@ -22,7 +25,7 @@ class Session extends Database {
     $query = "SELECT 
           `users`.*,
           $this->users_permission_columns,
-          `companies`.`company_name`
+          $this->company_info_columns
         FROM `users` 
         LEFT JOIN  `users_permissions` ON `users`.`UserID` = `users_permissions`.`UserID`
         LEFT JOIN `companies` ON `companies`.`company_id` = `users`.`company_id`
@@ -42,6 +45,7 @@ class Session extends Database {
     // get basics info
     $_SESSION['UserID']             = $info['UserID'];          // assign userid to session
     $_SESSION['profile_img']        = $info['profile_img'];
+    $_SESSION['company_img']        = $info['company_img'];
     $_SESSION['company_id']         = $info['company_id'];      // assign company id to session
     $_SESSION['company_name']       = $info['company_name'];    // assign company name to session
     $_SESSION['UserName']           = $info['UserName'];        // assign username to session
@@ -111,6 +115,7 @@ class Session extends Database {
     $_SESSION['restore_backup']     = $permissions['restore_backup'];     // permission to restore a backup
     $_SESSION['permission_update']  = $permissions['permission_update'];  // permission to update permissions
     $_SESSION['permission_show']    = $permissions['permission_show'];    // permission to show permissions
+    $_SESSION['change_company_img'] = $permissions['change_company_img']; // permission to change company image
   }
 
   // function to get version id by his id

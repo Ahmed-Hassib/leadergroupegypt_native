@@ -2,7 +2,12 @@
 <div class="sidebar-menu sidebar-menu-<?php echo @$_SESSION['systemLang'] == 'ar' ? 'right' : 'left' ?> close">
   <!-- start sidebar menu brand -->
   <div class="sidebar-menu-brand" href="dashboard.php" <?php if (!isset($_SESSION['UserName'])) { echo "style='margin: auto'"; } ?>>
-    <img class="sidebar-menu-logo-img" src="<?php echo $assets ?>jsl.jpeg" alt="<?php echo isset($_SESSION['company_name']) ? $_SESSION['company_name'] : language('NOT ASSIGNED') ?>">
+    <?php $db_obj = new Database(); ?>
+    <?php $company_img_name_db = $db_obj->select_specific_column("`company_img`", "`companies`", "WHERE `company_id` = ".$_SESSION['company_id'])[0]['company_img']; ?>
+    <?php $company_img_name = empty($company_img_name_db) ? 'leadergroupegypt.jpg' : $company_img_name_db; ?>
+    <?php $company_img_path = empty($company_img_name_db) ? $uploads . "companies-img" : $uploads . "companies-img/".$_SESSION['company_id']; ?>
+    <img src="<?php echo "$company_img_path/$company_img_name" ?>" class="sidebar-menu-logo-img" alt="<?php echo isset($_SESSION['company_name']) ? $_SESSION['company_name'] : language('NOT ASSIGNED') ?>" id="company-img-brand" >
+    <!-- <img  src="<?php echo $assets ?>jsl.jpeg" > -->
     <span class="sidebar-menu-logo-name text-uppercase "><?php echo isset($_SESSION['company_name']) ? $_SESSION['company_name'] : language('NOT ASSIGNED') ?></span>
     <!-- close icon displayed in small screens -->
     <span class="close-btn"><i class="bi bi-x"></i></span>
@@ -286,8 +291,9 @@
       <div class="profile-details">
         <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $_SESSION['UserID']; ?>">
         <div class="profile-content">
-          <?php $profile_img = $uploads . "employees-img/" . (empty($_SESSION['profile_img']) ? "male-avatar.svg" : "/".$_SESSION['company_id']."/".$_SESSION['profile_img']) ;?>
-          <img src="<?php echo $profile_img ?>" class="profile-img">
+          <?php $profile_img_name = empty($_SESSION['profile_img']) ? "male-avatar.svg" : $_SESSION['company_id']."/". $_SESSION['profile_img']; ?>
+          <?php $profile_img_path = $uploads . "employees-img/" . $profile_img_name ;?>
+          <img src="<?php echo $profile_img_path ?>" class="profile-img">
         </div>
           <div class="name-job">
             <div class="profile-name"><?php echo $_SESSION['UserName'] ?></div>

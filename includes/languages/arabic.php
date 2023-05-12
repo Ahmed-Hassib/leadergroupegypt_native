@@ -110,6 +110,7 @@ function languageAr($phrase)
     'THE INSTRUCTIONS'      => 'التعليمات',
     'UNDERSTAND'            => 'فهمت',
     'THUS'                  => 'حيث',
+    'COMPANY BRAND'         => 'شعار الشركة',
     
     
     /**
@@ -677,6 +678,7 @@ function languageAr($phrase)
     /**
      * SOME SEQUENCES
      */
+    'THIS IS DEFAULT IMAGE OF THE SYSTEM'                                           => 'هذة الصورة الافتراضية من قِبل البرنامج',
     'DON`T SHOW THIS AGAIN'                                                         => 'لا تعرض هذا مرة اخرى!',
     'DON`T HAVE AN ACCOUNT?'                                                        => 'لا تمتلك حساب؟',
     'SORRY, THE PAGE IS UNDER DEVELOPING'                                           => 'هذه الصفحة تحت التطوير',
@@ -908,7 +910,9 @@ function languageAr($phrase)
     'YOUR ACTIVATION CODE IS'                                                       => 'رمز التفعيل الخاص بك هو',
     'DON`T SHARE THE ACTIVATION CODE WITH ANY ONE ELSE'                             => 'لا تشارك رمز التفعيل مع اي شخص اخر',
     'YOUR ACTIVATION CODE WILL EXPIRE WITHIN 1 MINUTE'                              => 'تنتهي صلاحية رمز التفعيل الخاص بك في غضون دقيقة واحدة',
-    
+    'COMPANY IMAGE WAS UPDATED SUCCESSFULLY'                                        => 'تم تعديل شعار الشركة بنجاح',
+    'COMPANY IMAGE WAS NOT UPDATED'                                                 => 'لم يتم تعديل شعار الشركة',
+    'THERE IS NO IMAGES WAS ADDED TO CHANGE IT'                                     => 'لم يتم اختيار صورة لتغيير شعار الشركة',
     
     
     'WHEN REGISTERING THE ABBRERVIATED NAME OF THE COMPANY AND THE USERNAME OF ADMIN, PLEASE NOTE THE FOLLOWING'                          => 'عند تسجيل الاسم المختصر للشركة واسم المستخدم للأدمن برجاء مراعاة التالي',

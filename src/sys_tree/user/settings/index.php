@@ -13,6 +13,7 @@ $nav_level = 1;
 include_once str_repeat("../", $level) . "etc/pre-conf.php";
 
 $possible_back = false;
+$preloader = false;
 
 // check username in SESSION variable
 if (isset($_SESSION['UserName']))  {
@@ -25,11 +26,17 @@ if (isset($_SESSION['UserName']))  {
   if ($query == 'manage') {
     // include dashboard
     $file_name = "dashboard.php";
+    $possible_back = true;
     $is_stored = true;
+    $preloader = true;
 
   } elseif ($query == "change-lang") {
     // include change-language file
     $file_name = "change-language.php";
+  
+  } elseif ($query == "change-company-img" && $_SESSION['change_company_img']) {
+    // include change company file
+    $file_name = "change-company-img.php";
 
   } else {
     // include page not founded module
@@ -45,7 +52,7 @@ $page_title = "Settings";
 // page category
 $page_category = "sys_tree";
 // page role
-$page_role = "sys_tree_user";
+$page_role = "sys_tree_settings";
 // folder name of dependendies
 $dependencies_folder = "sys_tree/";
 // initial configration of system

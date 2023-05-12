@@ -63,11 +63,13 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
                       <i class="bi bi-pencil-square"></i>
                       <?php echo language('CHANGE IMAGE', @$_SESSION['systemLang']) ?>
                     </button>
+                    <?php if (!empty($user['profile_img'])) {?>
                     <!-- delete image button -->
                     <button type="button" role="button" class="btn btn-danger fs-12 py-1 text-capitalize" onclick="delete_profile_image()">
                       <i class="bi bi-trash"></i>
                       <?php echo language('DELETE IMAGE', @$_SESSION['systemLang']) ?>
                     </button>
+                    <?php } ?>
                   </div>
                 </div>
                 <!-- end control buttons -->
