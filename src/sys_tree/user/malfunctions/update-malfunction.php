@@ -25,43 +25,37 @@
       // get new malfunction info
       $manager_id   = $_POST['admin-id'];
       $tech_id      = $_POST['technical-id'];
-      // chekc malfunction status
-      if ($mal_info['mal_status'] == 0) {
-        // check who is doing the update
-        switch ($update_owner_job_id) {
-          /**
-           * updates for:
-            * [1] The Manager
-            * [2] Customer Services
-            */
-          case 1:
-          case 3:
-            do_manager_updates($_POST);
-            break;
-          /**
-           * updates for:
-           * [1] Technical Man
-           */
-          case 2:
-            // check who is doing the updates
-            if ($update_owner_id == $tech_id) {
-              do_technical_updates($_POST);
-              
-              // check if upload media
-              if (count($_FILES) > 0) {
-                $path = $uploads . "//malfunctions/" . $_SESSION['company_id'] . "/";
-                upload_malfunction_media($_FILES, $mal_id, $path);
-              }
-            }
-            break;
-        }
-      } else {
+
+      // check who is doing the update
+      switch ($update_owner_job_id) {
         /**
          * updates for:
-         * [1] After Sales Man
+          * [1] The Manager
+          * [2] Customer Services
+          */
+        case 1:
+        case 3:
+          do_manager_updates($_POST);
+          do_after_sales_updates($_POST);
+          break;
+        /**
+         * updates for:
+         * [1] Technical Man
          */
-        do_after_sales_updates($_POST);
+        case 2:
+          // check who is doing the updates
+          if ($update_owner_id == $tech_id) {
+            do_technical_updates($_POST);
+            
+            // check if upload media
+            if (count($_FILES) > 0) {
+              $path = $uploads . "//malfunctions/" . $_SESSION['company_id'] . "/";
+              upload_malfunction_media($_FILES, $mal_id, $path);
+            }
+          }
+          break;
       }
+      
       // success message
       $msg = '<div class="alert alert-success text-capitalize"><i class="bi bi-check-circle-fill"></i>&nbsp;'.language("MALFUNCTION WAS UPDATED SUCCESSFULLY", @$_SESSION['systemLang']).'</div>';
     } ?>
