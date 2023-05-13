@@ -358,7 +358,7 @@ if ($_SESSION['mal_show'] == 1) {
                   <th><?php echo language('PHONE', @$_SESSION['systemLang']) ?></th>
                   <th><?php echo language('TECHNICAL NAME', @$_SESSION['systemLang']) ?></th>
                   <th><?php echo language('STATUS', @$_SESSION['systemLang']) ?></th>
-                  <th><?php echo language('TECH STATUS', @$_SESSION['systemLang']) ?></th>
+                  <th style="width: 200px"><?php echo language('HAVE MEDIA', @$_SESSION['systemLang']) ?></th>
                   <th><?php echo language('CONTROL', @$_SESSION['systemLang']) ?></th>
                 </tr>
               </thead>
@@ -412,22 +412,14 @@ if ($_SESSION['mal_show'] == 1) {
                     </td>
 
                     <td style="width: 50px">
-                    <?php
-                      if ($mal['isAccepted'] == 0) {
-                        $iconStatus   = "bi-x-circle-fill text-danger";
-                        $titleStatus  = language('NOT ACCEPTED', @$_SESSION['systemLang']);
-                      } elseif ($mal['isAccepted'] == 1) {
-                        $iconStatus   = "bi-check-circle-fill text-success";
-                        $titleStatus  = language('ACCEPTED', @$_SESSION['systemLang']);
-                      } elseif ($mal['isAccepted'] == 2) {
-                        $iconStatus   = "bi-exclamation-circle-fill text-warning";
-                        $titleStatus  = language('DELAYED', @$_SESSION['systemLang']);
-                      } else {
-                        $iconStatus   = "bi-dash-circle-fill text-info";
-                        $titleStatus  = language('NO STATUS', @$_SESSION['systemLang']);
-                      }
-                    ?>
-                    <i class="bi <?php echo $iconStatus ?>" title="<?php echo $titleStatus ?>"></i>
+                      <?php 
+                        $have_media = $mal_obj->count_records("`id`", "`malfunctions_media`", "WHERE `mal_id` = ".$mal['mal_id']);
+                        if ($have_media > 0) {
+                          echo language('MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
+                        } else {
+                          echo language('NO MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
+                        }
+                      ?>
                     </td>
 
                     <td style="width: 50px">
@@ -470,7 +462,7 @@ if ($_SESSION['mal_show'] == 1) {
                   <th><?php echo language('PHONE', @$_SESSION['systemLang']) ?></th>
                   <th><?php echo language('TECHNICAL NAME', @$_SESSION['systemLang']) ?></th>
                   <th><?php echo language('STATUS', @$_SESSION['systemLang']) ?></th>
-                  <th><?php echo language('TECH STATUS', @$_SESSION['systemLang']) ?></th>
+                  <th style="width: 200px"><?php echo language('HAVE MEDIA', @$_SESSION['systemLang']) ?></th>
                   <th><?php echo language('CONTROL', @$_SESSION['systemLang']) ?></th>
                 </tr>
               </thead>
@@ -492,9 +484,27 @@ if ($_SESSION['mal_show'] == 1) {
                       </a>
                     </td>
 
-                    <td style="width: 200px" class="<?php echo empty($client_addr) ? 'text-danger ' : '' ?>"><?php echo !empty($client_addr) ? $client_addr[0]['address'] : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?></td>
+                    <td style="width: 200px" class="<?php echo empty($client_addr) ? 'text-danger ' : '' ?>">
+                      <?php 
+                      $addr = !empty($client_addr) ? $client_addr[0]['address'] : language('NO DATA ENTERED', @$_SESSION['systemLang']);
+                      if (strlen($addr) > 50) {
+                        echo trim(substr($addr, 0, 50), '') . "...";
+                      } else {
+                        echo $addr;
+                      }
+                      ?>
+                    </td>
 
-                    <td style="width: 100px" class="<?php echo empty($client_phone) ? 'text-danger ' : '' ?>"><?php echo !empty($client_phone) ? $client_phone[0]['phone'] : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?></td>
+                    <td style="width: 100px" class="<?php echo empty($client_phone) ? 'text-danger ' : '' ?>">
+                      <?php 
+                      $phone = !empty($client_phone) ? $client_phone[0]['phone'] : language('NO DATA ENTERED', @$_SESSION['systemLang']);
+                      if (strlen($phone) > 11) {
+                        echo trim(substr($phone, 0, 11), '') . "...";
+                      } else {
+                        echo $phone;
+                      }
+                      ?>
+                    </td>
 
                     <td style="width: 50px">
                       <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $mal['tech_id'] ?>">
@@ -521,23 +531,15 @@ if ($_SESSION['mal_show'] == 1) {
                     <i class="bi <?php echo $iconStatus ?>" title="<?php echo $titleStatus ?>"></i>
                     </td>
 
-                    <td style="width: 25px">
-                    <?php
-                      if ($mal['isAccepted'] == 0) {
-                        $iconStatus   = "bi-x-circle-fill text-danger";
-                        $titleStatus  = language('NOT ACCEPTED', @$_SESSION['systemLang']);
-                      } elseif ($mal['isAccepted'] == 1) {
-                        $iconStatus   = "bi-check-circle-fill text-success";
-                        $titleStatus  = language('ACCEPTED', @$_SESSION['systemLang']);
-                      } elseif ($mal['isAccepted'] == 2) {
-                        $iconStatus   = "bi-exclamation-circle-fill text-warning";
-                        $titleStatus  = language('DELAYED', @$_SESSION['systemLang']);
-                      } else {
-                        $iconStatus   = "bi-dash-circle-fill text-info";
-                        $titleStatus  = language('NO STATUS', @$_SESSION['systemLang']);
-                      }
-                    ?>
-                    <i class="bi <?php echo $iconStatus ?>" title="<?php echo $titleStatus ?>"></i>
+                    <td style="width: 50px">
+                      <?php 
+                        $have_media = $mal_obj->count_records("`id`", "`malfunctions_media`", "WHERE `mal_id` = ".$mal['mal_id']);
+                        if ($have_media > 0) {
+                          echo language('MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
+                        } else {
+                          echo language('NO MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
+                        }
+                      ?>
                     </td>
 
                     <td style="width: 50px">

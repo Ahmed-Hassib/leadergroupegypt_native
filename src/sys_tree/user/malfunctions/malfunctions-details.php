@@ -204,7 +204,7 @@ $count = $stmt->rowCount();     // get row count
           <th data-order="asc" data-col-type="string" class="text-center" style="width: 100px"><?php echo language('ADDED DATE', @$_SESSION['systemLang']) ?></th>
           <th data-order="asc" data-col-type="string" class="text-center" style="width: 100px"><?php echo language('ADDED TIME', @$_SESSION['systemLang']) ?></th>
           <th data-order="asc" data-col-type="string" class="text-center fs-10-sm" style="width: 50px"><?php echo language('STATUS', @$_SESSION['systemLang']) ?></th>
-          <th data-order="asc" data-col-type="string" class="text-center fs-10-sm" style="width: 50px"><?php echo language('TECH STATUS', @$_SESSION['systemLang']) ?></th>
+          <th data-order="asc" data-col-type="string" class="text-center fs-10-sm" style="width: 200px"><?php echo language('HAVE MEDIA', @$_SESSION['systemLang']) ?></th>
           <th class="text-center" style="width: 70px;"><?php echo language('CONTROL', @$_SESSION['systemLang']) ?></th>
         </tr>
       </thead>
@@ -274,23 +274,15 @@ $count = $stmt->rowCount();     // get row count
               <i class="bi <?php echo $iconStatus ?>" title="<?php echo $titleStatus ?>"></i>
             </td>
 
-            <td class="text-center">
-              <?php
-                if ($row['isAccepted'] == 0) {
-                  $iconStatus   = "bi-x-circle-fill text-danger";
-                  $titleStatus  = language('NOT ACCEPTED', @$_SESSION['systemLang']);
-                } elseif ($row['isAccepted'] == 1) {
-                  $iconStatus   = "bi-check-circle-fill text-success";
-                  $titleStatus  = language('ACCEPTED', @$_SESSION['systemLang']);
-                } elseif ($row['isAccepted'] == 2) {
-                  $iconStatus   = "bi-exclamation-circle-fill text-warning";
-                  $titleStatus  = language('DELAYED', @$_SESSION['systemLang']);
+            <td style="width: 50px">
+              <?php 
+                $have_media = $mal_obj->count_records("`id`", "`malfunctions_media`", "WHERE `mal_id` = ".$row['mal_id']);
+                if ($have_media > 0) {
+                  echo language('MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
                 } else {
-                  $iconStatus   = "bi-dash-circle-fill text-info";
-                  $titleStatus  = language('NO STATUS', @$_SESSION['systemLang']);
+                  echo language('NO MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
                 }
               ?>
-              <i class="bi <?php echo $iconStatus ?>" title="<?php echo $titleStatus ?>"></i>
             </td>
 
             <td class="text-center">

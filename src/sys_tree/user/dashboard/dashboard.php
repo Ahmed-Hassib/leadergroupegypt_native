@@ -43,10 +43,7 @@
             </div>
           </div>
         <?php } else { ?>
-          <?php
-            // create an object of Database
-            $db_obj = new Database();
-          ?>
+          <?php $db_obj = new Database(); ?>
           <!-- start new design -->
           <div class="mb-3 row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3 justify-content-sm-center">
             <div class="col-6 <?php if ($_SESSION['user_show'] == 0) {echo 'd-none';} ?>">
@@ -59,7 +56,7 @@
                     </a>
                   </span>
                 </div>
-                <?php $newEmpCounter = $db_obj->count_records("`UserID`", "`users`", "WHERE `joinedDate` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id']); ?>
+                <?php $newEmpCounter = $db_obj->count_records("`UserID`", "`users`", "WHERE `joinedDate` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id']); ?>
                 <?php if ($newEmpCounter > 0) { ?>
                   <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
                     <span><?php echo $newEmpCounter ?></span>
@@ -77,7 +74,7 @@
                     </a>
                   </span>
                 </div>
-                <?php $newDirCounter = $db_obj->count_records("`direction_id`", "`direction`", "WHERE `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id']); ?>
+                <?php $newDirCounter = $db_obj->count_records("`direction_id`", "`direction`", "WHERE `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id']); ?>
                 <?php if ($newDirCounter > 0) { ?>
                   <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
                     <span><?php echo $newDirCounter ?></span>
@@ -95,7 +92,7 @@
                     </a>
                   </span>
                 </div>
-                <?php $newPcsCounter = $db_obj->count_records("`piece_id`", "`pieces`", "WHERE `is_client` = 0 AND `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id']); ?>
+                <?php $newPcsCounter = $db_obj->count_records("`piece_id`", "`pieces`", "WHERE `is_client` = 0 AND `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id']); ?>
                 <?php if ($newPcsCounter > 0) { ?>
                   <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
                     <span><?php echo $newPcsCounter ?></span>
@@ -113,7 +110,7 @@
                     </a>
                   </span>
                 </div>
-                <?php $newPcsCounter = $db_obj->count_records("`piece_id`", "`pieces`", "WHERE `is_client` = 1 AND `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id']); ?>
+                <?php $newPcsCounter = $db_obj->count_records("`piece_id`", "`pieces`", "WHERE `is_client` = 1 AND `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id']); ?>
                 <?php if ($newPcsCounter > 0) { ?>
                   <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
                     <span><?php echo $newPcsCounter ?></span>
@@ -131,7 +128,7 @@
                     </a>
                   </span>
                 </div>
-                <?php $newSuggCounter = $db_obj->count_records("`id`", "`comp_sugg`", "WHERE `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id']); ?>
+                <?php $newSuggCounter = $db_obj->count_records("`id`", "`comp_sugg`", "WHERE `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id']); ?>
                 <?php if ($newSuggCounter > 0) { ?>
                   <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
                     <span><?php echo $newSuggCounter ?></span>
@@ -149,7 +146,7 @@
                     </a>
                   </span>
                 </div>
-                <?php $newMalCounter = $db_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] . " $techMalCondition"); ?>
+                <?php $newMalCounter = $db_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `added_date` = '".get_date_now()."' AND `mal_status` = 0 AND `company_id` = ".$_SESSION['company_id'] . " $techMalCondition"); ?>
                 <?php if ($newMalCounter > 0) { ?>
                   <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
                     <span><?php echo $newMalCounter ?></span>
@@ -167,7 +164,7 @@
                     </a>
                   </span>
                 </div>
-                <?php $newCombCounter = $db_obj->count_records("`comb_id`", "`combinations`", "WHERE `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] . " $techCombCondition"); ?>
+                <?php $newCombCounter = $db_obj->count_records("`comb_id`", "`combinations`", "WHERE `added_date` = '".get_date_now()."' AND `isFinished` = 0 AND `company_id` = ".$_SESSION['company_id'] . " $techCombCondition"); ?>
                 <?php if ($newCombCounter > 0) { ?>
                   <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
                     <span><?php echo $newCombCounter ?></span>
@@ -186,7 +183,7 @@
                     </a>
                   </span>
                 </div>
-                <?php $newPointCounter = $db_obj->count_records("`id`", "`users_points`", "WHERE `points_date` = CURRENT_DATE AND `UserID` = ".$_SESSION['UserID']); ?>
+                <?php $newPointCounter = $db_obj->count_records("`id`", "`users_points`", "WHERE `points_date` = '".get_date_now()."' AND `UserID` = ".$_SESSION['UserID']); ?>
                 <?php if ($newPointCounter > 0) { ?>
                   <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
                     <span><?php echo $newPointCounter ?></span>

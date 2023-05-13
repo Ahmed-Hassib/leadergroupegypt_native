@@ -83,7 +83,7 @@ if ($is_exist_piece) {
             <th data-order="asc" data-col-type="string" class="text-center" style="width: 100px"><?php echo language('ADDED DATE', @$_SESSION['systemLang']) ?></th>
             <th data-order="asc" data-col-type="string" class="text-center" style="width: 100px"><?php echo language('ADDED TIME', @$_SESSION['systemLang']) ?></th>
             <th data-order="asc" data-col-type="string" class="text-center fs-10-sm" style="width: 50px"><?php echo language('STATUS', @$_SESSION['systemLang']) ?></th>
-            <th data-order="asc" data-col-type="string" class="text-center fs-10-sm" style="width: 50px"><?php echo language('TECH STATUS', @$_SESSION['systemLang']) ?></th>
+            <th data-order="asc" data-col-type="string" class="text-center fs-10-sm" style="width: 200px"><?php echo language('HAVE MEDIA', @$_SESSION['systemLang']) ?></th>
             <th class="text-center"><?php echo language('CONTROL', @$_SESSION['systemLang']) ?></th>
           </tr>
         </thead>
@@ -101,10 +101,6 @@ if ($is_exist_piece) {
                 <?php $techName = selectSpecificColumn("`UserName`", "`users`", "WHERE `UserID` = ".$row['tech_id'])[0]['UserName']; ?>
                 <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $row['tech_id'];?>"><?php echo $techName ?></a>
               </td>
-              <!-- <td class="text-center">
-                <?php $clientnName = selectSpecificColumn("`full_name`", "`pieces_info`", "WHERE `id` = '" . $row['client_id'] . "' LIMIT 1")[0]['full_name']; ?>
-                <a href="<?php echo $nav_up_level ?>pieces/index.php?do=edit-piece&piece-id=<?php echo $row['client_id'];?>"><?php echo $clientnName ?></a>
-              </td> -->
 
               <td class="text-center">
                 <?php if (strlen($row['descreption']) > 40) {
@@ -149,23 +145,15 @@ if ($is_exist_piece) {
                 <i class="bi <?php echo $iconStatus ?>" title="<?php echo $titleStatus ?>"></i>
               </td>
 
-              <td class="text-center">
-                <?php
-                  if ($row['isAccepted'] == 0) {
-                    $iconStatus   = "bi-x-circle-fill text-danger";
-                    $titleStatus  = language('NOT ACCEPTED', @$_SESSION['systemLang']);
-                  } elseif ($row['isAccepted'] == 1) {
-                    $iconStatus   = "bi-check-circle-fill text-success";
-                    $titleStatus  = language('ACCEPTED', @$_SESSION['systemLang']);
-                  } elseif ($row['isAccepted'] == 2) {
-                    $iconStatus   = "bi-exclamation-circle-fill text-warning";
-                    $titleStatus  = language('DELAYED COMBINATION', @$_SESSION['systemLang']);
+              <td style="width: 50px">
+                <?php 
+                  $have_media = $mal_obj->count_records("`id`", "`malfunctions_media`", "WHERE `mal_id` = ".$row['mal_id']);
+                  if ($have_media > 0) {
+                    echo language('MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
                   } else {
-                    $iconStatus   = "bi-dash-circle-fill text-info";
-                    $titleStatus  = language('NO STATUS', @$_SESSION['systemLang']);
+                    echo language('NO MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
                   }
                 ?>
-                <i class="bi <?php echo $iconStatus ?>" title="<?php echo $titleStatus ?>"></i>
               </td>
 
               <td class="text-center">
