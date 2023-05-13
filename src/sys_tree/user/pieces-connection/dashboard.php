@@ -100,14 +100,3 @@
     </div>
   </div>
 </div>
-
-<!-- include add new connection type modal -->
-<?php include_once 'add-conn-type-modal.php' ?>
-
-<!-- include edit connection type modal -->
-<?php 
-if ($types_count > 0) {  
-  include_once 'edit-conn-type-modal.php';
-  include_once 'delete-conn-type-modal.php';
-}
-?>

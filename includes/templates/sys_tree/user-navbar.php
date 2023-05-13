@@ -144,17 +144,47 @@
     <?php if ($_SESSION['connection_add'] == 1 || $_SESSION['connection_show'] == 1) { ?>
     <!-- start dashboard page link -->
     <li>
-      <a href="<?php echo $nav_up_level ?>pieces-connection/index.php">
-        <i class="bi bi-hdd-network"></i>
-        <span class="link-name"><?php echo language('MANAGE', @$_SESSION['systemLang'])." ".language('CONNECTION TYPES', @$_SESSION['systemLang']) ?></span>
-      </a>
+      <div class="icon-link">
+        <section>
+          <i class="bi bi-hdd-network"></i>
+          <span class="link-name"><?php echo language('CONNECTION TYPES', @$_SESSION['systemLang']) ?></span>
+        </section>
+        <i class="bi bi-arrow-down-short"></i>
+      </div>
       <!-- start blank sub menu -->
-      <ul class="sub-menu blank">
+      <ul class="sub-menu">
         <li>
           <a href="<?php echo $nav_up_level ?>pieces-connection/index.php">
-            <span class="link-name"><?php echo language('MANAGE', @$_SESSION['systemLang'])." ".language('CONNECTION TYPES', @$_SESSION['systemLang']) ?></span>
+            <span class="link-name"><?php echo language('DASHBOARD', @$_SESSION['systemLang']) ?></span>
           </a>
         </li>
+        <?php if ($_SESSION['connection_add'] == 1) { ?>
+        <li>
+          <a href="#" data-bs-toggle="modal" data-bs-target="#addNewPieceConnTypeModal">
+            <span class="link-name"><?php echo language('ADD NEW CONNECTION TYPE', @$_SESSION['systemLang']) ?></span>
+          </a>
+        </li>
+        <?php } ?>
+        <?php
+        // create an object of PiecesConn class
+        $db_obj = new Database();
+        // get all connections 
+        $conn_data_types = $db_obj->count_records("`id`", "`connection_types`", "WHERE `company_id` = ". $_SESSION['company_id']);
+        ?>
+        <?php if ($_SESSION['connection_update'] == 1 && $conn_data_types > 0) { ?>
+        <li>
+          <a href="#" data-bs-toggle="modal" data-bs-target="#editPieceConnTypeModal">
+            <span class="link-name"><?php echo language('EDIT CONNECTION TYPES', @$_SESSION['systemLang']) ?></span>
+          </a>
+        </li>
+        <?php } ?>
+        <?php if ($_SESSION['connection_delete'] == 1 && $conn_data_types > 0) { ?>
+        <li>
+          <a href="#" data-bs-toggle="modal" data-bs-target="#deletePieceConnTypeModal">
+            <span class="link-name"><?php echo language('DELETE CONNECTION TYPE', @$_SESSION['systemLang']) ?></span>
+          </a>
+        </li>
+        <?php } ?>
       </ul>
       <!-- end blank sub menu -->
     </li>
