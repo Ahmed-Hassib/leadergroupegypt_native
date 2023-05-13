@@ -53,8 +53,12 @@
 <?php 
 // CHECK PAGE CATEGORY IF EQUAL 'sys_tree'
 if ($page_category == 'sys_tree' && $page_role != 'sys_tree_login' && $page_role != 'sys_tree_signup' && isset($_SESSION['UserID']) && $_SESSION['isRoot'] == 0) {
-  // INCLUDE ADD DIERCTION MODAL
-  include_once $nav_up_level . 'directions/add-direction-modal.php';
+  if ($_SESSION['dir_add'] == 1) {
+    // INCLUDE ADD DIERCTION MODAL
+    include_once $nav_up_level . 'directions/add-direction-modal.php';
+  }
+
+  
   echo "<script>localStorage.removeItem('sidebarMenuClosed');</script>";
 }
 ?>

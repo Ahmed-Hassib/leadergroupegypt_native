@@ -447,7 +447,7 @@ function languageAr($phrase)
     'THERE IS SOME MALFUNCTION YOU CANNOT SEE'  => 'توجد بعض الاعطال التي لا يمكنك الاطلاع عليها',
     'DELETE MEDIA'                              => 'حذف الصور/الفيديوهات',
     'DOWNLOAD MEDIA'                            => 'تحميل الصور/الفيديوهات',
-    'THE NUMBERS MUST BE IN ENGLISH'            => 'لابد وان تكون الارقام انجليزى',
+    'THE NUMBERS MUST BE IN ENGLISH'            => 'لابد ان تكون الارقام انجليزى',
     'HAVE MEDIA'                                => 'حالة الصور/الفيديوهات',
     'MEDIA HAVE BEEN ATTACHED'                  => 'تم ارفاق صور/فيديوهات',
     'NO MEDIA HAVE BEEN ATTACHED'               => 'لم يتم ارفاق صور/فيديوهات',

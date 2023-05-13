@@ -487,7 +487,7 @@ if ($_SESSION['mal_show'] == 1) {
                     <td style="width: 200px" class="<?php echo empty($client_addr) ? 'text-danger ' : '' ?>">
                       <?php 
                       $addr = !empty($client_addr) ? $client_addr[0]['address'] : language('NO DATA ENTERED', @$_SESSION['systemLang']);
-                      if (strlen($addr) > 50) {
+                      if (!empty($client_addr) && strlen($addr) > 50) {
                         echo trim(substr($addr, 0, 50), '') . "...";
                       } else {
                         echo $addr;
@@ -498,7 +498,7 @@ if ($_SESSION['mal_show'] == 1) {
                     <td style="width: 100px" class="<?php echo empty($client_phone) ? 'text-danger ' : '' ?>">
                       <?php 
                       $phone = !empty($client_phone) ? $client_phone[0]['phone'] : language('NO DATA ENTERED', @$_SESSION['systemLang']);
-                      if (strlen($phone) > 11) {
+                      if (!empty($client_phone) && strlen($phone) > 11) {
                         echo trim(substr($phone, 0, 11), '') . "...";
                       } else {
                         echo $phone;

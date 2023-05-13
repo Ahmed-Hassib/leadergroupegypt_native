@@ -34,7 +34,9 @@
                 </a>
               </div>
               <!-- employee image -->
-              <img src="<?php echo $uploads . "employees-img/male-avatar.svg" ?>" class="card-img-top shadow" alt="">
+              <?php $profile_img_name = empty($user['profile_img']) ? "male-avatar.svg" : $_SESSION['company_id']."/". $user['profile_img']; ?>
+              <?php $profile_img_path = $uploads . "employees-img/" . $profile_img_name ;?>
+              <img src="<?php echo $profile_img_path ?>" class="card-img-top shadow" alt="profile image">
               <!-- employee details -->
               <div class="card-body">
               <!-- vstack for employee info -->
