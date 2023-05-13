@@ -16,6 +16,7 @@ $nav_level = 1;
 // pre configration of system
 include_once str_repeat('../', $level) . 'etc/pre-conf.php';
 $possible_back = false;
+$preloader = false;
 // check username in SESSION variable
 if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
   // check if Get request do is set or not
