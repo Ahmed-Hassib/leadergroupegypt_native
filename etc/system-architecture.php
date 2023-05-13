@@ -240,9 +240,10 @@ function get_page_dependencies($page_role, $file_type) {
     'sys_tree_malfunction' => [
       'css' => [
         '1' => 'malfunction.css',
+        '2' => 'malfunction-media.css'
       ],
       'js' => [
-        '1' => 'malfunction.js'
+        '1' => 'malfunction.js',
       ],
       'node' => [
         'css' => [],

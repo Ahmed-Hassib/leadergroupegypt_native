@@ -4,6 +4,9 @@ var client_name_search = document.querySelector("#client-name");
 var client_name_result = document.querySelector('#clients-names');
 var delete_mal_btn = document.querySelectorAll('#delete-mal');
 var confirm_delete_malfunction = document.querySelector("#confirm-delete-malfunction");
+var modal = document.querySelector("#media-modal");
+var modal_content = document.querySelector("#media-modal-content");
+var modal_close_btn = document.querySelector("#media-modal-close");
 
 // self invoke function
 (function () {
@@ -233,11 +236,23 @@ function create_control_buttons(src, type) {
     evt.preventDefault()
     download_media(src, type)
   })
+  
+  // create delete button
+  let show_button = document.createElement('a');
+  show_button.type = 'button';
+  show_button.classList.add('btn', 'btn-primary', 'py-1', 'ms-1');
+  show_button.innerHTML = "<i class='bi bi-eye'></i>";
+  // add event to delete button
+  show_button.addEventListener('click', (evt) => {
+    evt.preventDefault()
+    open_media(src, type)
+  })
   // < a src = "<?php echo $media_source ?>" download = "<?php echo $media_source ?>" > download</a >
 
   // append buttons
   btn_container.appendChild(download_button);
   btn_container.appendChild(delete_button);
+  btn_container.appendChild(show_button);
   // return button
   return btn_container;
 }
@@ -284,11 +299,28 @@ function download_media(src, type) {
     });
 }
 
+function open_media(src, type) {
+  // check type
+  switch (type) {
+    case 'jpg':
+      // create image
+      element = document.createElement('img');
+      element.setAttribute('src', src);
+      break;
+    
+    case 'mp4':
+      element = create_video_element(src);
+      break;
+  }
+  modal_content.innerHTML = '';
+  modal.style.display = "block";
+  element.classList.add('media-modal-content');
+  modal_content.appendChild(element);
+}
 
-//  < !--reasons for rejection or postponement man comment-- >
-//   <div class="mb-sm-2 mb-md-3 row align-items-center">
-//     <label for="tech-status-comment" class="col-sm-12 col-form-label text-capitalize"><?php echo language('REASONS FOR REJECTION OR POSTPONEMENT', @$_SESSION['systemLang']) ?></label>
-//     <div class="col-sm-12 position-relative">
-//       <textarea name="tech-status-comment" id="tech-status-comment" class="form-control w-100" style="height: 5rem; resize: none; direction: <?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>" <?php if ($_SESSION['isTech'] == 0 || $mal_info['mal_status'] == 1) {echo 'disabled';} ?>><?php echo empty($mal_info['tech_status_comment']) && $mal_info['mal_status'] == 1 ? "لا يوجد تعليق من الفني" : $mal_info['tech_status_comment']; ?></textarea>
-//   </div>
-//             </div >
+
+if (modal_close_btn != null) {
+  modal_close_btn.addEventListener('click', (evt) => {
+    modal.style.display = "none";
+  })
+}

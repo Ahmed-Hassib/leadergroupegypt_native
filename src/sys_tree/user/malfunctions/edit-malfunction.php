@@ -475,6 +475,7 @@ if ($is_exist_mal == true) {
                       <?php if ($_SESSION['mal_media_delete'] == 1) { ?>
                         <button type="button" class="btn btn-danger py-1 ms-1" onclick="delete_media(this)" data-media-id="<?php echo $media['id']; ?>" data-media-name="<?php echo $media['media']; ?>"><i class="bi bi-trash"></i></button>
                       <?php } ?>
+                      <button type="button" class="btn btn-primary" onclick="open_media('<?php echo $media_source ?>', '<?php echo $media['type'] == 'img' ? 'jpg' : 'mp4' ?>')"><i class="bi bi-eye"></i></button>
                     </div>
                     <?php } ?>
                   </div>
@@ -540,7 +541,15 @@ if ($is_exist_mal == true) {
         </div>
       </div>
     </div>
+    
+    <!-- media modal -->
+    <div id="media-modal" class="media-modal">
+      <span class="close" id="media-modal-close">&times;</span>
+      <div id="media-modal-content"></div>
+    </div>
   </div>
+  
+
 <?php } else { 
   // include no data founded
   include_once $globmod . 'no-data-founded.php';
