@@ -467,7 +467,6 @@ if ($is_exist_mal == true) {
                         <source src="<?php echo $media_source ?>" type="video/*">
                       </video>
                     <?php } ?>
-                    <?php if ($_SESSION['mal_media_download'] == 1 || $_SESSION['mal_media_delete'] == 1) { ?>
                     <div class="control-btn">
                       <?php if ($_SESSION['mal_media_download'] == 1) { ?>
                         <button type="button" class="btn btn-primary py-1 ms-1" onclick="download_media('<?php echo $media_source ?>', '<?php echo $media['type'] == 'img' ? 'jpg' : 'mp4' ?>')" src="<?php echo $media_source ?>"><i class='bi bi-download'></i></a>
@@ -477,7 +476,6 @@ if ($is_exist_mal == true) {
                       <?php } ?>
                       <button type="button" class="btn btn-primary" onclick="open_media('<?php echo $media_source ?>', '<?php echo $media['type'] == 'img' ? 'jpg' : 'mp4' ?>')"><i class="bi bi-eye"></i></button>
                     </div>
-                    <?php } ?>
                   </div>
                 <?php } else { ?>
                   <div class="alert alert-danger">
