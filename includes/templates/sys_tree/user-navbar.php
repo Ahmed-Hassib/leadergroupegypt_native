@@ -167,9 +167,9 @@
         <?php } ?>
         <?php
         // create an object of PiecesConn class
-        $db_obj = new Database();
+        $pcs_conn_obj = new PiecesConn();
         // get all connections 
-        $conn_data_types = $db_obj->count_records("`id`", "`connection_types`", "WHERE `company_id` = ". $_SESSION['company_id']);
+        $conn_data_types = $pcs_conn_obj->count_records("`id`", "`connection_types`", "WHERE `company_id` = ". $_SESSION['company_id']);
         ?>
         <?php if ($_SESSION['connection_update'] == 1 && $conn_data_types > 0) { ?>
         <li>

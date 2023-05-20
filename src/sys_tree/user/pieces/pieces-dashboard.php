@@ -66,10 +66,8 @@
             <hr>
           </div>
           <?php
-          // create an object of PiecesConn class
-          $conn_obj = new PiecesConn();
           // get all connections 
-          $conn_data = $conn_obj->get_all_conn_types($_SESSION['company_id']);
+          $conn_data = $pcs_conn_obj->get_all_conn_types($_SESSION['company_id']);
           // data counter
           $conn_types_count = $conn_data[0];
           // data rows
@@ -83,7 +81,7 @@
               // loop on types
               foreach ($conn_types_rows as $key => $conn_type) {
                 // get count of pieces
-                $pcsCount = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `connection_type` = ".$conn_type['id']);
+                $pcsCount = $pcs_conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `connection_type` = ".$conn_type['id']);
                 // check counter
                 if ($i > 9) { $i = 1; }
               ?>
@@ -103,7 +101,7 @@
               <div class="col-12">
                 <div class="card card-stat bg-danger shadow-sm border border-1">
                   <div class="card-body">
-                    <?php $not_assigned_conn = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `connection_type` = 0  AND `company_id` = ".$_SESSION['company_id']); ?>
+                    <?php $not_assigned_conn = $pcs_conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `connection_type` = 0  AND `company_id` = ".$_SESSION['company_id']); ?>
                     <h5 class="h5 card-title text-uppercase"><?php echo language('NOT ASSIGNED', @$_SESSION['systemLang']) ?></h5>
                     <span class="nums">
                       <a href="?name=pieces&do=show-connections-types&action=show-pieces-conn&type=1&conn-id=0" class="num stretched-link text-black" data-goal="<?php echo $not_assigned_conn ?>">0</a>

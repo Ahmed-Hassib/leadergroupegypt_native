@@ -60,17 +60,17 @@ if ($page_category == 'sys_tree' && $page_role != 'sys_tree_login' && $page_role
 
   if ($_SESSION['connection_add'] == 1) {
     // include add new connection type modal
-    include_once  $sys_tree_user . 'pieces-connection/add-conn-type-modal.php';
+    include_once  $nav_up_level . 'pieces-connection/add-conn-type-modal.php';
   }
   
   // include edit connection type modal
   if ($conn_data_types > 0) {
     if ($_SESSION['connection_update'] == 1) {
-      include_once $sys_tree_user . 'pieces-connection/edit-conn-type-modal.php';
+      include_once $nav_up_level . 'pieces-connection/edit-conn-type-modal.php';
     }
 
     if ($_SESSION['connection_delete'] == 1) {
-      include_once $sys_tree_user . 'pieces-connection/delete-conn-type-modal.php';
+      include_once $nav_up_level . 'pieces-connection/delete-conn-type-modal.php';
     }
   }
   

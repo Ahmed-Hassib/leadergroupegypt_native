@@ -14,16 +14,14 @@
             <label for="old-conn-type-name" class="col-sm-12 col-form-label text-capitalize"><?php echo language('THE OLD NAME', @$_SESSION['systemLang']) ?></label>
             <div class="col-sm-12 position-relative">
               <?php 
-              // create an object of PieceConn class
-              $conn_obj = new PiecesConn();
               // get all connections data
-              $connections = $conn_obj->get_all_conn_types($_SESSION['company_id']);
-              $typesRows = $connections[1]; 
+              $edit_connections = $pcs_conn_obj->get_all_conn_types($_SESSION['company_id']);
+              $edit_types_rows = $edit_connections[1]; 
               ?>
               <select class="form-select" id="old-conn-type-name" name="old-conn-type-name" onchange="document.getElementById('conn-type-id').value = this.value; document.getElementById('new-conn-type-note').value = this[this.selectedIndex].dataset.note;" required>
                 <option value="default" disabled selected><?php echo language('SELECT', @$_SESSION['systemLang'])." ".language('THE TYPE', @$_SESSION['systemLang']) ?></option>
                 <!-- loop on pieces types -->
-                <?php foreach ($typesRows as $type) { ?>
+                <?php foreach ($edit_types_rows as $type) { ?>
                   <option value="<?php echo $type['id'] ?>" data-note="<?php echo $type['notes'] ?>"><?php echo $type['connection_name'] ?></option>
                 <?php } ?>
               </select>
