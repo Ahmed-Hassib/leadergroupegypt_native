@@ -117,45 +117,49 @@ if (isset($_SESSION['UserName'])) {
             <h4 class="h4"><?php echo language("ADMIN LOGIN INFO", @$_SESSION['systemLang']) ?></h4>
           </div>
           <div class="row row-cols-sm-1 row-cols-lg-2 g-2">
-            <!-- admin fullname -->
-            <div class="mb-sm-2 mb-md-3 row">
-              <label for="fullname" class="col-sm-12 col-form-label text-capitalize"><?php echo language("FULLNAME", @$_SESSION['systemLang']) ?></label>
-              <div class="col-sm-12 position-relative">
-                <input class="form-control w-100" type="text" name="fullname" id="fullname" placeholder="<?php echo language("FULLNAME", @$_SESSION['systemLang']) ?>" required>
+            <div class="col">
+              <!-- admin username -->
+              <div class="mb-sm-2 mb-md-3 row">
+                <label for="username" class="col-sm-12 col-form-label text-capitalize"><?php echo language("USERNAME", @$_SESSION['systemLang']) ?></label>
+                <div class="col-sm-12 position-relative">
+                  <input class="form-control w-100" type="text" name="username" id="username" placeholder="<?php echo language("USERNAME", @$_SESSION['systemLang']) ?>" onkeyup="is_valid(this, 'username');" required>
+                </div>
+              </div>
+              <!-- admin password -->
+              <div class="mb-sm-2 mb-md-3 row">
+                <label for="password" class="col-sm-12 col-form-label text-capitalize"><?php echo language("PASSWORD", @$_SESSION['systemLang']) ?></label>
+                <div class="col-sm-12 position-relative">
+                  <input class="form-control w-100" type="password" name="password" id="password" placeholder="<?php echo language("PASSWORD", @$_SESSION['systemLang']) ?>" onblur="confirm_password(confirm_pass, this)" data-no-validation="true" required>
+                  <i class="bi bi-eye-slash show-pass show-pass-left text-dark" id="show-pass" onclick="showPass(this)"></i>
+                </div>
+              </div>
+              <!-- confirm_pass -->
+              <div class="mb-sm-2 mb-md-3 row">
+                <label for="confirm_pass" class="col-sm-12 col-form-label text-capitalize"><?php echo language("CONFIRM PASSWORD", @$_SESSION['systemLang']) ?></label>
+                <div class="col-sm-12 position-relative">
+                  <input class="form-control w-100" type="password" name="confirm_pass" id="confirm_pass" placeholder="<?php echo language("CONFIRM PASSWORD", @$_SESSION['systemLang']) ?>" onblur="confirm_password(this, password)" data-no-validation="true" required>
+                  <i class="bi bi-eye-slash show-pass show-pass-left text-dark" id="show-pass" onclick="showPass(this)"></i>
+                </div>
               </div>
             </div>
-            <!-- admin gender -->
-            <div class="mb-sm-2 mb-md-3 row">
-              <label for="gender" class="col-sm-12 col-form-label text-capitalize"><?php echo language("GENDER", @$_SESSION['systemLang']) ?></label>
-              <div class="col-sm-12 position-relative">
-                <select class="form-select" name="gender" id="gender" required>
-                  <option value="default" disabled selected><?php echo language("SELECT", @$_SESSION['systemLang']) ." ".language("GENDER", @$_SESSION['systemLang']) ?></option>
-                  <option value="0"><?php echo language("MALE", @$_SESSION['systemLang']) ?></option>
-                  <option value="1"><?php echo language("FEMALE", @$_SESSION['systemLang']) ?></option>
-                </select>
+            <div class="col">
+              <!-- admin fullname -->
+              <div class="mb-sm-2 mb-md-3 row">
+                <label for="fullname" class="col-sm-12 col-form-label text-capitalize"><?php echo language("FULLNAME", @$_SESSION['systemLang']) ?></label>
+                <div class="col-sm-12 position-relative">
+                  <input class="form-control w-100" type="text" name="fullname" id="fullname" placeholder="<?php echo language("FULLNAME", @$_SESSION['systemLang']) ?>" required>
+                </div>
               </div>
-            </div>
-            <!-- admin username -->
-            <div class="mb-sm-2 mb-md-3 row">
-              <label for="username" class="col-sm-12 col-form-label text-capitalize"><?php echo language("USERNAME", @$_SESSION['systemLang']) ?></label>
-              <div class="col-sm-12 position-relative">
-                <input class="form-control w-100" type="text" name="username" id="username" placeholder="<?php echo language("USERNAME", @$_SESSION['systemLang']) ?>" onkeyup="is_valid(this, 'username');" required>
-              </div>
-            </div>
-            <!-- admin password -->
-            <div class="mb-sm-2 mb-md-3 row">
-              <label for="password" class="col-sm-12 col-form-label text-capitalize"><?php echo language("PASSWORD", @$_SESSION['systemLang']) ?></label>
-              <div class="col-sm-12 position-relative">
-                <input class="form-control w-100" type="password" name="password" id="password" placeholder="<?php echo language("PASSWORD", @$_SESSION['systemLang']) ?>" onblur="confirm_password(confirm_pass, this)" data-no-validation="true" required>
-                <i class="bi bi-eye-slash show-pass show-pass-left text-dark" id="show-pass" onclick="showPass(this)"></i>
-              </div>
-            </div>
-            <!-- confirm_pass -->
-            <div class="mb-sm-2 mb-md-3 row">
-              <label for="confirm_pass" class="col-sm-12 col-form-label text-capitalize"><?php echo language("CONFIRM PASSWORD", @$_SESSION['systemLang']) ?></label>
-              <div class="col-sm-12 position-relative">
-                <input class="form-control w-100" type="password" name="confirm_pass" id="confirm_pass" placeholder="<?php echo language("CONFIRM PASSWORD", @$_SESSION['systemLang']) ?>" onblur="confirm_password(this, password)" data-no-validation="true" required>
-                <i class="bi bi-eye-slash show-pass show-pass-left text-dark" id="show-pass" onclick="showPass(this)"></i>
+              <!-- admin gender -->
+              <div class="mb-sm-2 mb-md-3 row">
+                <label for="gender" class="col-sm-12 col-form-label text-capitalize"><?php echo language("GENDER", @$_SESSION['systemLang']) ?></label>
+                <div class="col-sm-12 position-relative">
+                  <select class="form-select" name="gender" id="gender" required>
+                    <option value="default" disabled selected><?php echo language("SELECT", @$_SESSION['systemLang']) ." ".language("GENDER", @$_SESSION['systemLang']) ?></option>
+                    <option value="0"><?php echo language("MALE", @$_SESSION['systemLang']) ?></option>
+                    <option value="1"><?php echo language("FEMALE", @$_SESSION['systemLang']) ?></option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
