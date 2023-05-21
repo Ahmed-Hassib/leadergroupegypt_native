@@ -15,10 +15,27 @@ $(document).ready(function () {
       ],
       dom: '<"#datatables-buttons.w-auto mb-2"B><".row g-3"<".col-sm-12 col-lg-6"f><".col-sm-12 col-lg-6 text-start"l>>ti<".pagination-right"p>',
       buttons: [
-        { extend: 'excel', className: 'btn btn-outline-primary fs-12 py-1', text: 'Excel' },
-        { extend: 'colvis', className: 'btn btn-outline-primary fs-12 py-1', columns: ':not(.noVis)' }
+        { extend: 'excel', className: 'btn btn-outline-primary fs-12 py-1', text: 'تحميل الجدول' },
+        { extend: 'colvis', className: 'btn btn-outline-primary fs-12 py-1', columns: ':not(.noVis)', text: 'رؤية الأعمدة' }
       ],
       columnDefs: [{ targets: [0, -1], className: 'noVis' }],
+
+      "language": {
+        "emptyTable": "لا توجد بيانات للعرض",
+        "info": "عرض _START_ الي _END_ من _TOTAL_ صف",
+        "infoEmpty": "عرض 0 الي 0 من 0 صف",
+        "infoFiltered": "(تم البحث من خلال _MAX_ صف)",
+        "lengthMenu": "عرض _MENU_ صفوف",
+        "loadingRecords": "جارى تحميل البيانات...",
+        "search": "البحث",
+        "zeroRecords": "لا توجد بيانات متطابقة للبحث المطلوب",
+        "paginate": {
+          "first": "الاول",
+          "last": "الاخير",
+          "next": "التالى",
+          "previous": "السابق"
+        },
+      }
     });
   }
 
@@ -39,7 +56,7 @@ $(document).ready(function () {
     let scroll_value = $('.dataTables_scrollBody').scrollLeft();
     $('.dataTables_scrollBody').scrollLeft(scroll_value - 150)
   })
-  
+
   // get next button
   let next_btn = $('button.scroll-next');
   // add click event
