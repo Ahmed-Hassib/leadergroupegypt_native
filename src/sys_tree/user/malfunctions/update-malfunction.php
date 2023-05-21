@@ -67,7 +67,7 @@
     <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
       <!-- start header -->
       <header class="header">
-        <?php redirectHome($msg, 'back', 10000000); ?>
+        <?php redirectHome($msg, 'back'); ?>
       </header>
     </div>
   <?php
