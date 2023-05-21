@@ -1,7 +1,8 @@
 <?php 
-
-// create an object of Pieces class
-$pcs_obj = new Pieces();
+if (!isset($pcs_obj)) {
+  // create an object of Pieces class
+  $pcs_obj = new Pieces();
+}
 // get all pieces
 $all_pieces_data = $pcs_obj->get_all_pieces($_SESSION['company_id'], 0);
 // get counter flag

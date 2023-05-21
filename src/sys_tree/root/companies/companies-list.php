@@ -54,8 +54,10 @@
       </thead>
       <tbody id="companies-table">
         <?php
-        // create an object of Company class
-        $comp_obj = new Company();
+        if (!isset($comp_obj)) {
+          // create an object of Company class
+          $comp_obj = new Company();
+        }
         // get all companies
         $all_companies = $comp_obj->get_all_companies();
         // chekc the count

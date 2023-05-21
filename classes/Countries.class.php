@@ -2,7 +2,7 @@
 /**
  * countries class
  */
-class countries extends Database {
+class Countries extends Database {
   // properties
   public $con;
 

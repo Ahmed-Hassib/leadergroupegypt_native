@@ -1,8 +1,11 @@
 <?php
 // get company id to delete his profile image
 $company_id = $_SESSION['company_id'];
-// create an object of Company class
-$company_obj = new Company();
+
+if (!isset($company_obj)) {
+  // create an object of Company class
+  $company_obj = new Company();
+}
 // delete profile image from disk
 unlink($uploads . "//companies-img/" . $_SESSION['company_id'] . "/" . $_SESSION['company_img']);
 // delete profile image

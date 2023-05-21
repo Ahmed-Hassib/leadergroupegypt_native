@@ -64,8 +64,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
   
   // if count > 0 this mean that user exist
   if ($count > 0) {
-    // create an object of Session class to set session
-    $session_obj = new Session();
+    if (!isset($session_obj)) {
+      // create an object of Session class to set session
+      $session_obj = new Session();
+    }
     // set session
     $session_obj->set_user_session($userInfo);
     // check license expiration
@@ -79,8 +81,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
     // set system language
     @$_SESSION['systemLang'] = $_POST['language'];
     $lang = $_POST['language'] == 'ar' ? 0 : 1;
-    // create an object of User class
-    $user_obj = new User();
+    if (!isset($user_obj)) {
+      // create an object of User class
+      $user_obj = new User();
+    }
     // call change_user_langugae
     $is_changed = $user_obj->change_user_language($lang, $_SESSION['UserID']);
     // reset login error variable

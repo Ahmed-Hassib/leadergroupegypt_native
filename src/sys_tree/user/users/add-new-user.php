@@ -139,7 +139,9 @@
               <select class="form-select" name="job_title_id" id="job_title_id" <?php if ($_SESSION['user_update'] == 0) {echo 'disabled';} ?> required>
                 <option value="default" selected disabled><?php echo language('JOB TITLE', @$_SESSION['systemLang']) ?></option>
                 <?php 
-                  $db_obj = new Database();
+                  if (!isset($db_obj)) {
+                    $db_obj = new Database();
+                  }
                   $job_titles = $db_obj->select_specific_column('*', "`users_job_title`", ""); ?>
                 <?php foreach ($job_titles as $job_title) { ?>
                   <option value="<?php echo $job_title['job_title_id'] ?>"><?php echo language($job_title['job_title_name'], @$_SESSION['systemLang']) ?></option>

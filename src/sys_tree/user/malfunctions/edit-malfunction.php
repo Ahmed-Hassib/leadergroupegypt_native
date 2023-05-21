@@ -1,6 +1,8 @@
 <?php 
-// create an object of Malfunction class
-$mal_obj = new Malfunction();
+if (!isset($mal_obj)) {
+  // create an object of Malfunction class
+  $mal_obj = new Malfunction();
+}
 // get malfunction id 
 $mal_id = isset($_GET['malid']) && !empty($_GET['malid']) ? intval($_GET['malid']) : 0;
 // check if malid exist
@@ -84,7 +86,7 @@ if ($is_exist_mal == true) {
                         <option><?php echo language('NOT AVAILABLE NOW', @$_SESSION['systemLang']) ?></option>
                       <?php } ?>
                     </select>
-                    <input type="hidden" name="technical-id" id="technical-id-value" value="">
+                    <input type="hidden" name="technical-id-value" id="technical-id-value" value="">
                   </div>
                 </div>
               </div>

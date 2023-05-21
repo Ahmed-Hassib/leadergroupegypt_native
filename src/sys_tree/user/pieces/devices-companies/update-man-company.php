@@ -4,9 +4,10 @@
   $company_id = isset($_POST['company-id']) && !empty($_POST['company-id']) ? $_POST['company-id'] : '';
   // get new name
   $new_company_name = isset($_POST['new-company-name']) && !empty($_POST['new-company-name']) ? $_POST['new-company-name'] : '';
-  
-  // create an object of PiecesTypes class
-  $dev_company_obj = new ManufuctureCompanies();
+  if (!isset($dev_company_obj)) {
+    // create an object of PiecesTypes class
+    $dev_company_obj = new ManufuctureCompanies();
+  }
   // check if name exist or not
   $is_exist = $dev_company_obj->is_exist("`man_company_id`", "`manufacture_companies`", $company_id);
   // check if type is exist or not

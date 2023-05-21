@@ -14,8 +14,10 @@
             <label for="updated-dir-name" class="col-sm-12 col-form-label text-capitalize"><?php echo language('THE DIRECTION', @$_SESSION['systemLang']) ?></label>
             <div class="col-sm-12 position-relative">
               <?php
-                // create an object of Direction class
-                $dir_obj = new Direction();
+                if (!isset($dir_obj)) {
+                  // create an object of Direction class
+                  $dir_obj = new Direction();
+                }
                 // get all directions 
                 $directions = $dir_obj->get_all_directions($_SESSION['company_id']);
                 $directions_info = $directions[1]; 

@@ -9,8 +9,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $device_models = isset($_POST['model']) && !empty($_POST['model']) ? $_POST['model'] : '';
   // check if company id is not empty
   if (!empty($company_id) && !empty($device_name)) {
-    // create an object of PiecesTypes class
-    $dev_company_obj = new Devices();
+    if (!isset($dev_company_obj)) {
+      // create an object of PiecesTypes class
+      $dev_company_obj = new Devices();
+    }
     // count condition
     $count_condition = "LEFT JOIN `manufacture_companies` ON `manufacture_companies`.`man_company_id` = `devices_info`.`device_company_id` WHERE `manufacture_companies`.`company_id` = " . $_SESSION['company_id'] . "AND `devices_info`.`device_name` = $device_name ";
     // check if name exist or not
@@ -26,8 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $curr_device_id = $dev_company_obj->get_latest_records("`device_id`", "`devices_info`", "", "`device_id`", "1")[0]['device_id'];
       // check model length
       if (!empty($device_models)) {
-        // create an object of Models class
-        $model_obj = new Models();
+        if (!isset($model_obj)) {
+          // create an object of Models class
+          $model_obj = new Models();
+        }
         // is inserted flag for models
         $is_inserted_models = false;
         // loop on models to insert it

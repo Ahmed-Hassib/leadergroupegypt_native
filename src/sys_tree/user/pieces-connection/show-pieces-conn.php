@@ -46,8 +46,10 @@ switch ($type) {
     break;
 }
 
-// create an object of Pieces class
-$pcs_obj = new Pieces();
+if (!isset($pcs_obj)) {
+  // create an object of Pieces class
+  $pcs_obj = new Pieces();
+}
 // get specific pieces/clients
 $pieces_info = $pcs_obj->get_spec_pieces($condition);
 // get pieces_info is_exist

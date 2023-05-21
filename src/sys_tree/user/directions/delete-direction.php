@@ -1,8 +1,10 @@
 <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
   // get direction id
   $direction_id = isset($_POST['deleted-dir-id']) && !empty($_POST['deleted-dir-id']) ? $_POST['deleted-dir-id'] : '';
-  // create an object of Direction class
-  $dir_obj = new Direction();
+  if (!isset($dir_obj)) {
+    // create an object of Direction class
+    $dir_obj = new Direction();
+  }
   // check if direction is exist
   $is_exist = $dir_obj->is_exist("`direction_id`", "`direction`", $direction_id);
   // direction name validation

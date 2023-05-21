@@ -1,8 +1,10 @@
 <?php
 // get user id
 $user_id = isset($_POST['id']) ? intval($_POST['id']) : 0; 
-// create an object of User class
-$user_obj = new User();
+if (!isset($user_obj)) {
+  // create an object of User class
+  $user_obj = new User();
+}
 // check user if exist or not
 $check = $user_obj->is_exist("`UserID`", "`users`", $user_id);
 // check
@@ -13,8 +15,10 @@ if ($check == true) {
   $is_changed = $user_obj->change_user_language($lang, $user_id);
   // check if language is changed
   if ($is_changed) {
-    // create an object of Session class
-    $session_obj = new Session();
+    if (!isset($session_obj)) {
+      // create an object of Session class
+      $session_obj = new Session();
+    }
     // get user info
     $user_details = $session_obj->get_user_info($user_id);
     // check if exist

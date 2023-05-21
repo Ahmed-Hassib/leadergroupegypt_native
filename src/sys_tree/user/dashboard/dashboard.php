@@ -43,7 +43,11 @@
             </div>
           </div>
         <?php } else { ?>
-          <?php $db_obj = new Database(); ?>
+          <?php 
+            if (!isset($db_obj)) {
+              $db_obj = new Database(); 
+            }
+          ?>
           <!-- start new design -->
           <div class="mb-3 row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3 justify-content-sm-center">
             <div class="col-6 <?php if ($_SESSION['user_show'] == 0) {echo 'd-none';} ?>">

@@ -1,8 +1,10 @@
 <?php
 // check the current users
 if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
-  // create an object of Users class
-  $user_obj = new User();
+  if (!isset($user_obj)) {
+    // create an object of User class
+    $user_obj = new User();
+  }
   // get user info from database
   $user_info = $user_obj->get_user_info($user_id, $_SESSION['company_id']);
   // counter
@@ -198,7 +200,6 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
                   <div class="col-sm-12 position-relative">
                     <select class="form-select" name="job_title_id" id="job_title_id" <?php if ($_SESSION['user_update'] == 0) {echo 'disabled';} ?> required>
                       <?php 
-                        $db_obj = new Database();
                         $job_titles = $db_obj->select_specific_column('*', "`users_job_title`", ""); ?>
                       <option value="default" <?php if ($user['job_title_id'] == 0) {echo 'selected';} ?> disabled><?php echo language('JOB TITLE', @$_SESSION['systemLang']) ?></option>
                       <?php foreach ($job_titles as $job_title) { ?>

@@ -1,8 +1,10 @@
 <?php
 // get piece / client id
 $pieceid = isset($_GET['pieceid']) && !empty($_GET['pieceid']) ? $_GET['pieceid'] : 0;
-// create an object of Malfunction class
-$mal_obj = new Malfunction();
+if (!isset($mal_obj)) {
+  // create an object of Malfunction class
+  $mal_obj = new Malfunction();
+}
 // check the piece id 
 $is_exist_piece = $mal_obj->is_exist("`id`", "`pieces_info`", $pieceid);
 // check if there are malfunctions of this piece / client

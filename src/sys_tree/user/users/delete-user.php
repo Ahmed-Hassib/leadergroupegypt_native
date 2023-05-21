@@ -1,8 +1,10 @@
 <?php
 // check if Get request userid is numeric and get the integer value
 $userid = isset($_GET['userid']) && is_numeric($_GET['userid']) ? intval($_GET['userid']) : 0;
-// create an object of User class
-$user_obj = new User();
+if (!isset($user_obj)) {
+  // create an object of User class
+  $user_obj = new User();
+}
 // check if user is exist
 $is_exist = $user_obj->is_exist("`UserID`", "`users`", $userid);
 // if user exist

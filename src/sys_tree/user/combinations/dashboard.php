@@ -4,8 +4,10 @@ $is_contain_table = true;
 $techCondition1 = "";
 $techCondition2 = "";
 
-// create an object of Combination
-$comb_obj = new Combination();
+if (!isset($comb_obj)) {
+  // create an object of Combination
+  $comb_obj = new Combination();
+}
 
 if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
   $techCondition1 = "AND `UserID` = " . $_SESSION['UserID'];

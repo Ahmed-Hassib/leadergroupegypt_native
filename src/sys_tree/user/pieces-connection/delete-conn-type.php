@@ -2,8 +2,10 @@
 <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
   // get deleted connection type id
   $conn_id = isset($_POST['deleted-conn-type-id']) && !empty($_POST['deleted-conn-type-id']) ? $_POST['deleted-conn-type-id'] : '';
-  // create an object of PiecesConn class
-  $conn_obj = new PiecesConn();
+  if (!isset($conn_obj)) {
+    // create an object of PiecesConn class
+    $conn_obj = new PiecesConn();
+  }
   // check if id is exist
   $is_exist_id = $conn_obj->is_exist("`id`", "`connection_types`", $conn_id);
   // check if type is exist or not

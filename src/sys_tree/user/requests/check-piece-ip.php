@@ -3,8 +3,10 @@
 $ip = $_GET['ip'];
 // get ip if set
 $id = isset($_GET['id']) ? $_GET['id'] : 0;
-// create an object of Pieces class
-$pcs_obj = new Pieces();
+if (!isset($pcs_obj)) {
+  // create an object of Pieces class
+  $pcs_obj = new Pieces();
+}
 // query statement
 $query = $id ==  0 ? "SELECT COUNT(`id`) FROM `pieces_info` WHERE `ip` = ? AND `company_id` = ?" : "SELECT COUNT(`id`) FROM `pieces_info` WHERE `ip` = ? AND `company_id` = ? AND `id` != ?";
 // prepare statement

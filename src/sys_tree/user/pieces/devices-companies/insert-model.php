@@ -7,8 +7,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $device_models = isset($_POST['model']) && !empty($_POST['model']) ? $_POST['model'] : '';
   // check if company id is not empty
   if (!empty($device_models) && !empty($device_id)) {
-    // create an object of PiecesTypes class
-    $model_obj = new Models();
+    if (!isset($model_obj)) {
+      // create an object of PiecesTypes class
+      $model_obj = new Models();
+    }
     // check if name exist or not
     $is_exist = $model_obj->count_records("`device_id`", "`devices_info`", $device_id);
 

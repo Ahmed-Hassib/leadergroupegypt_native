@@ -3,8 +3,10 @@
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // get company id
   $company_id = $_SESSION['company_id'];
-  // create an object of Company class
-  $company_obj = new Company();
+  if (!isset($company_obj)) {
+    // create an object of Company class
+    $company_obj = new Company();
+  }
   // get company image info
   $file_name        = $_FILES['company-img-input']['name'];
   $file_type        = $_FILES['company-img-input']['type'];
@@ -38,9 +40,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $msg = '<div class="alert alert-success text-capitalize"><i class="bi bi-check-circle-fill"></i>&nbsp;'.language('COMPANY IMAGE WAS UPDATED SUCCESSFULLY', @$_SESSION['systemLang']).'</div>';
       // log message
       $logMsg = "company image was updated successfully by " . $_SESSION['UserName'] . " at " . date('D d/m/Y h:i a');
-
-      // create an object of Session class
-      $session_obj = new Session();
+      if (!isset($session_obj)) {
+        // create an object of Session class
+        $session_obj = new Session();
+      }
       // get user info
       $user_info = $session_obj->get_user_info($_SESSION['UserID']);
       // check if done

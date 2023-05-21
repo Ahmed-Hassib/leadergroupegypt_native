@@ -14,6 +14,9 @@
             <label for="deleted-conn-type-name" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('THE TYPE', @$_SESSION['systemLang']) ?></label>
             <div class="col-sm-12 col-md-8">
               <?php
+                if (!isset($pcs_conn_obj)) {
+                  $pcs_conn_obj = new PiecesConn();
+                }
                 // get all connections data
                 $delete_connections = $pcs_conn_obj->get_all_conn_types($_SESSION['company_id']);
                 $delete_types_rows = $delete_connections[1];

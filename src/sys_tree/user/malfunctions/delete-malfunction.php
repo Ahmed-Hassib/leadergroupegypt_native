@@ -1,6 +1,8 @@
 <?php
-// create an object of Malfunction class
-$mal_obj = new Malfunction();
+if (!isset($mal_obj)) {
+  // create an object of Malfunction class
+  $mal_obj = new Malfunction();
+}
 // get malfunction id
 $mal_id = isset($_GET['mal-id']) && intval($_GET['mal-id']) ? intval($_GET['mal-id']) : 0;
 // check if the current malfunction id is exist or not

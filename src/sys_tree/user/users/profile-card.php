@@ -76,8 +76,10 @@
                   <span class="text-muted"><?php echo language('JOB TITLE', @$_SESSION['systemLang']) ?>:</span>
                   <span class="<?php echo $user['job_title_id'] == 0 ? ' text-danger' : 'text-black' ?>">
                     <?php if ($user['job_title_id']) {
-                      // create an object of Database class
-                      $db_obj = new Database();
+                      if (!isset($db_obj)) {
+                        // create an object of Database class
+                        $db_obj = new Database();
+                      }
                       // get job title
                       $job_title = $db_obj->select_specific_column("`job_title_name`", "`users_job_title`", "WHERE `job_title_id` = " . $user['job_title_id'])[0]['job_title_name'];
                     } else {

@@ -1,8 +1,11 @@
 <?php 
 // get piece full name 
 $client_name = $_GET['client-name'];
-// create an object of Pieces class
-$pcs_obj = new Pieces();
+
+if (!isset($pcs_obj)) {
+  // create an object of Pieces class
+  $pcs_obj = new Pieces();
+}
 // query statement
 $query = "SELECT COUNT(`comb_id`) FROM `combinations` WHERE `client_name` = ? AND `company_id` = ?";
 // prepare statement

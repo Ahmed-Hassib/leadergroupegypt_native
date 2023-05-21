@@ -4,8 +4,11 @@ $is_contain_table = true;
 
 $techCondition1 = "";
 $techCondition2 = "";
-// create an object of Malfunction class
-$mal_obj = new Malfunction();
+
+if (!isset($mal_obj)) {
+  // create an object of Malfunction class
+  $mal_obj = new Malfunction();
+}
 
 // check permissions
 if ($_SESSION['mal_show'] == 1) {

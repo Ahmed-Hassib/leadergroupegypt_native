@@ -4,8 +4,10 @@
   $direction_id = isset($_POST['updated-dir-id']) && !empty($_POST['updated-dir-id']) ? $_POST['updated-dir-id'] : '';
   // get direction new name
   $new_direction_name = isset($_POST['new-direction-name']) && !empty($_POST['new-direction-name']) ? $_POST['new-direction-name'] : '';
-  // create an object of Direction class
-  $dir_obj = new Direction();
+  if (!isset($dir_obj)) {
+    // create an object of Direction class
+    $dir_obj = new Direction();
+  }
   // check if direction is exist
   $is_exist = $dir_obj->is_exist("`direction_id`", "`direction`", $direction_id);
 

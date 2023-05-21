@@ -4,8 +4,10 @@
   $dir_name = isset($_POST['direction-name']) && !empty($_POST['direction-name']) ? $_POST['direction-name'] : '';
   // direction name validation
   if (!empty($dir_name)) {
-    // create an object of Direction class
-    $dir_obj = new Direction();
+    if (!isset($dir_obj)) {
+      // create an object of Direction class
+      $dir_obj = new Direction();
+    }
     // check if name is exist or not
     $is_exist = $dir_obj->count_records("`direction_id`", "`direction`", "WHERE `direction_name` = $dir_name AND `company_id` = " . $_SESSION['company_id']);
 

@@ -33,7 +33,12 @@
             <p class="text-muted "><?php echo language("HERE WILL SHOW SOME STATISTICS ABOUT THE NUMBERS OF PIECES", @$_SESSION['systemLang']) ?></p>
             <hr>
           </div>
-          <?php $pcs_obj = new Pieces(); ?>
+          <?php
+          if (!isset($pcs_obj)) {
+            // create an object of Pieces class
+            $pcs_obj = new Pieces();
+          }
+          ?>
           <div class="row row-cols-sm-1 g3">
             <div class="col-12">
               <div class="card card-stat bg-primary shadow-sm border border-1">

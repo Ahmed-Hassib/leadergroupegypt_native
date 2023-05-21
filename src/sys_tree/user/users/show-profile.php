@@ -5,8 +5,10 @@ $user_id = isset($_GET['userid']) && is_numeric($_GET['userid']) ? intval($_GET[
 $action = isset($_GET['action']) && is_numeric($_GET['action']) ? intval($_GET['action']) : 0;
 // check the current users
 if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
-  // create an object of Users class
-  $user_obj = new User();
+  if (!isset($user_obj)) {
+    // create an object of Users class
+    $user_obj = new User();
+  }
   // get user info from database
   $user_info = $user_obj->get_user_info($user_id, $_SESSION['company_id']);
   // counter

@@ -1,6 +1,8 @@
 <?php
-// create an object of Malfunctions class
-$db_obj = new Database();
+if (!isset($db_obj)) {
+    // create an object of Database class
+  $db_obj = new Database();
+}
 // get counter of employees, clients and pieces
 $emp_counter = $db_obj->count_records("`UserID`", "`users`", "WHERE `isTech` = 1 AND `company_id` = ".$_SESSION['company_id']);
 ?>

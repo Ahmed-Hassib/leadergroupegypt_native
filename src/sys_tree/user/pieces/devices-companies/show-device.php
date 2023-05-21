@@ -11,8 +11,10 @@
   <!-- add new device modal -->
 
   <?php 
-  // create an object of Devices class
-  $dev_obj = new Devices();
+  if (!isset($dev_obj)) {
+    // create an object of Devices class
+    $dev_obj = new Devices();
+  }
   // check if company is exit
   $is_exist = $dev_obj->is_exist("`device_id`", "`devices_info`", $device_id);
   // check the value
@@ -51,8 +53,10 @@
                 <div class="col-sm-12 col-md-8">
                   <select class="form-select" id="manufacture-company-id" name="manufacture-company-id" required >
                     <?php
-                    // create an object of ManufuctureCompanies class
-                    $man_company_obj = new ManufuctureCompanies();
+                    if (!isset($man_company_obj)) {
+                      // create an object of ManufuctureCompanies class
+                      $man_company_obj = new ManufuctureCompanies();
+                    }
                     // get all manufucture companies
                     $man_companies = $man_company_obj->get_all_man_companies($_SESSION['company_id']);
                     // data counter

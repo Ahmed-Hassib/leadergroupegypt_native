@@ -1,11 +1,15 @@
 
 <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
   // get device id
-  $device_id = isset($_POST['deleted-device-id']) && !empty($_POST['deleted-device-id']) ? $_POST['deleted-device-id'] : '';      
-  // create an object of PiecesTypes class
-  $device_obj = new Devices();
-  // create an object of Model class
-  $model_obj = new Models();
+  $device_id = isset($_POST['deleted-device-id']) && !empty($_POST['deleted-device-id']) ? $_POST['deleted-device-id'] : '';   
+  if (!isset($device_obj)) {
+    // create an object of PiecesTypes class
+    $device_obj = new Devices();
+  }
+  if (!isset($model_obj)) {
+    // create an object of Model class
+    $model_obj = new Models();
+  }
   // check if name exist or not
   $is_exist = $device_obj->is_exist("`device_id`", "`devices_info`", $device_id);
   // check if company is exist or not

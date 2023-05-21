@@ -30,8 +30,10 @@
       // create an empty array of comination info
       $comb_info = array();
 
-      // create an object of Combination class
-      $comb_obj = new Combination();
+      if (!isset($comb_obj)) {
+        // create an object of Combination
+        $comb_obj = new Combination();
+      }
 
       // push info into the array
       array_push($comb_info, $client_name, $client_phone, $client_addr, get_date_now(), get_time_now(), $client_notes, $tech_id, $admin_id, $_SESSION['company_id']);

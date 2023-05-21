@@ -6,8 +6,10 @@
       <?php
       // get type name
       $company_name = isset($_POST['company-name']) && !empty($_POST['company-name']) ? $_POST['company-name'] : '';
-      // create an object of PiecesTypes class
-      $dev_company_obj = new ManufuctureCompanies();
+      if (!isset($dev_company_obj)) {
+        // create an object of PiecesTypes class
+        $dev_company_obj = new ManufuctureCompanies();
+      }
       // check if name exist or not
       $is_exist = $dev_company_obj->count_records("`man_company_id`", "`manufacture_companies`", "WHERE `man_company_name` = $company_name AND `company_id` = " . $_SESSION['company_id']);
       // type name validation

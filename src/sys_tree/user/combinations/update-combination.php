@@ -1,8 +1,10 @@
 <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // final message
   $msg = '';
-  // create an object of Combination class
-  $comb_obj = new Combination();
+  if (!isset($comb_obj)) {
+    // create an object of Combination
+    $comb_obj = new Combination();
+  }
   // get update owner id
   $update_owner_id = $_SESSION['UserID'];
   // get update owner type
@@ -96,8 +98,10 @@
  * used to do only manager updates
  */
 function do_manager_updates($info) {
-  // create an object of Combination class
-  $comb_obj = new Combination();
+  if (!isset($comb_obj)) {
+    // create an object of Combination
+    $comb_obj = new Combination();
+  }
   // get combination id
   $comb_id = $info['comb-id'];
   // get combination technical id
@@ -141,8 +145,10 @@ function do_technical_updates($info) {
   $tech_comment = isset($info['comment']) ? $info['comment'] : '';
   // get combination cost
   $cost = $_POST['cost'];
-  // create an object of Combination class
-  $comb_obj = new Combination();
+  if (!isset($comb_obj)) {
+    // create an object of Combination
+    $comb_obj = new Combination();
+  }
   // get updated status
   $is_updated = $comb_obj->update_combination_tech(array($is_finished, $tech_status, get_date_now(), get_time_now(), get_date_now(), get_time_now(), $cost, $tech_comment, $comb_id));
   // return updated status
@@ -168,8 +174,10 @@ function do_after_sales_updates($info) {
   $review_comment = isset($info['review-comment']) ? $info['review-comment'] : '';
   // check if will review
   if ($tech_qty != 0 && $service_qty != 0 && $money_review != 0 && !empty($review_comment)) {
-    // create an object of Combination class
-    $comb_obj = new Combination();
+    if (!isset($comb_obj)) {
+      // create an object of Combination
+      $comb_obj = new Combination();
+    }
     // get updated status
     $is_updated = $comb_obj->update_combination_review(array(get_date_now(), get_time_now(), $money_review, $service_qty, $tech_qty, $review_comment, $comb_id));
   } else {

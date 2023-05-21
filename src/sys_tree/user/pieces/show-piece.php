@@ -5,8 +5,10 @@ $dir_id = isset($_GET['dir-id']) && is_numeric($_GET['dir-id']) ? intval($_GET['
 $src_id = isset($_GET['src-id']) && is_numeric($_GET['src-id']) ? intval($_GET['src-id']) : -1;
 // check the direction and source id
 if ($dir_id != -1 && $src_id != -1) {
-  // create an object of Pieces class
-  $pcs_obj = new Pieces();
+  if (!isset($pcs_obj)) {
+    // create an object of Pieces class
+    $pcs_obj = new Pieces();
+  }
   // get name of current devices
   $current_piece_name = $pcs_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = $src_id")[0]['full_name'];
   // condition

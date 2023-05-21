@@ -3,8 +3,11 @@
 $full_name = $_GET['fullname'];
 // check id if isset
 $id = isset($_GET['id']) ? $_GET['id'] : '';
-// create an object of Pieces class
-$pcs_obj = new Pieces();
+
+if (!isset($pcs_obj)) {
+  // create an object of Pieces class
+  $pcs_obj = new Pieces();
+}
 // query statement
 $query = isset($_GET['id']) ? "SELECT COUNT(`full_name`) FROM `pieces_info` WHERE `full_name` = ? AND `company_id` = ? AND `id` != ?"  : "SELECT COUNT(`full_name`) FROM `pieces_info` WHERE `full_name` = ? AND `company_id` = ?";
 // prepare statement

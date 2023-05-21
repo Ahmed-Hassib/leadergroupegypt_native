@@ -13,8 +13,10 @@
   <!-- second row -->
   <div class="mb-3">
     <?php
-    // create an object of User class
-    $user_obj = new User();
+    if (!isset($user_obj)) {
+      // create an object of User class
+      $user_obj = new User();
+    }
     // call get_all_users function
     $users_data = $user_obj->get_all_users($_SESSION['company_id']);
     $users_counter = $users_data[0];

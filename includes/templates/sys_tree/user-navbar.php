@@ -2,10 +2,15 @@
 <div class="sidebar-menu sidebar-menu-<?php echo @$_SESSION['systemLang'] == 'ar' ? 'right' : 'left' ?> close">
   <!-- start sidebar menu brand -->
   <div class="sidebar-menu-brand" href="dashboard.php" <?php if (!isset($_SESSION['UserName'])) { echo "style='margin: auto'"; } ?>>
-    <?php $db_obj = new Database(); ?>
-    <?php $company_img_name_db = $db_obj->select_specific_column("`company_img`", "`companies`", "WHERE `company_id` = ".$_SESSION['company_id'])[0]['company_img']; ?>
-    <?php $company_img_name = empty($company_img_name_db) ? 'leadergroupegypt.jpg' : $company_img_name_db; ?>
-    <?php $company_img_path = empty($company_img_name_db) ? $uploads . "companies-img" : $uploads . "companies-img/".$_SESSION['company_id']; ?>
+    <?php 
+    if (!isset($db_obj)) {
+      $db_obj = new Database();
+    }
+
+    $company_img_name_db = $db_obj->select_specific_column("`company_img`", "`companies`", "WHERE `company_id` = ".$_SESSION['company_id'])[0]['company_img'];
+    $company_img_name = empty($company_img_name_db) ? 'leadergroupegypt.jpg' : $company_img_name_db;
+    $company_img_path = empty($company_img_name_db) ? $uploads . "companies-img" : $uploads . "companies-img/".$_SESSION['company_id']; 
+    ?>
     <img src="<?php echo "$company_img_path/$company_img_name" ?>" class="sidebar-menu-logo-img" alt="<?php echo isset($_SESSION['company_name']) ? $_SESSION['company_name'] : language('NOT ASSIGNED') ?>" id="company-img-brand" >
     <!-- <img  src="<?php echo $assets ?>jsl.jpeg" > -->
     <span class="sidebar-menu-logo-name text-uppercase "><?php echo isset($_SESSION['company_name']) ? $_SESSION['company_name'] : language('NOT ASSIGNED') ?></span>
@@ -166,8 +171,10 @@
         </li>
         <?php } ?>
         <?php
-        // create an object of PiecesConn class
-        $pcs_conn_obj = new PiecesConn();
+        if (!isset($pcs_conn_obj)) {
+          // create an object of PiecesConn class
+          $pcs_conn_obj = new PiecesConn();
+        }
         // get all connections 
         $conn_data_types = $pcs_conn_obj->count_records("`id`", "`connection_types`", "WHERE `company_id` = ". $_SESSION['company_id']);
         ?>
@@ -330,8 +337,10 @@
             <?php if (!empty($_SESSION['job_title_id'])) { ?>
               <div class="profile-job">
                 <?php 
-                  // create an object of Database class
-                  $db_obj = new Database();
+                  if (!isset($db_obj)) {
+                    // create an object of Database class
+                    $db_obj = new Database();
+                  }
                   // get job title
                   echo $db_obj->select_specific_column("`job_title_name`", "`users_job_title`", "WHERE `job_title_id` = " . $_SESSION['job_title_id'])[0]['job_title_name'] ?>
               </div>
@@ -369,16 +378,15 @@
 </div>
 
 <div class="main-content">
-  <!-- <img src="<?php echo $assets ?>eid-mobarak-2.png" class="bg-event-img" alt=""> -->
 
-  <?php if ($preloader == true && !empty($_SESSION['phone']) && isset($_SESSION['is_activated_phone']) && $_SESSION['is_activated_phone'] == 0) { ?>
-  <div class="m-auto container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
+  <?php # if ($preloader == true && !empty($_SESSION['phone']) && isset($_SESSION['is_activated_phone']) && $_SESSION['is_activated_phone'] == 0) { ?>
+  <!-- <div class="m-auto container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
     <div class="alert alert-warning" role="alert">
       <i class="bi bi-exclamation-triangle-fill"></i>
       <span><?php echo language('HI', @$_SESSION['systemLang']) . ' ' . $_SESSION['UserName'] ?>,&nbsp;</span>
-      <span><?php echo language('YOUR PHONE NUMBER IS NOT ACTIVATED!', @$_SESSION['systemLang']) ?></span>
+      <span><?php echo language('YOUR PHONE NUMBER IS NOT ACTIVATED!', @$_SESSION['systemLang']) ?></span> -->
       <!-- <a class="alert-link" href="<?php echo $nav_up_level ?>requests/index.php?do=activate-phone-number"><?php # echo language('SEND ACTIVATION CODE', @$_SESSION['systemLang']) ?>&nbsp;<i class="bi bi-arrow-up-left-square"></i></a> -->
-      <button type="button" class="btn-close btn-close-<?php echo @$_SESSION['systemLang'] == 'ar' ? 'left' : 'right' ?>" data-bs-dismiss="alert" aria-label="Close"></button>
+      <!-- <button type="button" class="btn-close btn-close-<?php echo @$_SESSION['systemLang'] == 'ar' ? 'left' : 'right' ?>" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-  </div>
-  <?php } ?>
+  </div> -->
+  <?php # } ?>

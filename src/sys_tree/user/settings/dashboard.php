@@ -11,10 +11,14 @@
         </div>
         <!-- start company image -->
         <div class="mb-4 row" id="company-image-container">
-          <?php $db_obj = new Database(); ?>
-          <?php $company_img_name = $db_obj->select_specific_column("`company_img`", "`companies`", "WHERE `company_id` = ".$_SESSION['company_id'])[0]['company_img']; ?>
-          <?php $company_img_name = empty($company_img_name) ? 'leadergroupegypt.jpg' : $company_img_name; ?>
-          <?php $company_img_path = empty($_SESSION['company_img']) ? $uploads . "companies-img" : $uploads . "companies-img/".$_SESSION['company_id']; ?>
+          <?php 
+          if (!isset($db_obj)) {
+            $db_obj = new Database();
+          }
+          $company_img_name = $db_obj->select_specific_column("`company_img`", "`companies`", "WHERE `company_id` = ".$_SESSION['company_id'])[0]['company_img'];
+          $company_img_name = empty($company_img_name) ? 'leadergroupegypt.jpg' : $company_img_name;
+          $company_img_path = empty($_SESSION['company_img']) ? $uploads . "companies-img" : $uploads . "companies-img/".$_SESSION['company_id']; 
+          ?>
           <img src="<?php echo "$company_img_path/$company_img_name" ?>" class="company-img" alt="" id="company-img" >
           <form action="?do=change-company-img" method="POST" id="change-company-image" enctype="multipart/form-data">
             <!-- company image form -->

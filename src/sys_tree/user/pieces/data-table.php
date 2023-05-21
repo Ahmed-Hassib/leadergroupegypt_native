@@ -29,8 +29,10 @@ $stmt = $con->prepare($q);
 $stmt->execute(); // execute q2
 $rows = $stmt->fetchAll(); // fetch data
 
-// create an object of Database
-$db_obj = new Database();
+if (!isset($db_obj)) {
+  // create an object of Database
+  $db_obj = new Database();
+}
 
 ?>
 <!-- start edit profile page -->

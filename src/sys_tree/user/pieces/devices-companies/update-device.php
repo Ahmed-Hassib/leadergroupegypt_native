@@ -15,12 +15,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- start header -->
     <header class="header mb-3">
     <?php
-      // create an object of PiecesTypes class
-      $dev_company_obj = new Devices();
+      if (!isset($dev_obj)) {
+        // create an object of PiecesTypes class
+        $dev_obj = new Devices();
+      }
       // check if name exist or not
-      $is_exist_device_id   = $dev_company_obj->is_exist("`device_id`", "`devices_info`", $device_id);
-      $is_exist_device_name = $dev_company_obj->is_exist("`device_id`", "`devices_info`", $device_name);
-      $is_exist_company_id  = $dev_company_obj->is_exist("`man_company_id`", "`manufacture_companies`", $company_id);
+      $is_exist_device_id   = $dev_obj->is_exist("`device_id`", "`devices_info`", $device_id);
+      $is_exist_device_name = $dev_obj->is_exist("`device_id`", "`devices_info`", $device_name);
+      $is_exist_company_id  = $dev_obj->is_exist("`man_company_id`", "`manufacture_companies`", $company_id);
 
       // check if type is exist or not
       if ($is_exist_device_id == true && $is_exist_company_id == true) {
@@ -29,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           $msg = '<div class="alert alert-danger text-capitalize" dir=""><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;' . language('THIS NAME IS ALREADY EXIST', @$_SESSION['systemLang']) . '</div>';
         } else {
           // call insert_new_type function
-          $dev_company_obj->update_device_info($device_name, $company_id, $device_id);
+          $dev_obj->update_device_info($device_name, $company_id, $device_id);
           // echo success message
           $msg = '<div class="alert alert-success text-capitalize" dir=""><i class="bi bi-check-circle-fill"></i>&nbsp;' . language('DEVICE WAS UPDATED SUCCESSFULLY', @$_SESSION['systemLang']) . '</div>';
         }

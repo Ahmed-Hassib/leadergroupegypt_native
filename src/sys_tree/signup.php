@@ -73,8 +73,10 @@ if (isset($_SESSION['UserName'])) {
               <label for="country" class="col-sm-12 col-form-label text-capitalize"><?php echo language("COUNTRY", @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 position-relative">
                 <?php 
-                // create an object of Countries class
-                $countries_obj = new countries();
+                if (!isset($countries_obj)) {
+                  // create an object of Countries class
+                  $countries_obj = new Countries();
+                }
                 // get all countries
                 $countries = $countries_obj->get_all_countries(); 
                 // countries counter

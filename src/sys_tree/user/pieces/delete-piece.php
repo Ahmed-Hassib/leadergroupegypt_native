@@ -1,6 +1,8 @@
 <?php
-// create an object of Piece Class
-$pcs_obj = new Pieces();
+if (!isset($pcs_obj)) {
+  // create an object of Piece Class
+  $pcs_obj = new Pieces();
+}
 // check if Get request piece-id is numeric and get the integer value
 $piece_id = isset($_GET['piece-id']) && is_numeric($_GET['piece-id']) ? intval($_GET['piece-id']) : 0;
 // get piece name

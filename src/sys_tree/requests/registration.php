@@ -24,8 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $is_exist_company_name = $db_obj->is_exist("`company_name`", "`companies`", $company_name);
   // if not exist add it
   if (!$is_exist_company_name) {
-    // create an object of Registration class
-    $reg_obj = new Registration();
+    if (!isset($reg_obj)) {
+      // create an object of Registration class
+      $reg_obj = new Registration();
+    }
     // add new company
     $is_inserted_company = $reg_obj->add_new_company(array($company_name, $manager_name, $manager_phone, get_date_now()));
     // echo success message

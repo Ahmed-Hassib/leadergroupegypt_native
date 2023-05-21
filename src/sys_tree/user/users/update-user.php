@@ -1,8 +1,10 @@
 <?php
 // check the request post
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  // create an object of User class
-  $user_obj = new User();
+  if (!isset($user_obj)) {
+    // create an object of User class
+    $user_obj = new User();
+  }
 
   // get personal info from the form
   $userid             = isset($_POST['userid'])   && !empty($_POST['userid'])     ? $_POST['userid']          : '';
@@ -147,8 +149,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
       // update SESSION variables
       if ($_SESSION['UserID'] == $userid) {
-        // create an object of Session class
-        $session_obj = new Session();
+        if (!isset($session_obj)) {
+          // create an object of Session class
+          $session_obj = new Session();
+        }
         // get user info
         $user_info = $session_obj->get_user_info($userid);
         // check if done

@@ -9,8 +9,10 @@ $dbname = "eb2a_33040878_jsl_db";
 $user   = "eb2a_33040878";
 $pass   = "@hmedH@ssib";
 
-// initiate database object
-$db_obj = new Database($host, $dbname, $user, $pass);
+if (!isset($db_obj)) {
+  // initiate database object
+  $db_obj = new Database($host, $dbname, $user, $pass);
+}
 
 // connect to database
 $db_obj->db_connection();

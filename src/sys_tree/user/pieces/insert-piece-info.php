@@ -1,6 +1,8 @@
 <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  // create an object of Pieces class
-  $pcs_obj = new Pieces();
+  if (!isset($pcs_obj)) {
+    // create an object of Pieces class
+    $pcs_obj = new Pieces();
+  }
   // get latest id in pieces table
   $latest_id = intval($pcs_obj->get_latest_records("`id`", "`pieces_info`", "", "`id`", 1)[0]['id']);
   // get next id

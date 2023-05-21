@@ -1,6 +1,8 @@
 <?php
-// create an object of Database class
-$dev_comp_obj = new ManufuctureCompanies();
+if (!isset($dev_comp_obj)) {
+  // create an object of Database class
+  $dev_comp_obj = new ManufuctureCompanies();
+}
 // get all devices companies data
 $manufacture_companies = $dev_comp_obj->get_all_man_companies($_SESSION['company_id']);
 ?>

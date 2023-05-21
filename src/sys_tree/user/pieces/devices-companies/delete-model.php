@@ -5,9 +5,11 @@
     <header class="header mb-3">
       <?php
       // get model id
-      $model_id = isset($_POST['deleted-model-id']) && !empty($_POST['deleted-model-id']) ? $_POST['deleted-model-id'] : '';      
-      // create an object of Model class
-      $model_obj = new Models();
+      $model_id = isset($_POST['deleted-model-id']) && !empty($_POST['deleted-model-id']) ? $_POST['deleted-model-id'] : '';
+      if (!isset($model_obj)) {
+        // create an object of Model class
+        $model_obj = new Models();
+      }
       // check if name exist or not
       $is_exist = $model_obj->is_exist("`model_id`", "`devices_model`", $model_id);
       // check if company is exist or not

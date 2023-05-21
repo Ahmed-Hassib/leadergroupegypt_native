@@ -102,8 +102,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   
   // check if empty form error
   if (empty($formErorr)) {
-    // create an object of User class
-    $user_obj = new User();
+    if (!isset($user_obj)) {
+      // create an object of User class
+      $user_obj = new User();
+    }
     // check if user is exist in database or not
     $is_exist_user  = $user_obj->is_exist("`UserName`", "`users`", $username);
     // check the counter

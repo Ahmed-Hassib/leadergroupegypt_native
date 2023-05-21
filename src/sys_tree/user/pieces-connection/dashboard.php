@@ -40,8 +40,10 @@
             <hr>
           </div>
           <?php 
-          // create an object of PiecesConn class
-          $conn_obj = new PiecesConn();
+          if (!isset($conn_obj)) {
+            // create an object of PiecesConn class
+            $conn_obj = new PiecesConn();
+          }
           // get all connections 
           $conn_data = $conn_obj->get_all_conn_types($_SESSION['company_id']);
           // data counter

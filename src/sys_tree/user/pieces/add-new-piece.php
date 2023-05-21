@@ -169,8 +169,10 @@
                     <div class="col-sm-12 position-relative">
                       <select class="form-select" id="direction" name="direction" required onchange="get_sources(this, <?php echo $_SESSION['company_id'] ?>, '<?php echo $dirs . $_SESSION['company_name'] ?>', ['sources', 'alternative-sources']);">
                         <?php
-                        // create an object of Direction class
-                        $dir_obj = new Direction();
+                        if (!isset($dir_obj)) {
+                          // create an object of Direction class
+                          $dir_obj = new Direction();
+                        }
                         // get all directions
                         $dirs = $dir_obj->get_all_directions($_SESSION['company_id']);
                         // counter

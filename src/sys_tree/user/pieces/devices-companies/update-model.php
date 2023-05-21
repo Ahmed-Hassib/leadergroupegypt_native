@@ -13,8 +13,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- start header -->
     <header class="header mb-3">
       <?php
-      // create an object of Model class
-      $model_obj = new Models();
+      if (!isset($model_obj)) {
+        // create an object of Model class
+        $model_obj = new Models();
+      }
       // check if name exist or not
       $is_exist_model_id   = $model_obj->is_exist("`model_id`", "`devices_model`", $model_id);
       $is_exist_model_name = $model_obj->count_records("`model_id`", "`devices_model`", "WHERE `model_id` <> $model_id AND `model_name` = $model_name");

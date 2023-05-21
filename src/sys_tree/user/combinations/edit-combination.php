@@ -1,8 +1,10 @@
 <?php
 // get malfunction id 
 $comb_id = isset($_GET['combid']) && !empty($_GET['combid']) ? intval($_GET['combid']) : 0;
-// create an object of Combination class
-$comb_obj = new Combination();
+if (!isset($comb_obj)) {
+  // create an object of Combination
+  $comb_obj = new Combination();
+}
 // check if combid exist
 $is_exist = $comb_obj->is_exist("`comb_id`", "`combinations`", $comb_id);
 // check

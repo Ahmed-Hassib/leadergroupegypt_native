@@ -24,8 +24,10 @@
             <hr>
           </div>
           <?php 
-            // create an object of Pieces class
-            $pcs_obj = new Pieces();
+            if (!isset($pcs_obj)) {
+              // create an object of Pieces class
+              $pcs_obj = new Pieces();
+            }
           ?>
           <div class="row row-cols-sm-1 g-3">
             <div class="col-12">

@@ -3,8 +3,10 @@
   $conn_type_name = isset($_POST['conn-type-name']) && !empty($_POST['conn-type-name']) ? $_POST['conn-type-name'] : '';
   // get connection type notes
   $conn_type_note = isset($_POST['conn-type-note']) && !empty($_POST['conn-type-note']) ? $_POST['conn-type-note'] : '';
-  // create an object of PiecesConn class
-  $conn_obj = new PiecesConn();
+  if (!isset($conn_obj)) {
+    // create an object of PiecesConn class
+    $conn_obj = new PiecesConn();
+  }
   // type name validation
   if (!empty($conn_type_name)) {
     // check if connection name is exist

@@ -13,8 +13,10 @@
   <?php 
   // get devices company id
   $dev_company_id = isset($_GET['dev-company-id']) && !empty($_GET['dev-company-id']) ? intval($_GET['dev-company-id']) : 0;
-  // create an object of Devices class
-  $dev_obj = new Devices();
+  if (!isset($dev_obj)) {
+    // create an object of Devices class
+    $dev_obj = new Devices();
+  }
   // get company name
   @$dev_company_name = $dev_obj->select_specific_column("`man_company_name`", "`manufacture_companies`", "WHERE `man_company_id` = " . $dev_company_id)[0]['man_company_name'];
   // check if company is exit

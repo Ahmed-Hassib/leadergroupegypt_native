@@ -1,7 +1,9 @@
 <?php
 $is_contain_table = true;
-// create an object of Malfunction class
-$mal_obj = new Malfunction();
+if (!isset($mal_obj)) {
+  // create an object of Malfunction class
+  $mal_obj = new Malfunction();
+}
 // period value
 $action = isset($_GET['period']) && !empty($_GET['period']) ? $_GET['period'] : 'all';
 // malStatus of combination

@@ -1,8 +1,10 @@
 <?php
 // get combination id
 $comb_id = isset($_GET['comb-id']) && intval($_GET['comb-id']) ? intval($_GET['comb-id']) : 0;
-// create an object of Combination class
-$comb_obj = new Combination();
+if (!isset($comb_obj)) {
+  // create an object of Combination
+  $comb_obj = new Combination();
+}
 // check if the current combination id is exist or not
 $is_exist = $comb_obj->is_exist("`comb_id`", "`combinations`", $comb_id);
 

@@ -5,8 +5,10 @@ if (isset($_SESSION) && $_SESSION['isTech'] == 0) {
   $new_version_id = $_GET['new-version-id'];
   // compare between current version and new version
   if ($new_version_id != $_SESSION['curr_version_id']) {
-    // create an object of Companies class
-    $cmp_obj = new Company();
+    if (!isset($cmp_obj)) {
+      // create an object of Companies class
+      $cmp_obj = new Company();
+    }
     // call upgrade version function
     $upgrade_info = $cmp_obj->upgrade_version($new_version_id, $_SESSION['company_id']);
     // is_upgraded
@@ -19,8 +21,11 @@ if (isset($_SESSION) && $_SESSION['isTech'] == 0) {
     } else {
       $msg = '<div>'.language('A PROPLEM HAS BEEN HAPPEND WHILE UPGRADING VERSION', @$_SESSION['systemLang']).'</div>';
     }
-    // create an object of Session class
-    $session_obj = new Session();
+
+    if (!isset($session_obj)) {
+      // create an object of Session class
+      $session_obj = new Session();
+    }
     // get user info
     $user_info = $session_obj->get_user_info($_SESSION['UserID']);
     // check if done

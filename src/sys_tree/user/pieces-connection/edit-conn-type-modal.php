@@ -14,6 +14,9 @@
             <label for="old-conn-type-name" class="col-sm-12 col-form-label text-capitalize"><?php echo language('THE OLD NAME', @$_SESSION['systemLang']) ?></label>
             <div class="col-sm-12 position-relative">
               <?php 
+              if (!isset($pcs_conn_obj)) {
+                $pcs_conn_obj = new PiecesConn();
+              }
               // get all connections data
               $edit_connections = $pcs_conn_obj->get_all_conn_types($_SESSION['company_id']);
               $edit_types_rows = $edit_connections[1]; 

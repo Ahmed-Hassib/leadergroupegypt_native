@@ -1,8 +1,10 @@
 <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // final message
   $msg = '';
-  // create an object of Malfunction class
-  $mal_obj = new Malfunction();
+  if (!isset($mal_obj)) {
+    // create an object of Malfunction class
+    $mal_obj = new Malfunction();
+  }
   // get update owner id
   $update_owner_id = $_SESSION['UserID'];
   // get update owner type
@@ -35,6 +37,7 @@
           */
         case 1:
         case 3:
+        case 4:
           do_manager_updates($_POST);
           do_after_sales_updates($_POST);
           break;
@@ -64,7 +67,7 @@
     <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
       <!-- start header -->
       <header class="header">
-        <?php redirectHome($msg, 'back'); ?>
+        <?php redirectHome($msg, 'back', 10000000); ?>
       </header>
     </div>
   <?php
@@ -85,12 +88,14 @@
  * used to do only manager updates
  */
 function do_manager_updates($info) {
-  // create an object of Malfunction class
-  $mal_obj = new Malfunction();
+  if (!isset($mal_obj)) {
+    // create an object of Malfunction class
+    $mal_obj = new Malfunction();
+  }
   // get malfunction id
   $mal_id = $info['mal-id'];
   // get malfunction technical id
-  $tech_id = $info['tech-id'];
+  $tech_id = $info['technical-id-value'];
   // get malfunction description
   $descreption = $info['descreption'];
   // get previous malfunction tecnical id
@@ -125,8 +130,10 @@ function do_technical_updates($info) {
   $tech_comment_status = isset($info['tech-status-comment']) ? $info['tech-status-comment'] : '';
   // get malfunction cost
   $cost = $_POST['cost'];
-  // create an object of Malfunction class
-  $mal_obj = new Malfunction();
+  if (!isset($mal_obj)) {
+    // create an object of Malfunction class
+    $mal_obj = new Malfunction();
+  }
   // get updated status
   $mal_obj->update_malfunction_tech(array($mal_status, $cost, get_date_now(), get_time_now(), $tech_comment, $tech_comment_status, $tech_status, $mal_id));
 }
@@ -138,8 +145,10 @@ function do_technical_updates($info) {
  * used to upload media to database
  */
 function upload_malfunction_media($media_files, $mal_id, $path) {
-  // create an object of Malfunction class
-  $mal_obj = new Malfunction();
+  if (!isset($mal_obj)) {
+    // create an object of Malfunction class
+    $mal_obj = new Malfunction();
+  }
   // files names
   $files_names = $media_files['mal-media']['name'];
   // files tmp name
@@ -192,8 +201,10 @@ function do_after_sales_updates($info) {
   $review_comment = isset($info['review-comment']) ? $info['review-comment'] : '';
   // check if will review
   if ($tech_qty != 0 && $service_qty != 0 && $money_review != 0) {
-    // create an object of Malfunction class
-    $mal_obj = new Malfunction();
+    if (!isset($mal_obj)) {
+      // create an object of Malfunction class
+      $mal_obj = new Malfunction();
+    }
     // get updated status
     $mal_obj->update_malfunction_review(array(get_date_now(), get_time_now(), $money_review, $service_qty, $tech_qty, $review_comment, $mal_id));
   }

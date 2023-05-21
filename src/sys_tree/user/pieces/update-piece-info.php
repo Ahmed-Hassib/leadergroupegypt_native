@@ -81,8 +81,10 @@
     $alt_source_id = 0;
   }
   
-  // create an object of Piece class
-  $pcs_obj = new Pieces();
+  if (!isset($pcs_obj)) {
+    // create an object of Pieces class
+    $pcs_obj = new Pieces();
+  }
 
   $msg = '';
   // check if empty form error

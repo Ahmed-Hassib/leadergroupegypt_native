@@ -5,8 +5,10 @@
   $new_conn_name = isset($_POST['new-conn-type-name']) && !empty($_POST['new-conn-type-name']) ? $_POST['new-conn-type-name'] : '';
   // get connection type notes
   $new_conn_note = isset($_POST['new-conn-type-note']) && !empty($_POST['new-conn-type-note']) ? $_POST['new-conn-type-note'] : '';
-  // create an object of PiecesConn class
-  $conn_obj = new PiecesConn();
+  if (!isset($conn_obj)) {
+    // create an object of PiecesConn class
+    $conn_obj = new PiecesConn();
+  }
   // check the type exist to update 
   $is_exist = $conn_obj->is_exist("`id`", "`connection_types`", $conn_id);
   // type name validation
