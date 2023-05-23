@@ -64,7 +64,7 @@ if ($page_category == 'sys_tree' && $page_role != 'sys_tree_login' && $page_role
   }
   
   // include edit connection type modal
-  if ($conn_data_types > 0) {
+  if (isset($conn_data_types) && $conn_data_types > 0) {
     if ($_SESSION['connection_update'] == 1) {
       include_once $nav_up_level . 'pieces-connection/edit-conn-type-modal.php';
     }

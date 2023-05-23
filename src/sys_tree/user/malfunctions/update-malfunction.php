@@ -26,7 +26,7 @@
       $mal_info = $stored_basics_info[1][0];
       // get new malfunction info
       $manager_id   = $_POST['admin-id'];
-      $tech_id      = $_POST['technical-id'];
+      $tech_id      = $_POST['technical-id-value'];
 
       // check who is doing the update
       switch ($update_owner_job_id) {
