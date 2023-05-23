@@ -58,7 +58,7 @@ if (isset($_SESSION['UserName'])) {
             <div class="mb-sm-2 mb-md-3 row">
               <label for="company-name" class="col-sm-12 col-form-label text-capitalize"><?php echo language("COMPANY NAME", @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 position-relative">
-                <input class="form-control w-100" type="text" name="company-name" id="company-name" placeholder="<?php echo language("COMPANY NAME", @$_SESSION['systemLang']) ?>" onkeyup="is_valid(this, 'company');" required>
+                <input class="form-control w-100" type="text" name="company-name" id="company-name" placeholder="<?php echo language("COMPANY NAME", @$_SESSION['systemLang']) ?>" onblur="is_valid(this, 'company');" required>
               </div>
             </div>
             <!-- manager name -->
@@ -122,7 +122,7 @@ if (isset($_SESSION['UserName'])) {
               <div class="mb-sm-2 mb-md-3 row">
                 <label for="username" class="col-sm-12 col-form-label text-capitalize"><?php echo language("USERNAME", @$_SESSION['systemLang']) ?></label>
                 <div class="col-sm-12 position-relative">
-                  <input class="form-control w-100" type="text" name="username" id="username" placeholder="<?php echo language("USERNAME", @$_SESSION['systemLang']) ?>" onkeyup="is_valid(this, 'username');" required>
+                  <input class="form-control w-100" type="text" name="username" id="username" placeholder="<?php echo language("USERNAME", @$_SESSION['systemLang']) ?>" onblur="is_valid(this, 'username');" required>
                 </div>
               </div>
               <!-- admin password -->

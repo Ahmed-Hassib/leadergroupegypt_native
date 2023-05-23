@@ -58,7 +58,7 @@ $pcs_counter = $db_obj->count_records("`id`", "`pieces_info`", "WHERE `company_i
                 <option  value="default" disabled selected><?php echo language('SELECT', @$_SESSION['systemLang'])." ".language('TECHNICAL NAME', @$_SESSION['systemLang']) ?></option>
                 <?php 
                 // get Employees ID and Names
-                $usersRows = $db_obj->select_specific_column("`UserID`, `UserName`", "`users`", "WHERE `isTech` = 1 AND AND `job_title_id` = 2 AND `company_id` = ".$_SESSION['company_id']);
+                $usersRows = $db_obj->select_specific_column("`UserID`, `UserName`", "`users`", "WHERE `isTech` = 1 AND `job_title_id` = 2 AND `company_id` = ".$_SESSION['company_id']);
                 // check the length of result
                 if (count($usersRows) > 0) {
                   // loop on result ..

@@ -63,23 +63,42 @@ function username_validation(input) {
   // get input value
   let value = input.value;
   // get addon wrapping 
-  let addon_wrapping = document.querySelector("#addon-wrapping");
+  let alerts = document.querySelector("div.alert");
   // check value length
   if (value.length > 0) {
     // check if name has a white space
-    if (value.match(/^[a-z\-]+$/)) {
-      // put company alias into addo wrapping
-      // addon_wrapping.textContent = `@${value.trim()}`;
-      // add valid class to input
-      input.classList.contains("is-invalid") ? input.classList.replace("is-invalid", "is-valid") : input.classList.add("is-valid")
-      // set valid attribute true
-      input.dataset.valid = true;
-    } else {
-      // add invalid class to input
-      input.classList.contains("is-valid") ? input.classList.replace("is-valid", "is-invalid") : input.classList.add("is-invalid")
-      // set valid attribute false
-      input.dataset.valid = false;
-    }
+    // if (value.match(/^[a-z\-]+$/)) {
+      // get request to check if comapny name is exits
+      $.get(`requests/index.php?do=check-company-name&name=${value}`, (data) => {
+        // converted data
+        let is_exist = $.parseJSON(data);
+        // if exist
+        if (is_exist) {
+          // add valid class to input
+          input.classList.contains("is-valid") ? input.classList.replace("is-valid", "is-invalid") : input.classList.add("is-invalid")
+          // set valid attribute true
+          input.dataset.valid = true;
+          alert = create_alert('warn', 'اسم مستخدم موجود بالفعل!', 'w-100');
+        } else {
+          // add valid class to input
+          input.classList.contains("is-invalid") ? input.classList.replace("is-invalid", "is-valid") : input.classList.add("is-valid")
+          // set valid attribute true
+          input.dataset.valid = true;
+          alert = create_alert('success', 'اسم مستخدم صالح!', 'w-100');
+        }
+
+        if (input.parentElement.contains(alerts)) {
+          alerts.remove();
+        }
+        
+        input.parentElement.appendChild(alert)
+      })
+    // } else {
+    //   // add invalid class to input
+    //   input.classList.contains("is-valid") ? input.classList.replace("is-valid", "is-invalid") : input.classList.add("is-invalid")
+    //   // set valid attribute false
+    //   input.dataset.valid = false;
+    // }
   } else {
     // remove all classes
     input.classList.remove('is-valid', 'is-invalid')
@@ -122,11 +141,11 @@ function confirm_password(confirm_pass, pass) {
   }
 }
 
-function create_alert(type, message) {
+function create_alert(type, message, width = 'w-50') {
   // create alert container
   let alert_container = document.createElement('div');
   // add alert classes
-  alert_container.classList.add('alert', (type == 'warn' ? 'alert-warning' : 'alert-success'), 'w-50', 'mx-auto', 'my-1');
+  alert_container.classList.add('alert', (type == 'warn' ? 'alert-warning' : 'alert-success'), width, 'mx-auto', 'my-1');
   // add alert role
   alert_container.role = 'alert';
   // create a text node
