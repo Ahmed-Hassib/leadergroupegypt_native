@@ -14,11 +14,11 @@ if ($is_exist == true) {
   // select type of the given id
   $src_piece = $pcs_obj->select_specific_column("`is_client`", "`pieces_info`", "WHERE `id` = $piece_id")[0]['is_client'];
   // check the piece type
-  if ($src_piece != 4) {
-      // check if the piece have a children or not
-      $count_child = $pcs_obj->count_records("`piece_id`", "`pieces_info`", "WHERE `source_id` = $piece_id");
+  if ($src_piece != 1) {
+    // check if the piece have a children or not
+    $count_child = $pcs_obj->count_records("`piece_id`", "`pieces_info`", "WHERE `source_id` = $piece_id");
   } else {
-      $count_child = 0;
+    $count_child = 0;
   }
 ?>
   <!-- start edit profile page -->
