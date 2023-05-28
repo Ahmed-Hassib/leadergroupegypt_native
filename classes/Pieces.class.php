@@ -148,18 +148,18 @@ class Pieces extends Database {
   // delete piece
   public function delete_piece($id) {
     // delete query
-    $delete_query  = "DELETE FROM `pieces_addr`             WHERE `id` = ?;";
-    $delete_query .= "DELETE FROM `pieces_frequency`        WHERE `id` = ?;";
-    $delete_query .= "DELETE FROM `pieces_info`             WHERE `id` = ?;";
-    $delete_query .= "DELETE FROM `pieces_mac_addr`         WHERE `id` = ?;";
-    $delete_query .= "DELETE FROM `pieces_pass_connection`  WHERE `id` = ?;";
-    $delete_query .= "DELETE FROM `pieces_phone`            WHERE `id` = ?;";
-    $delete_query .= "DELETE FROM `pieces_ssid`             WHERE `id` = ?;";
-    $delete_query .= "DELETE FROM `pieces_waves`            WHERE `id` = ?;";
-    $delete_query .= "DELETE FROM `pieces_internet_source`  WHERE `id` = ?;";
+    $delete_query  = "DELETE FROM `pieces_addr`             WHERE `id`        = ?;";
+    $delete_query .= "DELETE FROM `pieces_frequency`        WHERE `id`        = ?;";
+    $delete_query .= "DELETE FROM `pieces_info`             WHERE `id`        = ?;";
+    $delete_query .= "DELETE FROM `pieces_mac_addr`         WHERE `id`        = ?;";
+    $delete_query .= "DELETE FROM `pieces_pass_connection`  WHERE `id`        = ?;";
+    $delete_query .= "DELETE FROM `pieces_phone`            WHERE `id`        = ?;";
+    $delete_query .= "DELETE FROM `pieces_ssid`             WHERE `id`        = ?;";
+    $delete_query .= "DELETE FROM `pieces_waves`            WHERE `id`        = ?;";
+    $delete_query .= "DELETE FROM `pieces_internet_source`  WHERE `id`        = ?;";
     // prepare query
     $stmt = $this->con->prepare($delete_query);
-    $stmt->execute(array($id, $id, $id, $id, $id, $id, $id, $id));
+    $stmt->execute(array($id, $id, $id, $id, $id, $id, $id, $id, $id));
     $pcs_count =  $stmt->rowCount();       // count effected rows
     // return result
     return $pcs_count > 0 ? true : false;

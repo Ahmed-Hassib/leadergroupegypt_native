@@ -462,7 +462,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
           <?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
         </button>
         <!-- delete button -->
-        <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deletePieceModal" data-piece-id="<?php echo $piece_data['id'] ?>">
+        <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deletePieceModal" data-piece-id="<?php echo $piece_data['id'] ?>" data-piece-name="<?php echo $piece_data['full_name'] ?>" data-page-title="<?php echo $page_title ?>" onclick="confirm_delete_piece(this)">
             <i class="bi bi-trash"></i>
             <?php echo language('DELETE', @$_SESSION['systemLang']); ?>
         </button>
