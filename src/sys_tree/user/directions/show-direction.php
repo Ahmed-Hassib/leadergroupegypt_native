@@ -4,7 +4,7 @@ $dir_id = isset($_GET['dir-id']) && is_numeric($_GET['dir-id']) ? intval($_GET['
 // 
 $dir_name = selectSpecificColumn("`direction_name`", "`direction`", "WHERE `direction_id` = $dir_id")[0]['direction_name'];
 // query select
-$q = "SELECT `pieces_info`.`id`, `pieces_info`.`ip`, `pieces_info`.`full_name`, `pieces_info`.`source_id`, `direction`.`direction_name`, `direction`.`direction_id` FROM `pieces_info` LEFT JOIN `direction` ON `direction`.`direction_id` = `pieces_info`.`direction_id` WHERE `pieces_info`.`direction_id` = ? AND `pieces_info`.`is_client` = 0 AND `pieces_info`.`company_id` = ?";
+$q = "SELECT `pieces_info`.`id`, `pieces_info`.`ip`, `pieces_info`.`full_name`, `pieces_info`.`source_id`, `direction`.`direction_name`, `direction`.`direction_id` FROM `pieces_info` LEFT JOIN `direction` ON `direction`.`direction_id` = `pieces_info`.`direction_id` WHERE `pieces_info`.`direction_id` = ? AND `pieces_info`.`is_client` != 1 AND `pieces_info`.`company_id` = ?";
 
 $stmt = $con->prepare($q);          // select all users
 $stmt->execute(array($dir_id, $_SESSION['company_id']));      // execute data

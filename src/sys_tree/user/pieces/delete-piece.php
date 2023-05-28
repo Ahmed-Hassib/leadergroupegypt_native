@@ -11,15 +11,8 @@ $piece_name = $pcs_obj->select_specific_column("`full_name`", "`pieces_info`", "
 $is_exist = $pcs_obj->is_exist("`id`", "`pieces_info`", $piece_id);
 // check if exist
 if ($is_exist == true) {
-  // select type of the given id
-  $src_piece = $pcs_obj->select_specific_column("`is_client`", "`pieces_info`", "WHERE `id` = $piece_id")[0]['is_client'];
-  // check the piece type
-  if ($src_piece != 1) {
-    // check if the piece have a children or not
-    $count_child = $pcs_obj->count_records("`piece_id`", "`pieces_info`", "WHERE `source_id` = $piece_id");
-  } else {
-    $count_child = 0;
-  }
+  // check if the piece have a children or not
+  $count_child = $pcs_obj->count_records("`id`", "`pieces_info`", "WHERE `source_id` = $piece_id AND `company_id` = ".$_SESSION['company_id']);
 ?>
   <!-- start edit profile page -->
   <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
