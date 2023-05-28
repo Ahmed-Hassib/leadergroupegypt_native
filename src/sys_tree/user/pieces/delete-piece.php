@@ -36,7 +36,7 @@ if ($is_exist == true) {
         $logMsg = "You cannot delete the piece because it hase more than 1 child..";
         createLogs($_SESSION['UserName'], $logMsg, 2);
         $msg = '<div class="alert alert-danger text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;'. language('YOU CANNOT DELETE THIS PIECE BECAUSE IT HAVE MORE THAN 1 CHILD', @$_SESSION['systemLang']) .'</div>';
-        redirectHome($msg, 'back');
+        redirectHome($msg, 'back', 5);
       } ?>
     </header>
     <!-- end header  -->
