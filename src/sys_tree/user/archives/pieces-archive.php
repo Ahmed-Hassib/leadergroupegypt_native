@@ -80,7 +80,7 @@
                     <i class="bi bi-calendar-month"></i>
                     <span class="nums">
                       <a href="?do=piecesArchive&type=pieces&added_date=<?php echo $row['added_date'] ?>" class="stretched-link">
-                        <?php $piecesNum = countRecords("`piece_id`", "`pieces`", "WHERE `added_date` = '".$row['added_date']."' AND `pieces`.`type_id` != 4") ?>
+                        <?php $piecesNum = countRecords("`id`", "`pieces`", "WHERE `added_date` = '".$row['added_date']."' AND `pieces`.`type_id` != 4") ?>
                         <span> <?php echo $row['added_date'] ?></span><br>
                         <span class="fs-16" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
                           <span class="text-capitalize"><?php echo language("TOTAL", @$_SESSION['systemLang']) . " " . language("PIECES", @$_SESSION['systemLang']) ?> = </span>
@@ -119,7 +119,7 @@
                     <i class="bi bi-calendar-month"></i>
                     <span class="nums">
                       <a href="?do=piecesArchive&type=clients&added_date=<?php echo $row['added_date'] ?>" class="stretched-link">
-                        <?php $clientsNum = countRecords("`piece_id`", "`pieces`", "WHERE `added_date` = '".$row['added_date']."' AND `pieces`.`type_id` = 4") ?>
+                        <?php $clientsNum = countRecords("`id`", "`pieces`", "WHERE `added_date` = '".$row['added_date']."' AND `pieces`.`type_id` = 4") ?>
                         <span> <?php echo $row['added_date'] ?></span><br>
                         <span class="fs-16" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
                           <span class="text-capitalize"><?php echo language("TOTAL", @$_SESSION['systemLang']) . " " . language("CLIENTS", @$_SESSION['systemLang']) ?> = </span>
@@ -180,9 +180,9 @@
             `pieces_additional`.`device_type`
           FROM 
             `pieces`
-          LEFT JOIN `pieces_addr` ON `pieces_addr`.`piece_id` = `pieces`.`piece_id` 
-          LEFT JOIN `pieces_phone` ON `pieces_phone`.`piece_id` = `pieces`.`piece_id`
-          LEFT JOIN `pieces_additional` ON `pieces_additional`.`piece_id` = `pieces`.`piece_id`
+          LEFT JOIN `pieces_addr` ON `pieces_addr`.`id` = `pieces`.`id` 
+          LEFT JOIN `pieces_phone` ON `pieces_phone`.`id` = `pieces`.`id`
+          LEFT JOIN `pieces_additional` ON `pieces_additional`.`id` = `pieces`.`id`
           WHERE 
             `type_id` != 4 AND `added_date` = '".$added_date."'
           ORDER BY 
@@ -318,13 +318,13 @@
               <?php $index = $startFrom; ?>
               <?php foreach ($rows as $row) { ?>
                 <tr>
-                  <td class="d-none"><?php echo $row['piece_id']; ?></td>
+                  <td class="d-none"><?php echo $row['id']; ?></td>
                   <td><?php echo ++$index; ?></td>
                   <td data-ip="<?php echo convertIP($row['piece_ip']) ?>"><?php echo $row['piece_ip'] == 1 ? 'لا يوجد' :"<a href='http://" . $row['piece_ip'] . "' target='_blank'>" . $row['piece_ip'] . '</a>'; ?></td>
                   <td class="<?php echo !empty($row['mac_add']) ? "" : "text-danger " ?>"><?php echo !empty($row['mac_add']) ? $row['mac_add'] : language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></td>
                   <td><?php echo $row['piece_name']; ?></td>
                   <td>
-                    <a href="pieces.php?do=edit-piece&piece-id=<?php echo $row['piece_id']; ?>">
+                    <a href="pieces.php?do=edit-piece&piece-id=<?php echo $row['id']; ?>">
                       <?php echo $row['username']; ?>
                     </a>
                   </td>
@@ -338,7 +338,7 @@
                       <p class="text-danger "><?php echo language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></p>
                     <?php } ?>
                   </td>
-                  <?php $sourceip = $row['source_id'] == 0 ? $row['piece_ip'] : selectSpecificColumn('piece_ip','pieces','WHERE piece_id = ' . $row['source_id'])[0]['piece_ip']; ?>
+                  <?php $sourceip = $row['source_id'] == 0 ? $row['piece_ip'] : selectSpecificColumn('piece_ip','pieces','WHERE id = ' . $row['source_id'])[0]['piece_ip']; ?>
                   <td data-ip="<?php echo convertIP($sourceip) ;?>"> 
                     <?php echo '<a href="http://' . $sourceip . '" target="">' . $sourceip . '</a>'; ?>
                   </td>
@@ -379,9 +379,9 @@
                   <td><?php echo $row['added_date'] == '0000-00-00' ? language("NO DATA ENTERED", @$_SESSION['systemLang']) : $row['added_date'] ?></td>
                   <td><?php echo selectSpecificColumn("`UserName`", "`users`", "WHERE `UserID` = ". $row['added_by'])[0]["UserName"]; ?></td>
                   <td>
-                    <a class="btn btn-success text-capitalize fs-12 <?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="pieces.php?do=edit-piece&piece-id=<?php echo $row['piece_id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
+                    <a class="btn btn-success text-capitalize fs-12 <?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="pieces.php?do=edit-piece&piece-id=<?php echo $row['id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
                     <?php if ($row['type_id'] != 4) { ?>
-                      <a class="btn btn-outline-primary text-capitalize fs-12 <?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>" href="?do=show-piece&dir-id=<?php echo $row['direction_id'] ?>&srcId=<?php echo $row['piece_id'] ?>" ><i class="bi bi-eye"></i><!-- <?php echo language('SHOW', @$_SESSION['systemLang']).' '.language('PIECES', @$_SESSION['systemLang']) ?> --></a>
+                      <a class="btn btn-outline-primary text-capitalize fs-12 <?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>" href="?do=show-piece&dir-id=<?php echo $row['direction_id'] ?>&srcId=<?php echo $row['id'] ?>" ><i class="bi bi-eye"></i><!-- <?php echo language('SHOW', @$_SESSION['systemLang']).' '.language('PIECES', @$_SESSION['systemLang']) ?> --></a>
                     <?php } ?>
                     <?php if ($row['piece_ip'] != 1) { ?>
                       <button class="btn btn-outline-secondary text-capitalize fs-12" onclick="ping(this)" value="<?php echo $row['piece_ip']; ?>">ping</button>
@@ -441,9 +441,9 @@
             `pieces_additional`.`device_type`
           FROM 
             `pieces`
-          LEFT JOIN `pieces_addr` ON `pieces_addr`.`piece_id` = `pieces`.`piece_id` 
-          LEFT JOIN `pieces_phone` ON `pieces_phone`.`piece_id` = `pieces`.`piece_id`
-          LEFT JOIN `pieces_additional` ON `pieces_additional`.`piece_id` = `pieces`.`piece_id`
+          LEFT JOIN `pieces_addr` ON `pieces_addr`.`id` = `pieces`.`id` 
+          LEFT JOIN `pieces_phone` ON `pieces_phone`.`id` = `pieces`.`id`
+          LEFT JOIN `pieces_additional` ON `pieces_additional`.`id` = `pieces`.`id`
           WHERE 
             `type_id` = 4 AND `added_date` = '".$added_date."'
           ORDER BY 
@@ -579,13 +579,13 @@
               <?php $index = $startFrom; ?>
               <?php foreach ($rows as $row) { ?>
                 <tr>
-                  <td class="d-none"><?php echo $row['piece_id']; ?></td>
+                  <td class="d-none"><?php echo $row['id']; ?></td>
                   <td><?php echo ++$index; ?></td>
                   <td data-ip="<?php echo convertIP($row['piece_ip']) ?>"><?php echo $row['piece_ip'] == 1 ? 'لا يوجد' :"<a href='http://" . $row['piece_ip'] . "' target='_blank'>" . $row['piece_ip'] . '</a>'; ?></td>
                   <td class="<?php echo !empty($row['mac_add']) ? "" : "text-danger " ?>"><?php echo !empty($row['mac_add']) ? $row['mac_add'] : language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></td>
                   <td><?php echo $row['piece_name']; ?></td>
                   <td>
-                    <a href="pieces.php?do=edit-piece&piece-id=<?php echo $row['piece_id']; ?>">
+                    <a href="pieces.php?do=edit-piece&piece-id=<?php echo $row['id']; ?>">
                       <?php echo $row['username']; ?>
                     </a>
                   </td>
@@ -599,7 +599,7 @@
                       <p class="text-danger "><?php echo language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></p>
                     <?php } ?>
                   </td>
-                  <?php $sourceip = $row['source_id'] == 0 ? $row['piece_ip'] : selectSpecificColumn('piece_ip','pieces','WHERE piece_id = ' . $row['source_id'])[0]['piece_ip']; ?>
+                  <?php $sourceip = $row['source_id'] == 0 ? $row['piece_ip'] : selectSpecificColumn('piece_ip','pieces','WHERE id = ' . $row['source_id'])[0]['piece_ip']; ?>
                   <td data-ip="<?php echo convertIP($sourceip) ;?>"> 
                     <?php echo '<a href="http://' . $sourceip . '" target="">' . $sourceip . '</a>'; ?>
                   </td>
@@ -640,9 +640,9 @@
                   <td><?php echo $row['added_date'] == '0000-00-00' ? language("NO DATA ENTERED", @$_SESSION['systemLang']) : $row['added_date'] ?></td>
                   <td><?php echo selectSpecificColumn("`UserName`", "`users`", "WHERE `UserID` = ". $row['added_by'])[0]["UserName"]; ?></td>
                   <td>
-                    <a class="btn btn-success text-capitalize fs-12 <?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="pieces.php?do=edit-piece&piece-id=<?php echo $row['piece_id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
+                    <a class="btn btn-success text-capitalize fs-12 <?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="pieces.php?do=edit-piece&piece-id=<?php echo $row['id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
                     <?php if ($row['type_id'] != 4) { ?>
-                      <a class="btn btn-outline-primary text-capitalize fs-12 <?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>" href="pieces.php?do=show-piece&dir-id=<?php echo $row['direction_id'] ?>&srcId=<?php echo $row['piece_id'] ?>" ><i class="bi bi-eye"></i><!-- <?php echo language('SHOW', @$_SESSION['systemLang']).' '.language('PIECES', @$_SESSION['systemLang']) ?> --></a>
+                      <a class="btn btn-outline-primary text-capitalize fs-12 <?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>" href="pieces.php?do=show-piece&dir-id=<?php echo $row['direction_id'] ?>&srcId=<?php echo $row['id'] ?>" ><i class="bi bi-eye"></i><!-- <?php echo language('SHOW', @$_SESSION['systemLang']).' '.language('PIECES', @$_SESSION['systemLang']) ?> --></a>
                     <?php } ?>
                     <?php if ($row['piece_ip'] != 1) { ?>
                       <button class="btn btn-outline-secondary text-capitalize fs-12" onclick="ping(this)" value="<?php echo $row['piece_ip']; ?>">ping</button>

@@ -39,7 +39,7 @@ if ($query == 'ping') {
   // get dir id
   $dirId = $_GET['dir-id'];
   // select all pieces in this dir
-  $q = "SELECT `pieces`.`piece_id`, `pieces`.`piece_ip`, `pieces`.`piece_name` FROM `pieces` WHERE `pieces`.`type_id` <> 4 AND `pieces`.`direction_id` = ? ORDER BY `pieces`.`direction_id` ASC, `pieces`.`piece_id` ASC";
+  $q = "SELECT `pieces`.`id`, `pieces`.`piece_ip`, `pieces`.`piece_name` FROM `pieces` WHERE `pieces`.`type_id` <> 4 AND `pieces`.`direction_id` = ? ORDER BY `pieces`.`direction_id` ASC, `pieces`.`id` ASC";
   // prepare the query
   $stmt = $con->prepare($q);
   $stmt->execute(array($dirId));      // execute query
@@ -51,7 +51,7 @@ if ($query == 'ping') {
   // get client name
   $clientName = $_GET['client-name'];
   // query statement
-  $query = "SELECT `piece_id`, `piece_name` FROM `pieces` WHERE `piece_name` LIKE :keysearch";
+  $query = "SELECT `id`, `piece_name` FROM `pieces` WHERE `piece_name` LIKE :keysearch";
   // prepare statement
   $stmt = $con->prepare($query);
   $stmt->bindValue('keysearch', '%' . $clientName . '%');

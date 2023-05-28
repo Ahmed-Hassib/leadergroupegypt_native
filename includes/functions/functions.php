@@ -238,26 +238,26 @@ function updateChildDirection($srcId, $newDir) {
   // final query
   $finalQuery = "";
   // check piece if exist or not
-  $checkPiece = checkItem("`piece_id`", "`pieces`", $srcId);
+  $checkPiece = checkItem("`id`", "`pieces`", $srcId);
   // if exist
   if ($checkPiece > 0) {
     // count children of the current piece
-    $checkChildren = countRecords("`piece_id`", "`pieces`", "WHERE `source_id` = " . $srcId);
+    $checkChildren = countRecords("`id`", "`pieces`", "WHERE `source_id` = " . $srcId);
     // check if has children
     if ($checkChildren > 0) {
-      $finalQuery .= "UPDATE `pieces` SET `direction_id` = '" . $newDir . "' WHERE `piece_id` = " . $srcId . " AND `company_id` = " . $_SESSION['company_id'] . ";";
+      $finalQuery .= "UPDATE `pieces` SET `direction_id` = '" . $newDir . "' WHERE `id` = " . $srcId . " AND `company_id` = " . $_SESSION['company_id'] . ";";
       // condition
       $condition = "LEFT JOIN `direction` ON `direction`.`direction_id` = `pieces`.`direction_id`";
       $condition .= "WHERE `pieces`.`source_id` = " . $srcId . ";";
       // fetch all children
-      $children = selectSpecificColumn("`pieces`.`piece_id`, `pieces`.`direction_id`", "`pieces`", $condition);
+      $children = selectSpecificColumn("`pieces`.`id`, `pieces`.`direction_id`", "`pieces`", $condition);
       // loop on it
       foreach ($children as $value) {
         // get the children of the current piece
-        $finalQuery .= updateChildDirection($value['piece_id'], $newDir);
+        $finalQuery .= updateChildDirection($value['id'], $newDir);
       }
     } else {
-      $finalQuery .= "UPDATE `pieces` SET `direction_id` = '" . $newDir . "' WHERE `piece_id` = " . $srcId . " AND `company_id` = " . $_SESSION['company_id'] . ";";
+      $finalQuery .= "UPDATE `pieces` SET `direction_id` = '" . $newDir . "' WHERE `id` = " . $srcId . " AND `company_id` = " . $_SESSION['company_id'] . ";";
     }
   }
   // return the query

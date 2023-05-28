@@ -96,7 +96,7 @@
                     </a>
                   </span>
                 </div>
-                <?php $newPcsCounter = $db_obj->count_records("`piece_id`", "`pieces`", "WHERE `is_client` = 0 AND `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id']); ?>
+                <?php $newPcsCounter = $db_obj->count_records("`id`", "`pieces`", "WHERE `is_client` = 0 AND `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id']); ?>
                 <?php if ($newPcsCounter > 0) { ?>
                   <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
                     <span><?php echo $newPcsCounter ?></span>
@@ -114,7 +114,7 @@
                     </a>
                   </span>
                 </div>
-                <?php $newPcsCounter = $db_obj->count_records("`piece_id`", "`pieces`", "WHERE `is_client` = 1 AND `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id']); ?>
+                <?php $newPcsCounter = $db_obj->count_records("`id`", "`pieces`", "WHERE `is_client` = 1 AND `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id']); ?>
                 <?php if ($newPcsCounter > 0) { ?>
                   <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
                     <span><?php echo $newPcsCounter ?></span>

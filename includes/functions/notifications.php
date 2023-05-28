@@ -32,7 +32,7 @@ if ($isTech) {
         foreach ($malsRows as $key => $row) {
             $mals[$key]['mal_id'] = $row['mal_id'];
             $mals[$key]['mng']    = selectSpecificColumn("`Username`", "`users`", "WHERE `UserID` = ".$row['mng_id'])[0]['Username'];
-            $mals[$key]['client'] = selectSpecificColumn("`piece_name`", "`pieces`", "WHERE `piece_id` = ".$row['client_id'])[0]['piece_name'];
+            $mals[$key]['client'] = selectSpecificColumn("`piece_name`", "`pieces`", "WHERE `id` = ".$row['client_id'])[0]['piece_name'];
         }
     }
 

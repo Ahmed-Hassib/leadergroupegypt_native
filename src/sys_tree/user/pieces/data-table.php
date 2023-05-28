@@ -92,7 +92,7 @@ if (!isset($db_obj)) {
             <td class="text-capitalize <?php echo !empty($row['mac_add']) ? "" : "text-danger " ?>"><?php echo !empty($row['mac_add']) ? $row['mac_add'] : language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></td>
             <!-- piece name -->
             <td>
-              <a class="<?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="?name=<?php echo $name ?>&do=edit-piece&piece-id=<?php echo $row['piece_id']; ?>" target="">
+              <a class="<?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="?name=<?php echo $name ?>&do=edit-piece&piece-id=<?php echo $row['id']; ?>" target="">
                 <?php echo trim($row['piece_name'], ' ') ?>
                 <?php if ($row['direction_id'] == 0) { ?>
                   <i class="bi bi-exclamation-triangle-fill text-danger" title="<?php echo language("DIRECTION NO DATA ENTERED", @$_SESSION['systemLang']) ?>"></i>
@@ -104,7 +104,7 @@ if (!isset($db_obj)) {
             </td>
             <!-- piece username -->
             <td class="text-capitalize">
-              <a href="?do=edit-piece&piece-id=<?php echo $row['piece_id']; ?>">
+              <a href="?do=edit-piece&piece-id=<?php echo $row['id']; ?>">
                 <?php echo $row['username']; ?>
               </a>
             </td>
@@ -120,7 +120,7 @@ if (!isset($db_obj)) {
             </td>
             <!-- piece source -->
             <td data-ip="<?php echo convertIP($sourceip) ;?>"> 
-              <?php $sourceip = $row['source_id'] == 0 ? $row['piece_ip'] : $db_obj->select_specific_column("`piece_ip`", "`pieces`", "WHERE `piece_id` = " . $row['source_id'])[0]['piece_ip']; ?>
+              <?php $sourceip = $row['source_id'] == 0 ? $row['piece_ip'] : $db_obj->select_specific_column("`piece_ip`", "`pieces`", "WHERE `id` = " . $row['source_id'])[0]['piece_ip']; ?>
               <?php echo '<a href="http://' . $sourceip . '" target="">' . $sourceip . '</a>'; ?>
             </td>
             <!-- device type -->
@@ -151,9 +151,9 @@ if (!isset($db_obj)) {
             <td><?php echo $row['added_date'] == '0000-00-00' ? language("NO DATA ENTERED", @$_SESSION['systemLang']) : $row['added_date'] ?></td>
             <!-- control -->
             <td>
-              <a class="btn btn-success text-capitalize fs-12 <?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="?do=edit-piece&piece-id=<?php echo $row['piece_id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
+              <a class="btn btn-success text-capitalize fs-12 <?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="?do=edit-piece&piece-id=<?php echo $row['id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
               <?php if ($row['is_client'] == 0) { ?>
-                <a class="btn btn-outline-primary text-capitalize fs-12 <?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>" href="?name=<?php echo $name ?>&do=show-piece&dir-id=<?php echo $row['direction_id'] ?>&srcId=<?php echo $row['piece_id'] ?>" ><i class="bi bi-eye"></i><!-- <?php echo language('SHOW', @$_SESSION['systemLang']).' '.language('PIECES', @$_SESSION['systemLang']) ?> --></a>
+                <a class="btn btn-outline-primary text-capitalize fs-12 <?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>" href="?name=<?php echo $name ?>&do=show-piece&dir-id=<?php echo $row['direction_id'] ?>&srcId=<?php echo $row['id'] ?>" ><i class="bi bi-eye"></i><!-- <?php echo language('SHOW', @$_SESSION['systemLang']).' '.language('PIECES', @$_SESSION['systemLang']) ?> --></a>
               <?php } ?>
               <?php if ($_SESSION['pcs_delete'] == 1) { ?>
                 <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deletePieceModal" id="delete-piece" data-page-title="<?php echo $page_title ?>" data-piece-id="<?php echo $pcs['id'] ?>" data-piece-name="<?php echo $pcs['full_name'] ?>" onclick="confirm_delete_piece(this)"><i class="bi bi-trash"></i></button>
