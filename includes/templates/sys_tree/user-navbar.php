@@ -424,9 +424,16 @@
       </div>
     <?php } else { ?>
       <div class="m-auto container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-        <div class="alert alert-info" role="alert" dir="ltr">
-          <div><i class="bi bi-exclamation-triangle-fill"></i> Hello <span class="fw-bold"><?php echo $_SESSION['UserName'] ?></span>, some modifications have been made to the security of the system</div>
-          <div>this code '<span class="fw-bold"><?php echo $_SESSION['company_code'] ?></span>' has been assigned to your company, so please keep it, as it is taken into account that you will use it to log in since the date of next June 15, good luck.</div>
+        <div class="alert alert-info" role="alert">
+          <div>
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <span><?php echo language('HI', @$_SESSION['systemLang']) ?>&nbsp;<span class="fw-bold"><?php echo $_SESSION['UserName'] ?></span>,&nbsp;</span>
+            <span><?php echo language('SOME MODIFICATIONS HAVE BEEN MADE TO THE SECURITY OF THE SYSTEM', @$_SESSION['systemLang']) ?></span>
+          </div>
+          <div>
+            '<span class="fw-bold"><?php echo $_SESSION['company_code'] ?></span>'
+            <span><?php echo language('IS THE CODE THAT ASSIGNED TO YOUR COMPANY, SO PLEASE KEEP IT, AS IT IS TAKEN INTO ACCOUNT THAT YOU WILL USE IT TO LOG IN SINCE THE DATE OF NEXT JUNE 15, GOOD LUCK', @$_SESSION['systemLang']) ?></span>
+          </div>
           
           <button type="button" class="btn-close btn-close-<?php echo @$_SESSION['systemLang'] == 'ar' ? 'left' : 'right' ?>" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>

@@ -918,7 +918,7 @@ function languageAr($phrase)
     'COMPANY IMAGE WAS UPDATED SUCCESSFULLY'                                        => 'تم تعديل شعار الشركة بنجاح',
     'COMPANY IMAGE WAS NOT UPDATED'                                                 => 'لم يتم تعديل شعار الشركة',
     'THERE IS NO IMAGES WAS ADDED TO CHANGE IT'                                     => 'لم يتم اختيار صورة لتغيير شعار الشركة',
-    
+    'SOME MODIFICATIONS HAVE BEEN MADE TO THE SECURITY OF THE SYSTEM'               => 'حدثت بعض التعديلات علي الحماية الخاصة بالسيستم',
     
     'WHEN REGISTERING THE ABBRERVIATED NAME OF THE COMPANY AND THE USERNAME OF ADMIN, PLEASE NOTE THE FOLLOWING'                          => 'عند تسجيل الاسم المختصر للشركة واسم المستخدم للأدمن برجاء مراعاة التالي',
     'WHEN LOGGING IN, BE SURE TO WRITE THE USERNAME FOLLOWED BY "@" SIGN, THEN THE COMPANY`S ABBREVIATED NAME'                            => 'عند تسجيل الدخول يجب مراعاة كتابة اسم المستخدم متبوعاً بعلامة "@" ثم الاسم المختصر للشركة',
@@ -937,6 +937,7 @@ function languageAr($phrase)
     'THIS BLOG HELPS YOU TO IDENTIFY THE PROBLEMS THAT SOME PEOPLE FACE AND SOLVE THEM, AND YOU CAN ALSO DISPLAY THE PROBLEMS THAT YOU FACE, AND YOU WILL BE ANSWERED BY SOME SPECIALIZED PEOPLE'       => 'يساعدك هذا المنتدي علي التعرف علي المشاكل التي تواجه بعض الناس وحلها ويمكنك ايضاً عرض المشاكل التي تواجهك وسوف يتم الرد عليك من بعض الاشخاص المتخصصين',
     'THIS STORE HELPS YOU TO BROWSE ALL THE ELECTRONIC DEVICES THAT ENABLE YOU TO ENSURE GOOD COMMUNICATION BETWEEN YOU AND YOUR CUSTOMERS IN YOUR NETWORK'                                             => 'يساعدك هذا المتجر علي تصفح جميع الاجهزة الالكترونية التي تمكنك من ضمان الاتصال الجيد بينك وبين عملائك في شبكتك',
     'THIS PROGRAM ENABLES YOU TO MANAGE YOUR NETWORK, CUSTOMERS AND EMPLOYEES OF YOUR COMPANY IN ADDITION TO SOME OTHER FEATURES THAT YOU CAN VIEW THROUGH THE FOLLOWING LINK'                          => 'يمكنك هذا البرنامج من ادارة شبكتك وعملائك وموظفين شركتك بالاضافة الي بعض المميزات الخرى التي يمكنك الاطلاع عليها من خلال الرابط التالي',
+    'IS THE CODE THAT ASSIGNED TO YOUR COMPANY, SO PLEASE KEEP IT, AS IT IS TAKEN INTO ACCOUNT THAT YOU WILL USE IT TO LOG IN SINCE THE DATE OF NEXT JUNE 15, GOOD LUCK'                                => 'هذا الكود خاص بشركتك برجاء احتفظ به مع الاخذ في العتبار انك سوف تستخدمع في تسجيل الدخول للسيستم اعتباراً من يوم 15 يونيو القادم',
     
     'THE SYS TREE APP TEAM INFORMS YOU THAT THEY ARE WORKING ON A NEW ALGORITHM TO CONFIRM THE PHONE NUMBER, THIS IS A RECORDED MESAGE AND YOU WILL BE NOTIFIED BY THE APPLICATION WHEN IT IS COMPLETED. WE WISH YOU CONTINUED SUCCESS'  => 'يعلمك فريق تطبيق SYS TREE أنه يعمل على خوارزمية جديدة لتأكيد رقم الهاتف، وهذه رسالة مسجلة وسيتم ابلاغك عن طريق التطبيق عند الانتهاء منه. نتمنى لكم دوام التوفيق والنجاح',
   
