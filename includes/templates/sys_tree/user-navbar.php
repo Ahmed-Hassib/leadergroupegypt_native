@@ -395,29 +395,34 @@
       </div> -->
     <?php # } ?>
 
-    <?php if (isset($_SESSION['company_code']) && empty($_SESSION['company_code'])) { ?>
-      <?php
+    <?php 
+    // check if company_obj is created or ot
+    if (!isset($company_obj)) {
+      // if not created create it
+      $company_obj = new Company();
+    }
+    // get assigned code from database
+    $assigned_code = $company_obj->select_specific_column("`company_code`", "`companies`", "WHERE `company_id` = ". $_SESSION['company_id'])[0]['company_code'];
+    // check if not empty
+    if (isset($assigned_code) && empty($assigned_code)) {
       // flag for check if code is exist or not
       $is_exist_code = false;
-      // check if company_obj is created or ot
-      if (!isset($company_obj)) {
-        // if not created create it
-        $company_obj = new Company();
-      }
       // loop to generate a code that is not exist in database
       do {
         // generate a code
         // first 4 character -> string
         //  second 4 character -> numbers
-        $company_code = generate_random_string().random_digits(4);
+        $company_code = generate_random_string(4).random_digits(4);
         // count companies that have same code
         $is_exist_code = $company_obj->is_exist("`company_code`", "`companies`", $company_code);
       } while($is_exist_code);
-      
     } else {
-      $company_code = $_SESSION['company_code'];
-    } ?>
-
+      // asssign company code to a variable to use it
+      $company_code = $assigned_code;
+    } 
+    // update it in database
+    $company_obj->update_company_code($_SESSION['company_id'], $company_code);
+    ?>
     <div class="m-auto container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
       <div class="alert alert-info" role="alert">
         <div>

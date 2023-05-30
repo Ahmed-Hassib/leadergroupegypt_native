@@ -76,7 +76,7 @@ class Company extends Database {
     return $count > 0 ? true : false;
   }
 
-  function delete_company_img($company_id) {
+  public function delete_company_img($company_id) {
     // update query
     $upload_company_img_query = "UPDATE `companies` SET `company_img` = '' WHERE `company_id` = ?";
     // update the database with this info
@@ -87,15 +87,14 @@ class Company extends Database {
     return $count > 0 ? true : false;
   }
   
-  function update_company_code($company_id) {
+  public function update_company_code($company_id, $company_code) {
     // update query
     $company_code_query = "UPDATE `companies` SET `company_code` = ? WHERE `company_id` = ?";
     // update the database with this info
     $stmt = $this->con->prepare($company_code_query);
-    $stmt->execute(array($company_id));
+    $stmt->execute(array($company_code, $company_id));
     $count = $stmt->rowCount();     // get number of effected rows
     // return
     return $count > 0 ? true : false;
   }
-
 }
