@@ -413,31 +413,24 @@
         // count companies that have same code
         $is_exist_code = $db_obj->is_exist("`company_code`", "`companies`", $company_code);
       } while($is_exist_code);
-      ?>
-      <div class="m-auto container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-        <div class="alert alert-warning" role="alert">
+      
+    } else {
+      $company_code = $_SESSION['company_code'];
+    } ?>
+
+    <div class="m-auto container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
+      <div class="alert alert-info" role="alert">
+        <div>
           <i class="bi bi-exclamation-triangle-fill"></i>
-          <span><?php echo language('HI', @$_SESSION['systemLang']) . ' ' . $_SESSION['UserName'] ?>,&nbsp;</span>
-          
-          <button type="button" class="btn-close btn-close-<?php echo @$_SESSION['systemLang'] == 'ar' ? 'left' : 'right' ?>" data-bs-dismiss="alert" aria-label="Close"></button>
+          <span><?php echo language('HI', @$_SESSION['systemLang']) ?>&nbsp;<span class="fw-bold"><?php echo $_SESSION['UserName'] ?></span>,&nbsp;</span>
+          <span><?php echo language('SOME MODIFICATIONS HAVE BEEN MADE TO THE SECURITY OF THE SYSTEM', @$_SESSION['systemLang']) ?></span>
         </div>
-      </div>
-    <?php } else { ?>
-      <div class="m-auto container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-        <div class="alert alert-info" role="alert">
-          <div>
-            <i class="bi bi-exclamation-triangle-fill"></i>
-            <span><?php echo language('HI', @$_SESSION['systemLang']) ?>&nbsp;<span class="fw-bold"><?php echo $_SESSION['UserName'] ?></span>,&nbsp;</span>
-            <span><?php echo language('SOME MODIFICATIONS HAVE BEEN MADE TO THE SECURITY OF THE SYSTEM', @$_SESSION['systemLang']) ?></span>
-          </div>
-          <div>
-            '<span class="fw-bold"><?php echo $_SESSION['company_code'] ?></span>'
-            <span><?php echo language('IS THE CODE THAT ASSIGNED TO YOUR COMPANY, SO PLEASE KEEP IT, AS IT IS TAKEN INTO ACCOUNT THAT YOU WILL USE IT TO LOG IN SINCE THE DATE OF NEXT JUNE 15, GOOD LUCK', @$_SESSION['systemLang']) ?></span>
-          </div>
-          
-          <button type="button" class="btn-close btn-close-<?php echo @$_SESSION['systemLang'] == 'ar' ? 'left' : 'right' ?>" data-bs-dismiss="alert" aria-label="Close"></button>
+        <div>
+          '<span class="fw-bold"><?php echo $company_code ?></span>'
+          <span><?php echo language('IS THE CODE THAT ASSIGNED TO YOUR COMPANY, SO PLEASE KEEP IT, AS IT IS TAKEN INTO ACCOUNT THAT YOU WILL USE IT TO LOG IN SINCE THE DATE OF NEXT JUNE 15', @$_SESSION['systemLang']).' '.language('GOOD LUCK', @$_SESSION['systemLang']) ?></span>
         </div>
+        <button type="button" class="btn-close btn-close-<?php echo @$_SESSION['systemLang'] == 'ar' ? 'left' : 'right' ?>" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
-    <?php } ?>
+    </div>
   <?php } ?>
   
