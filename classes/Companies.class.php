@@ -86,5 +86,16 @@ class Company extends Database {
     // return
     return $count > 0 ? true : false;
   }
+  
+  function update_company_code($company_id) {
+    // update query
+    $company_code_query = "UPDATE `companies` SET `company_code` = ? WHERE `company_id` = ?";
+    // update the database with this info
+    $stmt = $this->con->prepare($company_code_query);
+    $stmt->execute(array($company_id));
+    $count = $stmt->rowCount();     // get number of effected rows
+    // return
+    return $count > 0 ? true : false;
+  }
 
 }

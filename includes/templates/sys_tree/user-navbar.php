@@ -399,10 +399,10 @@
       <?php
       // flag for check if code is exist or not
       $is_exist_code = false;
-      // check if db_obj is created or ot
-      if (!isset($db_obj)) {
+      // check if company_obj is created or ot
+      if (!isset($company_obj)) {
         // if not created create it
-        $db_obj = new Database();
+        $company_obj = new Company();
       }
       // loop to generate a code that is not exist in database
       do {
@@ -411,7 +411,7 @@
         //  second 4 character -> numbers
         $company_code = generate_random_string().random_digits(4);
         // count companies that have same code
-        $is_exist_code = $db_obj->is_exist("`company_code`", "`companies`", $company_code);
+        $is_exist_code = $company_obj->is_exist("`company_code`", "`companies`", $company_code);
       } while($is_exist_code);
       
     } else {
