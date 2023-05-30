@@ -15,7 +15,7 @@ class Registration extends Database {
 
   public function add_new_company($info) {
     // insertion query for company data
-    $company_query = "INSERT INTO `companies` (`company_name`, `company_manager`, `company_phone`, `version`, `joined_date`) VALUES (?, ?, ?, 3, ?)";
+    $company_query = "INSERT INTO `companies` (`company_name`, `company_code`, `company_manager`, `company_phone`, `version`, `joined_date`) VALUES (?, ?, ?, ?, 3, ?)";
     $company_stmt = $this->con->prepare($company_query);
     $company_stmt->execute($info);
     $count = $company_stmt->rowCount();

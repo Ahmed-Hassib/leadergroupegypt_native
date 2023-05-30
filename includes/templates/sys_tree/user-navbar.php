@@ -382,14 +382,55 @@
 
 <div class="main-content">
 
-  <?php # if ($preloader == true && !empty($_SESSION['phone']) && isset($_SESSION['is_activated_phone']) && $_SESSION['is_activated_phone'] == 0) { ?>
-  <!-- <div class="m-auto container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-    <div class="alert alert-warning" role="alert">
-      <i class="bi bi-exclamation-triangle-fill"></i>
-      <span><?php echo language('HI', @$_SESSION['systemLang']) . ' ' . $_SESSION['UserName'] ?>,&nbsp;</span>
-      <span><?php echo language('YOUR PHONE NUMBER IS NOT ACTIVATED!', @$_SESSION['systemLang']) ?></span> -->
-      <!-- <a class="alert-link" href="<?php echo $nav_up_level ?>requests/index.php?do=activate-phone-number"><?php # echo language('SEND ACTIVATION CODE', @$_SESSION['systemLang']) ?>&nbsp;<i class="bi bi-arrow-up-left-square"></i></a> -->
-      <!-- <button type="button" class="btn-close btn-close-<?php echo @$_SESSION['systemLang'] == 'ar' ? 'left' : 'right' ?>" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  </div> -->
-  <?php # } ?>
+  <?php if ($preloader == true) { ?>
+    <?php # if (!empty($_SESSION['phone']) && isset($_SESSION['is_activated_phone']) && $_SESSION['is_activated_phone'] == 0) { ?>
+      <!-- <div class="m-auto container" dir="<?php # echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
+        <div class="alert alert-warning" role="alert">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+          <span><?php # echo language('HI', @$_SESSION['systemLang']) . ' ' . $_SESSION['UserName'] ?>,&nbsp;</span>
+          <span><?php # echo language('YOUR PHONE NUMBER IS NOT ACTIVATED!', @$_SESSION['systemLang']) ?></span>
+          <a class="alert-link" href="<?php # echo $nav_up_level ?>requests/index.php?do=activate-phone-number"><?php # echo language('SEND ACTIVATION CODE', @$_SESSION['systemLang']) ?>&nbsp;<i class="bi bi-arrow-up-left-square"></i></a>
+          <button type="button" class="btn-close btn-close-<?php # echo @$_SESSION['systemLang'] == 'ar' ? 'left' : 'right' ?>" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div> -->
+    <?php # } ?>
+
+    <?php if (isset($_SESSION['company_code']) && empty($_SESSION['company_code'])) { ?>
+      <?php
+      // flag for check if code is exist or not
+      $is_exist_code = false;
+      // check if db_obj is created or ot
+      if (!isset($db_obj)) {
+        // if not created create it
+        $db_obj = new Database();
+      }
+      // loop to generate a code that is not exist in database
+      do {
+        // generate a code
+        // first 4 character -> string
+        //  second 4 character -> numbers
+        $company_code = generate_random_string().random_digits(4);
+        // count companies that have same code
+        $is_exist_code = $db_obj->is_exist("`company_code`", "`companies`", $company_code);
+      } while($is_exist_code);
+      ?>
+      <div class="m-auto container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
+        <div class="alert alert-warning" role="alert">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+          <span><?php echo language('HI', @$_SESSION['systemLang']) . ' ' . $_SESSION['UserName'] ?>,&nbsp;</span>
+          
+          <button type="button" class="btn-close btn-close-<?php echo @$_SESSION['systemLang'] == 'ar' ? 'left' : 'right' ?>" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+    <?php } else { ?>
+      <div class="m-auto container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
+        <div class="alert alert-info" role="alert" dir="ltr">
+          <div><i class="bi bi-exclamation-triangle-fill"></i> Hello <span class="fw-bold"><?php echo $_SESSION['UserName'] ?></span>, some modifications have been made to the security of the system</div>
+          <div>this code '<span class="fw-bold"><?php echo $_SESSION['company_code'] ?></span>' has been assigned to your company, so please keep it, as it is taken into account that you will use it to log in since the date of next June 15, good luck.</div>
+          
+          <button type="button" class="btn-close btn-close-<?php echo @$_SESSION['systemLang'] == 'ar' ? 'left' : 'right' ?>" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+    <?php } ?>
+  <?php } ?>
+  

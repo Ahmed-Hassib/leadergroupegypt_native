@@ -110,7 +110,7 @@ function languageAr($phrase)
     'THE INSTRUCTIONS'      => 'التعليمات',
     'UNDERSTAND'            => 'فهمت',
     'THUS'                  => 'حيث',
-    'COMPANY BRAND'         => 'شعار الشركة',
+
     
     
     /**
@@ -168,7 +168,8 @@ function languageAr($phrase)
     'LICENSE STATUS'            => 'حالة التراخيص',
     'LICENSE EXPIRED'           => 'انتهت صلاحية الترخيص',
     'LICENSE ACTIVATED'         => 'ترخيص مفعل',
-
+    'COMPANY BRAND'             => 'شعار الشركة',
+    'COMPANY CODE'              => 'كود الشركة',
     
     
     /**

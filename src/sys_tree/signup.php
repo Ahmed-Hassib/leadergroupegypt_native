@@ -61,6 +61,31 @@ if (isset($_SESSION['UserName'])) {
                 <input class="form-control w-100" type="text" name="company-name" id="company-name" placeholder="<?php echo language("COMPANY NAME", @$_SESSION['systemLang']) ?>" onblur="is_valid(this, 'company');" required>
               </div>
             </div>
+            <?php
+            // flag for check if code is exist or not
+            $is_exist_code = false;
+            // check if db_obj is created or ot
+            if (!isset($db_obj)) {
+              // if not created create it
+              $db_obj = new Database();
+            }
+            // loop to generate a code that is not exist in database
+            do {
+              // generate a code
+              // first 4 character -> string
+              //  second 4 character -> numbers
+              $company_code = generate_random_string().random_digits(4);
+              // count companies that have same code
+              $is_exist_code = $db_obj->is_exist("`company_code`", "`companies`", $company_code);
+            } while($is_exist_code);
+            ?>
+            <!-- company code -->
+            <div class="mb-sm-2 mb-md-3 row">
+              <label for="company-code" class="col-sm-12 col-form-label text-capitalize"><?php echo language("COMPANY CODE", @$_SESSION['systemLang']) ?></label>
+              <div class="col-sm-12 position-relative">
+                <input class="form-control w-100" type="text" name="company-code" id="company-code-id" value="<?php echo $company_code; ?>" placeholder="<?php echo language("COMPANY CODE", @$_SESSION['systemLang']) ?>" readonly>
+              </div>
+            </div>
             <!-- manager name -->
             <div class="mb-sm-2 mb-md-3 row">
               <label for="manager-name" class="col-sm-12 col-form-label text-capitalize"><?php echo language("MANAGER NAME", @$_SESSION['systemLang']) ?></label>

@@ -358,11 +358,21 @@ function get_date_now() {
  * random_digits function
  * accepts length of random digits
  */
-function random_digits($length){
+function random_digits($length = 5){
   $digits = '';
   $numbers = range(0,9);
   shuffle($numbers);
   for($i = 0;$i < $length;$i++)
     $digits .= $numbers[$i];
   return $digits;
+}
+
+function generate_random_string($length = 5) {
+  $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  $charactersLength = strlen($characters);
+  $randomString = '';
+  for ($i = 0; $i < $length; $i++) {
+      $randomString .= $characters[random_int(0, $charactersLength - 1)];
+  }
+  return $randomString;
 }

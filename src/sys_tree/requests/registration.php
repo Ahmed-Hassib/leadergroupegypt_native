@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $user_id = $db_obj->get_next_id('users');
   // get company info
   $company_name = $_POST['company-name'];
+  $company_code = $_POST['company-code'];
   $manager_name = $_POST['manager-name'];
   $manager_phone = $_POST['manager-phone'];
   // check company name is exists
@@ -29,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $reg_obj = new Registration();
     }
     // add new company
-    $is_inserted_company = $reg_obj->add_new_company(array($company_name, $manager_name, $manager_phone, get_date_now()));
+    $is_inserted_company = $reg_obj->add_new_company(array($company_name, $company_code, $manager_name, $manager_phone, get_date_now()));
     // echo success message
     $msg = '<div class="alert alert-success text-capitalize fw-bolder text-center">' . language("YOUR COMPANY IS CREATED SUCCESSFULLY!") . '</div>';
     // check if inserted company
@@ -69,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               // success message
               $msg .= '<div class="alert alert-success text-capitalize fw-bolder text-center">' . language("YOUR ADMIN ACCOUNT PERMISSIONS IS CREATED SUCCESSFULLY!") . '</div>';
               // redirect to url
-              $url = "../login.php?username=$username&password=$password";
+              $url = "../login.php?username=$username&password=$password&company-code=$company_code";
             } else {
               // failed message
               $msg .= '<div class="alert alert-danger text-capitalize fw-bolder text-center">' . language('ADMIN PERMISSION IS NOT INSERTED PLEASE, TRY AGAIN OR CALL TECH SUPPORT!') . '</div>';

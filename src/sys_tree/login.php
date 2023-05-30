@@ -38,14 +38,15 @@ if (isset($_SESSION['UserName'])) {
 // check if user comming from http request ..
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
   // get request info
-  $username   = $_POST["username"];
-  $pass       = $_POST["pass"];
-  $hashedPass = sha1($pass);
+  $username       = $_POST["username"];
+  $pass           = $_POST["pass"];
+  // $company_code   = $_POST["company-code"];
+  $hashed_pass = sha1($pass);
   
   // columns to select
   $users_permission_columns = "`users_permissions`.`user_add`,`users_permissions`.`user_update`,`users_permissions`.`user_delete`,`users_permissions`.`user_show`,`users_permissions`.`mal_add`,`users_permissions`.`mal_update`,`users_permissions`.`mal_delete`,`users_permissions`.`mal_show`,`users_permissions`.`mal_review`,`users_permissions`.`mal_media_delete`,`users_permissions`.`mal_media_download`,`users_permissions`.`comb_add`,`users_permissions`.`comb_update`,`users_permissions`.`comb_delete`,`users_permissions`.`comb_show`,`users_permissions`.`comb_review`,`users_permissions`.`pcs_add`,`users_permissions`.`pcs_update`,`users_permissions`.`pcs_delete`,`users_permissions`.`pcs_show`,`users_permissions`.`dir_add`,`users_permissions`.`dir_update`,`users_permissions`.`dir_delete`,`users_permissions`.`dir_show`,`users_permissions`.`sugg_replay`,`users_permissions`.`sugg_delete`,`users_permissions`.`sugg_show`,`users_permissions`.`points_add`,`users_permissions`.`points_delete`,`users_permissions`.`points_show`,`users_permissions`.`reports_show`,`users_permissions`.`archive_show`,`users_permissions`.`take_backup`,`users_permissions`.`restore_backup`,`users_permissions`.`connection_add`,`users_permissions`.`connection_update`,`users_permissions`.`connection_delete`,`users_permissions`.`connection_show`,`users_permissions`.`permission_update`,`users_permissions`.`permission_show`,`users_permissions`.`change_company_img`";
   // get company info
-    $company_info_columns = "`companies`.`company_name`,`companies`.`company_img`";
+  $company_info_columns = "`companies`.`company_name`,`companies`.`company_code`,`companies`.`company_img`";
   // query select
   $query = "SELECT 
               `users`.*,
@@ -55,10 +56,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
           LEFT JOIN `users_permissions` ON `users`.`UserID` = `users_permissions`.`UserID`
           LEFT JOIN `companies` ON `companies`.`company_id` = `users`.`company_id`
           WHERE `users`.`UserName` = ? AND `users`.`Pass` = ? LIMIT 1";
+          // WHERE `users`.`UserName` = ? AND `users`.`Pass` = ? AND `companies`.`company_code` = ? LIMIT 1";
           
   // check if user exist in database
   $stmt = $con->prepare($query);
-  $stmt->execute(array($username, $hashedPass));
+  $stmt->execute(array($username, $hashed_pass));
+  // $stmt->execute(array($username, $hashed_pass, $company_code));
   $userInfo = $stmt->fetch();
   $count = $stmt->rowCount();
   
@@ -110,6 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && !empty($_GET)) {
   // nwe username
   $username = isset($_GET['username']) && !empty($_GET['username']) ? $_GET['username'] : "";
   $password = isset($_GET['password']) && !empty($_GET['password']) ? $_GET['password'] : "";
+  // $company_code = isset($_GET['company-code']) && !empty($_GET['company-code']) ? $_GET['company-code'] : "";
 }
 ?>
 
@@ -128,16 +132,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && !empty($_GET)) {
       <!-- login form -->
       <form class="login-form" id="login-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
         <div class="mb-4">
-          <!-- <label class="mb-2" for="username"><?php echo language('USERNAME') ?></label> -->
-          <input type="text" class="form-control" id="username" name="username" placeholder="<?php echo language('USERNAME') ?>" value="<?php echo isset($_GET['username']) && isset($_GET['password']) ? $username : "" ?>" data-no-astrisk="true" required>
+          <input type="text" class="form-control" id="username" name="username" placeholder="<?php echo language('USERNAME') ?>" value="<?php echo isset($_GET['username']) && isset($_GET['password']) && isset($_GET['company-code']) ? $username : "" ?>" data-no-astrisk="true" required>
         </div>
         <div class="mb-4 position-relative login">
-          <!-- <label class="mb-2" for="password"><?php echo language('PASSWORD') ?></label> -->
-          <input type="password" class="form-control" id="password" name="pass" placeholder="<?php echo language('PASSWORD') ?>" value="<?php echo isset($_GET['username']) && isset($_GET['password']) ? $password : "" ?>" data-no-astrisk="true" required>
+          <input type="password" class="form-control" id="password" name="pass" placeholder="<?php echo language('PASSWORD') ?>" value="<?php echo isset($_GET['username']) && isset($_GET['password']) && isset($_GET['company-code']) ? $password : "" ?>" data-no-astrisk="true" required>
           <i class="bi bi-eye-slash show-pass show-pass-left text-dark" id="show-pass" onclick="showPass(this)"></i>
         </div>
+        <!-- <div class="mb-4 position-relative login">
+          <input type="text" class="form-control" id="company-code-id" name="company-code" placeholder="<?php echo language('COMPANY CODE') ?>" value="<?php echo isset($_GET['username']) && isset($_GET['password']) && isset($_GET['company-code']) ? $company_code : "" ?>" data-no-astrisk="true" required>
+        </div> -->
         <div class="mb-4 position-relative login">
-          <!-- <label class="mb-2" for="language"><?php echo language('THE LANGUAGE') ?></label> -->
           <select class="form-select" name="language" id="language">
             <option value="ar" selected><?php echo language('ARABIC') ?></option>
             <option value="en" disabled>
