@@ -415,8 +415,11 @@ body::-webkit-scrollbar-thumb:hover,
 	font-size: 1.25rem !important;
 }
 
-.card-body {
+.card-body { 
 	position: relative;
+}
+
+.stats .card-body {
 	display: flex;
 	justify-content: center;
 	align-items: center;

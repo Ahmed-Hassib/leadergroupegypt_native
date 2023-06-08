@@ -49,12 +49,12 @@
             }
           ?>
           <!-- start new design -->
-          <div class="mb-3 row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3 justify-content-sm-center">
+          <div class="mb-3 row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gx-3 gy-5 justify-content-sm-center">
             <div class="col-6 <?php if ($_SESSION['user_show'] == 0) {echo 'd-none';} ?>">
-              <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } else { echo 'bg-primary';} ?> bg-gradient">
+              <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } ?> bg-gradient">
                 <div class="card-body">
-                  <i class="bi bi-people"></i>
-                  <span>
+                  <span class="icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>"><i class="bi bi-people"></i></span>
+                  <span class="d-block">
                     <a href="<?php echo $nav_up_level ?>users/index.php" class="stretched-link text-capitalize">
                       <?php echo language('THE EMPLOYEES', @$_SESSION['systemLang']) ?>
                     </a>
@@ -69,9 +69,9 @@
               </div>
             </div>
             <div class="col-6 <?php if ($_SESSION['dir_show'] == 0) {echo 'd-none';} ?>">
-              <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } else { echo 'bg-primary';} ?> bg-gradient">
+              <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } ?> bg-gradient">
                 <div class="card-body">
-                  <i class="bi bi-diagram-3"></i>
+                  <span class="icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>"><i class="bi bi-diagram-3"></i></span>
                   <span>
                     <a href="<?php echo $nav_up_level ?>directions/index.php" class="stretched-link text-capitalize">
                       <?php echo language('THE DIRECTIONS', @$_SESSION['systemLang']) ?>
@@ -87,9 +87,9 @@
               </div>
             </div>
             <div class="col-6 <?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>">
-              <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } else { echo 'bg-primary';} ?> bg-gradient">
+              <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } ?> bg-gradient">
                 <div class="card-body">
-                  <i class="bi bi-hdd-rack"></i>
+                  <span class="icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>"><i class="bi bi-hdd-rack"></i></span>
                   <span>
                     <a href="<?php echo $nav_up_level ?>pieces/index.php?name=pieces" class="stretched-link text-capitalize">
                       <?php echo language('PIECES', @$_SESSION['systemLang']) ?>
@@ -105,9 +105,9 @@
               </div>
             </div>
             <div class="col-6 <?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>">
-              <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } else { echo 'bg-primary';} ?> bg-gradient">
+              <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } ?> bg-gradient">
                 <div class="card-body">
-                  <i class="bi bi-people"></i>
+                  <span class="icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>"><i class="bi bi-people"></i></span>
                   <span>
                     <a href="<?php echo $nav_up_level ?>pieces/index.php?name=clients" class="stretched-link text-capitalize">
                       <?php echo language('CLIENTS', @$_SESSION['systemLang']) ?>
@@ -123,7 +123,7 @@
               </div>
             </div>
             <!-- <div class="col-6 <?php if ($_SESSION['sugg_show'] == 0) {echo 'd-none';} ?>">
-              <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } else { echo 'bg-primary';} ?> bg-gradient">
+              <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } ?> bg-gradient">
                 <div class="card-body">
                   <i class="bi bi-mailbox"></i>
                   <span>
@@ -143,7 +143,7 @@
             <div class="col-6 <?php if ($_SESSION['mal_show'] == 0) {echo 'd-none';} ?>">
               <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-mal card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } else { echo 'bg-danger';} ?> bg-gradient">
                 <div class="card-body">
-                  <i class="bi bi-folder-x"></i>
+                  <span class="icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?> bg-warning"><i class="bi bi-folder-x"></i></span>
                   <span>
                     <a href="<?php echo $nav_up_level ?>malfunctions/index.php" class="stretched-link text-capitalize">
                       <?php echo language('THE MALFUNCTIONS', @$_SESSION['systemLang']) ?>
@@ -161,7 +161,7 @@
             <div class="col-6 <?php if ($_SESSION['comb_show'] == 0) {echo 'd-none';} ?>">
               <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-comb card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } else { echo 'bg-success';} ?> bg-gradient">
                 <div class="card-body">
-                  <i class="bi bi-terminal"></i>
+                  <span class="icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?> bg-warning"><i class="bi bi-terminal"></i></span>
                   <span>
                     <a href="<?php echo $nav_up_level ?>combinations/index.php" class="stretched-link text-capitalize">
                       <?php echo language('THE COMBINATIONS', @$_SESSION['systemLang']) ?>
@@ -177,7 +177,7 @@
               </div>
             </div>
             <!-- <div class="col-6 <?php if ($_SESSION['points_show'] == 0) {echo 'd-none';} ?>">
-              <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } else { echo 'bg-primary';} ?> bg-gradient">
+              <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } ?> bg-gradient">
                 <div class="card-body">
                   <i class="bi bi-award"></i> -->
                   <!-- <h5 class="card-title text-capitalize"></h5> -->
@@ -196,7 +196,7 @@
               </div>
             </div> -->
             <!-- <div class="col-6 <?php if ($_SESSION['reports_show'] == 0) {echo 'd-none';} ?>">
-              <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } else { echo 'bg-primary';} ?> bg-gradient">
+              <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } ?> bg-gradient">
                 <div class="card-body">
                   <i class="bi bi-file-text"></i> -->
                   <!-- <h5 class="card-title text-capitalize"></h5> -->
@@ -209,7 +209,7 @@
               </div>
             </div> -->
             <!-- <div class="col-6 <?php if ($_SESSION['archive_show'] == 0) {echo 'd-none';} ?>">
-              <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } else { echo 'bg-primary';} ?> bg-gradient">
+              <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } ?> bg-gradient">
                 <div class="card-body">
                   <i class="bi bi-archive"></i>
                   -->
