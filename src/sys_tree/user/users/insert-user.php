@@ -60,6 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $combDelete         = isset($_POST['combDelete'])         ? $_POST['combDelete']        : 0;
   $combShow           = isset($_POST['combShow'])           ? $_POST['combShow']          : 0;
   $combReview         = isset($_POST['combReview'])         ? $_POST['combReview']        : 0;
+  $combMediaDelete    = isset($_POST['combMediaDelete'])     ? $_POST['combMediaDelete']    : 0;
+  $combMediaDownload  = isset($_POST['combMediaDownload'])   ? $_POST['combMediaDownload']  : 0;
   $permissionUpdate   = isset($_POST['permissionUpdate'])   ? $_POST['permissionUpdate']  : 0;
   $permissionShow     = isset($_POST['permissionShow'])     ? $_POST['permissionShow']    : 0;
   $changeCompanyImg   = isset($_POST['changeCompanyImg'])   ? $_POST['changeCompanyImg']  : 0;
@@ -124,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       // array of user permissions
       $user_permissions = array();
       // push user`s permissions into array
-      array_push($user_permissions, $new_emp_id, $userAdd, $userUpdate, $userDelete, $userShow, $malAdd, $malUpdate, $malDelete, $malShow, $malReview, $malMediaDelete, $malMediaDownload, $combAdd, $combUpdate, $combDelete, $combShow, $combReview, $pcsAdd, $pcsUpdate, $pcsDelete, $pcsShow, $dirAdd, $dirUpdate, $dirDelete, $dirShow, $connectionAdd, $connectionUpdate, $connectionDelete, $connectionShow, $permissionUpdate, $permissionShow, $changeCompanyImg);
+      array_push($user_permissions, $new_emp_id, $userAdd, $userUpdate, $userDelete, $userShow, $malAdd, $malUpdate, $malDelete, $malShow, $malReview, $malMediaDelete, $malMediaDownload, $combAdd, $combUpdate, $combDelete, $combShow, $combReview, $combMediaDelete, $combMediaDownload, $pcsAdd, $pcsUpdate, $pcsDelete, $pcsShow, $dirAdd, $dirUpdate, $dirDelete, $dirShow, $connectionAdd, $connectionUpdate, $connectionDelete, $connectionShow, $permissionUpdate, $permissionShow, $changeCompanyImg);
       // call insert permissions function
       $user_obj->insert_user_permissions($user_permissions);
       
@@ -145,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
     <!-- start header -->
     <header class="header">
-      <?php redirectHome($msg, 'back') ?>
+      <?php redirectHome($msg, 'back', 1000000000000000000000) ?>
     </header>
   </div>
 <?php } else {
