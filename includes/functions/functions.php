@@ -122,8 +122,8 @@ function build_direction_tree($arr, $parent, $level = 0, $prelevel = -1, $nav_up
       $data['src'] = $parent == 0 ? $data['ip'] : $arr[$parent]['ip'];
       // check tree level
       if ($level > $prelevel) {
-        if ($level == 0 && count($arr) < 20) {
-          echo "<ul>";
+        if ($level == 0 && count($arr) < 15) {
+          echo "<ul class='justify-content-center'>";
         } else {
           echo "<ul>";
         }
