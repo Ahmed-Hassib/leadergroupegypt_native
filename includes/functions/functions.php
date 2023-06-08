@@ -123,7 +123,7 @@ function build_direction_tree($arr, $parent, $level = 0, $prelevel = -1, $nav_up
       // check tree level
       if ($level > $prelevel) {
         if ($level == 0 && count($arr) < 20) {
-          echo "<ul style='justify-content: center;'>";
+          echo "<ul>";
         } else {
           echo "<ul>";
         }

@@ -51,6 +51,10 @@
                   <?php } ?>
                   <!-- username -->
                   <?php echo $user['UserName'] ?>
+
+                  <?php if ($user['joinedDate'] == get_date_now()) { ?>
+                    <span class="badge bg-danger"><?php echo language('NEW', @$_SESSION['systemLang']) ?></span>
+                  <?php } ?>
                 </h5>
                 <!-- job title -->
                 <p class="card-text text-secondary">
@@ -71,7 +75,6 @@
                 <p class="mb-0 card-text">
                   <i class="bi bi-whatsapp"></i>
                   <span class="<?php echo !empty($user['phone']) ? 'text-black' : 'text-secondary' ?>">
-                    <!-- <?php echo !empty($user['phone']) ? $user['phone'] : language('NOT ASSIGNED', @$_SESSION['systemLang']) ?> -->
                     <?php echo !empty($user['phone']) ? $user['phone'] : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>
                   </span>
                 </p>
