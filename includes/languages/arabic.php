@@ -111,6 +111,7 @@ function languageAr($phrase)
     'UNDERSTAND'            => 'فهمت',
     'THUS'                  => 'حيث',
     'GOOD LUCK'             => 'بالتوفيق',
+    'POWERED BY'            => 'powered by',
 
     
     

@@ -135,6 +135,7 @@ function get_page_dependencies($page_role, $file_type) {
       'css' => [
         '1' => 'global.css',
         '2' => 'sidebar-menu.css',
+        '3' => 'footer.css',
       ],
       'js' => [
         '1' => 'global.js',

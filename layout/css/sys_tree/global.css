@@ -418,7 +418,7 @@ body::-webkit-scrollbar-thumb:hover,
 
 .container {
 	position: relative;
-	margin: 1rem auto 5rem;
+	margin: 1rem auto;
 }
 
 .container[name="showDir"] {
