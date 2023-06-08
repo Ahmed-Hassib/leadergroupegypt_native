@@ -91,5 +91,4 @@ include_once $file_name;
 include_once $tpl . "footer.php"; 
 include_once $tpl . "js-includes.php";
 
-
 ob_end_flush();
