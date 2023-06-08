@@ -35,16 +35,20 @@ if ($is_exist_mal == true) {
     <form class="custom-form" action="?do=update-malfunction-info" method="POST" enctype="multipart/form-data" id="edit-malfunction-info">
       <!-- submit -->
       <div class="mb-3 hstack gap-2">
+        <?php if ($_SESSION['mal_update'] == 1 || ($_SESSION['UserID'] == $mal_info['tech_id'] && $_SESSION['isTech'] == 1)) { ?>
         <div class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
-        <button type="submit" form="edit-malfunction-info" class="btn btn-primary text-capitalize form-control bg-gradient fs-12 py-1" id="update-malfunctions" <?php if ($_SESSION['mal_update'] == 0 || ($_SESSION['UserID'] != $mal_info['tech_id'] && $_SESSION['isTech'] == 1)) {echo 'disabled';} ?>>
-          <i class="bi bi-check-all"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
-        </button>
+          <button type="submit" form="edit-malfunction-info" class="btn btn-primary text-capitalize form-control bg-gradient fs-12 py-1" id="update-malfunctions">
+            <i class="bi bi-check-all"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
+          </button>
         </div>
+        <?php } ?>
+        <?php if ($_SESSION['mal_delete'] == 1) { ?> 
         <div>
-        <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 py-1" data-bs-toggle="modal" data-bs-target="#deleteMalModal" <?php if ($_SESSION['mal_delete'] == 0) {echo 'readonly';} ?> >
-          <i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?>
-        </button>
+          <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 py-1" data-bs-toggle="modal" data-bs-target="#deleteMalModal">
+            <i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?>
+          </button>
         </div>
+        <?php } ?>
       </div>
       <!-- form content -->
       <div class="mb-3 row row-cols-sm-1 row-cols-md-2 g-3 " id="malfuction-body">
@@ -345,7 +349,7 @@ if ($is_exist_mal == true) {
               </div>
             </div>
             <!-- cost -->
-            <div class="mb-sm-2 mb-md-3 row align-items-center">
+            <div class="mb-sm-2 mb-md-3 row align-items-start">
               <label for="cost" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('MALFUNCTION COST', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 col-md-8 position-relative">
                 <div class="row">
@@ -436,7 +440,6 @@ if ($is_exist_mal == true) {
             <?php } ?>
           </div>
         </div>
-
       </div>
 
       <!-- the malfunctions media -->
@@ -505,16 +508,20 @@ if ($is_exist_mal == true) {
 
       <!-- submit -->
       <div class="hstack gap-2">
-        <div class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
-          <button type="submit" form="edit-malfunction-info" class="btn btn-primary text-capitalize form-control bg-gradient fs-12 py-1" id="update-malfunctions" <?php if ($_SESSION['mal_update'] == 0 || ($_SESSION['UserID'] != $mal_info['tech_id'] && $_SESSION['isTech'] == 1)) {echo 'disabled';} ?>>
-            <i class="bi bi-check-all"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
-          </button>
-        </div>
+        <?php if ($_SESSION['mal_update'] == 1 || ($_SESSION['UserID'] == $mal_info['tech_id'] && $_SESSION['isTech'] == 1)) { ?>
+          <div class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
+            <button type="submit" form="edit-malfunction-info" class="btn btn-primary text-capitalize form-control bg-gradient fs-12 py-1" id="update-malfunctions" >
+              <i class="bi bi-check-all"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
+            </button>
+          </div>
+        <?php } ?>
+        <?php if ($_SESSION['mal_delete'] == 1) { ?> 
         <div>
-          <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 py-1" data-bs-toggle="modal" data-bs-target="#deleteMalModal" <?php if ($_SESSION['mal_delete'] == 0) {echo 'readonly';} ?> >
+          <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 py-1" data-bs-toggle="modal" data-bs-target="#deleteMalModal" >
             <i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?>
           </button>
         </div>
+        <?php } ?>
       </div>
     </form>
     <!-- end form -->

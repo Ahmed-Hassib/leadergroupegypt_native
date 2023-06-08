@@ -55,7 +55,7 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
     // include edit combination page
     $file_name = 'edit-combination.php';
     
-  } elseif ($query == 'update-combination-info' && $_SESSION['comb_update'] == 1) {
+  } elseif ($query == 'update-combination-info') {
     // include update combination page
     $file_name = 'update-combination.php';
     $possible_back = false;

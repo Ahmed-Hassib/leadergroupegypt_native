@@ -18,7 +18,7 @@ if ($is_exist == true) {
     $msg  = '<div class="alert alert-success text-capitalize"><i class="bi bi-check-circle-fill"></i>'.language("COMBINATION WAS DELETED SUCCESSFULLY").'</div>';
   } else {
     // show the successfull messgae
-    $msg  = '<div class="alert alert-success text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>'.language("A PROBLEM WAS HAPPENED WHILE INSERTING A THE COMBINATION").'</div>';
+    $msg  = '<div class="alert alert-success text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>'.language("A PROBLEM WAS HAPPENED WHILE DELETING A THE COMBINATION").'</div>';
   }
 ?>
   <!-- start edit profile page -->

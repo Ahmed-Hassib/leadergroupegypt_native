@@ -47,22 +47,21 @@
          */
         case 2:
           // check who is doing the updates
-          if ($update_owner_id == $tech_id) {
+          if ($update_owner_id == $tech_id && $mal_info['mal_status'] == 0) {
             do_technical_updates($_POST);
+          }
             
-            // check if upload media
-            if (count($_FILES) > 0) {
-              $path = $uploads . "//malfunctions/" . $_SESSION['company_id'] . "/";
-              upload_malfunction_media($_FILES, $mal_id, $path);
-            }
+          // check if upload media
+          if (count($_FILES) > 0) {
+            $path = $uploads . "malfunctions/";
+            upload_malfunction_media($_FILES, $mal_id, $path);
           }
           break;
       }
-      
       // success message
       $msg = '<div class="alert alert-success text-capitalize"><i class="bi bi-check-circle-fill"></i>&nbsp;'.language("MALFUNCTION WAS UPDATED SUCCESSFULLY", @$_SESSION['systemLang']).'</div>';
-    } ?>
-
+    } 
+    ?>
     <!-- start edit profile page -->
     <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
       <!-- start header -->
@@ -163,7 +162,12 @@ function upload_malfunction_media($media_files, $mal_id, $path) {
   if (!file_exists($path)) {
     mkdir($path);
   }
-
+  
+  $path .= $_SESSION['company_id'] . "/";
+  
+  if (!file_exists($path)) {
+    mkdir($path);
+  }
   // loop on it
   for ($i=0; $i < count($files_names); $i++) {
     // media temp
@@ -211,40 +215,3 @@ function do_after_sales_updates($info) {
 }
 ?>
 
-
-<?php
-  //       //   // loop on form error array
-  //       //   foreach ($formErorr as $error) {
-  //       //     echo '<div class="alert alert-danger text-capitalize w-50 mx-auto align-left">' . $error . '</div>';
-  //       //   }
-
-  //       //   // check if empty form error
-  //       //   if (empty($formErorr)) {
-  //       //     // values of photos to insert
-  //       //     $updatePhoto = "";
-  //       //     // check photo array
-  //       //     if ($isUploaded) {
-  //       //       // loop on photos
-  //       //       foreach ($photoName as $key => $photo) {
-  //       //         # code...
-  //       //         $arrName = explode('.', $photo);
-  //       //         $photoExtension = strtolower(end($arrName));
-  //       //         // add the date of day and malfunction id to the photo name
-  //       //         $phName = strtoupper($photoExtension) . "_". Date('Ymd') . "_" . $malID . "_" . rand() . "." . $photoExtension;
-  //       //         // move photo into upload directory
-  //       //         move_uploaded_file($photoTmp[$key], $uploads."//malfunctions//".$phName);
-  //       //         // check the uploaded type
-  //       //         $type = in_array($photoExtension, $imageTypes) ? "img" : "video";
-  //       //         // append photos values
-  //       //         $updatePhoto .= "(".$malID.", '".$phName."', '".$type."')";
-  //       //         // if not last photo add ',' at the end of the values query
-  //       //         $updatePhoto .= ($key + 1) == count($photoName) ? "" : ", ";
-  //       //       }
-  //       //       // 
-  //       //       $query .= "INSERT INTO `malfunctions_media` (`mal_id`, `media`,`type`) VALUES " . $updatePhoto . ";";
-  //       //     }
-  //       //   }
-  //       // }
-  //       // query to update the malfunction
-  //       $query .= "UPDATE `malfunctions` SET `mal_status` = ?, `isAccepted` = ?, `cost` = ?, `repaired_date` = CURRENT_DATE, `repaired_time` = now(), `tech_comment` = ? WHERE `mal_id` = ?;";
-  ?>

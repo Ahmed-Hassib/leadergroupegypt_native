@@ -59,7 +59,7 @@ $title .= " MALFUNCTIONS";
 switch($action) {
   case 'today':
     $title .= " OF TODAY";
-    $conditionPeriod = " `added_date` = CURRENT_DATE";
+    $conditionPeriod = " `added_date` = '".get_date_now()."'";
     break;
   case 'month':
     $title .= " OF THIS MONTH";
@@ -194,7 +194,7 @@ $count = $stmt->rowCount();     // get row count
       </button>
     </div>
     <!-- strst users table -->
-    <table class="table table-striped table-bordered  display compact table-style" id="malfunctions">
+    <table class="table table-striped table-bordered display compact table-style" id="malfunctions">
       <thead class="primary text-capitalize">
         <tr>
           <th data-order="asc" data-col-type="number" class="text-center" style="width: 20px">#</th>

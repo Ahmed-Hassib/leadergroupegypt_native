@@ -1,0 +1,46 @@
+.media-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+@media (max-width: 576px) {
+  .media-section h5 {
+    padding-bottom: 3rem;
+  }
+
+  .media-button {
+    bottom: 1rem;
+    top: unset;
+  }
+}
+
+.col-media {
+  position: relative;
+  height: 250px;
+}
+
+.col-media img,
+.col-media video {
+  padding: 0px;
+  border: 5px solid #0d6efd;
+  border-radius: 16px;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  -webkit-object-fit: contain;
+}
+
+.col-media .control-btn {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
+.col-media:hover .control-btn {
+  display: block;
+}

@@ -41,7 +41,7 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
             <div class="col-6">
               <div class="card card-stat bg-total bg-gradient">
                 <div class="card-body">
-                  <?php $all_comb_today = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
+                  <?php $all_comb_today = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                   <h5 class="card-title text-capitalize"><?php echo language('TOTAL', @$_SESSION['systemLang']) ?></h5>
                   <span class="nums">
                     <a href="?do=show-combination-details&period=today&combStatus=-1" class="num stretched-link" data-goal="<?php echo $all_comb_today ?>">0</a>
@@ -52,7 +52,7 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
             <div class="col-6">
               <div class="card card-stat bg-danger bg-gradient">
                 <div class="card-body">
-                  <?php $unfinished_comb_today = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE (`isFinished` = 0 AND `isAccepted` <> 2) AND added_date = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
+                  <?php $unfinished_comb_today = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE (`isFinished` = 0 AND `isAccepted` <> 2) AND added_date = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                   <h5 class="card-title text-capitalize"><?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="nums">
                     <a href="?do=show-combination-details&period=today&combStatus=unfinished" class="num stretched-link" data-goal="<?php echo $unfinished_comb_today ?>">0</a>
@@ -63,7 +63,7 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
             <div class="col-6">
               <div class="card card-stat bg-success bg-gradient">
                 <div class="card-body">
-                  <?php $finished_comb_today = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE `isFinished` = 1 AND added_date = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
+                  <?php $finished_comb_today = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE `isFinished` = 1 AND added_date = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                   <h5 class="card-title text-capitalize"><?php echo language('FINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="nums">
                     <a href="?do=show-combination-details&period=today&combStatus=finished" class="num stretched-link" data-goal="<?php echo $finished_comb_today ?>">0</a>
@@ -74,7 +74,7 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
             <div class="col-6">
               <div class="card card-stat bg-warning bg-gradient">
                 <div class="card-body">
-                  <?php $delayed_comb_today = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE (`isAccepted` = 2 OR `isFinished` = 2) AND added_date = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
+                  <?php $delayed_comb_today = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE (`isAccepted` = 2 OR `isFinished` = 2) AND added_date = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                   <h5 class="card-title text-capitalize"><?php echo language('DELAYED', @$_SESSION['systemLang']) ?></h5>
                   <span class="nums">
                     <a href="?do=show-combination-details&period=today&accepted=delayed" class="num stretched-link" data-goal="<?php echo $delayed_comb_today ?>">0</a>
@@ -340,27 +340,43 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
           </header>
           <?php
           // get `combinations` of today of the cureent employee
-          $today_comb = $comb_obj->select_specific_column("*", "`combinations`", "WHERE `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] . "  " . $techCondition1." ORDER BY `added_date` DESC LIMIT 5");
+          $today_comb = $comb_obj->select_specific_column("*", "`combinations`", "WHERE `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id'] . "  " . $techCondition1." ORDER BY `added_date` DESC LIMIT 5");
           ?>
           <div class="table-responsive-sm">
             <table class="table table-striped table-bordered  display compact w-100">
               <thead class="primary text-capitalize">
                 <tr>
-                  <th><?php echo language('CLIENT NAME', @$_SESSION['systemLang']) ?></th>
-                  <!-- <th><?php echo language('THE ADDRESS', @$_SESSION['systemLang']) ?></th> -->
-                  <!-- <th><?php echo language('PHONE', @$_SESSION['systemLang']) ?></th> -->
-                  <th><?php echo language('TECHNICAL NAME', @$_SESSION['systemLang']) ?></th>
-                  <th><?php echo language('STATUS', @$_SESSION['systemLang']) ?></th>
-                  <th><?php echo language('TECH STATUS', @$_SESSION['systemLang']) ?></th>
-                  <th><?php echo language('CONTROL', @$_SESSION['systemLang']) ?></th>
+                  <th class="text-center"><?php echo language('CLIENT NAME', @$_SESSION['systemLang']) ?></th>
+                  <th class="text-center"><?php echo language('THE ADDRESS', @$_SESSION['systemLang']) ?></th>
+                  <th class="text-center"><?php echo language('PHONE', @$_SESSION['systemLang']) ?></th>
+                  <th class="text-center"><?php echo language('TECHNICAL NAME', @$_SESSION['systemLang']) ?></th>
+                  <th class="text-center"><?php echo language('STATUS', @$_SESSION['systemLang']) ?></th>
+                  <th class="text-center"><?php echo language('HAVE MEDIA', @$_SESSION['systemLang']) ?></th>
+                  <th class="text-center"><?php echo language('CONTROL', @$_SESSION['systemLang']) ?></th>
                 </tr>
               </thead>
               <tbody>
                 <?php foreach ($today_comb as $index => $comb) { ?>
                   <tr>
                     <td style="width: 150px"><?php echo $comb['client_name'] ?></td>
-                    <!-- <td style="width: 100px"><?php echo $comb['address'] ?></td> -->
-                    <!-- <td style="width: 100px"><?php echo $comb['phone'] ?></td> -->
+                    <td style="width: 200px">
+                      <?php $client_addr = $comb['address'];
+                      if (!empty($client_addr) && strlen($client_addr) > 50) {
+                        echo trim(substr($client_addr, 0, 50), '') . "...";
+                      } else {
+                        echo $client_addr;
+                      }
+                      ?>
+                    </td>
+                    <td style="width: 100px">
+                      <?php $client_phone = $comb['phone'];
+                      if (!empty($client_phone) && strlen($client_phone) > 50) {
+                        echo trim(substr($$client_phone, 0, 11), '') . "...";
+                      } else {
+                        echo $client_phone;
+                      }
+                      ?>
+                    </td>
                     <td style="width: 100px">
                       <?php $techName = $comb_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$comb['UserID'])[0]['UserName']; ?>
                       <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $comb['UserID'];?>"><?php echo $techName ?></a>
@@ -380,27 +396,25 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                       ?>
                       <i class="bi <?php echo $icon ?>" title="<?php echo $title ?>"></i>
                     </td>
-                    <td style="width: 50px">
-                      <?php
-                        if ($comb['isAccepted'] == 0) {
-                          $iconStatus   = "bi-x-circle-fill text-danger";
-                          $titleStatus  = language('NOT ACCEPTED', @$_SESSION['systemLang']);
-                        } elseif ($comb['isAccepted'] == 1) {
-                          $iconStatus   = "bi-check-circle-fill text-success";
-                          $titleStatus  = language('ACCEPTED', @$_SESSION['systemLang']);
-                        } elseif ($comb['isAccepted'] == 2) {
-                          $iconStatus   = "bi-exclamation-circle-fill text-warning";
-                          $titleStatus  = language('DELAYED COMBINATION', @$_SESSION['systemLang']);
-                        } else {
-                          $iconStatus   = "bi-dash-circle-fill text-info";
-                          $titleStatus  = language('NO STATUS', @$_SESSION['systemLang']);
-                        }
-                      ?>
-                      <i class="bi <?php echo $iconStatus ?>" title="<?php echo $titleStatus ?>"></i>
+                    <td style="width: 150px">
+                    <?php 
+                      $have_media = $comb_obj->count_records("`id`", "`combinations_media`", "WHERE `comb_id` = ".$comb['comb_id']);
+                      if ($have_media > 0) {
+                        echo language('MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
+                      } else {
+                        echo language('NO MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
+                      }
+                    ?>
                     </td>
                     <td style="width: 50px">
-                      <a href="?do=edit-combination&combid=<?php echo $comb['comb_id'] ?>" target="" class="btn btn-outline-primary me-1 fs-12 <?php if ($_SESSION['comb_show'] == 0) {echo 'disabled';} ?>"><i class="bi bi-eye"></i></a>
-                      <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 <?php if ($_SESSION['comb_delete'] == 0) {echo 'disabled';} ?>" data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb" data-comb-id="<?php echo $comb['comb_id'] ?>"><i class="bi bi-trash"></i></button>
+                    <?php if ($_SESSION['comb_show'] == 1 || $_SESSION['comb_delete'] == 1) { ?>
+                      <?php if ($_SESSION['comb_show'] == 1) { ?>
+                        <a href="?do=edit-combination&combid=<?php echo $comb['comb_id'] ?>" target="" class="btn btn-outline-primary me-1 fs-12"><i class="bi bi-eye"></i></a>
+                      <?php } ?>
+                      <?php if ($_SESSION['comb_delete'] == 1) {?>
+                        <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb" data-comb-id="<?php echo $comb['comb_id'] ?>"><i class="bi bi-trash"></i></button>
+                      <?php } ?>
+                    <?php } ?>
                     </td>
                   </tr>
                 <?php } ?>
@@ -433,21 +447,21 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
             <table class="table table-striped table-bordered  display compact w-100">
               <thead class="primary text-capitalize">
                 <tr>
-                  <th><?php echo language('CLIENT NAME', @$_SESSION['systemLang']) ?></th>
-                  <!-- <th><?php echo language('THE ADDRESS', @$_SESSION['systemLang']) ?></th> -->
-                  <!-- <th><?php echo language('PHONE', @$_SESSION['systemLang']) ?></th> -->
-                  <th><?php echo language('TECHNICAL NAME', @$_SESSION['systemLang']) ?></th>
-                  <th><?php echo language('STATUS', @$_SESSION['systemLang']) ?></th>
-                  <th><?php echo language('TECH STATUS', @$_SESSION['systemLang']) ?></th>
-                  <th><?php echo language('CONTROL', @$_SESSION['systemLang']) ?></th>
+                  <th class="text-center"><?php echo language('CLIENT NAME', @$_SESSION['systemLang']) ?></th>
+                  <th class="text-center"><?php echo language('THE ADDRESS', @$_SESSION['systemLang']) ?></th>
+                  <th class="text-center"><?php echo language('PHONE', @$_SESSION['systemLang']) ?></th>
+                  <th class="text-center"><?php echo language('TECHNICAL NAME', @$_SESSION['systemLang']) ?></th>
+                  <th class="text-center"><?php echo language('STATUS', @$_SESSION['systemLang']) ?></th>
+                  <th class="text-center"><?php echo language('HAVE MEDIA', @$_SESSION['systemLang']) ?></th>
+                  <th class="text-center"><?php echo language('CONTROL', @$_SESSION['systemLang']) ?></th>
                 </tr>
               </thead>
               <tbody>
                 <?php foreach ($latest_comb as $index => $comb) { ?>
                   <tr>
                     <td style="width: 150px"><?php echo $comb['client_name'] ?></td>
-                    <!-- <td style="width: 100px"><?php echo $comb['address'] ?></td> -->
-                    <!-- <td style="width: 100px"><?php echo $comb['phone'] ?></td> -->
+                    <td style="width: 200px"><?php echo $comb['address'] ?></td>
+                    <td style="width: 100px"><?php echo $comb['phone'] ?></td>
                     <td style="width: 100px">
                       <?php $techName = $comb_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$comb['UserID'])[0]['UserName']; ?>
                       <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $comb['UserID'];?>"><?php echo $techName ?></a>
@@ -467,27 +481,25 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                       ?>
                       <i class="bi <?php echo $icon ?>" title="<?php echo $title ?>"></i>
                     </td>
-                    <td style="width: 50px">
-                      <?php
-                        if ($comb['isAccepted'] == 0) {
-                          $iconStatus   = "bi-x-circle-fill text-danger";
-                          $titleStatus  = language('NOT ACCEPTED', @$_SESSION['systemLang']);
-                        } elseif ($comb['isAccepted'] == 1) {
-                          $iconStatus   = "bi-check-circle-fill text-success";
-                          $titleStatus  = language('ACCEPTED', @$_SESSION['systemLang']);
-                        } elseif ($comb['isAccepted'] == 2) {
-                          $iconStatus   = "bi-exclamation-circle-fill text-warning";
-                          $titleStatus  = language('DELAYED COMBINATION', @$_SESSION['systemLang']);
-                        } else {
-                          $iconStatus   = "bi-dash-circle-fill text-info";
-                          $titleStatus  = language('NO STATUS', @$_SESSION['systemLang']);
-                        }
-                      ?>
-                      <i class="bi <?php echo $iconStatus ?>" title="<?php echo $titleStatus ?>"></i>
+                    <td style="width: 150px">
+                    <?php 
+                      $have_media = $comb_obj->count_records("`id`", "`combinations_media`", "WHERE `comb_id` = ".$comb['comb_id']);
+                      if ($have_media > 0) {
+                        echo language('MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
+                      } else {
+                        echo language('NO MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
+                      }
+                    ?>
                     </td>
                     <td style="width: 50px">
-                      <a href="?do=edit-combination&combid=<?php echo $comb['comb_id'] ?>" target="" class="btn btn-outline-primary me-1 fs-12 <?php if ($_SESSION['comb_show'] == 0) {echo 'disabled';} ?>"><i class="bi bi-eye"></i></a>
-                      <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 <?php if ($_SESSION['comb_delete'] == 0) {echo 'disabled';} ?>" data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb" data-comb-id="<?php echo $comb['comb_id'] ?>"><i class="bi bi-trash"></i></button>
+                      <?php if ($_SESSION['comb_show'] == 1 || $_SESSION['comb_delete'] == 1) { ?>
+                        <?php if ($_SESSION['comb_show'] == 1) { ?>
+                          <a href="?do=edit-combination&combid=<?php echo $comb['comb_id'] ?>" target="" class="btn btn-outline-primary me-1 fs-12"><i class="bi bi-eye"></i></a>
+                        <?php } ?>
+                        <?php if ($_SESSION['comb_delete'] == 1) {?>
+                          <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb" data-comb-id="<?php echo $comb['comb_id'] ?>"><i class="bi bi-trash"></i></button>
+                        <?php } ?>
+                      <?php } ?>
                     </td>
                   </tr>
                 <?php } ?>

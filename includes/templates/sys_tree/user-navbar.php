@@ -288,7 +288,7 @@
         <?php } ?>
         <?php if ($_SESSION['comb_add'] == 1) { ?>
         <li>
-          <a href="<?php echo $nav_up_level ?>combinations/index.php?do=addCombinations">
+          <a href="<?php echo $nav_up_level ?>combinations/index.php?do=add-new-combination">
             <span class="link-name"><?php echo language('ADD NEW COMBINATION', @$_SESSION['systemLang']) ?></span>
           </a>
         </li>

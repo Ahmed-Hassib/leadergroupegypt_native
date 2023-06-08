@@ -26,52 +26,44 @@
       // get new malfunction info
       $manager_id   = $_POST['admin-id'];
       $tech_id      = $_POST['technical-id'];
-      // is updated flag
-      $is_updated = false;
-      // chekc malfunction status
-      if ($comb_info['isFinished'] == 0) {
-        // check who is doing the update
-        switch ($update_owner_job_id) {
-          /**
-           * updates for:
-          * [1] The Manager
-          * [2] Customer Services
-          */
-          case 1:
-          case 3:
-          // check who is doing the updates
-          if ($update_owner_id == $manager_id || $update_owner_job_id == 1) {
-            $is_updated = do_manager_updates($_POST);
+
+      
+      // check who is doing the update
+      switch ($update_owner_job_id) {
+        /**
+         * updates for:
+        * [1] The Manager
+        * [2] Customer Services
+        */
+        case 1:
+        case 3:
+        case 4:
+          if ($comb_info['isFinished'] == 0) {
+            do_manager_updates($_POST);
+          } else {
+            do_after_sales_updates($_POST);
           }
           break;
-          /**
-           * updates for:
-           * [1] Technical Man
-           */
-          case 2:
+        /**
+         * updates for:
+         * [1] Technical Man
+         */
+        case 2:
           // check who is doing the updates
-          if ($update_owner_id == $tech_id) {
-            $is_updated = do_technical_updates($_POST);
+          if ($update_owner_id == $tech_id && $comb_info['isFinished'] == 0) {
+            do_technical_updates($_POST);
+          }
+          // check if upload media
+          if (count($_FILES) > 0) {
+            $path = $uploads . "combinations/";
+            upload_combination_media($_FILES, $comb_id, $path);
           }
           break;
-        }
-      } else {
-        // check who is doing the update
-        if ($update_owner_job_id == 4 || $update_owner_job_id == 1 || $_SESSION['mal_update'] == 1) {
-          /**
-           * updates for:
-           * [1] After Sales Man
-           */
-          $is_updated = do_after_sales_updates($_POST);
-        }
       }
-      // check if was updated
-      if ($is_updated) {
-        $msg = '<div class="alert alert-success text-capitalize"><i class="bi bi-check-circle-fill"></i>&nbsp;'.language("COMBINATION WAS UPDATED SUCCESSFULLY", @$_SESSION['systemLang']).'</div>';
-      } else {
-        $msg = '<div class="alert alert-danger text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;'.language("A PROBLEM WAS HAPPENED WHILE UPDATING THE COMBINATION", @$_SESSION['systemLang']).'</div>';
-      }
-    } ?>
+      // success message
+      $msg = '<div class="alert alert-success text-capitalize"><i class="bi bi-check-circle-fill"></i>&nbsp;'.language("COMBINATION WAS UPDATED SUCCESSFULLY", @$_SESSION['systemLang']).'</div>';
+    } 
+    ?>
     <!-- start edit profile page -->
     <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
       <!-- start header -->
@@ -119,13 +111,11 @@ function do_manager_updates($info) {
   // compare new tech with the old
   if ($tech_id == $prev_tech_id) {
     // update all compination info
-    $is_updated = $comb_obj->update_compination_mng(array($client_name, $client_phone, $client_address, $comment, $tech_id, get_date_now(), get_time_now(), $comb_id));
+    $comb_obj->update_compination_mng(array($client_name, $client_phone, $client_address, $comment, $tech_id, get_date_now(), get_time_now(), $comb_id));
   } else {
     // reset compination info
-    $is_updated = $comb_obj->reset_compination_info($tech_id, get_date_now(), get_time_now(), $comb_id);
+    $comb_obj->reset_compination_info($tech_id, get_date_now(), get_time_now(), $comb_id);
   }
-  // return updated status
-  return $is_updated;
 }
 ?>
 
@@ -140,7 +130,7 @@ function do_technical_updates($info) {
   // get combination status
   $is_finished = $info['comb-status'];
   // get technical status
-  $tech_status = $info['tech-comb-status'];
+  $tech_status = $info['comb-status'];
   // get technical man comment
   $tech_comment = isset($info['comment']) ? $info['comment'] : '';
   // get combination cost
@@ -150,9 +140,56 @@ function do_technical_updates($info) {
     $comb_obj = new Combination();
   }
   // get updated status
-  $is_updated = $comb_obj->update_combination_tech(array($is_finished, $tech_status, get_date_now(), get_time_now(), get_date_now(), get_time_now(), $cost, $tech_comment, $comb_id));
-  // return updated status
-  return $is_updated;
+  $comb_obj->update_combination_tech(array($is_finished, $tech_status, get_date_now(), get_time_now(), get_date_now(), get_time_now(), $cost, $tech_comment, $comb_id));
+}
+?>
+
+<?php 
+/**
+ * upload_combination_media function
+ * used to upload media to database
+ */
+function upload_combination_media($media_files, $comb_id, $path) {
+  if (!isset($comb_obj)) {
+    // create an object of Combination class
+    $comb_obj = new Combination();
+  }
+  // files names
+  $files_names = $media_files['comb-media']['name'];
+  // files tmp name
+  $files_tmp_name = $media_files['comb-media']['tmp_name'];
+  // files types
+  $files_types = $media_files['comb-media']['type'];
+  // files error
+  $files_error = $media_files['comb-media']['error'];
+  // files size
+  $files_size = $media_files['comb-media']['size'];
+
+  if (!file_exists($path) && !is_dir($path)) {
+    mkdir($path);
+  }
+  
+  $path .= $_SESSION['company_id'] . "/";
+
+  if (!file_exists($path) && !is_dir($path)) {
+    mkdir($path);
+  }
+  
+  // loop on it
+  for ($i=0; $i < count($files_names); $i++) {
+    // media temp
+    $media_temp = [];
+    // check if not empty
+    if (!empty($files_names[$i]) && $files_error[$i] == 0) {
+      $media_temp = explode('.', $files_names[$i]);
+      $media_temp[0] = date('dmY') .'_'. $comb_id .'_'. rand(00000000, 99999999) .'_'.($i + 1);
+      $media_name = join('.',$media_temp);
+      move_uploaded_file($files_tmp_name[$i], $path.$media_name);
+
+      // upload files info into database
+      $comb_obj->upload_media($comb_id, $media_name, strpos($files_types[$i], 'image') !== false ? 'img' : 'video' );
+    }
+  }
 }
 ?>
 
@@ -179,49 +216,7 @@ function do_after_sales_updates($info) {
       $comb_obj = new Combination();
     }
     // get updated status
-    $is_updated = $comb_obj->update_combination_review(array(get_date_now(), get_time_now(), $money_review, $service_qty, $tech_qty, $review_comment, $comb_id));
-  } else {
-    $is_updated = false;
+    $comb_obj->update_combination_review(array(get_date_now(), get_time_now(), $money_review, $service_qty, $tech_qty, $review_comment, $comb_id));
   }
-  // return updated status
-  return $is_updated;
 }
 ?>
-
-
-<?php
-  //       //   // loop on form error array
-  //       //   foreach ($formErorr as $error) {
-  //       //     echo '<div class="alert alert-danger text-capitalize w-50 mx-auto align-left">' . $error . '</div>';
-  //       //   }
-
-  //       //   // check if empty form error
-  //       //   if (empty($formErorr)) {
-  //       //     // values of photos to insert
-  //       //     $updatePhoto = "";
-  //       //     // check photo array
-  //       //     if ($isUploaded) {
-  //       //       // loop on photos
-  //       //       foreach ($photoName as $key => $photo) {
-  //       //         # code...
-  //       //         $arrName = explode('.', $photo);
-  //       //         $photoExtension = strtolower(end($arrName));
-  //       //         // add the date of day and malfunction id to the photo name
-  //       //         $phName = strtoupper($photoExtension) . "_". Date('Ymd') . "_" . $malID . "_" . rand() . "." . $photoExtension;
-  //       //         // move photo into upload directory
-  //       //         move_uploaded_file($photoTmp[$key], $uploads."//malfunctions//".$phName);
-  //       //         // check the uploaded type
-  //       //         $type = in_array($photoExtension, $imageTypes) ? "img" : "video";
-  //       //         // append photos values
-  //       //         $updatePhoto .= "(".$malID.", '".$phName."', '".$type."')";
-  //       //         // if not last photo add ',' at the end of the values query
-  //       //         $updatePhoto .= ($key + 1) == count($photoName) ? "" : ", ";
-  //       //       }
-  //       //       // 
-  //       //       $query .= "INSERT INTO `malfunctions_media` (`comb_id`, `media`,`type`) VALUES " . $updatePhoto . ";";
-  //       //     }
-  //       //   }
-  //       // }
-  //       // query to update the malfunction
-  //       $query .= "UPDATE `malfunctions` SET `mal_status` = ?, `isAccepted` = ?, `cost` = ?, `repaired_date` = CURRENT_DATE, `repaired_time` = now(), `tech_comment` = ? WHERE `comb_id` = ?;";
-  ?>

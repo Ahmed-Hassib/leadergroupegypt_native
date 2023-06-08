@@ -79,6 +79,10 @@ switch ($query) {
   case "delete-malfunction-media":
     $file_name = 'delete-malfunction-media.php';
     break;
+
+  case "delete-combination-media":
+    $file_name = 'delete-combination-media.php';
+    break;
   
   case "delete-profile-img":
     $file_name = 'delete-profile-img.php';

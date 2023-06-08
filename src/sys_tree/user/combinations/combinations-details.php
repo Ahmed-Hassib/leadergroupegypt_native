@@ -1,5 +1,9 @@
 <?php 
 $is_contain_table = true;
+if (!isset($comb_obj)) {
+  // create an object of Combin class
+  $comb_obj = new Combination();
+}
 // period value
 $period = isset($_GET['period']) && !empty($_GET['period']) ? $_GET['period'] : 'all';
 // combStatus of combination
@@ -55,7 +59,7 @@ $title .= " COMBINATIONS";
 switch($period) {
   case 'today':
     $title .= " OF TODAY";
-    $conditionPeriod = " `added_date` = CURRENT_DATE";
+    $conditionPeriod = " `added_date` = '".get_date_now()."'";
     break;
   case 'month':
     $title .= " OF THIS MONTH";
@@ -165,12 +169,14 @@ $count = $stmt->rowCount();     // get row count
 ?>
 <!-- start edit profile page -->
 <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-  <div class="mb-3 <?php if ($_SESSION['mal_add'] == 0) {echo 'd-none';} ?>">
+  <?php if ($_SESSION['comb_add'] == 1) { ?>
+  <div class="mb-3">
     <a href="?do=add-new-combination" class="btn btn-outline-primary py-1 shadow-sm fs-12">
       <span class="bi bi-plus"></span>
       <?php echo language("ADD NEW COMBINATION", @$_SESSION['systemLang']) ?>
     </a>
   </div>
+  <?php } ?>
   <!-- start header -->
   <header class="header mb-3">
     <h5 class="h5 text-capitalize text-success "><?php echo language($title, @$_SESSION['systemLang']); ?></h5>
@@ -179,9 +185,7 @@ $count = $stmt->rowCount();     // get row count
       <h6 class="h6 text-capitalize text-danger "><?php echo language('THERE IS NO COMBINATIONS TO SHOW', @$_SESSION['systemLang']) ?></h6>
     <?php } ?>
   </header>
-  <?php
-  if ($count > 0) {
-  ?>
+  <?php if ($count > 0) {  ?>
     <!-- start table container -->
     <div class="table-responsive-sm">
       <div class="fixed-scroll-btn">
@@ -195,21 +199,21 @@ $count = $stmt->rowCount();     // get row count
         </button>
       </div>
       <!-- strst users table -->
-      <table class="table table-bordered  display compact table-style w-100" id="combinations">
+      <table class="table table-striped table-bordered display compact table-style" id="combinations">
         <thead class="primary text-capitalize">
-          <tr class="text-center">
+          <tr>
             <th class="d-none">id</th>
-            <th data-order="asc" data-col-type="number">#</th>
-            <th data-order="asc" data-col-type="string"><?php echo language('ADMIN NAME', @$_SESSION['systemLang']) ?></th>
-            <th data-order="asc" data-col-type="string"><?php echo language('TECHNICAL NAME', @$_SESSION['systemLang']) ?></th>
-            <th data-order="asc" data-col-type="string"><?php echo language('CLIENT NAME', @$_SESSION['systemLang']) ?></th>
-            <th data-order="asc" data-col-type="string"><?php echo language('THE ADDRESS', @$_SESSION['systemLang']) ?></th>
-            <th data-order="asc" data-col-type="string"><?php echo language('PHONE', @$_SESSION['systemLang']) ?></th>
-            <th data-order="asc" data-col-type="string"><?php echo language('THE NOTES', @$_SESSION['systemLang']) ?></th>
-            <th data-order="asc" data-col-type="string"><?php echo language('TECHNICAL MAN COMMENT', @$_SESSION['systemLang']) ?></th>
-            <th data-order="asc" data-col-type="string"><?php echo language('STATUS', @$_SESSION['systemLang']) ?></th>
-            <th data-order="asc" data-col-type="string"><?php echo language('TECH STATUS', @$_SESSION['systemLang']) ?></th>
-            <th><?php echo language('CONTROL', @$_SESSION['systemLang']) ?></th>
+            <th class="text-center" style="width: 20px">#</th>
+            <th class="text-center" style="width: 150px"><?php echo language('ADMIN NAME', @$_SESSION['systemLang']) ?></th>
+            <th class="text-center" style="width: 150px"><?php echo language('TECHNICAL NAME', @$_SESSION['systemLang']) ?></th>
+            <th class="text-center" style="width: 200px"><?php echo language('CLIENT NAME', @$_SESSION['systemLang']) ?></th>
+            <th class="text-center" style="width: 200px"><?php echo language('THE ADDRESS', @$_SESSION['systemLang']) ?></th>
+            <th class="text-center" style="width: 100px"><?php echo language('PHONE', @$_SESSION['systemLang']) ?></th>
+            <!-- <th class="text-center" style="width: 100px"><?php echo language('THE NOTES', @$_SESSION['systemLang']) ?></th> -->
+            <th class="text-center" style="width: 300px"><?php echo language('TECHNICAL MAN COMMENT', @$_SESSION['systemLang']) ?></th>
+            <th class="text-center" style="width: 50px"><?php echo language('STATUS', @$_SESSION['systemLang']) ?></th>
+            <th class="text-center fs-10-sm" style="width: 200px"><?php echo language('HAVE MEDIA', @$_SESSION['systemLang']) ?></th>
+            <th class="text-center" style="width: 70px;"><?php echo language('CONTROL', @$_SESSION['systemLang']) ?></th>
           </tr>
         </thead>
         <tbody>
@@ -218,18 +222,51 @@ $count = $stmt->rowCount();     // get row count
               <td class="d-none"><?php echo $row['comb_id'] ?></td>
               <td><?php echo ($index + 1) ?></td>
               <td>
-                <?php $admin_name = selectSpecificColumn("`UserName`", "`users`", "WHERE `UserID` = ".$row['addedBy'])[0]['UserName']; ?>
+                <?php $admin_name = $comb_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$row['addedBy'])[0]['UserName']; ?>
                 <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $row['addedBy'];?>"><?php echo $admin_name ?></a>
               </td>
               <td>
-                <?php $tech_name = selectSpecificColumn("`UserName`", "`users`", "WHERE `UserID` = ".$row['UserID'])[0]['UserName']; ?>
+                <?php $tech_name = $comb_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$row['UserID'])[0]['UserName']; ?>
                 <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $row['UserID'];?>"><?php echo $tech_name ?></a>
               </td>
               <td><?php echo $row['client_name'] ?></td>
-              <td><?php echo $row['address'] ?></td>
-              <td><?php echo $row['phone'] ?></td>
-              <td><?php echo $row['comment'] ?></td>
-              <td class="text-center <?php echo empty($row['tech_comment']) ? 'text-danger ' : '' ?>"><?php echo !empty($row['tech_comment']) ? $row['tech_comment'] : language('THERE IS NO COMMENT OR NOTE TO SHOW', @$_SESSION['systemLang']) ?></td>
+              <td>
+                <?php $client_addr = $row['address'];
+                if (!empty($client_addr) && strlen($client_addr) > 50) {
+                  echo trim(substr($client_addr, 0, 50), '') . "...";
+                } else {
+                  echo $client_addr;
+                }
+                ?>
+              </td>
+              <td>
+                <?php $client_phone = $row['phone'];
+                if (!empty($client_phone) && strlen($client_phone) > 50) {
+                  echo trim(substr($$client_phone, 0, 11), '') . "...";
+                } else {
+                  echo $client_phone;
+                }
+                ?>
+              </td>
+              <!-- <td>
+                <?php 
+                // $comment = $row['comment'];
+                // if (!empty($comment) && strlen($comment) > 50) {
+                //   echo trim(substr($comment, 0, 50), '') . "...";
+                // } else {
+                //   echo $comment;
+                // }
+                ?>
+              </td> -->
+              <td class="text-center <?php echo empty($row['tech_comment']) ? 'text-danger ' : '' ?>">
+                <?php $tech_comment = !empty($row['tech_comment']) ? $row['tech_comment'] : language('THERE IS NO COMMENT OR NOTE TO SHOW', @$_SESSION['systemLang']);
+                if (!empty($tech_comment) && strlen($tech_comment) > 50) {
+                  echo trim(substr($tech_comment, 0, 50), '') . "...";
+                } else {
+                  echo $tech_comment;
+                }
+                ?>
+              </td>
               <td>
                 <?php
                   if ($row['isFinished'] == 0) {
@@ -246,26 +283,24 @@ $count = $stmt->rowCount();     // get row count
                 <i class="bi <?php echo $icon ?>" title="<?php echo $title ?>"></i>
               </td>
               <td>
-                <?php
-                  if ($row['isAccepted'] == 0) {
-                    $iconStatus   = "bi-x-circle-fill text-danger";
-                    $titleStatus  = language('NOT ACCEPTED', @$_SESSION['systemLang']);
-                  } elseif ($row['isAccepted'] == 1) {
-                    $iconStatus   = "bi-check-circle-fill text-success";
-                    $titleStatus  = language('ACCEPTED', @$_SESSION['systemLang']);
-                  } elseif ($row['isAccepted'] == 2) {
-                    $iconStatus   = "bi-exclamation-circle-fill text-warning";
-                    $titleStatus  = language('DELAYED COMBINATION', @$_SESSION['systemLang']);
-                  } else {
-                    $iconStatus   = "bi-dash-circle-fill text-info";
-                    $titleStatus  = language('NO STATUS', @$_SESSION['systemLang']);
-                  }
-                ?>
-                <i class="bi <?php echo $iconStatus ?>" title="<?php echo $titleStatus ?>"></i>
+              <?php 
+                $have_media = $comb_obj->count_records("`id`", "`combinations_media`", "WHERE `comb_id` = ".$row['comb_id']);
+                if ($have_media > 0) {
+                  echo language('MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
+                } else {
+                  echo language('NO MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
+                }
+              ?>
               </td>
               <td>
-                <a href="?do=edit-combination&combid=<?php echo $row['comb_id'] ?>" class="btn btn-outline-primary fs-12 <?php if ($_SESSION['comb_show'] == 0) {echo 'disabled';} ?>"><i class="bi bi-eye"></i></a>
-                <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 <?php if ($_SESSION['comb_delete'] == 0) {echo 'disabled';} ?>" data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb" data-comb-id="<?php echo $row['comb_id'] ?>"><i class="bi bi-trash"></i></button>
+                <?php if ($_SESSION['comb_show'] == 1 || $_SESSION['comb_delete'] == 1) { ?>
+                  <?php if ($_SESSION['comb_show'] == 1) { ?>
+                  <a href="?do=edit-combination&combid=<?php echo $row['comb_id'] ?>" class="btn btn-outline-primary fs-12"><i class="bi bi-eye"></i></a>
+                  <?php } ?>
+                  <?php if ($_SESSION['comb_delete'] == 1) {?>
+                    <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb" data-comb-id="<?php echo $row['comb_id'] ?>"><i class="bi bi-trash"></i></button>
+                  <?php } ?>
+                <?php } ?>
               </td>
             </tr>
           <?php } ?>
