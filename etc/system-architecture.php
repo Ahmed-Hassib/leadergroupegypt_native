@@ -254,7 +254,8 @@ function get_page_dependencies($page_role, $file_type) {
     
     'sys_tree_combination' => [
       'css' => [
-        '1' => 'combination.css'
+        '1' => 'combination.css',
+        '2' => 'combination-media.css'
       ],
       'js' => [
         '1' => 'combination.js'

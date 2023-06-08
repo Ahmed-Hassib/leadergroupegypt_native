@@ -486,6 +486,12 @@ if ($is_exist == true) {
     </form>
     <!-- end form -->
     <?php include_once 'delete-combination-modal.php' ?>
+
+    <!-- media modal -->
+    <div id="media-modal" class="media-modal">
+      <span class="close" id="media-modal-close">&times;</span>
+      <div id="media-modal-content"></div>
+    </div>
   </div>
 <?php } else { ?>
   <!-- start edit profile page -->

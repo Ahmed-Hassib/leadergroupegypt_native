@@ -95,7 +95,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
     // check logined user
     if ($_SESSION['isRoot'] == 1) {
       // redirect to admin page
-      // header("Location: root/$curr_version/dashboard/index.php"); 
       header("Location: root/dashboard/index.php"); 
       exit();
     } else {
@@ -167,6 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && !empty($_GET)) {
         <div class="mb-4">
         <?php if (isset($_SESSION['loginError']) && $_SESSION['loginError'] == 1) { ?>
           <span class='text-danger text-capitalize'><?php echo language("SORRY, USERNAME OR PASSWORD IS WRONG PLEASE TRY LATER") ?></span>
+          <?php unset($_SESSION['loginError']); ?>
         <?php } ?>
         </div>
       </form>
