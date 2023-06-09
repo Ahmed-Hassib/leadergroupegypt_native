@@ -38,8 +38,11 @@
         case 1:
         case 3:
         case 4:
-          do_manager_updates($_POST);
-          do_after_sales_updates($_POST);
+          if ($mal_info['mal_status'] != 1) {
+            do_manager_updates($_POST);
+          } else {
+            do_after_sales_updates($_POST);
+          }
           break;
         /**
          * updates for:

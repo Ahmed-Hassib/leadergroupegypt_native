@@ -38,7 +38,7 @@
         case 1:
         case 3:
         case 4:
-          if ($comb_info['isFinished'] == 0) {
+          if ($comb_info['isFinished'] != 1) {
             do_manager_updates($_POST);
           } else {
             do_after_sales_updates($_POST);

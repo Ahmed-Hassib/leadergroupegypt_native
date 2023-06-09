@@ -299,7 +299,7 @@ if ($is_exist == true) {
             <div class="mb-sm-2 mb-md-3 row">
               <label for="comment" class="col-sm-12 col-form-label text-capitalize"><?php echo language('TECHNICAL MAN COMMENT', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 position-relative">
-                <textarea name="comment" id="comment" title="describe the combination" class="form-control w-100" style="height: 7rem; resize: none; direction: <?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>" <?php if ($_SESSION['isTech'] == 0 || $comb_info['isFinished']) {echo 'disabled';} ?>><?php echo empty($comb_info['tech_comment']) && $comb_info['isFinished'] ? "لا يوجد تعليق من الفني" : $comb_info['tech_comment']; ?></textarea>
+                <textarea name="comment" id="comment" title="describe the combination" class="form-control w-100" style="height: 7rem; resize: none; direction: <?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>" <?php if ($_SESSION['isTech'] == 0 || $comb_info['isFinished'] == 1) {echo 'disabled';} ?>><?php echo empty($comb_info['tech_comment']) && $comb_info['isFinished'] ? "لا يوجد تعليق من الفني" : $comb_info['tech_comment']; ?></textarea>
               </div>
             </div>
             <!-- cost -->
