@@ -45,10 +45,11 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('TOTAL', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-combination-details&period=today&combStatus=-1" class="num stretched-link" data-goal="<?php echo $all_comb_today ?>">0</a>
+                      <span class="num" data-goal="<?php echo $all_comb_today ?>">0</span>
                     </span>
                   </span>
-                </div>
+                  <a href="?do=show-combination-details&period=today&combStatus=-1" class="stretched-link" ></a>
+                  </div>
               </div>
             </div>
             <div class="col-6">
@@ -58,9 +59,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-combination-details&period=today&combStatus=unfinished" class="num stretched-link" data-goal="<?php echo $unfinished_comb_today ?>">0</a>
+                      <span class="num" data-goal="<?php echo $unfinished_comb_today ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-combination-details&period=today&combStatus=unfinished" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -71,9 +73,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('FINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-combination-details&period=today&combStatus=finished" class="num stretched-link" data-goal="<?php echo $finished_comb_today ?>">0</a>
+                      <span class="num" data-goal="<?php echo $finished_comb_today ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-combination-details&period=today&combStatus=finished" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -84,9 +87,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('DELAYED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-combination-details&period=today&accepted=delayed" class="num stretched-link" data-goal="<?php echo $delayed_comb_today ?>">0</a>
+                      <span class="num" data-goal="<?php echo $delayed_comb_today ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-combination-details&period=today&accepted=delayed" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -111,9 +115,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('TOTAL', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-combination-details&period=month&combStatus=-1" class="num stretched-link" data-goal="<?php echo $all_comb_month ?>">0</a>
+                      <span class="num" data-goal="<?php echo $all_comb_month ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-combination-details&period=month&combStatus=-1" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -124,9 +129,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-combination-details&period=month&combStatus=unfinished" class="num stretched-link" data-goal="<?php echo $unfinished_comb_month ?>">0</a>
+                      <span class="num" data-goal="<?php echo $unfinished_comb_month ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-combination-details&period=month&combStatus=unfinished" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -137,9 +143,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('FINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-combination-details&period=month&combStatus=finished" class="num stretched-link" data-goal="<?php echo $finished_comb_month ?>">0</a>
+                      <span class="num" data-goal="<?php echo $finished_comb_month ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-combination-details&period=month&combStatus=finished" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -150,9 +157,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('DELAYED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-combination-details&period=month&accepted=delayed" class="num stretched-link" data-goal="<?php echo $delayed_comb_month ?>">0</a>
+                      <span class="num" data-goal="<?php echo $delayed_comb_month ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-combination-details&period=month&accepted=delayed" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -184,9 +192,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('TOTAL', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-combination-details&period=previous-month&combStatus=-1" class="num stretched-link" data-goal="<?php echo $all_comb_prev_month ?>">0</a>
+                      <span class="num" data-goal="<?php echo $all_comb_prev_month ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-combination-details&period=previous-month&combStatus=-1" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -197,9 +206,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-combination-details&period=previous-month&combStatus=unfinished" class="num stretched-link" data-goal="<?php echo $unfinished_comb_prev_month ?>">0</a>
+                      <span class="num" data-goal="<?php echo $unfinished_comb_prev_month ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-combination-details&period=previous-month&combStatus=unfinished" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -210,9 +220,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('FINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-combination-details&period=previous-month&combStatus=finished" class="num stretched-link" data-goal="<?php echo $finished_comb_prev_month ?>">0</a>
+                      <span class="num" data-goal="<?php echo $finished_comb_prev_month ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-combination-details&period=previous-month&combStatus=finished" class="stretched-link" ></a>
                 </div>
               </div>
             </div>
@@ -223,9 +234,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('DELAYED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-combination-details&period=previous-month&accepted=delayed" class="num stretched-link" data-goal="<?php echo $delayed_comb_prev_month ?>">0</a>
+                      <span class="num" data-goal="<?php echo $delayed_comb_prev_month ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-combination-details&period=previous-month&accepted=delayed" class="stretched-link" ></a>
                 </div>
               </div>
             </div>
@@ -248,9 +260,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('TOTAL', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-combination-details" class="stretched-link num" data-goal="<?php echo $all_comb ?>">0</a>
+                      <span class="num" data-goal="<?php echo $all_comb ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-combination-details" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -261,9 +274,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-combination-details&combStatus=unfinished" class="stretched-link num" data-goal="<?php echo $all_unfinished_comb ?>">0</a>
+                      <span class="num" data-goal="<?php echo $all_unfinished_comb ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-combination-details&combStatus=unfinished" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -274,9 +288,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('FINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-combination-details&combStatus=finished" class="stretched-link num" data-goal="<?php echo $all_finished_comb ?>">0</a>
+                      <span class="num" data-goal="<?php echo $all_finished_comb ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-combination-details&combStatus=finished" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -287,9 +302,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('DELAYED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-combination-details&accepted=delayed" class="stretched-link num" data-goal="<?php echo $all_delayed_comb ?>">0</a>
+                      <span class="num" data-goal="<?php echo $all_delayed_comb ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-combination-details&accepted=delayed" class="stretched-link"></a>
                 </div>
               </div>
             </div>
