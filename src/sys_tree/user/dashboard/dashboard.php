@@ -149,7 +149,7 @@
                 <?php if ($newMalCounter > 0) { ?>
                   <div class="card-footer">
                     <span><?php echo $newMalCounter ?></span>
-                    <span class="badge bg-danger fs-12"><?php echo language('NEW', @$_SESSION['systemLang']) ?></span>
+                    <span class="badge bg-warning fs-12"><?php echo language('NEW', @$_SESSION['systemLang']) ?></span>
                   </div>
                 <?php } ?>
               </div>
@@ -170,7 +170,7 @@
                 <?php if ($newCombCounter > 0) { ?>
                   <div class="card-footer">
                     <span><?php echo $newCombCounter ?></span>
-                    <span class="badge bg-danger fs-12"><?php echo language('NEW', @$_SESSION['systemLang']) ?></span>
+                    <span class="badge bg-warning fs-12"><?php echo language('NEW', @$_SESSION['systemLang']) ?></span>
                   </div>
                 <?php } ?>
               </div>
