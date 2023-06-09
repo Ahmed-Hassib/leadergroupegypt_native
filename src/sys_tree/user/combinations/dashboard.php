@@ -28,7 +28,7 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
       </a>
     </div>
     <!-- start new design -->
-    <div class="mb-3 row row-cols-sm-1 row-cols-md-2 g-3 align-items-stretch justify-content-start">
+    <div class="mb-3 row row-cols-sm-1 row-cols-md-2 gx-3 gy-5 align-items-stretch justify-content-start">
       <!-- combinations of today -->
       <div class="col-12">
         <div class="section-block">
@@ -37,14 +37,16 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
             <p class="text-muted "><?php echo language('HERE WILL SHOW ALL STATISTICS ABOUT COMBINATIONS TODAY', @$_SESSION['systemLang']) ?></p>
             <hr>
           </header>
-          <div class="row row-cols-sm-2 g-3">
+          <div class="row row-cols-sm-2 gx-3 gy-5">
             <div class="col-6">
               <div class="card card-stat bg-total bg-gradient">
                 <div class="card-body">
                   <?php $all_comb_today = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                   <h5 class="card-title text-capitalize"><?php echo language('TOTAL', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-combination-details&period=today&combStatus=-1" class="num stretched-link" data-goal="<?php echo $all_comb_today ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-combination-details&period=today&combStatus=-1" class="num stretched-link" data-goal="<?php echo $all_comb_today ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -54,8 +56,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                 <div class="card-body">
                   <?php $unfinished_comb_today = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE (`isFinished` = 0 AND `isAccepted` <> 2) AND added_date = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                   <h5 class="card-title text-capitalize"><?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-combination-details&period=today&combStatus=unfinished" class="num stretched-link" data-goal="<?php echo $unfinished_comb_today ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-combination-details&period=today&combStatus=unfinished" class="num stretched-link" data-goal="<?php echo $unfinished_comb_today ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -65,8 +69,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                 <div class="card-body">
                   <?php $finished_comb_today = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE `isFinished` = 1 AND added_date = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                   <h5 class="card-title text-capitalize"><?php echo language('FINISHED', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-combination-details&period=today&combStatus=finished" class="num stretched-link" data-goal="<?php echo $finished_comb_today ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-combination-details&period=today&combStatus=finished" class="num stretched-link" data-goal="<?php echo $finished_comb_today ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -76,8 +82,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                 <div class="card-body">
                   <?php $delayed_comb_today = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE (`isAccepted` = 2 OR `isFinished` = 2) AND added_date = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                   <h5 class="card-title text-capitalize"><?php echo language('DELAYED', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-combination-details&period=today&accepted=delayed" class="num stretched-link" data-goal="<?php echo $delayed_comb_today ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-combination-details&period=today&accepted=delayed" class="num stretched-link" data-goal="<?php echo $delayed_comb_today ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -95,14 +103,16 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
           </header>
           <?php $startDate  = Date('Y-m-1'); ?>
           <?php $endDate    = Date('Y-m-31'); ?>        
-          <div class="row row-cols-sm-2 g-3">
+          <div class="row row-cols-sm-2 gx-3 gy-5">
             <div class="col-6">
               <div class="card card-stat bg-total bg-gradient">
                 <div class="card-body">
                   <?php $all_comb_month = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE `added_date` BETWEEN '".$startDate."' AND '".$endDate."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1"); ?>
                   <h5 class="card-title text-capitalize"><?php echo language('TOTAL', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-combination-details&period=month&combStatus=-1" class="num stretched-link" data-goal="<?php echo $all_comb_month ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-combination-details&period=month&combStatus=-1" class="num stretched-link" data-goal="<?php echo $all_comb_month ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -112,8 +122,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                 <div class="card-body">
                   <?php $unfinished_comb_month = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE `added_date` BETWEEN '".$startDate."' AND '".$endDate."' AND `isFinished` = 0 AND `isAccepted` <> 2 AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1"); ?>
                   <h5 class="card-title text-capitalize"><?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-combination-details&period=month&combStatus=unfinished" class="num stretched-link" data-goal="<?php echo $unfinished_comb_month ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-combination-details&period=month&combStatus=unfinished" class="num stretched-link" data-goal="<?php echo $unfinished_comb_month ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -123,8 +135,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                 <div class="card-body">
                   <?php $finished_comb_month = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE `added_date` BETWEEN '".$startDate."' AND '".$endDate."' AND `isFinished` = 1 AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1"); ?>
                   <h5 class="card-title text-capitalize"><?php echo language('FINISHED', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-combination-details&period=month&combStatus=finished" class="num stretched-link" data-goal="<?php echo $finished_comb_month ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-combination-details&period=month&combStatus=finished" class="num stretched-link" data-goal="<?php echo $finished_comb_month ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -134,8 +148,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                 <div class="card-body">
                   <?php $delayed_comb_month = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE `added_date` BETWEEN '".$startDate."' AND '".$endDate."' AND (`isAccepted` = 2 OR `isFinished` = 2) AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1"); ?>
                   <h5 class="card-title text-capitalize"><?php echo language('DELAYED', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-combination-details&period=month&accepted=delayed" class="num stretched-link" data-goal="<?php echo $delayed_comb_month ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-combination-details&period=month&accepted=delayed" class="num stretched-link" data-goal="<?php echo $delayed_comb_month ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -160,14 +176,16 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
             $startDate = Date("Y-m-d", strtotime($start. $period));
             $endDate = Date("Y-m-d", strtotime($end. $period));
           ?>
-          <div class="row row-cols-sm-2 g-3">
+          <div class="row row-cols-sm-2 gx-3 gy-5">
             <div class="col-6">
               <div class="card card-stat bg-total bg-gradient">
                 <div class="card-body">
                   <?php $all_comb_prev_month = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE `added_date` BETWEEN '".$startDate."' AND '".$endDate."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1"); ?>
                   <h5 class="card-title text-capitalize"><?php echo language('TOTAL', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-combination-details&period=previous-month&combStatus=-1" class="num stretched-link" data-goal="<?php echo $all_comb_prev_month ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-combination-details&period=previous-month&combStatus=-1" class="num stretched-link" data-goal="<?php echo $all_comb_prev_month ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -177,8 +195,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                 <div class="card-body">
                   <?php $unfinished_comb_prev_month = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE `added_date` BETWEEN '".$startDate."' AND '".$endDate."' AND `isFinished` = 0 AND `isAccepted` <> 2 AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1"); ?>
                   <h5 class="card-title text-capitalize"><?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-combination-details&period=previous-month&combStatus=unfinished" class="num stretched-link" data-goal="<?php echo $unfinished_comb_prev_month ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-combination-details&period=previous-month&combStatus=unfinished" class="num stretched-link" data-goal="<?php echo $unfinished_comb_prev_month ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -188,8 +208,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                 <div class="card-body">
                   <?php $finished_comb_prev_month = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE `added_date` BETWEEN '".$startDate."' AND '".$endDate."' AND `isFinished` = 1 AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1"); ?>
                   <h5 class="card-title text-capitalize"><?php echo language('FINISHED', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-combination-details&period=previous-month&combStatus=finished" class="num stretched-link" data-goal="<?php echo $finished_comb_prev_month ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-combination-details&period=previous-month&combStatus=finished" class="num stretched-link" data-goal="<?php echo $finished_comb_prev_month ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -199,8 +221,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                 <div class="card-body">
                   <?php $delayed_comb_prev_month = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE `added_date` BETWEEN '".$startDate."' AND '".$endDate."' AND (`isAccepted` = 2 OR `isFinished` = 2) AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1"); ?>
                   <h5 class="card-title text-capitalize"><?php echo language('DELAYED', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-combination-details&period=previous-month&accepted=delayed" class="num stretched-link" data-goal="<?php echo $delayed_comb_prev_month ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-combination-details&period=previous-month&accepted=delayed" class="num stretched-link" data-goal="<?php echo $delayed_comb_prev_month ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -216,14 +240,16 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
             <p class="text-muted "><?php echo language('HERE WILL SHOW ALL STATISTICS ABOUT COMBINATIONS OVERALL', @$_SESSION['systemLang']) ?></p>
             <hr>
           </header>
-          <div class="row row-cols-sm-2 g-3">
+          <div class="row row-cols-sm-2 gx-3 gy-5">
             <div class="col-6">
               <div class="card card-stat bg-total bg-gradient">
                 <div class="card-body">
                   <?php $all_comb = $comb_obj->count_records("`comb_id`", "`combinations`", "$techCondition2 " . (empty($techCondition2) ?  "WHERE `company_id` = ".$_SESSION['company_id'] :  "AND `company_id` = ".$_SESSION['company_id'] )); ?>
                   <h5 class="card-title text-capitalize"><?php echo language('TOTAL', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-combination-details" class="stretched-link num" data-goal="<?php echo $all_comb ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-combination-details" class="stretched-link num" data-goal="<?php echo $all_comb ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -233,8 +259,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                 <div class="card-body">
                   <?php $all_unfinished_comb = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE `isFinished` = 0 AND `isAccepted` <> 2 AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1"); ?>
                   <h5 class="card-title text-capitalize"><?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-combination-details&combStatus=unfinished" class="stretched-link num" data-goal="<?php echo $all_unfinished_comb ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-combination-details&combStatus=unfinished" class="stretched-link num" data-goal="<?php echo $all_unfinished_comb ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -244,8 +272,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                 <div class="card-body">
                   <?php $all_finished_comb = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE `isFinished` = 1 AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1"); ?>
                   <h5 class="card-title text-capitalize"><?php echo language('FINISHED', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-combination-details&combStatus=finished" class="stretched-link num" data-goal="<?php echo $all_finished_comb ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-combination-details&combStatus=finished" class="stretched-link num" data-goal="<?php echo $all_finished_comb ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -255,8 +285,10 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                 <div class="card-body">
                   <?php $all_delayed_comb = $comb_obj->count_records("`comb_id`", "`combinations`", "WHERE (`isAccepted` = 2 OR `isFinished` = 2) AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1"); ?>
                   <h5 class="card-title text-capitalize"><?php echo language('DELAYED', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-combination-details&accepted=delayed" class="stretched-link num" data-goal="<?php echo $all_delayed_comb ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-combination-details&accepted=delayed" class="stretched-link num" data-goal="<?php echo $all_delayed_comb ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -267,7 +299,7 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
     </div>
 
     <?php if ($all_comb > 0) { ?>
-    <div class="mb-3 row row-cols-sm-1 align-items-center-justify-content-center">
+    <div class="mb-3 row row-cols-sm-1 align-items-center justify-content-center">
       <!-- combinations rating -->
       <div class="col-12">
         <div class="section-block">
@@ -276,7 +308,7 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
             <p class="text-muted "><?php echo language("COMBINATIONS RATING IS DEPENDING ON COMPARE BETWEEN REPAIRED, UNREPAIRED AND DELAYED AND ALL COMBINATIONS", @$_SESSION['systemLang']) ?></p>
             <hr>
           </header>
-          <div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 align-items-center justify-content-center g-5">
+          <div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 g-3 align-items-center justify-content-center g-5">
             <div class="col-12">
               <?php $rep_rate = round(($all_finished_comb / $all_comb) * 100, 2); ?>
               <h5 class="card-title text-capitalize text-center">

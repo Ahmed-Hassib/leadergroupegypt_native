@@ -26,7 +26,7 @@
     <!-- start new design -->
     <div class="mb-3 row g-3 align-items-stretch justify-content-start">
       <!-- total numbers of pieces/pieces -->
-      <div class="col-sm-12 col-lg-4">
+      <div class="col-sm-12 col-lg-5">
         <div class="section-block">
           <div class="section-header">
             <h5 class="h5 text-capitalize"><?php echo language("PIECES STATISTICS", @$_SESSION['systemLang']) ?></h5>
@@ -63,77 +63,8 @@
           </div>
         </div>
       </div>
-
-      <!-- connection types statistics of pieces -->
-      <div class="col-sm-12 col-lg-8">
-        <div class="section-block">
-          <div class="section-header">
-            <h5 class="h5 text-capitalize"><?php echo language('CONNECTION TYPES STATISTICS', @$_SESSION['systemLang']) ?></h5>
-            <p class="text-muted "><?php echo language('HERE WILL SHOW NUMBER OF PIECES OF EACH CONNECTION TYPE', @$_SESSION['systemLang']) ?></p>
-            <hr>
-          </div>
-          <?php
-          // get all connections 
-          $conn_data = $pcs_conn_obj->get_all_conn_types($_SESSION['company_id']);
-          // data counter
-          $conn_types_count = $conn_data[0];
-          // data rows
-          $conn_types_rows = $conn_data[1];
-          ?>
-          <?php if ($conn_types_count > 0) { ?>
-            <div class="row row-cols-sm-2 row-cols-md-3 gx-3 gy-5">
-              <?php 
-              // counter
-              $i = 1;
-              // loop on types
-              foreach ($conn_types_rows as $key => $conn_type) {
-                // get count of pieces
-                $pcsCount = $pcs_conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `connection_type` = ".$conn_type['id']);
-                // check counter
-                if ($i > 9) { $i = 1; }
-              ?>
-                <div class="col-12">
-                  <div class="card card-stat shadow-sm border border-1">
-                    <div class="card-body">
-                      <h5 class="h5 card-title text-uppercase"><?php echo $conn_type['connection_name'] ?></h5>
-                      <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
-                        <span class="nums">
-                          <a href="?name=pieces&do=show-connections-types&action=show-pieces-conn&type=1&conn-id=<?php echo $conn_type['id'] ?>" class="num stretched-link text-black" data-goal="<?php echo $pcsCount ?>">0</a>
-                        </span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <?php $i++; ?>
-              <?php } ?>
-              <!-- show the number of pieces that not assigned the connection type -->
-              <div class="col-12">
-                <div class="card card-stat bg-danger shadow-sm border border-1">
-                  <div class="card-body">
-                    <?php $not_assigned_conn = $pcs_conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `connection_type` = 0  AND `company_id` = ".$_SESSION['company_id']); ?>
-                    <h5 class="h5 card-title text-uppercase"><?php echo language('NOT ASSIGNED', @$_SESSION['systemLang']) ?></h5>
-                    <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
-                      <span class="nums">
-                        <a href="?name=pieces&do=show-connections-types&action=show-pieces-conn&type=1&conn-id=0" class="num stretched-link text-black" data-goal="<?php echo $not_assigned_conn ?>">0</a>
-                      </span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <?php } else { ?>
-            <h5 class="h5 text-capitalize text-danger"><?php echo language('THERE IS NO CONNECTION TYPES TO SHOW', @$_SESSION['systemLang']) ?></h5>
-            <a href="?name=pieces&do=show-connections-types" class="btn btn-outline-primary py-1">
-              <h6 class="h6 mb-0 text-center text-capitalize fs-12">
-                <i class="bi bi-hdd-network"></i>
-                <?php echo language('MANAGE', @$_SESSION['systemLang'])." ".language('CONNECTION TYPES', @$_SESSION['systemLang']) ?>
-              </h6>
-            </a>
-          <?php } ?>
-        </div>
-      </div>    
     </div>
-        
+    
     <div class="mb-3 row row-cols-1 g-3">
       <!-- latest added pieces -->
       <div class="col-12 <?php if ($_SESSION['user_show'] == 0) {echo 'd-none';} ?>">

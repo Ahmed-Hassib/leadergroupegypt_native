@@ -298,6 +298,26 @@
     </li>
     <!-- end combinations nav link -->
     <?php } ?>
+    <!-- <li>
+      <div class="icon-link">
+        <section>
+          <i class="bi bi-lightbulb"></i>
+          <span class="link-name" style="font-size: 12px!important;"><?php echo language('COMPLAINTS & SUGGESTIONS', @$_SESSION['systemLang']) ?></span>
+        </section>
+      </div>
+      <ul class="sub-menu">
+        <li>
+          <a href="<?php echo $nav_up_level ?>comp-sugg/index.php">
+            <span class="link-name"><?php echo language('DASHBOARD', @$_SESSION['systemLang']) ?></span>
+          </a>
+        </li>
+        <li>
+          <a href="<?php echo $nav_up_level ?>comp-sugg/index.php?do=add-comp-sugg">
+            <span class="link-name"><?php echo language('ADD COMPLAINT OR SUGGESTION', @$_SESSION['systemLang']) ?></span>
+          </a>
+        </li>
+      </ul>
+    </li> -->
     <!-- start setting nav link -->
     <li>
       <a href="<?php echo $nav_up_level ?>settings/index.php">

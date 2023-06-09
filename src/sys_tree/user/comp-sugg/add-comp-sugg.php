@@ -1,24 +1,11 @@
 <!-- start edit profile page -->
 <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-  <!-- start header -->
-  <header class="header">
-    <h1 class="text-capitalize"><?php echo language('ADD NEW SUGG/COMP') ?></h1>
-  </header>
-  <!-- complaints & suggestions section -->
-  <div class="col-12">
-    <div class="section-header">
-      <h5 class="text-capitalize "><?php echo language('COMPLAINTS & SUGGESTIONS', @$_SESSION['systemLang']) ?></h5>
-      <hr />
-    </div>
-    <!-- start add new points form -->
-    <!-- start edit profile form -->
-    <form class="profile-form" action="?do=insertCompSugg" method="POST">
-      <!-- start userid field -->
-      <input type="hidden" class="form-control" name="userid" id="userid" value="<?php echo $_SESSION['UserID'] ?>">
+  <div class="section-block mx-auto" style="max-width: 600px">
+    <form class="profile-form" action="?do=insert-comp-sugg" method="POST">
       <!-- start type field -->
-      <div class="mb-4 row">
-        <label for="type" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('THE TYPE', @$_SESSION['systemLang']) ?></label>
-        <div class="col-sm-12 col-md-8">
+      <div class="mb-4 row justify-content-center align-items-center">
+        <label for="type" class="col-sm-4 col-form-label text-capitalize"><?php echo language('THE TYPE', @$_SESSION['systemLang']) ?></label>
+        <div class="col-sm-8">
           <!-- SUGGESTION -->
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="type" id="sugg" value="0">
@@ -47,13 +34,12 @@
       <!-- end comment field -->
       
       <!-- strat submit -->
-      <div class="mb-4 row">
-        <div class="col-sm-12">
-          <button type="submit" class="ms-auto btn btn-outline-primary text-capitalize"><i class="bi bi-plus"></i>&nbsp;<?php echo language('SUBMIT', @$_SESSION['systemLang'])." ".language('COMP', @$_SESSION['systemLang'])." - ".language('SUGG', @$_SESSION['systemLang']) ?></button>
+      <div class="hstack">
+        <div class="me-auto">
+          <button type="submit" class="ms-auto btn btn-outline-primary text-capitalize fs-12 py-1"><i class="bi bi-plus"></i>&nbsp;<?php echo language('SUBMIT', @$_SESSION['systemLang'])." ".language('COMP', @$_SESSION['systemLang'])." - ".language('SUGG', @$_SESSION['systemLang']) ?></button>
         </div>
       </div>
       <!-- end submit -->
     </form>
-    <!-- end add new points form -->
   </div>
 </div>

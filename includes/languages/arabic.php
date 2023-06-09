@@ -225,6 +225,7 @@ function languageAr($phrase)
     'COMPLAINTS & SUGGESTIONS'      => 'الشكاوى والاقتراحات',
     'COMPLAINTS OR SUGGESTIONS'     => 'الشكاوى اوالاقتراحات',
     'COMPLAINT OR SUGGESTION'       => 'شكوى او اقتراح',
+    'ADD COMPLAINT OR SUGGESTION'   => 'اضافة شكوى او اقتراح',
     'THIS COMPLAINT OR SUGGESTION'  => 'هذه الشكوى او الاقتراح',
     'NUMBER'                        => 'رقم',
     'NUMBERS'                       => 'ارقام',

@@ -50,7 +50,8 @@
           ?>
           <!-- start new design -->
           <div class="mb-3 row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gx-3 gy-5 justify-content-sm-center">
-            <div class="col-6 <?php if ($_SESSION['user_show'] == 0) {echo 'd-none';} ?>">
+            <?php if ($_SESSION['user_show'] == 1) { ?>
+            <div class="col-6 echo 'd-none';} ?>">
               <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } ?> bg-gradient">
                 <div class="card-body">
                   <span class="icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>"><i class="bi bi-people"></i></span>
@@ -62,13 +63,16 @@
                 </div>
                 <?php $newEmpCounter = $db_obj->count_records("`UserID`", "`users`", "WHERE `joinedDate` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id']); ?>
                 <?php if ($newEmpCounter > 0) { ?>
-                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
+                  <div class="card-footer">
                     <span><?php echo $newEmpCounter ?></span>
-                  </span>
+                    <span class="badge bg-danger fs-12"><?php echo language('NEW', @$_SESSION['systemLang']) ?></span>
+                  </div>
                 <?php } ?>
               </div>
             </div>
-            <div class="col-6 <?php if ($_SESSION['dir_show'] == 0) {echo 'd-none';} ?>">
+            <?php } ?>
+            <?php if ($_SESSION['dir_show'] == 1) { ?>
+            <div class="col-6 ">
               <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } ?> bg-gradient">
                 <div class="card-body">
                   <span class="icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>"><i class="bi bi-diagram-3"></i></span>
@@ -80,13 +84,16 @@
                 </div>
                 <?php $newDirCounter = $db_obj->count_records("`direction_id`", "`direction`", "WHERE `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id']); ?>
                 <?php if ($newDirCounter > 0) { ?>
-                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
+                  <div class="card-footer">
                     <span><?php echo $newDirCounter ?></span>
-                  </span>
+                    <span class="badge bg-danger fs-12"><?php echo language('NEW', @$_SESSION['systemLang']) ?></span>
+                  </div>
                 <?php } ?>
               </div>
             </div>
-            <div class="col-6 <?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>">
+            <?php } ?>
+            <?php if ($_SESSION['pcs_show'] == 1) { ?>
+            <div class="col-6">
               <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } ?> bg-gradient">
                 <div class="card-body">
                   <span class="icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>"><i class="bi bi-hdd-rack"></i></span>
@@ -98,13 +105,16 @@
                 </div>
                 <?php $newPcsCounter = $db_obj->count_records("`id`", "`pieces`", "WHERE `is_client` = 0 AND `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id']); ?>
                 <?php if ($newPcsCounter > 0) { ?>
-                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
+                  <div class="card-footer">
                     <span><?php echo $newPcsCounter ?></span>
-                  </span>
+                    <span class="badge bg-danger fs-12"><?php echo language('NEW', @$_SESSION['systemLang']) ?></span>
+                  </div>
                 <?php } ?>
               </div>
             </div>
-            <div class="col-6 <?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>">
+            <?php } ?>
+            <?php if ($_SESSION['pcs_show'] == 1) { ?>
+            <div class="col-6">
               <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } ?> bg-gradient">
                 <div class="card-body">
                   <span class="icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>"><i class="bi bi-people"></i></span>
@@ -116,31 +126,16 @@
                 </div>
                 <?php $newPcsCounter = $db_obj->count_records("`id`", "`pieces`", "WHERE `is_client` = 1 AND `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id']); ?>
                 <?php if ($newPcsCounter > 0) { ?>
-                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
+                  <div class="card-footer">
                     <span><?php echo $newPcsCounter ?></span>
-                  </span>
+                    <span class="badge bg-danger fs-12"><?php echo language('NEW', @$_SESSION['systemLang']) ?></span>
+                  </div>
                 <?php } ?>
               </div>
             </div>
-            <!-- <div class="col-6 <?php if ($_SESSION['sugg_show'] == 0) {echo 'd-none';} ?>">
-              <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } ?> bg-gradient">
-                <div class="card-body">
-                  <i class="bi bi-mailbox"></i>
-                  <span>
-                    <a href="<?php echo $nav_up_level ?>comp-sugg/index.php" class="stretched-link text-capitalize">
-                      <?php echo language('COMPLAINTS & SUGGESTIONS', @$_SESSION['systemLang']) ?>
-                    </a>
-                  </span>
-                </div>
-                <?php $newSuggCounter = $db_obj->count_records("`id`", "`comp_sugg`", "WHERE `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id']); ?>
-                <?php if ($newSuggCounter > 0) { ?>
-                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
-                    <span><?php echo $newSuggCounter ?></span>
-                  </span>
-                <?php } ?>
-              </div>
-            </div> -->
-            <div class="col-6 <?php if ($_SESSION['mal_show'] == 0) {echo 'd-none';} ?>">
+            <?php } ?>
+            <?php if ($_SESSION['mal_show'] == 1) { ?>
+            <div class="col-6">
               <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-mal card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } else { echo 'bg-danger';} ?> bg-gradient">
                 <div class="card-body">
                   <span class="icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?> bg-warning"><i class="bi bi-folder-x"></i></span>
@@ -152,13 +147,16 @@
                 </div>
                 <?php $newMalCounter = $db_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `added_date` = '".get_date_now()."' AND `mal_status` = 0 AND `company_id` = ".$_SESSION['company_id'] . " $techMalCondition"); ?>
                 <?php if ($newMalCounter > 0) { ?>
-                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
+                  <div class="card-footer">
                     <span><?php echo $newMalCounter ?></span>
-                  </span>
+                    <span class="badge bg-danger fs-12"><?php echo language('NEW', @$_SESSION['systemLang']) ?></span>
+                  </div>
                 <?php } ?>
               </div>
             </div>
-            <div class="col-6 <?php if ($_SESSION['comb_show'] == 0) {echo 'd-none';} ?>">
+            <?php } ?>
+            <?php if ($_SESSION['comb_show'] == 1) { ?>
+            <div class="col-6">
               <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-comb card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } else { echo 'bg-success';} ?> bg-gradient">
                 <div class="card-body">
                   <span class="icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?> bg-warning"><i class="bi bi-terminal"></i></span>
@@ -170,58 +168,14 @@
                 </div>
                 <?php $newCombCounter = $db_obj->count_records("`comb_id`", "`combinations`", "WHERE `added_date` = '".get_date_now()."' AND `isFinished` = 0 AND `company_id` = ".$_SESSION['company_id'] . " $techCombCondition"); ?>
                 <?php if ($newCombCounter > 0) { ?>
-                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
+                  <div class="card-footer">
                     <span><?php echo $newCombCounter ?></span>
-                  </span>
+                    <span class="badge bg-danger fs-12"><?php echo language('NEW', @$_SESSION['systemLang']) ?></span>
+                  </div>
                 <?php } ?>
               </div>
             </div>
-            <!-- <div class="col-6 <?php if ($_SESSION['points_show'] == 0) {echo 'd-none';} ?>">
-              <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } ?> bg-gradient">
-                <div class="card-body">
-                  <i class="bi bi-award"></i> -->
-                  <!-- <h5 class="card-title text-capitalize"></h5> -->
-                  <!-- <span>
-                    <a href="<?php echo $nav_up_level ?>users/index.php?do=motivationPoints&userid=<?php echo $_SESSION['UserID'] ?>" class="stretched-link text-capitalize">
-                      <?php echo language('PERSONAL MOTIVATION POINTS', @$_SESSION['systemLang']) ?>
-                    </a>
-                  </span>
-                </div>
-                <?php $newPointCounter = $db_obj->count_records("`id`", "`users_points`", "WHERE `points_date` = '".get_date_now()."' AND `UserID` = ".$_SESSION['UserID']); ?>
-                <?php if ($newPointCounter > 0) { ?>
-                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
-                    <span><?php echo $newPointCounter ?></span>
-                  </span>
-                <?php } ?>
-              </div>
-            </div> -->
-            <!-- <div class="col-6 <?php if ($_SESSION['reports_show'] == 0) {echo 'd-none';} ?>">
-              <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } ?> bg-gradient">
-                <div class="card-body">
-                  <i class="bi bi-file-text"></i> -->
-                  <!-- <h5 class="card-title text-capitalize"></h5> -->
-                  <!-- <span>
-                    <a href="<?php echo $nav_up_level ?>reports/index.php" class="stretched-link text-capitalize">
-                      <?php echo language('REPORTS', @$_SESSION['systemLang']) ?>
-                    </a>
-                  </span>
-                </div>
-              </div>
-            </div> -->
-            <!-- <div class="col-6 <?php if ($_SESSION['archive_show'] == 0) {echo 'd-none';} ?>">
-              <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } ?> bg-gradient">
-                <div class="card-body">
-                  <i class="bi bi-archive"></i>
-                  -->
-                  <!-- <h5 class="card-title text-capitalize"></h5> -->
-                  <!-- <span>
-                    <a href="<?php echo $nav_up_level ?>archives/index.php" class="stretched-link text-capitalize">
-                      <?php echo language('ARCHIVE', @$_SESSION['systemLang']) ?>
-                    </a>
-                  </span>
-                </div>
-              </div>
-            </div> -->
+            <?php } ?>
           </div>
         <?php } ?>
       <?php } else { ?>

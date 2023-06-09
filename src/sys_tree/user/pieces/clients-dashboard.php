@@ -16,7 +16,7 @@
     <!-- start new design -->
     <div class="mb-3 row g-3 align-items-stretch justify-content-start">
       <!-- total numbers of pieces/clients -->
-      <div class="col-sm-12 col-lg-4">
+      <div class="col-sm-12 col-lg-5">
         <div class="section-block">
           <div class="section-header">
             <h5 class="h5 text-capitalize"><?php echo language("CLIENTS STATISTICS", @$_SESSION['systemLang']) ?></h5>
