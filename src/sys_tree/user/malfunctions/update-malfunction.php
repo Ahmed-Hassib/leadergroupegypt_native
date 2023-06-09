@@ -47,7 +47,7 @@
          */
         case 2:
           // check who is doing the updates
-          if ($update_owner_id == $tech_id && $mal_info['mal_status'] == 0) {
+          if ($update_owner_id == $tech_id && $mal_info['mal_status'] != 1) {
             do_technical_updates($_POST);
           }
             

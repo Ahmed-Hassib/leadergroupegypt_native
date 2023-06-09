@@ -50,7 +50,7 @@
          */
         case 2:
           // check who is doing the updates
-          if ($update_owner_id == $tech_id && $comb_info['isFinished'] == 0) {
+          if ($update_owner_id == $tech_id && $comb_info['isFinished'] != 1) {
             do_technical_updates($_POST);
           }
           // check if upload media
