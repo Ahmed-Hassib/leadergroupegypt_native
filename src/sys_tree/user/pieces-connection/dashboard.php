@@ -53,7 +53,7 @@
           // check types count
           if ($types_count > 0) {
           ?>
-            <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+            <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gx-3 gy-5">
               <?php
               // counter
               $i = 1;
@@ -65,11 +65,13 @@
                 if($i > 9) { $i = 1; }
               ?>
                 <div class="col-12">
-                  <div class="card card-stat bg-primary shadow-sm border border-1">
+                  <div class="card card-stat shadow-sm border border-1">
                     <div class="card-body">
                       <h5 class="h5 card-title text-uppercase"><?php echo $type['connection_name'] ?></h5>
-                      <span class="nums">
+                      <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                        <span class="nums">
                           <a href="?do=show-pieces-conn&type=1&conn-id=<?php echo $type['id'] ?>" class="num stretched-link text-black" data-goal="<?php echo $pcsCount ?>">0</a>
+                        </span>
                       </span>
                     </div>
                   </div>
@@ -82,8 +84,10 @@
                   <div class="card-body">
                     <?php $notAssigned = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `connection_type` = 0 AND `company_id` = ".$_SESSION['company_id']); ?>
                     <h5 class="h5 card-title text-uppercase"><?php echo language('NOT ASSIGNED', @$_SESSION['systemLang']) ?></h5>
-                    <span class="nums">
-                      <a href="?do=show-pieces-conn&type=1&conn-id=0" class="num stretched-link text-black" data-goal="<?php echo $notAssigned ?>">0</a>
+                    <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                      <span class="nums">
+                        <a href="?do=show-pieces-conn&type=1&conn-id=0" class="num stretched-link text-black" data-goal="<?php echo $notAssigned ?>">0</a>
+                      </span>
                     </span>
                   </div>
                 </div>

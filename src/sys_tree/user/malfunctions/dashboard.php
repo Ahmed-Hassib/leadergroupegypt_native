@@ -42,14 +42,16 @@ if ($_SESSION['mal_show'] == 1) {
             <p class="text-muted "><?php echo language("HERE WILL SHOW ALL STATISTICS ABOUT MALFUNCTIONS TODAY", @$_SESSION['systemLang']) ?></p>
             <hr>
           </header>
-          <div class="row row-cols-sm-2 g-3">
+          <div class="row row-cols-sm-2 gx-3 gy-5">
             <div class="col-6">
               <div class="card card-stat bg-total bg-gradient">
                 <?php $all_mal_today = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><?php echo language('TOTAL', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-malfunction-details&period=today&malStatus=all" class="num stretched-link" data-goal="<?php echo $all_mal_today; ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-malfunction-details&period=today&malStatus=all" class="num stretched-link" data-goal="<?php echo $all_mal_today; ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -59,8 +61,10 @@ if ($_SESSION['mal_show'] == 1) {
                 <?php $unrep_mal_today = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE (`mal_status` = 0 AND `isAccepted` <> 2) AND `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-malfunction-details&period=today&malStatus=unrepaired" class="num stretched-link" data-goal="<?php echo $unrep_mal_today; ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-malfunction-details&period=today&malStatus=unrepaired" class="num stretched-link" data-goal="<?php echo $unrep_mal_today; ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -70,8 +74,10 @@ if ($_SESSION['mal_show'] == 1) {
                 <?php $rep_mal_today = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `mal_status` = 1 AND `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><?php echo language('FINISHED', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-malfunction-details&period=today&malStatus=repaired" class="stretched-link num" data-goal="<?php echo $rep_mal_today ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-malfunction-details&period=today&malStatus=repaired" class="stretched-link num" data-goal="<?php echo $rep_mal_today ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -81,8 +87,10 @@ if ($_SESSION['mal_show'] == 1) {
                 <?php $del_mal_today = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE (`mal_status` = 2 OR `isAccepted` = 2) AND `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><?php echo language('DELAYED', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-malfunction-details&period=today&accepted=delayed" class="stretched-link num" data-goal="<?php echo $del_mal_today ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-malfunction-details&period=today&accepted=delayed" class="stretched-link num" data-goal="<?php echo $del_mal_today ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -102,14 +110,16 @@ if ($_SESSION['mal_show'] == 1) {
             $start_date  = Date('Y-m-1');
             $end_date    = Date('Y-m-30');
           ?>
-          <div class="row row-cols-sm-2 g-3">
+          <div class="row row-cols-sm-2 gx-3 gy-5">
             <div class="col-6">
               <div class="card card-stat bg-total bg-gradient">
               <?php $all_mal_month = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `added_date` BETWEEN '".$start_date."' AND '".$end_date."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1"); ?>
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><?php echo language('TOTAL', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-malfunction-details&period=month&malStatus=all" class="num stretched-link" data-goal="<?php echo $all_mal_month ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-malfunction-details&period=month&malStatus=all" class="num stretched-link" data-goal="<?php echo $all_mal_month ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -119,8 +129,10 @@ if ($_SESSION['mal_show'] == 1) {
                 <?php $unrep_mal_month = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE (`mal_status` = 0 AND `isAccepted` <> 2) AND `added_date` BETWEEN '".$start_date."' AND '".$end_date."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1"); ?>
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-malfunction-details&period=month&malStatus=unrepaired" class="num stretched-link" data-goal="<?php echo $unrep_mal_month ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-malfunction-details&period=month&malStatus=unrepaired" class="num stretched-link" data-goal="<?php echo $unrep_mal_month ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -130,8 +142,10 @@ if ($_SESSION['mal_show'] == 1) {
                 <?php $rep_mal_month = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `mal_status` = 1 AND `added_date` BETWEEN '".$start_date."' AND '".$end_date."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1"); ?>
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><?php echo language('FINISHED', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-malfunction-details&period=month&malStatus=repaired" class="num stretched-link" data-goal="<?php echo $rep_mal_month ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-malfunction-details&period=month&malStatus=repaired" class="num stretched-link" data-goal="<?php echo $rep_mal_month ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -141,8 +155,10 @@ if ($_SESSION['mal_show'] == 1) {
                 <?php $del_mal_month = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE (`mal_status` = 2 OR `isAccepted` = 2) AND `added_date` BETWEEN '".$start_date."' AND '".$end_date."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1"); ?>
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><?php echo language('DELAYED', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-malfunction-details&period=month&accepted=delayed" class="num stretched-link" data-goal="<?php echo $del_mal_month ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-malfunction-details&period=month&accepted=delayed" class="num stretched-link" data-goal="<?php echo $del_mal_month ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -167,14 +183,16 @@ if ($_SESSION['mal_show'] == 1) {
             $start_date = Date("Y-m-d", strtotime($start. $period));
             $end_date = Date("Y-m-d", strtotime($end. $period));
           ?>
-          <div class="row row-cols-sm-2 g-3">
+          <div class="row row-cols-sm-2 gx-3 gy-5">
             <div class="col-6">
               <div class="card card-stat bg-total bg-gradient">
               <?php $all_prev_mal_month = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `added_date` BETWEEN '".$start_date."' AND '".$end_date."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1"); ?>
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><?php echo language('TOTAL', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-malfunction-details&period=previous-month&malStatus=all" class="num stretched-link" data-goal="<?php echo $all_prev_mal_month ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-malfunction-details&period=previous-month&malStatus=all" class="num stretched-link" data-goal="<?php echo $all_prev_mal_month ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -184,8 +202,10 @@ if ($_SESSION['mal_show'] == 1) {
                 <?php $unrep_prev_month = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE (`mal_status` = 0 AND `isAccepted` <> 2) AND `added_date` BETWEEN '".$start_date."' AND '".$end_date."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1"); ?>
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-malfunction-details&period=previous-month&malStatus=unrepaired" class="num stretched-link" data-goal="<?php echo $unrep_prev_month ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-malfunction-details&period=previous-month&malStatus=unrepaired" class="num stretched-link" data-goal="<?php echo $unrep_prev_month ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -195,8 +215,10 @@ if ($_SESSION['mal_show'] == 1) {
                 <?php $rep_prev_month = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `mal_status` = 1 AND `added_date` BETWEEN '".$start_date."' AND '".$end_date."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1"); ?>
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><?php echo language('FINISHED', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-malfunction-details&period=previous-month&malStatus=repaired" class="num stretched-link" data-goal="<?php echo $rep_prev_month ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-malfunction-details&period=previous-month&malStatus=repaired" class="num stretched-link" data-goal="<?php echo $rep_prev_month ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -206,8 +228,10 @@ if ($_SESSION['mal_show'] == 1) {
                 <?php $del_prev_month = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE (`mal_status` = 2 OR `isAccepted` = 2) AND `added_date` BETWEEN '".$start_date."' AND '".$end_date."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1"); ?>
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><?php echo language('DELAYED', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-malfunction-details&period=previous-month&accepted=delayed" class="num stretched-link" data-goal="<?php echo $del_prev_month ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-malfunction-details&period=previous-month&accepted=delayed" class="num stretched-link" data-goal="<?php echo $del_prev_month ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -223,14 +247,16 @@ if ($_SESSION['mal_show'] == 1) {
             <p class="text-muted "><?php echo language("HERE WILL SHOW ALL STATISTICS ABOUT MALFUNCTIONS OVERALL", @$_SESSION['systemLang']) ?></p>
             <hr>
           </header>
-          <div class="row row-cols-sm-2 g-3">
+          <div class="row row-cols-sm-2 gx-3 gy-5">
             <div class="col-6">
               <div class="card card-stat bg-total bg-gradient">
                 <?php $total_mal = $mal_obj->count_records("`mal_id`", "`malfunctions`", "$techCondition2 " . (empty($techCondition2) ? "WHERE `company_id` = ".$_SESSION['company_id'] : "AND `company_id` = ".$_SESSION['company_id'])) ?>
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><?php echo language('TOTAL', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-malfunction-details&period=all&malStatus=all" class="num stretched-link" data-goal="<?php echo $total_mal ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-malfunction-details&period=all&malStatus=all" class="num stretched-link" data-goal="<?php echo $total_mal ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -240,8 +266,10 @@ if ($_SESSION['mal_show'] == 1) {
                 <?php $total_unrep_mal = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE (`mal_status` = 0 AND `isAccepted` <> 2) AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-malfunction-details&period=all&malStatus=unrepaired" class="num stretched-link" data-goal="<?php echo $total_unrep_mal ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-malfunction-details&period=all&malStatus=unrepaired" class="num stretched-link" data-goal="<?php echo $total_unrep_mal ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -251,8 +279,10 @@ if ($_SESSION['mal_show'] == 1) {
                 <?php $total_rep_mal = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `mal_status` = 1 AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><?php echo language('FINISHED', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-malfunction-details&period=all&malStatus=repaired" class="num stretched-link" data-goal="<?php echo $total_rep_mal ; ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-malfunction-details&period=all&malStatus=repaired" class="num stretched-link" data-goal="<?php echo $total_rep_mal ; ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>
@@ -262,8 +292,10 @@ if ($_SESSION['mal_show'] == 1) {
                 <?php $total_del_mal = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE (`mal_status` = 2 OR `isAccepted` = 2) AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><?php echo language('DELAYED', @$_SESSION['systemLang']) ?></h5>
-                  <span class="nums">
-                    <a href="?do=show-malfunction-details&period=all&accepted=delayed" class="num stretched-link" data-goal="<?php echo $total_del_mal ; ?>">0</a>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="nums">
+                      <a href="?do=show-malfunction-details&period=all&accepted=delayed" class="num stretched-link" data-goal="<?php echo $total_del_mal ; ?>">0</a>
+                    </span>
                   </span>
                 </div>
               </div>

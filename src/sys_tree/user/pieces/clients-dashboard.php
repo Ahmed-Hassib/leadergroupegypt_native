@@ -29,13 +29,15 @@
               $pcs_obj = new Pieces();
             }
           ?>
-          <div class="row row-cols-sm-1 g-3">
+          <div class="row row-cols-sm-1 gx-3 gy-5">
             <div class="col-12">
               <div class="card card-stat bg-primary shadow-sm border border-1">
                 <div class="card-body">
                   <?php $clients = $pcs_obj->count_records('`id`', '`pieces_info`', 'WHERE `is_client` = 1 AND `company_id` = '.$_SESSION['company_id']); ?>
-                  <i class="bi bi-people"></i>
                   <h5 class="card-title text-capitalize"><?php echo language('TOTAL', @$_SESSION['systemLang'])." ".language('CLIENTS', @$_SESSION['systemLang']) ?></h5>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>"><i class="bi bi-people"></i></span>
+                </div>
+                <div class="card-footer">
                   <span class="nums">
                     <a href="?name=clients&do=show-all-clients" class="num stretched-link text-black" data-goal="<?php echo $clients; ?>">0</a>
                   </span>

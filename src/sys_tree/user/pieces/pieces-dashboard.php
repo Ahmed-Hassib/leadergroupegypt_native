@@ -44,8 +44,10 @@
               <div class="card card-stat bg-primary shadow-sm border border-1">
                 <div class="card-body">
                   <?php $pieces = $pcs_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `company_id` = ".$_SESSION['company_id']);   ?>
-                  <i class="bi bi-hdd-rack"></i>
                   <h5 class="card-title text-capitalize"><?php echo language('TOTAL', @$_SESSION['systemLang'])." ".language('PIECES', @$_SESSION['systemLang']) ?></h5>
+                  <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>"><i class="bi bi-hdd-rack"></i></span>
+                </div>
+                <div class="card-footer">
                   <span class="nums">
                     <a href="?name=pieces&do=show-all-pieces" class="num stretched-link text-black" data-goal="<?php echo $pieces; ?>">0</a>
                   </span>
@@ -79,7 +81,7 @@
           $conn_types_rows = $conn_data[1];
           ?>
           <?php if ($conn_types_count > 0) { ?>
-            <div class="row row-cols-sm-2 row-cols-md-3 g-3">
+            <div class="row row-cols-sm-2 row-cols-md-3 gx-3 gy-5">
               <?php 
               // counter
               $i = 1;
@@ -91,11 +93,13 @@
                 if ($i > 9) { $i = 1; }
               ?>
                 <div class="col-12">
-                  <div class="card card-stat bg-primary shadow-sm border border-1">
+                  <div class="card card-stat shadow-sm border border-1">
                     <div class="card-body">
                       <h5 class="h5 card-title text-uppercase"><?php echo $conn_type['connection_name'] ?></h5>
-                      <span class="nums">
-                        <a href="?name=pieces&do=show-connections-types&action=show-pieces-conn&type=1&conn-id=<?php echo $conn_type['id'] ?>" class="num stretched-link text-black" data-goal="<?php echo $pcsCount ?>">0</a>
+                      <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                        <span class="nums">
+                          <a href="?name=pieces&do=show-connections-types&action=show-pieces-conn&type=1&conn-id=<?php echo $conn_type['id'] ?>" class="num stretched-link text-black" data-goal="<?php echo $pcsCount ?>">0</a>
+                        </span>
                       </span>
                     </div>
                   </div>
@@ -108,8 +112,10 @@
                   <div class="card-body">
                     <?php $not_assigned_conn = $pcs_conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `connection_type` = 0  AND `company_id` = ".$_SESSION['company_id']); ?>
                     <h5 class="h5 card-title text-uppercase"><?php echo language('NOT ASSIGNED', @$_SESSION['systemLang']) ?></h5>
-                    <span class="nums">
-                      <a href="?name=pieces&do=show-connections-types&action=show-pieces-conn&type=1&conn-id=0" class="num stretched-link text-black" data-goal="<?php echo $not_assigned_conn ?>">0</a>
+                    <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                      <span class="nums">
+                        <a href="?name=pieces&do=show-connections-types&action=show-pieces-conn&type=1&conn-id=0" class="num stretched-link text-black" data-goal="<?php echo $not_assigned_conn ?>">0</a>
+                      </span>
                     </span>
                   </div>
                 </div>

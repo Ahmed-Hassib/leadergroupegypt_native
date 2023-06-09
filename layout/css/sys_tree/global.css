@@ -423,7 +423,7 @@ body::-webkit-scrollbar-thumb:hover,
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	min-height: 125px;
+	padding-top: 4rem;
 }
 
 .card-body>i {
