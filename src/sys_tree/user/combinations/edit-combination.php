@@ -107,7 +107,7 @@ if ($is_exist == true) {
                   <label for="mal-status" class="col-sm-12 col-form-label text-capitalize pt-0"><?php echo language('STATUS', @$_SESSION['systemLang']) ?></label>
                   <div class="col-sm-12" id="comb-status">
                     <select class="form-select" name="comb-status" id="comb-status" required <?php if (($_SESSION['comb_update'] != 1 && $_SESSION['isTech'] != 1) || $comb_info['isFinished'] == 1) {echo 'disabled';} ?> <?php if ($_SESSION['isTech'] == 0) {echo 'disabled';} ?>>
-                      <option value="default" disabled selected><?php echo language("SELECT YOUR STATUS", @$_SESSION['systemLang']) ?></option>
+                      <option value="default" disabled><?php echo language("SELECT YOUR STATUS", @$_SESSION['systemLang']) ?></option>
                       <option value="0" <?php if ($comb_info['isFinished'] ==  0) { echo 'selected'; } ?>><?php echo language("UNFINISHED", @$_SESSION['systemLang']) ?></option>
                       <option value="1" <?php if ($comb_info['isFinished'] ==  1) { echo 'selected'; } ?>><?php echo language("FINISHED", @$_SESSION['systemLang']) ?></option>
                       <option value="2" <?php if ($comb_info['isFinished'] ==  2) { echo 'selected'; } ?>><?php echo language("DELAYED", @$_SESSION['systemLang']) ?></option>
@@ -228,11 +228,19 @@ if ($is_exist == true) {
                   <span class="text-primary" dir='ltr'><?php echo date_format(date_create($comb_info['showed_time']), 'h:i:s a') ?></span>
                 <?php } else { ?>
                   <span class="pt-2 text-danger"><?php echo language('NOT SHOWED BY THE TECHNICAL', @$_SESSION['systemLang']) ?></span>
-                <?php } ?>              </div>
+                <?php } ?>
+              </div>
             </div>
             <!-- finished date -->
             <div class="mb-1 row align-items-center">
-              <label for="finished-date" class="col-sm-12 col-md-5 col-form-label text-capitalize"><?php echo language('FINISHED DATE', @$_SESSION['systemLang']) ?></label>
+              <label for="finished-date" class="col-sm-12 col-md-5 col-form-label text-capitalize">
+                <?php if ($comb_info['isFinished'] == 1 && $comb_info['isAccepted'] == 1) {
+                  echo language('FINISHED DATE', @$_SESSION['systemLang']);
+                } else {
+                  echo language('DELAYED OR REFUSED DATE', @$_SESSION['systemLang']);
+                }
+                ?>
+              </label>
               <div class="col-sm-12 col-md-7">
                 <?php if ($comb_info['isFinished']) { ?>
                   <span class="text-primary" dir='ltr'><?php echo date_format(date_create($comb_info['finished_date']), 'd/m/Y') ?></span>
@@ -243,7 +251,14 @@ if ($is_exist == true) {
             </div>
             <!-- finished time -->
             <div class="mb-1 row align-items-center">
-              <label for="finished-time" class="col-sm-12 col-md-5 col-form-label text-capitalize"><?php echo language('FINISHED TIME', @$_SESSION['systemLang']) ?></label>
+              <label for="finished-time" class="col-sm-12 col-md-5 col-form-label text-capitalize">
+                <?php if ($comb_info['isFinished'] == 1 && $comb_info['isAccepted'] == 1) {
+                  echo language('FINISHED TIME', @$_SESSION['systemLang']);
+                } else {
+                  echo language('DELAYED OR REFUSED TIME', @$_SESSION['systemLang']);
+                }
+                ?>
+              </label>
               <div class="col-sm-12 col-md-7">
                 <?php if ($comb_info['isFinished']) { ?>
                   <span class="text-primary" dir='ltr'><?php echo date_format(date_create($comb_info['finished_time']), 'h:i:s a') ?></span>

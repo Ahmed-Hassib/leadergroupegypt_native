@@ -106,7 +106,7 @@ if ($is_exist_mal == true) {
                   <label for="mal-status" class="col-sm-12 col-form-label text-capitalize pt-0"><?php echo language('STATUS', @$_SESSION['systemLang']) ?></label>
                   <div class="col-sm-12 position-relative" id="mal-status">
                     <select name="mal-status" id="mal-status" class="form-select" <?php if ($_SESSION['isTech'] == 0 || $mal_info['mal_status'] == 1) {echo 'disabled';} ?>>
-                      <option value="default" disabled selected><?php echo language("SELECT", @$_SESSION['systemLang']).' '.language("STATUS", @$_SESSION['systemLang']) ?></option>
+                      <option value="default" disabled><?php echo language("SELECT", @$_SESSION['systemLang']).' '.language("STATUS", @$_SESSION['systemLang']) ?></option>
                       <option value="0" <?php if ($mal_info['mal_status'] == 0) { echo 'selected'; } ?>><?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?></option>
                       <option value="1" <?php if ($mal_info['mal_status'] == 1) { echo 'selected'; } ?>><?php echo language('FINISHED', @$_SESSION['systemLang']) ?></option>
                       <option value="2" <?php if ($mal_info['mal_status'] == 2) { echo 'selected'; } ?>><?php echo language('DELAYED', @$_SESSION['systemLang']) ?></option>
