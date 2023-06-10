@@ -70,9 +70,10 @@
                       <h5 class="h5 card-title text-uppercase"><?php echo $type['connection_name'] ?></h5>
                       <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                         <span class="nums">
-                          <a href="?do=show-pieces-conn&type=1&conn-id=<?php echo $type['id'] ?>" class="num stretched-link text-black" data-goal="<?php echo $pcsCount ?>">0</a>
+                          <span class="num" data-goal="<?php echo $pcsCount ?>">0</span>
                         </span>
                       </span>
+                      <a href="?do=show-pieces-conn&type=1&conn-id=<?php echo $type['id'] ?>" class="stretched-link text-black"></a>
                     </div>
                   </div>
                 </div>
@@ -84,11 +85,12 @@
                   <div class="card-body">
                     <?php $notAssigned = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `connection_type` = 0 AND `company_id` = ".$_SESSION['company_id']); ?>
                     <h5 class="h5 card-title text-uppercase"><?php echo language('NOT ASSIGNED', @$_SESSION['systemLang']) ?></h5>
-                    <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                    <span class="bg-warning icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                       <span class="nums">
-                        <a href="?do=show-pieces-conn&type=1&conn-id=0" class="num stretched-link text-black" data-goal="<?php echo $notAssigned ?>">0</a>
+                        <span class="num" data-goal="<?php echo $notAssigned ?>">0</span>
                       </span>
                     </span>
+                    <a href="?do=show-pieces-conn&type=1&conn-id=0" class="stretched-link text-black"></a>
                   </div>
                 </div>
               </div>
