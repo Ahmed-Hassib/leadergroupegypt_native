@@ -39,6 +39,7 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
   } elseif ($query == 'show-malfunction-details' && $_SESSION['mal_show'] == 1) {
     // include malfunction details page
     $file_name = 'malfunctions-details.php';
+    $is_contain_table = true;
     $possible_back = true;
     $preloader = true;
     
