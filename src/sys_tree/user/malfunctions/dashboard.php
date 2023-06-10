@@ -45,7 +45,7 @@ if ($_SESSION['mal_show'] == 1) {
           <div class="row row-cols-sm-2 gx-3 gy-5">
             <div class="col-6">
               <div class="card card-stat bg-total bg-gradient">
-                <?php $all_mal_today = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
+                <?php $all_mal_today = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><?php echo language('TOTAL', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
@@ -59,7 +59,7 @@ if ($_SESSION['mal_show'] == 1) {
             </div>
             <div class="col-6">
               <div class="card card-stat bg-danger bg-gradient">
-                <?php $unrep_mal_today = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE (`mal_status` = 0 AND `isAccepted` <> 2) AND `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
+                <?php $unrep_mal_today = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE (`mal_status` = 0 AND `isAccepted` <> 2) AND `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
@@ -73,7 +73,7 @@ if ($_SESSION['mal_show'] == 1) {
             </div>
             <div class="col-6">
               <div class="card card-stat bg-success bg-gradient">
-                <?php $rep_mal_today = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `mal_status` = 1 AND `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
+                <?php $rep_mal_today = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `mal_status` = 1 AND `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><?php echo language('FINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
@@ -87,7 +87,7 @@ if ($_SESSION['mal_show'] == 1) {
             </div>
             <div class="col-6">
               <div class="card card-stat bg-warning bg-gradient">
-                <?php $del_mal_today = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE (`mal_status` = 2 OR `isAccepted` = 2) AND `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
+                <?php $del_mal_today = $mal_obj->count_records("`mal_id`", "`malfunctions`", "WHERE (`mal_status` = 2 OR `isAccepted` = 2) AND `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1") ?>
                 <div class="card-body">
                   <h5 class="card-title text-capitalize"><?php echo language('DELAYED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
@@ -394,7 +394,7 @@ if ($_SESSION['mal_show'] == 1) {
           </header>
           <?php 
           // get malfunctions of today
-          $todayMal = $mal_obj->select_specific_column("*", "`malfunctions`", "WHERE `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1 ORDER BY `added_time` DESC LIMIT 5");
+          $todayMal = $mal_obj->select_specific_column("*", "`malfunctions`", "WHERE `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1 ORDER BY `added_time` DESC LIMIT 5");
           // check if array not empty
           if (!empty($todayMal)) {
             $index = 0;
