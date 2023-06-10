@@ -303,12 +303,11 @@ $count = $stmt->rowCount();     // get row count
     </table>
   </div>
 </div>
+<!-- delete malfunction modal -->
+<?php include_once 'delete-malfunction-modal.php' ?>
 <?php } else {
   // include no data founded module
   include_once $globmod . 'no-data-founded-no-redirect.php';
 } ?>
 
 
-
-<!-- delete malfunction modal -->
-<?php include_once 'delete-malfunction-modal.php' ?>
