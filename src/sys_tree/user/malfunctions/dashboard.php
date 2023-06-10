@@ -50,9 +50,10 @@ if ($_SESSION['mal_show'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('TOTAL', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-malfunction-details&period=today&malStatus=all" class="num stretched-link" data-goal="<?php echo $all_mal_today; ?>">0</a>
+                      <span class="num" data-goal="<?php echo $all_mal_today; ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-malfunction-details&period=today&malStatus=all" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -63,9 +64,10 @@ if ($_SESSION['mal_show'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-malfunction-details&period=today&malStatus=unrepaired" class="num stretched-link" data-goal="<?php echo $unrep_mal_today; ?>">0</a>
+                      <span class="num" data-goal="<?php echo $unrep_mal_today; ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-malfunction-details&period=today&malStatus=unrepaired" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -76,9 +78,10 @@ if ($_SESSION['mal_show'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('FINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-malfunction-details&period=today&malStatus=repaired" class="stretched-link num" data-goal="<?php echo $rep_mal_today ?>">0</a>
+                      <span class="num" data-goal="<?php echo $rep_mal_today ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-malfunction-details&period=today&malStatus=repaired" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -89,9 +92,10 @@ if ($_SESSION['mal_show'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('DELAYED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-malfunction-details&period=today&accepted=delayed" class="stretched-link num" data-goal="<?php echo $del_mal_today ?>">0</a>
+                      <span class="num" data-goal="<?php echo $del_mal_today ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-malfunction-details&period=today&accepted=delayed" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -118,9 +122,10 @@ if ($_SESSION['mal_show'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('TOTAL', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-malfunction-details&period=month&malStatus=all" class="num stretched-link" data-goal="<?php echo $all_mal_month ?>">0</a>
+                      <span class="num" data-goal="<?php echo $all_mal_month ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-malfunction-details&period=month&malStatus=all" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -131,9 +136,10 @@ if ($_SESSION['mal_show'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-malfunction-details&period=month&malStatus=unrepaired" class="num stretched-link" data-goal="<?php echo $unrep_mal_month ?>">0</a>
+                      <span class="num" data-goal="<?php echo $unrep_mal_month ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-malfunction-details&period=month&malStatus=unrepaired" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -144,9 +150,10 @@ if ($_SESSION['mal_show'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('FINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-malfunction-details&period=month&malStatus=repaired" class="num stretched-link" data-goal="<?php echo $rep_mal_month ?>">0</a>
+                      <span class="num" data-goal="<?php echo $rep_mal_month ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-malfunction-details&period=month&malStatus=repaired" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -157,9 +164,10 @@ if ($_SESSION['mal_show'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('DELAYED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-malfunction-details&period=month&accepted=delayed" class="num stretched-link" data-goal="<?php echo $del_mal_month ?>">0</a>
+                      <span class="num" data-goal="<?php echo $del_mal_month ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-malfunction-details&period=month&accepted=delayed" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -191,9 +199,10 @@ if ($_SESSION['mal_show'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('TOTAL', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-malfunction-details&period=previous-month&malStatus=all" class="num stretched-link" data-goal="<?php echo $all_prev_mal_month ?>">0</a>
+                      <span class="num" data-goal="<?php echo $all_prev_mal_month ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-malfunction-details&period=previous-month&malStatus=all" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -204,9 +213,10 @@ if ($_SESSION['mal_show'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-malfunction-details&period=previous-month&malStatus=unrepaired" class="num stretched-link" data-goal="<?php echo $unrep_prev_month ?>">0</a>
+                      <span class="num" data-goal="<?php echo $unrep_prev_month ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-malfunction-details&period=previous-month&malStatus=unrepaired" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -217,9 +227,10 @@ if ($_SESSION['mal_show'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('FINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-malfunction-details&period=previous-month&malStatus=repaired" class="num stretched-link" data-goal="<?php echo $rep_prev_month ?>">0</a>
+                      <span class="num" data-goal="<?php echo $rep_prev_month ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-malfunction-details&period=previous-month&malStatus=repaired" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -230,9 +241,10 @@ if ($_SESSION['mal_show'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('DELAYED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-malfunction-details&period=previous-month&accepted=delayed" class="num stretched-link" data-goal="<?php echo $del_prev_month ?>">0</a>
+                      <span class="num" data-goal="<?php echo $del_prev_month ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-malfunction-details&period=previous-month&accepted=delayed" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -255,9 +267,10 @@ if ($_SESSION['mal_show'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('TOTAL', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-malfunction-details&period=all&malStatus=all" class="num stretched-link" data-goal="<?php echo $total_mal ?>">0</a>
+                      <span class="num" data-goal="<?php echo $total_mal ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-malfunction-details&period=all&malStatus=all" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -268,9 +281,10 @@ if ($_SESSION['mal_show'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('UNFINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-malfunction-details&period=all&malStatus=unrepaired" class="num stretched-link" data-goal="<?php echo $total_unrep_mal ?>">0</a>
+                      <span class="num" data-goal="<?php echo $total_unrep_mal ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-malfunction-details&period=all&malStatus=unrepaired" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -281,9 +295,10 @@ if ($_SESSION['mal_show'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('FINISHED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-malfunction-details&period=all&malStatus=repaired" class="num stretched-link" data-goal="<?php echo $total_rep_mal ; ?>">0</a>
+                      <span class="num" data-goal="<?php echo $total_rep_mal ; ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-malfunction-details&period=all&malStatus=repaired" class="stretched-link"></a>
                 </div>
               </div>
             </div>
@@ -294,9 +309,10 @@ if ($_SESSION['mal_show'] == 1) {
                   <h5 class="card-title text-capitalize"><?php echo language('DELAYED', @$_SESSION['systemLang']) ?></h5>
                   <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                     <span class="nums">
-                      <a href="?do=show-malfunction-details&period=all&accepted=delayed" class="num stretched-link" data-goal="<?php echo $total_del_mal ; ?>">0</a>
+                      <span class="num" data-goal="<?php echo $total_del_mal ; ?>">0</span>
                     </span>
                   </span>
+                  <a href="?do=show-malfunction-details&period=all&accepted=delayed" class="stretched-link"></a>
                 </div>
               </div>
             </div>
