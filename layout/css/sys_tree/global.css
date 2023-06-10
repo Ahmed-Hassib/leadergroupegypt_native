@@ -415,7 +415,7 @@ body::-webkit-scrollbar-thumb:hover,
 	font-size: 1.25rem !important;
 }
 
-.card-body { 
+.card-body {
 	position: relative;
 }
 
@@ -441,6 +441,12 @@ body::-webkit-scrollbar-thumb:hover,
 .card span a.stretched-link {
 	text-decoration: none;
 	font-size: 1.25rem;
+}
+
+.card-footer {
+	margin: auto;
+	width: 80%;
+	background-color: unset;
 }
 
 .container {
