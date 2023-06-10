@@ -399,6 +399,10 @@ body::-webkit-scrollbar-thumb:hover,
 	color: #fff;
 }
 
+.icon-container .num {
+	font-size: 20px;
+}
+
 .icon-container-left {
 	left: 15px;
 }
