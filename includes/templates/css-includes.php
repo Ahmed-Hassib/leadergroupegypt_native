@@ -20,6 +20,12 @@
 
 <?php if (isset($is_contain_table) && $is_contain_table == true) { ?>
   <!-- GET ALL CSS TABLES STYLE -->
+  <?php $tables_css_files = get_page_dependencies('tables', 'css') ?>
+  <?php foreach ($tables_css_files as $css_file) { ?>
+    <link rel="stylesheet" href="<?php echo $css . $css_file; ?>">
+  <?php } ?>
+
+  <!-- GET ALL CSS TABLES STYLE -->
   <?php $tables_css_node_files = get_page_dependencies('tables', 'node')['css'] ?>
   <?php foreach ($tables_css_node_files as $css_file) { ?>
     <link rel="stylesheet" href="<?php echo $node . $css_file; ?>">

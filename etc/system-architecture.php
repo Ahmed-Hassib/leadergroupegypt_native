@@ -31,6 +31,7 @@ function get_page_dependencies($page_role, $file_type) {
     // for tables files
     'tables' => [
       'css' => [
+        '1' => 'table-style.css',
       ],
       'js' => [
         '1' => 'table-behaviour.js',
