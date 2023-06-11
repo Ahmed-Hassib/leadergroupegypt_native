@@ -323,7 +323,7 @@ if ($is_exist == true) {
               <div class="col-sm-12 col-md-8 position-relative">
                 <div class="row">
                   <div class="col-4">
-                    <input name="cost" id="cost" class="form-control" placeholder="<?php echo language('COMBINATION COST', @$_SESSION['systemLang']) ?>" value="<?php echo $comb_info['cost'] ?>" <?php if ($_SESSION['isTech'] == 0 || $comb_info['isFinished'] == 1) {echo 'disabled';} ?> >
+                    <input name="cost" id="cost" class="form-control" placeholder="<?php echo language('COMBINATION COST', @$_SESSION['systemLang']) ?>" value="<?php echo $comb_info['cost'] ?>" <?php if ($_SESSION['isTech'] == 0 || $comb_info['isFinished'] == 1) {echo 'disabled';} ?> onblur="arabic_to_english_nums(this)" >
                   </div>
                   <div class="mt-2 col">
                     <span><?php echo language('L.E', @$_SESSION['systemLang']) ?></span>

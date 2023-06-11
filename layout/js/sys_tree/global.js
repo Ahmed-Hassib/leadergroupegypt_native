@@ -84,7 +84,7 @@ var arrowUpBtn = document.querySelector(".arrow-up");
       }
     }
 
-    
+
 
   };
 
@@ -276,7 +276,7 @@ function put_data_into_select(data, status, box, type, ...fields) {
         default_option.setAttribute('disabled', 'disabled');
         // append to select box
         select_box.appendChild(default_option);
-        
+
         // check if source data has pieces or not
         if (data.length > 0) {
           // loop on data result to display the data
@@ -461,4 +461,48 @@ function upload_image(btn) {
   emp_img_element.addEventListener("click", (evt) => {
     emp_img_element.classList.add('full-screen');
   })
+}
+
+
+/**
+ * arabic_to_english_nums function
+ * used to convert arabic numbers into english
+ */
+function arabic_to_english_nums(input) {
+  // arabic digits
+  let ar_digits = {
+    '٠': 0,
+    '١': 1,
+    '٢': 2,
+    '٣': 3,
+    '٤': 4,
+    '٥': 5,
+    '٦': 6,
+    '٧': 7,
+    '٨': 8,
+    '٩': 9,
+  };
+
+  // '٧٧٥٤٢'
+
+  // get value of the input 
+  // then convert it into string 
+  // then split it into an array to loop on it
+  let input_digits = input.value.toString().split("");
+  // final result variable
+  let res = '';
+
+  // loop on array of input`s value
+  for (let i = 0; i < input_digits.length; i++) {
+    // check if ar_digit has value of input_digits[i]
+    if (ar_digits.hasOwnProperty(input_digits[i])) {
+      // if exist replace it with its value
+      res += ar_digits[input_digits[i]];
+    } else {
+      // if not exist keep it
+      res += input_digits[i];
+    }
+  }
+  // replace input`s value within the new value
+  input.value = res;
 }
