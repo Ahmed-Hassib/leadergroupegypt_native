@@ -482,28 +482,38 @@ function arabic_to_english_nums(input) {
     '٨': 8,
     '٩': 9,
   };
+  // english charachters
+  let en_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   // '٧٧٥٤٢'
-  
-  if (isFinite(input.value)) {
-    // get value of the input 
-    // then convert it into string 
-    // then split it into an array to loop on it
-    let input_digits = input.value.toString().split("");
-    // final result variable
-    let res = '';
-    // loop on array of input`s value
-    for (let i = 0; i < input_digits.length; i++) {
-      // check if ar_digit has value of input_digits[i]
-      if (ar_digits.hasOwnProperty(input_digits[i])) {
-        // if exist replace it with its value
-        res += ar_digits[input_digits[i]];
-      } else {
-        // if not exist keep it
-        res += input_digits[i];
-      }
+  // get value of the input 
+  // then convert it into string 
+  // then split it into an array to loop on it
+  let input_digits = input.value.toString().split("");
+  // final result variable
+  let res = '';
+  // loop on array of input`s value
+  for (let i = 0; i < input_digits.length; i++) {
+    // check if ar_digit has value of input_digits[i]
+    if (ar_digits.hasOwnProperty(input_digits[i])) {
+      // if exist replace it with its value
+      res += ar_digits[input_digits[i]];
+    } else {
+      // if not exist keep it
+      res += input_digits[i];
     }
-    // replace input`s value within the new value
-    input.value = res;
-  }  
+  }
+  // loop on array of input`s value
+  for (let i = 0; i < input_digits.length; i++) {
+    // check if result contains any characters
+    if (en_chars.indexOf(input_digits[i]) >= 0) {
+      // if contains replace it with empty space
+      res = res.replace(input_digits[i], "");
+    }
+  }
+
+  // remove any spaces in result
+  res = res.replace(/\s+/g, '');
+  // replace input`s value within the new value
+  input.value = res;
 }

@@ -352,13 +352,9 @@ if ($is_exist_mal == true) {
             <div class="mb-sm-2 mb-md-3 row align-items-start">
               <label for="cost" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('MALFUNCTION COST', @$_SESSION['systemLang']) ?></label>
               <div class="col-sm-12 col-md-8 position-relative">
-                <div class="row">
-                  <div class="col-4">
-                    <input type="number" name="cost" id="cost" class="form-control"  placeholder="<?php echo language('MALFUNCTION COST', @$_SESSION['systemLang']) ?>" value="<?php echo $mal_info['cost'] ?>" <?php if ($_SESSION['isTech'] == 0 || $mal_info['mal_status'] == 1) {echo 'disabled';} ?> onblur="arabic_to_english_nums(this)">
-                  </div>
-                  <div class="mt-2 col">
-                    <span><?php echo language('L.E', @$_SESSION['systemLang']) ?></span>
-                  </div>
+                <div class="input-group" dir="ltr">
+                  <span class="input-group-text"><?php echo language('L.E', @$_SESSION['systemLang']) ?></span>
+                  <input type="text" name="cost" id="cost" class="form-control"  placeholder="<?php echo language('MALFUNCTION COST', @$_SESSION['systemLang']) ?>" value="<?php echo $mal_info['cost'] ?>" <?php if ($_SESSION['isTech'] == 0 || $mal_info['mal_status'] == 1) {echo 'disabled';} ?> onblur="arabic_to_english_nums(this)">
                 </div>
                 <div id="costHelp" class="form-text text-info">
                   <i class="bi bi-exclamation-triangle-fill"></i>&nbsp;
