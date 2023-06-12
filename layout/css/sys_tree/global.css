@@ -469,6 +469,7 @@ body::-webkit-scrollbar-thumb:hover,
 	margin: auto;
 	width: 80%;
 	background-color: unset;
+	color: #fff;
 }
 
 .container {

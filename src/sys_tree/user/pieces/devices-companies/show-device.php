@@ -53,18 +53,14 @@
                 <div class="col-sm-12 col-md-8">
                   <select class="form-select" id="manufacture-company-id" name="manufacture-company-id" required >
                     <?php
-                    if (!isset($man_company_obj)) {
-                      // create an object of ManufuctureCompanies class
-                      $man_company_obj = new ManufuctureCompanies();
-                    }
                     // get all manufucture companies
-                    $man_companies = $man_company_obj->get_all_man_companies($_SESSION['company_id']);
+                    $man_companies = $dev_obj->select_specific_column("*", "`manufacture_companies`", "WHERE `company_id` = " .$_SESSION['company_id']);
                     // data counter
-                    $companies_counter = $man_companies[0];
+                    $companies_counter = count($man_companies);
                     // check the return value
                     if ($companies_counter > 0) {
                       // companies data
-                      $companies_data = $man_companies[1];
+                      $companies_data = $man_companies;
                       // loop on companies
                       ?>
                       <option value="default" selected disabled><?php echo language('SELECT', @$_SESSION['systemLang'])." ". language('COMPANY NAME', @$_SESSION['systemLang']) ?></option>
@@ -81,6 +77,7 @@
             </div>
           </div>
 
+          
           <!-- second column -->
           <div class="col-12">
             <div class="section-block">

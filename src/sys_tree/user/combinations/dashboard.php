@@ -28,7 +28,7 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
       </a>
     </div>
     <!-- start new design -->
-    <div class="mb-3 row row-cols-sm-1 row-cols-md-2 gx-3 gy-5 align-items-stretch justify-content-start">
+    <div class="mb-3 row row-cols-sm-1 row-cols-md-2 g-3 align-items-stretch justify-content-start">
       <!-- combinations of today -->
       <div class="col-12">
         <div class="section-block">

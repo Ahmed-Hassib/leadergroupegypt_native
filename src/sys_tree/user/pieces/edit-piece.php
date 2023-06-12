@@ -177,16 +177,12 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
                       <div class="col-sm-12 position-relative">
                         <select class="form-select" id="direction" name="direction" required onchange="get_sources(this, <?php echo $_SESSION['company_id'] ?>, '<?php echo $dirs . $_SESSION['company_name'] ?>', ['sources', 'alternative-sources']);">
                           <?php
-                          if (!isset($dir_obj)) {
-                            // create an object of Direction class
-                            $dir_obj = new Direction();
-                          }
                           // get all directions
-                          $dirs = $dir_obj->get_all_directions($_SESSION['company_id']);
+                          $dirs = $pcs_obj->select_specific_column("*", "`direction`", "WHERE `company_id` = ".$_SESSION['company_id'] ." ORDER BY `direction_name` ASC");
                           // counter
-                          $dirs_count = $dirs[0];
+                          $dirs_count = count($dirs);
                           // directions data
-                          $dir_data = $dirs[1];
+                          $dir_data = $dirs;
                           // check the row dirs_count
                           if ($dirs_count > 0) { ?>
                             <option value="default" disabled selected><?php echo language('SELECT', @$_SESSION['systemLang'])." ". language('THE DIRECTION', @$_SESSION['systemLang']) ?></option>
@@ -210,11 +206,12 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
                       <div class="col-sm-12 position-relative">
                         <select class="form-select" id="sources" name="source-id" required>
                           <?php
-                          $sources = $dir_obj->get_direction_sources($piece_data['direction_id'], $_SESSION['company_id']);
+                          $condition = "LEFT JOIN `direction` ON `direction`.`direction_id` = `pieces_info`.`direction_id` WHERE `pieces_info`.`direction_id` = ".$piece_data['direction_id']." AND `pieces_info`.`is_client` = 0 AND `pieces_info`.`company_id` = ".$_SESSION['company_id'];
+                          $sources = $pcs_obj->select_specific_column("`pieces_info`.`id`, `pieces_info`.`full_name`, `pieces_info`.`ip`", "`pieces_info`", $condition);
                           // counter
-                          $sources_count = $sources[0];
+                          $sources_count = count($sources);
                           // directions data
-                          $sources_data = $sources[1];
+                          $sources_data = $sources;
                           // check the row sources_count
                           if ($sources_count) { ?>
                             <option value="default" disabled><?php echo language('SELECT', @$_SESSION['systemLang'])." ". language('THE SOURCE', @$_SESSION['systemLang']) ?></option>
@@ -224,7 +221,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
                               </option>
                             <?php } ?>
                           <?php } else { ?>
-                            <option value="default" disabled selected><?php echo language('NOT AVAILABLE NOW', @$_SESSION['systemLang']) ?></option>';
+                            <option value="default" disabled selected><?php echo language('NOT AVAILABLE NOW', @$_SESSION['systemLang']) ?></option>
                           <?php } ?>
                         </select>
                       </div>

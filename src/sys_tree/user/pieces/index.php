@@ -61,6 +61,10 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
   } elseif ($query == 'show-piece' && $_SESSION['pcs_show'] == 1) {
     $file_name = 'show-piece.php';
     $is_contain_table = true;
+  
+  } elseif ($query == 'show-dir-pieces' && $_SESSION['pcs_show'] == 1) {
+    $file_name = 'show-dir-pieces.php';
+    $is_contain_table = true;
     
   } elseif ($query == 'devices-companies' && $_SESSION['pcs_show'] == 1) {
     // cehck if action is set or not

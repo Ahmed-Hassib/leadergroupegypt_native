@@ -37,9 +37,8 @@
                   $pieces = $dir_obj->count_records("`id`", "pieces_info", $pieces_conditions);
                   // count clients
                   $clients = $dir_obj->count_records("`id`", "pieces_info", $clients_conditions);
-                  
-                  if ($pieces == 0 && $clients == 0) {
                 ?>
+                  <?php if ($pieces == 0 && $clients == 0) { ?>
                     <option value="<?php echo $dir['direction_id'] ?>"><?php echo $dir['direction_name'] ?></option>
                   <?php } ?>
                 <?php } ?>

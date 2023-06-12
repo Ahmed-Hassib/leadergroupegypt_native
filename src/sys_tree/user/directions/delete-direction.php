@@ -10,7 +10,7 @@
   // direction name validation
   if (!empty($direction_id) && $is_exist == true) {
     // count pieces on this direction
-    $pieces_counter = $dir_obj->count_records("`id`", "`pieces_info`", "WHERE `direction_id` = $direction_id");
+    $pieces_counter = $dir_obj->count_records("`id`", "`pieces_info`", "WHERE `direction_id` = $direction_id AND `company_id` = ".$_SESSION['company_id']);
     // check if direction name is exist or not
     if ($pieces_counter > 0) {
       // echo danger message

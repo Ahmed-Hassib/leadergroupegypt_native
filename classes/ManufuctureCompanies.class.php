@@ -15,9 +15,9 @@ class ManufuctureCompanies extends Database {
   }
     
   // get all manufacture_companies
-  public function get_all_man_companies($company_id = null) {
+  public function get_all_man_companies($company_id) {
     // get all pieces manufacture_companies
-    $dev_comp_query = "SELECT *FROM `manufacture_companies` WHERE `company_id` = ?";
+    $dev_comp_query = "SELECT *FROM `manufacture_companies` WHERE `company_id` = ?;";
     $query_stmt = $this->con->prepare($dev_comp_query);
     $query_stmt->execute(array($company_id));
     $companies_data = $query_stmt->fetchAll();

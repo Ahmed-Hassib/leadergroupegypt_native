@@ -70,23 +70,33 @@ $directions_info = $directions[1];
                   $clients_conditions   = "WHERE `direction_id` = '" . $row['direction_id'] . "' AND `is_client` = 1 AND `company_id` = " . $_SESSION['company_id'];
                   // pieces condition
                   $pieces_conditions     = "WHERE `direction_id` = '" . $row['direction_id'] . "' AND `is_client` = 0 AND `company_id` = " . $_SESSION['company_id'];
+                  // pieces condition
+                  $unkown_conditions     = "WHERE `direction_id` = '" . $row['direction_id'] . "' AND `is_client` NOT IN (0, 1) AND `company_id` = " . $_SESSION['company_id'];
                   // count pieces
                   $pieces = $dir_obj->count_records("`id`", "pieces_info", $pieces_conditions);
                   // count clients
                   $clients = $dir_obj->count_records("`id`", "pieces_info", $clients_conditions);
+                  // count unkown
+                  $unkown = $dir_obj->count_records("`id`", "pieces_info", $unkown_conditions);
                   ?>
                   <!-- clients -->
-                  <p class="mb-0 card-text text-black text-capitalize">
+                  <a href="<?php echo $nav_up_level ?>pieces/index.php?do=show-dir-pieces&name=clients&type=1&dir-id=<?php echo $row["direction_id"] ?>" class="mb-0 text-capitalize">
                     <i class="bi bi-people"></i>
                     <span><?php echo language('CLIENTS', @$_SESSION['systemLang']) ?></span>
                     <span class="num" data-goal="<?php echo $clients ?>">0</span>
-                  </p>
+                  </a>
                   <!-- pieces -->
-                  <p class="mb-0 card-text text-black text-capitalize">
+                  <a href="<?php echo $nav_up_level ?>pieces/index.php?do=show-dir-pieces&name=pieces&type=0&dir-id=<?php echo $row["direction_id"] ?>" class="mb-0 text-capitalize">
                     <i class="bi bi-hdd-rack"></i>
                     <span><?php echo language('PIECES', @$_SESSION['systemLang']) ?></span>
                     <span class="num" data-goal="<?php echo $pieces ?>">0</span>
-                  </p>
+                  </a>
+                  <!-- un assigned -->
+                  <a href="<?php echo $nav_up_level ?>pieces/index.php?do=show-dir-pieces&name=pieces&type=-1&dir-id=<?php echo $row["direction_id"] ?>" class="mb-0 text-capitalize">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <span><?php echo language('UNKNOWN', @$_SESSION['systemLang']) ?></span>
+                    <span class="num" data-goal="<?php echo $unkown ?>">0</span>
+                  </a>
                   <!-- horizontal rule -->
                   <hr>
                 </div>

@@ -15,12 +15,6 @@
           <?php echo language('MANAGE', @$_SESSION['systemLang'])." ".language('PIECES TYPES', @$_SESSION['systemLang']) ?>
         </a>
       </div>
-      <div class="<?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>">
-        <a href="?name=pieces&do=show-connections-types" class="btn btn-outline-primary py-1 fs-12">
-          <i class="bi bi-hdd-network"></i>
-          <?php echo language('MANAGE', @$_SESSION['systemLang'])." ".language('CONNECTION TYPES', @$_SESSION['systemLang']) ?>
-        </a>
-      </div>
     </div>
 
     <!-- start new design -->

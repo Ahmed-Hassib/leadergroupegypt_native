@@ -484,7 +484,7 @@ function arabic_to_english_nums(input) {
   };
   // english charachters
   let en_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
+  
   // '٧٧٥٤٢'
   // get value of the input 
   // then convert it into string 
@@ -514,6 +514,7 @@ function arabic_to_english_nums(input) {
 
   // remove any spaces in result
   res = res.replace(/\s+/g, '');
+  res = res.replace(/[^\w]/g, '');
   // replace input`s value within the new value
   input.value = res;
 }
