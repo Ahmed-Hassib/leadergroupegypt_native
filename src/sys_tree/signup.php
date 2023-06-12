@@ -74,7 +74,7 @@ if (isset($_SESSION['UserName'])) {
               // generate a code
               // first 4 character -> string
               //  second 4 character -> numbers
-              $company_code = generate_random_string().random_digits(4);
+              $company_code = generate_random_string(2).random_digits(2);
               // count companies that have same code
               $is_exist_code = $db_obj->is_exist("`company_code`", "`companies`", $company_code);
             } while($is_exist_code);
