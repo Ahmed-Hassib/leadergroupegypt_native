@@ -95,6 +95,10 @@ switch ($query) {
   case "activate-phone-number":
     $file_name = 'activate-phone-number.php';
     break;
+
+  case "rating-app":
+    $file_name = 'rating-app.php';
+    break;
 }
 
 include_once $file_name;

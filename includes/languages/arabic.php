@@ -113,6 +113,7 @@ function languageAr($phrase)
     'GOOD LUCK'             => 'بالتوفيق',
     'POWERED BY'            => 'powered by',
     'RATE APP'              => 'تقييم السيستم',
+    'SEND RATE'             => 'ارسال التقييم',
 
     
     

@@ -1008,3 +1008,39 @@ ul.clients-names li:last-child {
 .modal {
 	z-index: 999999;
 }
+
+/**************************/
+/* rating form style */
+.rating-form-container {
+	margin: auto;
+	width: 80%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.rating-form-container .rating-form input {
+	display: none;
+}
+
+.rating-form label {
+	font-size: 40px;
+	color: #444;
+	padding: 10px;
+	float: right;
+}
+
+.rating-form input:not(:checked)~label:hover,
+.rating-form input:not(:checked)~label:hover~label {
+	color: #fd4;
+}
+
+.rating-form input:checked ~ label {
+	color: #fd4;
+}
+
+.rating-form input#rating-5:checked ~ label {
+	color: #fe7;
+	text-shadow: 0 0 20px rgb(133, 78, 36);
+}
