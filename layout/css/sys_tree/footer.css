@@ -25,12 +25,17 @@ footer .hstack>ul>li:not(:last-child):after {
   margin: 0 10px 0 0;
 }
 
+footer .hstack>ul>li>button,
 footer .hstack>ul>li>a {
+  padding: 0;
   color: rgba(0, 0, 0, 0.6);
   text-decoration: none;
   transition: all 0.3s ease-in-out;
+  background-color: unset;
+  border: unset;
 }
 
+footer .hstack>ul>li>button:hover,
 footer .hstack>ul>li>a:hover {
   color: #0d6efd;
 }

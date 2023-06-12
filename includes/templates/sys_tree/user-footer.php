@@ -8,7 +8,7 @@
     <ul>
       <li>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ratingAppModal">
+        <button type="button" data-bs-toggle="modal" data-bs-target="#ratingAppModal">
           <?php echo language('RATE APP', @$_SESSION['systemLang']) ?>
         </button>
       </li>
