@@ -78,6 +78,8 @@ if ($page_category == 'sys_tree' && $page_role != 'sys_tree_login' && $page_role
 }
 ?>
 
+<?php include_once $globmod . 'rating-app.php'; ?>
+
 <script>localStorage['systemLang']  = '<?php echo @$_SESSION['systemLang'] ?>';</script>
 
 <!-- save system language to local storage -->

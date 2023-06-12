@@ -7,12 +7,13 @@
   <div class="hstack gap-3" dir="<?php echo $_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
     <ul>
       <li>
-        <a href="">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ratingAppModal">
           <?php echo language('RATE APP', @$_SESSION['systemLang']) ?>
-        </a>
+        </button>
       </li>
       <li>
-        <a href="">
+        <a href="<?php echo $nav_up_level ?>comp-sugg/index.php">
           <?php echo language('COMPLAINTS & SUGGESTIONS', @$_SESSION['systemLang']) ?>
         </a>
       </li>
