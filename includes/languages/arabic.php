@@ -112,6 +112,7 @@ function languageAr($phrase)
     'THUS'                  => 'حيث',
     'GOOD LUCK'             => 'بالتوفيق',
     'POWERED BY'            => 'powered by',
+    'RATE APP'              => 'تقييم السيستم',
 
     
     
