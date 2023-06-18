@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $is_exist = $model_obj->count_records("`device_id`", "`devices_info`", $device_id);
 
     // check if type is exist or not
-    if ($is_exist == true) {
+    if ($is_exist > 0) {
       // is inserted flag for models
       $is_inserted_models = false;
       // total models
