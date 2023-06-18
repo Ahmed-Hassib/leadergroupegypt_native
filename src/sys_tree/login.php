@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
   // get request info
   $username       = $_POST["username"];
   $pass           = $_POST["pass"];
-  // $company_code   = $_POST["company-code"];
+  $company_code   = $_POST["company-code"];
   $hashed_pass = sha1($pass);
   
   // columns to select
@@ -55,13 +55,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
           FROM `users` 
           LEFT JOIN `users_permissions` ON `users`.`UserID` = `users_permissions`.`UserID`
           LEFT JOIN `companies` ON `companies`.`company_id` = `users`.`company_id`
-          WHERE `users`.`UserName` = ? AND `users`.`Pass` = ? LIMIT 1";
-          // WHERE `users`.`UserName` = ? AND `users`.`Pass` = ? AND `companies`.`company_code` = ? LIMIT 1";
+          WHERE `users`.`UserName` = ? AND `users`.`Pass` = ? AND `companies`.`company_code` = ? LIMIT 1";
           
   // check if user exist in database
   $stmt = $con->prepare($query);
-  $stmt->execute(array($username, $hashed_pass));
-  // $stmt->execute(array($username, $hashed_pass, $company_code));
+  $stmt->execute(array($username, $hashed_pass, $company_code));
   $userInfo = $stmt->fetch();
   $count = $stmt->rowCount();
   
@@ -112,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && !empty($_GET)) {
   // nwe username
   $username = isset($_GET['username']) && !empty($_GET['username']) ? $_GET['username'] : "";
   $password = isset($_GET['password']) && !empty($_GET['password']) ? $_GET['password'] : "";
-  // $company_code = isset($_GET['company-code']) && !empty($_GET['company-code']) ? $_GET['company-code'] : "";
+  $company_code = isset($_GET['company-code']) && !empty($_GET['company-code']) ? $_GET['company-code'] : "";
 }
 ?>
 
@@ -137,9 +135,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && !empty($_GET)) {
           <input type="password" class="form-control" id="password" name="pass" placeholder="<?php echo language('PASSWORD') ?>" value="<?php echo isset($_GET['username']) && isset($_GET['password']) && isset($_GET['company-code']) ? $password : "" ?>" data-no-astrisk="true" required>
           <i class="bi bi-eye-slash show-pass show-pass-left text-dark" id="show-pass" onclick="showPass(this)"></i>
         </div>
-        <!-- <div class="mb-4 position-relative login">
+        <div class="mb-4 position-relative login">
           <input type="text" class="form-control" id="company-code-id" name="company-code" placeholder="<?php echo language('COMPANY CODE') ?>" value="<?php echo isset($_GET['username']) && isset($_GET['password']) && isset($_GET['company-code']) ? $company_code : "" ?>" data-no-astrisk="true" required>
-        </div> -->
+        </div>
         <div class="mb-4 position-relative login">
           <select class="form-select" name="language" id="language">
             <option value="ar" selected><?php echo language('ARABIC') ?></option>
