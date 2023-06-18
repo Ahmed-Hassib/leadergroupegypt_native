@@ -21,6 +21,8 @@ sql/*
 # ignoring local configration file
 etc/local-conf.php
 
+# ignoring Database class
 classes/Database.class.php
 
-hh*
+# ignoring spare_files folder
+spare_files/*
