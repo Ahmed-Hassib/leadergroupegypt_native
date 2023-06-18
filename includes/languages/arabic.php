@@ -798,7 +798,7 @@ function languageAr($phrase)
     'PLEASE, TRY TO CALL TECHNICAL SUPPORT'                                         => 'برجاء الاتصال بالدعم الفني',
     'COMBINATION UPDATED SUCCESSFULLY'                                              => 'تم تعديل التركيبة بنجاح',
     'YOU DON`T HAVE PERMISSION TO UPDATE THIS FIELD'                                => 'ليس لديك الصلاحية للتعديل علي هذا الحقل',
-    'SORRY, USERNAME OR PASSWORD IS WRONG PLEASE TRY LATER'                         => 'معذرةً، اسم المستخدم او كلمة المرور غير صحيحة برجاء المحاولة في وقت لاحق',
+    'SORRY, USERNAME OR PASSWORD OR COMPANY CODE IS WRONG PLEASE TRY LATER'         => 'معذرةً، اسم المستخدم او كلمة المرور او كود الشركة غير صحيح برجاء المحاولة في وقت لاحق',
     'YOUR LICENSE HAD BEEN ENDED, PLEASE CALL THE TECHNICAL SUPPORT'                => 'تراخيص استخدام البرنامج انتهت برجاء الاتصال بالدعم الفني',
     'PLEASE, REENTER THE OWNER OF SYSTEM PASSWORD'                                  => 'من فضلك اعد ادخال الرقم السرى الخالص بمالك النظام',
     'YOU MUST SELECT NEW LICENSE TYPE'                                              => 'لابد من اختيار نوع الترخيص الجديد',

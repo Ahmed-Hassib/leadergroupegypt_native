@@ -88,8 +88,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
     }
     // call change_user_langugae
     $is_changed = $user_obj->change_user_language($lang, $_SESSION['UserID']);
-    // reset login error variable
-    $_SESSION['loginError'] = 0;
     // check logined user
     if ($_SESSION['isRoot'] == 1) {
       // redirect to admin page
@@ -101,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
       exit();
     }
   } else {
-    $_SESSION['loginError'] = 1;
+    $_SESSION['loginStatus'] = false;
   }
 }
 
@@ -160,15 +158,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && !empty($_GET)) {
             </a>
           </div>
         </div>
-        <div class="mb-4">
-        <?php if (isset($_SESSION['loginError']) && $_SESSION['loginError'] == 1) { ?>
-          <span class='text-danger text-capitalize'><?php echo language("SORRY, USERNAME OR PASSWORD IS WRONG PLEASE TRY LATER") ?></span>
-          <?php unset($_SESSION['loginError']); ?>
-        <?php } ?>
-        </div>
       </form>
       <hr>
-
       <div class="row g-2">
         <div class="col-10">
           <a href="../../index.php" class="btn btn-outline-primary w-100"><?php echo language("LEADER GROUP EGYPT AR") ?></a>
@@ -180,6 +171,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && !empty($_GET)) {
     </div>
   </div>
 </div>
-<?php 
-  include_once $tpl . "js-includes.php";
-?>
+
+<?php if (isset($_SESSION['loginStatus']) && $_SESSION['loginStatus'] == false) { ?>
+  <div class="alert alert-danger alert-login-status" dir="rtl">
+    <?php echo language("SORRY, USERNAME OR PASSWORD OR COMPANY CODE IS WRONG PLEASE TRY LATER") ?>
+    <button type="button" class="btn-close btn-close-left" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <script>
+    let login_alert = document.querySelector('.alert-login-status');
+
+    setTimeout(() => {
+      login_alert.remove();
+    }, 5000);
+  </script>
+
+  <?php unset($_SESSION['loginStatus']) ?>
+<?php } ?>
+
+
+<?php include_once $tpl . "js-includes.php"; ?>

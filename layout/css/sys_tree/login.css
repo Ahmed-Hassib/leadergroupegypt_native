@@ -1,4 +1,3 @@
-/************/
 /* Start Login Form */
 .hero-image {
 	/* The image used */
@@ -108,7 +107,7 @@
 		z-index: 1;
 		/* background: none; */
 	}
-	
+
 	.contentBox .formBox {
 		width: 100%;
 		margin: 1.5rem 1rem;
@@ -118,3 +117,14 @@
 }
 
 /* End Login Form */
+
+/* start alert of login status */
+.alert-login-status {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	padding-left: 4rem;
+	max-width: 500px;
+}
+
+/* end alert of login status */
