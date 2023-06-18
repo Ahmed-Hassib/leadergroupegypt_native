@@ -118,7 +118,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && !empty($_GET)) {
   <div class="imgBox">
     <div class="hero-content">
       <img src="<?php echo $assets ?>images/login-2.svg" alt="" />
-      <!-- <img src="<?php echo $assets ?>leadergroupegypt-eid-said.jpg" alt="" /> -->
     </div>
   </div>
   <div class="contentBox" dir="rtl">
