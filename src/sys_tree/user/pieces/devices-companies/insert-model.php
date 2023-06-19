@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // check model if empty
         if (!empty($model)) {
           // insert model
-          $model_obj->insert_new_model($model, get_date_now(), $_SESSION['UserID'], $device_id);
+          $model_obj->insert_new_model(array($model, get_date_now(), $_SESSION['UserID'], $device_id));
           // counter
           $counter++;
         }
