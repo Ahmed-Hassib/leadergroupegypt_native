@@ -105,6 +105,7 @@
           ?>
             <p>
               <span class="text-capitalize"><?php echo language('COMPANY NAME', @$_SESSION['systemLang']) . ": " . $_SESSION['company_name'] ?></span><br>
+              <span class="text-capitalize"><?php echo language('COMPANY CODE', @$_SESSION['systemLang']) . ": " . $_SESSION['company_code'] ?></span><br>
               <span class="text-capitalize"><?php echo language('APP VERSION', @$_SESSION['systemLang']) . ": " . $_SESSION['curr_version_name'] ?></span><br>
               <span class="text-capitalize"><?php echo language('TYPE OF LICENSE', @$_SESSION['systemLang']) . ": " ?><span class="<?php echo $row['isTrial'] == 1 ? 'badge bg-danger' : '' ?>"><?php echo $type ?></span></span><br>
               <span class="text-capitalize"><?php echo language('LICENSE EXPIRY DATE', @$_SESSION['systemLang']) . ": " . $row['expire_date'] ?></span><br>
@@ -169,7 +170,7 @@
           <!-- end language field -->
           <!-- strat submit -->
           <div class="hstack gap-3">
-            <button type="submit" class="me-auto btn btn-primary text-capitalize"><i class="bi bi-check-all me-1"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?></button>
+            <button type="submit" class="me-auto btn btn-primary text-capitalize fs-12 py-1"><i class="bi bi-check-all me-1"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?></button>
           </div>
           <!-- end submit -->
         </form>
