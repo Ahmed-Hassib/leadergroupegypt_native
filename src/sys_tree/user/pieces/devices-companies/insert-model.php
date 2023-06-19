@@ -12,8 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $model_obj = new Models();
     }
     // check if name exist or not
-    $is_exist = $model_obj->count_records("`device_id`", "`devices_info`", $device_id);
-
+    $is_exist = $model_obj->count_records("`device_id`", "`devices_info`", "WHERE `device_id` = $device_id");
     // check if type is exist or not
     if ($is_exist > 0) {
       // is inserted flag for models
@@ -26,18 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       foreach ($device_models as $model) {
         // check model if empty
         if (!empty($model)) {
-          // // check if this model name is exist
-          // $is_exist_model = $model_obj->is_exist("`model_name`", "`devices_model`", $model);
-          // // if name is not exits
-          // if (!$is_exist_model) {
-            // insert model
-            $model_obj->insert_new_model($model, $_SESSION['UserID'], $device_id);
-            // counter
-            $counter++;
-          // } else {
-          //   // echo danger message
-          //   $msg = '<div class="alert alert-danger text-capitalize" dir=""><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;' . language('THIS NAME IS ALREADY EXIST', @$_SESSION['systemLang']) . ' -> ' . $model . '</div>';
-          // }
+          // insert model
+          $model_obj->insert_new_model($model, get_date_now(), $_SESSION['UserID'], $device_id);
+          // counter
+          $counter++;
         }
       }
 
