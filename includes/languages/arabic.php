@@ -692,7 +692,7 @@ function languageAr($phrase)
     'USERNAME CANNOT BE EMPTY'                                                      => 'اسم المستخدم لا يمكن ان يكون فارغ',
     'FULLNAME CANNOT BE EMPTY'                                                      => 'اسم الموظف لا يمكن ان يكون فارغ',
     'PASSWORD CANNOT BE EMPTY'                                                      => 'الرقم السرى لا يمكن ان يكون فارغ',
-    'USERNAME CANNOT BE LESS THAN 4 CHARACHETRS'                                    => 'اسم المستخدم لا يمكن ان يقل عن 4 احرف',
+    'USERNAME CANNOT BE LESS THAN 4 CHARACTERS'                                     => 'اسم المستخدم لا يمكن ان يقل عن 4 احرف',
     'THIS IS DEFAULT IMAGE OF THE SYSTEM'                                           => 'هذة الصورة الافتراضية من قِبل البرنامج',
     'DON`T SHOW THIS AGAIN'                                                         => 'لا تعرض هذا مرة اخرى!',
     'DON`T HAVE AN ACCOUNT?'                                                        => 'لا تمتلك حساب؟',

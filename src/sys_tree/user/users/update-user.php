@@ -33,15 +33,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   // validate username
   if (strlen($username) < 4) {
-    $formErorr[] = 'username cannot be less than <strong>4 characters.</strong>';
+    $formErorr[] = 'username cannot be less than 4 characters';
   }
   if (empty($username)) {
-    $formErorr[] = 'username cannot be <strong>empty.</strong>';
+    $formErorr[] = 'username cannot be empty';
   }
 
   // validate fullname
   if (empty($fullname)) {
-    $formErorr[] = 'full name cannot be <strong>empty.</strong>';
+    $formErorr[] = 'fullname cannot be empty';
   }
   
   $msg = "";
@@ -53,12 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $checkStmt->execute(array($username, $userid, $_SESSION['company_id']));
     $count = $checkStmt->rowCount();
     // check if username is exist
-    if ($count == 1) {
-      // echo success message
-      $msg = '<div class="alert alert-warning text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;';
-      $msg .= language('THIS USERNAME IS ALREADY EXIST', @$_SESSION['systemLang']).'..<br>';
-      $msg .= language('PLEASE, TRY ANOTHER USERNAME', @$_SESSION['systemLang']);
-      $msg .= '</div>';
+    if ($count > 0) {
+      $_SESSION['flash_message'] = 'THIS USERNAME IS ALREADY EXIST';
+      $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+      $_SESSION['flash_message_class'] = 'danger';
+      $_SESSION['flash_message_status'] = false;
     } else {
       // array of user info
       $user_info = array();
@@ -163,30 +162,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           $session_obj->set_user_session($user_info[1]);
         }
       }
-
-      // echo success message
-      $msg = '<div class="alert alert-success text-capitalize"><i class="bi bi-check-circle-fill"></i>&nbsp;'.language('USER INFO UPDATED SUCCESSFULLY', @$_SESSION['systemLang']).'</div>';
       // log message
       $logMsg = "Update user info -> username: " . $username . ".";
       createLogs($_SESSION['UserName'], $logMsg);
-      // redirect to home page
+
+      $_SESSION['flash_message'] = 'USER INFO UPDATED SUCCESSFULLY';
+      $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
+      $_SESSION['flash_message_class'] = 'success';
+      $_SESSION['flash_message_status'] = true;
     }
   } else {
     // loop on form error array
-    foreach ($formErorr as $error) {
-      $msg .= '<div class="alert alert-danger text-capitalize w-50 mx-auto align-left">' . language(strtoupper($error), $_SESSION['systemLang']) . '</div>';
+    foreach ($formErorr as $key => $error) {
+      $_SESSION['flash_message'][$key] = strtoupper($error);
+      $_SESSION['flash_message_icon'][$key] = 'bi-exclamation-triangle-fill';
+      $_SESSION['flash_message_class'][$key] = 'danger';
+      $_SESSION['flash_message_status'][$key] = false;
     }
   }
-?>
-  <!-- start edit profile page -->
-  <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-    <!-- start header -->
-    <header class="header">
-      <?php redirectHome($msg, 'back'); ?>
-    </header>
-  </div>
-
-<?php } else {
+  // redirect to previous page
+  redirectHome(null, 'back', 0);
+} else {
   // include_once per
   include_once $globmod . 'permission-error.php';
-} ?>
+}
