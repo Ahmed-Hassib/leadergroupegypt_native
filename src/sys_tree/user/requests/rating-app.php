@@ -19,18 +19,21 @@ if (!$is_rating) {
   $is_rating_now = $user_obj->do_rating_app(array($user_id, $curr_date, $curr_time, $company_id, $rating, null));
   // check if rated
   if ($is_rating_now) {
+    $_SESSION['flash_message'] = "THANK YOU, YOU HAVE SUCCESSFULLY RATED THE SYSTEM";
+    $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
     $_SESSION['flash_message_class'] = 'success';
     $_SESSION['flash_message_status'] = true;
-    $_SESSION['flash_message'] = "THANK YOU, YOU HAVE SUCCESSFULLY RATED THE SYSTEM";
   } else {
+    $_SESSION['flash_message'] = "A PROBLEM WAS HAPPENED WHILE RATING THE SYSTEM";
+    $_SESSION['flash_message_icon'] = 'exclamation-triangle-fill';
     $_SESSION['flash_message_class'] = 'danger';
     $_SESSION['flash_message_status'] = false;
-    $_SESSION['flash_message'] = "A PROBLEM WAS HAPPENED WHILE RATING THE SYSTEM";
   }
 } else {
+  $_SESSION['flash_message'] = "THANK YOU, YOU HAVE ALREADY RATED THE SYSTEM";
+  $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
   $_SESSION['flash_message_class'] = 'info';
   $_SESSION['flash_message_status'] = true;
-  $_SESSION['flash_message'] = "THANK YOU, YOU HAVE ALREADY RATED THE SYSTEM";
 }
 // redirect to the previous page
 redirectHome('', 'back', 0);

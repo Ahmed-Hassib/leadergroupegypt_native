@@ -459,9 +459,10 @@
     </div> -->
   <?php } ?>
   
-  <?php if (isset($_SESSION['flash_message']) && isset($_SESSION['flash_message_class']) && isset($_SESSION['flash_message_status'])) { ?>
+  <?php if (isset($_SESSION['flash_message']) && isset($_SESSION['flash_message_icon']) && isset($_SESSION['flash_message_class']) && isset($_SESSION['flash_message_status'])) { ?>
     <div class="m-auto container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
       <div class="alert alert-<?php echo $_SESSION['flash_message_class']; ?> alert-flash-status" dir="rtl">
+        <i class="bi <?php echo $_SESSION['flash_message_icon'] ?>"></i>
         <?php echo language($_SESSION['flash_message'], @$_SESSION['systemLang']) ?>
         <button type="button" class="btn-close btn-close-left" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
@@ -476,6 +477,7 @@
     </script>
 
     <?php unset($_SESSION['flash_message']) ?>
+    <?php unset($_SESSION['flash_message_icon']) ?>
     <?php unset($_SESSION['flash_message_class']) ?>
     <?php unset($_SESSION['flash_message_status']) ?>
   <?php } ?>
