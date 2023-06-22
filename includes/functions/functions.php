@@ -22,7 +22,7 @@ function getTitle() {
  * $msg => echo the error message
  * $seconds => seconds before redirect
  */
-function redirectHome($msg, $url = null, $seconds = 3) {
+function redirectHome($msg = null, $url = null, $seconds = 3) {
   // check the url
   if ($url == null) {
     $url = '../dashboard/index.php';
@@ -32,11 +32,11 @@ function redirectHome($msg, $url = null, $seconds = 3) {
   // redirect page
   header("refresh:$seconds;url=$url");
   // check if empty message
-  if (!empty($msg)) {
+  if (!empty($msg) && $msg != null) {
     echo $msg;
   }
   // show redirect messgae
-  echo "<div class='alert alert-info text-capitalize'><i class='bi bi-info-circle-fill'></i>&nbsp;". language('YOU WILL BE AUTOMATICALLY REDIRECTED AFTER', @$_SESSION['systemLang']) . " $seconds " . language('SECOND', @@$_SESSION['systemLang']) ."</div>";
+  echo "<div>". language('YOU WILL BE AUTOMATICALLY REDIRECTED AFTER', @$_SESSION['systemLang']) . " $seconds " . language('SECOND', @@$_SESSION['systemLang']) ."</div>";
   // exit
   exit();
 }
