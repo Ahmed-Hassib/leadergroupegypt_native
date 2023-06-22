@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   // validate fullname
   if (empty($fullname)) {
-    $formErorr[] = 'full name cannot be empty';
+    $formErorr[] = 'fullname cannot be empty';
   }
 
   // validate password
@@ -98,10 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   } else {
     // encrypt password
     $hashedPass = sha1($pass);
-  }
-
-  $msg = "";
-  
+  }  
   // check if empty form error
   if (empty($formErorr)) {
     if (!isset($user_obj)) {
@@ -112,8 +109,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $is_exist_user  = $user_obj->is_exist("`UserName`", "`users`", $username);
     // check the counter
     if ($is_exist_user == true) {
-      // show erroe message
-      $msg = '<div class="alert alert-warning text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;'. language('THIS USERNAME IS ALREADY EXIST', @$_SESSION['systemLang']) .'</div>';
+      $_SESSION['flash_message'] = 'THIS USERNAME IS ALREADY EXIST';
+      $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+      $_SESSION['flash_message_class'] = 'warning';
+      $_SESSION['flash_message_status'] = false;
     } else {
       // array of user info
       $user_info = array();
@@ -134,23 +133,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $log_msg = "Users dept:: A new user was added succefully!";
       createLogs($_SESSION['UserName'], $log_msg);
 
-      // echo success message
-      $msg = '<div class="alert alert-success text-capitalize"><i class="bi bi-check-circle-fill"></i>&nbsp;'.language('THE NEW EMPLOYEE HAS BEEN SUCCESSFULLY ADDED', @$_SESSION['systemLang']).'</div>';
+      $_SESSION['flash_message'] = 'THE NEW EMPLOYEE HAS BEEN SUCCESSFULLY ADDED';
+      $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
+      $_SESSION['flash_message_class'] = 'success';
+      $_SESSION['flash_message_status'] = true;
     }
-  } else { ?>
-    <?php foreach ($formErorr as $error) {
-      $msg .= '<div class="alert alert-danger text-capitalize w-50 mx-auto align-left">' . language(strtoupper($error), @$_SESSION['systemLang']) . '</div>';
+  } else {
+    foreach ($formErorr as $key => $error) {
+      $_SESSION['flash_message'][$key] = strtoupper($error);
+      $_SESSION['flash_message_icon'][$key] = 'bi-exclamation-triangle-fill';
+      $_SESSION['flash_message_class'][$key] = 'danger';
+      $_SESSION['flash_message_status'][$key] = false;
     }
-  } ?>
-
-  <!-- start edit profile page -->
-  <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-    <!-- start header -->
-    <header class="header">
-      <?php redirectHome($msg, 'back', 1000000000000000000000) ?>
-    </header>
-  </div>
-<?php } else {
-    // include_once permission error module
-    include_once $globmod . '/permission-error.php';
+  } 
+  // redirect to previous page
+  redirectHome(null, 'back', 0);
+} else {
+  // include_once permission error module
+  include_once $globmod . 'permission-error.php';
 } ?>
