@@ -460,11 +460,23 @@
   <?php } ?>
   
   <?php if (isset($_SESSION['flash_message']) && isset($_SESSION['flash_message_icon']) && isset($_SESSION['flash_message_class']) && isset($_SESSION['flash_message_status'])) { ?>
-    <div class="m-auto container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-      <div class="alert alert-<?php echo $_SESSION['flash_message_class']; ?> alert-flash-status" dir="rtl">
-        <i class="bi <?php echo $_SESSION['flash_message_icon'] ?>"></i>
-        <?php echo language($_SESSION['flash_message'], @$_SESSION['systemLang']) ?>
-        <button type="button" class="btn-close btn-close-left" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div class="m-0 container">
+      <div class="alert-flash-container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
+      <?php if (is_array($_SESSION['flash_message'])) { ?>
+        <?php foreach ($_SESSION['flash_message'] as $key => $message) { ?>
+          <div class="alert alert-<?php echo $_SESSION['flash_message_class']; ?> alert-flash-status" dir="rtl">
+            <i class="bi <?php echo $_SESSION['flash_message_icon'] ?>"></i>
+            <?php echo language($message, @$_SESSION['systemLang']) ?>
+            <button type="button" class="btn-close btn-close-left" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <?php } ?>
+      <?php } else { ?>
+        <div class="alert alert-<?php echo $_SESSION['flash_message_class']; ?> alert-flash-status" dir="rtl">
+          <i class="bi <?php echo $_SESSION['flash_message_icon'] ?>"></i>
+          <?php echo language($_SESSION['flash_message'], @$_SESSION['systemLang']) ?>
+          <button type="button" class="btn-close btn-close-left" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <?php } ?>
       </div>
     </div>
 
@@ -472,7 +484,7 @@
       let flash_alert = document.querySelector('.alert-flash-status');
 
       setTimeout(() => {
-        flash_alert.remove();
+        // flash_alert.remove();
       }, 10000);
     </script>
 
