@@ -144,4 +144,16 @@ class User extends Database {
     // return
     return $count > 0 ? true : false;
   }
+  
+  // do rating app
+  public function do_rating_app($info) {
+    // rating app query
+    $ratingAppQuery = "INSERT INTO `app_rating`(`added_by`, `added_date`, `added_time`, `company_id`, `rating`, `comment`) VALUES (?, ?, ?, ?, ?, ?)";
+    // prepare statement
+    $stmt = $this->con->prepare($ratingAppQuery);
+    $stmt->execute($info);
+    $count = $stmt->rowCount();               // get number of effected rows
+    // return
+    return $count > 0 ? true : false;
+  }
 }

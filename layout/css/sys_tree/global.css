@@ -1036,11 +1036,22 @@ ul.clients-names li:last-child {
 	color: #fd4;
 }
 
-.rating-form input:checked ~ label {
+.rating-form input:checked~label {
 	color: #fd4;
 }
 
-.rating-form input#rating-5:checked ~ label {
+.rating-form input#rating-5:checked~label {
 	color: #fe7;
 	text-shadow: 0 0 20px rgb(133, 78, 36);
+}
+
+.alert-flash-status {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	padding-left: 4rem;
+	min-height: 50px;
+	max-width: 700px;
+	z-index: 999;
+	box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.7);
 }

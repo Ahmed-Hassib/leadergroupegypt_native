@@ -443,7 +443,7 @@
     // update it in database
     $company_obj->update_company_code($_SESSION['company_id'], $company_code);
     ?>
-    <div class="m-auto container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
+    <!-- <div class="m-auto container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
       <div class="alert alert-info" role="alert">
         <div>
           <i class="bi bi-exclamation-triangle-fill"></i>
@@ -456,6 +456,26 @@
         </div>
         <button type="button" class="btn-close btn-close-<?php echo @$_SESSION['systemLang'] == 'ar' ? 'left' : 'right' ?>" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
-    </div>
+    </div> -->
   <?php } ?>
   
+  <?php if (isset($_SESSION['flash_message']) && isset($_SESSION['flash_message_class']) && isset($_SESSION['flash_message_status'])) { ?>
+    <div class="m-auto container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
+      <div class="alert alert-<?php echo $_SESSION['flash_message_class']; ?> alert-flash-status" dir="rtl">
+        <?php echo language($_SESSION['flash_message'], @$_SESSION['systemLang']) ?>
+        <button type="button" class="btn-close btn-close-left" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+
+    <script>
+      let flash_alert = document.querySelector('.alert-flash-status');
+
+      setTimeout(() => {
+        flash_alert.remove();
+      }, 10000);
+    </script>
+
+    <?php unset($_SESSION['flash_message']) ?>
+    <?php unset($_SESSION['flash_message_class']) ?>
+    <?php unset($_SESSION['flash_message_status']) ?>
+  <?php } ?>
