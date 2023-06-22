@@ -689,6 +689,10 @@ function languageAr($phrase)
     /**
      * SOME SEQUENCES
      */
+    'USERNAME CANNOT BE EMPTY'                                                      => 'اسم المستخدم لا يمكن ان يكون فارغ',
+    'FULLNAME CANNOT BE EMPTY'                                                      => 'اسم الموظف لا يمكن ان يكون فارغ',
+    'PASSWORD CANNOT BE EMPTY'                                                      => 'الرقم السرى لا يمكن ان يكون فارغ',
+    'USERNAME CANNOT BE LESS THAN 4 CHARACHETRS'                                    => 'اسم المستخدم لا يمكن ان يقل عن 4 احرف',
     'THIS IS DEFAULT IMAGE OF THE SYSTEM'                                           => 'هذة الصورة الافتراضية من قِبل البرنامج',
     'DON`T SHOW THIS AGAIN'                                                         => 'لا تعرض هذا مرة اخرى!',
     'DON`T HAVE AN ACCOUNT?'                                                        => 'لا تمتلك حساب؟',
@@ -819,7 +823,7 @@ function languageAr($phrase)
     'SHOW ALL MALFUNCTIONS OF THIS MONTH'                                           => 'عرض جميع اعطال الشهر الحالى',
     'SORRY, THE APP IS SUSPENDED TODAY DUE TO DEVELOPMENT WORK'                     => 'معذرة، التطبيق معلق اليوم بسبب اعمال التطوير',
     'THERE IS NO COMMENT OR NOTE TO SHOW'                                           => 'لا يوجد تعليق او ملاحظة للعرض',
-    'DIRECTION NO DATA ENTERED'                                                        => 'الاتجاه لم يُحدد',
+    'DIRECTION NO DATA ENTERED'                                                     => 'الاتجاه لم يُحدد',
     'HERE WILL SHOW ALL STATISTICS ABOUT MALFUNCTIONS TODAY'                        => 'بعض الاحصائيات عن كل اعطال هذا اليوم',
     'HERE WILL SHOW ALL STATISTICS ABOUT MALFUNCTIONS OF THIS MONTH'                => 'بعض الاحصائيات عن كل اعطال هذا الشهر',
     'HERE WILL SHOW ALL STATISTICS ABOUT MALFUNCTIONS OF PREVIOUS MONTH'            => 'بعض الاحصائيات عن كل اعطال الشهر السابق',
