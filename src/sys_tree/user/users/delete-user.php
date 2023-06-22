@@ -18,19 +18,13 @@ if ($is_exist == true) {
   $logMsg = "Users dept:: user deleted successfully.";
   createLogs($_SESSION['UserName'], $logMsg);
 
-  // success message
-  $msg  = '<div class="alert alert-success text-capitalize"><i class="bi bi-check-circle-fill"></i>&nbsp;'. language('AN USER WAS DELETED SUCCESSFULLY', @$_SESSION['systemLang']) .'</div>';
-  ?>
-  <!-- start edit profile page -->
-  <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-    <!-- start header -->
-    <header class="header">
-      <?php redirectHome($msg); ?>
-    </header>
-  </div>
-<?php 
+  $_SESSION['flash_message'] = 'AN USER WAS DELETED SUCCESSFULLY';
+  $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
+  $_SESSION['flash_message_class'] = 'success';
+  $_SESSION['flash_message_status'] = true;
+  // redirect to home page
+  redirectHome(null, null, 0);
 } else {
   // include_once no data founded module
   include_once $globmod .'no-data-founded.php';
 }
-?>
