@@ -64,8 +64,10 @@
                 <?php $newEmpCounter = $db_obj->count_records("`UserID`", "`users`", "WHERE `joinedDate` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id']); ?>
                 <?php if ($newEmpCounter > 0) { ?>
                   <div class="card-footer">
-                    <span><?php echo $newEmpCounter ?></span>
-                    <span class="badge bg-danger fs-12"><?php echo language('NEW', @$_SESSION['systemLang']) ?></span>
+                    <span class="badge bg-danger fs-12">
+                      <span><?php echo $newEmpCounter ?></span>
+                      <?php echo language('NEW', @$_SESSION['systemLang']) ?>
+                    </span>
                   </div>
                 <?php } ?>
               </div>
@@ -85,8 +87,10 @@
                 <?php $newDirCounter = $db_obj->count_records("`direction_id`", "`direction`", "WHERE `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id']); ?>
                 <?php if ($newDirCounter > 0) { ?>
                   <div class="card-footer">
-                    <span><?php echo $newDirCounter ?></span>
-                    <span class="badge bg-danger fs-12"><?php echo language('NEW', @$_SESSION['systemLang']) ?></span>
+                    <span class="badge bg-danger fs-12">
+                      <?php echo $newDirCounter ?>
+                      <?php echo language('NEW', @$_SESSION['systemLang']) ?>
+                    </span>
                   </div>
                 <?php } ?>
               </div>
@@ -106,8 +110,10 @@
                 <?php $newPcsCounter = $db_obj->count_records("`id`", "`pieces`", "WHERE `is_client` = 0 AND `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id']); ?>
                 <?php if ($newPcsCounter > 0) { ?>
                   <div class="card-footer">
-                    <span><?php echo $newPcsCounter ?></span>
-                    <span class="badge bg-danger fs-12"><?php echo language('NEW', @$_SESSION['systemLang']) ?></span>
+                    <span class="badge bg-danger fs-12">
+                      <?php echo $newPcsCounter ?>
+                      <?php echo language('NEW', @$_SESSION['systemLang']) ?>
+                    </span>
                   </div>
                 <?php } ?>
               </div>
@@ -127,8 +133,10 @@
                 <?php $newPcsCounter = $db_obj->count_records("`id`", "`pieces`", "WHERE `is_client` = 1 AND `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id']); ?>
                 <?php if ($newPcsCounter > 0) { ?>
                   <div class="card-footer">
-                    <span><?php echo $newPcsCounter ?></span>
-                    <span class="badge bg-danger fs-12"><?php echo language('NEW', @$_SESSION['systemLang']) ?></span>
+                    <span class="badge bg-danger fs-12">
+                      <?php echo $newPcsCounter ?>
+                      <?php echo language('NEW', @$_SESSION['systemLang']) ?>
+                    </span>
                   </div>
                 <?php } ?>
               </div>
@@ -148,8 +156,10 @@
                 <?php $newMalCounter = $db_obj->count_records("`mal_id`", "`malfunctions`", "WHERE `added_date` = '".get_date_now()."' AND `mal_status` = 0 AND `company_id` = ".$_SESSION['company_id'] . " $techMalCondition"); ?>
                 <?php if ($newMalCounter > 0) { ?>
                   <div class="card-footer">
-                    <span><?php echo $newMalCounter ?></span>
-                    <span class="badge bg-warning fs-12"><?php echo language('NEW', @$_SESSION['systemLang']) ?></span>
+                    <span class="badge bg-warning fs-12">
+                      <?php echo $newMalCounter ?>
+                      <?php echo language('NEW', @$_SESSION['systemLang']) ?>
+                    </span>
                   </div>
                 <?php } ?>
               </div>
@@ -169,8 +179,10 @@
                 <?php $newCombCounter = $db_obj->count_records("`comb_id`", "`combinations`", "WHERE `added_date` = '".get_date_now()."' AND `isFinished` = 0 AND `company_id` = ".$_SESSION['company_id'] . " $techCombCondition"); ?>
                 <?php if ($newCombCounter > 0) { ?>
                   <div class="card-footer">
-                    <span><?php echo $newCombCounter ?></span>
-                    <span class="badge bg-warning fs-12"><?php echo language('NEW', @$_SESSION['systemLang']) ?></span>
+                    <span class="badge bg-warning fs-12">
+                      <?php echo $newCombCounter ?>
+                      <?php echo language('NEW', @$_SESSION['systemLang']) ?>
+                    </span>
                   </div>
                 <?php } ?>
               </div>
