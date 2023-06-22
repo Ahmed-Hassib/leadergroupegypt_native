@@ -283,6 +283,8 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
       </div>
       <!-- end edit profile -->
     </div>
+    <!-- include_once delete user module -->
+    <?php include_once 'delete-user-modal.php' ?>
 <?php
   } else { 
     // include_once no data founded module
