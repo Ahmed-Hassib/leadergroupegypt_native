@@ -1,6 +1,9 @@
 <?php
 // check if Get request userid is numeric and get the integer value
 $userid = isset($_GET['userid']) && is_numeric($_GET['userid']) ? intval($_GET['userid']) : 0;
+// get back flage value
+$is_back = isset($_GET['back']) && !empty($_GET['back']) ? 'back' : null;
+// check if object is set or not
 if (!isset($user_obj)) {
   // create an object of User class
   $user_obj = new User();
@@ -23,7 +26,7 @@ if ($is_exist == true) {
   $_SESSION['flash_message_class'] = 'success';
   $_SESSION['flash_message_status'] = true;
   // redirect to home page
-  redirectHome(null, null, 0);
+  redirectHome(null, $is_back, 0);
 } else {
   // include_once no data founded module
   include_once $globmod .'no-data-founded.php';

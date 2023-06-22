@@ -55,3 +55,20 @@ function create_profile_img_status(status_text, text_class) {
 
   return span;
 }
+
+/**
+ * showUserModal function
+ */
+function show_delete_user_modal(btn, will_back = null) {
+  // check the attribute
+  if (btn.hasAttribute('data-user-id')) {
+    // get user id and name
+    let userid = btn.getAttribute('data-user-id');
+    let username = btn.getAttribute('data-username');
+    // get deleteUser page url
+    let url = will_back != null ? `?do=delete-user-info&userid=${userid}&back=true` : `?do=delete-user-info&userid=${userid}`;
+    // add username and url
+    document.getElementById('deleted-username').textContent = username;
+    document.getElementById('delete-user').setAttribute('href', url);
+  }
+}

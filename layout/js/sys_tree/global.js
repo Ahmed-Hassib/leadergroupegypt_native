@@ -405,24 +405,6 @@ function showSuggCompDetails(id) {
 
 
 /**
- * showUserModal function
- */
-function show_delete_user_modal(btn) {
-  // check the attribute
-  if (btn.hasAttribute('data-user-id')) {
-    // get user id and name
-    let userid = btn.getAttribute('data-user-id');
-    let username = btn.getAttribute('data-username');
-    // get deleteUser page url
-    let url = `?do=delete-user-info&userid=${userid}`;
-    // add username and url
-    document.getElementById('deleted-username').textContent = username;
-    document.getElementById('delete-user').setAttribute('href', url);
-  }
-}
-
-
-/**
  * select_all_checkboxes function
  */
 function select_all_checkboxes(btn) {
