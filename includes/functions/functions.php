@@ -36,7 +36,7 @@ function redirectHome($msg = null, $url = null, $seconds = 3) {
     echo $msg;
   }
   // show redirect messgae
-  echo "<div dir='".$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr'."'>". language('YOU WILL BE AUTOMATICALLY REDIRECTED AFTER', @$_SESSION['systemLang']) . " $seconds " . language('SECOND', @@$_SESSION['systemLang']) ."</div>";
+  echo "<div dir='".($_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr')."' >". language('YOU WILL BE AUTOMATICALLY REDIRECTED AFTER', @$_SESSION['systemLang']) . " $seconds " . language('SECOND', @@$_SESSION['systemLang']) ."</div>";
   // exit
   exit();
 }
