@@ -484,7 +484,7 @@
       let flash_alert = document.querySelector('.alert-flash-status');
 
       setTimeout(() => {
-        // flash_alert.remove();
+        flash_alert.remove();
       }, 10000);
     </script>
 
