@@ -13,20 +13,19 @@ $manufacture_companies = $dev_comp_obj->get_all_man_companies($_SESSION['company
   <div class="stats">
     <!-- buttons section -->
     <div class="mb-3 hstack gap-3">
-      <div class="<?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-outline-primary shadow-sm py-1 fs-12" data-bs-toggle="modal" data-bs-target="#addNewDevCompanyModal">
-          <i class="bi bi-file-plus"></i>
-          <?php echo language("ADD NEW COMPANY", @$_SESSION['systemLang']) ?>
-        </button>
-      </div>
+      <?php if ($_SESSION['pcs_show'] == 1) { ?>
+      <button type="button" class="btn btn-outline-primary shadow-sm py-1 fs-12" data-bs-toggle="modal" data-bs-target="#addNewDevCompanyModal">
+        <i class="bi bi-file-plus"></i>
+        <?php echo language("ADD NEW COMPANY", @$_SESSION['systemLang']) ?>
+      </button>
+      <?php } ?>
 
-      <div class="<?php if ($_SESSION['pcs_add'] == 0) {echo 'd-none';} ?>">
-        <button type="button" class="btn btn-outline-primary py-1 fs-12" data-bs-toggle="modal" data-bs-target="#addNewDevice">
-          <i class="bi bi-plus"></i>
-          <?php echo language('ADD NEW DEVICE', @$_SESSION['systemLang']) ?>
+      <?php if ($_SESSION['pcs_add'] == 1) { ?>
+      <button type="button" class="btn btn-outline-primary py-1 fs-12" data-bs-toggle="modal" data-bs-target="#addNewDevice">
+        <i class="bi bi-plus"></i>
+        <?php echo language('ADD NEW DEVICE', @$_SESSION['systemLang']) ?>
         </button>
-      </div>
+      <?php } ?>
     </div>
 
     <?php if ($manufacture_companies != null && count($manufacture_companies) > 0) { ?>
@@ -90,9 +89,8 @@ $manufacture_companies = $dev_comp_obj->get_all_man_companies($_SESSION['company
       <header class="header">
         <!-- start page not found 404 -->
         <div class="page-error">
-            <img src="<?php echo $assets ?>images/no-data-founded.svg" class="img-fluid" alt="<?php echo language("NO DATA FOUNDED", @$_SESSION['systemLang']) ?>">
-
-            <h4 class="h4 mt-3"><?php echo language("NO DATA FOUNDED", @$_SESSION['systemLang']) ?></h4>
+          <img src="<?php echo $assets ?>images/no-data-founded.svg" class="img-fluid" alt="<?php echo language("NO DATA FOUNDED", @$_SESSION['systemLang']) ?>">
+          <h4 class="h4 mt-3"><?php echo language("NO DATA FOUNDED", @$_SESSION['systemLang']) ?></h4>
         </div>
         <!-- end page not found 404 -->
       </header>
