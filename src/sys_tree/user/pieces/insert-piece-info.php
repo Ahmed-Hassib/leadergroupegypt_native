@@ -157,7 +157,7 @@
     }
     
     // prepare flash session variables
-    $_SESSION['flash_message'] = 'A PIECE WAS ADDED SUCCESSFULLY';
+    $_SESSION['flash_message'] = 'A NEW PIECE WAS ADDED SUCCESSFULLY';
     $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
     $_SESSION['flash_message_class'] = 'success';
     $_SESSION['flash_message_status'] = true;
