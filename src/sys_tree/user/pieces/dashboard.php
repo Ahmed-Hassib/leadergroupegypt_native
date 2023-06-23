@@ -3,18 +3,18 @@
   <!-- start stats -->
   <div class="stats">
     <div class="mb-3 hstack gap-3">
-      <div class="<?php if ($_SESSION['pcs_add'] == 0) {echo 'd-none';} ?>">
-        <a href="?do=add-new-piece" class="btn btn-outline-primary py-1 fs-12">
-          <i class="bi bi-plus"></i>
-          <?php echo language('ADD NEW PIECE', @$_SESSION['systemLang']) ?>
-        </a>
-      </div>
-      <div class="<?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>">
-        <a href="?do=devices-companies" class="btn btn-outline-primary py-1 fs-12">
-          <i class="bi bi-hdd-rack"></i>
-          <?php echo language('MANAGE', @$_SESSION['systemLang'])." ".language('PIECES TYPES', @$_SESSION['systemLang']) ?>
-        </a>
-      </div>
+      <?php if ($_SESSION['pcs_add'] == 1) { ?>
+      <a href="?do=add-new-piece" class="btn btn-outline-primary py-1 fs-12">
+        <i class="bi bi-plus"></i>
+        <?php echo language('ADD NEW PIECE', @$_SESSION['systemLang']) ?>
+      </a>
+      <?php } ?>
+      <?php if ($_SESSION['pcs_show'] == 1) { ?>
+      <a href="?do=devices-companies" class="btn btn-outline-primary py-1 fs-12">
+        <i class="bi bi-hdd-rack"></i>
+        <?php echo language('MANAGE', @$_SESSION['systemLang'])." ".language('PIECES TYPES', @$_SESSION['systemLang']) ?>
+      </a>
+      <?php } ?>
     </div>
 
     <!-- start new design -->
@@ -92,12 +92,16 @@
                     <td class="text-capitalize <?php echo $pcs['ip'] == '0.0.0.0' ? 'text-danger' : '' ?>" data-ip="<?php echo convertIP($pcs['ip']) ?>"><?php echo $pcs['ip'] == '0.0.0.0' ?  language("NO DATA ENTERED", @$_SESSION['systemLang']) :"<a href='http://" . $pcs['ip'] . "' target='_blank'>" . $pcs['ip'] . '</a>'; ?></td>
                     <!-- piece name -->
                     <td>
-                      <a class="<?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="?do=edit-piece&piece-id=<?php echo $pcs['id']; ?>" target="">
+                      <?php if ($_SESSION['pcs_update'] == 1) { ?>
+                      <a href="?do=edit-piece&piece-id=<?php echo $pcs['id']; ?>" target="">
                         <?php echo trim($pcs['full_name'], ' '); ?>
-                        <?php if ($pcs['direction_id'] == 0) { ?>
-                          <i class="bi bi-exclamation-triangle-fill text-danger" title="<?php echo language("DIRECTION NO DATA ENTERED", @$_SESSION['systemLang']) ?>"></i>
-                        <?php } ?>
                       </a>
+                      <?php } else { ?>
+                        <?php echo trim($pcs['full_name'], ' '); ?>
+                      <?php } ?>
+                      <?php if ($pcs['direction_id'] == 0) { ?>
+                        <i class="bi bi-exclamation-triangle-fill text-danger" title="<?php echo language("DIRECTION NO DATA ENTERED", @$_SESSION['systemLang']) ?>"></i>
+                      <?php } ?>
                       <!-- <?php $diff = date_diff(date_create($pcs['added_date']), date_create(date('Y-m-d'))); ?>
                       <span class="badge bg-danger p-1 <?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-1' : 'ms-1' ?>"><?php echo "$diff->days " . language('DAYS', @$_SESSION['systemLang']) ?></span> -->
                     </td>
@@ -115,10 +119,14 @@
                     <td><?php echo $pcs['added_date'] == '0000-00-00' ? language("NO DATA ENTERED", @$_SESSION['systemLang']) : $pcs['added_date'] ?></td>
                     <!-- control -->
                     <td>
-                      <a class="btn btn-success text-capitalize fs-12 <?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="?do=edit-piece&piece-id=<?php echo $pcs['id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
-                      <a class="btn btn-outline-primary text-capitalize fs-12 <?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>" href="?do=show-piece&dir-id=<?php echo $pcs['direction_id'] ?>&src-id=<?php echo $pcs['id'] ?>" ><i class="bi bi-eye"></i><!-- <?php echo language('SHOW', @$_SESSION['systemLang']).' '.language('PIECES', @$_SESSION['systemLang']) ?> --></a>
+                      <?php if ($_SESSION['pcs_update'] == 1) { ?>
+                        <a class="btn btn-success text-capitalize fs-12 py-1" href="?do=edit-piece&piece-id=<?php echo $pcs['id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
+                      <?php } ?>
+                      <?php if ($_SESSION['pcs_show'] == 1) { ?>
+                        <a class="btn btn-outline-primary text-capitalize fs-12 py-1" href="?do=show-piece&dir-id=<?php echo $pcs['direction_id'] ?>&src-id=<?php echo $pcs['id'] ?>" ><i class="bi bi-eye"></i><!-- <?php echo language('SHOW', @$_SESSION['systemLang']).' '.language('PIECES', @$_SESSION['systemLang']) ?> --></a>
+                      <?php } ?>
                       <?php if ($_SESSION['pcs_delete'] == 1) { ?>
-                        <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deletePieceModal" id="delete-piece" data-page-title="<?php echo $page_title ?>" data-piece-id="<?php echo $pcs['id'] ?>" data-piece-name="<?php echo $pcs['full_name'] ?>" onclick="confirm_delete_piece(this, true)"><i class="bi bi-trash"></i></button>
+                        <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 py-1" data-bs-toggle="modal" data-bs-target="#deletePieceModal" id="delete-piece" data-page-title="<?php echo $page_title ?>" data-piece-id="<?php echo $pcs['id'] ?>" data-piece-name="<?php echo $pcs['full_name'] ?>" onclick="confirm_delete_piece(this, true)"><i class="bi bi-trash"></i></button>
                       <?php } ?>
                     </td>
                   </tr>

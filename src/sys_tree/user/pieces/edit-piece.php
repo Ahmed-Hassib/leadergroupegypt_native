@@ -20,6 +20,22 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
   <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
     <!-- start form -->
     <form class="custom-form need-validation" action="?name=<?php echo $page_title ?>&do=update-piece-info" method="POST" id="update-piece-info" onchange="form_validation(this)">
+      <div class="hstack gap-3">
+        <?php if ($_SESSION['pcs_update'] == 1) { ?>
+        <!-- submit -->
+        <button type="button" form="update-piece-info" class="btn btn-primary text-capitalize bg-gradient fs-12 p-1 <?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" id="edit-piece" <?php if ($_SESSION['pcs_add'] == 0) {echo 'disabled';} ?> onclick="form_validation(this.form, 'submit')">
+          <i class="bi bi-check-all"></i>
+          <?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
+        </button>
+        <?php } ?>
+        <?php if ($_SESSION['pcs_delete'] == 1) { ?>
+        <!-- delete button -->
+        <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deletePieceModal" data-piece-id="<?php echo $piece_data['id'] ?>" data-piece-name="<?php echo $piece_data['full_name'] ?>" data-page-title="<?php echo $page_title ?>" onclick="confirm_delete_piece(this)">
+            <i class="bi bi-trash"></i>
+            <?php echo language('DELETE', @$_SESSION['systemLang']); ?>
+        </button>
+        <?php } ?>
+      </div>
       <!-- horzontal stack -->
       <div class="hstack gap-3">
         <h6 class="h6 text-decoration-underline text-capitalize text-danger fw-bold">
@@ -434,23 +450,25 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
         </div>
       </div>
 
-      <!-- submit -->
       <div class="hstack gap-3">
+        <?php if ($_SESSION['pcs_update'] == 1) { ?>
+        <!-- submit -->
         <button type="button" form="update-piece-info" class="btn btn-primary text-capitalize bg-gradient fs-12 p-1 <?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" id="edit-piece" <?php if ($_SESSION['pcs_add'] == 0) {echo 'disabled';} ?> onclick="form_validation(this.form, 'submit')">
           <i class="bi bi-check-all"></i>
           <?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
         </button>
+        <?php } ?>
+        <?php if ($_SESSION['pcs_delete'] == 1) { ?>
         <!-- delete button -->
         <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deletePieceModal" data-piece-id="<?php echo $piece_data['id'] ?>" data-piece-name="<?php echo $piece_data['full_name'] ?>" data-page-title="<?php echo $page_title ?>" onclick="confirm_delete_piece(this)">
             <i class="bi bi-trash"></i>
             <?php echo language('DELETE', @$_SESSION['systemLang']); ?>
         </button>
+        <?php } ?>
       </div>
     </form>
     <!-- end form -->
   </div>
-
-  <?php include_once "delete-piece-modal.php"  ?>
 <?php } else {
   // include missing data modeule
   include_once $globmod . "missing-data-no-redirect.php";
