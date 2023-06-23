@@ -9,8 +9,8 @@
           <h4 class="h4" <?php echo @$_SESSION['systemLang'] == "ar" ? "dir=rtl" : ""; ?>><?php echo language('ARE YOU SURE TO DELETE', @$_SESSION['systemLang'])." '" ?> <span id="deleted-username" class="text-danger"></span> <?php echo "' ".( @$_SESSION['systemLang'] == "ar" ? "؟" : "?" )?> </h4>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary fs-12" data-bs-dismiss="modal"><?php echo language('CLOSE', @$_SESSION['systemLang']) ?></button>
-        <a id="delete-user" class="btn btn-danger text-capitalize fs-12 <?php if ($_SESSION['user_delete'] == 0) {echo 'disabled';} ?>" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>"><i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?></a>
+        <a id="delete-user" class="btn btn-danger text-capitalize py-1 fs-12 <?php if ($_SESSION['user_delete'] == 0) {echo 'disabled';} ?>" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>"><i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?></a>
+        <button type="button" class="btn btn-outline-secondary py-1 fs-12" data-bs-dismiss="modal"><?php echo language('CLOSE', @$_SESSION['systemLang']) ?></button>
       </div>
     </div>
   </div>
