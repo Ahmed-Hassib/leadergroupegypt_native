@@ -27,10 +27,10 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
           <div class="hstack gap-3">
             <div class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
               <!-- edit button -->
-              <button type="button" form="edit-user-info" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'ltr' : 'rtl' ?>" class="btn btn-primary text-capitalize fs-12" <?php if ($_SESSION['user_update'] == 0 && $user['UserID'] != $_SESSION['UserID']) {echo 'disabled';} ?> onclick="form_validation(this.form, 'submit')"><i class="bi bi-check-all"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?></button>
+              <button type="button" form="edit-user-info" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'ltr' : 'rtl' ?>" class="btn btn-primary text-capitalize py-1 fs-12" <?php if ($_SESSION['user_update'] == 0 && $user['UserID'] != $_SESSION['UserID']) {echo 'disabled';} ?> onclick="form_validation(this.form, 'submit')"><i class="bi bi-check-all"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?></button>
               <?php if ($user['isRoot'] != 1 && $user['TrustStatus'] != 1 && $user['job_title_id'] != 1 && $_SESSION['user_delete'] == 1) { ?>
                 <!-- delete button -->
-                <button type="button" data-bs-toggle="modal" data-bs-target="#deleteUserModal" onclick="show_delete_user_modal(this)" data-username="<?php echo $user['UserName'] ?>" data-user-id="<?php echo $user['UserID'] ?>" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'ltr' : 'rtl' ?>" class="btn btn-outline-danger text-capitalize fs-12" <?php if ($_SESSION['user_delete'] == 0 && $user['UserID'] != $_SESSION['UserID']) {echo 'disabled';} ?>><i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?></button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#deleteUserModal" onclick="show_delete_user_modal(this)" data-username="<?php echo $user['UserName'] ?>" data-user-id="<?php echo $user['UserID'] ?>" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'ltr' : 'rtl' ?>" class="btn btn-outline-danger text-capitalize py-1 fs-12" <?php if ($_SESSION['user_delete'] == 0 && $user['UserID'] != $_SESSION['UserID']) {echo 'disabled';} ?>><i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?></button>
               <?php } ?>
             </div>
           </div>
@@ -269,11 +269,11 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
           <div class="hstack gap-3">
             <div class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
               <!-- edit button -->
-              <button type="button" form="edit-user-info" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'ltr' : 'rtl' ?>" class="btn btn-primary text-capitalize fs-12" <?php if ($_SESSION['user_update'] == 0 && $user['UserID'] != $_SESSION['UserID']) {echo 'disabled';} ?> onclick="form_validation(this.form, 'submit')"><i class="bi bi-check-all"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?></button>
+              <button type="button" form="edit-user-info" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'ltr' : 'rtl' ?>" class="btn btn-primary text-capitalize py-1 fs-12" <?php if ($_SESSION['user_update'] == 0 && $user['UserID'] != $_SESSION['UserID']) {echo 'disabled';} ?> onclick="form_validation(this.form, 'submit')"><i class="bi bi-check-all"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?></button>
               
               <?php if ($user['isRoot'] != 1 && $user['TrustStatus'] != 1 && $user['job_title_id'] != 1 && $_SESSION['user_delete'] == 1) { ?>
                 <!-- delete button -->
-                <button type="button" data-bs-toggle="modal" data-bs-target="#deleteUserModal" onclick="show_delete_user_modal(this)" data-username="<?php echo $user['UserName'] ?>" data-user-id="<?php echo $user['UserID'] ?>" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'ltr' : 'rtl' ?>" class="btn btn-outline-danger text-capitalize fs-12" <?php if ($_SESSION['user_delete'] == 0 && $user['UserID'] != $_SESSION['UserID']) {echo 'disabled';} ?>><i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?></button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#deleteUserModal" onclick="show_delete_user_modal(this)" data-username="<?php echo $user['UserName'] ?>" data-user-id="<?php echo $user['UserID'] ?>" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'ltr' : 'rtl' ?>" class="btn btn-outline-danger text-capitalize py-1 fs-12" <?php if ($_SESSION['user_delete'] == 0 && $user['UserID'] != $_SESSION['UserID']) {echo 'disabled';} ?>><i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?></button>
               <?php } ?>
             </div>
           </div>

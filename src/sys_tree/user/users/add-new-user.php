@@ -1,13 +1,19 @@
-<!-- <div class="overlay emp-overlay">
-  <div class="overlay-container">
-    <img src="" alt="">
-  </div>
-</div> -->
-
 <!-- start add new user page -->
 <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
   <!-- start add new user form -->
   <form class="profile-form" action="?do=insert-user" method="POST" id="add-new-user" enctype="multipart/form-data" onchange="form_validation(this)">
+    <!-- start buttons section -->
+    <div class="hstack gap-2">
+        <!-- submit button -->
+        <button type="button" form="add-new-user" class="btn btn-primary text-capitalize py-1 fs-12 <?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" <?php if ($_SESSION['user_add'] == 0) {echo 'disabled';} ?> onclick="form_validation(this.form, 'submit')">
+            <span><?php echo language('ADD THE EMPLOYEE', @$_SESSION['systemLang']) ?></span>&nbsp;<i class="bi bi-person-plus"></i>
+        </button>
+        <!-- submit button -->
+        <a href="?do=manage" class="btn btn-outline-secondary text-capitalize py-1 fs-12 <?php if ($_SESSION['user_show'] == 0) {echo 'disabled';} ?>">
+            <span><?php echo language('ALL THE EMPLOYEES', @$_SESSION['systemLang']) ?></span>&nbsp;<i class="bi bi-people"></i>
+        </a>
+    </div>
+    <!-- end submit -->
     <!-- horzontal stack -->
     <div class="hstack gap-3">
       <h6 class="h6 text-decoration-underline text-capitalize text-danger fw-bold">
@@ -201,11 +207,11 @@
     <!-- start buttons section -->
     <div class="hstack gap-2">
         <!-- submit button -->
-        <button type="button" form="add-new-user" class="btn btn-primary text-capitalize fs-12 <?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" <?php if ($_SESSION['user_add'] == 0) {echo 'disabled';} ?> onclick="form_validation(this.form, 'submit')">
+        <button type="button" form="add-new-user" class="btn btn-primary text-capitalize py-1 fs-12 <?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" <?php if ($_SESSION['user_add'] == 0) {echo 'disabled';} ?> onclick="form_validation(this.form, 'submit')">
             <span><?php echo language('ADD THE EMPLOYEE', @$_SESSION['systemLang']) ?></span>&nbsp;<i class="bi bi-person-plus"></i>
         </button>
         <!-- submit button -->
-        <a href="?do=manage" class="btn btn-outline-secondary text-capitalize fs-12 <?php if ($_SESSION['user_show'] == 0) {echo 'disabled';} ?>">
+        <a href="?do=manage" class="btn btn-outline-secondary text-capitalize py-1 fs-12 <?php if ($_SESSION['user_show'] == 0) {echo 'disabled';} ?>">
             <span><?php echo language('ALL THE EMPLOYEES', @$_SESSION['systemLang']) ?></span>&nbsp;<i class="bi bi-people"></i>
         </a>
     </div>
