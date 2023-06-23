@@ -6,7 +6,7 @@
         <h5 class="m-auto modal-title h5 " id="staticBackdropLabel"><?php echo language("ADD NEW COMPANY", @$_SESSION['systemLang']) ?></h5>
       </div>
       <div class="modal-body">
-        <form action="?name=pieces&do=devices-companies&action=insert-man-company" method="POST" id="addManCompany" onchange="form_validation(this)">
+        <form action="?do=devices-companies&action=insert-man-company" method="POST" id="addManCompany" onchange="form_validation(this)">
           <!-- start company name -->
           <div class="mb-sm-2 mb-md-3 row">
             <label for="company-name" class="col-sm-12 col-form-label text-capitalize"><?php echo language('COMPANY NAME', @$_SESSION['systemLang']) ?></label>

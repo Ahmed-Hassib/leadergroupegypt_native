@@ -76,7 +76,7 @@ $manufacture_companies = $dev_comp_obj->get_all_man_companies($_SESSION['company
                   <!-- edit button -->
                   <button type="button" class="btn btn-outline-success py-1 fs-12" data-bs-toggle="modal" data-bs-target="#editDevCompanyModal" data-name="<?php echo $company['man_company_name'] ?>" data-id="<?php echo $company['man_company_id'] ?>" onclick="put_data_into_modal(this, 'edit', 'company-id', 'old-company-name')"><i class="bi bi-pencil-square"></i></button>
                   <!-- show all devices button -->
-                  <a href="?name=pieces&do=devices-companies&action=show-devices&dev-company-id=<?php echo $company['man_company_id'] ?>" class="btn btn-outline-primary py-1 fs-12" style="width: 50px"><?php echo language('PIECES', @$_SESSION['systemLang']) ?></a>
+                  <a href="?do=devices-companies&action=show-devices&dev-company-id=<?php echo $company['man_company_id'] ?>" class="btn btn-outline-primary py-1 fs-12" style="width: 50px"><?php echo language('PIECES', @$_SESSION['systemLang']) ?></a>
                   <!-- edit button -->
                   <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deleteDevCompanyModal" data-name="<?php echo $company['man_company_name'] ?>" data-id="<?php echo $company['man_company_id'] ?>" onclick="put_data_into_modal(this, 'delete', 'deleted-company-id', 'deleted-company-name')"><i class="bi bi-trash"></i></button>
                 </td>

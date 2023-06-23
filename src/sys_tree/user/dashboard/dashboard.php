@@ -102,7 +102,7 @@
                 <div class="card-body">
                   <span class="icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>"><i class="bi bi-hdd-rack"></i></span>
                   <span>
-                    <a href="<?php echo $nav_up_level ?>pieces/index.php?name=pieces" class="stretched-link text-capitalize">
+                    <a href="<?php echo $nav_up_level ?>pieces/index.php" class="stretched-link text-capitalize">
                       <?php echo language('PIECES', @$_SESSION['systemLang']) ?>
                     </a>
                   </span>

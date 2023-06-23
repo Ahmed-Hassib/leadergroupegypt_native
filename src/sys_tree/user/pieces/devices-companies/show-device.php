@@ -28,7 +28,7 @@
     // check the counter
     if ($device_counter > 0) { ?>
       <!-- start form -->
-      <form class="mb-3 custom-form need-validation" action="?name=pieces&do=devices-companies&action=update-device" method="POST" id="editDeviceInfo">
+      <form class="mb-3 custom-form need-validation" action="?do=devices-companies&action=update-device" method="POST" id="editDeviceInfo">
         <!-- horzontal stack -->
         <div class="hstack gap-3">
           <h6 class="h6 text-decoration-underline text-capitalize text-danger fw-bold">

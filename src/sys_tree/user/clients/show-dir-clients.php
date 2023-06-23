@@ -27,7 +27,7 @@ $main_title = "SHOW DIRECTION CLIENTS";
     <div class="mb-3 hstack gap-3">
       <?php if ($_SESSION['pcs_add'] == 0) { ?>
       <div>
-        <a href="?name=pieces&do=add-new-piece" class="btn btn-outline-primary py-1 fs-12">
+        <a href="?do=add-new-piece" class="btn btn-outline-primary py-1 fs-12">
           <i class="bi bi-plus"></i>
           <?php echo language('ADD NEW PIECE', @$_SESSION['systemLang']) ?>
         </a>

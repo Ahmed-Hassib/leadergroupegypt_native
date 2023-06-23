@@ -118,7 +118,7 @@
                       <a class="btn btn-success text-capitalize fs-12 <?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="?do=edit-piece&piece-id=<?php echo $pcs['id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
                       <a class="btn btn-outline-primary text-capitalize fs-12 <?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>" href="?do=show-piece&dir-id=<?php echo $pcs['direction_id'] ?>&src-id=<?php echo $pcs['id'] ?>" ><i class="bi bi-eye"></i><!-- <?php echo language('SHOW', @$_SESSION['systemLang']).' '.language('PIECES', @$_SESSION['systemLang']) ?> --></a>
                       <?php if ($_SESSION['pcs_delete'] == 1) { ?>
-                        <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deletePieceModal" id="delete-piece" data-page-title="<?php echo $page_title ?>" data-piece-id="<?php echo $pcs['id'] ?>" data-piece-name="<?php echo $pcs['full_name'] ?>" onclick="confirm_delete_piece(this)"><i class="bi bi-trash"></i></button>
+                        <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deletePieceModal" id="delete-piece" data-page-title="<?php echo $page_title ?>" data-piece-id="<?php echo $pcs['id'] ?>" data-piece-name="<?php echo $pcs['full_name'] ?>" onclick="confirm_delete_piece(this, true)"><i class="bi bi-trash"></i></button>
                       <?php } ?>
                     </td>
                   </tr>

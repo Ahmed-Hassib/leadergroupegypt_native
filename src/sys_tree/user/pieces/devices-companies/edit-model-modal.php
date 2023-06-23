@@ -6,7 +6,7 @@
         <h5 class="m-auto modal-title h5 " id="staticBackdropLabel"><?php echo language("EDIT MODEL INFO", @$_SESSION['systemLang']) ?></h5>
       </div>
       <div class="modal-body">
-        <form action="?name=pieces&do=devices-companies&action=update-model" method="POST" id="edit-model" onchange="form_validation(this)">
+        <form action="?do=devices-companies&action=update-model" method="POST" id="edit-model" onchange="form_validation(this)">
           <input type="hidden" name="model-id" id="model-id">
           <!-- start model name -->
           <div class="mb-sm-2 mb-md-3 row">

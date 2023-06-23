@@ -6,7 +6,7 @@
         <h5 class="m-auto modal-title h5 " id="staticBackdropLabel"><?php echo language("ADD NEW MODEL", @$_SESSION['systemLang']) ?></h5>
       </div>
       <div class="modal-body">
-        <form action="?name=pieces&do=devices-companies&action=insert-model" method="POST" id="addDeviceModelForm" onchange="form_validation(this)">
+        <form action="?do=devices-companies&action=insert-model" method="POST" id="addDeviceModelForm" onchange="form_validation(this)">
           <input type="hidden" name="device-id" id="device-id" value="<?php echo $device_id ?>">
           <!-- button to add a model field -->
           <button type="button" class="btn btn-outline-success me-auto fs-12 py-1" onclick="add_model(this)" data-model-num="0">

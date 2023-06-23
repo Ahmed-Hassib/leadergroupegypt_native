@@ -224,7 +224,7 @@ if ($dir_id != -1 && $src_id != -1) {
                     <a class="btn btn-outline-primary text-capitalize fs-12" href="?do=show-piece&dir-id=<?php echo $piece['direction_id'] ?>&src-id=<?php echo $piece['id'] ?>" ><i class="bi bi-eye"></i></a>
                   <?php } ?>
                   <?php if ($_SESSION['pcs_delete'] == 1) { ?>
-                    <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deletePieceModal" id="delete-piece" data-page-title="<?php echo $name ?>" data-piece-id="<?php echo $piece['id'] ?>" data-piece-name="<?php echo $piece['full_name'] ?>" onclick="confirm_delete_piece(this)"><i class="bi bi-trash"></i></button>
+                    <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deletePieceModal" id="delete-piece" data-page-title="<?php echo $name ?>" data-piece-id="<?php echo $piece['id'] ?>" data-piece-name="<?php echo $piece['full_name'] ?>" onclick="confirm_delete_piece(this, true)"><i class="bi bi-trash"></i></button>
                   <?php } ?>
                 </td>
               </tr>

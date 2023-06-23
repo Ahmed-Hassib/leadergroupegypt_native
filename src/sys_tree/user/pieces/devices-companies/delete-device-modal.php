@@ -6,7 +6,7 @@
         <h5 class="m-auto modal-title h5 " id="staticBackdropLabel"><?php echo language("DELETE DEVICE INFO", @$_SESSION['systemLang']) ?></h5>
       </div>
       <div class="modal-body">
-        <form action="?name=pieces&do=devices-companies&action=delete-device" method="POST" id="delete-device">
+        <form action="?do=devices-companies&action=delete-device" method="POST" id="delete-device">
           <input type="hidden" name="deleted-device-id" id="deleted-device-id">
           <!-- start device name -->
           <div class="mb-sm-2 mb-md-3 row">

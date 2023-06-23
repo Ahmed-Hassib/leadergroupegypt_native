@@ -132,7 +132,7 @@ function build_direction_tree($arr, $parent, $level = 0, $prelevel = -1, $nav_up
         echo "</li>";
       }
 
-      $node_url = str_repeat("../", $nav_up_level) . "pieces/index.php?name=pieces&do=show-piece&dir-id=" . $data['direction_id'] . "&src-id=" . $data['id'];
+      $node_url = str_repeat("../", $nav_up_level) . "pieces/index.php?do=show-piece&dir-id=" . $data['direction_id'] . "&src-id=" . $data['id'];
       
       // show data
       echo "<li>";

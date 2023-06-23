@@ -6,7 +6,7 @@
         <h5 class="m-auto modal-title h5 " id="staticBackdropLabel"><?php echo language("ADD NEW DEVICE", @$_SESSION['systemLang']) ?></h5>
       </div>
       <div class="modal-body">
-        <form action="?name=pieces&do=devices-companies&action=insert-device" method="POST" id="addDevice" onchange="form_validation(this)">
+        <form action="?do=devices-companies&action=insert-device" method="POST" id="addDevice" onchange="form_validation(this)">
           <?php if (isset($dev_company_name)) { ?>
             <input type="hidden" name="company-id" id="company-id" value="<?php echo $dev_company_id ?>">
           <?php } ?>

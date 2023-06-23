@@ -86,7 +86,7 @@
                 <!-- controls buttons -->
                 <td>
                     <!-- edit button -->
-                  <a class="btn btn-success text-capitalize fs-12 <?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="?name=pieces&do=devices-companies&action=show-device&device-id=<?php echo $device['device_id']; ?>" target=""><i class="bi bi-pencil-square"></i></a>
+                  <a class="btn btn-success text-capitalize fs-12 <?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="?do=devices-companies&action=show-device&device-id=<?php echo $device['device_id']; ?>" target=""><i class="bi bi-pencil-square"></i></a>
                   <!-- delete device info -->
                   <button type="button" class="btn btn-outline-danger text-capitalize bg-gradient fs-12 p-1" data-bs-toggle="modal" data-bs-target="#deleteDeviceModal" data-id="<?php echo $device['device_id'] ?>" data-name="<?php echo $device['device_name'] ?>" onclick="put_data_into_modal(this, 'delete', 'deleted-device-id', 'deleted-device-name');"><i class="bi bi-trash"></i></button>
                 </td>
