@@ -1,6 +1,7 @@
 <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
   // get direction id
   $direction_id = isset($_POST['deleted-dir-id']) && !empty($_POST['deleted-dir-id']) ? $_POST['deleted-dir-id'] : '';
+  // check if dir object was created or not
   if (!isset($dir_obj)) {
     // create an object of Direction class
     $dir_obj = new Direction();
@@ -13,33 +14,30 @@
     $pieces_counter = $dir_obj->count_records("`id`", "`pieces_info`", "WHERE `direction_id` = $direction_id AND `company_id` = ".$_SESSION['company_id']);
     // check if direction name is exist or not
     if ($pieces_counter > 0) {
-      // echo danger message
-      $msg = '<div class="alert alert-danger text-capitalize" dir=""><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;' . language('CANNOT DELETE THIS DIRECTION BECAUSE THIS DIR CONTAINS ONE PIECE OR MORE', @$_SESSION['systemLang']) . '</div>';
-      // waiting time
-      $seconds = 5;
+      // prepare flash session variables
+      $_SESSION['flash_message'] = 'CANNOT DELETE THIS DIRECTION BECAUSE THIS DIR CONTAINS ONE PIECE OR MORE';
+      $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+      $_SESSION['flash_message_class'] = 'danger';
+      $_SESSION['flash_message_status'] = false;
     } else {
       // call delete direction function
       $dir_obj->delete_direction($direction_id);
-      // echo success message
-      $msg = '<div class="alert alert-success text-capitalize" dir=""><i class="bi bi-check-circle-fill"></i>&nbsp;' . language('DIRECTION DELETED SUCCESSFULLY', @$_SESSION['systemLang']) . '</div>';
-      // waiting time
-      $seconds = 3;
+      // prepare flash session variables
+      $_SESSION['flash_message'] = 'DIRECTION DELETED SUCCESSFULLY';
+      $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
+      $_SESSION['flash_message_class'] = 'success';
+      $_SESSION['flash_message_status'] = true;
     }
   } else {
-    // data missed
-    $msg = '<div class="alert alert-warning text-capitalize" dir=""><i class="bi bi-check-circle-fill"></i>&nbsp;' . language('DIRECTION NAME CANNOT BE EMPTY', @$_SESSION['systemLang']) . '</div>';
+    // prepare flash session variables
+    $_SESSION['flash_message'] = 'DIRECTION NAME CANNOT BE EMPTY';
+    $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+    $_SESSION['flash_message_class'] = 'warning';
+    $_SESSION['flash_message_status'] = false;
   }
-?>
-<!-- start pieces type page -->
-<div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-  <!-- start header -->
-  <header class="header mb-3">
-    <?php redirectHome($msg, "back", $seconds); ?>
-  </header>
-</div>
-<?php } else {
-
+  // redirect to previous page
+  redirectHome(null, "back", 0);
+} else {
   // include permission error module
   include_once $globmod . 'permission-error.php';
-
-} ?>
+}
