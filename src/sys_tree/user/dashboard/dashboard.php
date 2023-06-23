@@ -107,7 +107,7 @@
                     </a>
                   </span>
                 </div>
-                <?php $newPcsCounter = $db_obj->count_records("`id`", "`pieces`", "WHERE `is_client` = 0 AND `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id']); ?>
+                <?php $newPcsCounter = $db_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id']); ?>
                 <?php if ($newPcsCounter > 0) { ?>
                   <div class="card-footer">
                     <span class="badge bg-danger fs-12">
@@ -125,16 +125,16 @@
                 <div class="card-body">
                   <span class="icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>"><i class="bi bi-people"></i></span>
                   <span>
-                    <a href="<?php echo $nav_up_level ?>pieces/index.php?name=clients" class="stretched-link text-capitalize">
+                    <a href="<?php echo $nav_up_level ?>clients/index.php" class="stretched-link text-capitalize">
                       <?php echo language('CLIENTS', @$_SESSION['systemLang']) ?>
                     </a>
                   </span>
                 </div>
-                <?php $newPcsCounter = $db_obj->count_records("`id`", "`pieces`", "WHERE `is_client` = 1 AND `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id']); ?>
-                <?php if ($newPcsCounter > 0) { ?>
+                <?php $newClientsCounter = $db_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 1 AND `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id']); ?>
+                <?php if ($newClientsCounter > 0) { ?>
                   <div class="card-footer">
                     <span class="badge bg-danger fs-12">
-                      <?php echo $newPcsCounter ?>
+                      <?php echo $newClientsCounter ?>
                       <?php echo language('NEW', @$_SESSION['systemLang']) ?>
                     </span>
                   </div>
