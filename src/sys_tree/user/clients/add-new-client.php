@@ -1,7 +1,7 @@
 <!-- start add new user page -->
 <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
   <!-- start form -->
-  <form class="custom-form" action="?name=<?php echo $page_title ?>&do=insert-piece-info" method="POST" id="addPiece" onchange="form_validation(this)">
+  <form class="custom-form" action="?do=insert-client-info" method="POST" id="addClient" onchange="form_validation(this)">
     <!-- horzontal stack -->
     <div class="hstack gap-3">
       <h6 class="h6 text-decoration-underline text-capitalize text-danger fw-bold">
@@ -349,7 +349,7 @@
 
     <!-- submit -->
     <div class="hstack gap-3">
-      <button type="button" form="addPiece" class="btn btn-primary text-capitalize bg-gradient fs-12 p-1 <?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" id="add-piece" <?php if ($_SESSION['pcs_add'] == 0) {echo 'disabled';} ?> onclick="form_validation(this.form, 'submit')">
+      <button type="button" form="addClient" class="btn btn-primary text-capitalize bg-gradient fs-12 p-1 <?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" id="add-piece" <?php if ($_SESSION['pcs_add'] == 0) {echo 'disabled';} ?> onclick="form_validation(this.form, 'submit')">
         <i class="bi bi-plus"></i>
         <?php echo language('ADD NEW CLIENT', @$_SESSION['systemLang']); ?>
       </button>
