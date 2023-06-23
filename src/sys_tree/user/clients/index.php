@@ -53,11 +53,7 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
     $file_name = 'delete-client.php';
     $preloader = false;
     $possible_back = false;
-    
-  } elseif ($query == 'show-client' && $_SESSION['clients_show'] == 1) {
-    $file_name = 'show-client.php';
-    $is_contain_table = true;
-  
+
   } elseif ($query == 'show-dir-clients' && $_SESSION['clients_show'] == 1) {
     $file_name = 'show-dir-clients.php';
     $is_contain_table = true;
@@ -79,7 +75,7 @@ $page_title = 'clients';
 // page category
 $page_category = "sys_tree";
 // page role
-$page_role = "sys_tree_clients";
+$page_role = "sys_tree_pieces";
 // folder name of dependendies
 $dependencies_folder = "sys_tree/";
 

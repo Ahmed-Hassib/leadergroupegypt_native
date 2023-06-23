@@ -94,18 +94,6 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
               <h5><?php echo language('ADDITIONAL INFO', @$_SESSION['systemLang']) ?></h5>
               <hr />
             </div>
-            
-            <?php if ($page_title == 'pieces') { ?>
-            <!-- internet source -->
-            <div class="mb-sm-2 mb-md-3 row">
-              <label for="internet-source" class="col-sm-12 col-form-label text-capitalize">
-                  <?php echo language('INTERNET SOURCE', @$_SESSION['systemLang']); ?>
-              </label>
-              <div class="col-sm-12 position-relative">
-                <input type="text" name="internet-source" id="internet-source" class="form-control w-100" placeholder="<?php echo language('INTERNET SOURCE', @$_SESSION['systemLang']) ?>" value="<?php echo $piece_data['internet_source']  ?>" />
-              </div>
-            </div>
-            <?php } ?>
 
             <!-- notes -->
             <div class="mb-3 row">
@@ -135,14 +123,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
             <?php if ($malCounter > 0) { ?>
             <div class="mb-3 row align-items-center">
               <label for="malfunction-counter" class="col-sm-12 col-md-4 col-form-label text-capitalize">
-                <?php 
-                if ($piece_data['is_client'] <= 0) {
-                  $label = 'ALL MALFUNCTION OF THIS PIECE';
-                } else {
-                  $label = 'ALL MALFUNCTION OF THIS CLIENT';
-                }
-                echo language($label, @$_SESSION['systemLang']);
-                ?>
+                <?php echo language('ALL MALFUNCTION OF THIS CLIENT', @$_SESSION['systemLang']); ?>
               </label>
               <div class="col-sm-12 col-md-8 position-relative">
                 <span class="me-5 text-start" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo $malCounter . " " . ($malCounter > 2 ? language("MALFUNCTIONS", @$_SESSION['systemLang']) : language("MALFUNCTION", @$_SESSION['systemLang'])) ?></span>

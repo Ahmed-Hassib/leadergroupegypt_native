@@ -84,19 +84,19 @@ $directions_info = $directions[1];
                   $unkown = $dir_obj->count_records("`id`", "pieces_info", $unkown_conditions);
                   ?>
                   <!-- clients -->
-                  <a href="<?php echo $nav_up_level ?>pieces/index.php?do=show-dir-pieces&name=clients&type=1&dir-id=<?php echo $row["direction_id"] ?>" class="mb-0 text-capitalize">
+                  <a href="<?php echo $nav_up_level ?>clients/index.php?do=show-dir-clients&dir-id=<?php echo $row["direction_id"] ?>" class="mb-0 text-capitalize">
                     <i class="bi bi-people"></i>
                     <span><?php echo language('CLIENTS', @$_SESSION['systemLang']) ?></span>
                     <span class="num" data-goal="<?php echo $clients ?>">0</span>
                   </a>
                   <!-- pieces -->
-                  <a href="<?php echo $nav_up_level ?>pieces/index.php?do=show-dir-pieces&name=pieces&type=0&dir-id=<?php echo $row["direction_id"] ?>" class="mb-0 text-capitalize">
+                  <a href="<?php echo $nav_up_level ?>pieces/index.php?do=show-dir-pieces&type=0&dir-id=<?php echo $row["direction_id"] ?>" class="mb-0 text-capitalize">
                     <i class="bi bi-hdd-rack"></i>
                     <span><?php echo language('PIECES', @$_SESSION['systemLang']) ?></span>
                     <span class="num" data-goal="<?php echo $pieces ?>">0</span>
                   </a>
                   <!-- un assigned -->
-                  <a href="<?php echo $nav_up_level ?>pieces/index.php?do=show-dir-pieces&name=pieces&type=-1&dir-id=<?php echo $row["direction_id"] ?>" class="mb-0 text-capitalize">
+                  <a href="<?php echo $nav_up_level ?>pieces/index.php?do=show-dir-pieces&type=-1&dir-id=<?php echo $row["direction_id"] ?>" class="mb-0 text-capitalize">
                     <i class="bi bi-exclamation-triangle"></i>
                     <span><?php echo language('UNKNOWN', @$_SESSION['systemLang']) ?></span>
                     <span class="num" data-goal="<?php echo $unkown ?>">0</span>

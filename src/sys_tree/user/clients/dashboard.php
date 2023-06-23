@@ -4,7 +4,7 @@
   <div class="stats">
     <div class="mb-3 hstack gap-3">
       <div class="<?php if ($_SESSION['pcs_add'] == 0) {echo 'd-none';} ?>">
-        <a href="?name=clients&do=add-new-piece" class="btn btn-outline-primary py-1 fs-12">
+        <a href="?do=add-new-client" class="btn btn-outline-primary py-1 fs-12">
           <h6 class="h6 mb-0 text-center text-capitalize ">
             <i class="bi bi-person-plus"></i>
             <?php echo language('ADD NEW CLIENT', @$_SESSION['systemLang']) ?>
@@ -15,7 +15,7 @@
     
     <!-- start new design -->
     <div class="mb-3 row g-3 align-items-stretch justify-content-start">
-      <!-- total numbers of pieces/clients -->
+      <!-- total numbers of clients -->
       <div class="col-sm-12 col-lg-5">
         <div class="section-block">
           <div class="section-header">
@@ -39,7 +39,7 @@
                 </div>
                 <div class="card-footer">
                   <span class="nums">
-                    <a href="?name=clients&do=show-all-clients" class="num stretched-link text-black" data-goal="<?php echo $clients; ?>">0</a>
+                    <a href="?do=show-all-clients" class="num stretched-link text-black" data-goal="<?php echo $clients; ?>">0</a>
                   </span>
                 </div>
                 <?php $newPcsCounter = $db_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 1 AND `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id']); ?>
@@ -89,7 +89,7 @@
                     <td class="text-capitalize <?php echo $client['ip'] == '0.0.0.0' ? 'text-danger ' : '' ?>" data-ip="<?php echo convertIP($client['ip']) ?>"><?php echo $client['ip'] == '0.0.0.0' ?  language("NO DATA ENTERED", @$_SESSION['systemLang']) :"<a href='http://" . $client['ip'] . "' target='_blank'>" . $client['ip'] . '</a>'; ?></td>
                     <!-- piece name -->
                     <td>
-                      <a class="<?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="?name=clients&do=edit-piece&piece-id=<?php echo $client['id']; ?>" target="">
+                      <a class="<?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="?do=edit-piece&piece-id=<?php echo $client['id']; ?>" target="">
                         <?php echo trim($client['full_name'], ' '); ?>
                         <?php if ($client['direction_id'] == 0) { ?>
                           <i class="bi bi-exclamation-triangle-fill text-danger" title="<?php echo language("DIRECTION NO DATA ENTERED", @$_SESSION['systemLang']) ?>"></i>
@@ -112,7 +112,7 @@
                     <td><?php echo $client['added_date'] == '0000-00-00' ? language("NO DATA ENTERED", @$_SESSION['systemLang']) : $client['added_date'] ?></td>
                     <!-- control -->
                     <td>
-                      <a class="btn btn-success text-capitalize fs-12 <?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="?name=clients&do=edit-piece&piece-id=<?php echo $client['id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
+                      <a class="btn btn-success text-capitalize fs-12 <?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="?do=edit-piece&piece-id=<?php echo $client['id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
                       <?php if ($client['is_client'] == 0) { ?>
                         <a class="btn btn-outline-primary text-capitalize fs-12 <?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>" href="?do=show-piece&dir-id=<?php echo $client['direction_id'] ?>&srcId=<?php echo $client['id'] ?>" ><i class="bi bi-eye"></i><!-- <?php echo language('SHOW', @$_SESSION['systemLang']).' '.language('PIECES', @$_SESSION['systemLang']) ?> --></a>
                       <?php } ?>

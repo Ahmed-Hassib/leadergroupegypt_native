@@ -3,24 +3,18 @@ if (!isset($pcs_obj)) {
   // create an object of Pieces class
   $pcs_obj = new Pieces();
 }
-// get direction id
-$type = isset($_GET['type']) ? $_GET['type'] : -1;
 // get type
 $dir_id = isset($_GET['dir-id']) && !empty($_GET['dir-id']) ? intval($_GET['dir-id']) : -1;
 // condition
-$condition = "WHERE `pieces_info`.`is_client` = $type AND `pieces_info`.`direction_id` = $dir_id";
+$condition = "WHERE `pieces_info`.`is_client` = 1 AND `pieces_info`.`direction_id` = $dir_id";
 // get all pieces
 $all_pieces_data = $pcs_obj->get_spec_pieces($condition);
 // get counter flag
 $counter = $all_pieces_data[0];
 // get direction name
 $dir_name = $pcs_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = ".$dir_id)[0]['direction_name'];
-
-if ($_GET['type'] == 1) {
-  $main_title = "SHOW DIRECTION CLIENTS";
-} else {
-  $main_title = "SHOW DIRECTION UNKNOWN";
-}
+// main title
+$main_title = "SHOW DIRECTION CLIENTS";
 ?>
   <!-- start edit profile page -->
   <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">

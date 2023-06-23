@@ -212,7 +212,7 @@
       <ul class="sub-menu">
         <?php if ($_SESSION['clients_show'] == 1) { ?>
         <li>
-          <a href="<?php echo $nav_up_level ?>clients/index.php?">
+          <a href="<?php echo $nav_up_level ?>clients/index.php">
             <span class="link-name"><?php echo language('DASHBOARD', @$_SESSION['systemLang']) ?></span>
           </a>
         </li>

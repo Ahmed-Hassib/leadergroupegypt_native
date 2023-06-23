@@ -3,7 +3,7 @@
   <div class="modal-dialog modal-dialog-centered" style="width: 500px" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title text-capitalize " id="exampleModalLabel"><?php echo language('CONFIRM', @$_SESSION['systemLang'])." ".language('DELETE', @$_SESSION['systemLang'])." ".language('PIECE/CLIENT', @$_SESSION['systemLang']) ?></h5>
+        <h5 class="modal-title text-capitalize " id="exampleModalLabel"><?php echo language('CONFIRM', @$_SESSION['systemLang'])." ".language('DELETE', @$_SESSION['systemLang'])." ".language('CLIENT', @$_SESSION['systemLang']) ?></h5>
       </div>
       <div class="modal-body">
         <h5 class="h5"><?php echo language('ARE YOU SURE TO DELETE', @$_SESSION['systemLang']) ?>&nbsp;<span class="text-danger" id="deleted-piece-name"></span>&nbsp;<?php echo @$_SESSION['systemLang'] == "ar" ? "؟" : "?" ?></h5>

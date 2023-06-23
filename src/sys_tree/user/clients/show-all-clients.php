@@ -204,7 +204,7 @@ if ($counter > 0) {
       </table>
     </div>
   </div>
-  <?php include "delete-piece-modal.php" ?>
+  <?php include "delete-client-modal.php" ?>
 <?php } else {
   // include no data founded module
   include_once $globmod . 'no-data-founded-noredirect.php';
