@@ -58,7 +58,12 @@ $directions_info = $directions[1];
                 <!-- vstack for employee info -->
                 <div class="vstack gap-1">
                   <!-- card title -->
-                  <h5 class="mb-0 card-title "><?php echo $row['direction_name'] ?></h5>
+                  <h5 class="mb-0 card-title">
+                    <?php echo $row['direction_name'] ?>
+                    <?php if (get_date_now() == $row['added_date']) { ?>
+                      <span class="badge bg-danger py-1 fs-12"><?php echo language('NEW', @$_SESSION['systemLang']) ?></span>
+                    <?php } ?>
+                  </h5>
                   <!-- horizontal rule -->
                   <hr>
                 </div>
