@@ -1,3 +1,12 @@
+<?php if (!isset($manufacture_companies)) {
+  if (!isset($dev_comp_obj)) {
+    // create an object of Database class
+    $dev_comp_obj = new ManufuctureCompanies();
+  }
+  // get all devices companies data
+  $manufacture_companies = $dev_comp_obj->get_all_man_companies($_SESSION['company_id']);
+}
+?>
 <!-- Modal -->
 <div class="modal fade" id="addNewDevice" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-company-dialog" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
