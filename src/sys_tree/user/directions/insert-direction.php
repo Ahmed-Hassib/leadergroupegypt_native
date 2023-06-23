@@ -13,29 +13,30 @@
 
     // check if direction is exist or not
     if ($is_exist == true) {
-      // echo danger message
-      $msg = '<div class="alert alert-danger text-capitalize" dir=""><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;' . language('THIS NAME IS ALREADY EXIST', @$_SESSION['systemLang']) . '</div>';
+      // prepare flash session variables
+      $_SESSION['flash_message'] = 'THIS NAME IS ALREADY EXIST';
+      $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+      $_SESSION['flash_message_class'] = 'danger';
+      $_SESSION['flash_message_status'] = false;
     } else {
       // call insert direction function
       $dir_obj->insert_new_direction(array($dir_name, get_date_now(), $_SESSION['UserID'], $_SESSION['company_id']));
-
-      // echo success message
-      $msg = '<div class="alert alert-success text-capitalize" dir=""><i class="bi bi-check-circle-fill"></i>&nbsp;' . language('A NEW DIRECTION ADDED SUCCESSFULLY', @$_SESSION['systemLang']) . '</div>';
+      // prepare flash session variables
+      $_SESSION['flash_message'] = 'A NEW DIRECTION ADDED SUCCESSFULLY';
+      $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
+      $_SESSION['flash_message_class'] = 'success';
+      $_SESSION['flash_message_status'] = true;
     }
   } else {
-    // data missed
-    $msg = '<div class="alert alert-warning text-capitalize" dir=""><i class="bi bi-check-circle-fill"></i>&nbsp;' . language('DIRECTION NAME CANNOT BE EMPTY', @$_SESSION['systemLang']) . '</div>';
+    // prepare flash session variables
+    $_SESSION['flash_message'] = 'DIRECTION NAME CANNOT BE EMPTY';
+    $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+    $_SESSION['flash_message_class'] = 'danger';
+    $_SESSION['flash_message_status'] = false;
   }
-?>
-<!-- start pieces type page -->
-<div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-  <!-- start header -->
-  <header class="header mb-3">
-    <?php redirectHome($msg, "back"); ?>
-  </header>
-</div>
-
-<?php } else {
+  // redirect to the previous page
+  redirectHome(null, "back", 0);
+} else {
   // include permission error module
   include_once $globmod . 'permission-error.php';
-} ?>
+}
