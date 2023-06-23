@@ -1,5 +1,5 @@
 
-function put_data_into_modal(btn, type, id, name) {
+function put_data_into_modal(btn, type, id, name, will_back = null) {
   // get inputs
   let id_input = document.getElementById(id);
   let name_input = document.getElementById(name);
@@ -15,6 +15,14 @@ function put_data_into_modal(btn, type, id, name) {
       
     case 'delete':
       name_input.textContent = btn.dataset.name;
+
+      // get form action
+      let form_action = id_input.form.getAttribute('action');
+      if (will_back != null) {
+        id_input.form.setAttribute('action', `${form_action}&back=true`);
+
+        console.log(id_input.form.getAttribute('action'))
+      } 
       break;
   }
 }
