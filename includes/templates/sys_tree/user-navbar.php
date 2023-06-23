@@ -118,24 +118,24 @@
       <ul class="sub-menu">
         <?php if ($_SESSION['pcs_show'] == 1) { ?>
         <li>
-          <a href="<?php echo $nav_up_level ?>pieces/index.php?name=pieces">
+          <a href="<?php echo $nav_up_level ?>pieces/index.php">
               <span class="link-name"><?php echo language('DASHBOARD', @$_SESSION['systemLang']) ?></span>
           </a>
         </li>
         <li>
-          <a href="<?php echo $nav_up_level ?>pieces/index.php?name=pieces&do=show-all-pieces">
+          <a href="<?php echo $nav_up_level ?>pieces/index.php?do=show-all-pieces">
               <span class="link-name"><?php echo language('PIECES LIST', @$_SESSION['systemLang']) ?></span>
           </a>
         </li>
         <li>
-          <a href="<?php echo $nav_up_level ?>pieces/index.php?name=pieces&do=devices-companies">
+          <a href="<?php echo $nav_up_level ?>pieces/index.php?do=devices-companies">
               <span class="link-name"><?php echo language('MANAGE', @$_SESSION['systemLang'])." ".language('PIECES TYPES', @$_SESSION['systemLang']) ?></span>
           </a>
         </li>
         <?php } ?>
         <?php if ($_SESSION['pcs_add'] == 1) { ?>
         <li>
-          <a href="<?php echo $nav_up_level ?>pieces/index.php?name=pieces&do=add-new-piece">
+          <a href="<?php echo $nav_up_level ?>pieces/index.php?do=add-new-piece">
               <span class="link-name"><?php echo language('ADD NEW PIECE', @$_SESSION['systemLang']) ?></span>
           </a>
         </li>
@@ -198,7 +198,7 @@
     <!-- end dashboard page link -->
     <?php } ?>
 
-    <?php if ($_SESSION['pcs_show'] == 1 || $_SESSION['pcs_add'] == 1) { ?>
+    <?php if ($_SESSION['clients_show'] == 1 || $_SESSION['clients_add'] == 1) { ?>
     <!-- start clients nav link -->
     <li>
       <div class="icon-link">
@@ -210,21 +210,21 @@
       </div>
       <!-- start sub menu -->
       <ul class="sub-menu">
-        <?php if ($_SESSION['pcs_show'] == 1) { ?>
+        <?php if ($_SESSION['clients_show'] == 1) { ?>
         <li>
-          <a href="<?php echo $nav_up_level ?>pieces/index.php?name=clients">
+          <a href="<?php echo $nav_up_level ?>clients/index.php?">
             <span class="link-name"><?php echo language('DASHBOARD', @$_SESSION['systemLang']) ?></span>
           </a>
         </li>
         <li>
-          <a href="<?php echo $nav_up_level ?>pieces/index.php?name=clients&do=show-all-clients">
+          <a href="<?php echo $nav_up_level ?>clients/index.php?do=show-all-clients">
             <span class="link-name"><?php echo language('CLIENTS LIST', @$_SESSION['systemLang']) ?></span>
           </a>
         </li>
         <?php } ?>
-        <?php if ($_SESSION['pcs_add'] == 1) { ?>
+        <?php if ($_SESSION['clients_add'] == 1) { ?>
         <li>
-          <a href="<?php echo $nav_up_level ?>pieces/index.php?name=clients&do=add-new-piece">
+          <a href="<?php echo $nav_up_level ?>clients/index.php?do=add-new-piece">
             <span class="link-name"><?php echo language('ADD NEW CLIENT', @$_SESSION['systemLang']) ?></span>
           </a>
         </li>

@@ -1,6 +1,6 @@
 <?php
 /**
- * PIECES PAGE
+ * clientS PAGE
  */
 // start output buffering
 ob_start();
@@ -25,51 +25,42 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
   $preloader = true;
 
   // start manage page
-  if ($query == 'manage' && $_SESSION['pcs_show'] == 1){
+  if ($query == 'manage' && $_SESSION['clients_show'] == 1){
     $file_name = 'dashboard.php';
     $is_contain_table = true;
     
-  } elseif ($query == 'show-all-pieces' && $_SESSION['pcs_show'] == 1) {
-    $file_name = 'show-all-pieces.php';
-    $is_contain_table = true;
-    
-  } elseif ($query == 'show-all-clients' && $_SESSION['pcs_show'] == 1) {
+  } elseif ($query == 'show-all-clients' && $_SESSION['clients_show'] == 1) {
     $file_name = 'show-all-clients.php';
     $is_contain_table = true;
     
-  } elseif ($query == 'add-new-piece' && $_SESSION['pcs_add'] == 1) {
-    $file_name = 'add-new-piece.php';
+  } elseif ($query == 'add-new-client' && $_SESSION['clients_add'] == 1) {
+    $file_name = 'add-new-client.php';
     
-  } elseif ($query == 'insert-piece-info' && $_SESSION['pcs_add'] == 1) {
-    $file_name = 'insert-piece-info.php';
+  } elseif ($query == 'insert-client-info' && $_SESSION['clients_add'] == 1) {
+    $file_name = 'insert-client-info.php';
     $preloader = false;
     $possible_back = false;
     
-  } elseif ($query == 'edit-piece' && ($_SESSION['pcs_update'] == 1 || $_SESSION['pcs_show'] == 1)) {
-    $file_name = 'edit-piece.php';
+  } elseif ($query == 'edit-client' && ($_SESSION['clients_update'] == 1 || $_SESSION['clients_show'] == 1)) {
+    $file_name = 'edit-client.php';
     
-  } elseif ($query == 'update-piece-info' && $_SESSION['pcs_update'] == 1) {
-    $file_name = 'update-piece-info.php';
+  } elseif ($query == 'update-client-info' && $_SESSION['clients_update'] == 1) {
+    $file_name = 'update-client-info.php';
     $preloader = false;
     $possible_back = false;
     
-  } elseif ($query == 'delete-piece' && $_SESSION['pcs_delete'] == 1) {
-    $file_name = 'delete-piece.php';
+  } elseif ($query == 'delete-client' && $_SESSION['clients_delete'] == 1) {
+    $file_name = 'delete-client.php';
     $preloader = false;
     $possible_back = false;
     
-  } elseif ($query == 'show-piece' && $_SESSION['pcs_show'] == 1) {
-    $file_name = 'show-piece.php';
+  } elseif ($query == 'show-client' && $_SESSION['clients_show'] == 1) {
+    $file_name = 'show-client.php';
     $is_contain_table = true;
   
-  } elseif ($query == 'show-dir-pieces' && $_SESSION['pcs_show'] == 1) {
-    $file_name = 'show-dir-pieces.php';
+  } elseif ($query == 'show-dir-clients' && $_SESSION['clients_show'] == 1) {
+    $file_name = 'show-dir-clients.php';
     $is_contain_table = true;
-    
-  } elseif ($query == 'devices-companies' && $_SESSION['pcs_show'] == 1) {
-    // cehck if action is set or not
-    $action = isset($_GET['action']) & !empty($_GET['action']) ? $_GET['action'] : 'manage';
-    $file_name = include_once 'devices-companies.php';
 
   } else {
     $file_name = $globmod . 'page-permission-error.php';
@@ -84,11 +75,11 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
 }
 
 // page title
-$page_title = 'pieces';
+$page_title = 'clients';
 // page category
 $page_category = "sys_tree";
 // page role
-$page_role = "sys_tree_pieces";
+$page_role = "sys_tree_clients";
 // folder name of dependendies
 $dependencies_folder = "sys_tree/";
 
@@ -98,7 +89,7 @@ include_once str_repeat("../", $level) . "etc/init.php";
 // include file name
 include_once $file_name;
 // include confirmation delete modal
-include_once 'delete-piece-modal.php';
+include_once 'delete-client-modal.php';
 
 // include footer
 include_once $tpl . "footer.php"; 

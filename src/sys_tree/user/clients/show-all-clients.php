@@ -19,7 +19,7 @@ if ($counter > 0) {
     </header>
     <div class="mb-3 hstack gap-3">
       <div class="<?php if ($_SESSION['pcs_add'] == 0) {echo 'd-none';} ?>">
-        <a href="?name=clients&do=add-new-piece" class="btn btn-outline-primary py-1 fs-12">
+        <a href="?do=add-new-piece" class="btn btn-outline-primary py-1 fs-12">
           <i class="bi bi-plus"></i>
           <?php echo language('ADD NEW CLIENT', @$_SESSION['systemLang']) ?>
         </a>
@@ -72,7 +72,7 @@ if ($counter > 0) {
               <!-- piece name -->
               <td>
                 <?php if ($_SESSION['pcs_show'] == 1) { ?>
-                  <a href="?name=<?php echo $name ?>&do=edit-piece&piece-id=<?php echo $piece['id']; ?>" target="">
+                  <a href="?do=edit-piece&piece-id=<?php echo $piece['id']; ?>" target="">
                     <?php echo trim($piece['full_name'], ' ') ?>
                   </a>
                 <?php } else {?>
@@ -89,7 +89,7 @@ if ($counter > 0) {
               <!-- piece username -->
               <td class="text-capitalize">
                 <?php if ($_SESSION['pcs_show'] == 1) { ?>
-                <a href="?name=<?php echo $name ?>&do=edit-piece&piece-id=<?php echo $piece['id']; ?>">
+                <a href="?do=edit-piece&piece-id=<?php echo $piece['id']; ?>">
                   <?php echo $piece['username']; ?>
                 </a>
                 <?php } else {?>
@@ -189,10 +189,10 @@ if ($counter > 0) {
               <!-- control -->
               <td>
                 <?php if ($_SESSION['pcs_show'] == 1) { ?>
-                  <a class="btn btn-success text-capitalize fs-12" href="?name=<?php echo $name ?>&do=edit-piece&piece-id=<?php echo $piece['id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
+                  <a class="btn btn-success text-capitalize fs-12" href="?do=edit-piece&piece-id=<?php echo $piece['id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
                 <?php } ?>
                 <?php if ($piece['is_client'] == 0 && $_SESSION['pcs_show'] == 1) { ?>
-                  <a class="btn btn-outline-primary text-capitalize fs-12" href="?name=<?php echo $name ?>&do=show-piece&dir-id=<?php echo $piece['direction_id'] ?>&src-id=<?php echo $piece['id'] ?>" ><i class="bi bi-eye"></i></a>
+                  <a class="btn btn-outline-primary text-capitalize fs-12" href="?do=show-piece&dir-id=<?php echo $piece['direction_id'] ?>&src-id=<?php echo $piece['id'] ?>" ><i class="bi bi-eye"></i></a>
                 <?php } ?>
                 <?php if ($_SESSION['pcs_delete'] == 1) { ?>
                   <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deletePieceModal" id="delete-piece" data-page-title="<?php echo $name ?>" data-piece-id="<?php echo $piece['id'] ?>" data-piece-name="<?php echo $piece['full_name'] ?>" onclick="confirm_delete_piece(this)"><i class="bi bi-trash"></i></button>

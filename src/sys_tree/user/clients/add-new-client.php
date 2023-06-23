@@ -15,14 +15,13 @@
       <div class="col-12">
         <div class="section-block">
           <div class="section-header">
-            <h5><?php echo language('PIECE INFO', @$_SESSION['systemLang']); ?>
-            </h5>
+            <h5><?php echo language('PERSONAL INFO', @$_SESSION['systemLang']); ?></h5>
             <hr />
           </div>
           <!-- full name -->
           <div class="mb-sm-2 mb-md-3 row">
             <label for="full-name" class="col-sm-12 col-form-label text-capitalize">
-              <?php echo language('PIECE NAME', @$_SESSION['systemLang']); ?>
+              <?php echo language('FULLNAME', @$_SESSION['systemLang']); ?>
             </label>
             <div class="col-sm-12 position-relative">
               <input type="text" class="form-control" id="full-name" name="full-name" placeholder="<?php echo language('FULLNAME', @$_SESSION['systemLang']) ?>" onblur="fullname_validation(this)" autocomplete="off" required />
@@ -32,7 +31,7 @@
           <!-- address -->
           <div class="mb-sm-2 mb-md-3 row">
             <label for="address" class="col-sm-12 col-form-label text-capitalize">
-              <?php echo language('THE PROPERTY ADDRESS', @$_SESSION['systemLang']); ?>
+              <?php echo language('THE ADDRESS', @$_SESSION['systemLang']); ?>
             </label>
             <div class="col-sm-12 position-relative">
               <input type="text" name="address" id="address" class="form-control w-100" placeholder="<?php echo language('THE ADDRESS', @$_SESSION['systemLang']) ?>" />
@@ -42,7 +41,7 @@
           <!-- phone -->
           <div class="mb-sm-2 mb-md-3 row">
             <label for="phone-number" class="col-sm-12 col-form-label text-capitalize">
-              <?php echo language('THE REAL ESTATE AGENT PHONE', @$_SESSION['systemLang']); ?>
+              <?php echo language('PHONE', @$_SESSION['systemLang']); ?>
             </label>
             <div class="col-sm-12 position-relative">
               <input type="text" name="phone-number" id="phone-number" class="form-control w-100" placeholder="<?php echo language('PHONE', @$_SESSION['systemLang']) ?>" />
@@ -53,15 +52,10 @@
           <div class="mb-sm-2 mb-md-3 row">
             <label for="is-client" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('THE TYPE', @$_SESSION['systemLang']) ?></label>
             <div class="mt-2 col-sm-12 col-md-8">
-              <!-- TRANSMITTER -->
+              <!-- CLIENT -->
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="is-client" id="piece" value="1">
-                <label class="form-check-label text-capitalize" for="piece"><?php echo language('TRANSMITTER', @$_SESSION['systemLang']) ?></label>
-              </div>
-              <!-- RECEIVER -->
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="is-client" id="client" value="2">
-                <label class="form-check-label text-capitalize" for="client"><?php echo language('RECEIVER', @$_SESSION['systemLang']) ?></label>
+                <input class="form-check-input" type="radio" name="is-client" id="client" value="0" checked>
+                <label class="form-check-label text-capitalize" for="client"><?php echo language('CLIENT', @$_SESSION['systemLang']) ?></label>
               </div>
             </div>
           </div>
@@ -74,16 +68,6 @@
           <div class="section-header">
             <h5><?php echo language('ADDITIONAL INFO', @$_SESSION['systemLang']) ?></h5>
             <hr />
-          </div>
-          
-          <!-- internet source -->
-          <div class="mb-sm-2 mb-md-3 row">
-            <label for="internet-source" class="col-sm-12 col-form-label text-capitalize">
-                <?php echo language('INTERNET SOURCE', @$_SESSION['systemLang']); ?>
-            </label>
-            <div class="col-sm-12 position-relative">
-              <input type="text" name="internet-source" id="internet-source" class="form-control w-100" placeholder="<?php echo language('INTERNET SOURCE', @$_SESSION['systemLang']) ?>" />
-            </div>
           </div>
 
           <!-- notes -->
@@ -367,7 +351,7 @@
     <div class="hstack gap-3">
       <button type="button" form="addPiece" class="btn btn-primary text-capitalize bg-gradient fs-12 p-1 <?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" id="add-piece" <?php if ($_SESSION['pcs_add'] == 0) {echo 'disabled';} ?> onclick="form_validation(this.form, 'submit')">
         <i class="bi bi-plus"></i>
-        <?php echo language('ADD NEW PIECE', @$_SESSION['systemLang']); ?>
+        <?php echo language('ADD NEW CLIENT', @$_SESSION['systemLang']); ?>
       </button>
     </div>
   </form>
