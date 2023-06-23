@@ -33,12 +33,16 @@
                   $clients_conditions   = "WHERE `direction_id` = '" . $dir['direction_id'] . "' AND `is_client` = 1 AND `company_id` = " . $_SESSION['company_id'];
                   // pieces condition
                   $pieces_conditions     = "WHERE `direction_id` = '" . $dir['direction_id'] . "' AND `is_client` = 0 AND `company_id` = " . $_SESSION['company_id'];
+                  //  unknown conditions
+                  $unknown_conditions     = "WHERE `direction_id` = '" . $dir['direction_id'] . "' AND `is_client` NOT IN (0, 1) AND `company_id` = " . $_SESSION['company_id'];
                   // count pieces
                   $pieces = $dir_obj->count_records("`id`", "pieces_info", $pieces_conditions);
                   // count clients
                   $clients = $dir_obj->count_records("`id`", "pieces_info", $clients_conditions);
+                  // count unknown
+                  $unknown = $dir_obj->count_records("`id`", "pieces_info", $unknown_conditions);
                 ?>
-                  <?php if ($pieces == 0 && $clients == 0) { ?>
+                  <?php if ($pieces == 0 && $clients == 0 && $unknown == 0) { ?>
                     <option value="<?php echo $dir['direction_id'] ?>"><?php echo $dir['direction_name'] ?></option>
                   <?php } ?>
                 <?php } ?>
