@@ -1,7 +1,9 @@
 
 <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
   // get device id
-  $device_id = isset($_POST['deleted-device-id']) && !empty($_POST['deleted-device-id']) ? $_POST['deleted-device-id'] : '';   
+  $device_id = isset($_POST['deleted-device-id']) && !empty($_POST['deleted-device-id']) ? $_POST['deleted-device-id'] : '';  
+  // get back flag value
+  $is_back = isset($_GET['back']) && !empty($_GET['back']) ? 'back' : null;
   if (!isset($device_obj)) {
     // create an object of PiecesTypes class
     $device_obj = new Devices();
@@ -20,15 +22,9 @@
     $device_obj->delete_device($device_id);
     // echo success message
     $msg = '<div class="alert alert-success text-capitalize" dir=""><i class="bi bi-check-circle-fill"></i>&nbsp;' . language('DEVICE WAS DELETED SUCCESSFULLY', @$_SESSION['systemLang']) . '</div>';
-?>
-  <!-- start device page -->
-  <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-    <!-- start header -->
-    <header class="header mb-3">
-      <?php redirectHome($msg, "back"); ?>
-    </header>
-  </div>
-<?php } else {
+    // redirect to previous page
+    redirectHome(null, $is_back, 0); 
+  } else {
     // include no data founded
     include_once $globmod . 'no-data-founded-no-redirect.php';
   }
