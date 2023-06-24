@@ -75,7 +75,7 @@ $page_title = 'clients';
 // page category
 $page_category = "sys_tree";
 // page role
-$page_role = "sys_tree_pieces";
+$page_role = "sys_tree_clients";
 // folder name of dependendies
 $dependencies_folder = "sys_tree/";
 
