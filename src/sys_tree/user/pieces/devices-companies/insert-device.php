@@ -44,24 +44,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           }
         }
       }
-      // echo success message
-      $msg = '<div class="alert alert-success text-capitalize" dir=""><i class="bi bi-check-circle-fill"></i>&nbsp;' . language('DEVICE WAS ADDED SUCCESSFULLY', @$_SESSION['systemLang']) . '</div>';
+      // prepare flash session variables
+      $_SESSION['flash_message'][0] = 'DEVICE WAS ADDED SUCCESSFULLY';
+      $_SESSION['flash_message_icon'][0] = 'bi-check-circle-fill';
+      $_SESSION['flash_message_class'][0] = 'success';
+      $_SESSION['flash_message_status'][0] = true;
+      
       // check model flag
       if (!empty($device_models) && $is_inserted_models) {
-        // echo success message
-        $msg .= '<div class="alert alert-success text-capitalize" dir=""><i class="bi bi-check-circle-fill"></i>&nbsp;' . language('MODELS WAS ADDED SUCCESSFULLY', @$_SESSION['systemLang']) . '</div>';
+        // prepare flash session variables
+        $_SESSION['flash_message'][1] = 'MODELS WERE ADDED SUCCESSFULLY';
+        $_SESSION['flash_message_icon'][1] = 'bi-check-circle-fill';
+        $_SESSION['flash_message_class'][1] = 'success';
+        $_SESSION['flash_message_status'][1] = true;
       }
     }
-?>
-  <!-- start devices page -->
-  <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-    <!-- start header -->
-    <header class="header mb-3">
-      <?php redirectHome($msg, "back");  ?>
-    </header>
-  </div>
-  
-<?php
+    
+    // return to the previous page
+    redirectHome(null, "back", 0);
   } else {
     // include_once permission error module
     include_once $globmod . 'missing-data.php';

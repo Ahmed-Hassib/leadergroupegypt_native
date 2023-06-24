@@ -34,23 +34,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
       // check counter
       if ($counter == $total_models) {
-        // success message
-        $msg = '<div class="alert alert-success text-capitalize" dir=""><i class="bi bi-check-circle-fill"></i>&nbsp;' . language('MODELS WAS ADDED SUCCESSFULLY', @$_SESSION['systemLang']) . '</div>';
+        // prepare flash session variables
+        $_SESSION['flash_message'] = 'MODELS WERE ADDED SUCCESSFULLY';
+        $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
+        $_SESSION['flash_message_class'] = 'success';
+        $_SESSION['flash_message_status'] = true;
       }
-      
     } else {
-      // echo error message
-      $msg = '<div class="alert alert-danger text-capitalize" dir=""><i class="bi bi-check-circle-fill"></i>&nbsp;' . language('THERE IS NO ID LIKE THAT', @$_SESSION['systemLang']) . '</div>';
+      // prepare flash session variables
+      $_SESSION['flash_message'] = 'NO DATA FOUNDED';
+      $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+      $_SESSION['flash_message_class'] = 'danger';
+      $_SESSION['flash_message_status'] = false;
     }
-?>
-  <!-- start devices page -->
-  <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-    <!-- start header -->
-    <header class="header mb-3">
-      <?php redirectHome($msg, "back"); ?>
-    </header>
-  </div>
-<?php
+    // redirect to the previous page
+    redirectHome(null, "back", 0);
   } else {
     // include_once permission error module
     include_once $globmod . 'missing-data.php';

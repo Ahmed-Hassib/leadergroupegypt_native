@@ -2,6 +2,9 @@
 <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
   // get company id
   $company_id = isset($_POST['company-id']) && !empty($_POST['company-id']) ? $_POST['company-id'] : '';
+  // get back flag value
+  $is_back = isset($_GET['back']) && !empty($_GET['back']) ? 'back' : null;
+  // check if object of PiecesTypes class is created or not
   if (!isset($dev_company_obj)) {
     // create an object of PiecesTypes class
     $dev_company_obj = new ManufuctureCompanies();
@@ -36,17 +39,15 @@
     }
     // call delete_man_company function
     $dev_company_obj->delete_man_company($company_id);
-    // echo success message
-    $msg = '<div class="alert alert-success text-capitalize" dir=""><i class="bi bi-check-circle-fill"></i>&nbsp;' . language('COMPANY WAS DELETED SUCCESSFULLY', @$_SESSION['systemLang']) . '</div>';
-?>
-    <!-- start device company page -->
-    <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-      <!-- start header -->
-      <header class="header mb-3">
-        <?php redirectHome($msg, "back"); ?>
-      </header>
-    </div>
-<?php 
+    
+    // prepare flash session variables
+    $_SESSION['flash_message'] = 'COMPANY WAS DELETED SUCCESSFULLY';
+    $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
+    $_SESSION['flash_message_class'] = 'success';
+    $_SESSION['flash_message_status'] = true;
+
+    // redirect to the previous page
+    redirectHome(null, $is_back, 0);
   } else {
     // include no data founded
     include_once $globmod . 'no-data-founded-no-redirect.php';

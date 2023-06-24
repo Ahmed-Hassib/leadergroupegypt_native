@@ -1,6 +1,9 @@
 <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
   // get model id
   $model_id = isset($_POST['deleted-model-id']) && !empty($_POST['deleted-model-id']) ? $_POST['deleted-model-id'] : '';
+  // get back flag value
+  $is_back = isset($_GET['back']) && !empty($_GET['back']) ? 'back' : null;
+
   if (!isset($model_obj)) {
     // create an object of Model class
     $model_obj = new Models();
@@ -11,18 +14,14 @@
   if (!empty($model_id) && $is_exist == true) {
     // call delete_model function
     $model_obj->delete_model($model_id);
-    // echo success message
-    $msg = '<div class="alert alert-success text-capitalize" dir=""><i class="bi bi-check-circle-fill"></i>&nbsp;' . language('MODEL WAS DELETED SUCCESSFULLY', @$_SESSION['systemLang']) . '</div>';
-  
-  ?>
-  <!-- start device page -->
-  <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-    <!-- start header -->
-    <header class="header mb-3">
-      <?php redirectHome($msg, "back"); ?>
-    </header>
-  </div>
-  <?php } else {
+    // prepare flash session variables
+    $_SESSION['flash_message'] = 'MODEL WAS DELETED SUCCESSFULLY';
+    $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
+    $_SESSION['flash_message_class'] = 'success';
+    $_SESSION['flash_message_status'] = true;
+    // redirect to previous page
+    redirectHome($msg, "back");
+  } else {
     include_once $globmod . 'no-data-founded-no-redirect.php';
   }
 } else {

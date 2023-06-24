@@ -20,8 +20,13 @@
     $model_obj->delete_device_models($device_id);
     // call delete_device function
     $device_obj->delete_device($device_id);
-    // echo success message
-    $msg = '<div class="alert alert-success text-capitalize" dir=""><i class="bi bi-check-circle-fill"></i>&nbsp;' . language('DEVICE WAS DELETED SUCCESSFULLY', @$_SESSION['systemLang']) . '</div>';
+
+    // prepare flash session variables
+    $_SESSION['flash_message'] = 'DEVICE WAS DELETED SUCCESSFULLY';
+    $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
+    $_SESSION['flash_message_class'] = 'success';
+    $_SESSION['flash_message_status'] = true;
+    
     // redirect to previous page
     redirectHome(null, $is_back, 0); 
   } else {

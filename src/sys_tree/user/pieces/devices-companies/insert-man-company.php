@@ -11,27 +11,29 @@
   if (!empty($company_name)) {
     // check if type is exist or not
     if ($is_exist > 0) {
-      // echo danger message
-      $msg = '<div class="alert alert-danger text-capitalize" dir=""><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;' . language('THIS NAME IS ALREADY EXIST', @$_SESSION['systemLang']) . '</div>';
+      $_SESSION['flash_message'] = 'THIS NAME IS ALREADY EXIST';
+      $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+      $_SESSION['flash_message_class'] = 'danger';
+      $_SESSION['flash_message_status'] = false;
     } else {
       // call insert_new_type function
       $dev_company_obj->insert_new_man_company(array($company_name, get_date_now(), $_SESSION['UserID'], $_SESSION['company_id']));
-      // echo success message
-      $msg = '<div class="alert alert-success text-capitalize" dir=""><i class="bi bi-check-circle-fill"></i>&nbsp;' . language('COMPANY WAS ADDED SUCCESSFULLY', @$_SESSION['systemLang']) . '</div>';
+      // prepare flash session variables
+      $_SESSION['flash_message'] = 'COMPANY WAS ADDED SUCCESSFULLY';
+      $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
+      $_SESSION['flash_message_class'] = 'success';
+      $_SESSION['flash_message_status'] = true;
     }
   } else {
-    // data missed
-    $msg = '<div class="alert alert-warning text-capitalize" dir=""><i class="bi bi-check-circle-fill"></i>&nbsp;' . language('PIECE TYPE CANNOT BE EMPTY', @$_SESSION['systemLang']) . '</div>';
+    $_SESSION['flash_message'] = 'PIECE TYPE CANNOT BE EMPTY';
+    $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+    $_SESSION['flash_message_class'] = 'danger';
+    $_SESSION['flash_message_status'] = false;
   }
-?>
-  <!-- start pieces type page -->
-  <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-    <!-- start header -->
-    <header class="header mb-3">
-      <?php redirectHome($msg, "back"); ?>
-    </header>
-  </div>
-<?php } else {
+
+  // return to the previous page
+  redirectHome($msg, "back");
+} else {
   // include_once permission error module
   include_once $globmod . 'permission-error.php';
 } ?>
