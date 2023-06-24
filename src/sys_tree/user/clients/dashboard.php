@@ -3,14 +3,12 @@
   <!-- start stats -->
   <div class="stats">
     <div class="mb-3 hstack gap-3">
-      <div class="<?php if ($_SESSION['pcs_add'] == 0) {echo 'd-none';} ?>">
-        <a href="?do=add-new-client" class="btn btn-outline-primary py-1 fs-12">
-          <h6 class="h6 mb-0 text-center text-capitalize ">
-            <i class="bi bi-person-plus"></i>
-            <?php echo language('ADD NEW CLIENT', @$_SESSION['systemLang']) ?>
-          </h6>
-        </a>
-      </div>
+      <?php if ($_SESSION['clients_add'] == 1) { ?>
+      <a href="?do=add-new-client" class="btn btn-outline-primary py-1 fs-12">
+        <i class="bi bi-person-plus"></i>
+        <?php echo language('ADD NEW CLIENT', @$_SESSION['systemLang']) ?>
+      </a>
+      <?php } ?>
     </div>
     
     <!-- start new design -->
@@ -45,7 +43,7 @@
                 <?php $newPcsCounter = $db_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 1 AND `added_date` = CURRENT_DATE AND `company_id` = ".$_SESSION['company_id']); ?>
                 <?php if ($newPcsCounter > 0) { ?>
                   <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
-                    <span><?php echo $newPcsCounter ?></span>
+                    <span><?php echo $newPcsCounter .' '. language('NEW', @$_SESSION['systemLang']) ?></span>
                   </span>
                 <?php } ?>
               </div>
@@ -53,12 +51,12 @@
           </div>
         </div>
       </div>
-      
     </div>
     
+    <?php if ($_SESSION['clients_show'] == 1) { ?>
     <!-- latest added clients -->
     <div class="mb-3 row row-cols-1 g-3">
-      <div class="col-12 <?php if ($_SESSION['user_show'] == 0) {echo 'd-none';} ?>">
+      <div class="col-12">
         <div class="section-block">
           <div class="section-header">
             <h5 class="h5 text-capitalize"><?php echo language('LATEST ADDED CLIENTS', @$_SESSION['systemLang']) ?></h5>
@@ -85,20 +83,22 @@
                   <tr>
                     <!-- index -->
                     <td ><?php echo ++$index; ?></td>
-                    <!-- piece ip -->
+                    <!-- client ip -->
                     <td class="text-capitalize <?php echo $client['ip'] == '0.0.0.0' ? 'text-danger ' : '' ?>" data-ip="<?php echo convertIP($client['ip']) ?>"><?php echo $client['ip'] == '0.0.0.0' ?  language("NO DATA ENTERED", @$_SESSION['systemLang']) :"<a href='http://" . $client['ip'] . "' target='_blank'>" . $client['ip'] . '</a>'; ?></td>
-                    <!-- piece name -->
+                    <!-- client name -->
                     <td>
-                      <a class="<?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="?do=edit-piece&piece-id=<?php echo $client['id']; ?>" target="">
-                        <?php echo trim($client['full_name'], ' '); ?>
-                        <?php if ($client['direction_id'] == 0) { ?>
-                          <i class="bi bi-exclamation-triangle-fill text-danger" title="<?php echo language("DIRECTION NO DATA ENTERED", @$_SESSION['systemLang']) ?>"></i>
-                        <?php } ?>
-                      </a>
-                      <!-- <?php $diff = date_diff(date_create($client['added_date']), date_create(date('Y-m-d'))); ?>
-                      <span class="badge bg-danger p-1 <?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-1' : 'ms-1' ?>"><?php echo $diff->days <= 30 ? language("SINCE", @$_SESSION['systemLang']) . " $diff->days " . language('DAYS', @$_SESSION['systemLang']) : language("SINCE MORE THAN 30 DAYS", @$_SESSION['systemLang']) ?></span> -->
+                      <?php if ($_SESSION['clients_update'] == 1) { ?>
+                        <a href="?do=edit-client&client-id=<?php echo $client['id']; ?>" target="">
+                          <?php echo trim($client['full_name'], ' '); ?>
+                          <?php if ($client['direction_id'] == 0) { ?>
+                            <i class="bi bi-exclamation-triangle-fill text-danger" title="<?php echo language("DIRECTION NO DATA ENTERED", @$_SESSION['systemLang']) ?>"></i>
+                          <?php } ?>
+                        </a>
+                      <?php } else { ?>
+                        <span><?php echo trim($client['full_name'], ' '); ?></span>
+                      <?php } ?>
                     </td>
-                    <!-- piece direction -->
+                    <!-- client direction -->
                     <td class="text-capitalize" >
                       <?php if ($client['direction_id'] != 0) { ?>
                         <a href="<?php echo $nav_up_level ?>directions/index.php?do=show-direction-tree&dir-id=<?php echo $client['direction_id']; ?>">
@@ -112,12 +112,11 @@
                     <td><?php echo $client['added_date'] == '0000-00-00' ? language("NO DATA ENTERED", @$_SESSION['systemLang']) : $client['added_date'] ?></td>
                     <!-- control -->
                     <td>
-                      <a class="btn btn-success text-capitalize fs-12 <?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="?do=edit-client&piece-id=<?php echo $client['id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
-                      <?php if ($client['is_client'] == 0) { ?>
-                        <a class="btn btn-outline-primary text-capitalize fs-12 <?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>" href="?do=show-client&dir-id=<?php echo $client['direction_id'] ?>&srcId=<?php echo $client['id'] ?>" ><i class="bi bi-eye"></i><!-- <?php echo language('SHOW', @$_SESSION['systemLang']).' '.language('PIECES', @$_SESSION['systemLang']) ?> --></a>
+                      <?php if ($_SESSION['clients_update'] == 1) { ?>
+                        <a class="btn btn-success text-capitalize fs-12 py-1" href="?do=edit-client&client-id=<?php echo $client['id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
                       <?php } ?>
-                      <?php if ($_SESSION['pcs_delete'] == 1) { ?>
-                        <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deletePieceModal" id="delete-client" data-page-title="<?php echo $page_title ?>" data-piece-id="<?php echo $client['id'] ?>" data-piece-name="<?php echo $client['full_name'] ?>" onclick="confirm_delete_piece(this)"><i class="bi bi-trash"></i></button>
+                      <?php if ($_SESSION['clients_delete'] == 1) { ?>
+                        <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deleteClientModal" id="delete-client" data-client-id="<?php echo $client['id'] ?>" data-client-name="<?php echo $client['full_name'] ?>" onclick="confirm_delete_client(this, true)"><i class="bi bi-trash"></i></button>
                       <?php } ?>
                     </td>
                   </tr>
@@ -128,6 +127,7 @@
         </div>
       </div>
     </div>
+    <?php } ?>
   </div>    
   <!-- end stats -->
 </div>
