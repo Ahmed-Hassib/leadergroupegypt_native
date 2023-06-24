@@ -14,41 +14,9 @@
   $password   = isset($_POST['password'])   && !empty($_POST['password'])   ? trim($_POST['password'], ' ')   : '';
   $dir_id     = isset($_POST['direction'])  && !empty($_POST['direction'])  ? trim($_POST['direction'], ' ')  : '';
 
-  // check if client or not
-  if (isset($_POST['is-client'])) {
-    // get value
-    $is_client_value = $_POST['is-client'];
-    // switch ... case
-    switch ($is_client_value) {
-      case 0:
-        // make it client
-        $is_client   = 1;
-        $device_type = 0;
-      break;
-      
-      case 1:
-        // make it transmitter
-        $is_client   = 0;
-        $device_type = 1;
-      break;
-      
-      case 2:
-        // make it receiver
-        $is_client   = 0;
-        $device_type = 2;
-      break;
-      
-      default:
-        // make it default
-        $is_client   = -1;
-        $device_type = -1;
-      break;
-    }
-  } else {
-    // make it default
-    $is_client   = -1;
-    $device_type = -1;
-  }
+  // make it client
+  $is_client   = 1;
+  $device_type = 0;
 
   // get source id
   $source_id        = isset($_POST['source-id']) ? trim($_POST['source-id'], ' ')   : -1;
@@ -66,7 +34,6 @@
   $frequency        = trim($_POST['frequency'], ' ');
   $wave             = trim($_POST['wave'], ' ');
   $mac_add          = trim($_POST['mac-add'], ' ');
-  $internet_source  = trim($_POST['internet-source'], ' ');
 
   // validate the form
   $form_error = []; // error array
@@ -78,105 +45,107 @@
   if ($alt_source_id == $id) {
     $alt_source_id = 0;
   }
+  
+  // check if user is exist in database or not
+  $is_exist_name  = $pcs_obj->count_records("`id`", "`pieces_info`", "WHERE `full_name` = '$full_name' AND `company_id` = " . $_SESSION['company_id']);
+  $is_exist_mac   = !empty($macAdd) ? $pcs_obj->count_records("`pieces_mac_addr`.`id`", "`pieces_mac_addr`", "LEFT JOIN `pieces_info` ON `pieces_info`.`id` = `pieces_mac_addr`.`id` WHERE `pieces_mac_addr`.`mac_add` = $mac_add AND `pieces_info`.`company_id` = ".$_SESSION['company_id']) : 0;
+  $is_exist_ip    = $ip == '0.0.0.0' ? 0 : $pcs_obj->count_records("`id`", "`pieces_info`", "WHERE `ip` = '$ip' AND `direction_id` = $dir_id AND `company_id` = " . $_SESSION['company_id']);
 
-  // empty message
-  $msg = '';
+  // check piece name
+  if ($is_exist_name > 0) {
+    $form_error[] = 'this username is already exist';
+  }
+
+  // check piece mac
+  if ($is_exist_mac > 0) {
+    $form_error[] = 'this mac add is already exist';
+  }
+
+  // check piece mac
+  if ($is_exist_ip > 0) {
+    $form_error[] = 'this ip add is already exist';
+  }
+
   // check if empty form error
   if (empty($form_error)) {
-    // check if user is exist in database or not
-    $is_exist_name  = $pcs_obj->count_records("`id`", "`pieces_info`", "WHERE `full_name` = $full_name AND `company_id` = " . $_SESSION['company_id']);
-    $is_exist_mac   = !empty($macAdd) ? $pcs_obj->count_records("`pieces_mac_addr`.`id`", "`pieces_mac_addr`", "LEFT JOIN `pieces_info` ON `pieces_info`.`id` = `pieces_mac_addr`.`id` WHERE `pieces_mac_addr`.`mac_add` = $mac_add AND `pieces_info`.`company_id` = ".$_SESSION['company_id']) : 0;
-    $is_exist_ip    = $ip == '0.0.0.0' ? 0 : $pcs_obj->count_records("`id`", "`pieces_info`", "WHERE `ip` = '$ip' AND `direction_id` = $dir_id AND `company_id` = " . $_SESSION['company_id']);
-    // check piece name
-    if ($is_exist_name > 0) {
-      // show erroe message
-      $msg = '<div class="alert alert-warning text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;'.language('THIS USERNAME IS ALREADY EXIST', @$_SESSION['systemLang']).'</div>';
-    } elseif ($is_exist_mac > 0) {
-      $msg = '<div class="alert alert-warning text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;'.language('THIS MAC ADD IS ALREADY EXIST', @$_SESSION['systemLang']).'</div>';
-    } elseif ($is_exist_ip > 0) {
-      $msg = '<div class="alert alert-warning text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;'.language('THIS IP ADD IS ALREADY EXIST', @$_SESSION['systemLang']).'</div>';
-    } else {
-      // get current date
-      $date_now = get_date_now();
-      // call insert function
-      $is_inserted = $pcs_obj->insert_new_piece(array($full_name, $ip, $username, $password, $conn_type, $dir_id, $source_id, $alt_source_id, $is_client, $device_type, $device_id, $model_id, $_SESSION['UserID'], $date_now, $_SESSION['company_id'], $notes, $visit_time));
+    // get current date
+    $date_now = get_date_now();
+    // call insert function
+    $is_inserted = $pcs_obj->insert_new_piece(array($full_name, $ip, $username, $password, $conn_type, $dir_id, $source_id, $alt_source_id, $is_client, $device_type, $device_id, $model_id, $_SESSION['UserID'], $date_now, $_SESSION['company_id'], $notes, $visit_time));
 
-      // check address
-      if (!empty($address)) {
-        // echo "<br>* address is not empty<br>";
-        // insert address
-        $pcs_obj->insert_address($id, $address);
-      }
-      
-      // check frequency
-      if (!empty($frequency)) {
-        // echo "<br>* frequency is not empty<br>";
-        // insert frequency
-        $pcs_obj->insert_frequency($id, $frequency);
-      }
-      
-      // check mac_add
-      if (!empty($mac_add)) {
-        // echo "<br>* mac add is not empty<br>";
-        // insert mac_add
-        $pcs_obj->insert_mac_add($id, $mac_add);
-      }
-
-      // check pass_connection
-      if (!empty($pass_conn)) {
-        // echo "<br>* pass connection is not empty<br>";
-        // insert pass_conn
-        $pcs_obj->insert_pass_connection($id, $pass_conn);
-      }
-      
-      // check phones
-      if (!empty($phone)) {
-        // echo "<br>* phone is not empty<br>";
-        // insert phones
-        $pcs_obj->insert_phones($id, $phone);
-      }
-      
-      // check ssid
-      if (!empty($ssid)) {
-        // echo "<br>* ssid is not empty<br>";
-        // insert ssid
-        $pcs_obj->insert_ssid($id, $ssid);
-      }
-      
-      // check wave
-      if (!empty($wave)) {
-        // echo "<br>* wave is not empty<br>";
-        // insert wave
-        $pcs_obj->insert_wave($id, $wave);
-      }
-      
-      // check internet source
-      if (!empty($internet_source)) {
-        // echo "<br>* internet source is not empty<br>";
-        // insert internet source
-        $pcs_obj->insert_internet_source($id, $internet_source);
-      }
-      
-      // echo success message
-      $msg = '<div class="alert alert-success text-capitalize" dir="' . (@$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr') . '"><i class="bi bi-check-circle-fill"></i>&nbsp;' . language('PIECE/CLIENT ADDED SUCCESSFULLY', @$_SESSION['systemLang']) . '</div>';
+    // check address
+    if (!empty($address)) {
+      // echo "<br>* address is not empty<br>";
+      // insert address
+      $pcs_obj->insert_address($id, $address);
     }
+    
+    // check frequency
+    if (!empty($frequency)) {
+      // echo "<br>* frequency is not empty<br>";
+      // insert frequency
+      $pcs_obj->insert_frequency($id, $frequency);
+    }
+    
+    // check mac_add
+    if (!empty($mac_add)) {
+      // echo "<br>* mac add is not empty<br>";
+      // insert mac_add
+      $pcs_obj->insert_mac_add($id, $mac_add);
+    }
+
+    // check pass_connection
+    if (!empty($pass_conn)) {
+      // echo "<br>* pass connection is not empty<br>";
+      // insert pass_conn
+      $pcs_obj->insert_pass_connection($id, $pass_conn);
+    }
+    
+    // check phones
+    if (!empty($phone)) {
+      // echo "<br>* phone is not empty<br>";
+      // insert phones
+      $pcs_obj->insert_phones($id, $phone);
+    }
+    
+    // check ssid
+    if (!empty($ssid)) {
+      // echo "<br>* ssid is not empty<br>";
+      // insert ssid
+      $pcs_obj->insert_ssid($id, $ssid);
+    }
+    
+    // check wave
+    if (!empty($wave)) {
+      // echo "<br>* wave is not empty<br>";
+      // insert wave
+      $pcs_obj->insert_wave($id, $wave);
+    }
+    
+    // check internet source
+    if (!empty($internet_source)) {
+      // echo "<br>* internet source is not empty<br>";
+      // insert internet source
+      $pcs_obj->insert_internet_source($id, $internet_source);
+    }
+    
+    // prepare flash session variables
+    $_SESSION['flash_message'] = 'A NEW CLIENT WAS ADDED SUCCESSFULLY';
+    $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
+    $_SESSION['flash_message_class'] = 'success';
+    $_SESSION['flash_message_status'] = true;
   } else {
-    // echo success message
-    $msg = '<div class="alert alert-danger text-capitalize" dir="' . (@$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr') . '"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;' . language('A PROPLEM HAS BEEN HAPPEND WHILE INSERTING A PIECE/CLIENT', @$_SESSION['systemLang']) . '</div>';
-    // loop on errors
-    foreach($form_error as $error) {
-      $msg .= '<div class="alert alert-danger text-capitalize" dir="' . (@$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr') . '"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;' . language(strtoupper($error), @$_SESSION['systemLang']) . '</div>';
+    foreach ($form_error as $key => $error) {
+      // prepare flash session variables
+      $_SESSION['flash_message'][$key] = strtoupper($error);
+      $_SESSION['flash_message_icon'][$key] = 'bi-exclamation-triangle-fill';
+      $_SESSION['flash_message_class'][$key] = 'danger';
+      $_SESSION['flash_message_status'][$key] = false;
     }
   } 
-?>    
-<!-- start edit profile page -->
-<div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-    <!-- start header -->
-    <header class="header">
-      <?php redirectHome($msg, 'back'); ?>
-    </header>
-</div>
-<?php } else {
+  // redirect to previous page
+  redirectHome(null, 'back', 0);
+} else {
   // include permission error module
   include_once $globmod . 'permission-error.php';
-} ?>
+}
