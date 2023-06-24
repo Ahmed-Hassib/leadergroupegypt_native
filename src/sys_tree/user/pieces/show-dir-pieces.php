@@ -31,7 +31,7 @@ if ($_GET['type'] == 1) {
     </header>
     
     <div class="mb-3 hstack gap-3">
-      <?php if ($_SESSION['pcs_add'] == 0) { ?>
+      <?php if ($_SESSION['pcs_add'] == 1) { ?>
       <div>
         <a href="?do=add-new-piece" class="btn btn-outline-primary py-1 fs-12">
           <i class="bi bi-plus"></i>
@@ -82,7 +82,6 @@ if ($_GET['type'] == 1) {
         </thead>
         <tbody id="piecesTbl">
           <?php foreach ($all_data as $index => $piece) { ?>
-            <?php $name = $piece['is_client'] ? 'clients' : 'pieces' ?>
             <tr>
               <!-- index -->
               <td ><?php echo ++$index; ?></td>
