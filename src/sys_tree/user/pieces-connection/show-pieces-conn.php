@@ -4,46 +4,16 @@ $type = isset($_GET['type']) && !empty($_GET['type']) ? intval($_GET['type']) : 
 // get connection id
 $connection_id = isset($_GET['conn-id']) && !empty($_GET['conn-id']) ? intval($_GET['conn-id']) : 0;
 
-// switch case for type
-switch ($type) {
-  case 1:
-    // show all pieces of specific connection type
-    $condition = "WHERE `pieces_info`.`is_client` = 0 AND `pieces_info`.`connection_type` = $connection_id AND `pieces_info`.`company_id` = ".$_SESSION['company_id'];    // query condition
-    // check the connection id 
-    if ($connection_id != 0) {
-      // page subtitle
-      $section_title = language('SHOW ALL PIECES OF THE CONNECTION TYPE', @$_SESSION['systemLang']) .": <span class='text-uppercase'>". selectSpecificColumn("`connection_name`", "`connection_types`", "WHERE `id` = $connection_id")[0]['connection_name']."</span>";    
-    } else {    
-      // page subtitle
-      $section_title = "<span class='text-danger'>".language('SHOW ALL PIECES OF UNASSIGNED CONNECTION TYPE', @$_SESSION['systemLang'])."</span>";   
-    }
-    break;
+// show all clients of specific connection type
+$condition = "WHERE `pieces_info`.`connection_type` = $connection_id AND `pieces_info`.`company_id` = ".$_SESSION['company_id'];     // query condition
 
-  case 2:
-    // show all clients of specific connection type
-    $condition = "WHERE `pieces_info`.`is_client` = 1 AND `pieces_info`.`conn_type` = $connection_id AND `pieces_info`.`company_id` = ".$_SESSION['company_id'];     // query condition
-    // check the connection id 
-    if ($connection_id != 0) {
-      // page subtitle
-      $section_title = language('SHOW ALL CLIENTS OF THE CONNECTION TYPE', @$_SESSION['systemLang']) .": <span class='text-uppercase'>". selectSpecificColumn("`connection_name`", "`connection_types`", "WHERE `id` = $connection_id")[0]['connection_name']."</span>";    
-    } else {    
-      // page subtitle
-      $section_title = "<span class='text-danger'>".language('SHOW ALL CLIENTS OF UNASSIGNED CONNECTION TYPE', @$_SESSION['systemLang'])."</span>";
-    }
-    break;
-
-  default:
-    // show all clients of specific connection type
-    $condition = "WHERE `pieces_info`.`conn_type` = $connection_id AND `pieces_info`.`company_id` = ".$_SESSION['company_id'];     // query condition
-    // check the connection id 
-    if ($connection_id != 0) {
-      // page subtitle
-      $section_title = language('SHOW ALL PIECES/CLIENTS OF THE CONNECTION TYPE', @$_SESSION['systemLang']) .": <span class='text-uppercase'>". selectSpecificColumn("`connection_name`", "`connection_types`", "WHERE `id` = $connection_id")[0]['connection_name']."</span>";
-    } else {    
-      // page subtitle
-      $section_title = "<span class='text-danger'>".language('SHOW ALL PIECES/CLIENTS OF UNASSIGNED CONNECTION TYPE', @$_SESSION['systemLang'])."</span>";
-    }
-    break;
+// check the connection id 
+if ($connection_id != 0) {
+  // page subtitle
+  $section_title = language('SHOW ALL PIECES/CLIENTS OF THE CONNECTION TYPE', @$_SESSION['systemLang']) .": <span class='text-uppercase'>". selectSpecificColumn("`connection_name`", "`connection_types`", "WHERE `id` = $connection_id")[0]['connection_name']."</span>";
+} else {    
+  // page subtitle
+  $section_title = "<span class='text-danger'>".language('SHOW ALL PIECES/CLIENTS OF UNASSIGNED CONNECTION TYPE', @$_SESSION['systemLang'])."</span>";
 }
 
 if (!isset($pcs_obj)) {
@@ -113,7 +83,7 @@ if ($is_exist) {
               <!-- piece name -->
               <td>
                 <?php if ($_SESSION['pcs_show'] == 1 && $_SESSION['pcs_update'] == 1) { ?>
-                <a href="<?php echo $nav_up_level ?>pieces/index.php?name=<?php echo $name ?>&do=edit-piece&piece-id=<?php echo $piece['id']; ?>" target="">
+                <a href="<?php echo $nav_up_level ?>pieces/index.php?do=edit-piece&piece-id=<?php echo $piece['id']; ?>" target="">
                   <?php echo trim($piece['full_name'], ' ') ?>
                   <?php if ($piece['direction_id'] == 0) { ?>
                     <i class="bi bi-exclamation-triangle-fill text-danger" title="<?php echo language("DIRECTION NO DATA ENTERED", @$_SESSION['systemLang']) ?>"></i>
@@ -130,7 +100,7 @@ if ($is_exist) {
               <!-- piece username -->
               <td class="text-capitalize">
                 <?php if ($_SESSION['pcs_show'] == 1 && $_SESSION['pcs_update'] == 1) { ?>
-                <a href="<?php echo $nav_up_level ?>pieces/index.php?name=<?php echo $name ?>&do=edit-piece&piece-id=<?php echo $piece['id']; ?>">
+                <a href="<?php echo $nav_up_level ?>pieces/index.php?do=edit-piece&piece-id=<?php echo $piece['id']; ?>">
                   <?php echo $piece['username']; ?>
                 </a>
                 <?php } else { ?>
@@ -231,9 +201,11 @@ if ($is_exist) {
 
               <!-- control -->
               <td>
-                <a class="btn btn-success text-capitalize fs-12 <?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="<?php echo $nav_up_level ?>pieces/index.php?name=<?php echo $name ?>&do=edit-piece&piece-id=<?php echo $piece['id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
-                <?php if ($piece['is_client'] == 0) { ?>
-                  <a class="btn btn-outline-primary text-capitalize fs-12 <?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>" href="<?php echo $nav_up_level ?>pieces/index.php?name=<?php echo $name ?>&do=show-piece&dir-id=<?php echo $piece['direction_id'] ?>&src-id=<?php echo $piece['id'] ?>" ><i class="bi bi-eye"></i></a>
+                <?php if ($_SESSION['pcs_update'] == 1) { ?>
+                  <a class="btn btn-success text-capitalize fs-12 " href="<?php echo $nav_up_level ?>pieces/index.php?do=edit-piece&piece-id=<?php echo $piece['id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
+                <?php } ?>
+                <?php if ($piece['is_client'] == 0 && $_SESSION['pcs_show'] == 1) { ?>
+                  <a class="btn btn-outline-primary text-capitalize fs-12" href="<?php echo $nav_up_level ?>pieces/index.php?do=show-piece&dir-id=<?php echo $piece['direction_id'] ?>&src-id=<?php echo $piece['id'] ?>" ><i class="bi bi-eye"></i></a>
                 <?php } ?>
               </td>
             </tr>
