@@ -60,7 +60,10 @@
               // loop on types
               foreach ($types_data as $key => $type) {
                 // get count of pieces
-                $pcsCount = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `connection_type` = ".$type['id']);
+                $all_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `connection_type` = ".$type['id']);
+                $pcs_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `connection_type` = ".$type['id']);
+                $clients_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 1 AND `connection_type` = ".$type['id']);
+                $unknown_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` NOT IN (0, 1) AND `connection_type` = ".$type['id']);
                 // check counter
                 if($i > 9) { $i = 1; }
               ?>
@@ -68,12 +71,26 @@
                   <div class="card card-stat shadow-sm border border-1">
                     <div class="card-body">
                       <h5 class="h5 card-title text-uppercase"><?php echo $type['connection_name'] ?></h5>
-                      <span class="bg-info icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+                      <span class="bg-primary icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                         <span class="nums">
-                          <span class="num" data-goal="<?php echo $pcsCount ?>">0</span>
+                          <span class="num" data-goal="<?php echo $all_count ?>">0</span>
                         </span>
                       </span>
-                      <a href="?do=show-pieces-conn&type=1&conn-id=<?php echo $type['id'] ?>" class="stretched-link text-black"></a>
+                      <a href="?do=show-pieces-conn&conn-id=<?php echo $type['id'] ?>" class="stretched-link text-black"></a>
+                    </div>
+                    <div class="card-footer text-dark text-end fs-12 ">
+                      <div class="nums">
+                        <span class="num" data-goal="<?php echo $pcs_count ?>">0</span>
+                        <span><?php echo language('PIECE', @$_SESSION['systemLang']) ?></span>
+                      </div>
+                      <div class="nums">
+                        <span class="num" data-goal="<?php echo $clients_count ?>">0</span>
+                        <span><?php echo language('CLIENT', @$_SESSION['systemLang']) ?></span>
+                      </div>
+                      <div class="nums">
+                        <span class="num" data-goal="<?php echo $unknown_count ?>">0</span>
+                        <span><?php echo language('UNKNOWN', @$_SESSION['systemLang']) ?></span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -83,14 +100,14 @@
               <div class="col-12">
                 <div class="card card-stat bg-danger shadow-sm border border-1">
                   <div class="card-body">
-                    <?php $notAssigned = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `connection_type` = 0 AND `company_id` = ".$_SESSION['company_id']); ?>
+                    <?php $not_assigned = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `connection_type` = 0 AND `company_id` = ".$_SESSION['company_id']); ?>
                     <h5 class="h5 card-title text-uppercase"><?php echo language('NOT ASSIGNED', @$_SESSION['systemLang']) ?></h5>
                     <span class="bg-warning icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                       <span class="nums">
-                        <span class="num" data-goal="<?php echo $notAssigned ?>">0</span>
+                        <span class="num" data-goal="<?php echo $not_assigned ?>">0</span>
                       </span>
                     </span>
-                    <a href="?do=show-pieces-conn&type=1&conn-id=0" class="stretched-link text-black"></a>
+                    <a href="?do=show-pieces-conn&conn-id=0" class="stretched-link text-black"></a>
                   </div>
                 </div>
               </div>
