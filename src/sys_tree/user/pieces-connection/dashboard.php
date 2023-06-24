@@ -100,7 +100,12 @@
               <div class="col-12">
                 <div class="card card-stat bg-danger shadow-sm border border-1">
                   <div class="card-body">
-                    <?php $not_assigned = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `connection_type` = 0 AND `company_id` = ".$_SESSION['company_id']); ?>
+                    <?php 
+                    $not_assigned = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `connection_type` = 0 AND `company_id` = ".$_SESSION['company_id']);
+                    $not_assigned_pcs_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `connection_type` = 0 AND `pieces_info`.`company_id` = ".$_SESSION['company_id']);
+                    $not_assigned_clients_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 1 AND `connection_type` = 0 AND `pieces_info`.`company_id` = ".$_SESSION['company_id']);
+                    $not_assigned_unknown_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` NOT IN (0, 1) AND `connection_type` = 0 AND `pieces_info`.`company_id` = ".$_SESSION['company_id']);
+                    ?>
                     <h5 class="h5 card-title text-uppercase"><?php echo language('NOT ASSIGNED', @$_SESSION['systemLang']) ?></h5>
                     <span class="bg-warning icon-container <?php echo @$_SESSION['systemLang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
                       <span class="nums">
@@ -108,6 +113,20 @@
                       </span>
                     </span>
                     <a href="?do=show-pieces-conn&conn-id=0" class="stretched-link text-black"></a>
+                  </div>
+                  <div class="card-footer text-white text-end fs-12 ">
+                    <div class="nums">
+                      <span class="num" data-goal="<?php echo $not_assigned_pcs_count ?>">0</span>
+                      <span><?php echo language('PIECE', @$_SESSION['systemLang']) ?></span>
+                    </div>
+                    <div class="nums">
+                      <span class="num" data-goal="<?php echo $not_assigned_clients_count ?>">0</span>
+                      <span><?php echo language('CLIENT', @$_SESSION['systemLang']) ?></span>
+                    </div>
+                    <div class="nums">
+                      <span class="num" data-goal="<?php echo $not_assigned_unknown_count ?>">0</span>
+                      <span><?php echo language('UNKNOWN', @$_SESSION['systemLang']) ?></span>
+                    </div>
                   </div>
                 </div>
               </div>
