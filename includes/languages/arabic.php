@@ -679,9 +679,9 @@ function languageAr($phrase)
     'MODEL WAS ADDED SUCCESSFULLY'      => 'تم اضافة بيانات الموديل بنجاح',
     'MODEL WAS UPDATED SUCCESSFULLY'    => 'تم تعديل بيانات الموديل بنجاح',
     'MODEL WAS DELETED SUCCESSFULLY'    => 'تم حذف بيانات الموديل بنجاح',
-    'MODELS WAS ADDED SUCCESSFULLY'     => 'تم اضافة بيانات جميع الموديلات بنجاح',
-    'MODELS WAS UPDATED SUCCESSFULLY'   => 'تم تعديل بيانات جميع الموديلات بنجاح',
-    'MODELS WAS DELETED SUCCESSFULLY'   => 'تم حذف بيانات جميع الموديلات بنجاح',
+    'MODELS WERE ADDED SUCCESSFULLY'    => 'تم اضافة بيانات جميع الموديلات بنجاح',
+    'MODELS WERE UPDATED SUCCESSFULLY'  => 'تم تعديل بيانات جميع الموديلات بنجاح',
+    'MODELS WERE DELETED SUCCESSFULLY'  => 'تم حذف بيانات جميع الموديلات بنجاح',
     'SHOW ALL DEVICES OF COMPANY'       => 'عرض جميع اجهزة شركة',
     'SELECT MANUFACTURE COMPANY'        => 'اختر الشركة المصنعة',
 
