@@ -224,6 +224,18 @@ function get_page_dependencies($page_role, $file_type) {
       ],
       'fonts' => [],  
     ],
+    
+    'sys_tree_clients' => [
+      'css' => [],
+      'js' => [
+        '1' => 'clients.js',
+      ],
+      'node' => [
+        'css' => [],
+        'js' => []
+      ],
+      'fonts' => [],  
+    ],
 
     'sys_tree_dir' => [
       'css' => [
