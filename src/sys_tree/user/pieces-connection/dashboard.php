@@ -60,10 +60,10 @@
               // loop on types
               foreach ($types_data as $key => $type) {
                 // get count of pieces
-                $all_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `connection_type` = ".$type['id']);
-                $pcs_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `connection_type` = ".$type['id']);
-                $clients_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 1 AND `connection_type` = ".$type['id']);
-                $unknown_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` NOT IN (0, 1) AND `connection_type` = ".$type['id']);
+                $all_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `connection_type` = ".$type['id']. " AND `pieces_info`.`company_id` = ".$_SESSION['company_id']);
+                $pcs_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `connection_type` = ".$type['id']. " AND `pieces_info`.`company_id` = ".$_SESSION['company_id']);
+                $clients_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 1 AND `connection_type` = ".$type['id']. " AND `pieces_info`.`company_id` = ".$_SESSION['company_id']);
+                $unknown_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` NOT IN (0, 1) AND `connection_type` = ".$type['id']. " AND `pieces_info`.`company_id` = ".$_SESSION['company_id']);
                 // check counter
                 if($i > 9) { $i = 1; }
               ?>
