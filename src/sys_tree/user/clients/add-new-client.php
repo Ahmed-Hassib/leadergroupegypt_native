@@ -349,10 +349,12 @@
 
     <!-- submit -->
     <div class="hstack gap-3">
-      <button type="button" form="addClient" class="btn btn-primary text-capitalize bg-gradient fs-12 p-1 <?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" id="add-piece" <?php if ($_SESSION['pcs_add'] == 0) {echo 'disabled';} ?> onclick="form_validation(this.form, 'submit')">
+      <?php if ($_SESSION['clients_add'] == 1) { ?>
+      <button type="button" form="addClient" class="btn btn-primary text-capitalize bg-gradient fs-12 p-1 <?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" id="add-piece" onclick="form_validation(this.form, 'submit')">
         <i class="bi bi-plus"></i>
         <?php echo language('ADD NEW CLIENT', @$_SESSION['systemLang']); ?>
       </button>
+      <?php } ?>
     </div>
   </form>
   <!-- end form -->
