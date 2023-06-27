@@ -24,14 +24,14 @@ if ($_SESSION['mal_show'] == 1) {
 <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
   <!-- start stats -->
   <div class="stats">
-    <div class="mb-3 <?php if ($_SESSION['mal_add'] == 0) {echo 'd-none';} ?>">
-      <a href="?do=add-new-malfunction" class="btn btn-outline-primary py-1 shadow-sm">
-        <h6 class="h6 mb-0 text-center text-capitalize fs-12">
-          <i class="bi bi-plus"></i>
-          <?php echo language('ADD NEW MALFUNCTION', @$_SESSION['systemLang']) ?>
-        </h6>
+    <?php if ($_SESSION['mal_add'] == 1) { ?>
+    <div class="mb-3 hstack gap-3">
+      <a href="?do=add-new-malfunction" class="btn btn-outline-primary py-1 fs-12 shadow-sm">
+        <i class="bi bi-plus"></i>
+        <?php echo language('ADD NEW MALFUNCTION', @$_SESSION['systemLang']) ?>
       </a>
     </div>
+    <?php } ?>
     <!-- start new design -->
     <div class="mb-3 row row-cols-sm-1 row-cols-md-2 g-3 align-items-stretch justify-content-start">
       <!-- malfunction of today section -->
@@ -110,10 +110,8 @@ if ($_SESSION['mal_show'] == 1) {
             <p class="text-muted "><?php echo language("HERE WILL SHOW ALL STATISTICS ABOUT MALFUNCTIONS OF THIS MONTH", @$_SESSION['systemLang']) ?></p>
             <hr>
           </header>
-          <?php
-            $start_date  = Date('Y-m-1');
-            $end_date    = Date('Y-m-30');
-          ?>
+          <?php $start_date  = Date('Y-m-1'); ?>
+          <?php $end_date    = Date('Y-m-30'); ?>
           <div class="row row-cols-sm-2 gx-3 gy-5">
             <div class="col-6">
               <div class="card card-stat bg-total bg-gradient">
@@ -394,9 +392,9 @@ if ($_SESSION['mal_show'] == 1) {
           </header>
           <?php 
           // get malfunctions of today
-          $todayMal = $mal_obj->select_specific_column("*", "`malfunctions`", "WHERE `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1 ORDER BY `added_time` DESC LIMIT 5");
+          $today_mal = $mal_obj->select_specific_column("*", "`malfunctions`", "WHERE `added_date` = '".get_date_now()."' AND `company_id` = ".$_SESSION['company_id'] ." $techCondition1 ORDER BY `added_time` DESC LIMIT 5");
           // check if array not empty
-          if (!empty($todayMal)) {
+          if (!empty($today_mal)) {
             $index = 0;
           ?>
           <div class="table-responsive-sm">
@@ -406,7 +404,7 @@ if ($_SESSION['mal_show'] == 1) {
                   <th style="max-width: 50px;">#</th>
                   <th><?php echo language('PIECE/CLIENT NAME', @$_SESSION['systemLang']) ?></th>
                   <th><?php echo language('THE ADDRESS', @$_SESSION['systemLang']) ?></th>
-                  <th><?php echo language('PHONE', @$_SESSION['systemLang']) ?></th>
+                  <th style="max-width: 100px"><?php echo language('PHONE', @$_SESSION['systemLang']) ?></th>
                   <th><?php echo language('TECHNICAL NAME', @$_SESSION['systemLang']) ?></th>
                   <th><?php echo language('STATUS', @$_SESSION['systemLang']) ?></th>
                   <th style="width: 200px"><?php echo language('HAVE MEDIA', @$_SESSION['systemLang']) ?></th>
@@ -416,7 +414,7 @@ if ($_SESSION['mal_show'] == 1) {
               <tbody>
                 <?php
                 // loop on data
-                foreach ($todayMal as $index => $mal) {
+                foreach ($today_mal as $index => $mal) {
                   // get client info
                   $client_name  = $mal_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = ".$mal['client_id'])[0]['full_name'];
                   $client_type  = $mal_obj->select_specific_column("`is_client`", "`pieces_info`", "WHERE `id` = ".$mal['client_id'])[0]['is_client'];
@@ -426,59 +424,82 @@ if ($_SESSION['mal_show'] == 1) {
                 ?>
                   <tr>
                     <td><?php echo ++$index; ?></td>
-
+                    <!-- name -->
                     <td style="width: 100px">
                       <a href="<?php echo $nav_up_level ?>pieces/index.php?name=<?php echo $client_type > 0 ? 'clients' : 'pieces' ?>&do=edit-piece&piece-id=<?php echo $mal['client_id'] ?>">
                         <?php echo !empty($client_name) ? $client_name : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>
                       </a>
                     </td>
-
-                    <td style="width: 100px" class="<?php echo empty($client_addr) ? 'text-danger ' : '' ?>"><?php echo !empty($client_addr) ? $client_addr[0]['address'] : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?></td>
-
-                    <td style="width: 100px" class="<?php echo empty($client_phone) ? 'text-danger ' : '' ?>"><?php echo !empty($client_phone) ? $client_phone[0]['phone'] : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?></td>
-
+                    <!-- address -->
+                    <td style="width: 100px" class="<?php echo empty($client_addr) ? 'text-danger ' : '' ?>">
+                      <?php 
+                      if (!empty($client_addr)) {
+                        if (strlen($client_addr[0]['address']) > 30) {
+                          echo trim(substr($client_addr[0]['address'], 0, 30), '') . "...";
+                        } else {
+                          echo $client_addr[0]['address'];
+                        }
+                      } else {
+                        echo language('NO DATA ENTERED', @$_SESSION['systemLang']);
+                      }
+                      ?>
+                    </td>
+                    <td style="width: 100px" class="<?php echo empty($client_addr) ? 'text-danger ' : '' ?>">
+                    <!-- phone -->
+                      <?php 
+                      if (!empty($client_phone)) {
+                        if (strlen($client_phone[0]['phone']) > 15) {
+                          echo trim(substr($client_phone[0]['phone'], 0, 15), '') . "...";
+                        } else {
+                          echo $client_phone[0]['phone'];
+                        }
+                      } else {
+                        echo language('NO DATA ENTERED', @$_SESSION['systemLang']);
+                      }
+                      ?>
+                    </td>
+                    <!-- technical name -->
                     <td style="width: 100px">
                       <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $mal['tech_id'] ?>">
-                        <?php echo !empty($tech_name)   ? $tech_name    : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>
+                        <?php echo !empty($tech_name) ? $tech_name : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>
                       </a>
                     </td>
-
+                    
+                    <!-- malfunction status -->
                     <td style="width: 50px">
-                    <?php
-                    if ($mal['mal_status'] == 0) {
-                      $iconStatus   = "bi-x-circle-fill text-danger";
-                      $titleStatus  = language('UNFINISHED', @$_SESSION['systemLang']);
-                    } elseif ($mal['mal_status'] == 1) {
-                      $iconStatus   = "bi-check-circle-fill text-success";
-                      $titleStatus  = language('FINISHED', @$_SESSION['systemLang']);
-                    } elseif ($mal['mal_status'] == 2) {
-                      $iconStatus   = "bi-exclamation-circle-fill text-warning";
-                      $titleStatus  = language('DELAYED', @$_SESSION['systemLang']);
-                    } else {
-                      $iconStatus   = "bi-dash-circle-fill text-info";
-                      $titleStatus  = language('NO STATUS', @$_SESSION['systemLang']);
-                    }
-                    ?>
-                    <i class="bi <?php echo $iconStatus ?>" title="<?php echo $titleStatus ?>"></i>
+                      <?php
+                      if ($mal['mal_status'] == 0) {
+                        $iconStatus   = "bi-x-circle-fill text-danger";
+                        $titleStatus  = language('UNFINISHED', @$_SESSION['systemLang']);
+                      } elseif ($mal['mal_status'] == 1) {
+                        $iconStatus   = "bi-check-circle-fill text-success";
+                        $titleStatus  = language('FINISHED', @$_SESSION['systemLang']);
+                      } elseif ($mal['mal_status'] == 2) {
+                        $iconStatus   = "bi-exclamation-circle-fill text-warning";
+                        $titleStatus  = language('DELAYED', @$_SESSION['systemLang']);
+                      } else {
+                        $iconStatus   = "bi-dash-circle-fill text-info";
+                        $titleStatus  = language('NO STATUS', @$_SESSION['systemLang']);
+                      }
+                      ?>
+                      <i class="bi <?php echo $iconStatus ?>" title="<?php echo $titleStatus ?>"></i>
                     </td>
-
+                  
+                    <!-- malfunction media status -->
                     <td style="width: 50px">
                       <?php 
                         $have_media = $mal_obj->count_records("`id`", "`malfunctions_media`", "WHERE `mal_id` = ".$mal['mal_id']);
-                        if ($have_media > 0) {
-                          echo language('MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
-                        } else {
-                          echo language('NO MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
-                        }
+                        $have_media_status = $have_media > 0 ? 'MEDIA HAVE BEEN ATTACHED' : 'NO MEDIA HAVE BEEN ATTACHED';
+                        echo language($have_media_status, @$_SESSION['systemLang']);
                       ?>
                     </td>
-
+                    <!-- control buttons -->
                     <td style="width: 50px">
                       <?php if ($_SESSION['mal_show'] == 1) { ?>
                         <a href="?do=edit-malfunction-info&malid=<?php echo $mal['mal_id'] ?>" target="" class="btn btn-outline-primary me-1 fs-12"><i class="bi bi-eye"></i></a>
                       <?php } ?>
                       <?php if ($_SESSION['comb_delete'] == 1) { ?>
-                        <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#delete-malfunction-modal" id="delete-mal" data-mal-id="<?php echo $mal['mal_id'] ?>"><i class="bi bi-trash"></i></button>
+                        <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#delete-malfunction-modal" id="delete-mal" data-mal-id="<?php echo $mal['mal_id'] ?>" onclick="put_mal_data_into_modal(this, true)"><i class="bi bi-trash"></i></button>
                       <?php } ?>
                     </td>
                   </tr>
@@ -494,8 +515,8 @@ if ($_SESSION['mal_show'] == 1) {
     </div>
     <?php } ?>
 
-    <?php $latestMal = $mal_obj->select_specific_column("*", "`malfunctions`", "WHERE `company_id` = ".$_SESSION['company_id'] ." $techCondition1 ORDER BY `added_date` DESC, `added_time` DESC LIMIT 5"); ?>
-    <?php if (!empty($latestMal)) { ?>
+    <?php $latest_mal = $mal_obj->select_specific_column("*", "`malfunctions`", "WHERE `company_id` = ".$_SESSION['company_id'] ." $techCondition1 ORDER BY `added_date` DESC, `added_time` DESC LIMIT 5"); ?>
+    <?php if (!empty($latest_mal)) { ?>
     <div class="mb-3 row">
       <div class="col-12">
         <div class="section-block">
@@ -510,7 +531,7 @@ if ($_SESSION['mal_show'] == 1) {
                 <tr>
                   <th><?php echo language('PIECE/CLIENT NAME', @$_SESSION['systemLang']) ?></th>
                   <th><?php echo language('THE ADDRESS', @$_SESSION['systemLang']) ?></th>
-                  <th><?php echo language('PHONE', @$_SESSION['systemLang']) ?></th>
+                  <th style="max-width: 100px"><?php echo language('PHONE', @$_SESSION['systemLang']) ?></th>
                   <th><?php echo language('TECHNICAL NAME', @$_SESSION['systemLang']) ?></th>
                   <th><?php echo language('STATUS', @$_SESSION['systemLang']) ?></th>
                   <th style="width: 200px"><?php echo language('HAVE MEDIA', @$_SESSION['systemLang']) ?></th>
@@ -520,7 +541,7 @@ if ($_SESSION['mal_show'] == 1) {
               <tbody>
                 <?php
                 // loop on data
-                foreach ($latestMal as $index => $mal) {
+                foreach ($latest_mal as $index => $mal) {
                   // get client info
                   $client_name  = $mal_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = ".$mal['client_id'])[0]['full_name'];
                   $client_type  = $mal_obj->select_specific_column("`is_client`", "`pieces_info`", "WHERE `id` = ".$mal['client_id'])[0]['is_client'];
@@ -529,76 +550,82 @@ if ($_SESSION['mal_show'] == 1) {
                   $tech_name    = $mal_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$mal['tech_id'])[0]['UserName'];
                 ?>
                   <tr>
-                    <td style="width: 150px">
+                    <!-- name -->
+                    <td style="width: 100px">
                       <a href="<?php echo $nav_up_level ?>pieces/index.php?name=<?php echo $client_type > 0 ? 'clients' : 'pieces' ?>&do=edit-piece&piece-id=<?php echo $mal['client_id'] ?>">
                         <?php echo !empty($client_name) ? $client_name : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>
                       </a>
                     </td>
-
-                    <td style="width: 200px" class="<?php echo empty($client_addr) ? 'text-danger ' : '' ?>">
+                    <!-- address -->
+                    <td style="width: 100px" class="<?php echo empty($client_addr) ? 'text-danger ' : '' ?>">
                       <?php 
-                      $addr = !empty($client_addr) ? $client_addr[0]['address'] : language('NO DATA ENTERED', @$_SESSION['systemLang']);
-                      if (!empty($client_addr) && strlen($addr) > 50) {
-                        echo trim(substr($addr, 0, 50), '') . "...";
+                      if (!empty($client_addr)) {
+                        if (strlen($client_addr[0]['address']) > 30) {
+                          echo trim(substr($client_addr[0]['address'], 0, 30), '') . "...";
+                        } else {
+                          echo $client_addr[0]['address'];
+                        }
                       } else {
-                        echo $addr;
+                        echo language('NO DATA ENTERED', @$_SESSION['systemLang']);
                       }
                       ?>
                     </td>
-
-                    <td style="width: 100px" class="<?php echo empty($client_phone) ? 'text-danger ' : '' ?>">
+                    <!-- phone -->
+                    <td style="width: 100px" class="<?php echo empty($client_addr) ? 'text-danger ' : '' ?>">
                       <?php 
-                      $phone = !empty($client_phone) ? $client_phone[0]['phone'] : language('NO DATA ENTERED', @$_SESSION['systemLang']);
-                      if (!empty($client_phone) && strlen($phone) > 11) {
-                        echo trim(substr($phone, 0, 11), '') . "...";
+                      if (!empty($client_phone)) {
+                        if (strlen($client_phone[0]['phone']) > 11) {
+                          echo trim(substr($client_phone[0]['phone'], 0, 11), '') . "...";
+                        } else {
+                          echo $client_phone[0]['phone'];
+                        }
                       } else {
-                        echo $phone;
+                        echo language('NO DATA ENTERED', @$_SESSION['systemLang']);
                       }
                       ?>
                     </td>
-
-                    <td style="width: 50px">
+                    <!-- technical name -->
+                    <td style="width: 100px">
                       <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $mal['tech_id'] ?>">
-                        <?php echo !empty($tech_name)   ? $tech_name    : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>
+                        <?php echo !empty($tech_name) ? $tech_name : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>
                       </a>
                     </td>
-
-                    <td style="width: 25px">
-                    <?php
-                    if ($mal['mal_status'] == 0) {
-                      $iconStatus   = "bi-x-circle-fill text-danger";
-                      $titleStatus  = language('UNFINISHED', @$_SESSION['systemLang']);
-                    } elseif ($mal['mal_status'] == 1) {
-                      $iconStatus   = "bi-check-circle-fill text-success";
-                      $titleStatus  = language('FINISHED', @$_SESSION['systemLang']);
-                    } elseif ($mal['mal_status'] == 2) {
-                      $iconStatus   = "bi-exclamation-circle-fill text-warning";
-                      $titleStatus  = language('DELAYED', @$_SESSION['systemLang']);
-                    } else {
-                      $iconStatus   = "bi-dash-circle-fill text-info";
-                      $titleStatus  = language('NO STATUS', @$_SESSION['systemLang']);
-                    }
-                    ?>
-                    <i class="bi <?php echo $iconStatus ?>" title="<?php echo $titleStatus ?>"></i>
+                    
+                    <!-- malfunction status -->
+                    <td style="width: 50px">
+                      <?php
+                      if ($mal['mal_status'] == 0) {
+                        $iconStatus   = "bi-x-circle-fill text-danger";
+                        $titleStatus  = language('UNFINISHED', @$_SESSION['systemLang']);
+                      } elseif ($mal['mal_status'] == 1) {
+                        $iconStatus   = "bi-check-circle-fill text-success";
+                        $titleStatus  = language('FINISHED', @$_SESSION['systemLang']);
+                      } elseif ($mal['mal_status'] == 2) {
+                        $iconStatus   = "bi-exclamation-circle-fill text-warning";
+                        $titleStatus  = language('DELAYED', @$_SESSION['systemLang']);
+                      } else {
+                        $iconStatus   = "bi-dash-circle-fill text-info";
+                        $titleStatus  = language('NO STATUS', @$_SESSION['systemLang']);
+                      }
+                      ?>
+                      <i class="bi <?php echo $iconStatus ?>" title="<?php echo $titleStatus ?>"></i>
                     </td>
-
+                  
+                    <!-- malfunction media status -->
                     <td style="width: 50px">
                       <?php 
                         $have_media = $mal_obj->count_records("`id`", "`malfunctions_media`", "WHERE `mal_id` = ".$mal['mal_id']);
-                        if ($have_media > 0) {
-                          echo language('MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
-                        } else {
-                          echo language('NO MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
-                        }
+                        $have_media_status = $have_media > 0 ? 'MEDIA HAVE BEEN ATTACHED' : 'NO MEDIA HAVE BEEN ATTACHED';
+                        echo language($have_media_status, @$_SESSION['systemLang']);
                       ?>
                     </td>
-
+                    <!-- control buttons -->
                     <td style="width: 50px">
                       <?php if ($_SESSION['mal_show'] == 1) { ?>
                         <a href="?do=edit-malfunction-info&malid=<?php echo $mal['mal_id'] ?>" target="" class="btn btn-outline-primary me-1 fs-12"><i class="bi bi-eye"></i></a>
                       <?php } ?>
                       <?php if ($_SESSION['comb_delete'] == 1) { ?>
-                        <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#delete-malfunction-modal" id="delete-mal" data-mal-id="<?php echo $mal['mal_id'] ?>"><i class="bi bi-trash"></i></button>
+                        <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#delete-malfunction-modal" id="delete-mal" data-mal-id="<?php echo $mal['mal_id'] ?>" onclick="put_mal_data_into_modal(this, true)"><i class="bi bi-trash"></i></button>
                       <?php } ?>
                     </td>
                   </tr>
@@ -615,6 +642,9 @@ if ($_SESSION['mal_show'] == 1) {
   <!-- end stats -->
 </div>
 <!-- end home stats container -->
-
-<!-- delete malfunction modal -->
-<?php include_once 'delete-malfunction-modal.php' ?>
+<?php 
+if ($_SESSION['mal_delete'] == 1) {
+  // delete malfunction modal
+  include_once 'delete-malfunction-modal.php';
+} 
+?>
