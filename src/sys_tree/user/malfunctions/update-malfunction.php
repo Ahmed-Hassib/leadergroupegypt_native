@@ -1,6 +1,4 @@
 <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  // final message
-  $msg = '';
   if (!isset($mal_obj)) {
     // create an object of Malfunction class
     $mal_obj = new Malfunction();
@@ -61,21 +59,20 @@
           }
           break;
       }
-      // success message
-      $msg = '<div class="alert alert-success text-capitalize"><i class="bi bi-check-circle-fill"></i>&nbsp;'.language("MALFUNCTION WAS UPDATED SUCCESSFULLY", @$_SESSION['systemLang']).'</div>';
+      // prepare flash session variables
+      $_SESSION['flash_message'] = 'MALFUNCTION WAS UPDATED SUCCESSFULLY';
+      $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
+      $_SESSION['flash_message_class'] = 'success';
+      $_SESSION['flash_message_status'] = true;
     } 
-    ?>
-    <!-- start edit profile page -->
-    <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-      <!-- start header -->
-      <header class="header">
-        <?php redirectHome($msg, 'back'); ?>
-      </header>
-    </div>
-  <?php
+    // redirect to the previous page
+    redirectHome(null,'back', 0);
   } else {
-    // include no data founded
-    include_once $globmod . 'no-data-founded.php';
+    // prepare flash session variables
+    $_SESSION['flash_message'] = 'NO DATA FOUNDED';
+    $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+    $_SESSION['flash_message_class'] = 'danger';
+    $_SESSION['flash_message_status'] = false;
   }
 } else {
   // include no data founded
