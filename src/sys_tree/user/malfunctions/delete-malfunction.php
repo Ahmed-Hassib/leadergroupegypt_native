@@ -5,6 +5,9 @@ if (!isset($mal_obj)) {
 }
 // get malfunction id
 $mal_id = isset($_GET['mal-id']) && intval($_GET['mal-id']) ? intval($_GET['mal-id']) : 0;
+// get back flag if return back is possible
+$is_back = isset($_GET['back']) && !empty($_GET['back']) ? 'back' : null;
+
 // check if the current malfunction id is exist or not
 $is_exist = $mal_obj->is_exist("`mal_id`", "`malfunctions`", $mal_id);
 ?>
@@ -13,22 +16,21 @@ $is_exist = $mal_obj->is_exist("`mal_id`", "`malfunctions`", $mal_id);
   $is_deleted = $mal_obj->delete_malfunction($mal_id);
   // check if deleted
   if ($is_deleted) {
-    // show the successfull messgae
-    $msg  = '<div class="alert alert-success text-capitalize"><i class="bi bi-check-circle-fill"></i>&nbsp;'.language("MALFUNCTION WAS DELETED SUCCESSFULLY").'</div>';
-  } else {
-    // show warning message
-    $msg  = '<div class="alert alert-success text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;'.language("A PROBLEM WAS HAPPENED WHILE DELETING THE MALFUNCTION").'</div>';
+    // prepare flash session variables
+    $_SESSION['flash_message'] = 'MALFUNCTION WAS DELETED SUCCESSFULLY';
+    $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
+    $_SESSION['flash_message_class'] = 'success';
+    $_SESSION['flash_message_status'] = true;
+  } else {    
+    // prepare flash session variables
+    $_SESSION['flash_message'] = 'A PROBLEM WAS HAPPENED WHILE DELETING THE MALFUNCTION';
+    $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+    $_SESSION['flash_message_class'] = 'danger';
+    $_SESSION['flash_message_status'] = false;
   }
-  ?>
-  <!-- start edit profile page -->
-  <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-    <!-- start header -->
-    <header class="header">
-      <?php redirectHome($msg); ?>
-    </header>
-  </div>
-<?php } else {
+  // redirect to the previous page
+  redirectHome(null, $is_back, 0);
+} else {
   // include no data founded
   include_once $globmod . 'no-data-founded-no-redirect.php';
 }
-?>
