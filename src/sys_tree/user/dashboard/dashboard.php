@@ -193,10 +193,10 @@
       <?php } else { ?>
         <div class="mb-3 row row-cols-md-3 g-3 justify-content-center">
           <div class="col">
-            <div class="card card-stat bg-danger py-4 px-1">
-              <div class="card-body text-white">
+            <div class="card bg-danger py-4 px-1">
+              <div class="pt-0 card-body text-white">
                 <span class="" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr"; ?>">
-                  <i class="bi bi-exclamation-triangle-fill" style="font-size: 1.5rem"></i>
+                  <i class="bi bi-exclamation-triangle-fill" style="font-size: 3.5rem"></i>
                   <br>&nbsp;
                   <?php echo language("YOUR LICENSE HAD BEEN ENDED, PLEASE CALL THE TECHNICAL SUPPORT", @$_SESSION['systemLang']) ?>
                 </span>
