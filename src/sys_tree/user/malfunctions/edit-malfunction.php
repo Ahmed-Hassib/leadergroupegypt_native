@@ -36,15 +36,15 @@ if ($is_exist_mal == true) {
       <!-- submit -->
       <div class="mb-3 hstack gap-2">
         <?php if ($_SESSION['mal_update'] == 1 || ($_SESSION['UserID'] == $mal_info['tech_id'] && $_SESSION['isTech'] == 1)) { ?>
-        <div class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
-          <button type="submit" form="edit-malfunction-info" class="btn btn-primary text-capitalize form-control bg-gradient fs-12 py-1" id="update-malfunctions">
-            <i class="bi bi-check-all"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
-          </button>
-        </div>
+          <div class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
+            <button type="submit" form="edit-malfunction-info" class="btn btn-primary text-capitalize form-control bg-gradient fs-12 py-1" id="update-malfunctions" >
+              <i class="bi bi-check-all"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
+            </button>
+          </div>
         <?php } ?>
         <?php if ($_SESSION['mal_delete'] == 1) { ?> 
         <div>
-          <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 py-1" data-bs-toggle="modal" data-bs-target="#deleteMalModal">
+          <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 py-1" data-bs-toggle="modal" data-bs-target="#delete-malfunction-modal" data-mal-id="<?php echo $mal_info['mal_id'] ?>" onclick="put_mal_data_into_modal(this)">
             <i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?>
           </button>
         </div>
@@ -513,7 +513,7 @@ if ($is_exist_mal == true) {
         <?php } ?>
         <?php if ($_SESSION['mal_delete'] == 1) { ?> 
         <div>
-          <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 py-1" data-bs-toggle="modal" data-bs-target="#deleteMalModal" >
+          <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12 py-1" data-bs-toggle="modal" data-bs-target="#delete-malfunction-modal" data-mal-id="<?php echo $mal_info['mal_id'] ?>" onclick="put_mal_data_into_modal(this)">
             <i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?>
           </button>
         </div>
@@ -521,30 +521,6 @@ if ($is_exist_mal == true) {
       </div>
     </form>
     <!-- end form -->
-    <!-- Modal -->
-    <div class="modal fade" id="deleteMalModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title text-capitalize " id="exampleModalLabel"><?php echo language('CONFIRM', @$_SESSION['systemLang'])." ".language('DELETE', @$_SESSION['systemLang'])." ".language('THE MALFUNCTION', @$_SESSION['systemLang']) ?></h5>
-          </div>
-          <div class="modal-body">
-            <?php if ($_SESSION['mal_delete'] == 0) { ?>
-              <h5 class="h5 text-danger" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr"; ?>"><?php echo language("YOU DON`T HAVE THE PERMISSION TO DELETE THIS MALFUNCTION", @$_SESSION['systemLang']) ?></h5>
-            <?php } else { ?> 
-              <h5 class="h5 text-primary " dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr"; ?>"><?php echo language('ARE YOU SURE TO DELETE', @$_SESSION['systemLang'])." ".language('THE MALFUNCTION', @$_SESSION['systemLang'])." ".( @$_SESSION['systemLang'] == "ar" ? "؟" : "?" )?> </h5>
-            <?php } ?>
-          </div>
-          <div class="modal-footer">
-            <?php if ($_SESSION['mal_delete'] == 1) { ?>
-            <a href="?do=delete-malfunction&mal-id=<?php echo $mal_info['mal_id'] ?>" class="btn btn-danger text-capitalize fs-12" ><i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?></a>
-            <?php } ?>
-            <button type="button" class="btn btn-secondary fs-12" data-bs-dismiss="modal"><?php echo language('CLOSE', @$_SESSION['systemLang']) ?></button>
-          </div>
-        </div>
-      </div>
-    </div>
-    
     <!-- media modal -->
     <div id="media-modal" class="media-modal">
       <span class="close" id="media-modal-close">&times;</span>
@@ -552,6 +528,7 @@ if ($is_exist_mal == true) {
     </div>
   </div>
   
+  <?php if ($_SESSION['mal_delete'] == 1) { include_once 'delete-malfunction-modal.php'; } ?>
 
 <?php } else { 
   // include no data founded
