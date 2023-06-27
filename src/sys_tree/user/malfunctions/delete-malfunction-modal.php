@@ -7,11 +7,12 @@
       </div>
       <div class="modal-body">
         <h5 class="h5" <?php echo @$_SESSION['systemLang'] == "ar" ? "dir=rtl" : ""; ?>><?php echo language('ARE YOU SURE TO DELETE', @$_SESSION['systemLang'])." ".language('THE MALFUNCTION', @$_SESSION['systemLang'])." ".( @$_SESSION['systemLang'] == "ar" ? "؟" : "?" )?> </h5>
-        <p id="test"></p>
       </div>
       <div class="modal-footer">
-        <a class="btn btn-danger text-capitalize fs-12 <?php if ($_SESSION['mal_delete'] == 0) {echo 'disabled';} ?>" id="confirm-delete-malfunction"><i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?></a>
-        <button type="button" class="btn btn-outline-secondary fs-12" data-bs-dismiss="modal"><?php echo language('CLOSE', @$_SESSION['systemLang']) ?></button>
+        <?php if ($_SESSION['mal_delete'] == 1) { ?>
+          <a class="btn btn-danger text-capitalize fs-12 py-1" id="confirm-delete-malfunction"><i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?></a>
+        <?php } ?>
+        <button type="button" class="btn btn-outline-secondary py-1 fs-12" data-bs-dismiss="modal"><?php echo language('CLOSE', @$_SESSION['systemLang']) ?></button>
       </div>
     </div>
   </div>
