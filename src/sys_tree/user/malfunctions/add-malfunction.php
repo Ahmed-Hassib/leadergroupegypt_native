@@ -67,11 +67,10 @@ $pcs_counter = $db_obj->count_records("`id`", "`pieces_info`", "WHERE `company_i
                     <option value="<?php echo $userRow['UserID'] ?>">
                       <?php echo $userRow['UserName']; ?>
                     </option>
-                  <?php }
-                } else {
-                  echo "<option disabled>". language("NOT AVAILABLE NOW", @$_SESSION['systemLang']) ."</option>";
-                }
-                ?>
+                  <?php } ?>
+                <?php } else { ?>
+                  <option disabled><?php echo language("NOT AVAILABLE NOW", @$_SESSION['systemLang']) ?></option>
+                <?php } ?>
               </select>
             </div>
           </div>
@@ -108,11 +107,13 @@ $pcs_counter = $db_obj->count_records("`id`", "`pieces_info`", "WHERE `company_i
 
     <!-- submit -->
     <div class="hstack gap-3">
+      <?php if ($_SESSION['mal_add'] == 1 && $emp_counter >= 1 && $pcs_counter >= 1) { ?>
       <div class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
-        <button type="button" form="add-malfunction" class="btn btn-primary text-capitalize form-control bg-gradient fs-12 <?php if ($_SESSION['mal_add'] == 0 || $emp_counter == 0 || $pcs_counter == 0) {echo 'disabled';} ?>" id="add-malfunctions" onclick="form_validation(this.form, 'submit')">
+        <button type="button" form="add-malfunction" class="btn btn-primary text-capitalize form-control bg-gradient fs-12" id="add-malfunctions" onclick="form_validation(this.form, 'submit')">
           <?php echo language('ADD', @$_SESSION['systemLang'])." ".language('THE MALFUNCTION', @$_SESSION['systemLang']) ?>
         </button>
       </div>
+      <?php } ?>
     </div>
   </form>
   <!-- end form -->
