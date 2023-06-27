@@ -8,18 +8,12 @@ var modal = document.querySelector("#media-modal");
 var modal_content = document.querySelector("#media-modal-content");
 var modal_close_btn = document.querySelector("#media-modal-close");
 
-// self invoke function
-(function () {
-  // check if delete malfunction button is null 
-  if (delete_mal_btn != null) {
-    // loop on it
-    delete_mal_btn.forEach(element => {
-      element.addEventListener("click", (evt) => {
-        confirm_delete_malfunction.setAttribute('href', `?do=delete-malfunction&mal-id=${element.dataset.malId}`);
-      })
-    });
-  }
-})();
+
+function put_mal_data_into_modal (btn, will_back = null) {
+  let mal_id = btn.dataset.malId;
+  href = will_back != null ? `?do=delete-malfunction&mal-id=${mal_id}&back=true` : `?do=delete-malfunction&mal-id=${mal_id}`;
+  confirm_delete_malfunction.setAttribute('href', href);
+}
 
 
 /**
