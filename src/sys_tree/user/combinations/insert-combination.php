@@ -43,36 +43,27 @@
 
       // check if inserted
       if ($is_inserted == true) {
-        // echo success message
-        $msg = '<div class="alert alert-success text-capitalize"><i class="bi bi-check-circle-fill"></i>&nbsp;'. language('COMBINATION WAS INSERTED SUCCESSFULLY', @$_SESSION['systemLang']) .'</div>';
-      } else {
-        // echo success message
-        $msg = '<div class="alert alert-danger text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;'. language('A PROBLEM WAS HAPPENED WHILE INSERTING A THE COMBINATION', @$_SESSION['systemLang']) .'</div>';
+        // prepare flash session variables
+        $_SESSION['flash_message'] = 'COMBINATION WAS INSERTED SUCCESSFULLY';
+        $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
+        $_SESSION['flash_message_class'] = 'success';
+        $_SESSION['flash_message_status'] = true;
+      } else {    
+        // prepare flash session variables
+        $_SESSION['flash_message'] = 'A PROBLEM WAS HAPPENED WHILE INSERTING A THE COMBINATION';
+        $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+        $_SESSION['flash_message_class'] = 'danger';
+        $_SESSION['flash_message_status'] = false;
       }
-    ?>
-
-    <!-- start edit profile page -->
-    <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-      <!-- start header -->
-      <header class="header">
-        <?php if (empty($formErorr)) {
-          // redirect to add new user
-          redirectHome($msg, 'back');
-        } else {
-          // loop on form error array
-          foreach ($formErorr as $error) {
-            echo '<div class="alert alert-danger text-capitalize w-50 mx-auto align-left">' . language(strtoupper($error), @$_SESSION['systemLang']) . '</div>';
-          }
-        }?>
-      </header>
-    </div>
-    <?php
     } else {
-      // include missing data module
-      include_once $globmod . 'data-error.php';
+      foreach ($formErorr as $key => $error) {
+        $_SESSION['flash_message'][$key] = strtoupper($error);
+        $_SESSION['flash_message_icon'][$key] = 'bi-exclamation-triangle-fill';
+        $_SESSION['flash_message_class'][$key] = 'danger';
+        $_SESSION['flash_message_status'][$key] = false;
+      }
     }
-  } else {
-    // include permission error module
-    include_once $globmod . 'permission-error.php';
-  }
-?>
+} else {
+  // include permission error module
+  include_once $globmod . 'permission-error.php';
+}

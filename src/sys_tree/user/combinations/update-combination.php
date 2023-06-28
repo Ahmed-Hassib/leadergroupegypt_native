@@ -1,6 +1,4 @@
 <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  // final message
-  $msg = '';
   if (!isset($comb_obj)) {
     // create an object of Combination
     $comb_obj = new Combination();
@@ -26,7 +24,6 @@
       // get new malfunction info
       $manager_id   = $_POST['admin-id'];
       $tech_id      = $_POST['technical-id'];
-
       
       // check who is doing the update
       switch ($update_owner_job_id) {
@@ -39,9 +36,9 @@
         case 3:
         case 4:
           if ($comb_info['isFinished'] != 1) {
-            do_manager_updates($_POST);
+            $is_updated = do_manager_updates($_POST);
           } else {
-            do_after_sales_updates($_POST);
+            $is_updated = do_after_sales_updates($_POST);
           }
           break;
         /**
@@ -51,7 +48,7 @@
         case 2:
           // check who is doing the updates
           if ($update_owner_id == $tech_id && $comb_info['isFinished'] != 1) {
-            do_technical_updates($_POST);
+            $is_updated = do_technical_updates($_POST);
           }
           // check if upload media
           if (count($_FILES) > 0) {
@@ -60,22 +57,28 @@
           }
           break;
       }
-      // success message
-      $msg = '<div class="alert alert-success text-capitalize"><i class="bi bi-check-circle-fill"></i>&nbsp;'.language("COMBINATION WAS UPDATED SUCCESSFULLY", @$_SESSION['systemLang']).'</div>';
-    } 
-    ?>
-    <!-- start edit profile page -->
-    <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-      <!-- start header -->
-      <header class="header">
-      <?php  redirectHome($msg, 'back'); ?>
-      </header>
-    </div>
-  <?php
+      // prepare flash session variables
+      $_SESSION['flash_message'] = 'COMBINATION WAS UPDATED SUCCESSFULLY';
+      $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
+      $_SESSION['flash_message_class'] = 'success';
+      $_SESSION['flash_message_status'] = true;
+    } else {
+      // prepare flash session variables
+      $_SESSION['flash_message'] = 'NO DATA FOUNDED';
+      $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+      $_SESSION['flash_message_class'] = 'danger';
+      $_SESSION['flash_message_status'] = false;
+    }
   } else {
-  // include no data founded
-  include_once $globmod . 'no-data-founded.php';
+    foreach ($formErorr as $key => $error) {
+      $_SESSION['flash_message'][$key] = strtoupper($error);
+      $_SESSION['flash_message_icon'][$key] = 'bi-exclamation-triangle-fill';
+      $_SESSION['flash_message_class'][$key] = 'danger';
+      $_SESSION['flash_message_status'][$key] = false;
+    }
   }
+  // return to the previous page
+  redirectHome(null, 'back', 0);
 } else {
   // include no data founded
   include_once $globmod . 'permission-error.php';
@@ -111,11 +114,12 @@ function do_manager_updates($info) {
   // compare new tech with the old
   if ($tech_id == $prev_tech_id) {
     // update all compination info
-    $comb_obj->update_compination_mng(array($client_name, $client_phone, $client_address, $comment, $tech_id, get_date_now(), get_time_now(), $comb_id));
+    $is_updated = $comb_obj->update_compination_mng(array($client_name, $client_phone, $client_address, $comment, $tech_id, get_date_now(), get_time_now(), $comb_id));
   } else {
     // reset compination info
-    $comb_obj->reset_compination_info($tech_id, get_date_now(), get_time_now(), $comb_id);
+    $is_updated = $comb_obj->reset_compination_info($tech_id, get_date_now(), get_time_now(), $comb_id);
   }
+  return $is_updated;
 }
 ?>
 
@@ -140,7 +144,8 @@ function do_technical_updates($info) {
     $comb_obj = new Combination();
   }
   // get updated status
-  $comb_obj->update_combination_tech(array($is_finished, $tech_status, get_date_now(), get_time_now(), get_date_now(), get_time_now(), $cost, $tech_comment, $comb_id));
+  $is_updated = $comb_obj->update_combination_tech(array($is_finished, $tech_status, get_date_now(), get_time_now(), get_date_now(), get_time_now(), $cost, $tech_comment, $comb_id));
+  return $is_updated;
 }
 ?>
 
@@ -216,7 +221,9 @@ function do_after_sales_updates($info) {
       $comb_obj = new Combination();
     }
     // get updated status
-    $comb_obj->update_combination_review(array(get_date_now(), get_time_now(), $money_review, $service_qty, $tech_qty, $review_comment, $comb_id));
+    $is_updated = $comb_obj->update_combination_review(array(get_date_now(), get_time_now(), $money_review, $service_qty, $tech_qty, $review_comment, $comb_id));
   }
+
+  return $is_updated;
 }
 ?>
