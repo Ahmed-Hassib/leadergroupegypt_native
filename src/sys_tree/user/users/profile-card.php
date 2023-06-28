@@ -104,7 +104,7 @@
             <i class="bi bi-pencil-square"></i>
             <?php echo language('EDIT', @$_SESSION['systemLang']) ?>
           </a>
-          <?php if (($user['TrustStatus'] != 1 && $user['job_title_id'] != 1 && $_SESSION['user_delete'] == 1) || $user['UserID'] == $_SESSION['UserID']) { ?>
+          <?php if ($user['TrustStatus'] != 1 && $user['job_title_id'] != 1 && $_SESSION['user_delete'] == 1) { ?>
             <button type="button" data-bs-toggle="modal" data-bs-target="#deleteUserModal" onclick="show_delete_user_modal(this)" data-username="<?php echo $user['UserName'] ?>" data-user-id="<?php echo $user_id ?>" class="btn btn-outline-danger text-capitalize py-1 fs-12" ><i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?></button>
           <?php } ?>
         </div>
@@ -113,3 +113,5 @@
   </div>
   <!-- end new design -->
 </div>
+
+<?php if ($_SESSION['user_delete'] == 1) { include_once 'delete-user-modal.php'; } ?>

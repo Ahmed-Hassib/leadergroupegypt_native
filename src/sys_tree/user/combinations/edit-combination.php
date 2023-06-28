@@ -33,7 +33,7 @@ if ($is_exist == true) {
       <div class="mb-3 hstack gap-2">
         <?php if ($_SESSION['comb_update'] == 1 || ($_SESSION['UserID'] == $comb_info['UserID'] && $_SESSION['isTech'] == 1)) { ?>
         <div class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
-          <button type="button" class="btn btn-primary text-capitalize form-control bg-gradient fs-12" id="" onclick="form_validation(this.form, 'submit')">
+          <button type="button" class="btn btn-primary text-capitalize form-control bg-gradient py-1 fs-12" id="" onclick="form_validation(this.form, 'submit')">
             <i class="bi bi-check-all"></i>
             <?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
           </button>
@@ -41,7 +41,7 @@ if ($is_exist == true) {
         <?php } ?>
         <?php if ($_SESSION['comb_delete'] == 1) { ?>
         <div>
-          <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb" data-comb-id="<?php echo $comb_info['comb_id'] ?>">
+          <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb" data-comb-id="<?php echo $comb_info['comb_id'] ?>">
             <i class="bi bi-trash"></i>
             <?php echo language('DELETE', @$_SESSION['systemLang']) ?>
           </button>
@@ -479,7 +479,7 @@ if ($is_exist == true) {
       <div class="hstack gap-2">
         <?php if ($_SESSION['comb_update'] == 1 || ($_SESSION['UserID'] == $comb_info['UserID'] && $_SESSION['isTech'] == 1)) { ?>
         <div class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
-          <button type="button" class="btn btn-primary text-capitalize form-control bg-gradient fs-12" id="" onclick="form_validation(this.form, 'submit')">
+          <button type="button" class="btn btn-primary text-capitalize form-control bg-gradient py-1 fs-12" id="" onclick="form_validation(this.form, 'submit')">
             <i class="bi bi-check-all"></i>
             <?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
           </button>
@@ -487,7 +487,7 @@ if ($is_exist == true) {
         <?php } ?>
         <?php if ($_SESSION['comb_delete'] == 1) { ?>
         <div>
-          <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb" data-comb-id="<?php echo $comb_info['comb_id'] ?>">
+          <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb" data-comb-id="<?php echo $comb_info['comb_id'] ?>">
             <i class="bi bi-trash"></i>
             <?php echo language('DELETE', @$_SESSION['systemLang']) ?>
           </button>
@@ -496,7 +496,7 @@ if ($is_exist == true) {
       </div>
     </form>
     <!-- end form -->
-    <?php include_once 'delete-combination-modal.php' ?>
+    <?php if ($_SESSION['comb_delete'] == 1) { include_once 'delete-combination-modal.php'; } ?>
 
     <!-- media modal -->
     <div id="media-modal" class="media-modal">
@@ -504,16 +504,12 @@ if ($is_exist == true) {
       <div id="media-modal-content"></div>
     </div>
   </div>
-<?php } else { ?>
-  <!-- start edit profile page -->
-  <div class="container">
-    <!-- start header -->
-    <header class="header">
-      <h1 class="text-capitalize"><?php echo language('SHOW COMBINATION DETAILS', @$_SESSION['systemLang']) ?></h1>
-      <?php
-        $msg = "<div class='alert alert-warning'>there is no combinations</div>";
-        redirectHome($msg, 'back');
-      ?>
-    </header>
-  </div>
-<?php } ?>
+<?php } else { 
+  // prepare flash session variables
+  $_SESSION['flash_message'] = 'NO DATA FOUNDED';
+  $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+  $_SESSION['flash_message_class'] = 'danger';
+  $_SESSION['flash_message_status'] = false;
+  // redirect to the previous page 
+  redirectHome(null, 'back', 0);
+}

@@ -119,7 +119,7 @@
               </div>
             </div>
             <?php } ?>
-            <?php if ($_SESSION['pcs_show'] == 1) { ?>
+            <?php if ($_SESSION['clients_show'] == 1) { ?>
             <div class="col-6">
               <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } ?> bg-gradient">
                 <div class="card-body">
