@@ -4,18 +4,12 @@ var modal = document.querySelector("#media-modal");
 var modal_content = document.querySelector("#media-modal-content");
 var modal_close_btn = document.querySelector("#media-modal-close");
 
-// self invoke function
-(function () {
-  // check if delete combination button is null 
-  if (delete_comb_btn != null) {
-    // loop on it
-    delete_comb_btn.forEach(element => {
-      element.addEventListener("click", (evt) => {
-        confirm_delete_combination.setAttribute('href', `?do=delete-combination&comb-id=${element.dataset.combId}`);
-      })
-    });
-  }
-})();
+
+function put_comb_data_into_modal(btn, will_back = null) {
+  let comb_id = btn.dataset.combId;
+  let href = will_back != null ? `?do=delete-combination&mal-id=${comb_id}&back=true` : `?do=delete-combination&mal-id=${comb_id}`;
+  confirm_delete_combination.setAttribute('href', href);
+}
 
 
 /**
