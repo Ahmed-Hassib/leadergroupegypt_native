@@ -335,7 +335,7 @@
       <!-- end blank sub menu -->
     </li>
     <li>
-      <a href="<?php echo $sys_tree ?>logout.php" class="logout-btn">
+      <a href="<?php echo $sys_tree ?>logout.php">
         <i class="bi bi-box-arrow-right"></i>
         <span class="link-name"><?php echo language('LOG OUT', @$_SESSION['systemLang']) ?></span>
       </a>
