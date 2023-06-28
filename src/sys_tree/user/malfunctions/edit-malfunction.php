@@ -286,7 +286,7 @@ if ($is_exist_mal == true) {
                 } ?>
               </label>
               <div class="col-sm-12 col-md-7 position-relative">
-                <?php if ($mal_info['mal_status']) { ?>
+                <?php if ($mal_info['mal_status'] == 1) { ?>
                   <span class="text-primary" dir='ltr'><?php echo date_format(date_create($mal_info['repaired_time']), 'h:i:s a') ?></span>
                 <?php } else { ?>
                   <span class="text-danger"><?php echo language('NOT REPAIRED BY THE TECHNICAL', @$_SESSION['systemLang']) ?></span>
@@ -529,8 +529,12 @@ if ($is_exist_mal == true) {
   </div>
   
   <?php if ($_SESSION['mal_delete'] == 1) { include_once 'delete-malfunction-modal.php'; } ?>
-
 <?php } else { 
-  // include no data founded
-  include_once $globmod . 'no-data-founded.php';
-} ?>
+    // prepare flash session variables
+  $_SESSION['flash_message'] = 'NO DATA FOUNDED';
+  $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+  $_SESSION['flash_message_class'] = 'danger';
+  $_SESSION['flash_message_status'] = false;
+  // redirect to the previous page 
+  redirectHome(null, 'back', 0);
+}
