@@ -7,7 +7,6 @@
       </div>
       <div class="modal-body">
         <h5 class="h5" <?php echo @$_SESSION['systemLang'] == "ar" ? "dir=rtl" : ""; ?>><?php echo language('ARE YOU SURE TO DELETE', @$_SESSION['systemLang'])." ".language('THE COMBINATION', @$_SESSION['systemLang'])." ".( @$_SESSION['systemLang'] == "ar" ? "؟" : "?" )?> </h5>
-        <p id="test"></p>
       </div>
       <div class="modal-footer">
         <?php if ($_SESSION['comb_delete'] == 1) { ?>
