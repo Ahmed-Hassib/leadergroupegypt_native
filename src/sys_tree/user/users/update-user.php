@@ -76,6 +76,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $pcsUpdate          = isset($_POST['pcsUpdate'])          ? $_POST['pcsUpdate']         : 0;
         $pcsDelete          = isset($_POST['pcsDelete'])          ? $_POST['pcsDelete']         : 0;
         $pcsShow            = isset($_POST['pcsShow'])            ? $_POST['pcsShow']           : 0;
+        $clientsAdd         = isset($_POST['clientsAdd'])         ? $_POST['clientsAdd']        : 0;
+        $clientsUpdate      = isset($_POST['clientsUpdate'])      ? $_POST['clientsUpdate']     : 0;
+        $clientsDelete      = isset($_POST['clientsDelete'])      ? $_POST['clientsDelete']     : 0;
+        $clientsShow        = isset($_POST['clientsShow'])        ? $_POST['clientsShow']       : 0;
         $connectionAdd      = isset($_POST['connectionAdd'])      ? $_POST['connectionAdd']     : 0;
         $connectionUpdate   = isset($_POST['connectionUpdate'])   ? $_POST['connectionUpdate']  : 0;
         $connectionDelete   = isset($_POST['connectionDelete'])   ? $_POST['connectionDelete']  : 0;
@@ -108,12 +112,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($checkItem == true) {
           // permisssions
-          array_push($permissions, $userAdd, $userUpdate, $userDelete, $userShow, $malAdd, $malUpdate, $malDelete, $malShow, $malReviw, $malMediaDelete, $malMediaDownload, $combAdd, $combUpdate, $combDelete, $combShow, $combReview, $combMediaDelete, $combMediaDownload, $pcsAdd, $pcsUpdate, $pcsDelete, $pcsShow, $dirAdd, $dirUpdate, $dirDelete, $dirShow, $connectionAdd, $connectionUpdate, $connectionDelete, $connectionShow, $permissionUpdate, $permissionShow, $changeCompanyImg, $userid);
+          array_push($permissions, $userAdd, $userUpdate, $userDelete, $userShow, $malAdd, $malUpdate, $malDelete, $malShow, $malReviw, $malMediaDelete, $malMediaDownload, $combAdd, $combUpdate, $combDelete, $combShow, $combReview, $combMediaDelete, $combMediaDownload, $pcsAdd, $pcsUpdate, $pcsDelete, $pcsShow, $clientsAdd, $clientsUpdate, $clientsDelete, $clientsShow, $dirAdd, $dirUpdate, $dirDelete, $dirShow, $connectionAdd, $connectionUpdate, $connectionDelete, $connectionShow, $permissionUpdate, $permissionShow, $changeCompanyImg, $userid);
           // call permission update function
           $user_obj->update_user_permissions($permissions);
         } else {
           // permisssions
-          array_push($permissions, $userid, $userAdd, $userUpdate, $userDelete, $userShow, $malAdd, $malUpdate, $malDelete, $malShow, $malReviw, $malMediaDelete, $malMediaDownload, $combAdd, $combUpdate, $combDelete, $combShow, $combReview, $combMediaDelete, $combMediaDownload, $pcsAdd, $pcsUpdate, $pcsDelete, $pcsShow, $dirAdd, $dirUpdate, $dirDelete, $dirShow, $connectionAdd, $connectionUpdate, $connectionDelete, $connectionShow, $permissionUpdate, $permissionShow, $changeCompanyImg);
+          array_push($permissions, $userid, $userAdd, $userUpdate, $userDelete, $userShow, $malAdd, $malUpdate, $malDelete, $malShow, $malReviw, $malMediaDelete, $malMediaDownload, $combAdd, $combUpdate, $combDelete, $combShow, $combReview, $combMediaDelete, $combMediaDownload, $pcsAdd, $pcsUpdate, $pcsDelete, $pcsShow, $clientsAdd, $clientsUpdate, $clientsDelete, $clientsShow, $dirAdd, $dirUpdate, $dirDelete, $dirShow, $connectionAdd, $connectionUpdate, $connectionDelete, $connectionShow, $permissionUpdate, $permissionShow, $changeCompanyImg);
           // call permission insert function
           $user_obj->insert_user_permissions($permissions);
         }

@@ -40,6 +40,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $pcsUpdate          = isset($_POST['pcsUpdate'])          ? $_POST['pcsUpdate']         : 0;
   $pcsDelete          = isset($_POST['pcsDelete'])          ? $_POST['pcsDelete']         : 0;
   $pcsShow            = isset($_POST['pcsShow'])            ? $_POST['pcsShow']           : 0;
+  $clientsAdd         = isset($_POST['clientsAdd'])         ? $_POST['clientsAdd']        : 0;
+  $clientsUpdate      = isset($_POST['clientsUpdate'])      ? $_POST['clientsUpdate']     : 0;
+  $clientsDelete      = isset($_POST['clientsDelete'])      ? $_POST['clientsDelete']     : 0;
+  $clientsShow        = isset($_POST['clientsShow'])        ? $_POST['clientsShow']       : 0;
   $connectionAdd      = isset($_POST['connectionAdd'])      ? $_POST['connectionAdd']     : 0;
   $connectionUpdate   = isset($_POST['connectionUpdate'])   ? $_POST['connectionUpdate']  : 0;
   $connectionDelete   = isset($_POST['connectionDelete'])   ? $_POST['connectionDelete']  : 0;
@@ -106,9 +110,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $user_obj = new User();
     }
     // check if user is exist in database or not
-    $is_exist_user  = $user_obj->is_exist("`UserName`", "`users`", $username);
+    $is_exist_user  = $user_obj->count_records("`UserID`", "`users`", "WHERE `UserName` = '$username' AND `company_id` = ".$_SESSION['company_id']);
     // check the counter
-    if ($is_exist_user == true) {
+    if ($is_exist_user > 0) {
       $_SESSION['flash_message'] = 'THIS USERNAME IS ALREADY EXIST';
       $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
       $_SESSION['flash_message_class'] = 'warning';
@@ -125,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       // array of user permissions
       $user_permissions = array();
       // push user`s permissions into array
-      array_push($user_permissions, $new_emp_id, $userAdd, $userUpdate, $userDelete, $userShow, $malAdd, $malUpdate, $malDelete, $malShow, $malReview, $malMediaDelete, $malMediaDownload, $combAdd, $combUpdate, $combDelete, $combShow, $combReview, $combMediaDelete, $combMediaDownload, $pcsAdd, $pcsUpdate, $pcsDelete, $pcsShow, $dirAdd, $dirUpdate, $dirDelete, $dirShow, $connectionAdd, $connectionUpdate, $connectionDelete, $connectionShow, $permissionUpdate, $permissionShow, $changeCompanyImg);
+      array_push($user_permissions, $new_emp_id, $userAdd, $userUpdate, $userDelete, $userShow, $malAdd, $malUpdate, $malDelete, $malShow, $malReview, $malMediaDelete, $malMediaDownload, $combAdd, $combUpdate, $combDelete, $combShow, $combReview, $combMediaDelete, $combMediaDownload, $pcsAdd, $pcsUpdate, $pcsDelete, $pcsShow, $clientsAdd, $clientsUpdate, $clientsDelete, $clientsShow, $dirAdd, $dirUpdate, $dirDelete, $dirShow, $connectionAdd, $connectionUpdate, $connectionDelete, $connectionShow, $permissionUpdate, $permissionShow, $changeCompanyImg);
       // call insert permissions function
       $user_obj->insert_user_permissions($user_permissions);
       
