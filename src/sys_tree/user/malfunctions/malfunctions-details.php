@@ -205,8 +205,8 @@ $count = $stmt->rowCount();     // get row count
           <th class="text-center" style="width: 200px"><?php echo language('TECHNICAL MAN COMMENT', @$_SESSION['systemLang']) ?></th>
           <th class="text-center" style="width: 100px"><?php echo language('ADDED DATE', @$_SESSION['systemLang']) ?></th>
           <th class="text-center" style="width: 100px"><?php echo language('ADDED TIME', @$_SESSION['systemLang']) ?></th>
-          <th class="text-center fs-10-sm" style="width: 50px"><?php echo language('STATUS', @$_SESSION['systemLang']) ?></th>
-          <th class="text-center fs-10-sm" style="width: 200px"><?php echo language('HAVE MEDIA', @$_SESSION['systemLang']) ?></th>
+          <th class="text-center" style="width: 50px"><?php echo language('STATUS', @$_SESSION['systemLang']) ?></th>
+          <th class="text-center" style="width: 150px"><?php echo language('HAVE MEDIA', @$_SESSION['systemLang']) ?></th>
           <th class="text-center" style="width: 70px;"><?php echo language('CONTROL', @$_SESSION['systemLang']) ?></th>
         </tr>
       </thead>
@@ -214,25 +214,25 @@ $count = $stmt->rowCount();     // get row count
         <?php foreach ($rows as $index => $row) { ?>
           <tr>
             <!-- row index -->
-            <td class="text-center"><?php echo ($index + 1) ?></td>
+            <td><?php echo ($index + 1) ?></td>
             <!-- admin username -->
-            <td class="text-center">
+            <td>
               <?php $admin_name = $mal_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$row['mng_id'])[0]['UserName']; ?>
               <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $row['mng_id'];?>"><?php echo $admin_name ?></a>
             </td>
             <!-- technical username -->
-            <td class="text-center">
+            <td>
               <?php $tech_name = $mal_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$row['tech_id'])[0]['UserName']; ?>
               <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $row['tech_id'];?>"><?php echo $tech_name ?></a>
             </td>
             <!-- piece/client name -->
-            <td class="text-center">
+            <td>
               <?php $client_name = $mal_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = " . $row['client_id'] . " LIMIT 1")[0]['full_name']; ?>
               <?php $client_type = $mal_obj->select_specific_column("`is_client`", "`pieces_info`", "WHERE `id` = " . $row['client_id'] . " LIMIT 1")[0]['is_client']; ?>
               <a href="<?php echo $nav_up_level ?>pieces/index.php?name=<?php echo $client_type == 1 ? 'clients' : 'pieces' ?>&do=edit-piece&piece-id=<?php echo $row['client_id'];?>"><?php echo $client_name ?></a>
             </td>
             <!-- malfunction description -->
-            <td class="text-center">
+            <td>
               <?php if (strlen($row['descreption']) > 40) {
                 echo trim(substr($row['descreption'], 0, 40), '') . "...";
               } else {
@@ -240,7 +240,7 @@ $count = $stmt->rowCount();     // get row count
               } ?>
             </td>
             <!-- technical man comment -->
-            <td class="text-center <?php echo empty($row['tech_comment']) ? 'text-danger' : '' ?>">
+            <td class="<?php echo empty($row['tech_comment']) ? 'text-danger' : '' ?>">
               <?php if (!empty($row['tech_comment'])) {
                 if (strlen($row['tech_comment']) > 40) {
                   echo trim(substr($row['tech_comment'], 0, 40), '') . "...";
@@ -275,15 +275,18 @@ $count = $stmt->rowCount();     // get row count
               <i class="bi <?php echo $iconStatus ?>" title="<?php echo $titleStatus ?>"></i>
             </td>
             <!-- malfunction media status -->
-            <td style="width: 50px">
+            <td style="width: 50px" class="text-center">
               <?php 
                 $have_media = $mal_obj->count_records("`id`", "`malfunctions_media`", "WHERE `mal_id` = ".$row['mal_id']);
                 if ($have_media > 0) {
-                  echo language('MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
+                  $icon   = "bi-check-circle-fill text-success";
+                  $title = language('MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
                 } else {
-                  echo language('NO MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
+                  $icon = "bi-x-circle-fill text-danger";
+                  $title = language('NO MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
                 }
               ?>
+              <i class="bi <?php echo $icon ?>" title="<?php echo $title ?>"></i>
             </td>
             <!-- control buttons -->
             <td class="text-center">
@@ -295,9 +298,7 @@ $count = $stmt->rowCount();     // get row count
               <?php } ?>
             </td>
           </tr>
-        <?php
-        }
-        ?>
+        <?php } ?>
       </tbody>
     </table>
   </div>

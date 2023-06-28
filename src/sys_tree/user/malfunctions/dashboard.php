@@ -422,16 +422,15 @@ if ($_SESSION['mal_show'] == 1) {
                   $client_phone = $mal_obj->select_specific_column("`phone`", "`pieces_phones`", "WHERE `id` = ".$mal['client_id']);
                   $tech_name    = $mal_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$mal['tech_id'])[0]['UserName'];
                 ?>
-                  <tr>
-                    <td><?php echo ++$index; ?></td>
+                  <tr class="text-<?php echo $_SESSION['systemLang'] == 'ar' ? 'right' : 'left' ?>">
                     <!-- name -->
-                    <td style="width: 100px">
+                    <td style="min-width: 100px">
                       <a href="<?php echo $nav_up_level ?>pieces/index.php?name=<?php echo $client_type > 0 ? 'clients' : 'pieces' ?>&do=edit-piece&piece-id=<?php echo $mal['client_id'] ?>">
                         <?php echo !empty($client_name) ? $client_name : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>
                       </a>
                     </td>
                     <!-- address -->
-                    <td style="width: 100px" class="<?php echo empty($client_addr) ? 'text-danger ' : '' ?>">
+                    <td style="min-width: 100px" class="<?php echo empty($client_addr) ? 'text-danger ' : '' ?>">
                       <?php 
                       if (!empty($client_addr)) {
                         if (strlen($client_addr[0]['address']) > 30) {
@@ -444,12 +443,12 @@ if ($_SESSION['mal_show'] == 1) {
                       }
                       ?>
                     </td>
-                    <td style="width: 100px" class="<?php echo empty($client_addr) ? 'text-danger ' : '' ?>">
                     <!-- phone -->
+                    <td style="width: 100px" class="<?php echo empty($client_addr) ? 'text-danger ' : '' ?>">
                       <?php 
                       if (!empty($client_phone)) {
-                        if (strlen($client_phone[0]['phone']) > 15) {
-                          echo trim(substr($client_phone[0]['phone'], 0, 15), '') . "...";
+                        if (strlen($client_phone[0]['phone']) > 11) {
+                          echo trim(substr($client_phone[0]['phone'], 0, 11), '') . "...";
                         } else {
                           echo $client_phone[0]['phone'];
                         }
@@ -466,7 +465,7 @@ if ($_SESSION['mal_show'] == 1) {
                     </td>
                     
                     <!-- malfunction status -->
-                    <td style="width: 50px">
+                    <td style="width: 50px" class="text-center">
                       <?php
                       if ($mal['mal_status'] == 0) {
                         $iconStatus   = "bi-x-circle-fill text-danger";
@@ -486,12 +485,18 @@ if ($_SESSION['mal_show'] == 1) {
                     </td>
                   
                     <!-- malfunction media status -->
-                    <td style="width: 50px">
+                    <td style="width: 50px" class="text-center">
                       <?php 
                         $have_media = $mal_obj->count_records("`id`", "`malfunctions_media`", "WHERE `mal_id` = ".$mal['mal_id']);
-                        $have_media_status = $have_media > 0 ? 'MEDIA HAVE BEEN ATTACHED' : 'NO MEDIA HAVE BEEN ATTACHED';
-                        echo language($have_media_status, @$_SESSION['systemLang']);
+                        if ($have_media > 0) {
+                          $icon   = "bi-check-circle-fill text-success";
+                          $title = language('MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
+                        } else {
+                          $icon = "bi-x-circle-fill text-danger";
+                          $title = language('NO MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
+                        }
                       ?>
+                      <i class="bi <?php echo $icon ?>" title="<?php echo $title ?>"></i>
                     </td>
                     <!-- control buttons -->
                     <td style="width: 50px">
@@ -549,15 +554,15 @@ if ($_SESSION['mal_show'] == 1) {
                   $client_phone = $mal_obj->select_specific_column("`phone`", "`pieces_phones`", "WHERE `id` = ".$mal['client_id']);
                   $tech_name    = $mal_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$mal['tech_id'])[0]['UserName'];
                 ?>
-                  <tr>
+                  <tr class="text-<?php echo $_SESSION['systemLang'] == 'ar' ? 'right' : 'left' ?>">
                     <!-- name -->
-                    <td style="width: 100px">
+                    <td style="min-width: 100px">
                       <a href="<?php echo $nav_up_level ?>pieces/index.php?name=<?php echo $client_type > 0 ? 'clients' : 'pieces' ?>&do=edit-piece&piece-id=<?php echo $mal['client_id'] ?>">
                         <?php echo !empty($client_name) ? $client_name : language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>
                       </a>
                     </td>
                     <!-- address -->
-                    <td style="width: 100px" class="<?php echo empty($client_addr) ? 'text-danger ' : '' ?>">
+                    <td style="min-width: 100px" class="<?php echo empty($client_addr) ? 'text-danger ' : '' ?>">
                       <?php 
                       if (!empty($client_addr)) {
                         if (strlen($client_addr[0]['address']) > 30) {
@@ -592,7 +597,7 @@ if ($_SESSION['mal_show'] == 1) {
                     </td>
                     
                     <!-- malfunction status -->
-                    <td style="width: 50px">
+                    <td style="width: 50px" class="text-center">
                       <?php
                       if ($mal['mal_status'] == 0) {
                         $iconStatus   = "bi-x-circle-fill text-danger";
@@ -612,12 +617,18 @@ if ($_SESSION['mal_show'] == 1) {
                     </td>
                   
                     <!-- malfunction media status -->
-                    <td style="width: 50px">
+                    <td style="width: 50px" class="text-center">
                       <?php 
                         $have_media = $mal_obj->count_records("`id`", "`malfunctions_media`", "WHERE `mal_id` = ".$mal['mal_id']);
-                        $have_media_status = $have_media > 0 ? 'MEDIA HAVE BEEN ATTACHED' : 'NO MEDIA HAVE BEEN ATTACHED';
-                        echo language($have_media_status, @$_SESSION['systemLang']);
+                        if ($have_media > 0) {
+                          $icon   = "bi-check-circle-fill text-success";
+                          $title = language('MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
+                        } else {
+                          $icon = "bi-x-circle-fill text-danger";
+                          $title = language('NO MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
+                        }
                       ?>
+                      <i class="bi <?php echo $icon ?>" title="<?php echo $title ?>"></i>
                     </td>
                     <!-- control buttons -->
                     <td style="width: 50px">

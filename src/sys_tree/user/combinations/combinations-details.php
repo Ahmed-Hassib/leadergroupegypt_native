@@ -207,7 +207,6 @@ $count = $stmt->rowCount();     // get row count
           <th class="text-center" style="width: 200px"><?php echo language('CLIENT NAME', @$_SESSION['systemLang']) ?></th>
           <th class="text-center" style="width: 200px"><?php echo language('THE ADDRESS', @$_SESSION['systemLang']) ?></th>
           <th class="text-center" style="width: 100px"><?php echo language('PHONE', @$_SESSION['systemLang']) ?></th>
-          <!-- <th class="text-center" style="width: 100px"><?php echo language('THE NOTES', @$_SESSION['systemLang']) ?></th> -->
           <th class="text-center" style="width: 300px"><?php echo language('TECHNICAL MAN COMMENT', @$_SESSION['systemLang']) ?></th>
           <th class="text-center" style="width: 50px"><?php echo language('STATUS', @$_SESSION['systemLang']) ?></th>
           <th class="text-center fs-10-sm" style="width: 200px"><?php echo language('HAVE MEDIA', @$_SESSION['systemLang']) ?></th>
@@ -218,17 +217,17 @@ $count = $stmt->rowCount();     // get row count
         <?php foreach ($rows as $index => $row) { ?>
           <tr>
             <td class="d-none"><?php echo $row['comb_id'] ?></td>
-            <td><?php echo ($index + 1) ?></td>
-            <td>
+            <td class="text-<?php echo $_SESSION['systemLang'] == 'ar' ? 'right' : 'left' ?>"><?php echo ($index + 1) ?></td>
+            <td class="text-<?php echo $_SESSION['systemLang'] == 'ar' ? 'right' : 'left' ?>">
               <?php $admin_name = $comb_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$row['addedBy'])[0]['UserName']; ?>
               <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $row['addedBy'];?>"><?php echo $admin_name ?></a>
             </td>
-            <td>
+            <td class="text-<?php echo $_SESSION['systemLang'] == 'ar' ? 'right' : 'left' ?>">
               <?php $tech_name = $comb_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$row['UserID'])[0]['UserName']; ?>
               <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $row['UserID'];?>"><?php echo $tech_name ?></a>
             </td>
-            <td><?php echo $row['client_name'] ?></td>
-            <td>
+            <td class="text-<?php echo $_SESSION['systemLang'] == 'ar' ? 'right' : 'left' ?>"><?php echo $row['client_name'] ?></td>
+            <td class="text-<?php echo $_SESSION['systemLang'] == 'ar' ? 'right' : 'left' ?>">
               <?php $client_addr = $row['address'];
               if (!empty($client_addr) && strlen($client_addr) > 50) {
                 echo trim(substr($client_addr, 0, 50), '') . "...";
@@ -237,7 +236,7 @@ $count = $stmt->rowCount();     // get row count
               }
               ?>
             </td>
-            <td>
+            <td class="text-<?php echo $_SESSION['systemLang'] == 'ar' ? 'right' : 'left' ?>">
               <?php $client_phone = $row['phone'];
               if (!empty($client_phone) && strlen($client_phone) > 50) {
                 echo trim(substr($$client_phone, 0, 11), '') . "...";
@@ -246,26 +245,16 @@ $count = $stmt->rowCount();     // get row count
               }
               ?>
             </td>
-            <!-- <td>
-              <?php 
-              // $comment = $row['comment'];
-              // if (!empty($comment) && strlen($comment) > 50) {
-              //   echo trim(substr($comment, 0, 50), '') . "...";
-              // } else {
-              //   echo $comment;
-              // }
-              ?>
-            </td> -->
-            <td class="text-center <?php echo empty($row['tech_comment']) ? 'text-danger ' : '' ?>">
+            <td class="text-<?php echo $_SESSION['systemLang'] == 'ar' ? 'right' : 'left' ?> <?php echo empty($row['tech_comment']) ? 'text-danger ' : '' ?>">
               <?php $tech_comment = !empty($row['tech_comment']) ? $row['tech_comment'] : language('THERE IS NO COMMENT OR NOTE TO SHOW', @$_SESSION['systemLang']);
-              if (!empty($tech_comment) && strlen($tech_comment) > 50) {
-                echo trim(substr($tech_comment, 0, 50), '') . "...";
+              if (!empty($tech_comment) && strlen($tech_comment) > 60) {
+                echo trim(substr($tech_comment, 0, 60), '') . "...";
               } else {
                 echo $tech_comment;
               }
               ?>
             </td>
-            <td>
+            <td class="text-center">
               <?php
                 if ($row['isFinished'] == 0) {
                   $icon   = "bi-x-circle-fill text-danger";
@@ -296,7 +285,7 @@ $count = $stmt->rowCount();     // get row count
                 <a href="?do=edit-combination&combid=<?php echo $row['comb_id'] ?>" class="btn btn-outline-primary fs-12"><i class="bi bi-eye"></i></a>
                 <?php } ?>
                 <?php if ($_SESSION['comb_delete'] == 1) {?>
-                  <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb" data-comb-id="<?php echo $row['comb_id'] ?>"><i class="bi bi-trash"></i></button>
+                  <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb" data-comb-id="<?php echo $row['comb_id'] ?>" onclick="put_comb_data_into_modal(this, true)"><i class="bi bi-trash"></i></button>
                 <?php } ?>
               <?php } ?>
             </td>
@@ -306,7 +295,7 @@ $count = $stmt->rowCount();     // get row count
     </table>
   </div>
   <!-- delete combination modal -->
-  <?php include_once 'delete-combination-modal.php' ?>
+  <?php if ($_SESSION['comb_delete'] == 1) { include_once 'delete-combination-modal.php'; } ?>
 </div>
 <?php } else {
   // include no data founded module

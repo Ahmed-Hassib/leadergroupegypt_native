@@ -21,12 +21,14 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
 <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
   <!-- start stats -->
   <div class="stats">
-    <div class="mb-3 <?php if ($_SESSION['mal_add'] == 0) {echo 'd-none';} ?>">
+    <?php if ($_SESSION['comb_add'] == 1) { ?>
+    <div class="mb-3">
       <a href="?do=add-new-combination" class="btn btn-outline-primary py-1 shadow-sm fs-12">
         <span class="bi bi-plus"></span>
         <?php echo language("ADD NEW COMBINATION", @$_SESSION['systemLang']) ?>
       </a>
     </div>
+    <?php } ?>
     <!-- start new design -->
     <div class="mb-3 row row-cols-sm-1 row-cols-md-2 g-3 align-items-stretch justify-content-start">
       <!-- combinations of today -->
@@ -405,31 +407,15 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
               </thead>
               <tbody>
                 <?php foreach ($today_comb as $index => $comb) { ?>
-                  <tr>
-                    <td style="width: 150px"><?php echo $comb['client_name'] ?></td>
-                    <td style="width: 200px">
-                      <?php $client_addr = $comb['address'];
-                      if (!empty($client_addr) && strlen($client_addr) > 50) {
-                        echo trim(substr($client_addr, 0, 50), '') . "...";
-                      } else {
-                        echo $client_addr;
-                      }
-                      ?>
-                    </td>
-                    <td style="width: 100px">
-                      <?php $client_phone = $comb['phone'];
-                      if (!empty($client_phone) && strlen($client_phone) > 50) {
-                        echo trim(substr($$client_phone, 0, 11), '') . "...";
-                      } else {
-                        echo $client_phone;
-                      }
-                      ?>
-                    </td>
+                  <tr class="text-<?php echo $_SESSION['systemLang'] == 'ar' ? 'right' : 'left' ?>">
+                    <td style="min-width: 150px"><?php echo $comb['client_name'] ?></td>
+                    <td style="width: 200px"><?php echo $comb['address'] ?></td>
+                    <td style="width: 100px"><?php echo $comb['phone'] ?></td>
                     <td style="width: 100px">
                       <?php $techName = $comb_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$comb['UserID'])[0]['UserName']; ?>
                       <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $comb['UserID'];?>"><?php echo $techName ?></a>
                     </td>
-                    <td style="width: 50px">
+                    <td style="width: 50px" class="text-center">
                       <?php
                         if ($comb['isFinished'] == 0) {
                           $icon   = "bi-x-circle-fill text-danger";
@@ -444,25 +430,28 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                       ?>
                       <i class="bi <?php echo $icon ?>" title="<?php echo $title ?>"></i>
                     </td>
-                    <td style="width: 150px">
-                    <?php 
-                      $have_media = $comb_obj->count_records("`id`", "`combinations_media`", "WHERE `comb_id` = ".$comb['comb_id']);
-                      if ($have_media > 0) {
-                        echo language('MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
-                      } else {
-                        echo language('NO MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
-                      }
-                    ?>
+                    <td style="min-width: 100px" class="text-center">
+                      <?php 
+                        $have_media = $comb_obj->count_records("`id`", "`combinations_media`", "WHERE `comb_id` = ".$comb['comb_id']);
+                        if ($have_media > 0) {
+                          $icon   = "bi-check-circle-fill text-success";
+                          $title = language('MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
+                        } else {
+                          $icon = "bi-x-circle-fill text-danger";
+                          $title = language('NO MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
+                        }
+                      ?>
+                      <i class="bi <?php echo $icon ?>" title="<?php echo $title ?>"></i>
                     </td>
                     <td style="width: 50px">
-                    <?php if ($_SESSION['comb_show'] == 1 || $_SESSION['comb_delete'] == 1) { ?>
-                      <?php if ($_SESSION['comb_show'] == 1) { ?>
-                        <a href="?do=edit-combination&combid=<?php echo $comb['comb_id'] ?>" target="" class="btn btn-outline-primary me-1 fs-12"><i class="bi bi-eye"></i></a>
+                      <?php if ($_SESSION['comb_show'] == 1 || $_SESSION['comb_delete'] == 1) { ?>
+                        <?php if ($_SESSION['comb_show'] == 1) { ?>
+                          <a href="?do=edit-combination&combid=<?php echo $comb['comb_id'] ?>" target="" class="btn btn-outline-primary me-1 fs-12"><i class="bi bi-eye"></i></a>
+                        <?php } ?>
+                        <?php if ($_SESSION['comb_delete'] == 1) {?>
+                          <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb" data-comb-id="<?php echo $comb['comb_id'] ?>" onclick="put_comb_data_into_modal(this, true)"><i class="bi bi-trash"></i></button>
+                        <?php } ?>
                       <?php } ?>
-                      <?php if ($_SESSION['comb_delete'] == 1) {?>
-                        <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb" data-comb-id="<?php echo $comb['comb_id'] ?>"><i class="bi bi-trash"></i></button>
-                      <?php } ?>
-                    <?php } ?>
                     </td>
                   </tr>
                 <?php } ?>
@@ -506,15 +495,15 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
               </thead>
               <tbody>
                 <?php foreach ($latest_comb as $index => $comb) { ?>
-                  <tr>
-                    <td style="width: 150px"><?php echo $comb['client_name'] ?></td>
+                  <tr class="text-<?php echo $_SESSION['systemLang'] == 'ar' ? 'right' : 'left' ?>">
+                    <td style="min-width: 150px"><?php echo $comb['client_name'] ?></td>
                     <td style="width: 200px"><?php echo $comb['address'] ?></td>
                     <td style="width: 100px"><?php echo $comb['phone'] ?></td>
                     <td style="width: 100px">
                       <?php $techName = $comb_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$comb['UserID'])[0]['UserName']; ?>
                       <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $comb['UserID'];?>"><?php echo $techName ?></a>
                     </td>
-                    <td style="width: 50px">
+                    <td style="width: 50px" class="text-center">
                       <?php
                         if ($comb['isFinished'] == 0) {
                           $icon   = "bi-x-circle-fill text-danger";
@@ -529,15 +518,18 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                       ?>
                       <i class="bi <?php echo $icon ?>" title="<?php echo $title ?>"></i>
                     </td>
-                    <td style="width: 150px">
-                    <?php 
-                      $have_media = $comb_obj->count_records("`id`", "`combinations_media`", "WHERE `comb_id` = ".$comb['comb_id']);
-                      if ($have_media > 0) {
-                        echo language('MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
-                      } else {
-                        echo language('NO MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
-                      }
-                    ?>
+                    <td style="min-width: 100px" class="text-center">
+                      <?php 
+                        $have_media = $comb_obj->count_records("`id`", "`combinations_media`", "WHERE `comb_id` = ".$comb['comb_id']);
+                        if ($have_media > 0) {
+                          $icon   = "bi-check-circle-fill text-success";
+                          $title = language('MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
+                        } else {
+                          $icon = "bi-x-circle-fill text-danger";
+                          $title = language('NO MEDIA HAVE BEEN ATTACHED', @$_SESSION['systemLang']);
+                        }
+                      ?>
+                      <i class="bi <?php echo $icon ?>" title="<?php echo $title ?>"></i>
                     </td>
                     <td style="width: 50px">
                       <?php if ($_SESSION['comb_show'] == 1 || $_SESSION['comb_delete'] == 1) { ?>
@@ -545,7 +537,7 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
                           <a href="?do=edit-combination&combid=<?php echo $comb['comb_id'] ?>" target="" class="btn btn-outline-primary me-1 fs-12"><i class="bi bi-eye"></i></a>
                         <?php } ?>
                         <?php if ($_SESSION['comb_delete'] == 1) {?>
-                          <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb" data-comb-id="<?php echo $comb['comb_id'] ?>"><i class="bi bi-trash"></i></button>
+                          <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb" data-comb-id="<?php echo $comb['comb_id'] ?>" onclick="put_comb_data_into_modal(this, true)"><i class="bi bi-trash"></i></button>
                         <?php } ?>
                       <?php } ?>
                     </td>
@@ -564,4 +556,4 @@ if ($_SESSION['comb_show'] == 1 && $_SESSION['isTech'] == 1) {
 </div>
 <!-- end home stats container -->
 
-<?php include_once 'delete-combination-modal.php' ?>
+<?php if ($_SESSION['comb_delete'] == 1) { include_once 'delete-combination-modal.php'; } ?>
