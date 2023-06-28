@@ -39,7 +39,7 @@
   </div>
 </div>
 <div class="mb-4 row">
-  <div class="col-sm-12 col-md-3"><?php echo language('PIECES/CLIENTS', @$_SESSION['systemLang']) ?></div>
+  <div class="col-sm-12 col-md-3"><?php echo language('PIECES', @$_SESSION['systemLang']) ?></div>
   <div class="col-sm-12 col-md-8">
     <div class="row row-cols-sm-1 row-cols-md-3 row-cols-lg-5 align-items-start g-sm-1 gx-md-5">
       <div class="col-sm-12">
@@ -70,6 +70,45 @@
         <div class="form-check form-check-inline">
           <input class="form-check-input" type="checkbox" value="1" name="pcsShow" id="pcsPage4">
           <label class="form-check-label" for="pcsPage4">
+            <?php echo language("SHOW", @$_SESSION['systemLang']) ?>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mb-4 row">
+  <div class="col-sm-12 col-md-3"><?php echo language('CLIENTS', @$_SESSION['systemLang']) ?></div>
+  <div class="col-sm-12 col-md-8">
+    <div class="row row-cols-sm-1 row-cols-md-3 row-cols-lg-5 align-items-start g-sm-1 gx-md-5">
+      <div class="col-sm-12">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" value="1" name="clientsAdd" id="clientsPage1">
+          <label class="form-check-label" for="clientsPage1">
+            <?php echo language("ADD", @$_SESSION['systemLang']) ?>
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" value="1" name="clientsUpdate" id="clientsPage2">
+          <label class="form-check-label" for="clientsPage2">
+            <?php echo language("EDIT", @$_SESSION['systemLang']) ?>
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" value="1" name="clientsDelete" id="clientsPage3">
+          <label class="form-check-label" for="clientsPage3">
+            <?php echo language("DELETE", @$_SESSION['systemLang']) ?>
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" value="1" name="clientsShow" id="clientsPage4">
+          <label class="form-check-label" for="clientsPage4">
             <?php echo language("SHOW", @$_SESSION['systemLang']) ?>
           </label>
         </div>
