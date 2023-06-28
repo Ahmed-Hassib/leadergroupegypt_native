@@ -341,7 +341,6 @@
 	transition: all 0.3s ease;
 }
 
-.sidebar-menu.close .profile-details .logout-btn,
 .sidebar-menu.close .profile-details .profile-name,
 .sidebar-menu.close .profile-details .profile-job {
 	display: none;
@@ -351,7 +350,6 @@
 	font-size: 12px;
 }
 
-.sidebar-menu .profile-details:hover .logout-btn,
 .sidebar-menu .profile-details:hover .profile-name,
 .sidebar-menu .profile-details:hover .profile-job {
 	color: #fff;
