@@ -50,11 +50,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $_SESSION['flash_message_status'] = false;
     }
   } else {
-    // prepare flash session variables
-    $_SESSION['flash_message'] = 'NO DATA FOUNDED';
-    $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
-    $_SESSION['flash_message_class'] = 'danger';
-    $_SESSION['flash_message_status'] = false;
+    foreach ($formErorr as $key => $error) {
+      $_SESSION['flash_message'][$key] = strtoupper($error);
+      $_SESSION['flash_message_icon'][$key] = 'bi-exclamation-triangle-fill';
+      $_SESSION['flash_message_class'][$key] = 'danger';
+      $_SESSION['flash_message_status'][$key] = false;
+    }
   }
   // redirect to the previous page
   redirectHome(null, 'back', 0);
