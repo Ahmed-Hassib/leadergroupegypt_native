@@ -1,13 +1,8 @@
-<!-- start edit profile page -->
-<div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-  <!-- start header -->
-  <header class="header">
-    <!-- start page not found 404 -->
-    <div class="page-error">
-      <img src="<?php echo $assets ?>images/page-not-found.svg" class="img-fluid" alt="<?php echo language("NO PAGE WITH THIS NAME", @$_SESSION['systemLang']) ?>">
-      <?php $msg = '<div class="alert alert-warning text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;'.language("NO PAGE WITH THIS NAME", @$_SESSION['systemLang']).'</div>'; ?>
-      <?php redirectHome($msg, 'back'); ?>
-    </div>
-    <!-- end page not found 404 -->
-  </header>    
-</div>
+<?php
+// prepare flash session variables
+$_SESSION['flash_message'] = 'NO PAGE WITH THIS NAME';
+$_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+$_SESSION['flash_message_class'] = 'danger';
+$_SESSION['flash_message_status'] = false;
+// redirect to the previous page
+redirectHome(null, 'back', 0);

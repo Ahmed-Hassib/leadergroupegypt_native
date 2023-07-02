@@ -1,13 +1,8 @@
-
-<div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-  <!-- start header -->
-  <header class="header">
-    <!-- start missing data page -->
-    <div class="page-error">
-      <img src="<?php echo $assets ?>images/warning.svg" class="img-fluid" alt="<?php echo language("THERE IS AN ERROR OR MISSING DATA", @$_SESSION['systemLang']) ?>">
-      <?php $msg = '<div class="alert alert-danger text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;'. language('THERE IS AN ERROR OR MISSING DATA', @$_SESSION['systemLang']) .'</div>'; ?>
-      <?php redirectHome($msg, 'back'); ?>
-    </div>
-    <!-- end missing data page -->
-  </header>
-</div>
+<?php
+// prepare flash session variables
+$_SESSION['flash_message'] = 'THERE IS AN ERROR OR MISSING DATA';
+$_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+$_SESSION['flash_message_class'] = 'danger';
+$_SESSION['flash_message_status'] = false;
+// redirect to the previous page
+redirectHome(null, 'back', 0);
