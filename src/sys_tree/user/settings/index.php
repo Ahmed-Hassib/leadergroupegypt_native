@@ -40,7 +40,7 @@ if (isset($_SESSION['UserName']))  {
 
   } else {
     // include page not founded module
-    $file_name = $globmod . 'page-permission-error.php';
+    $file_name = $globmod . 'page-error.php';
   }
 } else { 
   // include permission error module

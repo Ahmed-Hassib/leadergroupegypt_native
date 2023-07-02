@@ -72,7 +72,7 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
     $file_name = include_once 'devices-companies.php';
 
   } else {
-    $file_name = $globmod . 'page-permission-error.php';
+    $file_name = $globmod . 'page-error.php';
     $possible_back = false;
     $preloader = false;
   }    

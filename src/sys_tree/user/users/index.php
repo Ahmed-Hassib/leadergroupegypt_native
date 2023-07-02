@@ -56,7 +56,7 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
     $possible_back = false;
     
   } else {
-    $file_name = $globmod . 'page-permission-error.php';
+    $file_name = $globmod . 'page-error.php';
     $preloader = false;
     $possible_back = false;
   }
