@@ -20,7 +20,7 @@
     $_SESSION['flash_message_class'] = 'success';
     $_SESSION['flash_message_status'] = true;
     // redirect to previous page
-    redirectHome($msg, "back");
+    redirectHome(null, "back", 0);
   } else {
     include_once $globmod . 'no-data-founded-no-redirect.php';
   }
