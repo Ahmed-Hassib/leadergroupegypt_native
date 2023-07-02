@@ -1,12 +1,12 @@
 <!-- start edit profile page -->
 <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
   <div class="mb-3 hstack gap-3">
-    <div class="<?php if ($_SESSION['pcs_add'] == 0) {echo 'd-none';} ?>">
-      <button type="button" class="btn btn-outline-primary py-1 fs-12" data-bs-toggle="modal" data-bs-target="#addNewDevice">
-        <i class="bi bi-plus"></i>
-        <?php echo language('ADD NEW DEVICE', @$_SESSION['systemLang']) ?>
-      </button>
-    </div>
+    <?php if ($_SESSION['pcs_add'] == 1) { ?>
+    <button type="button" class="btn btn-outline-primary py-1 fs-12" data-bs-toggle="modal" data-bs-target="#addNewDevice">
+      <i class="bi bi-plus"></i>
+      <?php echo language('ADD NEW DEVICE', @$_SESSION['systemLang']) ?>
+    </button>
+    <?php } ?>
   </div>
   <!-- add new device modal -->
 
@@ -109,7 +109,5 @@
   } ?>
 </div>
 
-<!-- include add new device modal -->
-<?php include_once 'devices-companies/add-device-modal.php'; ?>
-<!-- include delete deviceodel modal -->
-<?php include_once 'devices-companies/delete-device-modal.php'; ?>
+<?php if ($_SESSION['pcs_add'] == 1) { include_once 'add-device-modal.php'; } # include add new device modal ?>
+<?php if ($_SESSION['pcs_delete'] == 1) { include_once 'delete-device-modal.php'; } # include delete device model modal ?>
