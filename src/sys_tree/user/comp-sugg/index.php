@@ -25,10 +25,6 @@ include_once str_repeat("../", $level) . "etc/pre-conf.php";
 if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
   // check if Get request do is set or not
   $query = isset($_GET['do']) ? $_GET['do'] : 'manage';
-  // get type of the query
-  $type = isset($_GET['type']) ? intval($_GET['type']) : -1;
-  // condition
-  $condition = $type != -1 ? " WHERE `type` = " . $type : "";
   // start manage page
   if ($query == "manage") {       // manage page
     // include comp & sugg dashboard page
@@ -39,26 +35,26 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
     $file_name = 'personal-comp-sugg.php';
     $is_contain_table = true;
     
-  } elseif ($query == 'show-comp-sugg') { 
-    // include show comp & sugg page
-    $file_name = 'show-comp-sugg.php';
-    $is_contain_table = true;
+  // } elseif ($query == 'show-comp-sugg') { 
+  //   // include show comp & sugg page
+  //   $file_name = 'show-comp-sugg.php';
+  //   $is_contain_table = true;
     
-  } elseif ($query == 'delete-comp-sugg') {
-    // include delete comp & sugg page
-    $file_name = 'delete-comp-sugg.php';
-    $possible_back = false;
-    $preloader = false;
+  // } elseif ($query == 'delete-comp-sugg') {
+  //   // include delete comp & sugg page
+  //   $file_name = 'delete-comp-sugg.php';
+  //   $possible_back = false;
+  //   $preloader = false;
     
-  } elseif ($query == 'add-comp-sugg') {
-    // include add comp & sugg page
-    $file_name = 'add-comp-sugg.php';
+  // } elseif ($query == 'add-comp-sugg') {
+  //   // include add comp & sugg page
+  //   $file_name = 'add-comp-sugg.php';
     
-  } elseif ($query == "insert-comp-sugg") {
-    // include insert comp & sugg page
-    $file_name = 'insert-comp-sugg.php';
-    $possible_back = false;
-    $preloader = false;
+  // } elseif ($query == "insert-comp-sugg") {
+  //   // include insert comp & sugg page
+  //   $file_name = 'insert-comp-sugg.php';
+  //   $possible_back = false;
+  //   $preloader = false;
     
   } else {
     // include page error module
