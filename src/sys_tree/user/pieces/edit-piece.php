@@ -82,14 +82,21 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
               <div class="mt-2 col-sm-12 col-md-8 position-relative">
                 <!-- TRANSMITTER -->
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="is-client" id="piece" value="1" <?php echo $piece_data['is_client'] == 0 && $piece_data['device_type'] == 1 ? 'checked' : '' ?>>
-                  <label class="form-check-label text-capitalize" for="piece"><?php echo language('TRANSMITTER', @$_SESSION['systemLang']) ?></label>
+                  <input class="form-check-input" type="radio" name="is-client" id="transmitter" value="1" <?php echo $piece_data['is_client'] == 0 && $piece_data['device_type'] == 1 ? 'checked' : '' ?>>
+                  <label class="form-check-label text-capitalize" for="transmitter"><?php echo language('TRANSMITTER', @$_SESSION['systemLang']) ?></label>
                 </div>
                 <!-- RECEIVER -->
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="is-client" id="client" value="2" <?php echo $piece_data['is_client'] == 0 && $piece_data['device_type'] == 2 ? 'checked' : '' ?>>
-                  <label class="form-check-label text-capitalize" for="client"><?php echo language('RECEIVER', @$_SESSION['systemLang']) ?></label>
+                  <input class="form-check-input" type="radio" name="is-client" id="receiver" value="2" <?php echo $piece_data['is_client'] == 0 && $piece_data['device_type'] == 2 ? 'checked' : '' ?>>
+                  <label class="form-check-label text-capitalize" for="receiver"><?php echo language('RECEIVER', @$_SESSION['systemLang']) ?></label>
                 </div>
+                <?php if ($piece_data['is_client'] == -1) { ?>
+                  <!-- CLIENT -->
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="is-client" id="client" value="0">
+                    <label class="form-check-label text-capitalize" for="client"><?php echo language('CLIENT', @$_SESSION['systemLang']) ?></label>
+                  </div>
+                <?php } ?>
               </div>
             </div>
           </div>
@@ -183,7 +190,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
                           $dir_data = $dirs;
                           // check the row dirs_count
                           if ($dirs_count > 0) { ?>
-                            <option value="default" disabled selected><?php echo language('SELECT', @$_SESSION['systemLang'])." ". language('THE DIRECTION', @$_SESSION['systemLang']) ?></option>
+                            <option value="default" disabled><?php echo language('SELECT', @$_SESSION['systemLang'])." ". language('THE DIRECTION', @$_SESSION['systemLang']) ?></option>
                             <?php foreach ($dir_data as $dir) { ?>
                               <option value="<?php echo $dir['direction_id'] ?>" data-dir-company="<?php echo $_SESSION['company_id'] ?>" <?php echo $piece_data['direction_id'] == $dir['direction_id'] ? 'selected' : ''  ?>>
                                 <?php echo  $dir['direction_name'] ?>
