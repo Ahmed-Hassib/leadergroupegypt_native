@@ -171,8 +171,13 @@
       $_SESSION['flash_message_status'][$key] = false;
     }
   }
+  if ($is_client == 0) {
+    $target_url = $nav_up_level."pieces/index.php?do=edit-piece&piece-id=$id";
+  } else {
+    $target_url = 'back';
+  }
   // redirect to previous page
-  redirectHome(null, 'back', 0);
+  redirectHome(null, $target_url, 0);
 } else {
   // include permission error module
   include_once $globmod . 'permission-error.php';

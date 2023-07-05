@@ -98,8 +98,9 @@
     // push all basic info in it
     array_push($basic_info, $full_name, $ip, $username, $password, $conn_type, $dir_id, $source_id, $alt_source_id, $is_client, $device_type, $device_id, $model_id, $notes, $visit_time, $id);
     // update basic info
-    $is_updated = $pcs_obj->update_piece_info($basic_info);
-
+    $is_updated_1 = $pcs_obj->update_piece_info($basic_info);
+    $is_updated_2 = $pcs_obj->update_children_direction($id, $dir_id);
+    
     // check if address was inserted befor
     $is_exist_addr = $pcs_obj->is_exist("`id`", "`pieces_addr`", $id);
     if ($is_exist_addr == true) {
@@ -204,8 +205,14 @@
       $_SESSION['flash_message_status'][$key] = false;
     }
   }
+  
+  if ($is_client == 1) {
+    $target_url = $nav_up_level."clients/index.php?do=edit-client&client-id=$id";
+  } else {
+    $target_url = 'back';
+  }
   // redirect to previous page
-  redirectHome(null, 'back', 0);
+  redirectHome(null, $target_url, 0);
 } else {
   // include permission error module
   include_once $globmod . 'permission-error.php';
