@@ -80,24 +80,11 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
             <div class="mb-sm-2 mb-md-3 row">
               <label for="is-client" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('THE TYPE', @$_SESSION['systemLang']) ?></label>
               <div class="mt-2 col-sm-12 col-md-8 position-relative">
-                <?php if ($client_data['is_client'] <= 0) { ?>
-                  <!-- TRANSMITTER -->
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="is-client" id="piece" value="1" <?php echo $client_data['is_client'] == 0 && $client_data['device_type'] == 1 ? 'checked' : '' ?>>
-                    <label class="form-check-label text-capitalize" for="piece"><?php echo language('TRANSMITTER', @$_SESSION['systemLang']) ?></label>
-                  </div>
-                  <!-- RECEIVER -->
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="is-client" id="client" value="2" <?php echo $client_data['is_client'] == 0 && $client_data['device_type'] == 2 ? 'checked' : '' ?>>
-                    <label class="form-check-label text-capitalize" for="client"><?php echo language('RECEIVER', @$_SESSION['systemLang']) ?></label>
-                  </div>
-                <?php } elseif ($client_data['is_client'] == 1) { ?>
-                  <!-- CLIENT -->
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="is-client" id="client" value="0" <?php echo $client_data['is_client'] == 1 ? 'checked' : '' ?>>
-                    <label class="form-check-label text-capitalize" for="client"><?php echo language('CLIENT', @$_SESSION['systemLang']) ?></label>
-                  </div>
-                <?php } ?>
+                <!-- CLIENT -->
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="is-client" id="client" value="0" <?php echo $client_data['is_client'] == 1 ? 'checked' : '' ?>>
+                  <label class="form-check-label text-capitalize" for="client"><?php echo language('CLIENT', @$_SESSION['systemLang']) ?></label>
+                </div>
               </div>
             </div>
           </div>
@@ -232,7 +219,7 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                       <div class="col-sm-12 position-relative">
                         <select class="form-select" id="alternative-sources" name="alt-source-id">
                           <?php if ($sources_count) { ?>
-                            <option value="default" selected disabled><?php echo language('SELECT', @$_SESSION['systemLang'])." ". language('ALTERNATIVE SOURCE', @$_SESSION['systemLang']) ?></option>
+                            <option value="default" disabled><?php echo language('SELECT', @$_SESSION['systemLang'])." ". language('ALTERNATIVE SOURCE', @$_SESSION['systemLang']) ?></option>
                             <?php foreach ($sources_data as $alt_source) { ?>
                               <option value="<?php echo $alt_source['id'] ?>" <?php if ($client_data['alt_source_id'] == $alt_source['id'] || ($client_data['alt_source_id'] == 0 && $client_data['ip'] == $alt_source['ip'])) echo 'selected'; ?>>
                                 <?php echo  $alt_source['full_name'] . " - " . $alt_source['ip'] ?>
