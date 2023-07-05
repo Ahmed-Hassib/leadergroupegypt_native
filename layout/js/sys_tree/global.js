@@ -250,7 +250,7 @@ function put_data_into_select(data, status, box, type, ...fields) {
         } else {
           default_text = `اختر المصدر البديل`;
         }
-        default_option = new Option(default_text, 'default', true, true);
+        default_option = new Option(default_text, 'default');
         default_option.setAttribute('disabled', 'disabled');
         // append to select box
         select_box.appendChild(default_option);
