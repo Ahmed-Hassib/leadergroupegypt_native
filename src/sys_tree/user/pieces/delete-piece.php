@@ -17,7 +17,7 @@ if ($is_exist == true) {
   // check if the piece have a children or not
   $count_child = $pcs_obj->count_records("`id`", "`pieces_info`", "WHERE `source_id` = $piece_id AND `company_id` = ".$_SESSION['company_id']);
 
-  if ($is_exist > 0 && $count_child == 0) {
+  if ($count_child == 0) {
     // call delete function
     $pcs_obj->delete_piece($piece_id); 
     // log message
