@@ -82,6 +82,14 @@ if ($_GET['type'] == 1) {
         </thead>
         <tbody id="piecesTbl">
           <?php foreach ($all_data as $index => $piece) { ?>
+            <?php
+              // check type of child
+              if ($piece['is_client'] == 1) {
+                $url = "?do=edit-client&client-id=".$piece['id'];
+              } else {
+                $url = "?do=edit-piece&piece-id=".$piece['id'];
+              }
+            ?>
             <tr>
               <!-- index -->
               <td ><?php echo ++$index; ?></td>
@@ -95,7 +103,7 @@ if ($_GET['type'] == 1) {
               <!-- piece name -->
               <td>
                 <?php if ($_SESSION['pcs_show'] == 1) { ?>
-                  <a href="?do=edit-piece&piece-id=<?php echo $piece['id']; ?>" target="">
+                  <a href="<?php echo $url ?>" target="">
                     <?php echo trim($piece['full_name'], ' ') ?>
                   </a>
                 <?php } else {?>
@@ -112,7 +120,7 @@ if ($_GET['type'] == 1) {
               <!-- piece username -->
               <td class="text-capitalize">
                 <?php if ($_SESSION['pcs_show'] == 1) { ?>
-                <a href="?do=edit-piece&piece-id=<?php echo $piece['id']; ?>">
+                <a href="<?php echo $url ?>">
                   <?php echo $piece['username']; ?>
                 </a>
                 <?php } else {?>
@@ -212,7 +220,7 @@ if ($_GET['type'] == 1) {
               <!-- control -->
               <td>
                 <?php if ($_SESSION['pcs_show'] == 1) { ?>
-                  <a class="btn btn-success text-capitalize fs-12 " href="?do=edit-piece&piece-id=<?php echo $piece['id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
+                  <a class="btn btn-success text-capitalize fs-12 " href="<?php echo $url ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
                 <?php } ?>
                 <?php if ($piece['is_client'] == 0 && $_SESSION['pcs_show'] == 1) { ?>
                   <a class="btn btn-outline-primary text-capitalize fs-12" href="?do=show-piece&dir-id=<?php echo $piece['direction_id'] ?>&src-id=<?php echo $piece['id'] ?>" ><i class="bi bi-eye"></i></a>
