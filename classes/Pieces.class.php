@@ -339,29 +339,26 @@ class Pieces extends Database {
     // if exist
     if ($is_exist_piece == true) {
       // count children of the current piece
-      $checkChildren = $this->count_records("`id`", "`pieces_info`", "WHERE `source_id` = $source_id");
+      $children_count = $this->count_records("`id`", "`pieces_info`", "WHERE `source_id` = $source_id");
       // check if has children
-      if ($checkChildren > 0) {
-        $update_query .= "UPDATE `pieces_info` SET `direction_id` = $new_direction_id WHERE `id` = $source_id AND `company_id` = " . $_SESSION['company_id'] . ";";
-        // condition
-        $condition = "LEFT JOIN `direction` ON `direction`.`direction_id` = `pieces_info`.`direction_id`";
-        $condition .= "WHERE `pieces_info`.`source_id` = " . $source_id . ";";
+      if ($children_count > 0) {
+        $update_query .= "UPDATE `pieces_info` SET `direction_id` = '$new_direction_id' WHERE `id` = $source_id;";
         // fetch all children
-        $children = selectSpecificColumn("`pieces_info`.`id`, `pieces_info`.`direction_id`", "`pieces_info`", $condition);
+        $children = $this->select_specific_column("`id`", "`pieces_info`", "WHERE `source_id` = $source_id");
         // loop on it
         foreach ($children as $child) {
           // get the children of the current piece
           $update_query .= $this->update_children_direction($child['id'], $new_direction_id);
         }
       } else {
-        $update_query .= "UPDATE `pieces` SET `direction_id` = $new_direction_id WHERE `id` = $source_id AND `company_id` = " . $_SESSION['company_id'] . ";";
+        $update_query .= "UPDATE `pieces_info` SET `direction_id` = '$new_direction_id' WHERE `id` = $source_id;";
       }
       // 
       $stmt = $this->con->prepare($update_query);
       $stmt->execute();
       $pcs_count =  $stmt->rowCount();       // count effected rows
       // return result
-      return $pcs_count > 0 ? true : false;
+      return $pcs_count > 0 ? true : false; 
     }
   }
 }   
