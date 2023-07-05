@@ -25,12 +25,16 @@ function getTitle() {
 function redirectHome($msg = null, $url = null, $seconds = 3) {
   // check the url
   if ($url == null) {
-    $url = '../dashboard/index.php';
+    $target_url = '../dashboard/index.php';
   } else {
-    $url = isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '../dashboard/index.php';
+    if ($url == 'back') {
+      $target_url = isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '../dashboard/index.php';
+    } else {
+      $target_url = $url;
+    }
   }
   // redirect page
-  header("refresh:$seconds;url=$url");
+  header("refresh:$seconds;url=$target_url");
   // check if empty message
   if (!empty($msg) && $msg != null) {
     echo $msg;
