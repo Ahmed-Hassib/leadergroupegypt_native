@@ -6,7 +6,7 @@ $classes_arr = [
     'ManufuctureCompanies', 'Devices', 'Models',
     'Pieces', 'PiecesConn', 
     'Malfunction', 'Combination',
-    'Companies', 'Session',
+    'Companies', 'Session', 'CompSugg',
     'Countries'
 ];
 
