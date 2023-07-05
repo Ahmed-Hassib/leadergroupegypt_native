@@ -85,7 +85,7 @@ if ($_GET['type'] == 1) {
             <?php
               // check type of child
               if ($piece['is_client'] == 1) {
-                $url = "?do=edit-client&client-id=".$piece['id'];
+                $url = $nav_up_level."clients/index.php?do=edit-client&client-id=".$piece['id'];
               } else {
                 $url = "?do=edit-piece&piece-id=".$piece['id'];
               }
