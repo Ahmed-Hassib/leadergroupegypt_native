@@ -114,6 +114,7 @@ function languageAr($phrase)
     'POWERED BY'            => 'powered by',
     'RATE APP'              => 'تقييم السيستم',
     'SEND RATE'             => 'ارسال التقييم',
+    'PLEASE WAIT'           => 'من فضلك انتظر',
 
     
     
@@ -228,6 +229,8 @@ function languageAr($phrase)
     'COMPLAINTS OR SUGGESTIONS'     => 'الشكاوى اوالاقتراحات',
     'COMPLAINT OR SUGGESTION'       => 'شكوى او اقتراح',
     'ADD COMPLAINT OR SUGGESTION'   => 'اضافة شكوى او اقتراح',
+    'ADD NEW COMPLAINT'             => 'اضافة شكوى جديدة',
+    'ADD NEW SUGGESTION'            => 'اضافة اقتراح جديد',
     'THIS COMPLAINT OR SUGGESTION'  => 'هذه الشكوى او الاقتراح',
     'NUMBER'                        => 'رقم',
     'NUMBERS'                       => 'ارقام',
@@ -935,6 +938,10 @@ function languageAr($phrase)
     'COMPANY IMAGE WAS NOT UPDATED'                                                 => 'لم يتم تعديل شعار الشركة',
     'THERE IS NO IMAGES WAS ADDED TO CHANGE IT'                                     => 'لم يتم اختيار صورة لتغيير شعار الشركة',
     'SOME MODIFICATIONS HAVE BEEN MADE TO THE SECURITY OF THE SYSTEM'               => 'حدثت بعض التعديلات علي الحماية الخاصة بالسيستم',
+    'YOU MUST CHOOSE THE SECTION FOR EITHER SUGGESTIONS OR COMPLAINTS'              => 'يجب ان تختار القسم اما الاقتراحات اوالشكاوى',
+    'THIS PIECE OR CLIENT HAS BEEN DELETED'                                         => 'هذه القطعة او العميل تم حذفة',
+    'THIS EMPLOYEE HAS BEEN DELETED'                                                => 'هذا الموظف تم حذفة',
+    'SESSION HAS BEEN UPDATED SUCCESSFULLY'                                         => 'تم تحديث الجلسة بنجاح',
     
     'WHEN REGISTERING THE ABBRERVIATED NAME OF THE COMPANY AND THE USERNAME OF ADMIN, PLEASE NOTE THE FOLLOWING'                          => 'عند تسجيل الاسم المختصر للشركة واسم المستخدم للأدمن برجاء مراعاة التالي',
     'WHEN LOGGING IN, BE SURE TO WRITE THE USERNAME FOLLOWED BY "@" SIGN, THEN THE COMPANY`S ABBREVIATED NAME'                            => 'عند تسجيل الدخول يجب مراعاة كتابة اسم المستخدم متبوعاً بعلامة "@" ثم الاسم المختصر للشركة',
