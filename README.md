@@ -1,10 +1,10 @@
-# jsl-network
-This is the first largest project I worked on untill now
+# Leader Group Egypt app
 
 ## Used Tools
-- HTML5
-- CSS3
+- HTML
+- CSS
 - Pure JS
 - Bootstrap v5.1
 - Pure PHP
+- PHP oop
 - MySQL

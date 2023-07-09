@@ -26,3 +26,8 @@ classes/Database.class.php
 
 # ignoring spare_files folder
 spare_files/*
+
+
+includes/functions/api.php
+includes/functions/editu.php
+includes/functions/status.php
