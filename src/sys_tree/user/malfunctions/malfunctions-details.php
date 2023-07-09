@@ -217,27 +217,68 @@ $count = $stmt->rowCount();     // get row count
             <td><?php echo ($index + 1) ?></td>
             <!-- admin username -->
             <td>
-              <?php $admin_name = $mal_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$row['mng_id'])[0]['UserName']; ?>
-              <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $row['mng_id'];?>"><?php echo $admin_name ?></a>
+              <?php 
+              // check if exist
+              $is_exist_admin = $mal_obj->is_exist("`UserID`", "`users`", $row['mng_id']);
+              // if exist
+              if ($is_exist_admin) {
+                $admin_name = $mal_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$row['mng_id'])[0]['UserName'];
+              ?>
+                <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $row['mng_id'];?>"><?php echo $admin_name ?></a>
+              <?php } else { ?>
+                <span class="text-danger"><?php echo language('THIS EMPLOYEE HAS BEEN DELETED', @$_SESSION['systemLang']) ?></span>
+              <?php } ?>
             </td>
             <!-- technical username -->
             <td>
-              <?php $tech_name = $mal_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$row['tech_id'])[0]['UserName']; ?>
+              <?php 
+              // check if exist
+              $is_exist_tech = $mal_obj->is_exist("`UserID`", "`users`", $row['tech_id']);
+              // if exist
+              if ($is_exist_tech) {
+                $tech_name = $mal_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = ".$row['tech_id'])[0]['UserName']; ?>
               <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $row['tech_id'];?>"><?php echo $tech_name ?></a>
+              <?php } else { ?>
+                <span class="text-danger"><?php echo language('THIS EMPLOYEE HAS BEEN DELETED', @$_SESSION['systemLang']) ?></span>
+              <?php } ?>
             </td>
             <!-- piece/client name -->
             <td>
-              <?php $client_name = $mal_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = " . $row['client_id'] . " LIMIT 1")[0]['full_name']; ?>
-              <?php $client_type = $mal_obj->select_specific_column("`is_client`", "`pieces_info`", "WHERE `id` = " . $row['client_id'] . " LIMIT 1")[0]['is_client']; ?>
-              <a href="<?php echo $nav_up_level ?>pieces/index.php?name=<?php echo $client_type == 1 ? 'clients' : 'pieces' ?>&do=edit-piece&piece-id=<?php echo $row['client_id'];?>"><?php echo $client_name ?></a>
+              <?php 
+              // check if exist
+              $is_exist_device = $mal_obj->is_exist("`id`", "`pieces_info`", $row['client_id']);
+              // if exist
+              if ($is_exist_device) {
+                // get info
+                $info = $mal_obj->select_specific_column("`full_name`, `is_client`", "`pieces_info`", "WHERE `id` = " . $row['client_id'] . " LIMIT 1")[0];
+                // get name
+                $name = $info['full_name'];
+                // get type
+                $is_client = $info['is_client'];
+                // prepare url
+                if ($is_client == 1) {
+                  $url = $nav_up_level."clients/index.php?do=edit-client&client-id=".$row['client_id'];
+                } else {
+                  $url = "?do=edit-piece&piece-id=".$row['client_id'];
+                }
+              ?>
+                <a href="<?php echo $url ?>"><?php echo $name ?></a>
+              <?php } else { ?>
+                <span class="text-danger"><?php echo language('THIS PIECE OR CLIENT HAS BEEN DELETED', @$_SESSION['systemLang']) ?></span>
+              <?php } ?>
             </td>
             <!-- malfunction description -->
             <td>
-              <?php if (strlen($row['descreption']) > 40) {
-                echo trim(substr($row['descreption'], 0, 40), '') . "...";
-              } else {
-                echo $row['descreption'];
-              } ?>
+              <?php
+                if (strlen($row['descreption']) > 0 && !empty($row['descreption'])) {
+                  if (strlen($row['descreption']) > 40) {
+                    echo trim(substr($row['descreption'], 0, 40), '') . "...";
+                  } else {
+                    echo $row['descreption'];
+                  }
+                } else { ?>
+                  <span class="text-danger"><?php echo language('NO DATA ENTERED', @$_SESSION['systemLang']) ?></span>
+                <?php } ?>
             </td>
             <!-- technical man comment -->
             <td class="<?php echo empty($row['tech_comment']) ? 'text-danger' : '' ?>">
