@@ -58,7 +58,7 @@ if ($counter > 0) {
             <th style="min-width: 100px"><?php echo language('DEVICE MODEL', @$_SESSION['systemLang']) ?></th>
             <th style="min-width: 100px"><?php echo language('CONNECTION TYPE', @$_SESSION['systemLang']) ?></th>
             <th style="min-width: 100px"><?php echo language('ADDED DATE', @$_SESSION['systemLang']) ?></th>
-            <th style="min-width: 75px"><?php echo language('CONTROL', @$_SESSION['systemLang']) ?></th>
+            <th style="min-width: 200px"><?php echo language('CONTROL', @$_SESSION['systemLang']) ?></th>
           </tr>
         </thead>
         <tbody id="piecesTbl">
@@ -185,7 +185,7 @@ if ($counter > 0) {
 
               <!-- connection type -->
               <td class="text-uppercase" data-value="<?php echo $piece['connection_type'] ?>">
-                <?php echo $piece['connection_type'] == 0 ? 'none' : $db_obj->select_specific_column("`connection_name`", "`connection_types`", "WHERE `id` = ".$piece['connection_type'])[0]['connection_name']; ?>
+                <?php echo $piece['connection_type'] <= 0 ? 'none' : $db_obj->select_specific_column("`connection_name`", "`connection_types`", "WHERE `id` = ".$piece['connection_type'])[0]['connection_name']; ?>
               </td>
 
               <!-- added date -->
@@ -193,6 +193,9 @@ if ($counter > 0) {
 
               <!-- control -->
               <td>
+                <?php if ($piece['ip'] != '0.0.0.0' && $piece['ip'] != null && !empty($piece['ip'])) { ?>
+                  <button type="button" class="btn btn-outline-primary btn-ping text-capitalize form-control bg-gradient px-3 fs-12" data-bs-toggle="modal" data-bs-target="#pingModal" id="ping-piece" onclick="ping('<?php echo $piece['ip'] ?>')">ping</button>
+                <?php } ?>
                 <?php if ($_SESSION['pcs_show'] == 1) { ?>
                   <a class="btn btn-success text-capitalize fs-12 " href="?do=edit-piece&piece-id=<?php echo $piece['id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
                 <?php } ?>
@@ -209,6 +212,8 @@ if ($counter > 0) {
       </table>
     </div>
   </div>
+
+  <?php if ($piece['ip'] != '0.0.0.0' && $piece['ip'] != null && !empty($piece['ip'])) { include_once $globmod . 'ping-modal.php'; } ?>
 <?php } else {
   // include no data founded module
   include_once $globmod . 'no-data-founded-no-redirect.php';

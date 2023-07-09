@@ -90,7 +90,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
                   <input class="form-check-input" type="radio" name="is-client" id="receiver" value="2" <?php echo $piece_data['is_client'] == 0 && $piece_data['device_type'] == 2 ? 'checked' : '' ?>>
                   <label class="form-check-label text-capitalize" for="receiver"><?php echo language('RECEIVER', @$_SESSION['systemLang']) ?></label>
                 </div>
-                <?php if ($piece_data['is_client'] == -1) { ?>
+                <?php if ($piece_data['is_client'] <= 0) { ?>
                   <!-- CLIENT -->
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="is-client" id="client" value="0">
