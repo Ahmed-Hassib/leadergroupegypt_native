@@ -1,5 +1,5 @@
 .genealogy-scroll::-webkit-scrollbar {
-	width: 5px;
+	width: 16px;
 	height: 16px;
 }
 
@@ -22,11 +22,10 @@
 .genealogy-body {
 	position: relative;
 	white-space: nowrap;
-	overflow-y: hidden;
-	padding: 50px;
+	overflow-y: scroll;
+	padding: 30px;
+	margin: 20px 30px;
 	min-height: 500px;
-	padding-top: 10px;
-	padding-bottom: 10px;
 }
 
 .genealogy-tree {
