@@ -205,93 +205,7 @@ function addAstrisk(inputs) {
 
 
 
-function get_sources(dir_select, company_id, location, box) {
-  // get direction id
-  let dir_id = dir_select.value;
-  // get direction name
-  let dir_name = dir_select.options[dir_select.selectedIndex].textContent;
-  // json file name
-  let json_file_name = "";
-  // get all pieces data ..
-  $.get(`../requests/index.php?do=get-source&dir-id=${dir_id}&company=${company_id}`, (data) => {
-    // console.log(data);
-    // assign json file name to the variable
-    json_file_name = $.parseJSON(data);
 
-    // get data from json file
-    $.ajax({
-      url: `${location}/${json_file_name}`,
-      dataType: 'json',
-      cache: false,
-      success: function (data, status) {
-        for (let i = 0; i < box.length; i++) {
-          put_data_into_select(data, status, box[i], 'source', dir_name.trim());
-        }
-      },
-      error: function (xhr, textStatus, err) {
-        // for error message
-      }
-    })
-  });
-}
-
-function put_data_into_select(data, status, box, type, ...fields) {
-  // check the status
-  if (status === "success") {
-    var select_box = document.getElementById(box);
-    // remove all sources children
-    select_box.innerHTML = "";
-
-    switch (type) {
-      case 'source':
-        // check the select box
-        if (box == 'sources') {
-          default_text = `اختر المصدر`;
-        } else {
-          default_text = `اختر المصدر البديل`;
-        }
-        default_option = new Option(default_text, 'default');
-        default_option.setAttribute('disabled', 'disabled');
-        // append to select box
-        select_box.appendChild(default_option);
-
-        // check if source data has pieces or not
-        if (data.length == 0) {
-          console.log(fields)
-
-          option = new Option(`${fields[0]}`, 0, true, true);
-          select_box.appendChild(option);
-        } else {
-          // loop on data result to display the data
-          for (let i = 0; i < data.length; i++) {
-            option = new Option(`${data[i]["ip"]} - ${data[i]["full_name"]}`, data[i]["id"], false, false);
-            select_box.appendChild(option);
-          }
-        }
-        break;
-
-      case 'model':
-        select_box.innerHTML = '';
-        default_option = new Option('اختر موديل الجهاز', 'default', true, true);
-        default_option.setAttribute('disabled', 'disabled');
-        // append to select box
-        select_box.appendChild(default_option);
-
-        // check if source data has pieces or not
-        if (data.length > 0) {
-          // loop on data result to display the data
-          for (let i = 0; i < data.length; i++) {
-            option = new Option(`${data[i]["model_name"]}`, data[i]["model_id"], false, false);
-            select_box.appendChild(option);
-          }
-        }
-        break;
-
-      default:
-        break;
-    }
-  }
-}
 
 /**
  *
@@ -360,16 +274,6 @@ function getTimeNow() {
 }
 
 /**
- * hideList function
- */
-function hideList(btn) {
-  btn.nextElementSibling.classList.toggle("d-none");
-  let icon = btn.children[2].children[0];
-  icon.classList.contains("bi-dash-lg") ? icon.classList.replace("bi-dash-lg", "bi-plus-lg") : icon.classList.replace("bi-plus-lg", "bi-dash-lg");
-}
-
-
-/**
  * getUserPermission function
  */
 function getUserPermission(selected) {
@@ -382,26 +286,6 @@ function getUserPermission(selected) {
 }
 
 
-
-/**
- * show avatar
- */
-function showSuggCompDetails(id) {
-  // display the details box
-  suggCompBox.style.display = "block";
-  // get request to get backup of data
-  $.get(`../requests/index.php?do=getSuggComp&id=${id}`, (data) => {
-    let suggComp = $.parseJSON(data);
-
-
-    document.getElementById("sugg-comp-id").value = suggComp['id'];
-    if (suggComp['type'] == 0) {
-      document.getElementById("suggDetails").setAttribute("checked", "checked");
-    } else {
-      document.getElementById("compDetails").setAttribute("checked", "checked");
-    }
-  });
-}
 
 
 /**
@@ -432,18 +316,6 @@ function submitForm(btn) {
   myForm.submit();
 }
 
-function upload_image(btn) {
-  // soldier image element
-  let emp_img_element = btn.parentElement.previousElementSibling;
-  // get image path
-  let imgPath = URL.createObjectURL(btn.files[0]);
-  // upload image
-  emp_img_element.setAttribute("src", imgPath);
-
-  emp_img_element.addEventListener("click", (evt) => {
-    emp_img_element.classList.add('full-screen');
-  })
-}
 
 
 /**

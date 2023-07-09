@@ -72,3 +72,17 @@ function show_delete_user_modal(btn, will_back = null) {
     document.getElementById('delete-user').setAttribute('href', url);
   }
 }
+
+
+function upload_image(btn) {
+  // soldier image element
+  let emp_img_element = btn.parentElement.previousElementSibling;
+  // get image path
+  let imgPath = URL.createObjectURL(btn.files[0]);
+  // upload image
+  emp_img_element.setAttribute("src", imgPath);
+
+  emp_img_element.addEventListener("click", (evt) => {
+    emp_img_element.classList.add('full-screen');
+  })
+}
