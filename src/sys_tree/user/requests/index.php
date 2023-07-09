@@ -99,6 +99,10 @@ switch ($query) {
   case "rating-app":
     $file_name = 'rating-app.php';
     break;
+  
+  case "ping":
+    $file_name = 'ping.php';
+    break;
 }
 
 include_once $file_name;
