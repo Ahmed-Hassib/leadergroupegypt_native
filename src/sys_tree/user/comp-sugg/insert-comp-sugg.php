@@ -1,44 +1,47 @@
-<!-- start edit profile page -->
-<div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-    <!-- start header -->
-    <header class="header">
-        <!-- show page header -->
-        <h1 class="text-capitalize"><?php echo language('ADD', @$_SESSION['systemLang'])." ".language('COMPLAINTS OR SUGGESTIONS', @$_SESSION['systemLang']) ?></h1>
-        <?php
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // check if Get request userid is numeric and get the integer value
-            $userid = isset($_POST['userid']) && is_numeric($_POST['userid']) ? intval($_POST['userid']) : 0;
-            // get type
-            $type       = intval($_POST['type']);
-            $comment    = $_POST['comment'];
-            
-            // validate the form
-            $formErorr = array();   // error array 
-        
-            // loop on form error array
-            foreach ($formErorr as $error) {
-                echo '<div class="alert alert-danger text-capitalize w-50 mx-auto align-left">' . $error . '</div>';
-            }
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  $userid = $_SESSION['UserID'];
+  $company_id = $_SESSION['company_id'];
+  $type       = intval($_POST['type']);
+  $comment    = $_POST['comment'];
+  
+  // validate the form
+  $form_erorr = array();   // error array
 
-            if (empty($formErorr)) {
-                // prepare the query
-                $stmt = $con->prepare("INSERT INTO `comp_sugg` (`UserID`, `type`, `sugg`, `added_date`) VALUES (?, ?, ?, now())");
-                $stmt->execute(array($userid, $type, $comment));
-                // log message
-                $logMsg = "Add complaint or suggestion -> added a new " . ($type == 0 ? "suggestion" : "complaint") . "..";
-                // createLogs($_SESSION['UserName'], $logMsg);
-                // error message
-                $msg  = '<div class="alert alert-success text-capitalize"><i class="bi bi-check-circle-fill"></i>&nbsp;You added a new ' . ($type == 0 ? "suggestion" : "complaint") . ' successfully!</div>';
-                redirectHome($msg, "back");
-            } ?>
-        <?php } else {
-            // error message
-            $msg = '<div class="alert alert-warning text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;'.language('YOU CANNOT ACCESS THIS PAGE DIRECTLY', @$_SESSION['systemLang']).'</div>';
-            // log message
-            $logMsg = "You cannot access this page directly..";
-            // createLogs($_SESSION['UserName'], $logMsg, 2);
-            // redirect to home page
-            redirectHome($msg);
-        } ?>
-    </header>
-</div>
+  if (!isset($type) && $type < 0) {
+    $form_erorr[] = 'type must be selected';
+  }
+
+  if (empty($form_erorr)) {
+    // create an object of CompSUgg class
+    $comp_sugg_obj = new CompSugg();
+    $is_inserted = $comp_sugg_obj->insert_new(array($userid, $type, $comment, get_date_now(), get_time_now(), $company_id));
+    // check if inserted
+    if ($is_inserted) {
+      // prepare flash session variables
+      $_SESSION['flash_message'] = ($type == 0 ? "COMPLAINT" : "SUGGESTION") . ' WAS ADDED SUCCESSFULLY';
+      $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
+      $_SESSION['flash_message_class'] = 'success';
+      $_SESSION['flash_message_status'] = true;
+    } else {    
+      // prepare flash session variables
+      $_SESSION['flash_message'] = 'A PROBLEM WAS HAPPENED WHILE DELETING THE ' . ($type == 0 ? "COMPLAINT" : "SUGGESTION");
+      $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+      $_SESSION['flash_message_class'] = 'danger';
+      $_SESSION['flash_message_status'] = false;
+    }
+  } else {
+    foreach ($formErorr as $key => $error) {
+      $_SESSION['flash_message'][$key] = strtoupper($error);
+      $_SESSION['flash_message_icon'][$key] = 'bi-exclamation-triangle-fill';
+      $_SESSION['flash_message_class'][$key] = 'danger';
+      $_SESSION['flash_message_status'][$key] = false;
+    }
+  }
+  // redirect to the previous page
+  redirectHome(null, 'back', 0);
+} else {
+  // include permission error module
+  include_once $globmod . 'permission-error.php';
+} 
+?>
