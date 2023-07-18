@@ -36,4 +36,27 @@ class CompSugg extends Database {
     // return
     return $count > 0 ? $suggestions_data : null;
   }
+  
+  // function to get specific data inspecific period
+  public function get_all_data($type, $user_id, $company_id, $condition = null) {
+    // data query
+    $data_query = "SELECT *FROM `comp_sugg` WHERE " . ($condition != null ? $condition.' AND' : '') . " `type` = ? AND `added_by` = ? AND `company_id` = ?";
+    $stmt = $this->con->prepare($data_query);
+    $stmt->execute(array($type, $user_id, $company_id));
+    $data = $stmt->fetchAll();
+    $count = $stmt->rowCount() ;    // all count of data
+    // return
+    return $count > 0 ? $data : null;
+  }
+
+  // function for insert a new complaint or suggestion
+  public function insert_new($info) {
+    // prepare the query
+    $insert_query = "INSERT INTO `comp_sugg` (`added_by`, `type`, `message`, `added_date`, `added_time`, `company_id`) VALUES (?, ?, ?, ?, ?, ?)";
+    $stmt = $this->con->prepare($insert_query);
+    $stmt->execute($info);
+    $count = $stmt->rowCount() ;    // count afected rows
+    // return
+    return $count > 0 ? true : false;
+  }
 }
