@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $_SESSION['flash_message_status'] = true;
     } else {    
       // prepare flash session variables
-      $_SESSION['flash_message'] = 'A PROBLEM WAS HAPPENED WHILE DELETING THE MALFUNCTION';
+      $_SESSION['flash_message'] = 'A PROBLEM WAS HAPPENED WHILE INSERTING THE MALFUNCTION';
       $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
       $_SESSION['flash_message_class'] = 'danger';
       $_SESSION['flash_message_status'] = false;
