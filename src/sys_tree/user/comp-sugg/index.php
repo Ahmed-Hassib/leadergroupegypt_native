@@ -34,27 +34,29 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
     // include personal comp & sugg page
     $file_name = 'personal-comp-sugg.php';
     $is_contain_table = true;
+
+  } elseif ($query == 'add-comp-sugg') {
+    // include add comp & sugg page
+    $file_name = 'add-comp-sugg.php';
     
-  // } elseif ($query == 'show-comp-sugg') { 
-  //   // include show comp & sugg page
-  //   $file_name = 'show-comp-sugg.php';
-  //   $is_contain_table = true;
+  } elseif ($query == "insert-comp-sugg") {
+    // include insert comp & sugg page
+    $file_name = 'insert-comp-sugg.php';
+    $possible_back = false;
+    $preloader = false;
+
+  } elseif ($query == 'show-comp-sugg') { 
+    // include show comp & sugg page
+    $file_name = 'show-comp-sugg.php';
+    $is_contain_table = true;
     
   // } elseif ($query == 'delete-comp-sugg') {
   //   // include delete comp & sugg page
   //   $file_name = 'delete-comp-sugg.php';
   //   $possible_back = false;
   //   $preloader = false;
+  
     
-  // } elseif ($query == 'add-comp-sugg') {
-  //   // include add comp & sugg page
-  //   $file_name = 'add-comp-sugg.php';
-    
-  // } elseif ($query == "insert-comp-sugg") {
-  //   // include insert comp & sugg page
-  //   $file_name = 'insert-comp-sugg.php';
-  //   $possible_back = false;
-  //   $preloader = false;
     
   } else {
     // include page error module
