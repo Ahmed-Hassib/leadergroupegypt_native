@@ -4,19 +4,19 @@
 *.txt
 
 # ignoring all docs files
-*.docx
+docs/
 
 # ignoring all data directory content
-data/*
+data/
 
 # ignoring node_modules directory
-layout/node_modules/*
+layout/node_modules/
 
 # ignoring plugins directory
-layout/plugins/*
+layout/plugins/
 
 # ignoring sql directory
-sql/*
+sql/
 
 # ignoring local configration file
 etc/local-conf.php
@@ -25,9 +25,4 @@ etc/local-conf.php
 classes/Database.class.php
 
 # ignoring spare_files folder
-spare_files/*
-
-
-includes/functions/api.php
-includes/functions/editu.php
-includes/functions/status.php
+spare_files/

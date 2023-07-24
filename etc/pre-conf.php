@@ -22,3 +22,9 @@ require_once "system-architecture.php";
 include_once $func   . "functions.php";
 include_once $lan    . "language.php";
 
+// check if sys tree pages
+if (isset($is_sys_tree_page) && $is_sys_tree_page == true) {
+  // include mikrotic api
+  include_once $func . "api.php";
+}
+
