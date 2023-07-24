@@ -17,7 +17,8 @@ layout/plugins/
 sql/
 
 # ignoring local configration file
-etc/
+etc/local-conf.php
+etc/server-conf.php
 
 # ignoring Database class
 classes/Database.class.php
@@ -26,5 +27,5 @@ classes/Database.class.php
 spare_files/
 
 # ignore libraries
-libraries/mysqldump
-libraries/vendor
+libraries/mysqldump/
+libraries/vendor/
