@@ -12,9 +12,6 @@
     // set user session
     $session_obj->set_user_session($user_info[1]);
   }
-  $_SESSION['flash_message'] = "SESSION HAS BEEN UPDATED SUCCESSFULLY";
-  $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
-  $_SESSION['flash_message_class'] = 'success';
-  $_SESSION['flash_message_status'] = true;
+
   // redirect to the home
-  redirectHome(null, "back", 0);
+  redirectHome("", "back", 0);

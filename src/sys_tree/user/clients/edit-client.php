@@ -15,6 +15,12 @@ $is_exist_data = $client_info[0];
 if ($client_id != 0 && $is_exist_id && $is_exist_data) {
   // get all data of givin client id
   $client_data = $client_info[1];
+
+  $API->connect($ipRB, $Username, $clave);
+  $users =  $API->comm("/ip/firewall/nat/print", array(
+    "?comment" => "mohamady"
+  ));
+  $target_user = !empty($users) && count($users) > 0 ? $users[1] : -1;
 ?>
   <!-- start add new user page -->
   <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
@@ -23,17 +29,22 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
       <!-- submit -->
       <div class="hstack gap-3">
         <?php if ($_SESSION['clients_add'] == 1) { ?>
-        <button type="button" form="update-client-info" class="btn btn-primary text-capitalize bg-gradient fs-12 py-1 <?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" id="edit-client" onclick="form_validation(this.form, 'submit')">
-          <i class="bi bi-check-all"></i>
-          <?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
-        </button>
+          <button type="button" form="update-client-info" class="btn btn-primary text-capitalize bg-gradient fs-12 py-1 <?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" id="edit-client" onclick="form_validation(this.form, 'submit')">
+            <i class="bi bi-check-all"></i>
+            <?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
+          </button>
         <?php } ?>
+
+        <?php if ($target_user != -1) { ?>
+          <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2" href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $client_data['ip'] ?>&port=443" target='_blank'><?php echo language('VISIT DEVICE', @$_SESSION['systemLang']) ?></a>
+        <?php } ?>
+
         <?php if ($_SESSION['clients_delete'] == 1) { ?>
-        <!-- delete button -->
-        <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deleteClientModal" data-client-id="<?php echo $client_data['id'] ?>" data-client-name="<?php echo $client_data['full_name'] ?>" data-page-title="<?php echo $page_title ?>" onclick="confirm_delete_client(this)">
-          <i class="bi bi-trash"></i>
-          <?php echo language('DELETE', @$_SESSION['systemLang']); ?>
-        </button>
+          <!-- delete button -->
+          <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deleteClientModal" data-client-id="<?php echo $client_data['id'] ?>" data-client-name="<?php echo $client_data['full_name'] ?>" data-page-title="<?php echo $page_title ?>" onclick="confirm_delete_client(this)">
+            <i class="bi bi-trash"></i>
+            <?php echo language('DELETE', @$_SESSION['systemLang']); ?>
+          </button>
         <?php } ?>
       </div>
       <!-- horzontal stack -->
@@ -122,19 +133,19 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
               </div>
             </div>
             <!-- malfunctions counter -->
-            <?php $malCounter = countRecords("`mal_id`", "`malfunctions`", "WHERE `client_id` = ".$client_data['id']) ?>
+            <?php $malCounter = countRecords("`mal_id`", "`malfunctions`", "WHERE `client_id` = " . $client_data['id']) ?>
             <?php if ($malCounter > 0) { ?>
-            <div class="mb-3 row align-items-center">
-              <label for="malfunction-counter" class="col-sm-12 col-md-4 col-form-label text-capitalize">
-                <?php echo language('ALL MALFUNCTION OF THIS CLIENT', @$_SESSION['systemLang']); ?>
-              </label>
-              <div class="col-sm-12 col-md-8 position-relative">
-                <span class="me-5 text-start" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo $malCounter . " " . ($malCounter > 2 ? language("MALFUNCTIONS", @$_SESSION['systemLang']) : language("MALFUNCTION", @$_SESSION['systemLang'])) ?></span>
-                <?php if ($_SESSION['mal_show']) { ?>
-                  <a href="<?php echo $nav_up_level ?>malfunctions/index.php?do=show-pieces-malfunctions&pieceid=<?php echo $client_data['id'] ?>" class="mt-2 text-start" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo language("SHOW DETAILS", @$_SESSION['systemLang']) ?>&nbsp;<i class="bi bi-arrow-up-left-square"></i></a>
-                <?php } ?>
+              <div class="mb-3 row align-items-center">
+                <label for="malfunction-counter" class="col-sm-12 col-md-4 col-form-label text-capitalize">
+                  <?php echo language('ALL MALFUNCTION OF THIS CLIENT', @$_SESSION['systemLang']); ?>
+                </label>
+                <div class="col-sm-12 col-md-8 position-relative">
+                  <span class="me-5 text-start" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo $malCounter . " " . ($malCounter > 2 ? language("MALFUNCTIONS", @$_SESSION['systemLang']) : language("MALFUNCTION", @$_SESSION['systemLang'])) ?></span>
+                  <?php if ($_SESSION['mal_show']) { ?>
+                    <a href="<?php echo $nav_up_level ?>malfunctions/index.php?do=show-pieces-malfunctions&pieceid=<?php echo $client_data['id'] ?>" class="mt-2 text-start" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo language("SHOW DETAILS", @$_SESSION['systemLang']) ?>&nbsp;<i class="bi bi-arrow-up-left-square"></i></a>
+                  <?php } ?>
+                </div>
               </div>
-            </div>
             <?php } ?>
           </div>
         </div>
@@ -162,14 +173,14 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                         <select class="form-select" id="direction" name="direction" required onchange="get_sources(this, <?php echo $_SESSION['company_id'] ?>, '<?php echo $dirs . $_SESSION['company_name'] ?>', ['sources', 'alternative-sources']);">
                           <?php
                           // get all directions
-                          $dirs = $pcs_obj->select_specific_column("*", "`direction`", "WHERE `company_id` = ".$_SESSION['company_id'] ." ORDER BY `direction_name` ASC");
+                          $dirs = $pcs_obj->select_specific_column("*", "`direction`", "WHERE `company_id` = " . $_SESSION['company_id'] . " ORDER BY `direction_name` ASC");
                           // counter
                           $dirs_count = count($dirs);
                           // directions data
                           $dir_data = $dirs;
                           // check the row dirs_count
                           if ($dirs_count > 0) { ?>
-                            <option value="default" disabled selected><?php echo language('SELECT', @$_SESSION['systemLang'])." ". language('THE DIRECTION', @$_SESSION['systemLang']) ?></option>
+                            <option value="default" disabled selected><?php echo language('SELECT', @$_SESSION['systemLang']) . " " . language('THE DIRECTION', @$_SESSION['systemLang']) ?></option>
                             <?php foreach ($dir_data as $dir) { ?>
                               <option value="<?php echo $dir['direction_id'] ?>" data-dir-company="<?php echo $_SESSION['company_id'] ?>" <?php echo $client_data['direction_id'] == $dir['direction_id'] ? 'selected' : ''  ?>>
                                 <?php echo  $dir['direction_name'] ?>
@@ -190,7 +201,7 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                       <div class="col-sm-12 position-relative">
                         <select class="form-select" id="sources" name="source-id" required>
                           <?php
-                          $condition = "LEFT JOIN `direction` ON `direction`.`direction_id` = `pieces_info`.`direction_id` WHERE `pieces_info`.`direction_id` = ".$client_data['direction_id']." AND `pieces_info`.`is_client` = 0 AND `pieces_info`.`company_id` = ".$_SESSION['company_id'];
+                          $condition = "LEFT JOIN `direction` ON `direction`.`direction_id` = `pieces_info`.`direction_id` WHERE `pieces_info`.`direction_id` = " . $client_data['direction_id'] . " AND `pieces_info`.`is_client` = 0 AND `pieces_info`.`company_id` = " . $_SESSION['company_id'];
                           $sources = $pcs_obj->select_specific_column("`pieces_info`.`id`, `pieces_info`.`full_name`, `pieces_info`.`ip`", "`pieces_info`", $condition);
                           // counter
                           $sources_count = count($sources);
@@ -198,9 +209,11 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                           $sources_data = $sources;
                           // check the row sources_count
                           if ($sources_count) { ?>
-                            <option value="default" disabled><?php echo language('SELECT', @$_SESSION['systemLang'])." ". language('THE SOURCE', @$_SESSION['systemLang']) ?></option>
+                            <option value="default" disabled><?php echo language('SELECT', @$_SESSION['systemLang']) . " " . language('THE SOURCE', @$_SESSION['systemLang']) ?></option>
                             <?php foreach ($sources_data as $source) { ?>
-                              <option value="<?php echo $source['id'] ?>" <?php if ($client_data['source_id'] == $source['id'] || ($client_data['source_id'] == 0 && $client_data['ip'] == $source['ip']) ) {echo 'selected';}  ?>>
+                              <option value="<?php echo $source['id'] ?>" <?php if ($client_data['source_id'] == $source['id'] || ($client_data['source_id'] == 0 && $client_data['ip'] == $source['ip'])) {
+                                                                            echo 'selected';
+                                                                          }  ?>>
                                 <?php echo  $source['full_name'] . " - " . $source['ip'] ?>
                               </option>
                             <?php } ?>
@@ -219,7 +232,7 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                       <div class="col-sm-12 position-relative">
                         <select class="form-select" id="alternative-sources" name="alt-source-id">
                           <?php if ($sources_count) { ?>
-                            <option value="default" disabled><?php echo language('SELECT', @$_SESSION['systemLang'])." ". language('ALTERNATIVE SOURCE', @$_SESSION['systemLang']) ?></option>
+                            <option value="default" disabled><?php echo language('SELECT', @$_SESSION['systemLang']) . " " . language('ALTERNATIVE SOURCE', @$_SESSION['systemLang']) ?></option>
                             <?php foreach ($sources_data as $alt_source) { ?>
                               <option value="<?php echo $alt_source['id'] ?>" <?php if ($client_data['alt_source_id'] == $alt_source['id'] || ($client_data['alt_source_id'] == 0 && $client_data['ip'] == $alt_source['ip'])) echo 'selected'; ?>>
                                 <?php echo  $alt_source['full_name'] . " - " . $alt_source['ip'] ?>
@@ -244,22 +257,22 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                       <label for="device-id" class="col-sm-12 col-form-label text-capitalize"><?php echo language('DEVICE TYPE', @$_SESSION['systemLang']) ?></label>
                       <div class="col-sm-12 position-relative">
                         <?php
-                          $dev_query = "SELECT `devices_info`.*, `manufacture_companies`.`company_id` FROM `devices_info` LEFT JOIN `manufacture_companies` ON `manufacture_companies`.`man_company_id` = `devices_info`.`device_company_id` WHERE `manufacture_companies`.`company_id` = ?;";
-                          $stmt = $con->prepare($dev_query);
-                          $stmt->execute(array($_SESSION['company_id']));
-                          $devices_count = $stmt->rowCount();
-                          $devices_data =  $stmt->fetchAll();
-                          ?>
+                        $dev_query = "SELECT `devices_info`.*, `manufacture_companies`.`company_id` FROM `devices_info` LEFT JOIN `manufacture_companies` ON `manufacture_companies`.`man_company_id` = `devices_info`.`device_company_id` WHERE `manufacture_companies`.`company_id` = ?;";
+                        $stmt = $con->prepare($dev_query);
+                        $stmt->execute(array($_SESSION['company_id']));
+                        $devices_count = $stmt->rowCount();
+                        $devices_data =  $stmt->fetchAll();
+                        ?>
                         <select class="form-select" id="device-id" name="device-id" onchange="get_devices_models(this, '<?php echo $dev_models . $_SESSION['company_name'] ?>')">
                           <?php
                           // check the row devices_count
-                          if ($devices_count > 0) { 
+                          if ($devices_count > 0) {
                           ?>
-                            <option value="default" disabled selected><?php echo language('SELECT', @$_SESSION['systemLang'])." ". language('DEVICE TYPE', @$_SESSION['systemLang']) ?></option>
+                            <option value="default" disabled selected><?php echo language('SELECT', @$_SESSION['systemLang']) . " " . language('DEVICE TYPE', @$_SESSION['systemLang']) ?></option>
                             <?php foreach ($devices_data as $device) { ?>
-                                <option value="<?php echo $device['device_id'] ?>" <?php echo $client_data['device_id'] == $device['device_id'] ? 'selected' : '' ?>>
-                                    <?php echo $device['device_name'] ?>
-                                </option>
+                              <option value="<?php echo $device['device_id'] ?>" <?php echo $client_data['device_id'] == $device['device_id'] ? 'selected' : '' ?>>
+                                <?php echo $device['device_name'] ?>
+                              </option>
                             <?php } ?>
                           <?php } else { ?>
                             <option value="default" disabled selected><?php echo language('NOT AVAILABLE NOW', @$_SESSION['systemLang']) ?></option>';
@@ -287,11 +300,11 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                       <div class="mt-1 col-sm-12 position-relative">
                         <select class="form-select" name="device-model" id="device-model">
                           <?php if ($model_count > 0) { ?>
-                          <option value="default" disabled selected><?php echo language('SELECT', @$_SESSION['systemLang'])." ". language('DEVICE MODEL', @$_SESSION['systemLang']) ?></option>
+                            <option value="default" disabled selected><?php echo language('SELECT', @$_SESSION['systemLang']) . " " . language('DEVICE MODEL', @$_SESSION['systemLang']) ?></option>
                             <?php foreach ($models_data as $model) { ?>
-                                <option value="<?php echo $model['model_id'] ?>" <?php echo $client_data['device_model'] == $model['model_id'] ? 'selected' : '' ?>>
-                                    <?php echo $model['model_name'] ?>
-                                </option>
+                              <option value="<?php echo $model['model_id'] ?>" <?php echo $client_data['device_model'] == $model['model_id'] ? 'selected' : '' ?>>
+                                <?php echo $model['model_name'] ?>
+                              </option>
                             <?php } ?>
                           <?php } else { ?>
                             <option value="default" disabled selected><?php echo language('NOT AVAILABLE NOW', @$_SESSION['systemLang']) ?></option>';
@@ -310,9 +323,9 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                     <div class="mb-sm-2 mb-md-3 row">
                       <label for="conn-type" class="col-sm-12 col-form-label text-capitalize"><?php echo language('CONNECTION TYPE', @$_SESSION['systemLang']) ?></label>
                       <div class="col-sm-12 position-relative">
-                        <?php $conn_type_data = $db_obj->select_specific_column("*", "`connection_types`", "WHERE `company_id` = ".$_SESSION['company_id']); ?>
+                        <?php $conn_type_data = $db_obj->select_specific_column("*", "`connection_types`", "WHERE `company_id` = " . $_SESSION['company_id']); ?>
                         <select class="form-select text-uppercase" name="conn-type" id="conn-type">
-                          <option value="default" selected disabled><?php echo language('SELECT', @$_SESSION['systemLang'])." ". language('CONNECTION TYPE', @$_SESSION['systemLang']) ?></option>
+                          <option value="default" selected disabled><?php echo language('SELECT', @$_SESSION['systemLang']) . " " . language('CONNECTION TYPE', @$_SESSION['systemLang']) ?></option>
                           <?php if (count($conn_type_data) > 0) { ?>
                             <?php foreach ($conn_type_data as $conn_type_row) { ?>
                               <option value="<?php echo $conn_type_row['id'] ?>" <?php echo $client_data['connection_type'] == $conn_type_row['id'] ? 'selected' : '' ?>>
@@ -396,7 +409,7 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                     <div class="mb-sm-2 mb-md-3 row">
                       <label for="password-connection" class="col-sm-12 col-form-label text-capitalize"><?php echo language('PASSWORD CONNECTION', @$_SESSION['systemLang']) ?></label>
                       <div class="col-sm-12 position-relative">
-                        <input type="password" class="form-control" id="password-connection" name="password-connection" placeholder="<?php echo language('PASSWORD CONNECTION', @$_SESSION['systemLang']) ?>" value="<?php echo $client_data['password_connection'] ?>"  />
+                        <input type="password" class="form-control" id="password-connection" name="password-connection" placeholder="<?php echo language('PASSWORD CONNECTION', @$_SESSION['systemLang']) ?>" value="<?php echo $client_data['password_connection'] ?>" />
                         <i class="bi bi-eye-slash show-pass <?php echo @$_SESSION['systemLang'] == 'ar' ? 'show-pass-left' : 'show-pass-right' ?>" onclick="showPass(this)"></i>
                         <div id="passHelp" class="form-text text-warning "><?php echo language('DON`T SHARE THIS PASSWORD WITH ANYONE', @$_SESSION['systemLang']) ?></div>
                       </div>
@@ -416,7 +429,7 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                     <div class="mb-sm-2 mb-md-3 row">
                       <label for="frequency" class="col-sm-12 col-form-label text-capitalize"><?php echo language('FREQUENCY', @$_SESSION['systemLang']) ?></label>
                       <div class="col-sm-12 position-relative">
-                          <input type="text" class="form-control" id="frequency" name="frequency" placeholder="<?php echo language('FREQUENCY', @$_SESSION['systemLang']) ?>" value="<?php echo $client_data['frequency'] ?>"  onkeyup="integer_input_validation(this)" onblur="integer_input_validation(this)" />
+                        <input type="text" class="form-control" id="frequency" name="frequency" placeholder="<?php echo language('FREQUENCY', @$_SESSION['systemLang']) ?>" value="<?php echo $client_data['frequency'] ?>" onkeyup="integer_input_validation(this)" onblur="integer_input_validation(this)" />
                       </div>
                     </div>
                   </div>
@@ -430,7 +443,7 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                     </div>
                   </div>
                 </div>
-              </div>                       
+              </div>
             </div>
           </div>
         </div>
@@ -439,26 +452,32 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
       <!-- submit -->
       <div class="hstack gap-3">
         <?php if ($_SESSION['clients_add'] == 1) { ?>
-        <button type="button" form="update-client-info" class="btn btn-primary text-capitalize bg-gradient fs-12 py-1 <?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" id="edit-client" onclick="form_validation(this.form, 'submit')">
-          <i class="bi bi-check-all"></i>
-          <?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
-        </button>
+          <button type="button" form="update-client-info" class="btn btn-primary text-capitalize bg-gradient fs-12 py-1 <?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" id="edit-client" onclick="form_validation(this.form, 'submit')">
+            <i class="bi bi-check-all"></i>
+            <?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?>
+          </button>
         <?php } ?>
+
+        <?php if ($target_user != -1) { ?>
+          <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2" href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $client_data['ip'] ?>&port=443" target='_blank'><?php echo language('VISIT DEVICE', @$_SESSION['systemLang']) ?></a>
+        <?php } ?>
+
         <?php if ($_SESSION['clients_delete'] == 1) { ?>
-        <!-- delete button -->
-        <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deleteClientModal" data-client-id="<?php echo $client_data['id'] ?>" data-client-name="<?php echo $client_data['full_name'] ?>" data-page-title="<?php echo $page_title ?>" onclick="confirm_delete_client(this)">
-          <i class="bi bi-trash"></i>
-          <?php echo language('DELETE', @$_SESSION['systemLang']); ?>
-        </button>
+          <!-- delete button -->
+          <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deleteClientModal" data-client-id="<?php echo $client_data['id'] ?>" data-client-name="<?php echo $client_data['full_name'] ?>" data-page-title="<?php echo $page_title ?>" onclick="confirm_delete_client(this)">
+            <i class="bi bi-trash"></i>
+            <?php echo language('DELETE', @$_SESSION['systemLang']); ?>
+          </button>
         <?php } ?>
       </div>
     </form>
     <!-- end form -->
   </div>
 
-  <?php if ($_SESSION['clients_delete'] == 1) { include_once "delete-client-modal.php"; }  ?>
+  <?php if ($_SESSION['clients_delete'] == 1) {
+    include_once "delete-client-modal.php";
+  }  ?>
 <?php } else {
   // include missing data modeule
   include_once $globmod . "missing-data-no-redirect.php";
 }
-

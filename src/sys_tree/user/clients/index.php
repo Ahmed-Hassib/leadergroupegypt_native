@@ -13,6 +13,8 @@ session_regenerate_id();
 $level = 4;
 // nav level
 $nav_level = 1;
+// flag to determine if current page is sys tree page or not
+$is_sys_tree_page = true; 
 // pre configration of system
 include_once str_repeat("../", $level) . "etc/pre-conf.php";
 
@@ -57,6 +59,9 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
   } elseif ($query == 'show-dir-clients' && $_SESSION['clients_show'] == 1) {
     $file_name = 'show-dir-clients.php';
     $is_contain_table = true;
+  
+  } elseif ($query == 'prepare-ip' && $_SESSION['clients_show'] == 1) {
+    $file_name = 'prepare-ip.php';
 
   } else {
     $file_name = $globmod . 'page-error.php';

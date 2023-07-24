@@ -13,6 +13,8 @@ session_regenerate_id();
 $level = 4;
 // nav level
 $nav_level = 1;
+// flag to determine if current page is sys tree page or not
+$is_sys_tree_page = true;
 // pre configration of system
 include_once str_repeat('../', $level) . 'etc/pre-conf.php';
 $possible_back = false;

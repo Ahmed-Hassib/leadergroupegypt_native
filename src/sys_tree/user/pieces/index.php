@@ -13,6 +13,8 @@ session_regenerate_id();
 $level = 4;
 // nav level
 $nav_level = 1;
+// flag to determine if current page is sys tree page or not
+$is_sys_tree_page = true;
 // pre configration of system
 include_once str_repeat("../", $level) . "etc/pre-conf.php";
 
@@ -70,7 +72,11 @@ if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0) {
     // cehck if action is set or not
     $action = isset($_GET['action']) & !empty($_GET['action']) ? $_GET['action'] : 'manage';
     $file_name = include_once 'devices-companies.php';
-
+    
+  } elseif ($query == 'prepare-ip' && $_SESSION['pcs_show'] == 1) {
+    $file_name = 'prepare-ip.php';
+    $possible_back = false;
+    
   } else {
     $file_name = $globmod . 'page-error.php';
     $possible_back = false;
@@ -97,12 +103,8 @@ include_once str_repeat("../", $level) . "etc/init.php";
 
 // include file name
 include_once $file_name;
-
-// check the permission
-if ($_SESSION['pcs_delete'] == 1) {
-  // include confirmation delete modal
-  include_once 'delete-piece-modal.php';
-}
+// include confirmation delete modal
+include_once 'delete-piece-modal.php';
 
 // include footer
 include_once $tpl . "footer.php"; 

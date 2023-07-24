@@ -1,9 +1,7 @@
 # Leader Group Egypt
-
 This is the first largest project I worked on untill now
 
 ## Used Tools
-
 - HTML5
 - CSS3
 - Pure JS
@@ -12,7 +10,7 @@ This is the first largest project I worked on untill now
 - MySQL
 
 ## Services
-
 - Sys Tree
-  - Main Idea
-    - build a tree represent connected group of devices.
+  -- Main Idea
+    --- build a tree represent connected group of devices.
+    --- 
