@@ -27,5 +27,4 @@ classes/Database.class.php
 spare_files/
 
 # ignore libraries
-libraries/mysqldump/
-libraries/vendor/
+libraries/
