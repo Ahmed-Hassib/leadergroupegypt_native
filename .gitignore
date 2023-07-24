@@ -18,8 +18,8 @@ layout/plugins/
 # ignoring sql directory
 sql/
 
-# ignoring local configration file
-etc/local-conf.php
+# ignoring server configration file
+etc/server-conf.php
 
 # ignoring Database class
 classes/Database.class.php
