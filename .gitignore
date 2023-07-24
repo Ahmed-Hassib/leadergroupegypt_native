@@ -1,5 +1,3 @@
-# here we list all files that we want to ignore tracking it
-
 # ignoring all text files
 *.txt
 
@@ -18,7 +16,7 @@ layout/plugins/
 # ignoring sql directory
 sql/
 
-# ignoring server configration file
+# ignoring local configration file
 etc/
 
 # ignoring Database class
@@ -26,3 +24,7 @@ classes/Database.class.php
 
 # ignoring spare_files folder
 spare_files/
+
+# ignore libraries
+libraries/mysqldump
+libraries/vendor
