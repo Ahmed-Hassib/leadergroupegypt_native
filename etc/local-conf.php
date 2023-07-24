@@ -4,10 +4,10 @@
 include_once 'includes.php';
 
 // database info
-$host   = "your host";
-$dbname = "your database";
-$user   = "username of phpmyadmin";
-$pass   = "your password";
+$host   = "localhost";
+$dbname = "jsl_db";
+$user   = "root";
+$pass   = "@hmedH@ssib";
 
 if (!isset($db_obj)) {
   // initiate database object

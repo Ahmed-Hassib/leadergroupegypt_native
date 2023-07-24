@@ -20,6 +20,7 @@ sql/
 
 # ignoring server configration file
 etc/server-conf.php
+etc/local-conf.php
 
 # ignoring Database class
 classes/Database.class.php
