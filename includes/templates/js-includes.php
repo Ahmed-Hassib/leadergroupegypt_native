@@ -80,6 +80,10 @@ if ($page_category == 'sys_tree' && $page_role != 'sys_tree_login' && $page_role
 
 <?php include_once $globmod . 'rating-app.php'; ?>
 
+<?php if ($backup_flag == false && $db_backup_file_name != null && $backup_location_file != null) { ?>
+  <script src="<?php echo $js ?>backup.js"></script>
+<?php } ?>
+
 <script>localStorage['systemLang']  = '<?php echo @$_SESSION['systemLang'] ?>';</script>
 
 <!-- save system language to local storage -->
@@ -91,7 +95,7 @@ if ($page_category == 'sys_tree' && $page_role != 'sys_tree_login' && $page_role
   <script>
     $(document).ready(function() {
       $(".spinner").fadeOut(1000, function() {
-        $(this).parent().fadeOut(1200, function() {
+        $(this).parent('.preloader').fadeOut(1200, function() {
           $("body").css('overflow-x', 'visible');
         });
       });

@@ -14,7 +14,7 @@ $level = 4;
 // nav level
 $nav_level = 1;
 // flag to determine if current page is sys tree page or not
-$is_sys_tree_page = true;
+// $is_sys_tree_page = true;
 // pre configration of system
 include_once str_repeat("../", $level) . "etc/pre-conf.php";
 
@@ -105,6 +105,8 @@ include_once str_repeat("../", $level) . "etc/init.php";
 include_once $file_name;
 // include confirmation delete modal
 include_once 'delete-piece-modal.php';
+// include ping modal
+include_once $globmod . 'ping-modal.php';
 
 // include footer
 include_once $tpl . "footer.php"; 

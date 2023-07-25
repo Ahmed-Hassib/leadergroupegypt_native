@@ -511,5 +511,5 @@ if ($is_exist == true) {
   $_SESSION['flash_message_class'] = 'danger';
   $_SESSION['flash_message_status'] = false;
   // redirect to the previous page 
-  redirectHome(null, 'back', 0);
+  redirect_home(null, 'back', 0);
 }

@@ -1,5 +1,3 @@
-var hexChar = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F",];
-var body = document.body;
 var inputs = document.getElementsByTagName("input");
 var selects = document.getElementsByTagName("select");
 var textInputs = document.querySelectorAll("input[type=text]");
@@ -9,9 +7,6 @@ var showPassword2 = document.getElementById("show-pass-2");
 var direction = document.getElementById("direction");
 var sources = document.getElementById("sources");
 var altSources = document.getElementById("alternative-sources");
-var pingBtn = document.getElementById("ping");
-var piecesTbl = document.getElementById("piecesTbl");
-var backupBtn = document.getElementById("backup");
 var cardStats = document.querySelectorAll(".card-stat");
 var cardLinks = document.querySelectorAll("a.stretched-link");
 
@@ -296,29 +291,33 @@ function put_data_into_select(data, status, box, type, ...fields) {
 /**
  *
  */
-function getBackup(id) {
-  // // get request to get backup of data
-  // $.get(`../requests/index.php?do=backup&id=${id}`, (data) => {
-  //     if (data == 1) {
-  //         // get date and time
-  //         let date = getDateNow();
-  //         let time = getTimeNow();
-  //         // prepare the message
-  //         let message = `Backup successed on ${date} at ${time} ..`;
-  //         message += "\nENG HASSIB GREATING YOU AND SAYS `HAVE A NICE DAY` ..\n";
-  //         // show message
-  //         alert(message);
-  //     } else {
-  //         console.log("cannot take a backup");
-  //     }
-  // });
+function ping(ip, ping_counter = null) {
+  $.get(`../requests/index.php?do=ping&ip=${ip}&c=${ping_counter}`, (data) => {
+    let ping_res = $.parseJSON(data);
+
+    console.log(ping_res)
+
+    document.querySelector(".ping-preloader").classList.add('d-none');
+    ping_res['output'].forEach(line => {
+      if (line.length > 0) {
+        document.querySelector('#ping-status').innerHTML += `${line}<br>`;
+        console.log(line)
+      }
+
+    });
+  })
+}
+
+function reset_modal() {
+  document.querySelector(".ping-preloader").classList.remove('d-none');
+  document.querySelector('#ping-status').textContent = '';
 }
 
 /**
- * getDateNow function v1
+ * get_date_now function v1
  * This function is used to get the date for now
  */
-function getDateNow(lang) {
+function get_date_now(lang) {
   // dayes array in arabic
   const days_ar = ["الاحد", "الاثنين", "الثلاثاء", "لالربعاء", "الخميس", "الجمعة", "السبت"];
   // dayes array in english
@@ -341,10 +340,10 @@ function getDateNow(lang) {
 
 
 /**
- * getTimeNow function v1
+ * get_time_now function v1
  * This function is used to get the date for now
  */
-function getTimeNow() {
+function get_time_now() {
   // date object to get full date and time details
   let dateObj = new Date();
   // prepare the time
@@ -359,14 +358,6 @@ function getTimeNow() {
   return time;
 }
 
-/**
- * hideList function
- */
-function hideList(btn) {
-  btn.nextElementSibling.classList.toggle("d-none");
-  let icon = btn.children[2].children[0];
-  icon.classList.contains("bi-dash-lg") ? icon.classList.replace("bi-dash-lg", "bi-plus-lg") : icon.classList.replace("bi-plus-lg", "bi-dash-lg");
-}
 
 
 /**
@@ -466,7 +457,7 @@ function arabic_to_english_nums(input) {
   };
   // english charachters
   let en_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  
+
   // '٧٧٥٤٢'
   // get value of the input 
   // then convert it into string 

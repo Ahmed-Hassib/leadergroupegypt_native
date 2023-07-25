@@ -14,4 +14,4 @@
   }
 
   // redirect to the home
-  redirectHome("", "back", 0);
+  redirect_home("", "back", 0);

@@ -177,7 +177,7 @@
     $target_url = 'back';
   }
   // redirect to previous page
-  redirectHome(null, $target_url, 0);
+  redirect_home(null, $target_url, 0);
 } else {
   // include permission error module
   include_once $globmod . 'permission-error.php';

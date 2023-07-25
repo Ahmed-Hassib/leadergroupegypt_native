@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['flash_message_status'] = true;
       }
       // redirect to home page
-      redirectHome(null, "back", 0);
+      redirect_home(null, "back", 0);
     } else {
       // include not data founded module
       include_once $globmod . "no-data-founded.php";

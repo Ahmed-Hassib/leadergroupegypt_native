@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- page title -->
-  <title><?php getTitle(); ?></title>
+  <title><?php get_page_tilte(); ?></title>
   <!-- css files -->
   <?php include_once 'css-includes.php' ?>
 </head>

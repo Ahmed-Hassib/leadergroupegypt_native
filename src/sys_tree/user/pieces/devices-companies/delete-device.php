@@ -28,7 +28,7 @@
     $_SESSION['flash_message_status'] = true;
     
     // redirect to previous page
-    redirectHome(null, $is_back, 0); 
+    redirect_home(null, $is_back, 0); 
   } else {
     // include no data founded
     include_once $globmod . 'no-data-founded-no-redirect.php';

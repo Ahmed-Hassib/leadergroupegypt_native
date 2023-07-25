@@ -26,7 +26,7 @@ if ($is_exist == true) {
   $_SESSION['flash_message_class'] = 'success';
   $_SESSION['flash_message_status'] = true;
   // redirect to home page
-  redirectHome(null, $is_back, 0);
+  redirect_home(null, $is_back, 0);
 } else {
   // include_once no data founded module
   include_once $globmod .'no-data-founded.php';

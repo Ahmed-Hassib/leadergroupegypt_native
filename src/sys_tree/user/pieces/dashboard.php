@@ -60,6 +60,7 @@
       $users = $API->comm("/ip/firewall/nat/print", array(
         "?comment" => "mohamady"
       ));
+      // $users = [];
       $target_user = !empty($users) && count($users) > 0 ? $users[1] : -1;
       ?>
       <div class="mb-3 row row-cols-1 g-3">
@@ -78,7 +79,7 @@
                 <thead class="primary text-capitalize">
                   <tr>
                     <th style="max-width: 25px">#</th>
-                    <th style="min-width: 150px" class="text-uppercase"><?php echo language('IP', @$_SESSION['systemLang']) ?></th>
+                    <th style="min-width: 200px" class="text-uppercase"><?php echo language('IP', @$_SESSION['systemLang']) ?></th>
                     <th style="min-width: 150px"><?php echo language('PIECE NAME', @$_SESSION['systemLang']) ?></th>
                     <th style="min-width: 100px"><?php echo language('THE DIRECTION', @$_SESSION['systemLang']) ?></th>
                     <th style="width: 70px"><?php echo language('ADDED DATE', @$_SESSION['systemLang']) ?></th>
@@ -92,14 +93,21 @@
                       <!-- index -->
                       <td><?php echo ++$index; ?></td>
                       <!-- piece ip -->
-                      <td class="text-capitalize" data-ip="<?php echo convertIP($pcs['ip']) ?>">
+                      <td class="text-capitalize" data-ip="<?php echo convert_ip($pcs['ip']) ?>">
                         <?php if ($pcs['ip'] == '0.0.0.0') { ?>
                           <span class="text-danger"><?php echo language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></span>
                         <?php } else { ?>
+                          <?php $ping = ping($pcs['ip']); ?>
+                          <?php if ($ping['status'] == 1) { ?>
+                            <span class="badge bg-danger mt-2 p-2 d-inline-block"></span>
+                          <?php } else { ?>
+                            <span class="badge bg-success mt-2 p-2 d-inline-block"></span>
+                          <?php } ?>
                           <span><?php echo $pcs['ip'] ?></span>
                           <?php if ($target_user != -1) { ?>
                             <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2" href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $pcs['ip'] ?>&port=443" target='_blank'><?php echo language('VISIT DEVICE', @$_SESSION['systemLang']) ?></a>
                           <?php } ?>
+                          <button class="btn btn-outline-primary fs-12 px-3 py-1" data-bs-toggle="modal" data-bs-target="#pingModal" onclick="ping('<?php echo $pcs['ip'] ?>', <?php echo $_SESSION['ping_counter'] ?>)">ping</button>
                         <?php } ?>
                       </td>
                       <!-- piece name -->

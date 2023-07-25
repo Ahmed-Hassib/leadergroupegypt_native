@@ -37,7 +37,7 @@ if (isset($_SESSION) && $_SESSION['isTech'] == 0) {
     $msg = '<div>'.language('THE VERSION IS UP TO DATE', @$_SESSION['systemLang']).'</div>';
   }
   // call redirect home function
-  redirectHome($msg, "back");
+  redirect_home($msg, "back");
 } else {
   // include_once error page 
   include_once $globmod . 'permission-error.php';

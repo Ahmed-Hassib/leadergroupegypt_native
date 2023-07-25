@@ -1,12 +1,12 @@
 <?php
 
 /**
- * getTitle function v1.0.1
+ * get_page_tilte function v2.0.5
  * This function not accept parameters
  * Contain global variable can be access from anywhere
  * get title page from the page and display it
  */
-function getTitle() {
+function get_page_tilte() {
   global $page_title; // page title
   // check if set or not
   if (isset($page_title)) {
@@ -17,12 +17,12 @@ function getTitle() {
 }
 
 /**
- * redirectHome function v2
+ * redirect_home function v2
  * This function accepts parameters
  * $msg => echo the error message
  * $seconds => seconds before redirect
  */
-function redirectHome($msg = null, $url = null, $seconds = 3) {
+function redirect_home($msg = null, $url = null, $seconds = 3) {
   // check the url
   if ($url == null) {
     $target_url = '../dashboard/index.php';
@@ -45,71 +45,6 @@ function redirectHome($msg = null, $url = null, $seconds = 3) {
   exit();
 }
 
-
-
-
-/**
- * checkItems function v1
- * This function accept 3 parameter
- * $select => the item to select [Ex: User, Client, Piece]
- * $table => the table to select from [EX: users, Piece, Direction]
- * $value => the value of select [Ex: ahmed, DEV]
- */
-function checkItem($select, $table, $value) {
-  global $con;
-  $statement = $con->prepare("SELECT $select FROM $table WHERE $select = ? AND `company_id` = " . $_SESSION['company_id']);
-  $statement->execute(array($value));
-  $count = $statement->rowCount();
-
-  // echo $count;
-  return $count;
-}
-
-/**
- * countRecords function v2
- * This function used to count number of records in the specific table in database
- * This function accept parameters
- * $column => the column need to count
- * $table => table to count from
- */
-function countRecords($column, $table, $condition = null) {
-  global $con; // connection to database
-
-  $stmt = $con->prepare("SELECT COUNT($column) FROM $table $condition");
-  $stmt->execute();
-  
-  return $stmt->fetchColumn();
-}
-
-/**
- * getLatestRecord function v2
- * This function used to get latest record
- * $column => column to select
- * $table => table to choose from
- * $limit => number of record to select by default 5
- * $order => order the record debepds on the latest records
- */
-function getLatestRecord($column, $table, $condition, $order, $limit = 5) {
-  global $con; // connection to database
-  // prepare query
-  $stmt = $con->prepare("SELECT $column FROM $table $condition ORDER BY $order DESC LIMIT $limit");
-  $stmt->execute(); // execute query
-  $rows = $stmt->fetchAll(); // fetch all result
-  return $rows; // return result
-}
-
-/**
- * getNextID function v1
- * This function is used to get next piece id
- */
-function getNextID($table) {
-  global $con; // connection to database
-  // prepare query
-  $stmt = $con->prepare("SELECT `AUTO_INCREMENT` AS 'AI' FROM information_schema.TABLES WHERE `TABLE_SCHEMA` = 'jsl_db' AND `TABLE_NAME` = ?");
-  $stmt->execute(array($table));
-  $rows = $stmt->fetchColumn();
-  return $rows;
-}
 
 /**
  * build_direction_tree function v1
@@ -158,50 +93,6 @@ function build_direction_tree($arr, $parent, $level = 0, $prelevel = -1, $nav_up
   }
 }
 
-// *******************************
-/**
- * selectSpecificColumn function v1
- * This function is used to select specific column from specific table
- */
-function selectSpecificColumn($column, $table, $condition) {
-  global $con; // connection to database
-  // prepare query
-  $query = "SELECT $column FROM $table $condition";
-  $stmt = $con->prepare($query);
-  $stmt->execute(); // execute query
-  $rows = $stmt->fetchAll(); // fetch all result
-  return $rows; // return result
-}
-// *******************************
-
-// check the ping of ip ..
-function getPing($ip) {
-  if ($ip != '1') {
-    // set limit for execution process
-    set_time_limit(5000);
-    // executing ping command..
-    $lostping   = shell_exec("ping -n 10 " . $ip . " | findstr /I /C:\"Lost\" ");
-    $avping     = shell_exec("ping -n 10 " . $ip . " | findstr /I /C:\"Average\" ");
-    // empty array for result
-    // $temp       = array();      // temporary array
-    // $pingRes    = array();      // for temp result
-    // $finalRes   = array();      // for final result
-
-    // remove the special charachters from average and loss packet
-    $lostping   = trim($lostping, " \n");
-    $avping     = trim($avping, " \n");
-
-    // check if lost and average ping
-    if (!empty($avping)) {
-      // action when connected ..
-      return $avping . ", " . $lostping;
-    } else {
-      //action in connection failure ..
-      return "offline" . ", " . $lostping;
-    }
-  }
-}
-
 
 /**
  * restoreBackup function v1
@@ -235,38 +126,7 @@ function restoreBackup($file) {
 }
 
 
-/**
- * updateChildDirection function v 1
- */
-function updateChildDirection($srcId, $newDir) {
-  // final query
-  $finalQuery = "";
-  // check piece if exist or not
-  $checkPiece = checkItem("`id`", "`pieces`", $srcId);
-  // if exist
-  if ($checkPiece > 0) {
-    // count children of the current piece
-    $checkChildren = countRecords("`id`", "`pieces`", "WHERE `source_id` = " . $srcId);
-    // check if has children
-    if ($checkChildren > 0) {
-      $finalQuery .= "UPDATE `pieces` SET `direction_id` = '" . $newDir . "' WHERE `id` = " . $srcId . " AND `company_id` = " . $_SESSION['company_id'] . ";";
-      // condition
-      $condition = "LEFT JOIN `direction` ON `direction`.`direction_id` = `pieces`.`direction_id`";
-      $condition .= "WHERE `pieces`.`source_id` = " . $srcId . ";";
-      // fetch all children
-      $children = selectSpecificColumn("`pieces`.`id`, `pieces`.`direction_id`", "`pieces`", $condition);
-      // loop on it
-      foreach ($children as $value) {
-        // get the children of the current piece
-        $finalQuery .= updateChildDirection($value['id'], $newDir);
-      }
-    } else {
-      $finalQuery .= "UPDATE `pieces` SET `direction_id` = '" . $newDir . "' WHERE `id` = " . $srcId . " AND `company_id` = " . $_SESSION['company_id'] . ";";
-    }
-  }
-  // return the query
-  return $finalQuery;
-}
+
 
 /**
  * // createLogs function v1
@@ -312,13 +172,14 @@ function createLogs($username, $msg, $type = 1) {
 
 
 /**
- * convertIP function
+ * convert_ip function
  */
-function addZeros($ipSlice) {
+function add_zeros($ipSlice) {
   return substr('000' . $ipSlice, -3);
 }
-function convertIP($ip) {
-  return join("", array_map('addZeros', explode(".", $ip)));
+
+function convert_ip($ip) {
+  return join("", array_map('add_zeros', explode(".", $ip)));
 }
 
 
@@ -345,17 +206,17 @@ function bg_progress($val) {
  * get_time_now function
  * return the current time
  */
-function get_time_now() {
+function get_time_now($formate = null) {
   $timestamp = strtotime(date('H:i:s')) + 60*60;
-  return date('H:i:s', $timestamp);
+  return $formate != null ? date($formate, $timestamp) : date('H:i:s', $timestamp);
 }
 
 /**
  * get_date_now function
  * return the current date
  */
-function get_date_now() {
-  return date('Y-m-d');
+function get_date_now($formate = null) {
+  return $formate != null ? date($formate) : date('Y-m-d');
 }
 
 /**
@@ -379,4 +240,21 @@ function generate_random_string($length = 5) {
       $randomString .= $characters[random_int(0, $charactersLength - 1)];
   }
   return $randomString;
+}
+
+
+// ping to an ip and read ping result line by line
+function ping($ip) {
+  if (strtolower(PHP_OS) == 'winnt') {
+    $ping_cmd = "ping -n 1 $ip";
+  } else {
+    $ping_cmd = "ping -c 1 $ip";
+  }
+  
+  $ping = exec($ping_cmd, $output, $status);
+
+  return array(
+    "output" => $output,
+    "status" => $status
+  );
 }

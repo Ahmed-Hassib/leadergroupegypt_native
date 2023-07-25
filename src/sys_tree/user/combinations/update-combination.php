@@ -78,7 +78,7 @@
     }
   }
   // return to the previous page
-  redirectHome(null, 'back', 0);
+  redirect_home(null, 'back', 0);
 } else {
   // include no data founded
   include_once $globmod . 'permission-error.php';

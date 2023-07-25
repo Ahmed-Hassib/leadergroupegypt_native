@@ -29,7 +29,7 @@ if ($is_exist == true) {
     $_SESSION['flash_message_status'] = false;
   }
   // redirect to the previous page
-  redirectHome(null, $is_back, 0);
+  redirect_home(null, $is_back, 0);
 } else {
   // prepare flash session variables
   $_SESSION['flash_message'] = 'NO DATA FOUNDED';

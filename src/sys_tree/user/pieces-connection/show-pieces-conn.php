@@ -75,7 +75,7 @@ if ($is_exist) {
               <td ><?php echo ++$index; ?></td>
 
               <!-- piece ip -->
-              <td class="text-capitalize <?php echo $piece['ip'] == '0.0.0.0' ? 'text-danger ' : '' ?> " data-ip="<?php echo convertIP($piece['ip']) ?>"><?php echo $piece['ip'] == '0.0.0.0' ?  language("NO DATA ENTERED", @$_SESSION['systemLang']) :"<a href='http://" . $piece['ip'] . "' target='_blank'>" . $piece['ip'] . '</a>'; ?></td>
+              <td class="text-capitalize <?php echo $piece['ip'] == '0.0.0.0' ? 'text-danger ' : '' ?> " data-ip="<?php echo convert_ip($piece['ip']) ?>"><?php echo $piece['ip'] == '0.0.0.0' ?  language("NO DATA ENTERED", @$_SESSION['systemLang']) :"<a href='http://" . $piece['ip'] . "' target='_blank'>" . $piece['ip'] . '</a>'; ?></td>
 
               <!-- piece mac address -->
               <td class="text-capitalize <?php echo !empty($piece['mac_add']) ? "" : "text-danger " ?>"><?php echo !empty($piece['mac_add']) ? $piece['mac_add'] : language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></td>
@@ -126,7 +126,7 @@ if ($is_exist) {
 
               <!-- piece source -->
               <?php $sourceip = $piece['source_id'] == 0 ? $piece['ip'] : $db_obj->select_specific_column("`ip`", "`pieces_info`", "WHERE `id` = " . $piece['source_id'])[0]['ip']; ?>
-              <td data-ip="<?php echo convertIP($sourceip) ;?>"> 
+              <td data-ip="<?php echo convert_ip($sourceip) ;?>"> 
                 <?php echo '<a href="http://' . $sourceip . '" target="">' . $sourceip . '</a>'; ?>
               </td>
 

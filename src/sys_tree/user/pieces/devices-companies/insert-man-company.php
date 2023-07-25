@@ -32,7 +32,7 @@
   }
 
   // return to the previous page
-  redirectHome(null, "back", 0);
+  redirect_home(null, "back", 0);
 } else {
   // include_once permission error module
   include_once $globmod . 'permission-error.php';

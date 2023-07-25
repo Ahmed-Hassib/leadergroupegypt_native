@@ -30,7 +30,7 @@
 <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
   <!-- start header -->
   <header class="header mb-3">
-    <?php redirectHome($msg, "back"); ?>
+    <?php redirect_home($msg, "back"); ?>
   </header>
 </div>
 <?php } else {

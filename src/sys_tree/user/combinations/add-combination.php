@@ -15,7 +15,7 @@ $emp_counter = $db_obj->count_records("`UserID`", "`users`", "WHERE `isTech` = 1
     $_SESSION['flash_message_class'] = 'danger';
     $_SESSION['flash_message_status'] = false;
     // redirect to the previous page
-    redirectHome(null, 'back', 0);
+    redirect_home(null, 'back', 0);
   } elseif ($emp_counter == 0) { ?>
   <!-- note for empty employees -->
   <div class="alert bg-danger text-white text-capitalize fw-bold">

@@ -29,7 +29,7 @@ $is_exist = $mal_obj->is_exist("`mal_id`", "`malfunctions`", $mal_id);
     $_SESSION['flash_message_status'] = false;
   }
   // redirect to the previous page
-  redirectHome(null, $is_back, 0);
+  redirect_home(null, $is_back, 0);
 } else {
   // include no data founded
   include_once $globmod . 'no-data-founded-no-redirect.php';

@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $_SESSION['flash_message_status'] = false;
     }
     // redirect to the previous page
-    redirectHome(null, "back", 0);
+    redirect_home(null, "back", 0);
   } else {
     // include_once permission error module
     include_once $globmod . 'missing-data.php';

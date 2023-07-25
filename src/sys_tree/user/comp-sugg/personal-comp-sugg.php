@@ -23,6 +23,6 @@ if ($type == 0) {
   $_SESSION['flash_message_class'] = 'warning';
   $_SESSION['flash_message_status'] = false;
   // redirect to previous page
-  redirectHome(null, 'back', 0);
+  redirect_home(null, 'back', 0);
 }
 ?>

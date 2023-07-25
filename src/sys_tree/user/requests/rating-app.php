@@ -36,4 +36,4 @@ if (!$is_rating) {
   $_SESSION['flash_message_status'] = true;
 }
 // redirect to the previous page
-redirectHome('', 'back', 0);
+redirect_home('', 'back', 0);

@@ -145,7 +145,7 @@
               // error message
               $msg = '<div class="alert alert-danger text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;'.language('WRONG CHOISE', @$_SESSION['systemLang']).'</div>';
               // redirect to home page
-              redirectHome($msg, "back");
+              redirect_home($msg, "back");
             ?>
           </header>
         </div>
@@ -320,7 +320,7 @@
                 <tr>
                   <td class="d-none"><?php echo $row['id']; ?></td>
                   <td><?php echo ++$index; ?></td>
-                  <td data-ip="<?php echo convertIP($row['piece_ip']) ?>"><?php echo $row['piece_ip'] == 1 ? 'لا يوجد' :"<a href='http://" . $row['piece_ip'] . "' target='_blank'>" . $row['piece_ip'] . '</a>'; ?></td>
+                  <td data-ip="<?php echo convert_ip($row['piece_ip']) ?>"><?php echo $row['piece_ip'] == 1 ? 'لا يوجد' :"<a href='http://" . $row['piece_ip'] . "' target='_blank'>" . $row['piece_ip'] . '</a>'; ?></td>
                   <td class="<?php echo !empty($row['mac_add']) ? "" : "text-danger " ?>"><?php echo !empty($row['mac_add']) ? $row['mac_add'] : language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></td>
                   <td><?php echo $row['piece_name']; ?></td>
                   <td>
@@ -339,7 +339,7 @@
                     <?php } ?>
                   </td>
                   <?php $sourceip = $row['source_id'] == 0 ? $row['piece_ip'] : selectSpecificColumn('piece_ip','pieces','WHERE id = ' . $row['source_id'])[0]['piece_ip']; ?>
-                  <td data-ip="<?php echo convertIP($sourceip) ;?>"> 
+                  <td data-ip="<?php echo convert_ip($sourceip) ;?>"> 
                     <?php echo '<a href="http://' . $sourceip . '" target="">' . $sourceip . '</a>'; ?>
                   </td>
                   <td><?php echo $row['ssid']; ?></td>
@@ -581,7 +581,7 @@
                 <tr>
                   <td class="d-none"><?php echo $row['id']; ?></td>
                   <td><?php echo ++$index; ?></td>
-                  <td data-ip="<?php echo convertIP($row['piece_ip']) ?>"><?php echo $row['piece_ip'] == 1 ? 'لا يوجد' :"<a href='http://" . $row['piece_ip'] . "' target='_blank'>" . $row['piece_ip'] . '</a>'; ?></td>
+                  <td data-ip="<?php echo convert_ip($row['piece_ip']) ?>"><?php echo $row['piece_ip'] == 1 ? 'لا يوجد' :"<a href='http://" . $row['piece_ip'] . "' target='_blank'>" . $row['piece_ip'] . '</a>'; ?></td>
                   <td class="<?php echo !empty($row['mac_add']) ? "" : "text-danger " ?>"><?php echo !empty($row['mac_add']) ? $row['mac_add'] : language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></td>
                   <td><?php echo $row['piece_name']; ?></td>
                   <td>
@@ -600,7 +600,7 @@
                     <?php } ?>
                   </td>
                   <?php $sourceip = $row['source_id'] == 0 ? $row['piece_ip'] : selectSpecificColumn('piece_ip','pieces','WHERE id = ' . $row['source_id'])[0]['piece_ip']; ?>
-                  <td data-ip="<?php echo convertIP($sourceip) ;?>"> 
+                  <td data-ip="<?php echo convert_ip($sourceip) ;?>"> 
                     <?php echo '<a href="http://' . $sourceip . '" target="">' . $sourceip . '</a>'; ?>
                   </td>
                   <td><?php echo $row['ssid']; ?></td>
@@ -685,7 +685,7 @@
               // error message
               $msg = '<div class="alert alert-danger text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;'.language('WRONG CHOISE', @$_SESSION['systemLang']).'</div>';
               // redirect to home page
-              redirectHome($msg, "back");
+              redirect_home($msg, "back");
             ?>
           </header>
         </div>

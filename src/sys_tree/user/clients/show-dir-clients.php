@@ -86,7 +86,7 @@ if ($counter == true) {
               <td><?php echo ++$index; ?></td>
 
               <!-- client ip -->
-              <td class="text-capitalize" data-ip="<?php echo convertIP($client['ip']) ?>">
+              <td class="text-capitalize" data-ip="<?php echo convert_ip($client['ip']) ?>">
                 <?php if ($client['ip'] == '0.0.0.0') { ?>
                   <span class="text-danger"><?php echo language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></span>
                 <?php } else { ?>
@@ -144,7 +144,7 @@ if ($counter == true) {
 
               <!-- client source -->
               <?php $sourceip = $client['source_id'] == 0 ? $client['ip'] : @$db_obj->select_specific_column("`ip`", "`pieces_info`", "WHERE `id` = " . $client['source_id'])[0]['ip']; ?>
-              <td class="text-capitalize" data-ip="<?php echo convertIP($sourceip) ?>">
+              <td class="text-capitalize" data-ip="<?php echo convert_ip($sourceip) ?>">
                 <?php if ($sourceip == '0.0.0.0') { ?>
                   <span class="text-danger"><?php echo language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></span>
                 <?php } else { ?>

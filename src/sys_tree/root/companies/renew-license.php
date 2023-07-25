@@ -67,7 +67,7 @@
           $msg = '<div class="alert alert-success text-capitalize fw-bolder">' . language("LICENSE RENEWED SUCCESSFULLY", @$_SESSION['systemLang']) . '</div>';
           
           // redirect to home page
-          redirectHome($msg, 'back');
+          redirect_home($msg, 'back');
   
         } else {
           // include no data founded module

@@ -156,4 +156,15 @@ class User extends Database {
     // return
     return $count > 0 ? true : false;
   }
+
+  public function change_other_settings($info) {
+    // change other settings query
+    $other_settings_query = "UPDATE `users` SET `ping_counter` = ? WHERE `UserID` = ?";
+    // prepare statement
+    $stmt = $this->con->prepare($other_settings_query);
+    $stmt->execute($info);
+    $count = $stmt->rowCount();               // get number of effected rows
+    // return
+    return $count > 0 ? true : null;
+  }
 }

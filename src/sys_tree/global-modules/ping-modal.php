@@ -5,13 +5,11 @@
       <div class="modal-header" dir="ltr">
         <h5 class="modal-title text-capitalize" id="exampleModalLabel">Ping</h5>
       </div>
-      <div class="modal-body">
-        <div id="ping-loader">
-          <svg class="ping-loader" viewBox="25 25 50 50">
-            <circle r="20" cy="50" cx="50"></circle>
-          </svg>
+      <div class="modal-body position-relative">
+        <div class="ping-preloader">
+          <div class="ping-spinner spinner-grow spinner-border"></div>
         </div>
-        <div id="ping-status"></div>
+        <div id="ping-status" dir="ltr"></div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary py-1 fs-12" data-bs-dismiss="modal" onclick="reset_modal()"><?php echo language('CLOSE', @$_SESSION['systemLang']) ?></button>

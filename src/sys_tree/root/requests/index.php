@@ -90,7 +90,7 @@ if ($query == 'ping') {
       }
     }
     // redirect to home page
-    redirectHome("", 'back', 0);
+    redirect_home("", 'back', 0);
   }
 
 
@@ -133,5 +133,5 @@ if ($query == 'ping') {
   // 
   $curr_version = $version; 
   // redirect to previous page
-  redirectHome("", "back", 0);
+  redirect_home("", "back", 0);
 }

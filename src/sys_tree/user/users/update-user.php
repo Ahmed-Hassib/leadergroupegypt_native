@@ -185,7 +185,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
   }
   // redirect to previous page
-  redirectHome(null, 'back', 0);
+  redirect_home(null, 'back', 0);
 } else {
   // include_once per
   include_once $globmod . 'permission-error.php';

@@ -327,12 +327,12 @@ if (isset($_SESSION['UserName']))  {
                             $msg .= '<div class="alert alert-danger text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;' . $flag . '</div>';
                         }
                         // redirect to home page
-                        redirectHome($msg, 'backup');
+                        redirect_home($msg, 'backup');
                     } else {
                         // error message
                         $msg = '<div class="alert alert-danger text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;' . language("FAILED TO RESTORE BACKUP", @$_SESSION['systemLang']) . '</div>';
                         // redirect to home page
-                        redirectHome($msg, 'backup');
+                        redirect_home($msg, 'backup');
                     }
                 ?>
             </div>
@@ -384,25 +384,25 @@ if (isset($_SESSION['UserName']))  {
                                 // success message
                                 $msg = '<div class="alert alert-success text-capitalize fw-bolder">' . language("LICENSE UPDATED SUCCESSFULLY", @$_SESSION['systemLang']) . '</div>';
                                 // redirect to home page
-                                redirectHome($msg, 'back');
+                                redirect_home($msg, 'back');
                             }else {
                                 // error message
                                 $msg = '<div class="alert alert-danger text-capitalize fw-bolder">' . language("SORRY, USERNAME OR PASSWORD IS WRONG PLEASE TRY LATER", @$_SESSION['systemLang']) . '</div>';
                                 $msg .= '<div class="alert alert-danger text-capitalize fw-bolder">' . language("YOU CANNOT ACCESS THIS PAGE DIRECTLY", @$_SESSION['systemLang']) . '</div>';
                                 // redirect to home page
-                                redirectHome($msg, 'back', 5);
+                                redirect_home($msg, 'back', 5);
                             }
                         } else {
                             // error message
                             $msg = '<div class="alert alert-danger text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;' . language("YOU CANNOT ACCESS THIS PAGE DIRECTLY", @$_SESSION['systemLang']) . '</div>';
                             // redirect to home page
-                            redirectHome($msg, 'back');
+                            redirect_home($msg, 'back');
                         }
                     } else {
                         // error message
                         $msg = '<div class="alert alert-danger text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;' . language("YOU CANNOT ACCESS THIS PAGE DIRECTLY", @$_SESSION['systemLang']) . '</div>';
                         // redirect to home page
-                        redirectHome($msg);
+                        redirect_home($msg);
                     }
                 ?>
             </div>

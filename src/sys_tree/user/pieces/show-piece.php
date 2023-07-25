@@ -107,7 +107,7 @@ if ($dir_id != -1 && $src_id != -1) {
                 <td><?php echo ++$index; ?></td>
 
                 <!-- piece ip -->
-                <td class="text-capitalize" data-ip="<?php echo convertIP($piece['ip']) ?>">
+                <td class="text-capitalize" data-ip="<?php echo convert_ip($piece['ip']) ?>">
                   <?php if ($piece['ip'] == '0.0.0.0') { ?>
                     <span class="text-danger"><?php echo language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></span>
                   <?php } else { ?>
@@ -167,7 +167,7 @@ if ($dir_id != -1 && $src_id != -1) {
 
                 <!-- piece source -->
                 <?php $sourceip = $piece['source_id'] == 0 ? $piece['ip'] : $db_obj->select_specific_column("`ip`", "`pieces_info`", "WHERE `id` = " . $piece['source_id'])[0]['ip']; ?>
-                <td class="text-capitalize" data-ip="<?php echo convertIP($sourceip) ?>">
+                <td class="text-capitalize" data-ip="<?php echo convert_ip($sourceip) ?>">
                   <?php if ($sourceip == '0.0.0.0') { ?>
                     <span class="text-danger"><?php echo language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></span>
                   <?php } else { ?>

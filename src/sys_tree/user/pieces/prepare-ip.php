@@ -43,5 +43,5 @@ if (empty($errors)) {
     $_SESSION['flash_message_status'][$key] = false;
   }
   // redirect to the previous page
-  redirectHome(null, "back", 0);
+  redirect_home(null, "back", 0);
 }

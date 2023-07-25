@@ -88,7 +88,7 @@
                       <!-- index -->
                       <td><?php echo ++$index; ?></td>
                       <!-- client ip -->
-                      <td class="text-capitalize" data-ip="<?php echo convertIP($client['ip']) ?>">
+                      <td class="text-capitalize" data-ip="<?php echo convert_ip($client['ip']) ?>">
                         <?php if ($client['ip'] == '0.0.0.0') { ?>
                           <span class="text-danger"><?php echo language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></span>
                         <?php } else { ?>

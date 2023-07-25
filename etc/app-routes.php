@@ -1,6 +1,10 @@
 <?php
 
 // Routes
+
+$etc = $up_level . "etc/";
+
+// src directory
 $src        = $up_level  . "src/";                      // root directory
 
 // SYS TREE DIRECTORY

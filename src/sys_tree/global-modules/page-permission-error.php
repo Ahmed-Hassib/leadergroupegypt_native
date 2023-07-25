@@ -10,4 +10,4 @@ $_SESSION['flash_message_icon'][1] = 'bi-exclamation-triangle-fill';
 $_SESSION['flash_message_class'][1] = 'danger';
 $_SESSION['flash_message_status'][1] = false;
 // redirect to the previous page
-redirectHome(null, 'back', 0);
+redirect_home(null, 'back', 0);
