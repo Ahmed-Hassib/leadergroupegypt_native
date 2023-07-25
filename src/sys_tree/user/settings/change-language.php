@@ -28,5 +28,5 @@ if ($check == true) {
     }
   }
   // redirect to home page
-  redirectHome("", 'back', 0);
+  redirect_home("", 'back', 0);
 }

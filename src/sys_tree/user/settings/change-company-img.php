@@ -36,8 +36,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if ($is_changed) {
-      // echo success message
-      $msg = '<div class="alert alert-success text-capitalize"><i class="bi bi-check-circle-fill"></i>&nbsp;'.language('COMPANY IMAGE WAS UPDATED SUCCESSFULLY', @$_SESSION['systemLang']).'</div>';
+      // prepare flash session variables
+      $_SESSION['flash_message'] = 'COMPANY IMAGE WAS UPDATED SUCCESSFULLY';
+      $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
+      $_SESSION['flash_message_class'] = 'success';
+      $_SESSION['flash_message_status'] = true;
+      
       // log message
       $logMsg = "company image was updated successfully by " . $_SESSION['UserName'] . " at " . date('D d/m/Y h:i a');
       if (!isset($session_obj)) {
@@ -52,28 +56,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $session_obj->set_user_session($user_info[1]);
       }
     } else {
-      // echo warning message
-      $msg = '<div class="alert alert-warning text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;'.language('COMPANY IMAGE WAS NOT UPDATED', @$_SESSION['systemLang']).'</div>';
+      // prepare flash session variables
+      $_SESSION['flash_message'] = 'COMPANY IMAGE WAS NOT UPDATED';
+      $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+      $_SESSION['flash_message_class'] = 'danger';
+      $_SESSION['flash_message_status'] = false;
       // log message
       $logMsg = "company image was not updated because there is a problem while updating it";  
     }
   } else {
-    // echo danger message
-    $msg = '<div class="alert alert-danger text-capitalize"><i class="bi bi-check-circle-fill"></i>&nbsp;'.language('THERE IS NO IMAGES WAS ADDED TO CHANGE IT', @$_SESSION['systemLang']).'</div>';
+    // prepare flash session variables
+    $_SESSION['flash_message'] = 'THERE IS NO IMAGES WAS ADDED TO CHANGE IT';
+    $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+    $_SESSION['flash_message_class'] = 'danger';
+    $_SESSION['flash_message_status'] = false;
     // log message
     $logMsg = "there is no images was added to update company image";  
   } 
   // create a log
   createLogs($_SESSION['UserName'], $logMsg);
-  ?>
-  <!-- start edit profile page -->
-  <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-    <!-- start header -->
-    <header class="header">
-      <?php redirectHome($msg, 'back'); ?>
-    </header>
-  </div>
-<?php } else {
+  // redirect home
+  redirect_home(null, 'back', 0);
+} else {
   // include_once per
   include_once $globmod . 'permission-error.php';
-} ?>
+}

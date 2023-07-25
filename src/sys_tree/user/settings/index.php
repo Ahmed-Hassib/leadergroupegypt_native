@@ -37,6 +37,10 @@ if (isset($_SESSION['UserName']))  {
   } elseif ($query == "change-company-img" && $_SESSION['change_company_img']) {
     // include change company file
     $file_name = "change-company-img.php";
+  
+  } elseif ($query == "others") {
+    // include change other settings file
+    $file_name = "change-others.php";
 
   } else {
     // include page not founded module
