@@ -58,6 +58,7 @@ class Session extends Database {
     $_SESSION['log']                = isset($_SESSION['log']) && $_SESSION['log'] != 0 ? $_SESSION['log'] : 0;  // to create a login log
     $_SESSION['phone']              = $info['phone'];
     $_SESSION['is_activated_phone'] = $info['is_activated_phone'];
+    $_SESSION['ping_counter']       = $info['ping_counter'];
     // additional info
     $license_id                     = $this->get_license_id($info['company_id']);
     $_SESSION['license_id']         = $license_id;

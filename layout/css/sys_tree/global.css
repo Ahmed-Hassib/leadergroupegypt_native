@@ -26,6 +26,7 @@ label {
 	z-index: 999999;
 }
 
+
 .preloader>.spinner-grow,
 .preloader>.spinner-border {
 	position: absolute;
@@ -40,6 +41,18 @@ label {
 .preloader>.spinner-border {
 	border: 0.25em solid transparent;
 	border-right-color: #0d6efd;
+}
+
+.ping-preloader {
+	position: relative;
+	height: 100px;
+	width: 100%;
+}
+
+.ping-preloader>.ping-spinner {
+	position: absolute;
+	top: 50%;
+	left: 50%;
 }
 
 /************/

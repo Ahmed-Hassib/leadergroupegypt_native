@@ -20,6 +20,8 @@ if (isset($page_category)) {
     case 'sys_tree':
       // include_once check version script
       include_once 'check-version.php';
+      // check backup
+      include_once 'auto-backup.php';
       // check if root
       if (isset($_SESSION['isRoot'])) {
         if ($_SESSION['isRoot'] == 1) {  
@@ -40,5 +42,3 @@ if (isset($page_category)) {
       break;
   }
 }
-
-// echo isset($is_contain_table) ? 'this page is containing tables' : 'this page is not containing tables';
