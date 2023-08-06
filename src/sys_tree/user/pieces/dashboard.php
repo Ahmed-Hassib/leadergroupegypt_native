@@ -120,7 +120,7 @@
                     </span>
                     <?php if ($target_user != -1) { ?>
                     <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2"
-                      href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $pcs['ip'] ?>&port=443"
+                      href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $pcs['ip'] ?>&port=<?php echo $pcs['port'] != 0 ? $pcs['port'] : '443' ?>"
                       target='_blank'><?php echo language('VISIT DEVICE', @$_SESSION['systemLang']) ?></a>
                     <?php } ?>
                     <button class="btn btn-outline-primary fs-12 px-3 py-1" data-bs-toggle="modal"

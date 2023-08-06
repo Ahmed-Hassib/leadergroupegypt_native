@@ -21,7 +21,7 @@ if ($address == -1 || empty($address)) {
 }
 
 // check port
-if ($port == -1 || empty($port)) {
+if ($port <= 0 || empty($port)) {
   $errors[] = 'port cannot be empty';
 }
 

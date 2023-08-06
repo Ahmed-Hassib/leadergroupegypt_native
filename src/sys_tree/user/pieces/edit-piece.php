@@ -41,7 +41,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
 
       <?php if ($target_user != -1) { ?>
       <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2"
-        href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $piece_data['ip'] ?>&port=443"
+        href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $piece_data['ip'] ?>&port=<?php echo $piece_data['port'] != 0 ? $piece_data['port'] : '443' ?>"
         target='_blank'><?php echo language('VISIT DEVICE', @$_SESSION['systemLang']) ?></a>
       <?php } ?>
 
@@ -553,7 +553,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
 
       <?php if ($target_user != -1) { ?>
       <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2"
-        href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $piece_data['ip'] ?>&port=443"
+        href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $piece_data['ip'] ?>&port=<?php echo $piece_data['port'] != 0 ? $piece_data['port'] : '443' ?>"
         target='_blank'><?php echo language('VISIT DEVICE', @$_SESSION['systemLang']) ?></a>
       <?php } ?>
 

@@ -120,7 +120,7 @@ if ($counter == true) {
           </span>
           <?php if ($target_user != -1) { ?>
           <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2"
-            href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $piece['ip'] ?>&port=443"
+            href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $piece['ip'] ?>&port=<?php echo $piece['port'] != 0 ? $piece['port'] : '443' ?>"
             target='_blank'><?php echo language('VISIT DEVICE', @$_SESSION['systemLang']) ?></a>
           <?php } ?>
           <button class="btn btn-outline-primary fs-12 px-3 py-1" data-bs-toggle="modal" data-bs-target="#pingModal"
@@ -179,9 +179,10 @@ if ($counter == true) {
         </td>
 
         <!-- piece source -->
-        <?php $sourceip = $piece['source_id'] == 0 ? $piece['ip'] : $db_obj->select_specific_column("`ip`", "`pieces_info`", "WHERE `id` = " . $piece['source_id'])[0]['ip']; ?>
-        <td class="text-capitalize" data-ip="<?php echo convert_ip($sourceip) ?>">
-          <?php if ($sourceip == '0.0.0.0') { ?>
+        <?php $source_ip = $piece['source_id'] == 0 ? $piece['ip'] : $db_obj->select_specific_column("`ip`", "`pieces_info`", "WHERE `id` = " . $piece['source_id'])[0]['ip']; ?>
+        <?php $source_port = $piece['source_id'] == 0 ? $piece['ip'] : $db_obj->select_specific_column("`port`", "`pieces_info`", "WHERE `id` = " . $piece['source_id'])[0]['port']; ?>
+        <td class="text-capitalize" data-ip="<?php echo convert_ip($source_ip) ?>">
+          <?php if ($source_ip == '0.0.0.0') { ?>
           <span class="text-danger"><?php echo language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></span>
           <?php } else { ?>
           <span class="device-status">
@@ -189,15 +190,15 @@ if ($counter == true) {
               <span class="ping-spinner ping-spinner-table spinner-grow spinner-border"></span>
             </span>
             <span class="ping-status"></span>
-            <span class="pcs-ip" data-pcs-ip="<?php echo $sourceip ?>"><?php echo $sourceip ?></span>
+            <span class="pcs-ip" data-pcs-ip="<?php echo $source_ip ?>"><?php echo $source_ip ?></span>
           </span>
           <?php if ($target_user != -1) { ?>
           <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2"
-            href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $sourceip ?>&port=443"
+            href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $source_ip ?>&port=<?php echo $source_port != 0 ? $source_port : '443' ?>"
             target='_blank'><?php echo language('VISIT DEVICE', @$_SESSION['systemLang']) ?></a>
           <?php } ?>
           <button class="btn btn-outline-primary fs-12 px-3 py-1" data-bs-toggle="modal" data-bs-target="#pingModal"
-            onclick="ping('<?php echo $sourceip ?>', <?php echo $_SESSION['ping_counter'] ?>)">ping</button>
+            onclick="ping('<?php echo $source_ip ?>', <?php echo $_SESSION['ping_counter'] ?>)">ping</button>
           <?php } ?>
         </td>
 

@@ -48,11 +48,12 @@ if ($dir_id != -1 && $src_id != -1) {
       <!-- edit current piece -->
       <?php } ?>
       <?php $src_ip = $db_obj->select_specific_column("`ip`", "`pieces_info`", "WHERE `id` = $src_id")[0]['ip'] ?>
+      <?php $src_port = $db_obj->select_specific_column("`port`", "`pieces_info`", "WHERE `id` = $src_id")[0]['port'] ?>
       <?php if ($src_ip !== '0.0.0.0' && $target_user != -1) { ?>
       <div>
         <!-- Button trigger modal -->
         <a class="btn btn-outline-primary fs-12 py-1"
-          href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $src_ip ?>&port=443"
+          href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $src_ip ?>&port=<?php echo $src_port != 0 ? $src_port : '443' ?>"
           target="_blank">
           <i class="bi bi-box-arrow-in-up-right d-sm-block d-md-none"></i>
           <?php echo language('VISIT DEVICE', @$_SESSION['systemLang']) ?>
