@@ -480,9 +480,9 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
                     <i class="bi bi-eye-slash show-pass <?php echo @$_SESSION['systemLang'] == 'ar' ? 'show-pass-left' : 'show-pass-right' ?>"
                       onclick="show_pass(this)"></i>
                     <label for="password"><?php echo language('PASSWORD', @$_SESSION['systemLang']) ?></label>
+                    <div id="passHelp" class="form-text text-warning ">
+                      <?php echo language('DON`T SHARE THIS PASSWORD WITH ANYONE', @$_SESSION['systemLang']) ?></div>
                   </div>
-                  <div id="passHelp" class="form-text text-warning ">
-                    <?php echo language('DON`T SHARE THIS PASSWORD WITH ANYONE', @$_SESSION['systemLang']) ?></div>
                 </div>
               </div>
             </div>
@@ -500,9 +500,10 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
                       onclick="show_pass(this)"></i>
                     <label
                       for="password-connection"><?php echo language('PASSWORD CONNECTION', @$_SESSION['systemLang']) ?></label>
+                    <div id="passHelp" class="form-text text-warning ">
+                      <?php echo language('DON`T SHARE THIS PASSWORD WITH ANYONE', @$_SESSION['systemLang']) ?>
+                    </div>
                   </div>
-                  <div id="passHelp" class="form-text text-warning ">
-                    <?php echo language('DON`T SHARE THIS PASSWORD WITH ANYONE', @$_SESSION['systemLang']) ?></div>
                 </div>
                 <!-- ssid -->
                 <div class="col-12">
