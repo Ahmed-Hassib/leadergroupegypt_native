@@ -63,6 +63,8 @@
         $_SESSION['flash_message_status'][$key] = false;
       }
     }
+    // return home
+    redirect_home(null, "back", 0);
 } else {
   // include permission error module
   include_once $globmod . 'permission-error.php';

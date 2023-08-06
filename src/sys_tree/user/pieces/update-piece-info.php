@@ -3,6 +3,7 @@
   $id         = isset($_POST['piece-id'])   && !empty($_POST['piece-id'])   ? trim($_POST['piece-id'], ' ') : 0;
   $full_name  = isset($_POST['full-name'])  && !empty($_POST['full-name'])  ? trim($_POST['full-name'], ' ')  : '';
   $ip         = isset($_POST['ip'])         && !empty($_POST['ip'])         ? trim($_POST['ip'], ' ')         : '';
+  $port       = isset($_POST['port'])       && !empty($_POST['port'])       ? trim($_POST['port'], ' ')       : '';
   $username   = isset($_POST['user-name'])  && !empty($_POST['user-name'])  ? trim($_POST['user-name'], ' ')  : '';
   $password   = isset($_POST['password'])   && !empty($_POST['password'])   ? trim($_POST['password'], ' ')   : '';
   $dir_id     = isset($_POST['direction'])  && !empty($_POST['direction'])  ? trim($_POST['direction'], ' ')  : '';
@@ -96,7 +97,7 @@
     // create an array to collect all basic info
     $basic_info = [];
     // push all basic info in it
-    array_push($basic_info, $full_name, $ip, $username, $password, $conn_type, $dir_id, $source_id, $alt_source_id, $is_client, $device_type, $device_id, $model_id, $notes, $visit_time, $id);
+    array_push($basic_info, $full_name, $ip, $port, $username, $password, $conn_type, $dir_id, $source_id, $alt_source_id, $is_client, $device_type, $device_id, $model_id, $notes, $visit_time, $id);
     // update basic info
     $is_updated_1 = $pcs_obj->update_piece_info($basic_info);
     $is_updated_2 = $pcs_obj->update_children_direction($id, $dir_id);
@@ -189,7 +190,7 @@
 
     // log message
     $logMsg = "Update piece or client info with name `$full_name`";
-    createLogs($_SESSION['UserName'], $logMsg);
+    create_logs($_SESSION['UserName'], $logMsg);
 
     // prepare flash session variables
     $_SESSION['flash_message'] = 'PIECE INFO WAS UPDATED SUCCESSFULLY';

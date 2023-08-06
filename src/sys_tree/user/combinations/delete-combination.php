@@ -16,20 +16,18 @@ if ($is_exist == true) {
 
   // check if deleted
   if ($is_deleted == true) {
-  // prepare flash session variables
+    // prepare flash session variables
     $_SESSION['flash_message'] = 'COMBINATION WAS DELETED SUCCESSFULLY';
     $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
     $_SESSION['flash_message_class'] = 'success';
     $_SESSION['flash_message_status'] = true;
-  } else {    
+  } else {
     // prepare flash session variables
     $_SESSION['flash_message'] = 'A PROBLEM WAS HAPPENED WHILE DELETING THE COMBINATION';
     $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
     $_SESSION['flash_message_class'] = 'danger';
     $_SESSION['flash_message_status'] = false;
   }
-  // redirect to the previous page
-  redirect_home(null, $is_back, 0);
 } else {
   // prepare flash session variables
   $_SESSION['flash_message'] = 'NO DATA FOUNDED';
@@ -37,3 +35,5 @@ if ($is_exist == true) {
   $_SESSION['flash_message_class'] = 'danger';
   $_SESSION['flash_message_status'] = false;
 }
+// redirect to the previous page
+redirect_home(null, $is_back, 0);

@@ -155,7 +155,7 @@
 
     // log message
     $logMsg = "Update piece or client info with name `$full_name`";
-    createLogs($_SESSION['UserName'], $logMsg);
+    create_logs($_SESSION['UserName'], $logMsg);
 
     // prepare flash session variables
     $_SESSION['flash_message'] = 'CLIENT INFO WAS UPDATED SUCCESSFULLY';

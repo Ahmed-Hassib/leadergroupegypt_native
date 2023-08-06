@@ -133,7 +133,7 @@ if (isset($_SESSION['UserName']))  {
                                                 <h5 class="h5" <?php echo @$_SESSION['systemLang'] == "ar" ? "dir=rtl" : ""; ?>><?php echo language('PLEASE, REENTER THE OWNER OF SYSTEM PASSWORD', @$_SESSION['systemLang']) ?> </h5>
                                                 <div class="mb-3 position-relative">
                                                     <input type="password" form="renewLicenseForm" class="form-control" id="password" name="pass" placeholder="Password" dir="ltr" required>
-                                                    <i class="bi bi-eye-slash show-pass text-dark" id="show-pass" onclick="showPass(this)"></i>
+                                                    <i class="bi bi-eye-slash show-pass text-dark" id="show-pass" onclick="show_pass(this)"></i>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -224,7 +224,7 @@ if (isset($_SESSION['UserName']))  {
                         <hr />
                     </div>
                     <!-- backup form -->
-                    <form action="settings.php?do=restoreBackup" method="POST" enctype="multipart/form-data">
+                    <form action="settings.php?do=restore_backup" method="POST" enctype="multipart/form-data">
                         <!-- strat backup field -->
                         <div class="mb-3 row">
                             <label for="backup" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo language('CHOOSE BACKUP', @$_SESSION['systemLang']) ?></label>
@@ -295,7 +295,7 @@ if (isset($_SESSION['UserName']))  {
         </div>
     </div>
 
-    <?php } elseif ($query == "restoreBackup" && $_SESSION['restore_backup'] == 1) { 
+    <?php } elseif ($query == "restore_backup" && $_SESSION['restore_backup'] == 1) { 
         // get backup id
         $backupFileInfo = isset($_FILES['backup']) ? $_FILES['backup'] : 0;
     ?>
@@ -314,8 +314,8 @@ if (isset($_SESSION['UserName']))  {
                     $flag = '';
                     // check if the file path is exest..
                     if (file_exists($backupFileInfo['tmp_name'])) {
-                        // call restoreBackup function
-                        $flag = restoreBackup($backupFileInfo['tmp_name']);
+                        // call restore_backup function
+                        $flag = restore_backup($backupFileInfo['tmp_name']);
 
                         // check the flag
                         if ($flag == true) {

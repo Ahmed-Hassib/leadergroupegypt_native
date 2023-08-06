@@ -21,10 +21,10 @@ var mega_menu_btn = document.querySelectorAll(".main-nav > li");
 
 
 /**
- * showPass function
+ * show_pass function
  * used to show/hide the password
  */
-function showPass(btn) {
+function show_pass(btn) {
     if (btn.classList.contains("bi-eye-slash")) {
         btn.classList.replace("bi-eye-slash", "bi-eye");
         btn.previousElementSibling.setAttribute("type", "text");

@@ -21,7 +21,7 @@ if ($is_exist == true) {
     $pcs_obj->delete_piece($client_id); 
     // log message
     $logMsg = "Delete client with name `" . $client_name . "`";
-    createLogs($_SESSION['UserName'], $logMsg, 3);
+    create_logs($_SESSION['UserName'], $logMsg, 3);
     // prepare flash session variables
     $_SESSION['flash_message'] = 'CLIENT INFO WAS DELETED SUCCESSFULLY';
     $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
@@ -30,7 +30,7 @@ if ($is_exist == true) {
   } else {
     // log message
     $logMsg = "You cannot delete the client because it hase more than 1 child..";
-    createLogs($_SESSION['UserName'], $logMsg, 2);
+    create_logs($_SESSION['UserName'], $logMsg, 2);
     // prepare flash session variables
     $_SESSION['flash_message'] = 'YOU CANNOT DELETE THIS PIECE BECAUSE IT HAVE MORE THAN 1 CHILD';
     $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';

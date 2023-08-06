@@ -34,7 +34,7 @@ if (isset($_SESSION['UserName'])) {
   if ($_SESSION['log'] == 0) {
     // log message
     $msg = "loginning to system";
-    createLogs($_SESSION['UserName'], $msg);
+    create_logs($_SESSION['UserName'], $msg);
     $_SESSION['log'] = 1;
   }
 ?>

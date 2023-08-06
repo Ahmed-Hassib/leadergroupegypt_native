@@ -6,7 +6,8 @@
  * Contain global variable can be access from anywhere
  * get title page from the page and display it
  */
-function get_page_tilte() {
+function get_page_tilte()
+{
   global $page_title; // page title
   // check if set or not
   if (isset($page_title)) {
@@ -22,7 +23,8 @@ function get_page_tilte() {
  * $msg => echo the error message
  * $seconds => seconds before redirect
  */
-function redirect_home($msg = null, $url = null, $seconds = 3) {
+function redirect_home($msg = null, $url = null, $seconds = 3)
+{
   // check the url
   if ($url == null) {
     $target_url = '../dashboard/index.php';
@@ -40,7 +42,7 @@ function redirect_home($msg = null, $url = null, $seconds = 3) {
     echo $msg;
   }
   // show redirect messgae
-  echo "<div dir='".($_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr')."' >". language('YOU WILL BE AUTOMATICALLY REDIRECTED AFTER', @$_SESSION['systemLang']) . " $seconds " . language('SECOND', @@$_SESSION['systemLang']) ."</div>";
+  echo "<div dir='" . ($_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr') . "' >" . language('YOU WILL BE AUTOMATICALLY REDIRECTED AFTER', @$_SESSION['systemLang']) . " $seconds " . language('SECOND', @@$_SESSION['systemLang']) . "</div>";
   // exit
   exit();
 }
@@ -54,7 +56,8 @@ function redirect_home($msg = null, $url = null, $seconds = 3) {
  * $level => tree level [0 is default]
  * $prelevel => tree prelevel [-1 is default]
  */
-function build_direction_tree($arr, $parent, $level = 0, $prelevel = -1, $nav_up_level = 1) {
+function build_direction_tree($arr, $parent, $level = 0, $prelevel = -1, $nav_up_level = 1)
+{
   foreach ($arr as $id => $data) {
     if ($parent == $data['source_id']) {
       // check if this record is main
@@ -72,11 +75,21 @@ function build_direction_tree($arr, $parent, $level = 0, $prelevel = -1, $nav_up
       }
 
       $node_url = str_repeat("../", $nav_up_level) . "pieces/index.php?do=show-piece&dir-id=" . $data['direction_id'] . "&src-id=" . $data['id'];
-      
+
       // show data
       echo "<li>";
       echo "<a href='$node_url'>";
-      echo "<span id=". $data['ip'] .">" . $data['full_name'] . "<br>" . $data['ip'] . "</span>";
+      if ($data['ip'] != '0.0.0.0') {
+        echo "<span class='device-status'>";
+        echo "<span class='ping-preloader ping-preloader-table position-relative'>";
+        echo "<span class='ping-spinner ping-spinner-table spinner-grow spinner-border'></span>";
+        echo "</span>";
+        echo "<span class='ping-status'></span>";                    
+        echo "<span class='pcs-ip' data-pcs-ip=" . $data['ip'] . " id=" . $data['ip'] . ">" . $data['full_name'] . "<br>" . $data['ip'] . "</span>";
+        echo '</span>';
+      } else {
+        echo "<span id=" . $data['ip'] . ">" . $data['full_name'] . "<br>" . $data['ip'] . "</span>";
+      }
       echo "</a>";
 
       if ($level > $prelevel) {
@@ -95,11 +108,12 @@ function build_direction_tree($arr, $parent, $level = 0, $prelevel = -1, $nav_up
 
 
 /**
- * restoreBackup function v1
+ * restore_backup function v1
  * used to restore the backup
  * 
  */
-function restoreBackup($file) {
+function restore_backup($file)
+{
   // set limit for execution process
   set_time_limit(5000);
   global $con; // connection to database
@@ -129,7 +143,7 @@ function restoreBackup($file) {
 
 
 /**
- * // createLogs function v1
+ * // create_logs function v1
  * accepts 2 param
  * $username => username of owner of the log
  * $msg      => log message
@@ -137,7 +151,8 @@ function restoreBackup($file) {
  *              [2] warning
  *              [3] danger
  */
-function createLogs($username, $msg, $type = 1) {
+function create_logs($username, $msg, $type = 1)
+{
   // get type of log
   switch ($type) {
     case 1:
@@ -174,11 +189,13 @@ function createLogs($username, $msg, $type = 1) {
 /**
  * convert_ip function
  */
-function add_zeros($ipSlice) {
+function add_zeros($ipSlice)
+{
   return substr('000' . $ipSlice, -3);
 }
 
-function convert_ip($ip) {
+function convert_ip($ip)
+{
   return join("", array_map('add_zeros', explode(".", $ip)));
 }
 
@@ -187,7 +204,8 @@ function convert_ip($ip) {
  * bg_progress function
  * return background color depend on value
  */
-function bg_progress($val) {
+function bg_progress($val)
+{
   // get the progress bar color
   if ($val >= 0 && $val <= 10) {
     $bg_color = "bg-danger";
@@ -206,8 +224,9 @@ function bg_progress($val) {
  * get_time_now function
  * return the current time
  */
-function get_time_now($formate = null) {
-  $timestamp = strtotime(date('H:i:s')) + 60*60;
+function get_time_now($formate = null)
+{
+  $timestamp = strtotime(date('H:i:s')) + 60 * 60;
   return $formate != null ? date($formate, $timestamp) : date('H:i:s', $timestamp);
 }
 
@@ -215,7 +234,8 @@ function get_time_now($formate = null) {
  * get_date_now function
  * return the current date
  */
-function get_date_now($formate = null) {
+function get_date_now($formate = null)
+{
   return $formate != null ? date($formate) : date('Y-m-d');
 }
 
@@ -223,37 +243,47 @@ function get_date_now($formate = null) {
  * random_digits function
  * accepts length of random digits
  */
-function random_digits($length = 5){
+function random_digits($length = 5)
+{
   $digits = '';
-  $numbers = range(0,9);
+  $numbers = range(0, 9);
   shuffle($numbers);
-  for($i = 0;$i < $length;$i++)
+  for ($i = 0; $i < $length; $i++)
     $digits .= $numbers[$i];
   return $digits;
 }
 
-function generate_random_string($length = 5) {
+function generate_random_string($length = 5)
+{
   $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   $charactersLength = strlen($characters);
   $randomString = '';
   for ($i = 0; $i < $length; $i++) {
-      $randomString .= $characters[random_int(0, $charactersLength - 1)];
+    $randomString .= $characters[random_int(0, $charactersLength - 1)];
   }
   return $randomString;
 }
 
 
 // ping to an ip and read ping result line by line
-function ping($ip) {
+function ping($ip, $c = 1)
+{
+  // Set the maximum execution time to 5 minutes
+  set_time_limit(300);
+
+  // check operating system
   if (strtolower(PHP_OS) == 'winnt') {
-    $ping_cmd = "ping -n 1 $ip";
+    $ping_cmd = "ping -n $c $ip";
   } else {
-    $ping_cmd = "ping -c 1 $ip";
+    $ping_cmd = "ping -c $c $ip";
   }
-  
+
+  // execute the ping command
   $ping = exec($ping_cmd, $output, $status);
 
+  // return result
   return array(
+    "ping" => $ping,
     "output" => $output,
     "status" => $status
   );

@@ -10,9 +10,11 @@
 	font-family: "Cairo", sans-serif;
 }
 
-label {
+/* label {
 	font-weight: 600;
 }
+
+*/
 
 /************/
 
@@ -55,6 +57,13 @@ label {
 	left: 50%;
 }
 
+.ping-preloader>.ping-spinner-table {
+	position: relative;
+	top: unset;
+	left: unset;
+	width: 1rem !important;
+	height: 1rem !important;
+}
 /************/
 
 /* Chrome, Safari, Edge, Opera */
@@ -72,6 +81,15 @@ input[type=number] {
 	-webkit-appearance: textfield;
 }
 
+.form-control.is-valid-right,
+.form-control.is-invalid-right {
+	background-position: right calc(.375em + .1875rem) center
+}
+
+.form-control.is-valid-left,
+.form-control.is-invalid-left {
+	background-position: left calc(.375em + .1875rem) center
+}
 
 /************/
 

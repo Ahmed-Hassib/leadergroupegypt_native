@@ -46,7 +46,7 @@ include_once str_repeat("../", $level) . "etc/init.php";
                 <div class="mb-4 position-relative login">
                     <label class="mb-2" for="password"><?php echo language('PASSWORD') ?></label>
                     <input type="password" class="form-control" id="password" name="pass" placeholder="<?php echo language('PASSWORD') ?>" value="<?php echo isset($_GET['username']) && isset($_GET['password']) ? $password : "" ?>" data-no-astrisk="true" required>
-                    <i class="bi bi-eye-slash show-pass show-pass-left text-dark" id="show-pass" onclick="showPass(this)"></i>
+                    <i class="bi bi-eye-slash show-pass show-pass-left text-dark" id="show-pass" onclick="show_pass(this)"></i>
                 </div>
                 <div class="mb-2">
                     <button type="submit" class="btn btn-primary w-100 text-capitalize <?php # echo $_SESSION['loginErrorCounter'] > 3 ? 'disabled' : '' ?>" style="border-radius: 6px"><?php echo language('LOGIN') ?></button>

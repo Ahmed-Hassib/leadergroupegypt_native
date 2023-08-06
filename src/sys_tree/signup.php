@@ -155,7 +155,7 @@ if (isset($_SESSION['UserName'])) {
                 <label for="password" class="col-sm-12 col-form-label text-capitalize"><?php echo language("PASSWORD", @$_SESSION['systemLang']) ?></label>
                 <div class="col-sm-12 position-relative">
                   <input class="form-control w-100" type="password" name="password" id="password" placeholder="<?php echo language("PASSWORD", @$_SESSION['systemLang']) ?>" onblur="confirm_password(confirm_pass, this)" data-no-validation="true" required>
-                  <i class="bi bi-eye-slash show-pass show-pass-left text-dark" id="show-pass" onclick="showPass(this)"></i>
+                  <i class="bi bi-eye-slash show-pass show-pass-left text-dark" id="show-pass" onclick="show_pass(this)"></i>
                 </div>
               </div>
               <!-- confirm_pass -->
@@ -163,7 +163,7 @@ if (isset($_SESSION['UserName'])) {
                 <label for="confirm_pass" class="col-sm-12 col-form-label text-capitalize"><?php echo language("CONFIRM PASSWORD", @$_SESSION['systemLang']) ?></label>
                 <div class="col-sm-12 position-relative">
                   <input class="form-control w-100" type="password" name="confirm_pass" id="confirm_pass" placeholder="<?php echo language("CONFIRM PASSWORD", @$_SESSION['systemLang']) ?>" onblur="confirm_password(this, password)" data-no-validation="true" required>
-                  <i class="bi bi-eye-slash show-pass show-pass-left text-dark" id="show-pass" onclick="showPass(this)"></i>
+                  <i class="bi bi-eye-slash show-pass show-pass-left text-dark" id="show-pass" onclick="show_pass(this)"></i>
                 </div>
               </div>
             </div>

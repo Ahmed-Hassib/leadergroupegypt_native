@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $logMsg = "there is no images was added to update company image";  
   } 
   // create a log
-  createLogs($_SESSION['UserName'], $logMsg);
+  create_logs($_SESSION['UserName'], $logMsg);
   // redirect home
   redirect_home(null, 'back', 0);
 } else {

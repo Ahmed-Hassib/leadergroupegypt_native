@@ -6,7 +6,7 @@
 	"html.suggest.html5": true,
 	"html.autoClosingTags": true,
 	"[php]": {
-		"editor.defaultFormatter": "Sophisticode.php-formatter"
+		"editor.defaultFormatter": "Glavin001.unibeautify-vscode"
 	},
 	"[css]": {
 		"editor.defaultFormatter": "vscode.css-language-features"

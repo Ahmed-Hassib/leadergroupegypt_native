@@ -1,8 +1,12 @@
 <?php
 // check if Get request userid is numeric and get the integer value
 $dir_id = isset($_GET['dir-id']) && is_numeric($_GET['dir-id']) ? intval($_GET['dir-id']) : 0;
-// 
-$dir_name = selectSpecificColumn("`direction_name`", "`direction`", "WHERE `direction_id` = $dir_id")[0]['direction_name'];
+// check if DIrection class object was created or not
+if (!isset($dir_obj)) {
+  $dir_obj = new Direction();
+}
+// get direction name
+$dir_name = $dir_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = $dir_id")[0]['direction_name'];
 // query select
 $q = "SELECT `pieces_info`.`id`, `pieces_info`.`ip`, `pieces_info`.`full_name`, `pieces_info`.`source_id`, `direction`.`direction_name`, `direction`.`direction_id` FROM `pieces_info` LEFT JOIN `direction` ON `direction`.`direction_id` = `pieces_info`.`direction_id` WHERE `pieces_info`.`direction_id` = ? AND `pieces_info`.`is_client` != 1 AND `pieces_info`.`company_id` = ?";
 

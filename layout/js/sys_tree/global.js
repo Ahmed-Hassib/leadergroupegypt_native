@@ -78,9 +78,6 @@ var arrowUpBtn = document.querySelector(".arrow-up");
         }
       }
     }
-
-
-
   };
 
 
@@ -126,6 +123,40 @@ var arrowUpBtn = document.querySelector(".arrow-up");
     }
   }
 
+
+  // get all ips
+  let ips_elements = document.querySelectorAll(".pcs-ip");
+  let online = 0;
+  let offline = 0;
+
+  if (ips_elements.length > 0) {
+    // loop on ips
+    ips_elements.forEach(ip_element => {
+      let ip = ip_element.dataset.pcsIp;
+      let device_status = ip_element.previousElementSibling;
+      let preloader_status = device_status.previousElementSibling;
+      if (ip != '0.0.0.0') {
+        $.get(`../requests/index.php?do=ping&ip=${ip}&c=1`, (data) => {
+          // convert result
+          let ping_res = $.parseJSON(data);
+          // hide preloader
+          preloader_status.remove();
+          // check device status
+          if (ping_res['status'] == 1) {
+            device_status.classList.add('badge', 'bg-danger', 'd-inline-block', 'p-2');
+            device_status.title = "offline";
+            offline++;
+          } else {
+            device_status.classList.add('badge', 'bg-success', 'd-inline-block', 'p-2');
+            device_status.title = "online"
+            online++;
+          }
+          console.log(`online ${online} | offline ${offline}`);
+        })
+      }
+    })
+  }
+
 })();
 
 
@@ -152,10 +183,10 @@ function startCount(el) {
 
 
 /**
- * showPass function
+ * show_pass function
  * used to show/hide the password
  */
-function showPass(btn) {
+function show_pass(btn) {
   if (btn.classList.contains("bi-eye-slash")) {
     btn.classList.replace("bi-eye-slash", "bi-eye");
     btn.previousElementSibling.setAttribute("type", "text");
@@ -293,17 +324,15 @@ function put_data_into_select(data, status, box, type, ...fields) {
  */
 function ping(ip, ping_counter = null) {
   $.get(`../requests/index.php?do=ping&ip=${ip}&c=${ping_counter}`, (data) => {
+    // convert result
     let ping_res = $.parseJSON(data);
-
-    console.log(ping_res)
-
+    // hide preloader
     document.querySelector(".ping-preloader").classList.add('d-none');
+    // display result of ping
     ping_res['output'].forEach(line => {
       if (line.length > 0) {
         document.querySelector('#ping-status').innerHTML += `${line}<br>`;
-        console.log(line)
       }
-
     });
   })
 }

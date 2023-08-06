@@ -436,11 +436,11 @@ class RouterosAPI
   }
 }
 
-$ipRB = "192.168.60.2";
-$Username = "admin";
-$clave = "0106990187";
-//$api_puerto=8728;
+// $ipRB = "192.168.60.2";
+// $Username = "admin";
+// $clave = "0106990187";
+// //$api_puerto=8728;
 
-$API = new RouterosAPI();
+// $API = new RouterosAPI();
 
-$API->connect($ipRB, $Username, $clave);
+// $API->connect($ipRB, $Username, $clave);

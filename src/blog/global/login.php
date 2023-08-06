@@ -20,7 +20,7 @@
             <label for="password" class="form-label col-sm-12"><?php echo language('PASSWORD') ?></label>
             <div class="col-sm-12 position-relative">
               <input type="password" class="form-control" id="password" name="password" required>
-              <i class="bi bi-eye-slash show-pass text-dark" id="show-pass" onclick="showPass(this)"></i>
+              <i class="bi bi-eye-slash show-pass text-dark" id="show-pass" onclick="show_pass(this)"></i>
             </div>
           </div>
           <!-- END PASSWORD -->

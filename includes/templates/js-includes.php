@@ -1,4 +1,3 @@
-
 <?php include_once $tpl . "footer.php" ?>
 
 <!-- GET GLOBAL JS FILES -->
@@ -21,7 +20,7 @@
   <?php $table_js_files = get_page_dependencies('tables', 'js'); ?>
   <!-- GET ALL TABLES NODE JS FILES -->
   <?php $tables_node_js_files = get_page_dependencies('tables', 'node')['js']; ?>
-  
+
   <!-- INCLUDE ALL TABLES NODE JS FILES -->
   <?php foreach ($tables_node_js_files as $tables_node_js_file) { ?>
     <script src="<?php echo $node . $tables_node_js_file; ?>"></script>
@@ -36,13 +35,13 @@
 
 <!-- GET ALL GLOBAL CSS FILES DEPENDING ON PAGE CATEGORY -->
 <?php if (isset($page_category)) { ?>
-  <?php $global_web_js_files = get_page_dependencies("".$page_category."_global", 'js'); ?>
+  <?php $global_web_js_files = get_page_dependencies("" . $page_category . "_global", 'js'); ?>
 
   <?php foreach ($global_web_js_files as $js_file) { ?>
     <script src="<?php echo $js . $dependencies_folder . $js_file; ?>"></script>
   <?php } ?>
 <?php } ?>
-  
+
 <?php $page_role_js_files = get_page_dependencies($page_role, 'js'); ?>
 
 <?php foreach ($page_role_js_files as $js_file) { ?>
@@ -50,7 +49,7 @@
 <?php } ?>
 
 
-<?php 
+<?php
 // CHECK PAGE CATEGORY IF EQUAL 'sys_tree'
 if ($page_category == 'sys_tree' && $page_role != 'sys_tree_login' && $page_role != 'sys_tree_signup' && isset($_SESSION['UserID']) && $_SESSION['isRoot'] == 0) {
   if ($_SESSION['dir_add'] == 1) {
@@ -62,7 +61,7 @@ if ($page_category == 'sys_tree' && $page_role != 'sys_tree_login' && $page_role
     // include add new connection type modal
     include_once  $nav_up_level . 'pieces-connection/add-conn-type-modal.php';
   }
-  
+
   // include edit connection type modal
   if (isset($conn_data_types) && $conn_data_types > 0) {
     if ($_SESSION['connection_update'] == 1) {
@@ -73,25 +72,29 @@ if ($page_category == 'sys_tree' && $page_role != 'sys_tree_login' && $page_role
       include_once $nav_up_level . 'pieces-connection/delete-conn-type-modal.php';
     }
   }
-  
+
   echo "<script>localStorage.removeItem('sidebarMenuClosed');</script>";
 }
 ?>
 
 <?php include_once $globmod . 'rating-app.php'; ?>
 
-<?php if ($backup_flag == false && $db_backup_file_name != null && $backup_location_file != null) { ?>
+<?php if (isset($backup_flag) && $backup_flag == false && $db_backup_file_name != null && $backup_location_file != null) { ?>
   <script src="<?php echo $js ?>backup.js"></script>
 <?php } ?>
 
-<script>localStorage['systemLang']  = '<?php echo @$_SESSION['systemLang'] ?>';</script>
+<script>
+  localStorage['systemLang'] = '<?php echo @$_SESSION['systemLang'] ?>';
+</script>
 
 <!-- save system language to local storage -->
 <?php if (isset($is_website_pages) && $is_website_pages == true) { ?>
-  <script>document.body.style.direction = localStorage['systemLang'] == 'ar' ? 'rtl' : 'ltr';</script>
+  <script>
+    document.body.style.direction = localStorage['systemLang'] == 'ar' ? 'rtl' : 'ltr';
+  </script>
 <?php } ?>
 
-<?php if (isset($preloader) && $preloader == true) {?>
+<?php if (isset($preloader) && $preloader == true) { ?>
   <script>
     $(document).ready(function() {
       $(".spinner").fadeOut(1000, function() {
@@ -108,7 +111,6 @@ if ($page_category == 'sys_tree' && $page_role != 'sys_tree_login' && $page_role
     })
   </script>
 <?php } ?>
-
 </body>
-</html>
 
+</html>

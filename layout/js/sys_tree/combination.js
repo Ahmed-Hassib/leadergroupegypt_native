@@ -7,7 +7,7 @@ var modal_close_btn = document.querySelector("#media-modal-close");
 
 function put_comb_data_into_modal(btn, will_back = null) {
   let comb_id = btn.dataset.combId;
-  let href = will_back != null ? `?do=delete-combination&mal-id=${comb_id}&back=true` : `?do=delete-combination&mal-id=${comb_id}`;
+  let href = will_back != null ? `?do=delete-combination&comb-id=${comb_id}&back=true` : `?do=delete-combination&comb-id=${comb_id}`;
   confirm_delete_combination.setAttribute('href', href);
 }
 

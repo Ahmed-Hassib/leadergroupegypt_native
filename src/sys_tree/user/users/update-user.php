@@ -168,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       }
       // log message
       $logMsg = "Update user info -> username: " . $username . ".";
-      createLogs($_SESSION['UserName'], $logMsg);
+      create_logs($_SESSION['UserName'], $logMsg);
 
       $_SESSION['flash_message'] = 'USER INFO UPDATED SUCCESSFULLY';
       $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';

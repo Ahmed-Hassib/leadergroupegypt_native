@@ -178,7 +178,7 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
                   <div class="col-sm-12 position-relative">
                     <input type="hidden" name="old-password" value="<?php echo $user['Pass'] ?>">
                     <input type="password" class="form-control" name="password" id="password" placeholder="<?php echo language('ENTER NEW PASSSWORD TO UPDATE IT', @$_SESSION['systemLang']) ?>" aria-describedby="passHelp" autocomplete="new-password"  <?php if ($_SESSION['user_update'] == 0 && $_SESSION['UserID'] != $user['UserID']) {echo 'readonly';} ?>>
-                    <i class="bi bi-eye-slash show-pass <?php echo @$_SESSION['systemLang'] == 'ar' ? 'show-pass-left' : 'show-pass-right' ?>" id="show-pass" onclick="showPass(this)"></i>
+                    <i class="bi bi-eye-slash show-pass <?php echo @$_SESSION['systemLang'] == 'ar' ? 'show-pass-left' : 'show-pass-right' ?>" id="show-pass" onclick="show_pass(this)"></i>
                     <div id="passHelp" class="form-text"><?php echo language('PASSWORD MUST BE HARD AND COMPLEX', @$_SESSION['systemLang']) ?></div>
                   </div>
                 </div>

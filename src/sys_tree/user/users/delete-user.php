@@ -19,7 +19,7 @@ if ($is_exist == true) {
 
   // log message
   $logMsg = "Users dept:: user deleted successfully.";
-  createLogs($_SESSION['UserName'], $logMsg);
+  create_logs($_SESSION['UserName'], $logMsg);
 
   $_SESSION['flash_message'] = 'AN USER WAS DELETED SUCCESSFULLY';
   $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';

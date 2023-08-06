@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // $pointsShow    = isset($_POST['pointsShow'])    ? $_POST['pointsShow']    : 0;
   // $reportsShow   = isset($_POST['reportsShow'])   ? $_POST['reportsShow']   : 0;
   // $takeBackup    = isset($_POST['takeBackup'])    ? $_POST['takeBackup']    : 0;
-  // $restoreBackup = isset($_POST['restoreBackup']) ? $_POST['restoreBackup'] : 0;
+  // $restore_backup = isset($_POST['restore_backup']) ? $_POST['restore_backup'] : 0;
     
   // validate the form
   $formErorr = array();   // error array 
@@ -135,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       
       // log message
       $log_msg = "Users dept:: A new user was added succefully!";
-      createLogs($_SESSION['UserName'], $log_msg);
+      create_logs($_SESSION['UserName'], $log_msg);
 
       $_SESSION['flash_message'] = 'THE NEW EMPLOYEE HAS BEEN SUCCESSFULLY ADDED';
       $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';

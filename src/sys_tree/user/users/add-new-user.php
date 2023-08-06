@@ -126,7 +126,7 @@
             <label for="password" class="col-sm-12 col-form-label text-capitalize"><?php echo language('PASSWORD', @$_SESSION['systemLang']) ?></label>
             <div class="col-sm-12 position-relative">
               <input type="password" class="form-control" name="password" id="password" placeholder="" autocomplete="new-password" aria-describedby="passHelp" required>
-              <i class="bi bi-eye-slash show-pass <?php echo @$_SESSION['systemLang'] == 'ar' ? 'show-pass-left' : 'show-pass-right' ?>" onclick="showPass(this)" id="show-pass"></i>
+              <i class="bi bi-eye-slash show-pass <?php echo @$_SESSION['systemLang'] == 'ar' ? 'show-pass-left' : 'show-pass-right' ?>" onclick="show_pass(this)" id="show-pass"></i>
               <div id="passHelp" class="form-text"><?php echo language('PASSWORD MUST BE HARD AND COMPLEX', @$_SESSION['systemLang']) ?></div>
             </div>
           </div>

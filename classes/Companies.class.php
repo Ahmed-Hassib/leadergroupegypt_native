@@ -97,4 +97,14 @@ class Company extends Database {
     // return
     return $count > 0 ? true : false;
   }
+  public function update_opened_ports($company_id, $value) {
+    // update query
+    $opened_ports_query = "UPDATE `companies` SET `opened_ports` = ? WHERE `company_id` = ?";
+    // update the database with this info
+    $stmt = $this->con->prepare($opened_ports_query);
+    $stmt->execute(array($value, $company_id));
+    $count = $stmt->rowCount();     // get number of effected rows
+    // return
+    return $count > 0 ? true : false;
+  }
 }

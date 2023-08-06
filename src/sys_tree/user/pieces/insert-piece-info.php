@@ -10,6 +10,7 @@
   // get piece info from the form
   $full_name  = isset($_POST['full-name'])  && !empty($_POST['full-name'])  ? trim($_POST['full-name'], ' ')  : '';
   $ip         = isset($_POST['ip'])         && !empty($_POST['ip'])         ? trim($_POST['ip'], ' ')         : '';
+  $port       = isset($_POST['port'])       && !empty($_POST['port'])       ? trim($_POST['port'], ' ')       : '';
   $username   = isset($_POST['user-name'])  && !empty($_POST['user-name'])  ? trim($_POST['user-name'], ' ')  : '';
   $password   = isset($_POST['password'])   && !empty($_POST['password'])   ? trim($_POST['password'], ' ')   : '';
   $dir_id     = isset($_POST['direction'])  && !empty($_POST['direction'])  ? trim($_POST['direction'], ' ')  : '';
@@ -98,7 +99,7 @@
     // get current date
     $date_now = get_date_now();
     // call insert function
-    $is_inserted = $pcs_obj->insert_new_piece(array($full_name, $ip, $username, $password, $conn_type, $dir_id, $source_id, $alt_source_id, $is_client, $device_type, $device_id, $model_id, $_SESSION['UserID'], $date_now, $_SESSION['company_id'], $notes, $visit_time));
+    $is_inserted = $pcs_obj->insert_new_piece(array($full_name, $ip, $port, $username, $password, $conn_type, $dir_id, $source_id, $alt_source_id, $is_client, $device_type, $device_id, $model_id, $_SESSION['UserID'], $date_now, $_SESSION['company_id'], $notes, $visit_time));
 
     // check address
     if (!empty($address)) {

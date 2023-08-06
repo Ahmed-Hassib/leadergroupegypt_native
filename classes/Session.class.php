@@ -16,7 +16,7 @@ class Session extends Database {
     // set user permission columns
     $this->users_permission_columns = "`users_permissions`.`user_add`,`users_permissions`.`user_update`,`users_permissions`.`user_delete`,`users_permissions`.`user_show`,`users_permissions`.`mal_add`,`users_permissions`.`mal_update`,`users_permissions`.`mal_delete`,`users_permissions`.`mal_show`,`users_permissions`.`mal_review`,`users_permissions`.`mal_media_delete`,`users_permissions`.`mal_media_download`,`users_permissions`.`comb_add`,`users_permissions`.`comb_update`,`users_permissions`.`comb_delete`,`users_permissions`.`comb_show`,`users_permissions`.`comb_review`,`users_permissions`.`comb_media_delete`,`users_permissions`.`comb_media_download`,`users_permissions`.`pcs_add`,`users_permissions`.`pcs_update`,`users_permissions`.`pcs_delete`,`users_permissions`.`pcs_show`,`users_permissions`.`clients_add`,`users_permissions`.`clients_update`,`users_permissions`.`clients_delete`,`users_permissions`.`clients_show`,`users_permissions`.`dir_add`,`users_permissions`.`dir_update`,`users_permissions`.`dir_delete`,`users_permissions`.`dir_show`,`users_permissions`.`sugg_replay`,`users_permissions`.`sugg_delete`,`users_permissions`.`sugg_show`,`users_permissions`.`points_add`,`users_permissions`.`points_delete`,`users_permissions`.`points_show`,`users_permissions`.`reports_show`,`users_permissions`.`archive_show`,`users_permissions`.`take_backup`,`users_permissions`.`restore_backup`,`users_permissions`.`connection_add`,`users_permissions`.`connection_update`,`users_permissions`.`connection_delete`,`users_permissions`.`connection_show`,`users_permissions`.`permission_update`,`users_permissions`.`permission_show`,`users_permissions`.`change_company_img`";
     // get company info
-    $this->company_info_columns = "`companies`.`company_name`, `companies`.`company_code`, `companies`.`company_img`";
+    $this->company_info_columns = "`companies`.`company_name`, `companies`.`company_code`, `companies`.`company_img`, `companies`.`company_port`";
   }
 
   // function to get all user`s info
@@ -49,6 +49,7 @@ class Session extends Database {
     $_SESSION['company_id']         = $info['company_id'];      // assign company id to session
     $_SESSION['company_name']       = $info['company_name'];    // assign company name to session
     $_SESSION['company_code']       = $info['company_code'];    // assign company code to session
+    $_SESSION['company_port']       = $info['company_port'];    // assign company port to session
     $_SESSION['UserName']           = $info['UserName'];        // assign username to session
     $_SESSION['job_title_id']       = $info['job_title_id'];        // assign job title to session
     $_SESSION['isTech']             = $info['isTech'];          // is technical man or not (0 -> not || 1 -> technical)

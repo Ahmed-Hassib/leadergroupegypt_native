@@ -36,7 +36,7 @@
                         <label class="col-sm-12 col-md-5 col-form-label text-capitalize" for="root-password"><?php echo language('PASSWORD', @$_SESSION['systemLang']) ?></label>
                         <div class="col-sm-12 col-md-7">
                             <input type="password" class="form-control" id="root-password" name="root-password" placeholder="<?php echo language('PASSWORD', @$_SESSION['systemLang']) ?>" required>
-                            <i class="bi bi-eye-slash show-pass text-dark show-pass <?php echo @$_SESSION['systemLang'] == 'ar' ? 'show-pass-left' : 'show-pass-right' ?>" id="show-pass" onclick="showPass(this)"></i>
+                            <i class="bi bi-eye-slash show-pass text-dark show-pass <?php echo @$_SESSION['systemLang'] == 'ar' ? 'show-pass-left' : 'show-pass-right' ?>" id="show-pass" onclick="show_pass(this)"></i>
                         </div>
                     </div>
                     <!-- end root password field -->

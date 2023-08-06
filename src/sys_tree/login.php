@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
   // columns to select
   $users_permission_columns = "`users_permissions`.`user_add`,`users_permissions`.`user_update`,`users_permissions`.`user_delete`,`users_permissions`.`user_show`,`users_permissions`.`mal_add`,`users_permissions`.`mal_update`,`users_permissions`.`mal_delete`,`users_permissions`.`mal_show`,`users_permissions`.`mal_review`,`users_permissions`.`mal_media_delete`,`users_permissions`.`mal_media_download`,`users_permissions`.`comb_add`,`users_permissions`.`comb_update`,`users_permissions`.`comb_delete`,`users_permissions`.`comb_show`,`users_permissions`.`comb_review`,`users_permissions`.`comb_media_delete`,`users_permissions`.`comb_media_download`,`users_permissions`.`pcs_add`,`users_permissions`.`pcs_update`,`users_permissions`.`pcs_delete`,`users_permissions`.`pcs_show`,`users_permissions`.`clients_add`,`users_permissions`.`clients_update`,`users_permissions`.`clients_delete`,`users_permissions`.`clients_show`,`users_permissions`.`dir_add`,`users_permissions`.`dir_update`,`users_permissions`.`dir_delete`,`users_permissions`.`dir_show`,`users_permissions`.`sugg_replay`,`users_permissions`.`sugg_delete`,`users_permissions`.`sugg_show`,`users_permissions`.`points_add`,`users_permissions`.`points_delete`,`users_permissions`.`points_show`,`users_permissions`.`reports_show`,`users_permissions`.`archive_show`,`users_permissions`.`take_backup`,`users_permissions`.`restore_backup`,`users_permissions`.`connection_add`,`users_permissions`.`connection_update`,`users_permissions`.`connection_delete`,`users_permissions`.`connection_show`,`users_permissions`.`permission_update`,`users_permissions`.`permission_show`,`users_permissions`.`change_company_img`";
   // get company info
-  $company_info_columns = "`companies`.`company_name`,`companies`.`company_code`,`companies`.`company_img`";
+  $company_info_columns = "`companies`.`company_name`,`companies`.`company_code`,`companies`.`company_img`, `companies`.`company_port`";
   // query select
   $query = "SELECT 
               `users`.*,
@@ -130,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && !empty($_GET)) {
         </div>
         <div class="mb-4 position-relative login">
           <input type="password" class="form-control" id="password" name="pass" placeholder="<?php echo language('PASSWORD') ?>" value="<?php echo isset($_GET['username']) && isset($_GET['password']) && isset($_GET['company-code']) ? $password : "" ?>" data-no-astrisk="true" required>
-          <i class="bi bi-eye-slash show-pass show-pass-left text-dark" id="show-pass" onclick="showPass(this)"></i>
+          <i class="bi bi-eye-slash show-pass show-pass-left text-dark" id="show-pass" onclick="show_pass(this)"></i>
         </div>
         <div class="mb-4 position-relative login">
           <input type="text" class="form-control" id="company-code-id" name="company-code" placeholder="<?php echo language('COMPANY CODE') ?>" value="<?php echo isset($_GET['username']) && isset($_GET['password']) && isset($_GET['company-code']) ? $company_code : "" ?>" data-no-astrisk="true" required>

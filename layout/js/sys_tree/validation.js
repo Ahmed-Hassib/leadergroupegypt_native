@@ -87,17 +87,17 @@ function form_validation(form = null, btn = null) {
  * is used to check the specific required input in form
  */
 function input_validation(input) {
-  // if (!input.hasAttribute('data-no-validation')) {
-    // if input is empty
-    if ((input.tagName.toLowerCase() == 'input' && input.value.length == 0) || (input.tagName.toLowerCase() == 'select' && input.selectedIndex == 0)) {
-      // check if have an valid class
-      input.classList.contains('is-valid') ? input.classList.replace('is-valid', 'is-invalid') : input.classList.add('is-invalid');
-      input.dataset.valid = "false";
-    } else {
-      input.classList.contains('is-invalid') ? input.classList.replace('is-invalid', 'is-valid') : input.classList.add('is-valid');
-      input.dataset.valid = "true";
-    }
-  // }
+
+  if ((input.tagName.toLowerCase() == 'input' && input.value.length == 0) || (input.tagName.toLowerCase() == 'select' && input.selectedIndex == 0)) {
+    // check if have an valid class
+    input.classList.contains('is-valid') ? input.classList.replace('is-valid', 'is-invalid') : input.classList.add('is-invalid');
+    localStorage.getItem('systemLang') == 'ar' ? input.classList.add('is-invalid-left') : input.classList.add('is-invalid-right')
+    input.dataset.valid = "false";
+  } else {
+    input.classList.contains('is-invalid') ? input.classList.replace('is-invalid', 'is-valid') : input.classList.add('is-valid');
+    localStorage.getItem('systemLang') == 'ar' ? input.classList.add('is-valid-left') : input.classList.add('is-valid-right')
+    input.dataset.valid = "true";
+  }
 }
 
 
@@ -110,7 +110,7 @@ function fullname_validation(input, id = null, is_combination = false) {
   // get input value
   let value = input.value;
   let container = input.parentElement;
-  
+
   // check vallue
   if (value.length > 0) {
     // type of message
