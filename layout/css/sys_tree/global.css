@@ -64,6 +64,7 @@
 	width: 1rem !important;
 	height: 1rem !important;
 }
+
 /************/
 
 /* Chrome, Safari, Edge, Opera */
@@ -89,6 +90,13 @@ input[type=number] {
 .form-control.is-valid-left,
 .form-control.is-invalid-left {
 	background-position: left calc(.375em + .1875rem) center
+}
+
+.form-floating>.form-control-plaintext~label,
+.form-floating>.form-control:focus~label,
+.form-floating>.form-control:not(:placeholder-shown)~label,
+.form-floating>.form-select~label {
+	transform: scale(.85) translateY(-.5rem) translateX(15%)
 }
 
 /************/
