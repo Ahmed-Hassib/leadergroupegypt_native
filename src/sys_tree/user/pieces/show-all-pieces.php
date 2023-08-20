@@ -71,7 +71,7 @@ if ($counter > 0) {
           <th style="min-width: 100px"><?php echo language('THE TYPE', @$_SESSION['systemLang']) ?></th>
           <th style="min-width: 100px"><?php echo language('DEVICE TYPE', @$_SESSION['systemLang']) ?></th>
           <th style="min-width: 100px"><?php echo language('DEVICE MODEL', @$_SESSION['systemLang']) ?></th>
-          <th style="min-width: 100px"><?php echo language('CONNECTION TYPE', @$_SESSION['systemLang']) ?></th>
+          <th style="width: 100px!important"><?php echo language('CONNECTION TYPE', @$_SESSION['systemLang']) ?></th>
           <th style="min-width: 100px"><?php echo language('ADDED DATE', @$_SESSION['systemLang']) ?></th>
           <th style="min-width: 100px"><?php echo language('CONTROL', @$_SESSION['systemLang']) ?></th>
         </tr>
