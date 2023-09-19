@@ -89,7 +89,7 @@ function show_media_preview(evt) {
     var src = URL.createObjectURL(evt.files[i]);
     // create a colomn to append the image
     let col = document.createElement('div');
-    col.classList.add('col-12', 'col-media');
+    col.classList.add('media-content');
     // element that will append to the preview box
     let element;
     // switch ... case ...
@@ -241,7 +241,6 @@ function create_control_buttons(src, type) {
     evt.preventDefault()
     open_media(src, type)
   })
-  // < a src = "<?php echo $media_source ?>" download = "<?php echo $media_source ?>" > download</a >
 
   // append buttons
   btn_container.appendChild(download_button);

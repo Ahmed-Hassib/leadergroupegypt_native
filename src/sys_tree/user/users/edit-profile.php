@@ -1,12 +1,12 @@
 <?php
+// check if Get request userid is numeric and get the integer value
+$user_id = isset($_GET['userid']) && !empty($_GET['userid']) ? base64_decode($_GET['userid']) : null;
 // check the current users
-if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
-  if (!isset($user_obj)) {
-    // create an object of User class
-    $user_obj = new User();
-  }
+if ($user_id == base64_decode($_SESSION['sys']['UserID']) || $_SESSION['sys']['user_show'] == 1) {
+  // create an object of User class
+  $user_obj = !isset($user_obj) ? new User() : $user_obj;
   // get user info from database
-  $user_info = $user_obj->get_user_info($user_id, $_SESSION['company_id']);
+  $user_info = $user_obj->get_user_info($user_id, base64_decode($_SESSION['sys']['company_id']));
   // counter
   $counter = $user_info[0];
   // check the row count
@@ -17,29 +17,32 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
     $stmt = $con->prepare("SELECT *FROM `users_permissions` WHERE `UserID` = ? LIMIT 1");
     $stmt->execute(array($user_id)); // execute query
     $permissions = $stmt->fetch();   // fetch data
-  ?>
-    <div class="container" dir="<?php echo $_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
+?>
+    <div class="container" dir="<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'rtl' : 'ltr' ?>">
       <!-- start edit profile -->
       <div class="row row-cols-sm-1 row-cols-lg-2 g-3">
         <!-- start add new user form -->
         <form class="profile-form" action="?do=update-user-info" method="POST" enctype="multipart/form-data" id="edit-user-info" onchange="form_validation(this)">
           <!-- strat submit -->
           <div class="hstack gap-3">
-            <div class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
+            <div class="<?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
               <!-- edit button -->
-              <button type="button" form="edit-user-info" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'ltr' : 'rtl' ?>" class="btn btn-primary text-capitalize py-1 fs-12" <?php if ($_SESSION['user_update'] == 0 && $user['UserID'] != $_SESSION['UserID']) {echo 'disabled';} ?> onclick="form_validation(this.form, 'submit')"><i class="bi bi-check-all"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?></button>
-              <?php if ($user['isRoot'] != 1 && $user['TrustStatus'] != 1 && $user['job_title_id'] != 1 && $_SESSION['user_delete'] == 1) { ?>
+              <?php if ($_SESSION['sys']['user_update'] == 1 || $user['UserID'] == base64_decode($_SESSION['sys']['UserID'])) { ?>
+                <button type="button" form="edit-user-info" dir="<?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'ltr' : 'rtl' ?>" class="btn btn-primary text-capitalize py-1 fs-12" onclick="form_validation(this.form, 'submit')"><i class="bi bi-check-all"></i>&nbsp;<?php echo lang('SAVE') ?></button>
+              <?php } ?>
+
+              <?php if ($user['isRoot'] != 1 && $user['TrustStatus'] != 1 && $user['job_title_id'] != 1 && $_SESSION['sys']['user_delete'] == 1 && $user['UserID'] != base64_decode($_SESSION['sys']['UserID'])) { ?>
                 <!-- delete button -->
-                <button type="button" data-bs-toggle="modal" data-bs-target="#deleteUserModal" onclick="show_delete_user_modal(this)" data-username="<?php echo $user['UserName'] ?>" data-user-id="<?php echo $user['UserID'] ?>" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'ltr' : 'rtl' ?>" class="btn btn-outline-danger text-capitalize py-1 fs-12" <?php if ($_SESSION['user_delete'] == 0 && $user['UserID'] != $_SESSION['UserID']) {echo 'disabled';} ?>><i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?></button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#deleteUserModal" onclick="show_delete_user_modal(this)" data-username="<?php echo $user['UserName'] ?>" data-user-id="<?php echo $user['UserID'] ?>" dir="<?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'ltr' : 'rtl' ?>" class="btn btn-outline-danger text-capitalize py-1 fs-12"><i class="bi bi-trash"></i>&nbsp;<?php echo lang('DELETE') ?></button>
               <?php } ?>
             </div>
           </div>
+          <!-- end submit -->
 
           <!-- horzontal stack -->
           <div class="hstack gap-3">
             <h6 class="h6 text-decoration-underline text-capitalize text-danger fw-bold">
-              <span><?php echo language('NOTE', @$_SESSION['systemLang']) ?>:</span>&nbsp;
-              <span><?php echo language('THIS SIGN * IS REFERE TO REQUIRED FIELDS', @$_SESSION['systemLang']) ?></span>
+              <span><?php echo lang('*REQUIRED') ?></span>
             </h6>
           </div>
           <!-- start new design -->
@@ -48,99 +51,97 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
             <div class="col-sm-12">
               <div class="section-block">
                 <!-- start profile image -->
-                <div class="mb-4 row" id="profile-image-container">
-                  <?php $profile_img_name = empty($user['profile_img']) ? 'male-avatar.svg' : $user['profile_img']; ?>
-                  <?php $profile_img_path = empty($user['profile_img']) ? $uploads . "employees-img" : $uploads . "employees-img/".$_SESSION['company_id']; ?>
-                  <img src="<?php echo "$profile_img_path/$profile_img_name" ?>" class="profile-img" alt="" id="profile-img" >
+                <div class="mb-3 row profile-image-container" id="profile-image-container">
+                  <?php $profile_img_name = empty($user['profile_img']) || !file_exists($uploads . "employees-img/" . base64_decode($_SESSION['sys']['company_id']) . "/" . $user['profile_img']) ? 'male-avatar.svg' : $user['profile_img']; ?>
+                  <?php $profile_img_path = empty($user['profile_img']) || !file_exists($uploads . "employees-img/" . base64_decode($_SESSION['sys']['company_id']) . "/" . $user['profile_img']) ? $uploads . "employees-img" : $uploads . "employees-img/" . base64_decode($_SESSION['sys']['company_id']); ?>
+                  <img src="<?php echo "$profile_img_path/$profile_img_name" ?>" class="profile-img" alt="" id="profile-img">
                   <!-- profile image form -->
                   <input type="file" class="d-none" name="profile-img-input" id="profile-img-input" onchange="change_profile_img(this)" accept="image/*">
                 </div>
                 <!-- end profile image -->
-                <?php if ($_SESSION['UserID'] == $user['UserID']) { ?>
-                <!-- start control buttons -->
-                <div class="hstack gap-3">
-                  <div class="mx-auto">
-                    <!-- edit image button -->
-                    <button type="button" role="button" class="btn btn-outline-primary fs-12 py-1 text-capitalize" onclick="click_input()">
-                      <i class="bi bi-pencil-square"></i>
-                      <?php echo language('CHANGE IMAGE', @$_SESSION['systemLang']) ?>
-                    </button>
-                    <?php if (!empty($user['profile_img'])) {?>
-                    <!-- delete image button -->
-                    <button type="button" role="button" class="btn btn-danger fs-12 py-1 text-capitalize" onclick="delete_profile_image()">
-                      <i class="bi bi-trash"></i>
-                      <?php echo language('DELETE IMAGE', @$_SESSION['systemLang']) ?>
-                    </button>
+                <?php if (base64_decode($_SESSION['sys']['UserID']) == $user['UserID']) { ?>
+                  <!-- start control buttons -->
+                  <div class="vstack gap-3 justify-content-center">
+                    <?php if (!empty($user['profile_img']) && !file_exists($uploads . "employees-img/" . base64_decode($_SESSION['sys']['company_id']) . "/" . $user['profile_img'])) { ?>
+                      <p class="mb-0 text-center text-danger">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <?php echo lang('IMG ERROR', $lang_file); ?>
+                      </p>
                     <?php } ?>
+                    <div class="mx-auto">
+                      <!-- edit image button -->
+                      <button type="button" role="button" class="btn btn-outline-primary fs-12 py-1 text-capitalize" onclick="click_input()">
+                        <i class="bi bi-pencil-square"></i>
+                        <?php echo lang('CHANGE IMG') ?>
+                      </button>
+                      <?php if (!empty($user['profile_img'])) { ?>
+                        <!-- delete image button -->
+                        <button type="button" role="button" class="btn btn-danger fs-12 py-1 text-capitalize" onclick="delete_profile_image()">
+                          <i class="bi bi-trash"></i>
+                          <?php echo lang('DELETE IMG') ?>
+                        </button>
+                      <?php } ?>
+                    </div>
                   </div>
-                </div>
-                <!-- end control buttons -->
+                  <!-- end control buttons -->
                 <?php } ?>
               </div>
             </div>
-          </div> 
-          
-          <div class="mb-3 row g-3 justify-content-start align-items-stretch"> 
+          </div>
+
+          <div class="mb-3 row g-3 justify-content-start align-items-stretch">
             <!-- employee general info -->
             <div class="col-sm-12 col-lg-6">
               <div class="section-block">
                 <header class="section-header">
-                  <h5 class="h5 text-capitalize"><?php echo language('GENERAL INFO', @$_SESSION['systemLang']) ?></h5>
+                  <h5 class="h5 text-capitalize"><?php echo lang('GENERAL INFO', $lang_file) ?></h5>
                   <p class="text-secondary fs-12"></p>
                   <hr>
                 </header>
                 <!-- user id -->
-                <input type="hidden" name="userid" value="<?php echo $user['UserID'] ?>">
+                <input type="hidden" name="userid" value="<?php echo base64_encode($user['UserID']) ?>">
                 <!-- start full name field -->
-                <div class="mb-4 row">
-                  <label for="fullname" class="col-sm-12 col-form-label text-capitalize" autocomplete="off"><?php echo language('FULLNAME', @$_SESSION['systemLang']) ?></label>
-                  <div class="col-sm-12 position-relative">
-                    <input type="text" class="form-control" name="fullname" id="fullname" placeholder="<?php echo language('FULLNAME WILL APPEAR IN PROFILE PAGE', @$_SESSION['systemLang']) ?>" value="<?php echo $user['Fullname'] ?>"  <?php if ($_SESSION['user_update'] == 0 && $_SESSION['UserID'] != $user['UserID']) {echo 'readonly';} ?> required>
-                    <div id="fullNameHelp" class="form-text"><?php echo language('FULLNAME WILL APPEAR IN PROFILE PAGE', @$_SESSION['systemLang']) ?></div>
+                <div class="mb-3">
+                  <div class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                    <input type="text" class="form-control" name="fullname" id="fullname" placeholder="<?php echo lang('FULLNAME', $lang_file) ?>" value="<?php echo $user['Fullname'] ?>" <?php echo $_SESSION['sys']['user_update'] == 0 && base64_decode($_SESSION['sys']['UserID']) != $user['UserID'] ? 'readonly' : '' ?> required>
+                    <label for="fullname"><?php echo lang('FULLNAME', $lang_file) ?></label>
                   </div>
                 </div>
                 <!-- end full name field -->
                 <!-- start gender field -->
-                <div class="mb-4 row">
-                  <label for="gender" class="col-sm-12 col-form-label text-capitalize" autocomplete="off"><?php echo language('GENDER', @$_SESSION['systemLang']) ?></label>
-                  <div class="col-sm-12 position-relative">
-                    <select class="form-select" name="gender" id="gender" <?php if ($_SESSION['user_update'] == 0 && $_SESSION['UserID'] != $user['UserID']) {echo 'readonly';} ?> required>
-                      <option value="default" selected disabled><?php echo language('SELECT GENDER', @$_SESSION['systemLang']) ?></option>
-                      <option value="0" <?php echo $user['gender'] == 0 ? 'selected' : '' ?>><?php echo language('MALE', @$_SESSION['systemLang']) ?></option>
-                      <option value="1" <?php echo $user['gender'] == 1 ? 'selected' : '' ?>><?php echo language('FEMALE', @$_SESSION['systemLang']) ?></option>
-                    </select>
-                  </div>
+                <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                  <select class="form-select" name="gender" id="gender" <?php echo $_SESSION['sys']['user_update'] == 0 && base64_decode($_SESSION['sys']['UserID']) != $user['UserID'] ? 'readonly' : ''; ?> required>
+                    <option value="default" selected disabled><?php echo lang('SELECT GENDER', $lang_file) ?></option>
+                    <option value="0" <?php echo $user['gender'] == 0 ? 'selected' : '' ?>><?php echo lang('MALE', $lang_file) ?></option>
+                    <option value="1" <?php echo $user['gender'] == 1 ? 'selected' : '' ?>><?php echo lang('FEMALE', $lang_file) ?></option>
+                  </select>
+                  <label for="gender"><?php echo lang('GENDER', $lang_file) ?></label>
                 </div>
                 <!-- end gender field -->
                 <!-- start address field -->
-                <div class="mb-4 row">
-                  <label for="address" class="col-sm-12 col-form-label text-capitalize" autocomplete="off"><?php echo language('THE ADDRESS', @$_SESSION['systemLang']) ?></label>
-                  <div class="col-sm-12 position-relative">
-                    <input type="text" class="form-control" name="address" id="address" aria-describedby="address" value="<?php echo $user['address'] ?>" placeholder="<?php echo language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>" <?php if ($_SESSION['user_update'] == 0 && $_SESSION['UserID'] != $user['UserID']) {echo 'readonly';} ?>>
-                    <!-- <div id="address" class="form-text"><?php echo language('FULLNAME WILL APPEAR IN PROFILE PAGE', @$_SESSION['systemLang']) ?></div> -->
-                  </div>
+                <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                  <input type="text" class="form-control" name="address" id="address" aria-describedby="address" value="<?php echo $user['address'] ?>" placeholder="<?php echo lang('NO DATA') ?>" <?php echo $_SESSION['sys']['user_update'] == 0 && base64_decode($_SESSION['sys']['UserID']) != $user['UserID'] ? 'readonly' : '' ?>>
+                  <label for="address"><?php echo lang('ADDRESS', $lang_file) ?></label>
                 </div>
                 <!-- end address field -->
                 <!-- strat phone field -->
-                <div class="mb-4 row">
-                  <label for="phone" class="col-sm-12 col-form-label text-capitalize"><?php echo language('PHONE', @$_SESSION['systemLang']) ?></label>
-                  <div class="col-sm-12 position-relative">
-                    <input type="text" maxlength="11" class="form-control" name="phone" id="phone" placeholder="<?php echo language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>" value="<?php echo $user['phone'] ?>" <?php if ($_SESSION['user_update'] == 0 && $_SESSION['UserID'] != $user['UserID']) {echo 'readonly';} ?>>
-                    <?php if ($user['is_activated_phone'] == 0 && !empty($user['phone'])) { ?>
+                <div class="mb-3">
+                  <div class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                    <input type="text" maxlength="11" class="form-control" name="phone" id="phone" placeholder="<?php echo lang('NO DATA') ?>" value="<?php echo $user['phone'] ?>" <?php echo $_SESSION['sys']['user_update'] == 0 && base64_decode($_SESSION['sys']['UserID']) != $user['UserID'] ? 'readonly' : '' ?>>
+                    <label for="phone"><?php echo lang('PHONE', $lang_file) ?></label>
+                  </div>
+                  <?php if ($user['is_activated_phone'] == 0 && !empty($user['phone'])) { ?>
                     <div id="passHelp" class="form-text text-danger">
                       <i class="bi bi-exclamation-triangle-fill"></i>
-                      <?php echo language('YOUR PHONE NUMBER IS NOT ACTIVATED!', @$_SESSION['systemLang']) ?>
+                      <?php echo lang('PHONE NOT ACTIVATED', $lang_file) ?>
                     </div>
-                    <?php } ?>
-                  </div>
+                  <?php } ?>
                 </div>
                 <!-- end phone field -->
                 <!-- strat date of birth field -->
-                <div class="mb-4 row">
-                  <label for="date-of-birth" class="col-sm-12 col-form-label text-capitalize"><?php echo language('DATE OF BIRTH', @$_SESSION['systemLang']) ?></label>
-                  <div class="col-sm-12 position-relative">
-                    <input type="date" class="form-control px-5" name="date-of-birth" id="date-of-birth"  value="<?php echo $user['date_of_birth'] ?>" <?php if ($_SESSION['user_update'] == 0 && $_SESSION['UserID'] != $user['UserID']) {echo 'readonly';} ?>>
-                  </div>
+                <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                  <input type="date" class="form-control px-5" name="date-of-birth" id="date-of-birth" value="<?php echo $user['date_of_birth'] ?>" <?php echo $_SESSION['sys']['user_update'] == 0 && base64_decode($_SESSION['sys']['UserID']) != $user['UserID'] ? 'readonly' : '' ?>>
+                  <label for="date-of-birth"><?php echo lang('BIRTH', $lang_file) ?></label>
                 </div>
                 <!-- end date of birth field -->
               </div>
@@ -150,37 +151,34 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
             <div class="col-sm-12 col-lg-6">
               <div class="section-block">
                 <header class="section-header">
-                  <h5 class="h5 text-capitalize"><?php echo language('PERSONAL INFO', @$_SESSION['systemLang']) ?></h5>
+                  <h5 class="h5 text-capitalize"><?php echo lang('PERSONAL INFO', $lang_file) ?></h5>
                   <p class="text-secondary fs-12"></p>
                   <hr>
                 </header>
                 <!-- strat email field -->
-                <div class="mb-4 row">
-                  <label for="email" class="col-sm-12 col-form-label text-capitalize"><?php echo language('EMAIL', @$_SESSION['systemLang']) ?></label>
-                  <div class="col-sm-12 position-relative">
-                    <input type="email" class="form-control" name="email" id="email" placeholder="example@example.com" aria-describedby="emailHelp" value="<?php echo $user['Email'] ?>"  <?php if ($_SESSION['user_update'] == 0 && $_SESSION['UserID'] != $user['UserID']) {echo 'readonly';} ?>>
-                    <div id="emailHelp" class="form-text" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo language('WE`LL NEVER SHARE YOUR EMAIL WITH ANYONE ELSE', @$_SESSION['systemLang']) ?></div>
-                  </div>
+                <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="example@example.com" aria-describedby="emailHelp" value="<?php echo $user['Email'] ?>" <?php echo $_SESSION['sys']['user_update'] == 0 && base64_decode($_SESSION['sys']['UserID']) != $user['UserID'] ? 'readonly' : '' ?>>
+                  <label for="email"><?php echo lang('EMAIL', $lang_file) ?></label>
                 </div>
                 <!-- end email field -->
                 <!-- start user name field -->
-                <div class="mb-4 row">
-                  <label for="username" class="col-sm-12 col-form-label text-capitalize"><?php echo language('USERNAME', @$_SESSION['systemLang']) ?></label>
-                  <div class="col-sm-12 position-relative">
-                    <input type="text" class="form-control" name="username" id="username" placeholder="<?php echo language('USERNAME TO LOGIN INTO THE SYSTEM', @$_SESSION['systemLang']) ?>" autocomplete="off" value="<?php echo $user['UserName'] ?>"  required readonly>
-                    <div id="usernameHelp" class="form-text"><?php echo language('USERNAME TO LOGIN INTO THE SYSTEM', @$_SESSION['systemLang']) ?></div>
+                <div class="mb-3 position-relative">
+                  <div class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                    <input type="text" class="form-control" name="username" id="username" placeholder="<?php echo lang('USERNAME LOGIN', $lang_file) ?>" autocomplete="off" value="<?php echo $user['UserName'] ?>" required readonly>
+                    <label for="username"><?php echo lang('USERNAME') ?></label>
                   </div>
+                  <div id="usernameHelp" class="form-text"><?php echo lang('USERNAME LOGIN', $lang_file) ?></div>
                 </div>
                 <!-- end user name field -->
                 <!-- strat password field -->
-                <div class="mb-4 row">
-                  <label for="password" class="col-sm-12 col-form-label text-capitalize"><?php echo language('PASSWORD', @$_SESSION['systemLang']) ?></label>
-                  <div class="col-sm-12 position-relative">
+                <div class="mb-3 position-relative">
+                  <div class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
                     <input type="hidden" name="old-password" value="<?php echo $user['Pass'] ?>">
-                    <input type="password" class="form-control" name="password" id="password" placeholder="<?php echo language('ENTER NEW PASSSWORD TO UPDATE IT', @$_SESSION['systemLang']) ?>" aria-describedby="passHelp" autocomplete="new-password"  <?php if ($_SESSION['user_update'] == 0 && $_SESSION['UserID'] != $user['UserID']) {echo 'readonly';} ?>>
-                    <i class="bi bi-eye-slash show-pass <?php echo @$_SESSION['systemLang'] == 'ar' ? 'show-pass-left' : 'show-pass-right' ?>" id="show-pass" onclick="show_pass(this)"></i>
-                    <div id="passHelp" class="form-text"><?php echo language('PASSWORD MUST BE HARD AND COMPLEX', @$_SESSION['systemLang']) ?></div>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="<?php echo lang('ENTER NEW PASSSWORD', $lang_file) ?>" aria-describedby="passHelp" autocomplete="new-password" <?php echo $_SESSION['sys']['user_update'] == 0 && base64_decode($_SESSION['sys']['UserID']) != $user['UserID'] ? 'readonly' : '' ?>>
+                    <i class="bi bi-eye-slash show-pass <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'show-pass-left' : 'show-pass-right' ?>" id="show-pass" onclick="show_pass(this)"></i>
+                    <label for="password"><?php echo lang('PASSWORD') ?></label>
                   </div>
+                  <div id="passHelp" class="form-text"><?php echo lang('HARD & COMPLEX') ?></div>
                 </div>
                 <!-- end password field -->
               </div>
@@ -190,28 +188,28 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
             <div class="col-sm-12 col-lg-6">
               <div class="section-block">
                 <header class="section-header">
-                  <h5 class="h5 text-capitalize"><?php echo language('JOB INFO', @$_SESSION['systemLang']) ?></h5>
+                  <h5 class="h5 text-capitalize"><?php echo lang('JOB INFO', $lang_file) ?></h5>
                   <p class="text-secondary fs-12"></p>
                   <hr>
                 </header>
                 <!-- start job title field -->
-                <div class="mb-4 row">
-                  <label for="job_title_id" class="col-sm-12 col-form-label text-capitalize"><?php echo language('JOB TITLE', @$_SESSION['systemLang']) ?></label>
-                  <div class="col-sm-12 position-relative">
-                    <select class="form-select" name="job_title_id" id="job_title_id" <?php if ($_SESSION['user_update'] == 0) {echo 'disabled';} ?> required>
-                      <?php 
-                        $job_titles = $db_obj->select_specific_column('*', "`users_job_title`", ""); ?>
-                      <option value="default" <?php if ($user['job_title_id'] == 0) {echo 'selected';} ?> disabled><?php echo language('JOB TITLE', @$_SESSION['systemLang']) ?></option>
+                <div class="mb-3 position-relative">
+                  <div class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                    <select class="form-select" name="job_title_id" id="job_title_id" <?php echo $_SESSION['sys']['user_update'] == 0 ? 'disabled' : '' ?> required>
+                      <?php
+                      $job_titles = $db_obj->select_specific_column('*', "`users_job_title`", ""); ?>
+                      <option value="default" <?php echo $user['job_title_id'] == 0 ? 'selected' : '' ?> disabled><?php echo lang('JOB TITLE', $lang_file) ?></option>
                       <?php foreach ($job_titles as $job_title) { ?>
-                        <option value="<?php echo $job_title['job_title_id'] ?>" <?php if ($user['job_title_id'] == $job_title['job_title_id']) {echo 'selected';} ?>><?php echo language($job_title['job_title_name'], @$_SESSION['systemLang']) ?></option>
+                        <option value="<?php echo base64_encode($job_title['job_title_id']) ?>" <?php echo $user['job_title_id'] == $job_title['job_title_id'] ? 'selected' : '' ?>><?php echo lang($job_title['job_title_name'], $lang_file) ?></option>
                       <?php } ?>
                     </select>
+                    <label for="job_title_id"><?php echo lang('JOB TITLE', $lang_file) ?></label>
                   </div>
-                  <?php if ($_SESSION['user_update'] == 0) { ?>
-                    <div id="updatePermissionHelp" class="form-text" dir="<?php echo @$_SESSION['systemLang'] == "ar" ? "rtl" : "ltr" ?>">
-                      <p>
-                        <span class="text-danger text-decoration-underline  text-uppercase"><?php echo language('NOTE', @$_SESSION['systemLang']) ?>:</span>
-                        <?php echo language('YOU DON`T HAVE PERMISSION TO UPDATE THIS FIELD', @$_SESSION['systemLang']); ?>
+                  <?php if ($_SESSION['sys']['user_update'] == 0) { ?>
+                    <div id="updatePermissionHelp" class="form-text" dir="<?php echo @$_SESSION['sys']['lang'] == "ar" ? "rtl" : "ltr" ?>">
+                      <p class="text-danger">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <?php echo lang('PERMISSION UPDATE FAILED', $lang_file); ?>
                       </p>
                     </div>
                   <?php } ?>
@@ -224,56 +222,64 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
             <div class="col-sm-12 col-lg-6">
               <div class="section-block">
                 <header class="section-header">
-                  <h5 class="h5 text-capitalize"><?php echo language('SOCIAL MEDIA INFO', @$_SESSION['systemLang']) ?></h5>
+                  <h5 class="h5 text-capitalize"><?php echo lang('SOCIAL MEDIA', $lang_file) ?></h5>
                   <p class="text-secondary fs-12"></p>
                   <hr>
                 </header>
                 <!-- strat twitter field -->
                 <div class="input-group mb-3">
-                  <span class="input-group-text bg-white <?php echo @$_SESSION['systemLang'] == 'ar' ? 'input-group-right' : 'input-group-left' ?>" id="twitter"><i class="bi bi-twitter text-primary"></i></span>
-                  <input type="text" class="form-control <?php echo @$_SESSION['systemLang'] == 'ar' ? 'form-control-left' : 'form-control-right' ?>" name="twitter"  value="<?php echo $user['twitter'] ?>" placeholder="<?php echo language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>" aria-label="twitter" aria-describedby="twitter">
+                  <span class="input-group-text bg-white <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'input-group-right' : 'input-group-left' ?>" id="twitter"><i class="bi bi-twitter text-primary"></i></span>
+                  <div class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                    <input type="text" class="form-control <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'form-control-left' : 'form-control-right' ?>" name="twitter" value="<?php echo $user['twitter'] ?>" placeholder="<?php echo lang('NO DATA') ?>" aria-label="twitter" aria-describedby="twitter">
+                    <label for="twitter">twitter</label>
+                  </div>
                 </div>
                 <!-- end twitter field -->
                 <!-- strat facebook field -->
                 <div class="input-group mb-3">
-                  <span class="input-group-text bg-white <?php echo @$_SESSION['systemLang'] == 'ar' ? 'input-group-right' : 'input-group-left' ?>" id="facebook"><i class="bi bi-facebook text-primary"></i></span>
-                  <input type="text" class="form-control <?php echo @$_SESSION['systemLang'] == 'ar' ? 'form-control-left' : 'form-control-right' ?>" name="facebook" value="<?php echo $user['facebook'] ?>"  placeholder="<?php echo language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>" aria-label="facebook" aria-describedby="facebook">
+                  <span class="input-group-text bg-white <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'input-group-right' : 'input-group-left' ?>" id="facebook"><i class="bi bi-facebook text-primary"></i></span>
+                  <div class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                    <input type="text" class="form-control <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'form-control-left' : 'form-control-right' ?>" name="facebook" value="<?php echo $user['facebook'] ?>" placeholder="<?php echo lang('NO DATA') ?>" aria-label="facebook" aria-describedby="facebook">
+                    <label for="facebook">facebook</label>
+                  </div>
                 </div>
                 <!-- end facebook field -->
                 <!-- strat whatsapp field -->
                 <!-- <div class="input-group mb-3">
-                    <span class="input-group-text bg-success border-success <?php echo @$_SESSION['systemLang'] == 'ar' ? 'input-group-right' : 'input-group-left' ?>" id="whatsapp"><i class="bi bi-whatsapp"></i></span>
-                    <input type="text" class="form-control border-success <?php echo @$_SESSION['systemLang'] == 'ar' ? 'form-control-left' : 'form-control-right' ?>" name="whatsapp" placeholder="<?php echo language('NO DATA ENTERED', @$_SESSION['systemLang']) ?>" aria-label="whatsapp" aria-describedby="whatsapp">
+                    <span class="input-group-text bg-success border-success <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'input-group-right' : 'input-group-left' ?>" id="whatsapp"><i class="bi bi-whatsapp"></i></span>
+                    <input type="text" class="form-control border-success <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'form-control-left' : 'form-control-right' ?>" name="whatsapp" placeholder="<?php echo lang('NO DATA') ?>" aria-label="whatsapp" aria-describedby="whatsapp">
                 </div> -->
                 <!-- end whatsapp field -->
               </div>
             </div>
-            
-            <?php if ($_SESSION['permission_show'] == 1) { ?>
-            <!-- employee permission -->
-            <div class="col-sm-12">
-              <div class="section-block">
-                <header class="section-header">
-                  <h5 class="text-capitalize "><?php echo language('PERMISSIONS', @$_SESSION['systemLang']) ?></h5>
-                  <hr>
-                </header>
-                <!-- strat user-permission field -->
-                <?php include_once 'edit-user-permissions.php' ?>
-                <!-- end user-permission field -->
+
+            <?php if ($_SESSION['sys']['permission_show'] == 1) { ?>
+              <!-- employee permission -->
+              <div class="col-sm-12">
+                <div class="section-block">
+                  <header class="section-header">
+                    <h5 class="text-capitalize "><?php echo lang('PERMISSIONS', $lang_file) ?></h5>
+                    <hr>
+                  </header>
+                  <!-- strat user-permission field -->
+                  <?php include_once 'edit-user-permissions.php' ?>
+                  <!-- end user-permission field -->
+                </div>
               </div>
-            </div>
             <?php } ?>
           </div>
           <!-- end new design -->
           <!-- strat submit -->
           <div class="hstack gap-3">
-            <div class="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
+            <div class="<?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
               <!-- edit button -->
-              <button type="button" form="edit-user-info" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'ltr' : 'rtl' ?>" class="btn btn-primary text-capitalize py-1 fs-12" <?php if ($_SESSION['user_update'] == 0 && $user['UserID'] != $_SESSION['UserID']) {echo 'disabled';} ?> onclick="form_validation(this.form, 'submit')"><i class="bi bi-check-all"></i>&nbsp;<?php echo language('SAVE CHANGES', @$_SESSION['systemLang']) ?></button>
-              
-              <?php if ($user['isRoot'] != 1 && $user['TrustStatus'] != 1 && $user['job_title_id'] != 1 && $_SESSION['user_delete'] == 1) { ?>
+              <?php if ($_SESSION['sys']['user_update'] == 1 || $user['UserID'] == base64_decode($_SESSION['sys']['UserID'])) { ?>
+                <button type="button" form="edit-user-info" dir="<?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'ltr' : 'rtl' ?>" class="btn btn-primary text-capitalize py-1 fs-12" onclick="form_validation(this.form, 'submit')"><i class="bi bi-check-all"></i>&nbsp;<?php echo lang('SAVE') ?></button>
+              <?php } ?>
+
+              <?php if ($user['isRoot'] != 1 && $user['TrustStatus'] != 1 && $user['job_title_id'] != 1 && $_SESSION['sys']['user_delete'] == 1 && $user['UserID'] != base64_decode($_SESSION['sys']['UserID'])) { ?>
                 <!-- delete button -->
-                <button type="button" data-bs-toggle="modal" data-bs-target="#deleteUserModal" onclick="show_delete_user_modal(this)" data-username="<?php echo $user['UserName'] ?>" data-user-id="<?php echo $user['UserID'] ?>" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'ltr' : 'rtl' ?>" class="btn btn-outline-danger text-capitalize py-1 fs-12" <?php if ($_SESSION['user_delete'] == 0 && $user['UserID'] != $_SESSION['UserID']) {echo 'disabled';} ?>><i class="bi bi-trash"></i>&nbsp;<?php echo language('DELETE', @$_SESSION['systemLang']) ?></button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#deleteUserModal" onclick="show_delete_user_modal(this)" data-username="<?php echo $user['UserName'] ?>" data-user-id="<?php echo $user['UserID'] ?>" dir="<?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'ltr' : 'rtl' ?>" class="btn btn-outline-danger text-capitalize py-1 fs-12"><i class="bi bi-trash"></i>&nbsp;<?php echo lang('DELETE') ?></button>
               <?php } ?>
             </div>
           </div>
@@ -286,7 +292,7 @@ if ($user_id == $_SESSION['UserID'] || $_SESSION['user_show'] == 1) {
     <!-- include_once delete user module -->
     <?php include_once 'delete-user-modal.php' ?>
 <?php
-  } else { 
+  } else {
     // include_once no data founded module
     include_once $globmod . 'no-data-founded.php';
   }

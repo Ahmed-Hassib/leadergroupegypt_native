@@ -2,7 +2,7 @@
 // get client name
 $client_name = $_GET['client-name'];
 // company id
-$company_id = $_GET['company-id'];
+$company_id = base64_decode($_SESSION['sys']['company_id']);
 // update cliet name with %
 $client_name = '%'.$client_name.'%';
 // query statement

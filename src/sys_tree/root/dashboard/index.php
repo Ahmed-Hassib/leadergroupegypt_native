@@ -7,9 +7,9 @@ session_start();
 session_regenerate_id();
 // check if session is set
 // check username in SESSION variable
-if (isset($_SESSION['UserName'])) {
+if (isset($_SESSION['sys']['UserName'])) {
   // update version name in coockies
-  // setcookie('v_name', $_SESSION['curr_version_name'], time() + (365 * 24 * 60 * 60), "/");
+  // setcookie('v_name', $_SESSION['sys']['curr_version_name'], time() + (365 * 24 * 60 * 60), "/");
   setcookie('v_name', "", time() - (365 * 24 * 60 * 60), "/");
 
   // title page
@@ -31,25 +31,25 @@ if (isset($_SESSION['UserName'])) {
   // initial configration of system
   include_once str_repeat("../", $level) . "etc/init.php";
   // check if system write a log for login into system
-  if ($_SESSION['log'] == 0) {
+  if ($_SESSION['sys']['log'] == 0) {
     // log message
     $msg = "loginning to system";
-    create_logs($_SESSION['UserName'], $msg);
-    $_SESSION['log'] = 1;
+    create_logs($_SESSION['sys']['UserName'], $msg);
+    $_SESSION['sys']['log'] = 1;
   }
 ?>
   <!-- start home stats container -->
-  <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
+  <div class="container" dir="<?php echo $page_dir ?>">
     <!-- start stats -->
     <div class="stats">
       <!-- start new design -->
       <div class="mb-3 row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3 justify-content-sm-center align-items-center">
-        <div class="col-6 <?php if ($_SESSION['user_show'] == 0) {echo 'd-none';} ?>">
-          <div class="card card-stat <?php if ($_SESSION['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['systemLang'] == "ar" ? "card-effect-right":"card-effect-left"; } else { echo 'bg-primary';} ?> bg-gradient">
+        <div class="col-6 <?php if ($_SESSION['sys']['user_show'] == 0) {echo 'd-none';} ?>">
+          <div class="card card-stat <?php if ($_SESSION['sys']['system_theme'] == 2) { echo 'card-effect '; echo @$_SESSION['sys']['lang'] == "ar" ? "card-effect-right":"card-effect-left"; } else { echo 'bg-primary';} ?> bg-gradient">
             <div class="card-body">
               <i class="bi bi-building"></i>
               <a href="<?php echo $nav_up_level ?>companies/index.php?do=companies-list" class="stretched-link text-capitalize">
-                <?php echo language('THE COMPANIES', @$_SESSION['systemLang']) ?>
+                <?php echo lang('THE COMPANIES', @$_SESSION['sys']['lang']) ?>
               </a>
             </div>
             <?php $newEmpCounter = countRecords("`company_id`", "`companies`", "WHERE `joined_date` = 'CURRENT_DATE' AND `company_id` <> 1"); ?>

@@ -1,0 +1,6 @@
+.dashboard-content {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 40px 20px;
+}

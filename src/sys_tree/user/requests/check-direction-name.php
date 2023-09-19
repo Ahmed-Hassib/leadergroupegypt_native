@@ -2,9 +2,9 @@
 // get piece full name 
 $direction_name = $_GET['direction-name'];
 // check id if isset
-$id = isset($_GET['id']) && !empty($_GET['id']) ? $_GET['id'] : '';
+$id = isset($_GET['id']) && !empty($_GET['id']) ? base64_decode($_GET['id']) : '';
 // company id
-$company_id = $_SESSION['company_id'];
+$company_id = base64_decode($_SESSION['sys']['company_id']);
 
 if (!isset(($dir_obj))) {
   // create an object of Direction class

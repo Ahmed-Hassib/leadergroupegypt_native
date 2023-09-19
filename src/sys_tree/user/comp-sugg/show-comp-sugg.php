@@ -45,11 +45,11 @@ if (empty($errors)) {
   }
 
   // get data
-  $data = $comp_sugg_obj->get_all_data($type, $_SESSION['UserID'], $_SESSION['company_id'], $condition);
+  $data = $comp_sugg_obj->get_all_data($type, $_SESSION['sys']['UserID'], $_SESSION['sys']['company_id'], $condition);
   // check data count
   if ($data != null && count($data) > 0) {
 ?>
-<div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
+<div class="container" dir="<?php echo $page_dir ?>">
   <!-- start table container -->
   <div class="table-responsive-sm">
     <!-- strst malfunctions table -->
@@ -57,22 +57,22 @@ if (empty($errors)) {
       <thead class="primary text-capitalize">
         <tr>
           <th class="text-center" style="width: 20px">#</th>
-          <th class="text-center"><?php echo language('THE TYPE', @$_SESSION['systemLang']) ?></th>
-          <th class="text-center"><?php echo language('THE COMMENT', @$_SESSION['systemLang']) ?></th>
-          <th class="text-center"><?php echo language('ADDED DATE', @$_SESSION['systemLang']) ?></th>
-          <th class="text-center"><?php echo language('ADDED TIME', @$_SESSION['systemLang']) ?></th>
-          <th class="text-center"><?php echo language('CONTROL', @$_SESSION['systemLang']) ?></th>
+          <th class="text-center"><?php echo lang('THE TYPE', @$_SESSION['sys']['lang']) ?></th>
+          <th class="text-center"><?php echo lang('THE COMMENT', @$_SESSION['sys']['lang']) ?></th>
+          <th class="text-center"><?php echo lang('ADDED DATE', @$_SESSION['sys']['lang']) ?></th>
+          <th class="text-center"><?php echo lang('ADDED TIME', @$_SESSION['sys']['lang']) ?></th>
+          <th class="text-center"><?php echo lang('CONTROL', @$_SESSION['sys']['lang']) ?></th>
         </tr>
       </thead>
       <tbody>
         <?php foreach ($data as $index => $row) { ?>
           <tr>
             <td><?php echo ++$index; ?></td>
-            <td><?php echo $row['type'] == 0 ? language('COMPLAINT', @$_SESSION['systemLang']) : language('SUGGESTION', @$_SESSION['systemLang']) ?></td>
+            <td><?php echo $row['type'] == 0 ? lang('COMPLAINT', @$_SESSION['sys']['lang']) : lang('SUGGESTION', @$_SESSION['sys']['lang']) ?></td>
             <td><?php echo $row['message'] ?></td>
             <td><?php echo $row['added_date'] ?></td>
             <td><?php echo date_format(date_create($row['added_time']), 'h:i a') ?></td>
-            <td><?php echo language('CONTROL', @$_SESSION['systemLang']) ?></td>
+            <td><?php echo lang('CONTROL', @$_SESSION['sys']['lang']) ?></td>
           </tr>
         <?php } ?>
       </tbody>

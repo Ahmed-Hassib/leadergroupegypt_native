@@ -1,0 +1,328 @@
+/* under developing section */
+.under-developing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+}
+
+/* start dashboard */
+.card {
+  text-align: center;
+  position: relative;
+  height: 100%;
+  border: none;
+  border-radius: 10px;
+  background: #ffffffc9;
+  transition: 0.2s all ease-in-out;
+  /* box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5); */
+}
+
+.card.card-stat:hover {
+  transform: scale(1.05);
+}
+
+.card-effect-right::before {
+  border-radius: 0 10px 10px 0;
+}
+
+.card-effect-left::before {
+  border-radius: 10px 0 0 10px;
+}
+
+.card-effect::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  border-right: 10px solid #0d6efd;
+}
+
+.card-effect.card-mal::before {
+  border-right: 10px solid rgb(220, 53, 69);
+}
+
+.card-effect.card-comb::before {
+  border-right: 10px solid rgb(25, 135, 84);
+}
+
+.card-header {
+  text-align: left;
+}
+
+.card-title {
+  font-size: 1.25rem !important;
+}
+
+.card-body {
+  position: relative;
+}
+
+.stats .card-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 4rem;
+}
+
+.card-body>i {
+  position: relative;
+  font-size: 4rem;
+  display: block;
+}
+
+.card-body>i::after {
+  content: "";
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.card span a.stretched-link {
+  text-decoration: none;
+  font-size: 1.25rem;
+}
+
+.card-footer {
+  margin: auto;
+  width: 80%;
+  background-color: unset;
+  color: #fff;
+}
+
+.icon-container {
+  font-size: 30px;
+  padding: 1rem;
+  background: #0d6efd;
+  border-radius: 16px;
+  width: 75px;
+  height: 75px;
+  position: absolute;
+  top: -24px;
+  color: #fff;
+}
+
+.icon-container .num {
+  font-size: 20px;
+}
+
+.icon-container-left {
+  left: 15px;
+}
+
+.icon-container-right {
+  right: 15px;
+}
+
+/************/
+
+.modal-header .btn-close.btn-close-right {
+  margin: -.5rem -.5rem -.5rem auto;
+}
+
+.modal-header .btn-close.btn-close-left {
+  margin: -.5rem auto -.5rem -.5rem;
+}
+
+/* for close button in alerts */
+.alert .btn-close {
+  position: absolute;
+}
+
+.alert .btn-close.btn-close-right {
+  right: 10px;
+}
+
+.alert .btn-close.btn-close-left {
+  left: 10px;
+  top: 10px;
+}
+
+/* for all alerts */
+.alert-flash-container {
+  margin: auto !important;
+  position: absolute !important;
+  top: 10px !important;
+  right: 0;
+  width: auto !important;
+  z-index: 99999 !important;
+  transition: all 0.3s ease;
+}
+
+
+.alert-flash-container.alert-flash-web {
+  top: 90px !important;
+  right: 300px;
+}
+
+.sidebar-menu.close~.main-content .alert-flash-container.alert-flash-web {
+  right: 100px;
+}
+
+.alert-flash-container>.alert-flash-status {
+  min-height: 50px !important;
+  max-width: 500px !important;
+  padding-left: 4rem !important;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.7) !important;
+  overflow: hidden !important;
+}
+
+.alert-flash-status>.alert-progress {
+  position: absolute !important;
+  bottom: 0 !important;
+  right: 0 !important;
+  height: 5px !important;
+  width: 100%;
+  background: #0d6efd !important;
+  transition: all .5s linear !important;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+
+/* Firefox */
+input[type=number] {
+  appearance: textfield !important;
+  -o-appearance: textfield !important;
+  -moz-appearance: textfield !important;
+  -webkit-appearance: textfield !important;
+}
+
+.form-control.is-valid-right,
+.form-control.is-invalid-right {
+  background-position: right calc(.375em + .1875rem) center !important;
+}
+
+.form-control.is-valid-left,
+.form-control.is-invalid-left {
+  background-position: left calc(.375em + .1875rem) center !important;
+}
+
+.form-floating>.form-select~label {
+  background-color: #fff !important;
+  transform: scale(.85) translateY(-1.5rem) translateX(15%) !important;
+}
+
+.form-floating>.form-control-plaintext~label,
+.form-floating>.form-control:focus~label,
+.form-floating>.form-control:not(:placeholder-shown)~label {
+  transform: scale(.85) translateY(-1.75rem) translateX(15%) !important;
+  background-color: #fff !important;
+}
+
+.form-select.is-invalid:not([multiple]):not([size]),
+.form-select.is-invalid:not([multiple])[size="1"],
+.was-validated .form-select:invalid:not([multiple]):not([size]),
+.was-validated .form-select:invalid:not([multiple])[size="1"],
+.form-select.is-valid:not([multiple]):not([size]),
+.form-select.is-valid:not([multiple])[size="1"],
+.was-validated .form-select:valid:not([multiple]):not([size]),
+.was-validated .form-select:valid:not([multiple])[size="1"] {
+  background-position: right .75rem center,
+    center right 98% !important;
+}
+
+.form-floating>.form-control,
+.form-floating>.form-control-plaintext {
+  padding: 0.75rem !important;
+}
+
+.form-floating>textarea.form-control {
+  padding: 1.5rem 0.75rem !important;
+}
+
+.form-floating>.form-control,
+.form-floating>.form-control-plaintext,
+.form-floating>.form-select {
+  height: 2.75rem !important;
+  line-height: 1.5 !important;
+}
+
+.form-floating>textarea.form-control {
+  height: 120px !important;
+}
+
+.form-floating>.form-control-plaintext:focus,
+.form-floating>.form-control-plaintext:not(:placeholder-shown),
+.form-floating>.form-control:focus,
+.form-floating>.form-control:not(:placeholder-shown),
+.form-floating>.form-select {
+  padding-top: unset !important;
+  padding-bottom: unset !important;
+}
+
+.form-floating>textarea.form-control:not(:placeholder-shown) {
+  padding-top: 1.5rem !important;
+}
+
+.form-floating>label {
+  padding: 0 0.5rem !important;
+  top: 10px !important;
+  left: unset !important;
+  right: unset !important;
+  width: fit-content !important;
+  height: auto !important;
+  opacity: 1 !important;
+}
+
+.form-floating.form-floating-left>label {
+  left: 10px !important;
+}
+
+.form-floating.form-floating-right>label {
+  right: 10px !important;
+}
+
+/* for form check inline */
+.form-check-inline {
+  width: fit-content !important;
+}
+
+/* for floating buttons */
+.floating-button {
+  position: absolute;
+  top: 0;
+}
+
+.floating-button-right {
+  right: 0;
+}
+
+.floating-button-left {
+  left: 0;
+}
+
+.astrisk {
+  position: absolute;
+  top: 10px;
+  font-weight: 800;
+}
+
+.astrisk-left {
+  left: 30px;
+}
+
+.astrisk-right {
+  right: 50px;
+}
+
+/* for orders */
+.order-6 {
+  order: 6 !important;
+}
+
+.order-7 {
+  order: 7 !important;
+}
+
+.order-8 {
+  order: 8 !important;
+}
+
+.order-9,
+.order-last {
+  order: 9 !important;
+}

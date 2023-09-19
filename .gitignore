@@ -1,6 +1,9 @@
 # ignoring all text files
 *.txt
 
+# ignore wala yhmk
+wla_yhmk/
+
 # ignoring all docs files
 docs/
 

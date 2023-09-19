@@ -1,0 +1,27 @@
+.form-content.form-content__content.add-img {
+  align-items: baseline;
+}
+
+.form-content.form-content__content.add-img img {
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 100%;
+  height: 400px;
+}
+
+.add-img .img-control {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.img-container-preview {
+  text-align: center;
+}
+
+.img-thumbnail {
+  width: 150px;
+}

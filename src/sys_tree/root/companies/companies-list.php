@@ -1,4 +1,4 @@
-<div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
+<div class="container" dir="<?php echo $page_dir ?>">
   <!-- start header -->
   <header class="header mb-3">
     <div class="hstack gap-2">
@@ -7,17 +7,17 @@
         <!-- Button trigger modal -->
         <a class="btn btn-outline-primary fs-12 py-1" href="?do=add-new-company">
           <i class="bi bi-pencil d-sm-block d-md-none"></i>
-          <span class="d-none d-md-block"><?php echo language("ADD NEW COMPANY", @$_SESSION['systemLang']) ?></span>
+          <span class="d-none d-md-block"><?php echo lang("ADD NEW COMPANY", @$_SESSION['sys']['lang']) ?></span>
         </a>
       </div>
       <div class="hstack gap-2">
         <div>
           <span class="badge bg-danger p-2 d-inline-block"></span>
-          <span><?php echo language('LICENSE EXPIRED', @$_SESSION['systemLang']) ?></span>
+          <span><?php echo lang('LICENSE EXPIRED', @$_SESSION['sys']['lang']) ?></span>
         </div>
         <div>
           <span class="badge bg-success p-2 d-inline-block"></span>
-          <span><?php echo language('LICENSE ACTIVATED', @$_SESSION['systemLang']) ?></span>
+          <span><?php echo lang('LICENSE ACTIVATED', @$_SESSION['sys']['lang']) ?></span>
         </div>
       </div>
     </div>
@@ -31,7 +31,7 @@
         <i class="carousel-control-prev-icon"></i>
       </button>
       <!-- scroll right button -->
-      <button type="button" role="button" class="scroll-button scroll-next <?php echo $_SESSION['systemLang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
+      <button type="button" role="button" class="scroll-button scroll-next <?php echo $_SESSION['sys']['lang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
         <i class="carousel-control-next-icon"></i>
       </button>
     </div>
@@ -41,15 +41,15 @@
         <tr>
           <th class="d-none">#</th>
           <th style="max-width: 40px">#</th>
-          <th><?php echo language('STATUS', @$_SESSION['systemLang']) ?></th>
-          <th><?php echo language('COMPANY NAME', @$_SESSION['systemLang']) ?></th>
-          <th><?php echo language('MANAGER NAME', @$_SESSION['systemLang']) ?></th>
-          <th><?php echo language('PHONE', @$_SESSION['systemLang']) ?></th>
-          <th><?php echo language('APP VERSION', @$_SESSION['systemLang']) ?></th>
-          <th><?php echo language('JOINED DATE', @$_SESSION['systemLang']) ?></th>
-          <th><?php echo language('EXPIRE DATE', @$_SESSION['systemLang']) ?></th>
+          <th><?php echo lang('STATUS', @$_SESSION['sys']['lang']) ?></th>
+          <th><?php echo lang('COMPANY NAME', @$_SESSION['sys']['lang']) ?></th>
+          <th><?php echo lang('MANAGER NAME', @$_SESSION['sys']['lang']) ?></th>
+          <th><?php echo lang('PHONE', @$_SESSION['sys']['lang']) ?></th>
+          <th><?php echo lang('APP VERSION', @$_SESSION['sys']['lang']) ?></th>
+          <th><?php echo lang('JOINED DATE', @$_SESSION['sys']['lang']) ?></th>
+          <th><?php echo lang('EXPIRE DATE', @$_SESSION['sys']['lang']) ?></th>
           <th style="width: 200px">Progress</th>
-          <th style="min-width: 100px"><?php echo language('CONTROL', @$_SESSION['systemLang']) ?></th>
+          <th style="min-width: 100px"><?php echo lang('CONTROL', @$_SESSION['sys']['lang']) ?></th>
         </tr>
       </thead>
       <tbody id="companies-table">
@@ -87,9 +87,9 @@
             <td><?php echo ++$key; ?></td>
             <td class="text-center">
               <?php if ($is_ended == true) { ?>
-                <span class="badge bg-danger p-2 d-inline-block" title="<?php echo language('LICENSE EXPIRED', @$_SESSION['systemLang']) ?>"></span>
+                <span class="badge bg-danger p-2 d-inline-block" title="<?php echo lang('LICENSE EXPIRED', @$_SESSION['sys']['lang']) ?>"></span>
               <?php } else { ?>
-                <span class="badge bg-success p-2 d-inline-block" title="<?php echo language('LICENSE ACTIVATED', @$_SESSION['systemLang']) ?>"></span>
+                <span class="badge bg-success p-2 d-inline-block" title="<?php echo lang('LICENSE ACTIVATED', @$_SESSION['sys']['lang']) ?>"></span>
               <?php }?>
             </td>
             <!-- company name -->
@@ -100,14 +100,14 @@
             <td><?php echo $company['company_manager'] ?></td>
             <!-- company phone -->
             <td class="<?php echo !empty($company['company_phone']) ? '' : 'text-danger fw-bold' ?>">
-              <?php echo !empty($company['company_phone']) ? $company['company_phone'] : language('NOT ASSIGNED', @$_SESSION['systemLang']) ?>
+              <?php echo !empty($company['company_phone']) ? $company['company_phone'] : lang('NOT ASSIGNED', @$_SESSION['sys']['lang']) ?>
             </td>
             <!-- company version -->
             <td>
               <?php echo $comp_obj->select_specific_column("`v_name`", "`versions`", "WHERE `v_id` = " . $company['version'])[0]['v_name']; ?>
             </td>
             <!-- company joined date -->
-            <td><?php echo !empty($company['joined_date']) ? $company['joined_date'] : language('NOT ASSIGNED', @$_SESSION['systemLang']) ?></td>
+            <td><?php echo !empty($company['joined_date']) ? $company['joined_date'] : lang('NOT ASSIGNED', @$_SESSION['sys']['lang']) ?></td>
             <!-- company expire date -->
             <td>
               <?php echo $expire; ?>

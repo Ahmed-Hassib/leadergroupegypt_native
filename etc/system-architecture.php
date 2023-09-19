@@ -1,8 +1,10 @@
 <?php
+
 /**
  * 
  */
-function get_page_dependencies($page_role, $file_type) {
+function get_page_dependencies($page_role, $file_type)
+{
   // include_once "app-routes.php";
   // website files
   $project_files_archeticture = [
@@ -10,9 +12,16 @@ function get_page_dependencies($page_role, $file_type) {
     'global' => [
       'css' => [
         '1' => 'normalize.css',
-        '2' => 'animation.css'
+        '2' => 'animation.css',
+        '3' => 'global.css',
+        '4' => 'sidebar-menu.css',
       ],
-      'js' => [],
+      'js' => [
+        '1' => 'global.js',
+        '2' => 'lang.js',
+        '3' => 'validation.js',
+        '4' => 'sidebar-menu.js',
+      ],
       'node' => [
         'css' => [
           '1' => 'bootstrap/dist/css/bootstrap.min.css',
@@ -20,7 +29,7 @@ function get_page_dependencies($page_role, $file_type) {
         ],
         'js' => [
           '1' => 'jquery/dist/jquery.min.js',
-          '2' => 'bootstrap/dist/js/bootstrap.min.js',
+          '2' => 'bootstrap/dist/js/bootstrap.bundle.min.js',
         ]
       ],
       'fonts' => [
@@ -56,14 +65,12 @@ function get_page_dependencies($page_role, $file_type) {
       ],
       'fonts' => []
     ],
-    
-    
+
+
     // for webite files
     'website' => [
-      'css' => [
-      ],
-      'js' => [
-      ],
+      'css' => [],
+      'js' => [],
       'node' => [
         'css' => [],
         'js' => []
@@ -72,7 +79,7 @@ function get_page_dependencies($page_role, $file_type) {
         '1' => 'cairo.css'
       ]
     ],
-      
+
     // for webite global files
     'website_global' => [
       'css' => [
@@ -87,11 +94,14 @@ function get_page_dependencies($page_role, $file_type) {
         'js' => []
       ],
       'fonts' => [],
-      'navbar' => 'website-navbar.php',
+      'navbar' => [
+        'root' => 'root-navbar.php',
+        'user' => 'user-navbar.php'
+      ],
       'footer' => 'website-footer.php',
     ],
-    
-    
+
+
     // for website login
     'website_login' => [
       'css' => [
@@ -104,11 +114,11 @@ function get_page_dependencies($page_role, $file_type) {
       ],
       'fonts' => []
     ],
-    
-    // for website signup
-    'website_signup' => [
+
+    // for website login
+    'website_dash' => [
       'css' => [
-        '1' => "signup.css"
+        '1' => 'dashboard.css'
       ],
       'js' => [],
       'node' => [
@@ -117,7 +127,82 @@ function get_page_dependencies($page_role, $file_type) {
       ],
       'fonts' => []
     ],
+
+    // for website login
+    'website_sections' => [
+      'css' => [
+        '1' => 'sections.css'
+      ],
+      'js' => [
+        '1' => 'sections.js'
+      ],
+      'node' => [
+        'css' => [],
+        'js' => []
+      ],
+      'fonts' => []
+    ],
     
+    // for website gallery
+    'website_gallery' => [
+      'css' => [
+        '1' => 'gallery.css'
+      ],
+      'js' => [
+        '1' => 'gallery.js'
+      ],
+      'node' => [
+        'css' => [],
+        'js' => []
+      ],
+      'fonts' => []
+    ],
+
+    // for website links
+    'website_links' => [
+      'css' => [
+        '1' => 'links.css'
+      ],
+      'js' => [
+        '1' => 'links.js'
+      ],
+      'node' => [
+        'css' => [],
+        'js' => []
+      ],
+      'fonts' => []
+    ],
+    
+    // for website about
+    'website_about' => [
+      'css' => [
+        // '1' => 'about.css'
+      ],
+      'js' => [
+        '1' => 'about.js'
+      ],
+      'node' => [
+        'css' => [],
+        'js' => []
+      ],
+      'fonts' => []
+    ],
+    
+    // for website services
+    'website_services' => [
+      'css' => [
+        '1' => 'services.css'
+      ],
+      'js' => [
+        '1' => 'services.js'
+      ],
+      'node' => [
+        'css' => [],
+        'js' => []
+      ],
+      'fonts' => []
+    ],
+
     // for website signup
     'website_desc' => [
       'css' => [
@@ -135,12 +220,10 @@ function get_page_dependencies($page_role, $file_type) {
     'sys_tree_global' => [
       'css' => [
         '1' => 'global.css',
-        '2' => 'sidebar-menu.css',
         '3' => 'footer.css',
       ],
       'js' => [
         '1' => 'global.js',
-        '2' => 'sidebar-menu.js',
         '3' => 'validation.js',
         '4' => 'history.js',
       ],
@@ -158,7 +241,7 @@ function get_page_dependencies($page_role, $file_type) {
         'root' => 'root-navbar.php'
       ]
     ],
-    
+
     // for blog login
     'sys_tree_login' => [
       'css' => [
@@ -169,9 +252,9 @@ function get_page_dependencies($page_role, $file_type) {
         'css' => [],
         'js' => []
       ],
-      'fonts' => [],  
+      'fonts' => [],
     ],
-    
+
     'sys_tree_signup' => [
       'css' => [
         '1' => 'signup.css'
@@ -183,9 +266,9 @@ function get_page_dependencies($page_role, $file_type) {
         'css' => [],
         'js' => []
       ],
-      'fonts' => [],  
+      'fonts' => [],
     ],
-    
+
     'sys_tree_user' => [
       'css' => [
         '1' => 'users.css',
@@ -197,7 +280,7 @@ function get_page_dependencies($page_role, $file_type) {
         'css' => [],
         'js' => []
       ],
-      'fonts' => [],  
+      'fonts' => [],
     ],
 
     'sys_tree_devices' => [
@@ -209,9 +292,9 @@ function get_page_dependencies($page_role, $file_type) {
         'css' => [],
         'js' => []
       ],
-      'fonts' => [],  
+      'fonts' => [],
     ],
-    
+
     'sys_tree_pieces' => [
       'css' => [],
       'js' => [
@@ -222,9 +305,9 @@ function get_page_dependencies($page_role, $file_type) {
         'css' => [],
         'js' => []
       ],
-      'fonts' => [],  
+      'fonts' => [],
     ],
-    
+
     'sys_tree_clients' => [
       'css' => [],
       'js' => [
@@ -234,7 +317,7 @@ function get_page_dependencies($page_role, $file_type) {
         'css' => [],
         'js' => []
       ],
-      'fonts' => [],  
+      'fonts' => [],
     ],
 
     'sys_tree_dir' => [
@@ -248,9 +331,9 @@ function get_page_dependencies($page_role, $file_type) {
         'css' => [],
         'js' => []
       ],
-      'fonts' => [],  
+      'fonts' => [],
     ],
-    
+
     'sys_tree_malfunction' => [
       'css' => [
         '1' => 'malfunction.css',
@@ -263,9 +346,9 @@ function get_page_dependencies($page_role, $file_type) {
         'css' => [],
         'js' => []
       ],
-      'fonts' => [],  
+      'fonts' => [],
     ],
-    
+
     'sys_tree_combination' => [
       'css' => [
         '1' => 'combination.css',
@@ -278,19 +361,21 @@ function get_page_dependencies($page_role, $file_type) {
         'css' => [],
         'js' => []
       ],
-      'fonts' => [],  
+      'fonts' => [],
     ],
-    
+
     'sys_tree_dash' => [
-      'css' => [],
+      'css' => [
+        '1' => 'dashboard.css'
+      ],
       'js' => [],
       'node' => [
         'css' => [],
         'js' => []
       ],
-      'fonts' => [],  
+      'fonts' => [],
     ],
-    
+
     'sys_tree_settings' => [
       'css' => [
         '1' => 'settings.css'
@@ -302,9 +387,9 @@ function get_page_dependencies($page_role, $file_type) {
         'css' => [],
         'js' => []
       ],
-      'fonts' => [],  
+      'fonts' => [],
     ],
-    
+
     'sys_tree_comp' => [
       'css' => [],
       'js' => [],
@@ -324,7 +409,7 @@ function get_page_dependencies($page_role, $file_type) {
         'css' => [],
         'js' => []
       ],
-      'fonts' => [],  
+      'fonts' => [],
     ],
 
 
@@ -344,7 +429,7 @@ function get_page_dependencies($page_role, $file_type) {
       'navbar' => 'blog-navbar.php',
       'footer' => 'blog-footer.php'
     ],
-    
+
     // for blog
     'blog' => [
       'css' => [
@@ -360,7 +445,7 @@ function get_page_dependencies($page_role, $file_type) {
       ],
       'fonts' => [],
     ],
-    
+
     // for blog login
     'blog_login' => [
       'css' => [
@@ -373,9 +458,9 @@ function get_page_dependencies($page_role, $file_type) {
         'css' => [],
         'js' => []
       ],
-      'fonts' => [],  
+      'fonts' => [],
     ],
-    
+
     // for blog signup
     'blog_signup' => [
       'css' => [],
@@ -384,7 +469,7 @@ function get_page_dependencies($page_role, $file_type) {
         'css' => [],
         'js' => []
       ],
-      'fonts' => [],  
+      'fonts' => [],
     ],
   ];
   // returns files of the given page role

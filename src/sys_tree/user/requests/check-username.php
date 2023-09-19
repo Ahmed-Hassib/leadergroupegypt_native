@@ -5,7 +5,7 @@ $username = isset($_GET['username']) ? $_GET['username'] : '';
 $query = "SELECT count(`UserID`) FROM `users` WHERE `UserName` = ? AND `company_id` = ?";
 // prepare statement
 $stmt = $con->prepare($query);
-$stmt->execute(array($username, $_SESSION['company_id']));
+$stmt->execute(array($username, base64_decode($_SESSION['sys']['company_id'])));
 // get all rows
 $result = $stmt->fetchColumn();
 // 

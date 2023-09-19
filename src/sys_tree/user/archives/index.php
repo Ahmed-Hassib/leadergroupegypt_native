@@ -23,7 +23,7 @@ $is_contain_table = true;
 // initial configration of system
 include_once str_repeat("../", $level) . "etc/init.php";
 
-if (isset($_SESSION['UserName']) && $_SESSION['isLicenseExpired'] == 0 && $_SESSION['archive_show'] == 1) {
+if (isset($_SESSION['sys']['UserName']) && $_SESSION['sys']['isLicenseExpired'] == 0 && $_SESSION['sys']['archive_show'] == 1) {
     
     // check if Get request do is set or not
     $query = isset($_GET['do']) && !empty($_GET['do']) ? $_GET['do'] : 'manage';

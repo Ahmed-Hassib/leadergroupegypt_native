@@ -1,22 +1,17 @@
 
-<?php if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
+<?php if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // get company id
-  $company_id = isset($_POST['company-id']) && !empty($_POST['company-id']) ? $_POST['company-id'] : '';
+  $company_id = isset($_POST['company-id']) && !empty($_POST['company-id']) ? base64_decode($_POST['company-id']) : '';
   // get back flag value
   $is_back = isset($_GET['back']) && !empty($_GET['back']) ? 'back' : null;
   // check if object of PiecesTypes class is created or not
-  if (!isset($dev_company_obj)) {
-    // create an object of PiecesTypes class
-    $dev_company_obj = new ManufuctureCompanies();
-  }
+  $dev_company_obj = !isset($dev_company_obj) ? new ManufuctureCompanies() : $dev_company_obj;
   // check if name exist or not
   $is_exist = $dev_company_obj->is_exist("`man_company_id`", "`manufacture_companies`", $company_id);
   // check if company is exist or not
   if (!empty($company_id) && $is_exist == true) {
-    if (!isset($dev_obj)) {
-      // create an object of Devices clas
-      $dev_obj = new Devices();
-    }
+    // create an object of Devices clas
+    $dev_obj = !isset($dev_obj) ? new Devices() : $dev_obj;
     // get all devices of this company
     $company_devices_info = $dev_obj->get_all_company_devices($company_id);
     // counter
@@ -25,10 +20,8 @@
     $devices_data = $company_devices_info[1];
     // check if it not empty
     if (!empty($devices_data)) {
-      if (!isset($model_obj)) {
-        // create an object of Model class
-        $model_obj = new Models();
-      }
+      // create an object of Model class
+      $model_obj = !isset($model_obj) ? new Models() : $model_obj;
       // loop on it to delete all devices` models
       foreach ($devices_data as $key => $device) {
         // delete all models of this device
@@ -39,13 +32,17 @@
     }
     // call delete_man_company function
     $dev_company_obj->delete_man_company($company_id);
-    
-    // prepare flash session variables
-    $_SESSION['flash_message'] = 'COMPANY WAS DELETED SUCCESSFULLY';
-    $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
-    $_SESSION['flash_message_class'] = 'success';
-    $_SESSION['flash_message_status'] = true;
-
+    // messages
+    $messages = array('COMPANY DELETED', 'DEVS DELETED', 'MODELS DELETED');
+    // loop on message
+    foreach ($messages as $key => $message) {
+      // prepare flash session variables
+      $_SESSION['flash_message'][$key] = $message;
+      $_SESSION['flash_message_icon'][$key] = 'bi-check-circle-fill';
+      $_SESSION['flash_message_class'][$key] = 'success';
+      $_SESSION['flash_message_status'][$key] = true;
+      $_SESSION['flash_message_lang_file'][$key] = 'pieces';
+    }
     // redirect to the previous page
     redirect_home(null, $is_back, 0);
   } else {

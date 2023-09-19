@@ -1,6 +1,7 @@
-<?php if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // get direction id
-  $direction_id = isset($_POST['deleted-dir-id']) && !empty($_POST['deleted-dir-id']) ? $_POST['deleted-dir-id'] : '';
+  $direction_id = isset($_POST['deleted-dir-id']) && !empty($_POST['deleted-dir-id']) ? base64_decode($_POST['deleted-dir-id']) : '';
   // check if dir object was created or not
   if (!isset($dir_obj)) {
     // create an object of Direction class
@@ -11,29 +12,32 @@
   // direction name validation
   if (!empty($direction_id) && $is_exist == true) {
     // count pieces on this direction
-    $pieces_counter = $dir_obj->count_records("`id`", "`pieces_info`", "WHERE `direction_id` = $direction_id AND `company_id` = ".$_SESSION['company_id']);
+    $pieces_counter = $dir_obj->count_records("`id`", "`pieces_info`", "WHERE `direction_id` = $direction_id AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
     // check if direction name is exist or not
     if ($pieces_counter > 0) {
       // prepare flash session variables
-      $_SESSION['flash_message'] = 'CANNOT DELETE THIS DIRECTION BECAUSE THIS DIR CONTAINS ONE PIECE OR MORE';
+      $_SESSION['flash_message'] = 'CANNOT DELETE';
       $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
       $_SESSION['flash_message_class'] = 'danger';
       $_SESSION['flash_message_status'] = false;
+      $_SESSION['flash_message_lang_file'] = 'directions';
     } else {
       // call delete direction function
       $dir_obj->delete_direction($direction_id);
       // prepare flash session variables
-      $_SESSION['flash_message'] = 'DIRECTION DELETED SUCCESSFULLY';
+      $_SESSION['flash_message'] = 'DELETED';
       $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
       $_SESSION['flash_message_class'] = 'success';
       $_SESSION['flash_message_status'] = true;
+      $_SESSION['flash_message_lang_file'] = 'directions';
     }
   } else {
     // prepare flash session variables
-    $_SESSION['flash_message'] = 'DIRECTION NAME CANNOT BE EMPTY';
+    $_SESSION['flash_message'] = 'DIRECTION ERROR';
     $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
     $_SESSION['flash_message_class'] = 'warning';
     $_SESSION['flash_message_status'] = false;
+    $_SESSION['flash_message_lang_file'] = 'directions';
   }
   // redirect to previous page
   redirect_home(null, "back", 0);

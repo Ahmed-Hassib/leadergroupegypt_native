@@ -1,25 +1,23 @@
 <!-- start home stats container -->
-<div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-  <div class="mb-3 row row-cols-sm-1 align-items-stretch g-3 ">
+<div class="container" dir="<?php echo $page_dir ?>">
+  <div class="settings-container">
     <!-- company image info -->
-    <div class="col-sm-12">
-      <?php include_once 'company-image.php' ?>
-    </div>
-  </div>
-  <div class="mb-3 row row-cols-sm-1 row-cols-md-2 align-items-stretch g-3 ">
+    <?php include_once 'company-image.php' ?>
+
     <!-- system info -->
-    <div class="col-12">
-      <?php include_once 'system-info.php' ?>
-    </div>
-    
+    <?php include_once 'system-info.php' ?>
+
     <!-- system language setting -->
-    <div class="col-12">
-      <?php include_once 'system-lang.php' ?>
-    </div>
-    
+    <?php include_once 'system-lang.php' ?>
+
+    <?php
+    if (base64_decode($_SESSION['sys']['job_title_id']) == 1 || $_SESSION['sys']['change_mikrotik'] == 1) {
+      // mikrotek info
+      include_once 'mikrotik-info.php';
+    }
+    ?>
+
     <!-- other setting -->
-    <div class="col-12">
-      <?php include_once 'others.php' ?>
-    </div>
+    <?php include_once 'others.php' ?>
   </div>
 </div>

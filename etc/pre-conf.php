@@ -1,30 +1,28 @@
 <?php
-
-// connect to database from configration file
-// require_once 'server-conf.php';
-require_once 'local-conf.php';
 // developer name
 $developerName = "ahmed hassib";
 // sponsor company
 $sponsorCompany = "leader group";
 // company name
 $appName = "sys tree";
-// is app suspended
-$isDeveloping = false;
-// get user version of system
-$curr_version = isset($_SESSION['curr_version_name']) ? $_SESSION['curr_version_name'] : "v1.0.3";
-
-// include routes file
-require_once "app-routes.php";
-require_once "system-architecture.php";
-
-// include_once the important files
-include_once $func   . "functions.php";
-include_once $lan    . "language.php";
 
 // check if sys tree pages
-if (isset($is_sys_tree_page) && $is_sys_tree_page == true) {
-  // include mikrotic api
-  include_once $func . "api.php";
+if ($is_developing == false && isset($is_sys_tree_page) && $is_sys_tree_page == true) {
+  // check mikrotik info
+  if (isset($_SESSION['sys']['mikrotik']) && !empty($_SESSION['sys']['mikrotik']['ip']) && !empty($_SESSION['sys']['mikrotik']['port']) && !empty($_SESSION['sys']['mikrotik']['username']) && !empty($_SESSION['sys']['mikrotik']['password'])) {
+    // include mikrotic api
+    include_once $func . "api.php";
+    // get mikrotek data
+    $mikrotik_ip = $_SESSION['sys']['mikrotik']['ip'];
+    $mikrotik_port = $_SESSION['sys']['mikrotik']['port'];
+    $mikrotik_username = $_SESSION['sys']['mikrotik']['username'];
+    $mikrotik_password = $_SESSION['sys']['mikrotik']['password'];
+    // create an object of mikrotek api
+    $api_obj = new RouterosAPI();
+  }
 }
 
+// include_once header in all pages expect pages include_once no_header
+if (!isset($no_header)) {
+  include_once $tpl . "header.php";
+}

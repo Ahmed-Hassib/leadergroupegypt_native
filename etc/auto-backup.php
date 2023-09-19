@@ -1,12 +1,10 @@
 <?php
 
-if (isset($_SESSION['UserID'])) {
-  if (!isset($db_obj)) {
-    // create an object of Database class
-    $db_obj = new Database();
-  }
+if (isset($_SESSION['sys']) || isset($_SESSION['website'])) {
+  // create an object of Database class
+  $db_obj = !isset($db_obj) ? new Database() : $db_obj;
   // get latest backup details
-  $latest_backup = $db_obj->get_latest_records("*", "`backups`", "WHERE `backup_date` = '".get_date_now()."'", "`id`", 1);
+  $latest_backup = $db_obj->get_latest_records("*", "`backups`", "WHERE `backup_date` = '" . get_date_now() . "'", "`id`", 1);
   // check the count
   if (count($latest_backup) == 0 && empty($latest_backup)) {
     // make flag false;
@@ -22,4 +20,3 @@ if (isset($_SESSION['UserID'])) {
     $db_backup_file_name = null;
   }
 }
-?>

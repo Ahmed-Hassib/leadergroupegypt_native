@@ -4,7 +4,7 @@ $type = isset($_GET['type']) ? intval($_GET['type']) : -1;
 // // get status
 // $status = isset($_GET['status']) ? $_GET['status'] : -1;
 // get userid
-$userid = $_SESSION['UserID'];
+$userid = $_SESSION['sys']['UserID'];
 // check if CompSugg class object is created
 if (!isset($comp_sugg_obj)) {
   $comp_sugg_obj = new CompSugg();

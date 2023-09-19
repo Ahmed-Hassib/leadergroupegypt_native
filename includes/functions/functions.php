@@ -6,14 +6,14 @@
  * Contain global variable can be access from anywhere
  * get title page from the page and display it
  */
-function get_page_tilte()
+function get_page_tilte($lang_file)
 {
   global $page_title; // page title
   // check if set or not
   if (isset($page_title)) {
-    echo strtoupper(language(strtoupper($page_title), isset($_SESSION['systemLang']) ? $_SESSION['systemLang'] : "ar"));
+    echo strtoupper(lang(strtoupper($page_title)));
   } else {
-    echo language('NOT ASSIGNED', isset($_SESSION['systemLang']) ? $_SESSION['systemLang'] : "ar");
+    echo lang('NOT ASSIGNED');
   }
 }
 
@@ -42,7 +42,7 @@ function redirect_home($msg = null, $url = null, $seconds = 3)
     echo $msg;
   }
   // show redirect messgae
-  echo "<div dir='" . ($_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr') . "' >" . language('YOU WILL BE AUTOMATICALLY REDIRECTED AFTER', @$_SESSION['systemLang']) . " $seconds " . language('SECOND', @@$_SESSION['systemLang']) . "</div>";
+  echo "<div dir='" . (@$_SESSION['sys']['lang'] == 'ar' ? 'rtl' : 'ltr') . "' >" . lang('REDIRECT AUTO') . " $seconds " . lang('SECOND') . "</div>";
   // exit
   exit();
 }
@@ -74,7 +74,7 @@ function build_direction_tree($arr, $parent, $level = 0, $prelevel = -1, $nav_up
         echo "</li>";
       }
 
-      $node_url = str_repeat("../", $nav_up_level) . "pieces/index.php?do=show-piece&dir-id=" . $data['direction_id'] . "&src-id=" . $data['id'];
+      $node_url = str_repeat("../", $nav_up_level) . "pieces/index.php?do=show-piece&dir-id=" . base64_encode($data['direction_id']) . "&src-id=" . base64_encode($data['id']);
 
       // show data
       echo "<li>";
@@ -84,7 +84,7 @@ function build_direction_tree($arr, $parent, $level = 0, $prelevel = -1, $nav_up
         echo "<span class='ping-preloader ping-preloader-table position-relative'>";
         echo "<span class='ping-spinner ping-spinner-table spinner-grow spinner-border'></span>";
         echo "</span>";
-        echo "<span class='ping-status'></span>";                    
+        echo "<span class='ping-status'></span>";
         echo "<span class='pcs-ip' data-pcs-ip=" . $data['ip'] . " id=" . $data['ip'] . ">" . $data['full_name'] . "<br>" . $data['ip'] . "</span>";
         echo '</span>';
       } else {
@@ -169,7 +169,7 @@ function create_logs($username, $msg, $type = 1)
   $log = "[" . $username . "@" . Date('d/m/Y h:ia') . " ~ " . $typeName . " msg]:" . $msg . ".\n";
   // location
   $DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
-  $fileLocation = $DOCUMENT_ROOT . "data/log/";
+  $fileLocation = $DOCUMENT_ROOT . "/app/data/log/";
   // check the fileLocation
   if (!file_exists($fileLocation) && !is_dir($fileLocation)) {
     mkdir($fileLocation);
@@ -287,4 +287,150 @@ function ping($ip, $c = 1)
     "output" => $output,
     "status" => $status
   );
+}
+
+/**
+ * function prepare_pcs_datatables v1
+ * is used to prepared data and remove all key numbers
+ * accepts 1 param => all_data
+ */
+function prepare_pcs_datatables($all_data, $lang_file)
+{
+  // create parent array
+  $res_arr = array();
+  // loop on data
+  foreach ($all_data as $key_ => $data) {
+    // loop on child data
+    foreach ($data as $key => $value) {
+      // chekc if key is string
+      if (is_string($key)) {
+        // check key
+        if ($key == 'direction_id') {
+          $res_arr[$key_]['direction_name'] = get_dir_name($value);
+
+        } elseif ($key == 'source_id') {
+          $res_arr[$key_]['source_name'] = $value == 0 ? get_src_name($data['id']) : get_src_name($value);
+
+        } elseif ($key == 'alt_source_id' && $value != -1) {
+          $res_arr[$key_]['alt_source_name'] = $value == 0 ? get_src_name($data['id']) : get_src_name($value);
+
+        } elseif ($key == 'is_client' && $value == 0) {
+          if ($data['device_type'] == 1) {
+            $type = lang('TRANSMITTER', $lang_file);
+
+          } elseif ($data['device_type'] == 2) {
+            $type = lang('RECEIVER', $lang_file);
+
+          } else {
+            $type = lang('NOT ASSIGNED');
+          }
+          $res_arr[$key_]['type'] = $type;
+
+        } elseif ($key == 'device_id' && $value > 0) {
+          $res_arr[$key_]['device_name'] = get_device_name($value);
+
+        } elseif ($key == 'device_model' && $value > 0) {
+          $res_arr[$key_]['model_name'] = get_model_name($data['device_id']);
+
+        } elseif ($key == 'visit_time' && $value > 0) {
+          $res_arr[$key_]['visit_time_name'] = get_visit_time_name($value);
+        
+        } elseif ($key == 'connection_type' && $value > 0) {
+          $res_arr[$key_]['conn_name'] = get_conn_name($value);
+        }
+        // push data into parent array
+        $res_arr[$key_][$key] = $value;
+      }
+    }
+  }
+  // print data
+  return $res_arr;
+}
+
+/**
+ * function get_dir_name v1
+ * is used to get direction name
+ * accepts 1 param => dir_id
+ */
+function get_dir_name($dir_id)
+{
+  global $db_obj;
+  // get result
+  $res = $db_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = $dir_id");
+  // get direction name
+  return count($res) > 0 ? $res[0]['direction_name'] : null;
+}
+
+/**
+ * function get_src_name v1
+ * is used to get source name
+ * accepts 1 param => src_id
+ */
+function get_src_name($src_id)
+{
+  global $db_obj;
+  // get result
+  $res = $db_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = $src_id");
+  // get source name
+  return count($res) > 0 ? $res[0]['full_name'] : null;
+}
+
+/**
+ * function get_device_name v1
+ * is used to get source name
+ * accepts 1 param => dev_id
+ */
+function get_device_name($dev_id)
+{
+  global $db_obj;
+  // get result
+  $res = $db_obj->select_specific_column("`device_name`", "`devices_info`", "WHERE `device_id` = $dev_id");
+  // get source name
+  return count($res) > 0 ? $res[0]['device_name'] : null;
+}
+
+/**
+ * function get_model_name v1
+ * is used to get source name
+ * accepts 1 param => dev_id
+ */
+function get_model_name($dev_id)
+{
+  global $db_obj;
+  // get result
+  $res = $db_obj->select_specific_column("`model_name`", "`devices_model`", "WHERE `device_id` = $dev_id");
+  // get source name
+  return count($res) > 0 ? $res[0]['model_name'] : null;
+}
+
+/**
+ * function get_conn_name v1
+ * is used to get source name
+ * accepts 1 param => conn_id
+ */
+function get_conn_name($conn_id)
+{
+  global $db_obj;
+  // get result
+  $res = $db_obj->select_specific_column("`connection_name`", "`connection_types`", "WHERE `id` = $conn_id");
+  // get source name
+  return count($res) > 0 ? $res[0]['connection_name'] : null;
+}
+
+/**
+ * function get_visit_time_name v1
+ * is used to get source name
+ * accepts 1 param => time_id
+ */
+function get_visit_time_name($time_id, $lang_file = 'pieces')
+{
+  if ($time_id == 1) {
+    $visit_msg = lang('ANY TIME', $lang_file);
+  } elseif ($time_id == 2) {
+    $visit_msg = lang('ADV CONN', $lang_file);
+  } else {
+    $visit_msg = lang('NO DATA');
+  }
+  // get time name
+  return $visit_msg;
 }

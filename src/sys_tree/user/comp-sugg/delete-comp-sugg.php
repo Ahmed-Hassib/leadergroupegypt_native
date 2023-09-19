@@ -5,10 +5,10 @@ $compSuggID = isset($_GET['compSuggID']) && intval($_GET['compSuggID']) ? intval
 $check = checkItem("`id`", "`comp_sugg`", $compSuggID);
 ?>
 <!-- start edit profile page -->
-<div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
+<div class="container" dir="<?php echo $page_dir ?>">
     <!-- start header -->
     <header class="header">
-        <h1 class="text-capitalize"><?php echo language('DELETE', @$_SESSION['systemLang']). " " .language('COMPLAINTS OR SUGGESTIONS') ?></h1>
+        <h1 class="text-capitalize"><?php echo lang('DELETE', @$_SESSION['sys']['lang']). " " .lang('COMPLAINTS OR SUGGESTIONS') ?></h1>
         <?php
         // echo $compSuggID;
         if ($check > 0) {

@@ -1,5 +1,4 @@
 <?php
-
 /*****************************
  *
  * RouterOS PHP API class v1.6
@@ -18,17 +17,17 @@
 
 class RouterosAPI
 {
-  var $debug     = false; //  Show debug information
+  var $debug = false; //  Show debug information
   var $connected = false; //  Connection state
-  var $port      = 8728;  //  Port to connect to (default 8729 for ssl)
-  var $ssl       = false; //  Connect using SSL (must enable api-ssl in IP/Services)
-  var $timeout   = 3;     //  Connection attempt timeout and data read timeout
-  var $attempts  = 5;     //  Connection attempt count
-  var $delay     = 3;     //  Delay between connection attempts in seconds
+  var $port = 8728; //  Port to connect to (default 8729 for ssl)
+  var $ssl = false; //  Connect using SSL (must enable api-ssl in IP/Services)
+  var $timeout = 3; //  Connection attempt timeout and data read timeout
+  var $attempts = 7; //  Connection attempt count
+  var $delay = 3; //  Delay between connection attempts in seconds
 
-  var $socket;            //  Variable for storing socket resource
-  var $error_no;          //  Variable for storing connection error number, if any
-  var $error_str;         //  Variable for storing connection error text, if any
+  var $socket; //  Variable for storing socket resource
+  var $error_no; //  Variable for storing connection error number, if any
+  var $error_str; //  Variable for storing connection error text, if any
 
   /* Check, can be var used in foreach  */
   public function isIterable($var)
@@ -171,15 +170,15 @@ class RouterosAPI
   public function parseResponse($response)
   {
     if (is_array($response)) {
-      $PARSED      = array();
-      $CURRENT     = null;
+      $PARSED = array();
+      $CURRENT = null;
       $singlevalue = null;
       foreach ($response as $x) {
         if (in_array($x, array('!fatal', '!re', '!trap'))) {
           if ($x == '!re') {
-            $CURRENT = &$PARSED[];
+            $CURRENT =& $PARSED[];
           } else {
-            $CURRENT = &$PARSED[$x][];
+            $CURRENT =& $PARSED[$x][];
           }
         } elseif ($x != '!done') {
           $MATCHES = array();
@@ -213,15 +212,15 @@ class RouterosAPI
   public function parseResponse4Smarty($response)
   {
     if (is_array($response)) {
-      $PARSED      = array();
-      $CURRENT     = null;
+      $PARSED = array();
+      $CURRENT = null;
       $singlevalue = null;
       foreach ($response as $x) {
         if (in_array($x, array('!fatal', '!re', '!trap'))) {
           if ($x == '!re') {
-            $CURRENT = &$PARSED[];
+            $CURRENT =& $PARSED[];
           } else {
-            $CURRENT = &$PARSED[$x][];
+            $CURRENT =& $PARSED[$x][];
           }
         } elseif ($x != '!done') {
           $MATCHES = array();
@@ -281,12 +280,12 @@ class RouterosAPI
    */
   public function read($parse = true)
   {
-    $RESPONSE     = array();
+    $RESPONSE = array();
     $receiveddone = false;
     while (true) {
       // Read the first byte of input which gives us some or all of the length
       // of the remaining reply.
-      $BYTE   = ord(fread($this->socket, 1));
+      $BYTE = ord(fread($this->socket, 1));
       $LENGTH = 0;
       // If the first bit is set then we need to remove the first four bits, shift left 8
       // and then read another byte in.
@@ -321,7 +320,7 @@ class RouterosAPI
 
       // If we have got more characters to read, read them in.
       if ($LENGTH > 0) {
-        $_      = "";
+        $_ = "";
         $retlen = 0;
         while ($retlen < $LENGTH) {
           $toread = $LENGTH - $retlen;
@@ -435,12 +434,3 @@ class RouterosAPI
     $this->disconnect();
   }
 }
-
-// $ipRB = "192.168.60.2";
-// $Username = "admin";
-// $clave = "0106990187";
-// //$api_puerto=8728;
-
-// $API = new RouterosAPI();
-
-// $API->connect($ipRB, $Username, $clave);

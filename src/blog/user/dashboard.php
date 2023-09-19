@@ -1,12 +1,12 @@
 <div class="container">
   <div class="blog">
     <!-- START PAGE TITLE -->
-    <h2 class="main-title"><?php echo language('LEADER GROUP BLOG') ?></h2>
+    <h2 class="main-title"><?php echo lang('LEADER GROUP BLOG') ?></h2>
     <!-- START PAGE TITLE -->
     <div class="row justify-content-between align-items-start g-3">
       <!-- START BLOG CONTENT -->
       <div class="col-sm-12 col-lg-8">
-        <h2 class="blog-articles-title"><?php echo language('RECENT ARTICLES') ?></h2>
+        <h2 class="blog-articles-title"><?php echo lang('RECENT ARTICLES') ?></h2>
         <ul class="blog-articles">
           <li class="article row justify-content-between align-items-center gx-3">
             <div class="col-3">

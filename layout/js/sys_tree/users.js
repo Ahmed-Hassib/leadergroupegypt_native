@@ -15,10 +15,10 @@ function change_profile_img(btn) {
 
   let profile_img_status = document.querySelector('#profile-img-status');
   if (profile_img_status != null) {
-    profile_img_status.textContent = 'برجاة حفظ التغييرات';
+    profile_img_status.textContent = lang.save_changes_please;
     profile_img_status.classList.replace('text-danger', 'text-success')
   } else {
-    let status = create_profile_img_status('برجاة حفظ التغييرات', 'text-success');
+    let status = create_profile_img_status(lang.save_changes_please, 'text-success');
     profile_img_container.appendChild(status)
   }
 }
@@ -26,7 +26,7 @@ function change_profile_img(btn) {
 function delete_profile_image() {
   profile_img.setAttribute("src", '../../../../data/uploads/employees-img/male-avatar.svg');
 
-  let confirm_delete = confirm('هل انت متأكد من حذف الصورة؟')
+  let confirm_delete = confirm(lang.delete_confirm)
 
   if (confirm_delete) {
     // send request
@@ -35,10 +35,10 @@ function delete_profile_image() {
         let profile_img_status = document.querySelector('#profile-img-status');
         if (profile_img_status != null) {
           console.log('deleted');
-          profile_img_status.textContent = 'تم حذف الصورة بنجاح! برجاء تحديث الجلسة لتطبيق التغييرات';
+          profile_img_status.textContent = lang.success_del_emp_img;
           profile_img_status.classList.replace('text-success', 'text-danger');
         } else {
-          let status = create_profile_img_status('تم حذف الصورة بنجاح! برجاء تحديث الجلسة لتطبيق التغييرات', 'text-danger');
+          let status = create_profile_img_status(lang.success_del_emp_img, 'text-danger');
           profile_img_container.appendChild(status)
         }
       }

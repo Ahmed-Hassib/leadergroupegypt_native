@@ -1,32 +1,43 @@
 <?php
-if (!isset($mal_obj)) {
-  // create an object of Malfunction class
-  $mal_obj = new Malfunction();
-}
+// create an object of Malfunction class
+$mal_obj = !isset($mal_obj) ? new Malfunction() : $mal_obj;
 // get malfunction id
-$mal_id = isset($_GET['mal-id']) && intval($_GET['mal-id']) ? intval($_GET['mal-id']) : 0;
+$mal_id = isset($_GET['mal-id']) && !empty($_GET['mal-id']) ? base64_decode($_GET['mal-id']) : null;
 // get back flag if return back is possible
 $is_back = isset($_GET['back']) && !empty($_GET['back']) ? 'back' : null;
-
 // check if the current malfunction id is exist or not
 $is_exist = $mal_obj->is_exist("`mal_id`", "`malfunctions`", $mal_id);
-?>
-<?php if ($is_exist == true) { 
+// check if exists
+if ($mal_id != null && $is_exist == true) {
+  // get all malfunctions media to delete it
+  $all_media = $mal_obj->get_malfunction_media($mal_id);
   // call delete function
   $is_deleted = $mal_obj->delete_malfunction($mal_id);
   // check if deleted
   if ($is_deleted) {
+    // loop on malfunction id to delete it
+    foreach ($all_media as $key => $media) {
+      // file name
+      $media_file_name = $malfunction_media . base64_decode($_SESSION['sys']['company_id']) . "/" . $media['media'];
+      // check if media exists
+      if (file_exists($media_file_name)) {
+        // delete media
+        unlink($media_file_name);
+      }
+    }
     // prepare flash session variables
-    $_SESSION['flash_message'] = 'MALFUNCTION WAS DELETED SUCCESSFULLY';
+    $_SESSION['flash_message'] = 'DELETED';
     $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
     $_SESSION['flash_message_class'] = 'success';
     $_SESSION['flash_message_status'] = true;
-  } else {    
+    $_SESSION['flash_message_lang_file'] = 'malfunctions';
+  } else {
     // prepare flash session variables
-    $_SESSION['flash_message'] = 'A PROBLEM WAS HAPPENED WHILE DELETING THE MALFUNCTION';
+    $_SESSION['flash_message'] = 'QUERY PROBLEM';
     $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
     $_SESSION['flash_message_class'] = 'danger';
     $_SESSION['flash_message_status'] = false;
+    $_SESSION['flash_message_lang_file'] = 'global_';
   }
   // redirect to the previous page
   redirect_home(null, $is_back, 0);

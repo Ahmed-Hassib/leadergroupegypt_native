@@ -51,46 +51,51 @@
 
 <?php
 // CHECK PAGE CATEGORY IF EQUAL 'sys_tree'
-if ($page_category == 'sys_tree' && $page_role != 'sys_tree_login' && $page_role != 'sys_tree_signup' && isset($_SESSION['UserID']) && $_SESSION['isRoot'] == 0) {
-  if ($_SESSION['dir_add'] == 1) {
+if ($is_developing == false && $page_category == 'sys_tree' && $page_role != 'sys_tree_login' && $page_role != 'sys_tree_signup' && isset($_SESSION['sys']['UserID']) && $_SESSION['sys']['isRoot'] == 0) {
+  if ($_SESSION['sys']['dir_add'] == 1) {
     // INCLUDE ADD DIERCTION MODAL
     include_once $nav_up_level . 'directions/add-direction-modal.php';
   }
 
-  if ($_SESSION['connection_add'] == 1) {
+  if ($_SESSION['sys']['connection_add'] == 1) {
     // include add new connection type modal
     include_once  $nav_up_level . 'pieces-connection/add-conn-type-modal.php';
   }
 
   // include edit connection type modal
   if (isset($conn_data_types) && $conn_data_types > 0) {
-    if ($_SESSION['connection_update'] == 1) {
+    if ($_SESSION['sys']['connection_update'] == 1) {
       include_once $nav_up_level . 'pieces-connection/edit-conn-type-modal.php';
     }
 
-    if ($_SESSION['connection_delete'] == 1) {
+    if ($_SESSION['sys']['connection_delete'] == 1) {
       include_once $nav_up_level . 'pieces-connection/delete-conn-type-modal.php';
     }
   }
+
+  include_once $globmod . 'rating-app.php';
 
   echo "<script>localStorage.removeItem('sidebarMenuClosed');</script>";
 }
 ?>
 
-<?php include_once $globmod . 'rating-app.php'; ?>
 
 <?php if (isset($backup_flag) && $backup_flag == false && $db_backup_file_name != null && $backup_location_file != null) { ?>
   <script src="<?php echo $js ?>backup.js"></script>
 <?php } ?>
 
 <script>
-  localStorage['systemLang'] = '<?php echo @$_SESSION['systemLang'] ?>';
+  if (location.pathname.includes('website')) {
+    localStorage['lang'] = '<?php echo $page_dir == 'rtl' ? 'ar' : 'en' ?>';
+  } else if (location.pathname.includes('sys_tree')) {
+    localStorage['systemLang'] = '<?php echo $page_dir == 'rtl' ? 'ar' : 'en' ?>';
+  }
 </script>
 
 <!-- save system language to local storage -->
-<?php if (isset($is_website_pages) && $is_website_pages == true) { ?>
+<?php if ($page_role != 'sys_tree_login') { ?>
   <script>
-    document.body.style.direction = localStorage['systemLang'] == 'ar' ? 'rtl' : 'ltr';
+    document.body.style.direction = '<?php echo $page_dir ?>';
   </script>
 <?php } ?>
 
@@ -111,6 +116,15 @@ if ($page_category == 'sys_tree' && $page_role != 'sys_tree_login' && $page_role
     })
   </script>
 <?php } ?>
+
 </body>
 
 </html>
+
+<?php
+if ($page_category == 'website' && isset($_SESSION['website']['request_data'])) {
+  unset($_SESSION['website']['request_data']);
+} elseif ($page_category == 'sys_tree' && isset($_SESSION['sys']['request_data'])) {
+  unset($_SESSION['sys']['request_data']);
+}
+?>

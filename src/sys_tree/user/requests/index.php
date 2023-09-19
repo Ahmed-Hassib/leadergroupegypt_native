@@ -7,18 +7,23 @@ ob_start();
 session_start();
 // regenerate session id
 session_regenerate_id();
-
 // no header
-$noHeader = true;
+$no_header = true;
 // no navbar
-$noNavBar = 'any';
+$no_navbar = true;
+// page category
+$page_category = "sys_tree";
 // page title
-$page_title = '';
+$page_title = "";
+// lang file
+$lang_file = "";
 // level
 $level = 4;
 // nav level
 $nav_level = 1;
 $possible_back = false;
+// app status and global includes
+include_once str_repeat("../", $level) . "etc/app-status.php";
 // pre configration of system
 include_once str_repeat('../', $level) . 'etc/pre-conf.php';
 // initial configration of system

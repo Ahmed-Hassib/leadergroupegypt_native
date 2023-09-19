@@ -14,7 +14,7 @@ if ($mal_obj->is_exist("`id`", "`malfunctions_media`", $media_id)) {
   // check media name
   if (!empty($_GET['media-name'])) {
     // file full path
-    $file_full_path = $uploads . "malfunctions/" . $_SESSION['company_id'] ."/". $media_name;
+    $file_full_path = $uploads . "malfunctions/" . base64_decode($_SESSION['sys']['company_id']) ."/". $media_name;
     // delete media from server files
     unlink($file_full_path);
   }

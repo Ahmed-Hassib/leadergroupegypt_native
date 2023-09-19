@@ -2,7 +2,7 @@
 // get documnet root
 $document_root  = $_SERVER['DOCUMENT_ROOT'];
 // get user id 
-$user_id = isset($_GET['user-id']) ? $_GET['user-id'] : $_SESSION['UserID'];
+$user_id = isset($_GET['user-id']) ? $_GET['user-id'] : $_SESSION['sys']['UserID'];
 
 // check if arr parameters are entered or not
 if (empty($user_id)) {
@@ -13,9 +13,8 @@ if (empty($user_id)) {
     $session_obj = new Session();
   }
   // get user info
-  $user_info = $session_obj->get_user_info($user_id);
+  $user_info = $session_obj->get_user_info(base64_decode($user_id));
 
-  
   // check if done
   if ($user_info[0] == true) {
     // company name
@@ -25,14 +24,14 @@ if (empty($user_id)) {
     // convert data into json file
     $json_data = json_encode($user_info[1]);
     // json location
-    $json_location = $document_root . "/data/json/";
+    $json_location = $document_root . "/app/data/json/";
     // check if the directory is exist or not
     if (!file_exists($json_location)) {
       // create a directory for the company
       mkdir($json_location);
     }
     // json location
-    $json_location = $json_location . "users/$company_name/";
+    $json_location = $json_location . "users/$user_id/";
     // check if the directory is exist or not
     if (!file_exists($json_location)) {
       // create a directory for the company

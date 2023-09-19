@@ -1,11 +1,11 @@
 <?php $type = isset($_GET['type']) && !empty($_GET['type']) ? $_GET['type'] : "manage" ?>
 <!-- start home stats container -->
-<div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
+<div class="container" dir="<?php echo $page_dir ?>">
   <?php if ($type == "manage") { ?>
     <!-- start header -->
     <header class="mb-3 header">
-      <h1 class="h1 text-capitalize"><?php echo language('ARCHIVE', @$_SESSION['systemLang']) ?></h1>
-      <h5 class="h5 text-secondary text-capitalize "><?php echo language('PIECES/CLIENTS ARCHIVE', @$_SESSION['systemLang']) ?></h5>
+      <h1 class="h1 text-capitalize"><?php echo lang('ARCHIVE', @$_SESSION['sys']['lang']) ?></h1>
+      <h5 class="h5 text-secondary text-capitalize "><?php echo lang('PIECES/CLIENTS ARCHIVE', @$_SESSION['sys']['lang']) ?></h5>
     </header>
     <!-- end header -->
     <div class="mb-3 row row-cols-sm-1 row-cols-md-4 g-3">
@@ -15,7 +15,7 @@
             <i class="bi bi-arrow-left"></i>
             <span>
               <a href="index.php" class="stretched-link text-capitalize">
-                <?php echo language('BACK', @$_SESSION['systemLang']) ?>
+                <?php echo lang('BACK', @$_SESSION['sys']['lang']) ?>
               </a>
             </span>
           </div>
@@ -27,7 +27,7 @@
             <i class="bi bi-dice-5"></i>
             <span>
               <a href="?do=piecesArchive&type=pieces" class="stretched-link text-capitalize">
-                <?php echo language('PIECES ARCHIVE', @$_SESSION['systemLang']) ?>
+                <?php echo lang('PIECES ARCHIVE', @$_SESSION['sys']['lang']) ?>
               </a>
             </span>
           </div>
@@ -39,7 +39,7 @@
             <i class="bi bi-people"></i>
             <span>
               <a href="?do=piecesArchive&type=clients" class="stretched-link text-capitalize">
-                <?php echo language('CLIENTS ARCHIVE', @$_SESSION['systemLang']) ?>
+                <?php echo lang('CLIENTS ARCHIVE', @$_SESSION['sys']['lang']) ?>
               </a>
             </span>
           </div>
@@ -66,8 +66,8 @@
       ?>
         <!-- start header -->
         <header class="mb-3 header">
-          <h1 class="h1 text-capitalize"><?php echo language('ARCHIVE', @$_SESSION['systemLang']) ?></h1>
-          <h5 class="h5 text-secondary text-capitalize "><?php echo language('PIECES ARCHIVE', @$_SESSION['systemLang']) ?></h5>
+          <h1 class="h1 text-capitalize"><?php echo lang('ARCHIVE', @$_SESSION['sys']['lang']) ?></h1>
+          <h5 class="h5 text-secondary text-capitalize "><?php echo lang('PIECES ARCHIVE', @$_SESSION['sys']['lang']) ?></h5>
         </header>
         <!-- end header -->
         <div class="mb-5 row row-cols-sm-2 row-cols-md-4 row-cols-lg-6 g-3">
@@ -82,8 +82,8 @@
                       <a href="?do=piecesArchive&type=pieces&added_date=<?php echo $row['added_date'] ?>" class="stretched-link">
                         <?php $piecesNum = countRecords("`id`", "`pieces`", "WHERE `added_date` = '".$row['added_date']."' AND `pieces`.`type_id` != 4") ?>
                         <span> <?php echo $row['added_date'] ?></span><br>
-                        <span class="fs-16" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-                          <span class="text-capitalize"><?php echo language("TOTAL", @$_SESSION['systemLang']) . " " . language("PIECES", @$_SESSION['systemLang']) ?> = </span>
+                        <span class="fs-16" dir="<?php echo $page_dir ?>">
+                          <span class="text-capitalize"><?php echo lang("TOTAL", @$_SESSION['sys']['lang']) . " " . lang("PIECES", @$_SESSION['sys']['lang']) ?> = </span>
                           <span class="num" data-goal="<?php echo $piecesNum ?>">0</span>
                         </span>
                       </a>
@@ -105,8 +105,8 @@
       ?>
         <!-- start header -->
         <header class="mb-3 header">
-          <h1 class="h1 text-capitalize"><?php echo language('ARCHIVE', @$_SESSION['systemLang']) ?></h1>
-          <h5 class="h5 text-secondary text-capitalize "><?php echo language('CLIENTS ARCHIVE', @$_SESSION['systemLang']) ?></h5>
+          <h1 class="h1 text-capitalize"><?php echo lang('ARCHIVE', @$_SESSION['sys']['lang']) ?></h1>
+          <h5 class="h5 text-secondary text-capitalize "><?php echo lang('CLIENTS ARCHIVE', @$_SESSION['sys']['lang']) ?></h5>
         </header>
         <!-- end header -->
         <div class="mb-5 row row-cols-sm-2 row-cols-md-4 row-cols-lg-6 g-3">
@@ -121,8 +121,8 @@
                       <a href="?do=piecesArchive&type=clients&added_date=<?php echo $row['added_date'] ?>" class="stretched-link">
                         <?php $clientsNum = countRecords("`id`", "`pieces`", "WHERE `added_date` = '".$row['added_date']."' AND `pieces`.`type_id` = 4") ?>
                         <span> <?php echo $row['added_date'] ?></span><br>
-                        <span class="fs-16" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-                          <span class="text-capitalize"><?php echo language("TOTAL", @$_SESSION['systemLang']) . " " . language("CLIENTS", @$_SESSION['systemLang']) ?> = </span>
+                        <span class="fs-16" dir="<?php echo $page_dir ?>">
+                          <span class="text-capitalize"><?php echo lang("TOTAL", @$_SESSION['sys']['lang']) . " " . lang("CLIENTS", @$_SESSION['sys']['lang']) ?> = </span>
                           <span class="num" data-goal="<?php echo $clientsNum ?>">0</span>
                         </span>
                       </a>
@@ -140,10 +140,10 @@
         <div class="my-5 container">
           <!-- start header -->
           <header class="header">
-            <h1 class="h1 text-capitalize"><?php echo language('ARCHIVE', @$_SESSION['systemLang']) ?></h1>
+            <h1 class="h1 text-capitalize"><?php echo lang('ARCHIVE', @$_SESSION['sys']['lang']) ?></h1>
             <?php
               // error message
-              $msg = '<div class="alert alert-danger text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;'.language('WRONG CHOISE', @$_SESSION['systemLang']).'</div>';
+              $msg = '<div class="alert alert-danger text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;'.lang('WRONG CHOISE', @$_SESSION['sys']['lang']).'</div>';
               // redirect to home page
               redirect_home($msg, "back");
             ?>
@@ -163,11 +163,11 @@
         
         //  check if number of rows per page is set
         if (isset($_POST['rowsPerPage'])) {
-          $_SESSION['rowsPerPage'] = $_POST['rowsPerPage'];
+          $_SESSION['sys']['rowsPerPage'] = $_POST['rowsPerPage'];
         }
 
         // start from
-        $startFrom = ($page - 1) * $_SESSION['rowsPerPage'];
+        $startFrom = ($page - 1) * $_SESSION['sys']['rowsPerPage'];
 
         // query statement
         $q = "SELECT 
@@ -190,7 +190,7 @@
             `pieces`.`direct` DESC, 
             `pieces`.`type_id` ASC";
 
-        $limitation = ' LIMIT '.$startFrom.', '.$_SESSION['rowsPerPage'].';';
+        $limitation = ' LIMIT '.$startFrom.', '.$_SESSION['sys']['rowsPerPage'].';';
         $query = $q . $limitation;
 
         // prepare statment
@@ -206,7 +206,7 @@
         // get row count
         $count = $st->rowCount();
         // total pages
-        $totalPages = ceil($count / $_SESSION['rowsPerPage']);
+        $totalPages = ceil($count / $_SESSION['sys']['rowsPerPage']);
 
         $columns = array(
           "ip"                => "IP", 
@@ -235,9 +235,9 @@
       ?>
         <!-- start header -->
         <header class="mb-3 header">
-          <h1 class="h1 text-capitalize"><?php echo language('ARCHIVE', @$_SESSION['systemLang']) ?></h1>
-          <h5 class="h5 text-secondary text-capitalize "><?php echo language('PIECES ARCHIVE', @$_SESSION['systemLang']) ?></h5>
-          <h6 class="h6 text-secondary text-capitalize " dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>"><?php echo language("ADDED DATE", @$_SESSION['systemLang']) . " = " . $added_date ?></h6>
+          <h1 class="h1 text-capitalize"><?php echo lang('ARCHIVE', @$_SESSION['sys']['lang']) ?></h1>
+          <h5 class="h5 text-secondary text-capitalize "><?php echo lang('PIECES ARCHIVE', @$_SESSION['sys']['lang']) ?></h5>
+          <h6 class="h6 text-secondary text-capitalize " dir="<?php echo $page_dir ?>"><?php echo lang("ADDED DATE", @$_SESSION['sys']['lang']) . " = " . $added_date ?></h6>
           <div class="search-box row row-cols-sm-1">
             <div class="col">
               <input type="text" class="form-control w-100" name="search" id="search" placeholder="search" onkeyup="tableFiltration(this)">
@@ -260,11 +260,11 @@
               <form action="?do=piecesArchive&type=pieces&added_date=<?php echo $added_date ?>" method="POST">
                 <div class="col-sm-12 col-md-8">
                   <select class="form-select" name="rowsPerPage" id="rowPerPage" onchange="submitForm(this)">
-                    <option value="10" <?php echo $_SESSION['rowsPerPage'] == 10 ? 'selected' : ''; ?>>10</option>
-                    <option value="25" <?php echo $_SESSION['rowsPerPage'] == 25 ? 'selected' : ''; ?>>25</option>
-                    <option value="50" <?php echo $_SESSION['rowsPerPage'] == 50 ? 'selected' : ''; ?>>50 (Recommended)</option>
-                    <option value="100" <?php echo $_SESSION['rowsPerPage'] == 100 ? 'selected' : ''; ?>>100</option>
-                    <option value="500" <?php echo $_SESSION['rowsPerPage'] == 500 ? 'selected' : ''; ?>>500</option>
+                    <option value="10" <?php echo $_SESSION['sys']['rowsPerPage'] == 10 ? 'selected' : ''; ?>>10</option>
+                    <option value="25" <?php echo $_SESSION['sys']['rowsPerPage'] == 25 ? 'selected' : ''; ?>>25</option>
+                    <option value="50" <?php echo $_SESSION['sys']['rowsPerPage'] == 50 ? 'selected' : ''; ?>>50 (Recommended)</option>
+                    <option value="100" <?php echo $_SESSION['sys']['rowsPerPage'] == 100 ? 'selected' : ''; ?>>100</option>
+                    <option value="500" <?php echo $_SESSION['sys']['rowsPerPage'] == 500 ? 'selected' : ''; ?>>500</option>
                   </select>
                 </div>
               </form>
@@ -280,7 +280,7 @@
               <i class="carousel-control-prev-icon"></i>
             </button>
             <!-- scroll right button -->
-            <button type="button" role="button" class="scroll-button scroll-next <?php echo $_SESSION['systemLang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
+            <button type="button" role="button" class="scroll-button scroll-next <?php echo $_SESSION['sys']['lang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
               <i class="carousel-control-next-icon"></i>
             </button>
           </div>
@@ -290,28 +290,28 @@
               <tr>
                 <th class="d-none">ID</th>
                 <th style="min-width: 50px" data-order="asc" data-col-type="number">#</th>
-                <th style="min-width: 200px" data-col="ip" data-order="asc" data-col-type="ip" class="text-uppercase"><?php echo language('IP', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px" data-col="mac-add" data-order="asc" data-col-type="string" class="text-uppercase"><?php echo language('MAC ADD', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px" data-col="name" data-order="asc" data-col-type="string"><?php echo language('CLIENT NAME', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px" data-col="username" data-order="asc" data-col-type="string"><?php echo language('USERNAME', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px" data-col="pass" data-order="asc" data-col-type="string"><?php echo language('PASSWORD', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px" data-col="dir" data-order="asc" data-col-type="string"><?php echo language('THE DIRECTION', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px" data-col="src" data-order="asc" data-col-type="ip"><?php echo language('THE SOURCE', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 100px" data-col="ssid"><?php echo language('SSID', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px" data-col="pass-conn"><?php echo language('PASSWORD CONNECTION', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 100px" data-col="freq"><?php echo language('FREQUENCY', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px" data-col="dev-type" data-order="asc" data-col-type="string"><?php echo language('DEVICE TYPE', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 100px" data-col="conn-type" data-order="asc" data-col-type="string"><?php echo language('CONNECTION TYPE', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px" data-col="addr"><?php echo language('THE ADDRESS', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px" data-col="phone" data-order="asc" data-col-type="string"><?php echo language('PHONE', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 100px" data-col="type" data-order="asc" data-col-type="string"><?php echo language('THE TYPE', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px" data-col="notes" data-order="asc" data-col-type="string"><?php echo language('THE NOTES', @$_SESSION['systemLang']) ?></th>
+                <th style="min-width: 200px" data-col="ip" data-order="asc" data-col-type="ip" class="text-uppercase"><?php echo lang('IP', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px" data-col="mac-add" data-order="asc" data-col-type="string" class="text-uppercase"><?php echo lang('MAC ADD', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px" data-col="name" data-order="asc" data-col-type="string"><?php echo lang('CLIENT NAME', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px" data-col="username" data-order="asc" data-col-type="string"><?php echo lang('USERNAME', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px" data-col="pass" data-order="asc" data-col-type="string"><?php echo lang('PASSWORD', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px" data-col="dir" data-order="asc" data-col-type="string"><?php echo lang('THE DIRECTION', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px" data-col="src" data-order="asc" data-col-type="ip"><?php echo lang('THE SOURCE', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 100px" data-col="ssid"><?php echo lang('SSID', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px" data-col="pass-conn"><?php echo lang('PASSWORD CONNECTION', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 100px" data-col="freq"><?php echo lang('FREQUENCY', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px" data-col="dev-type" data-order="asc" data-col-type="string"><?php echo lang('DEVICE TYPE', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 100px" data-col="conn-type" data-order="asc" data-col-type="string"><?php echo lang('CONNECTION TYPE', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px" data-col="addr"><?php echo lang('THE ADDRESS', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px" data-col="phone" data-order="asc" data-col-type="string"><?php echo lang('PHONE', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 100px" data-col="type" data-order="asc" data-col-type="string"><?php echo lang('THE TYPE', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px" data-col="notes" data-order="asc" data-col-type="string"><?php echo lang('THE NOTES', @$_SESSION['sys']['lang']) ?></th>
                 <th style="min-width: 200px" data-col="avg-ping" >avg ping</th>
                 <th style="min-width: 200px" data-col="pack-loss" >packet loss</th>
-                <th style="min-width: 100px" data-col="direct" data-order="asc" data-col-type="string"><?php echo language('CONNECTION', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px" data-col="adedd-date" data-order="asc" data-col-type="string"><?php echo language('ADDED DATE', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 100px" data-col="adedd-by" data-order="asc" data-col-type="string"><?php echo language('ADDED BY', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px"><?php echo language('CONTROL', @$_SESSION['systemLang']) ?></th>
+                <th style="min-width: 100px" data-col="direct" data-order="asc" data-col-type="string"><?php echo lang('CONNECTION', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px" data-col="adedd-date" data-order="asc" data-col-type="string"><?php echo lang('ADDED DATE', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 100px" data-col="adedd-by" data-order="asc" data-col-type="string"><?php echo lang('ADDED BY', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px"><?php echo lang('CONTROL', @$_SESSION['sys']['lang']) ?></th>
               </tr>
             </thead>
             <tbody id="piecesTbl" name="pieces">
@@ -321,7 +321,7 @@
                   <td class="d-none"><?php echo $row['id']; ?></td>
                   <td><?php echo ++$index; ?></td>
                   <td data-ip="<?php echo convert_ip($row['piece_ip']) ?>"><?php echo $row['piece_ip'] == 1 ? 'لا يوجد' :"<a href='http://" . $row['piece_ip'] . "' target='_blank'>" . $row['piece_ip'] . '</a>'; ?></td>
-                  <td class="<?php echo !empty($row['mac_add']) ? "" : "text-danger " ?>"><?php echo !empty($row['mac_add']) ? $row['mac_add'] : language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></td>
+                  <td class="<?php echo !empty($row['mac_add']) ? "" : "text-danger " ?>"><?php echo !empty($row['mac_add']) ? $row['mac_add'] : lang("NO DATA ENTERED", @$_SESSION['sys']['lang']) ?></td>
                   <td><?php echo $row['piece_name']; ?></td>
                   <td>
                     <a href="pieces.php?do=edit-piece&piece-id=<?php echo $row['id']; ?>">
@@ -335,7 +335,7 @@
                         <?php echo selectSpecificColumn("`direction_name`", "`direction`", "WHERE `direction_id` = ".$row['direction_id'])[0]['direction_name']; ?>
                       </a>
                     <?php } else { ?>
-                      <p class="text-danger "><?php echo language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></p>
+                      <p class="text-danger "><?php echo lang("NO DATA ENTERED", @$_SESSION['sys']['lang']) ?></p>
                     <?php } ?>
                   </td>
                   <?php $sourceip = $row['source_id'] == 0 ? $row['piece_ip'] : selectSpecificColumn('piece_ip','pieces','WHERE id = ' . $row['source_id'])[0]['piece_ip']; ?>
@@ -349,7 +349,7 @@
                     <?php if (!empty($row['device_type'])) { ?>
                       <?php echo $row['device_type'] ?></td>
                     <?php } else { ?>
-                      <p class="text-danger "><?php echo language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></p>
+                      <p class="text-danger "><?php echo lang("NO DATA ENTERED", @$_SESSION['sys']['lang']) ?></p>
                     <?php } ?>
                   <td><?php echo $row['conn_type']; ?></td>
                   <td><?php  echo $row['address'] == '' ? 'لا يوجد' : $row['address']; ?></td>
@@ -358,7 +358,7 @@
                     <?php if ($row['type_id'] != 0) { ?>
                       <?php echo selectSpecificColumn("`type_name`", "`types`", "WHERE `type_id` = ". $row['type_id'])[0]['type_name']; ?></td>
                     <?php } else { ?>
-                      <p class="text-danger "><?php echo language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></p>
+                      <p class="text-danger "><?php echo lang("NO DATA ENTERED", @$_SESSION['sys']['lang']) ?></p>
                     <?php } ?>
                   <td><?php echo $row['notes']; ?></td>
                   <td class="text-capitalize">
@@ -375,13 +375,13 @@
                       echo '-----';
                     } ?>
                   </td>
-                  <td><?php echo $row['direct'] == 0 ? language('NOT DIRECT', @$_SESSION['systemLang']) : language('DIRECT', @$_SESSION['systemLang']); ?></td>
-                  <td><?php echo $row['added_date'] == '0000-00-00' ? language("NO DATA ENTERED", @$_SESSION['systemLang']) : $row['added_date'] ?></td>
+                  <td><?php echo $row['direct'] == 0 ? lang('NOT DIRECT', @$_SESSION['sys']['lang']) : lang('DIRECT', @$_SESSION['sys']['lang']); ?></td>
+                  <td><?php echo $row['added_date'] == '0000-00-00' ? lang("NO DATA ENTERED", @$_SESSION['sys']['lang']) : $row['added_date'] ?></td>
                   <td><?php echo selectSpecificColumn("`UserName`", "`users`", "WHERE `UserID` = ". $row['added_by'])[0]["UserName"]; ?></td>
                   <td>
-                    <a class="btn btn-success text-capitalize fs-12 <?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="pieces.php?do=edit-piece&piece-id=<?php echo $row['id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
+                    <a class="btn btn-success text-capitalize fs-12 <?php if ($_SESSION['sys']['pcs_update'] == 0) {echo 'd-none';} ?>" href="pieces.php?do=edit-piece&piece-id=<?php echo $row['id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo lang('EDIT', @$_SESSION['sys']['lang']) ?> --></a>
                     <?php if ($row['type_id'] != 4) { ?>
-                      <a class="btn btn-outline-primary text-capitalize fs-12 <?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>" href="?do=show-piece&dir-id=<?php echo $row['direction_id'] ?>&srcId=<?php echo $row['id'] ?>" ><i class="bi bi-eye"></i><!-- <?php echo language('SHOW', @$_SESSION['systemLang']).' '.language('PIECES', @$_SESSION['systemLang']) ?> --></a>
+                      <a class="btn btn-outline-primary text-capitalize fs-12 <?php if ($_SESSION['sys']['pcs_show'] == 0) {echo 'd-none';} ?>" href="?do=show-piece&dir-id=<?php echo $row['direction_id'] ?>&srcId=<?php echo $row['id'] ?>" ><i class="bi bi-eye"></i><!-- <?php echo lang('SHOW', @$_SESSION['sys']['lang']).' '.lang('PIECES', @$_SESSION['sys']['lang']) ?> --></a>
                     <?php } ?>
                     <?php if ($row['piece_ip'] != 1) { ?>
                       <button class="btn btn-outline-secondary text-capitalize fs-12" onclick="ping(this)" value="<?php echo $row['piece_ip']; ?>">ping</button>
@@ -402,14 +402,14 @@
               <?php foreach ($columns as $key => $col) { ?>
                 <div>
                   <input type="checkbox" id="col-<?php echo $i + 1 ?>" onclick="showHideColumn(this, 'piecesTbl')" data-col="<?php echo $key ?>" >&nbsp;
-                  <label for="col-<?php echo $i + 1 ?>"><?php echo language($col, @$_SESSION['systemLang']) ?></label>
+                  <label for="col-<?php echo $i + 1 ?>"><?php echo lang($col, @$_SESSION['sys']['lang']) ?></label>
                 </div>
               <?php $i++; ?>
               <?php } ?>
               <!-- input for show all columns -->
               <div>
                 <input type="checkbox" name="show-all" id="show-all" onclick="showHideAllColumns()">&nbsp;
-                <label for="show-all"><?php echo language('SHOW ALL', @$_SESSION['systemLang']) ?></label>
+                <label for="show-all"><?php echo lang('SHOW ALL', @$_SESSION['sys']['lang']) ?></label>
               </div>
             </div>
           </div>
@@ -424,11 +424,11 @@
         
         //  check if number of rows per page is set
         if (isset($_POST['rowsPerPage'])) {
-          $_SESSION['rowsPerPage'] = $_POST['rowsPerPage'];
+          $_SESSION['sys']['rowsPerPage'] = $_POST['rowsPerPage'];
         }
 
         // start from
-        $startFrom = ($page - 1) * $_SESSION['rowsPerPage'];
+        $startFrom = ($page - 1) * $_SESSION['sys']['rowsPerPage'];
 
         // query statement
         $q = "SELECT 
@@ -451,7 +451,7 @@
             `pieces`.`direct` DESC, 
             `pieces`.`type_id` ASC";
 
-        $limitation = ' LIMIT '.$startFrom.', '.$_SESSION['rowsPerPage'].';';
+        $limitation = ' LIMIT '.$startFrom.', '.$_SESSION['sys']['rowsPerPage'].';';
         $query = $q . $limitation;
 
         // prepare statment
@@ -467,7 +467,7 @@
         // get row count
         $count = $st->rowCount();
         // total pages
-        $totalPages = ceil($count / $_SESSION['rowsPerPage']);
+        $totalPages = ceil($count / $_SESSION['sys']['rowsPerPage']);
 
         $columns = array(
           "ip"                => "IP", 
@@ -496,9 +496,9 @@
       ?>
         <!-- start header -->
         <header class="mb-3 header">
-          <h1 class="h1 text-capitalize"><?php echo language('ARCHIVE', @$_SESSION['systemLang']) ?></h1>
-          <h5 class="h5 text-secondary text-capitalize "><?php echo language('CLIENTS ARCHIVE', @$_SESSION['systemLang']) ?></h5>
-          <h6 class="h6 text-secondary text-capitalize " dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>"><?php echo language("ADDED DATE", @$_SESSION['systemLang']) . " = " . $added_date ?></h6>
+          <h1 class="h1 text-capitalize"><?php echo lang('ARCHIVE', @$_SESSION['sys']['lang']) ?></h1>
+          <h5 class="h5 text-secondary text-capitalize "><?php echo lang('CLIENTS ARCHIVE', @$_SESSION['sys']['lang']) ?></h5>
+          <h6 class="h6 text-secondary text-capitalize " dir="<?php echo $page_dir ?>"><?php echo lang("ADDED DATE", @$_SESSION['sys']['lang']) . " = " . $added_date ?></h6>
           <div class="search-box row row-cols-sm-1">
             <div class="col">
               <input type="text" class="form-control w-100" name="search" id="search" placeholder="search" onkeyup="tableFiltration(this)">
@@ -521,11 +521,11 @@
               <form action="?do=piecesArchive&type=clients&added_date=<?php echo $added_date ?>" method="POST">
                 <div class="col-sm-12 col-md-8">
                   <select class="form-select" name="rowsPerPage" id="rowPerPage" onchange="submitForm(this)">
-                    <option value="10" <?php echo $_SESSION['rowsPerPage'] == 10 ? 'selected' : ''; ?>>10</option>
-                    <option value="25" <?php echo $_SESSION['rowsPerPage'] == 25 ? 'selected' : ''; ?>>25</option>
-                    <option value="50" <?php echo $_SESSION['rowsPerPage'] == 50 ? 'selected' : ''; ?>>50 (Recommended)</option>
-                    <option value="100" <?php echo $_SESSION['rowsPerPage'] == 100 ? 'selected' : ''; ?>>100</option>
-                    <option value="500" <?php echo $_SESSION['rowsPerPage'] == 500 ? 'selected' : ''; ?>>500</option>
+                    <option value="10" <?php echo $_SESSION['sys']['rowsPerPage'] == 10 ? 'selected' : ''; ?>>10</option>
+                    <option value="25" <?php echo $_SESSION['sys']['rowsPerPage'] == 25 ? 'selected' : ''; ?>>25</option>
+                    <option value="50" <?php echo $_SESSION['sys']['rowsPerPage'] == 50 ? 'selected' : ''; ?>>50 (Recommended)</option>
+                    <option value="100" <?php echo $_SESSION['sys']['rowsPerPage'] == 100 ? 'selected' : ''; ?>>100</option>
+                    <option value="500" <?php echo $_SESSION['sys']['rowsPerPage'] == 500 ? 'selected' : ''; ?>>500</option>
                   </select>
                 </div>
               </form>
@@ -541,7 +541,7 @@
               <i class="carousel-control-prev-icon"></i>
             </button>
             <!-- scroll right button -->
-            <button type="button" role="button" class="scroll-button scroll-next <?php echo $_SESSION['systemLang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
+            <button type="button" role="button" class="scroll-button scroll-next <?php echo $_SESSION['sys']['lang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
               <i class="carousel-control-next-icon"></i>
             </button>
           </div>
@@ -551,28 +551,28 @@
               <tr>
                 <th class="d-none">ID</th>
                 <th style="min-width: 50px" data-order="asc" data-col-type="number">#</th>
-                <th style="min-width: 200px" data-col="ip" data-order="asc" data-col-type="ip" class="text-uppercase"><?php echo language('IP', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px" data-col="mac-add" data-order="asc" data-col-type="string" class="text-uppercase"><?php echo language('MAC ADD', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px" data-col="name" data-order="asc" data-col-type="string"><?php echo language('CLIENT NAME', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px" data-col="username" data-order="asc" data-col-type="string"><?php echo language('USERNAME', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px" data-col="pass" data-order="asc" data-col-type="string"><?php echo language('PASSWORD', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px" data-col="dir" data-order="asc" data-col-type="string"><?php echo language('THE DIRECTION', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px" data-col="src" data-order="asc" data-col-type="ip"><?php echo language('THE SOURCE', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 100px" data-col="ssid"><?php echo language('SSID', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px" data-col="pass-conn"><?php echo language('PASSWORD CONNECTION', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 100px" data-col="freq"><?php echo language('FREQUENCY', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px" data-col="dev-type" data-order="asc" data-col-type="string"><?php echo language('DEVICE TYPE', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 100px" data-col="conn-type" data-order="asc" data-col-type="string"><?php echo language('CONNECTION TYPE', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px" data-col="addr"><?php echo language('THE ADDRESS', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px" data-col="phone" data-order="asc" data-col-type="string"><?php echo language('PHONE', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 100px" data-col="type" data-order="asc" data-col-type="string"><?php echo language('THE TYPE', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px" data-col="notes" data-order="asc" data-col-type="string"><?php echo language('THE NOTES', @$_SESSION['systemLang']) ?></th>
+                <th style="min-width: 200px" data-col="ip" data-order="asc" data-col-type="ip" class="text-uppercase"><?php echo lang('IP', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px" data-col="mac-add" data-order="asc" data-col-type="string" class="text-uppercase"><?php echo lang('MAC ADD', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px" data-col="name" data-order="asc" data-col-type="string"><?php echo lang('CLIENT NAME', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px" data-col="username" data-order="asc" data-col-type="string"><?php echo lang('USERNAME', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px" data-col="pass" data-order="asc" data-col-type="string"><?php echo lang('PASSWORD', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px" data-col="dir" data-order="asc" data-col-type="string"><?php echo lang('THE DIRECTION', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px" data-col="src" data-order="asc" data-col-type="ip"><?php echo lang('THE SOURCE', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 100px" data-col="ssid"><?php echo lang('SSID', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px" data-col="pass-conn"><?php echo lang('PASSWORD CONNECTION', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 100px" data-col="freq"><?php echo lang('FREQUENCY', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px" data-col="dev-type" data-order="asc" data-col-type="string"><?php echo lang('DEVICE TYPE', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 100px" data-col="conn-type" data-order="asc" data-col-type="string"><?php echo lang('CONNECTION TYPE', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px" data-col="addr"><?php echo lang('THE ADDRESS', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px" data-col="phone" data-order="asc" data-col-type="string"><?php echo lang('PHONE', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 100px" data-col="type" data-order="asc" data-col-type="string"><?php echo lang('THE TYPE', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px" data-col="notes" data-order="asc" data-col-type="string"><?php echo lang('THE NOTES', @$_SESSION['sys']['lang']) ?></th>
                 <th style="min-width: 200px" data-col="avg-ping" >avg ping</th>
                 <th style="min-width: 200px" data-col="pack-loss" >packet loss</th>
-                <th style="min-width: 100px" data-col="direct" data-order="asc" data-col-type="string"><?php echo language('CONNECTION', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px" data-col="adedd-date" data-order="asc" data-col-type="string"><?php echo language('ADDED DATE', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 100px" data-col="adedd-by" data-order="asc" data-col-type="string"><?php echo language('ADDED BY', @$_SESSION['systemLang']) ?></th>
-                <th style="min-width: 200px"><?php echo language('CONTROL', @$_SESSION['systemLang']) ?></th>
+                <th style="min-width: 100px" data-col="direct" data-order="asc" data-col-type="string"><?php echo lang('CONNECTION', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px" data-col="adedd-date" data-order="asc" data-col-type="string"><?php echo lang('ADDED DATE', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 100px" data-col="adedd-by" data-order="asc" data-col-type="string"><?php echo lang('ADDED BY', @$_SESSION['sys']['lang']) ?></th>
+                <th style="min-width: 200px"><?php echo lang('CONTROL', @$_SESSION['sys']['lang']) ?></th>
               </tr>
             </thead>
             <tbody id="piecesTbl" name="pieces">
@@ -582,7 +582,7 @@
                   <td class="d-none"><?php echo $row['id']; ?></td>
                   <td><?php echo ++$index; ?></td>
                   <td data-ip="<?php echo convert_ip($row['piece_ip']) ?>"><?php echo $row['piece_ip'] == 1 ? 'لا يوجد' :"<a href='http://" . $row['piece_ip'] . "' target='_blank'>" . $row['piece_ip'] . '</a>'; ?></td>
-                  <td class="<?php echo !empty($row['mac_add']) ? "" : "text-danger " ?>"><?php echo !empty($row['mac_add']) ? $row['mac_add'] : language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></td>
+                  <td class="<?php echo !empty($row['mac_add']) ? "" : "text-danger " ?>"><?php echo !empty($row['mac_add']) ? $row['mac_add'] : lang("NO DATA ENTERED", @$_SESSION['sys']['lang']) ?></td>
                   <td><?php echo $row['piece_name']; ?></td>
                   <td>
                     <a href="pieces.php?do=edit-piece&piece-id=<?php echo $row['id']; ?>">
@@ -596,7 +596,7 @@
                         <?php echo selectSpecificColumn("`direction_name`", "`direction`", "WHERE `direction_id` = ".$row['direction_id'])[0]['direction_name']; ?>
                       </a>
                     <?php } else { ?>
-                      <p class="text-danger "><?php echo language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></p>
+                      <p class="text-danger "><?php echo lang("NO DATA ENTERED", @$_SESSION['sys']['lang']) ?></p>
                     <?php } ?>
                   </td>
                   <?php $sourceip = $row['source_id'] == 0 ? $row['piece_ip'] : selectSpecificColumn('piece_ip','pieces','WHERE id = ' . $row['source_id'])[0]['piece_ip']; ?>
@@ -610,7 +610,7 @@
                     <?php if (!empty($row['device_type'])) { ?>
                       <?php echo $row['device_type'] ?></td>
                     <?php } else { ?>
-                      <p class="text-danger "><?php echo language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></p>
+                      <p class="text-danger "><?php echo lang("NO DATA ENTERED", @$_SESSION['sys']['lang']) ?></p>
                     <?php } ?>
                   <td><?php echo $row['conn_type']; ?></td>
                   <td><?php  echo $row['address'] == '' ? 'لا يوجد' : $row['address']; ?></td>
@@ -619,7 +619,7 @@
                     <?php if ($row['type_id'] != 0) { ?>
                       <?php echo selectSpecificColumn("`type_name`", "`types`", "WHERE `type_id` = ". $row['type_id'])[0]['type_name']; ?></td>
                     <?php } else { ?>
-                      <p class="text-danger "><?php echo language("NO DATA ENTERED", @$_SESSION['systemLang']) ?></p>
+                      <p class="text-danger "><?php echo lang("NO DATA ENTERED", @$_SESSION['sys']['lang']) ?></p>
                     <?php } ?>
                   <td><?php echo $row['notes']; ?></td>
                   <td class="text-capitalize">
@@ -636,13 +636,13 @@
                       echo '-----';
                     } ?>
                   </td>
-                  <td><?php echo $row['direct'] == 0 ? language('NOT DIRECT', @$_SESSION['systemLang']) : language('DIRECT', @$_SESSION['systemLang']); ?></td>
-                  <td><?php echo $row['added_date'] == '0000-00-00' ? language("NO DATA ENTERED", @$_SESSION['systemLang']) : $row['added_date'] ?></td>
+                  <td><?php echo $row['direct'] == 0 ? lang('NOT DIRECT', @$_SESSION['sys']['lang']) : lang('DIRECT', @$_SESSION['sys']['lang']); ?></td>
+                  <td><?php echo $row['added_date'] == '0000-00-00' ? lang("NO DATA ENTERED", @$_SESSION['sys']['lang']) : $row['added_date'] ?></td>
                   <td><?php echo selectSpecificColumn("`UserName`", "`users`", "WHERE `UserID` = ". $row['added_by'])[0]["UserName"]; ?></td>
                   <td>
-                    <a class="btn btn-success text-capitalize fs-12 <?php if ($_SESSION['pcs_update'] == 0) {echo 'd-none';} ?>" href="pieces.php?do=edit-piece&piece-id=<?php echo $row['id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo language('EDIT', @$_SESSION['systemLang']) ?> --></a>
+                    <a class="btn btn-success text-capitalize fs-12 <?php if ($_SESSION['sys']['pcs_update'] == 0) {echo 'd-none';} ?>" href="pieces.php?do=edit-piece&piece-id=<?php echo $row['id']; ?>" target=""><i class="bi bi-pencil-square"></i><!-- <?php echo lang('EDIT', @$_SESSION['sys']['lang']) ?> --></a>
                     <?php if ($row['type_id'] != 4) { ?>
-                      <a class="btn btn-outline-primary text-capitalize fs-12 <?php if ($_SESSION['pcs_show'] == 0) {echo 'd-none';} ?>" href="pieces.php?do=show-piece&dir-id=<?php echo $row['direction_id'] ?>&srcId=<?php echo $row['id'] ?>" ><i class="bi bi-eye"></i><!-- <?php echo language('SHOW', @$_SESSION['systemLang']).' '.language('PIECES', @$_SESSION['systemLang']) ?> --></a>
+                      <a class="btn btn-outline-primary text-capitalize fs-12 <?php if ($_SESSION['sys']['pcs_show'] == 0) {echo 'd-none';} ?>" href="pieces.php?do=show-piece&dir-id=<?php echo $row['direction_id'] ?>&srcId=<?php echo $row['id'] ?>" ><i class="bi bi-eye"></i><!-- <?php echo lang('SHOW', @$_SESSION['sys']['lang']).' '.lang('PIECES', @$_SESSION['sys']['lang']) ?> --></a>
                     <?php } ?>
                     <?php if ($row['piece_ip'] != 1) { ?>
                       <button class="btn btn-outline-secondary text-capitalize fs-12" onclick="ping(this)" value="<?php echo $row['piece_ip']; ?>">ping</button>
@@ -663,14 +663,14 @@
               <?php foreach ($columns as $key => $col) { ?>
                 <div>
                   <input type="checkbox" id="col-<?php echo $i + 1 ?>" onclick="showHideColumn(this, 'piecesTbl')" data-col="<?php echo $key ?>" >&nbsp;
-                  <label for="col-<?php echo $i + 1 ?>"><?php echo language($col, @$_SESSION['systemLang']) ?></label>
+                  <label for="col-<?php echo $i + 1 ?>"><?php echo lang($col, @$_SESSION['sys']['lang']) ?></label>
                 </div>
               <?php $i++; ?>
               <?php } ?>
               <!-- input for show all columns -->
               <div>
                 <input type="checkbox" name="show-all" id="show-all" onclick="showHideAllColumns()">&nbsp;
-                <label for="show-all"><?php echo language('SHOW ALL', @$_SESSION['systemLang']) ?></label>
+                <label for="show-all"><?php echo lang('SHOW ALL', @$_SESSION['sys']['lang']) ?></label>
               </div>
             </div>
           </div>
@@ -680,10 +680,10 @@
         <div class="my-5 container">
           <!-- start header -->
           <header class="header">
-            <h1 class="h1 text-capitalize"><?php echo language('ARCHIVE', @$_SESSION['systemLang']) ?></h1>
+            <h1 class="h1 text-capitalize"><?php echo lang('ARCHIVE', @$_SESSION['sys']['lang']) ?></h1>
             <?php
               // error message
-              $msg = '<div class="alert alert-danger text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;'.language('WRONG CHOISE', @$_SESSION['systemLang']).'</div>';
+              $msg = '<div class="alert alert-danger text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;'.lang('WRONG CHOISE', @$_SESSION['sys']['lang']).'</div>';
               // redirect to home page
               redirect_home($msg, "back");
             ?>

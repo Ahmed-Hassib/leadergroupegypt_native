@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // add new company
     $is_inserted_company = $reg_obj->add_new_company(array($company_name, $company_code, $manager_name, $manager_phone, get_date_now()));
     // echo success message
-    $msg = '<div class="alert alert-success text-capitalize fw-bolder text-center">' . language("YOUR COMPANY IS CREATED SUCCESSFULLY!") . '</div>';
+    $msg = '<div class="alert alert-success text-capitalize fw-bolder text-center">' . lang("YOUR COMPANY IS CREATED SUCCESSFULLY!") . '</div>';
     // check if inserted company
     if ($is_inserted_company) {
       // admin of this company info
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       // check if inserted license
       if ($is_inserted_license) {
         // echo success message
-        $msg .= '<div class="alert alert-success text-capitalize fw-bolder text-center">' . language("ONE MONTH FREE SUBSCRIPTION ACTIVATED SUCCESSFULLY!") . '</div>';
+        $msg .= '<div class="alert alert-success text-capitalize fw-bolder text-center">' . lang("ONE MONTH FREE SUBSCRIPTION ACTIVATED SUCCESSFULLY!") . '</div>';
         // if company was inserted
         // and license was inserted
         if ($is_inserted_company && $is_inserted_license) {
@@ -62,42 +62,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           // check if admin info is inserted
           if ($is_inserted_admin_info) {
             // success message
-            $msg .= '<div class="alert alert-success text-capitalize fw-bolder text-center">' . language("YOUR ADMIN ACCOUNT IS CREATED SUCCESSFULLY!") . '</div>';
+            $msg .= '<div class="alert alert-success text-capitalize fw-bolder text-center">' . lang("YOUR ADMIN ACCOUNT IS CREATED SUCCESSFULLY!") . '</div>';
             // add admin permission
             $is_inserted_admin_permission = $reg_obj->add_admin_permission($user_id);
             // check if admin permisssion was inserted
             if ($is_inserted_admin_permission) {
               // success message
-              $msg .= '<div class="alert alert-success text-capitalize fw-bolder text-center">' . language("YOUR ADMIN ACCOUNT PERMISSIONS IS CREATED SUCCESSFULLY!") . '</div>';
+              $msg .= '<div class="alert alert-success text-capitalize fw-bolder text-center">' . lang("YOUR ADMIN ACCOUNT PERMISSIONS IS CREATED SUCCESSFULLY!") . '</div>';
               // redirect to url
               $url = "../login.php?username=$username&password=$password&company-code=$company_code";
             } else {
               // failed message
-              $msg .= '<div class="alert alert-danger text-capitalize fw-bolder text-center">' . language('ADMIN PERMISSION IS NOT INSERTED PLEASE, TRY AGAIN OR CALL TECH SUPPORT!') . '</div>';
+              $msg .= '<div class="alert alert-danger text-capitalize fw-bolder text-center">' . lang('ADMIN PERMISSION IS NOT INSERTED PLEASE, TRY AGAIN OR CALL TECH SUPPORT!') . '</div>';
             }
           } else {
             // failed message
-            $msg .= '<div class="alert alert-danger text-capitalize fw-bolder text-center">' . language('ADMIN IS NOT INSERTED PLEASE, TRY AGAIN OR CALL TECH SUPPORT!') . '</div>';
+            $msg .= '<div class="alert alert-danger text-capitalize fw-bolder text-center">' . lang('ADMIN IS NOT INSERTED PLEASE, TRY AGAIN OR CALL TECH SUPPORT!') . '</div>';
           }
         } else {
           // failed message
-          $msg .= '<div class="alert alert-danger text-capitalize fw-bolder text-center">' . language('THIS USERNAME IS ALREADY EXIST') . '</div>';
+          $msg .= '<div class="alert alert-danger text-capitalize fw-bolder text-center">' . lang('THIS USERNAME IS ALREADY EXIST') . '</div>';
         }
       } else {
         // failed message
-        $msg .= '<div class="alert alert-danger text-capitalize fw-bolder text-center">' . language('LICENSE IS NOT INSERTED PLEASE, TRY AGAIN OR CALL TECH SUPPORT!') . '</div>';
+        $msg .= '<div class="alert alert-danger text-capitalize fw-bolder text-center">' . lang('LICENSE IS NOT INSERTED PLEASE, TRY AGAIN OR CALL TECH SUPPORT!') . '</div>';
       }
     } else {
       // failed message
-      $msg .= '<div class="alert alert-danger text-capitalize fw-bolder text-center">' . language('COMPANY IS NOT INSERTED PLEASE, TRY AGAIN OR CALL TECH SUPPORT!') . '</div>';
+      $msg .= '<div class="alert alert-danger text-capitalize fw-bolder text-center">' . lang('COMPANY IS NOT INSERTED PLEASE, TRY AGAIN OR CALL TECH SUPPORT!') . '</div>';
     }
   } else {
     // success message
-    $msg .= '<div class="alert alert-danger text-capitalize fw-bolder text-center">' . language('COMPANY NAME IS ALREADY EXIST!') . '</div>';
+    $msg .= '<div class="alert alert-danger text-capitalize fw-bolder text-center">' . lang('COMPANY NAME IS ALREADY EXIST!') . '</div>';
   }
 
   // success message
-  $msg .= '<div class="alert alert-success text-capitalize fw-bolder text-center">' . language('YOU WILL BE AUTOMATICALLY REDIRECTED AFTER') . " 5 " . language('SECOND') . '</div>';
+  $msg .= '<div class="alert alert-success text-capitalize fw-bolder text-center">' . lang('YOU WILL BE AUTOMATICALLY REDIRECTED AFTER') . " 5 " . lang('SECOND') . '</div>';
 ?>
 
   <!-- start edit profile page -->

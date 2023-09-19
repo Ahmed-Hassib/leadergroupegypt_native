@@ -1,6 +1,6 @@
 <?php
 // check if Get request userid is numeric and get the integer value
-$userid = isset($_GET['userid']) && is_numeric($_GET['userid']) ? intval($_GET['userid']) : 0;
+$userid = isset($_GET['userid']) && !empty($_GET['userid']) ? base64_decode($_GET['userid']) : 0;
 // get back flage value
 $is_back = isset($_GET['back']) && !empty($_GET['back']) ? 'back' : null;
 // check if object is set or not
@@ -8,6 +8,7 @@ if (!isset($user_obj)) {
   // create an object of User class
   $user_obj = new User();
 }
+
 // check if user is exist
 $is_exist = $user_obj->is_exist("`UserID`", "`users`", $userid);
 // if user exist
@@ -19,12 +20,13 @@ if ($is_exist == true) {
 
   // log message
   $logMsg = "Users dept:: user deleted successfully.";
-  create_logs($_SESSION['UserName'], $logMsg);
+  create_logs($_SESSION['sys']['UserName'], $logMsg);
 
-  $_SESSION['flash_message'] = 'AN USER WAS DELETED SUCCESSFULLY';
+  $_SESSION['flash_message'] = 'DELETED';
   $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
   $_SESSION['flash_message_class'] = 'success';
   $_SESSION['flash_message_status'] = true;
+  $_SESSION['flash_message_lang_file'] = 'employees';
   // redirect to home page
   redirect_home(null, $is_back, 0);
 } else {

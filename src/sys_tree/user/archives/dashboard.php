@@ -1,8 +1,8 @@
 <!-- start home stats container -->
-<div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
+<div class="container" dir="<?php echo $page_dir ?>">
     <!-- start header -->
     <header class="header">
-        <h1 class="h1 text-capitalize"><?php echo language('ARCHIVE', @$_SESSION['systemLang']) ?></h1>
+        <h1 class="h1 text-capitalize"><?php echo lang('ARCHIVE', @$_SESSION['sys']['lang']) ?></h1>
     </header>
     <!-- end header -->
     <div class="mb-3 row row-cols-sm-1 row-cols-md-4 g-3">
@@ -12,7 +12,7 @@
                     <i class="bi bi-people"></i>
                     <span>
                         <a href="?do=piecesArchive" class="stretched-link text-capitalize">
-                            <?php echo language('PIECES/CLIENTS ARCHIVE', @$_SESSION['systemLang']) ?>
+                            <?php echo lang('PIECES/CLIENTS ARCHIVE', @$_SESSION['sys']['lang']) ?>
                         </a>
                     </span>
                 </div>
@@ -24,7 +24,7 @@
                     <i class="bi bi-folder-x"></i>
                     <span>
                         <a href="?do=malfunctionsArchive" class="stretched-link text-capitalize">
-                            <?php echo language('MALFUNCTIONS ARCHIVE', @$_SESSION['systemLang']) ?>
+                            <?php echo lang('MALFUNCTIONS ARCHIVE', @$_SESSION['sys']['lang']) ?>
                         </a>
                     </span>
                 </div>
@@ -36,7 +36,7 @@
                     <i class="bi bi-terminal"></i>
                     <span>
                         <a href="?do=combinationsArchive" class="stretched-link text-capitalize">
-                            <?php echo language('COMBINATIONS ARCHIVE', @$_SESSION['systemLang']) ?>
+                            <?php echo lang('COMBINATIONS ARCHIVE', @$_SESSION['sys']['lang']) ?>
                         </a>
                     </span>
                 </div>

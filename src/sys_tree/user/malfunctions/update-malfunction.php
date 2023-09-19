@@ -1,21 +1,21 @@
-<?php if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  if (!isset($mal_obj)) {
-    // create an object of Malfunction class
-    $mal_obj = new Malfunction();
-  }
+<!-- <pre dir="ltr"><?php print_r($_POST) ?></pre> -->
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  // create an object of Malfunction class
+  $mal_obj = !isset($mal_obj) ? new Malfunction() : $mal_obj;
   // get update owner id
-  $update_owner_id = $_SESSION['UserID'];
+  $update_owner_id = base64_decode($_SESSION['sys']['UserID']);
   // get update owner type
-  $update_owner_type = $_SESSION['isTech'];
+  $update_owner_type = $_SESSION['sys']['isTech'];
   // get update owner job_id
-  $update_owner_job_id = $_SESSION['job_title_id'];
+  $update_owner_job_id = base64_decode($_SESSION['sys']['job_title_id']);
   // get malfunction id
-  $mal_id = isset($_POST['mal-id']) && !empty($_POST['mal-id']) ? $_POST['mal-id']: 0;
+  $mal_id = isset($_POST['mal-id']) && !empty($_POST['mal-id']) ? base64_decode($_POST['mal-id']) : 0;
 
   // check if malfunction is exist or not
   if ($mal_obj->is_exist("`mal_id`", "`malfunctions`", $mal_id)) {
     // get malfunction basics info
-    $stored_basics_info = $mal_obj->get_spec_malfunction($mal_id, $_SESSION['company_id']);
+    $stored_basics_info = $mal_obj->get_spec_malfunction($mal_id, base64_decode($_SESSION['sys']['company_id']));
     // get is exist boolean value
     $is_exist = $stored_basics_info[0];
     // check if exist again
@@ -23,16 +23,16 @@
       // get info
       $mal_info = $stored_basics_info[1][0];
       // get new malfunction info
-      $manager_id   = $_POST['admin-id'];
-      $tech_id      = $_POST['technical-id-value'];
+      $manager_id   = base64_decode($_POST['admin-id']);
+      $tech_id      = base64_decode($_POST['technical-id-value']);
 
       // check who is doing the update
       switch ($update_owner_job_id) {
-        /**
+          /**
          * updates for:
-          * [1] The Manager
-          * [2] Customer Services
-          */
+         * [1] The Manager
+         * [2] Customer Services
+         */
         case 1:
         case 3:
         case 4:
@@ -42,16 +42,16 @@
             do_after_sales_updates($_POST);
           }
           break;
-        /**
-         * updates for:
-         * [1] Technical Man
-         */
+          /**
+           * updates for:
+           * [1] Technical Man
+           */
         case 2:
           // check who is doing the updates
           if ($update_owner_id == $tech_id && $mal_info['mal_status'] != 1) {
             do_technical_updates($_POST);
           }
-            
+
           // check if upload media
           if (count($_FILES) > 0) {
             $path = $uploads . "malfunctions/";
@@ -60,47 +60,46 @@
           break;
       }
       // prepare flash session variables
-      $_SESSION['flash_message'] = 'MALFUNCTION WAS UPDATED SUCCESSFULLY';
+      $_SESSION['flash_message'] = 'UPDATED';
       $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
       $_SESSION['flash_message_class'] = 'success';
       $_SESSION['flash_message_status'] = true;
+      $_SESSION['flash_message_lang_file'] = 'malfunctions';
     } else {
       // prepare flash session variables
-      $_SESSION['flash_message'] = 'NO DATA FOUNDED';
+      $_SESSION['flash_message'] = 'NO DATA';
       $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
       $_SESSION['flash_message_class'] = 'danger';
       $_SESSION['flash_message_status'] = false;
+      $_SESSION['flash_message_lang_file'] = 'global_';
     }
   } else {
     // prepare flash session variables
-    $_SESSION['flash_message'] = 'NO DATA FOUNDED';
+    $_SESSION['flash_message'] = 'NO DATA';
     $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
     $_SESSION['flash_message_class'] = 'danger';
     $_SESSION['flash_message_status'] = false;
+    $_SESSION['flash_message_lang_file'] = 'global_';
   }
   // redirect to the previous page
-  redirect_home(null,'back', 0);
+  redirect_home(null, 'back', 0);
 } else {
   // include no data founded
   include_once $globmod . 'permission-error.php';
 }
-?>
 
-
-<?php
 /**
  * do_manager_updates function
  * used to do only manager updates
  */
-function do_manager_updates($info) {
-  if (!isset($mal_obj)) {
-    // create an object of Malfunction class
-    $mal_obj = new Malfunction();
-  }
+function do_manager_updates($info)
+{
+  // create an object of Malfunction class
+  $mal_obj = !isset($mal_obj) ?new Malfunction():$mal_obj;
   // get malfunction id
-  $mal_id = $info['mal-id'];
+  $mal_id = base64_decode($info['mal-id']);
   // get malfunction technical id
-  $tech_id = $info['technical-id-value'];
+  $tech_id = base64_decode($info['technical-id-value']);
   // get malfunction description
   $descreption = $info['descreption'];
   // get previous malfunction tecnical id
@@ -114,21 +113,20 @@ function do_manager_updates($info) {
     $mal_obj->reset_malfunction_info(array($tech_id, $descreption, get_date_now(), get_time_now(), $mal_id));
   }
 }
-?>
 
-<?php
 /**
  * do_technical_updates function
  * used to do only technical updates
  */
-function do_technical_updates($info) {
+function do_technical_updates($info)
+{
   // return $info['mal-status'] == 1 ? true : false; 
   // get malfunction id
-  $mal_id = $info['mal-id'];
+  $mal_id = base64_decode($info['mal-id']);
   // get malfunction status
-  $mal_status = $info['mal-status'];
+  $mal_status = base64_decode($info['mal-status']);
   // get technical status
-  $tech_status = $info['mal-status'];
+  $tech_status = base64_decode($info['mal-status']);
   // get technical man comment
   $tech_comment = isset($info['comment']) ? $info['comment'] : '';
   // get technical man status comment
@@ -142,14 +140,13 @@ function do_technical_updates($info) {
   // get updated status
   $mal_obj->update_malfunction_tech(array($mal_status, $cost, get_date_now(), get_time_now(), $tech_comment, $tech_comment_status, $tech_status, $mal_id));
 }
-?>
 
-<?php 
 /**
  * upload_malfunction_media function
  * used to upload media to database
  */
-function upload_malfunction_media($media_files, $mal_id, $path) {
+function upload_malfunction_media($media_files, $mal_id, $path)
+{
   if (!isset($mal_obj)) {
     // create an object of Malfunction class
     $mal_obj = new Malfunction();
@@ -168,45 +165,44 @@ function upload_malfunction_media($media_files, $mal_id, $path) {
   if (!file_exists($path)) {
     mkdir($path);
   }
-  
-  $path .= $_SESSION['company_id'] . "/";
-  
+
+  $path .= base64_decode($_SESSION['sys']['company_id']) . "/";
+
   if (!file_exists($path)) {
     mkdir($path);
   }
   // loop on it
-  for ($i=0; $i < count($files_names); $i++) {
+  for ($i = 0; $i < count($files_names); $i++) {
     // media temp
     $media_temp = [];
     // check if not empty
     if (!empty($files_names[$i]) && $files_error[$i] == 0) {
       $media_temp = explode('.', $files_names[$i]);
-      $media_temp[0] = date('dmY') .'_'. $mal_id .'_'. rand(00000000, 99999999) .'_'.($i + 1);
-      $media_name = join('.',$media_temp);
-      move_uploaded_file($files_tmp_name[$i], $path.$media_name);
+      $media_temp[0] = date('dmY') . '_' . $mal_id . '_' . rand(00000000, 99999999) . '_' . ($i + 1);
+      $media_name = join('.', $media_temp);
+      move_uploaded_file($files_tmp_name[$i], $path . $media_name);
 
       // // upload files info into database
-      $mal_obj->upload_media($mal_id, $media_name, strpos($files_types[$i], 'image') !== false ? 'img' : 'video' );
+      $mal_obj->upload_media($mal_id, $media_name, strpos($files_types[$i], 'image') !== false ? 'img' : 'video');
     }
   }
 }
-?>
 
 
-<?php
 /**
  * do_after_sales_updates function
  * used to do only after_sales updates
  */
-function do_after_sales_updates($info) {
+function do_after_sales_updates($info)
+{
   // get malfunction id
-  $mal_id = $info['mal-id'];
+  $mal_id = base64_decode($info['mal-id']);
   // get technical quality
-  $tech_qty = isset($info['technical-qty']) ? $info['technical-qty'] : 0;
+  $tech_qty = isset($info['technical-qty']) ? base64_decode($info['technical-qty']) : 0;
   // get services quality
-  $service_qty = isset($info['service-qty']) ? $info['service-qty'] : 0;
+  $service_qty = isset($info['service-qty']) ? base64_decode($info['service-qty']) : 0;
   // get money review
-  $money_review = isset($info['money-review']) ? $info['money-review'] : 0;
+  $money_review = isset($info['money-review']) ? base64_decode($info['money-review']) : 0;
   // get review comment
   $review_comment = isset($info['review-comment']) ? $info['review-comment'] : '';
   // check if will review
@@ -219,5 +215,3 @@ function do_after_sales_updates($info) {
     $mal_obj->update_malfunction_review(array(get_date_now(), get_time_now(), $money_review, $service_qty, $tech_qty, $review_comment, $mal_id));
   }
 }
-?>
-

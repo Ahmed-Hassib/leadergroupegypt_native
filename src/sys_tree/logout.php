@@ -9,10 +9,7 @@ session_start();
 session_regenerate_id();
 
 // unset all data session
-session_unset();
-
-// destroy all data session
-session_destroy();
+unset($_SESSION['sys']);
 
 // redirect to the login page
 header('Location: ./login.php');

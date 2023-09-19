@@ -1,18 +1,17 @@
+<pre dir="ltr">
 <?php
 // check the request post
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  if (!isset($user_obj)) {
-    // create an object of User class
-    $user_obj = new User();
-  }
+  // create an object of User class
+  $user_obj = new User();
 
   // get personal info from the form
-  $userid             = isset($_POST['userid'])   && !empty($_POST['userid'])     ? $_POST['userid']          : '';
+  $userid             = isset($_POST['userid'])   && !empty($_POST['userid'])     ? base64_decode($_POST['userid'])       : '';
   $fullname           = isset($_POST['fullname']) && !empty($_POST['fullname'])   ? $_POST['fullname']        : '';
   $username           = isset($_POST['username']) && !empty($_POST['username'])   ? $_POST['username']        : '';
   $pass               = isset($_POST['password']) && !empty($_POST['password'])   ? $_POST['password']        : '';
   $email              = isset($_POST['email'])                                    ? $_POST['email']           : '';
-  $job_title_id       = isset($_POST['job_title_id'])                             ? $_POST['job_title_id']    : '';
+  $job_title_id       = isset($_POST['job_title_id'])                             ? base64_decode($_POST['job_title_id']) : '';
   $isTech             = $job_title_id == 2 ? 1 : 0;
   $trust_status       = $job_title_id == 1 ? 1 : 0;
   $gender             = isset($_POST['gender'])   && !empty($_POST['gender'])     ? $_POST['gender']          : '';
@@ -21,43 +20,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $dateOfBirth        = isset($_POST['date-of-birth'])                            ? $_POST['date-of-birth']   : '';
   $twitter            = isset($_POST['twitter'])                                  ? $_POST['twitter']         : '';
   $facebook           = isset($_POST['facebook'])                                 ? $_POST['facebook']        : '';
-  // // get employee type
-  // $empType = $user_obj->select_specific_column("`isTech`", "`users`", "WHERE `UserID` = ".$userid)[0]['isTech'];
 
-  // $isTech = !isset($_POST['job_title_id']) ? $empType : $_POST['job_title_id'];
   // password trick
   $pass = empty($passwd) ? $_POST['old-password'] : sha1($passwd);
-  
+
   // validate the form
   $formErorr = array();   // error array 
 
   // validate username
   if (strlen($username) < 4) {
-    $formErorr[] = 'username cannot be less than 4 characters';
+    $formErorr[] = 'username length';
   }
   if (empty($username)) {
-    $formErorr[] = 'username cannot be empty';
+    $formErorr[] = 'username empty';
   }
 
   // validate fullname
   if (empty($fullname)) {
-    $formErorr[] = 'fullname cannot be empty';
+    $formErorr[] = 'fullname empty';
   }
-  
+
   $msg = "";
 
   // check if empty form error
   if (empty($formErorr)) {
     // get user that have the same username
     $checkStmt = $con->prepare("SELECT *FROM `users` WHERE `UserName` = ? AND `UserID` != ? AND `company_id` = ?");
-    $checkStmt->execute(array($username, $userid, $_SESSION['company_id']));
+    $checkStmt->execute(array($username, $userid, $_SESSION['sys']['company_id']));
     $count = $checkStmt->rowCount();
     // check if username is exist
     if ($count > 0) {
-      $_SESSION['flash_message'] = 'THIS USERNAME IS ALREADY EXIST';
+      $_SESSION['flash_message'] = 'USERNAME EXIST';
       $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
       $_SESSION['flash_message_class'] = 'danger';
       $_SESSION['flash_message_status'] = false;
+      $_SESSION['flash_message_lang_file'] = 'employees';
     } else {
       // array of user info
       $user_info = array();
@@ -66,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       // call update user function
       $user_obj->update_user_info($user_info);
       // check update permission
-      if ($_SESSION['user_update'] == 1) {
+      if ($_SESSION['sys']['user_update'] == 1) {
         // user permissions
         $userAdd            = isset($_POST['userAdd'])            ? $_POST['userAdd']           : 0;
         $userUpdate         = isset($_POST['userUpdate'])         ? $_POST['userUpdate']        : 0;
@@ -102,6 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $combReview         = isset($_POST['combReview'])         ? $_POST['combReview']        : 0;
         $combMediaDelete    = isset($_POST['combMediaDelete'])    ? $_POST['combMediaDelete']   : 0;
         $combMediaDownload  = isset($_POST['combMediaDownload'])  ? $_POST['combMediaDownload'] : 0;
+        $changeMikrotikInfo = isset($_POST['changeMikrotikInfo']) ? $_POST['changeMikrotikInfo']  : 0;
         $permissionUpdate   = isset($_POST['permissionUpdate'])   ? $_POST['permissionUpdate']  : 0;
         $permissionShow     = isset($_POST['permissionShow'])     ? $_POST['permissionShow']    : 0;
         $changeCompanyImg   = isset($_POST['changeCompanyImg'])   ? $_POST['changeCompanyImg']  : 0;
@@ -112,12 +110,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($checkItem == true) {
           // permisssions
-          array_push($permissions, $userAdd, $userUpdate, $userDelete, $userShow, $malAdd, $malUpdate, $malDelete, $malShow, $malReviw, $malMediaDelete, $malMediaDownload, $combAdd, $combUpdate, $combDelete, $combShow, $combReview, $combMediaDelete, $combMediaDownload, $pcsAdd, $pcsUpdate, $pcsDelete, $pcsShow, $clientsAdd, $clientsUpdate, $clientsDelete, $clientsShow, $dirAdd, $dirUpdate, $dirDelete, $dirShow, $connectionAdd, $connectionUpdate, $connectionDelete, $connectionShow, $permissionUpdate, $permissionShow, $changeCompanyImg, $userid);
+          array_push($permissions, $userAdd, $userUpdate, $userDelete, $userShow, $malAdd, $malUpdate, $malDelete, $malShow, $malReviw, $malMediaDelete, $malMediaDownload, $combAdd, $combUpdate, $combDelete, $combShow, $combReview, $combMediaDelete, $combMediaDownload, $pcsAdd, $pcsUpdate, $pcsDelete, $pcsShow, $clientsAdd, $clientsUpdate, $clientsDelete, $clientsShow, $dirAdd, $dirUpdate, $dirDelete, $dirShow, $connectionAdd, $connectionUpdate, $connectionDelete, $connectionShow, $permissionUpdate, $permissionShow, $changeMikrotikInfo, $changeCompanyImg, $userid);
           // call permission update function
           $user_obj->update_user_permissions($permissions);
         } else {
           // permisssions
-          array_push($permissions, $userid, $userAdd, $userUpdate, $userDelete, $userShow, $malAdd, $malUpdate, $malDelete, $malShow, $malReviw, $malMediaDelete, $malMediaDownload, $combAdd, $combUpdate, $combDelete, $combShow, $combReview, $combMediaDelete, $combMediaDownload, $pcsAdd, $pcsUpdate, $pcsDelete, $pcsShow, $clientsAdd, $clientsUpdate, $clientsDelete, $clientsShow, $dirAdd, $dirUpdate, $dirDelete, $dirShow, $connectionAdd, $connectionUpdate, $connectionDelete, $connectionShow, $permissionUpdate, $permissionShow, $changeCompanyImg);
+          array_push($permissions, $userid, $userAdd, $userUpdate, $userDelete, $userShow, $malAdd, $malUpdate, $malDelete, $malShow, $malReviw, $malMediaDelete, $malMediaDownload, $combAdd, $combUpdate, $combDelete, $combShow, $combReview, $combMediaDelete, $combMediaDownload, $pcsAdd, $pcsUpdate, $pcsDelete, $pcsShow, $clientsAdd, $clientsUpdate, $clientsDelete, $clientsShow, $dirAdd, $dirUpdate, $dirDelete, $dirShow, $connectionAdd, $connectionUpdate, $connectionDelete, $connectionShow, $permissionUpdate, $permissionShow, $changeMikrotikInfo, $changeCompanyImg);
           // call permission insert function
           $user_obj->insert_user_permissions($permissions);
         }
@@ -133,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       // check if profile image changed
       if ($file_error == 0 && $file_size > 0) {
         // profile image path
-        $path = $uploads . "//employees-img/" . $_SESSION['company_id'] . "/";
+        $path = $uploads . "employees-img/" . base64_decode($_SESSION['sys']['company_id']) . "/";
         // check path
         if (!file_exists($path)) {
           mkdir($path);
@@ -142,10 +140,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $media_temp = [];
         // check if not empty
         if (!empty($file_name)) {
+          // get old pgoto
+          $old_name = $user_obj->select_specific_column("`profile_img`", "`users`", "WHERE `UserID` = $userid")[0]['profile_img'];
+          // check if not empty && exist
+          if (!empty($old_name) && file_exists($path . $old_name)) {
+            // delete old one
+            unlink($path . $old_name);
+          }
           $media_temp = explode('.', $file_name);
-          $media_temp[0] = date('dmY') .'_'. $userid .'_'. rand(00000000, 99999999);
-          $media_name = join('.',$media_temp);
-          move_uploaded_file($files_tmp_name, $path.$media_name);
+          $media_temp[0] = date('dmY') . '_' . $userid . '_' . rand(00000000, 99999999);
+          $media_name = join('.', $media_temp);
+          move_uploaded_file($files_tmp_name, $path . $media_name);
 
           // upload files info into database
           $user_obj->upload_profile_img(array($media_name, $userid));
@@ -153,13 +158,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       }
 
       // update SESSION variables
-      if ($_SESSION['UserID'] == $userid) {
-        if (!isset($session_obj)) {
-          // create an object of Session class
-          $session_obj = new Session();
-        }
+      if (base64_decode($_SESSION['sys']['UserID']) == $userid) {
+        // create an object of Session class
+        $session_obj = new Session();
         // get user info
         $user_info = $session_obj->get_user_info($userid);
+        
         // check if done
         if ($user_info[0] == true) {
           // set user session
@@ -168,12 +172,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       }
       // log message
       $logMsg = "Update user info -> username: " . $username . ".";
-      create_logs($_SESSION['UserName'], $logMsg);
+      create_logs($_SESSION['sys']['UserName'], $logMsg);
 
-      $_SESSION['flash_message'] = 'USER INFO UPDATED SUCCESSFULLY';
+      $_SESSION['flash_message'] = 'UPDATED';
       $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
       $_SESSION['flash_message_class'] = 'success';
       $_SESSION['flash_message_status'] = true;
+      $_SESSION['flash_message_lang_file'] = 'employees';
     }
   } else {
     // loop on form error array
@@ -182,6 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $_SESSION['flash_message_icon'][$key] = 'bi-exclamation-triangle-fill';
       $_SESSION['flash_message_class'][$key] = 'danger';
       $_SESSION['flash_message_status'][$key] = false;
+      $_SESSION['flash_message_lang_file'][$key] = 'employees';
     }
   }
   // redirect to previous page

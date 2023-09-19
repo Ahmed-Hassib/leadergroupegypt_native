@@ -1,7 +1,7 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  $userid = $_SESSION['UserID'];
-  $company_id = $_SESSION['company_id'];
+  $userid = $_SESSION['sys']['UserID'];
+  $company_id = $_SESSION['sys']['company_id'];
   $type       = intval($_POST['type']);
   $comment    = $_POST['comment'];
   

@@ -1,12 +1,18 @@
 (function () {
   // direction tree body
   let dir_tree_body = document.querySelector('.genealogy-body');
+  // direction tree
+  let dir_tree = document.querySelector('#direction_tree');
   // get updated dir select box
   let updated_dir = document.getElementById("updated-dir-name");
   // get updated dir id input
   let updated_dir_id = document.getElementById('updated-dir-id');
   // get new dir name input
   let new_dir_name = document.getElementById('new-direction-name');
+  // zoom in button
+  let zoom_in_btn = document.querySelector('#zoom_in_btn');
+  // zoom out button
+  let zoom_out_btn = document.querySelector('#zoom_out_btn');
 
   if (updated_dir != null) {
     // add event on updated direction select box
@@ -49,7 +55,9 @@
   }
 
   if (dir_tree_body != null) {
-    dir_tree_body.scrollLeft = dir_tree_body.offsetWidth / 2 * 3
+    dir_tree_body.scrollLeft = dir_tree_body.offsetWidth / 2 * 3;
+    // tree initialization
+    tree_int(dir_tree, zoom_in_btn, zoom_out_btn);
   }
 
 })()
@@ -111,6 +119,19 @@ function put_deleted_data(btn) {
   deleted_dir_name.value = btn.dataset.directionId;
 }
 
+function tree_int(tree, zoom_in_btn, zoom_out_btn) {
+  // get cached scale from localStorage
+  let tree_scale = restore_scale_value();
+  // check value
+  if (tree_scale != null) {
+    // set tree scale
+    tree.style['transform'] = `scale(${tree_scale})`;
+    tree.style['transform-origin'] = '20% 50% 0px';
+    // update buttons scale value
+    update_buttons_scale_value(zoom_in_btn, zoom_out_btn, tree_scale);
+  }
+}
+
 function zoom_in(input_in, input_out, tree) {
   // get zoom value
   let zoom_value = Number(input_in.dataset.zoomValue) + 0.1;
@@ -119,6 +140,8 @@ function zoom_in(input_in, input_out, tree) {
   // update zoom value of zoom in button
   input_in.dataset.zoomValue = zoom_value;
   input_out.dataset.zoomValue = zoom_value;
+  // store new value of tree scale
+  store_scale_value(zoom_value);
 }
 
 function zoom_out(input_out, input_in, tree) {
@@ -129,6 +152,8 @@ function zoom_out(input_out, input_in, tree) {
   // update zoom value of zoom in button
   input_in.dataset.zoomValue = zoom_value;
   input_out.dataset.zoomValue = zoom_value;
+  // store new value of tree scale
+  store_scale_value(zoom_value);
 }
 
 function reset_zoom(input_in, input_out, tree) {
@@ -138,12 +163,27 @@ function reset_zoom(input_in, input_out, tree) {
   input_in.dataset.zoomValue = zoom_value;
   input_out.dataset.zoomValue = zoom_value;
   tree.style['transform'] = `scale(${zoom_value})`
+  // store new value of tree scale
+  store_scale_value(zoom_value);
 }
 
 function add_transform_origin(tree) {
-  tree.style['transform-origin'] = '0% 0% 0px';
+  tree.style['transform-origin'] = '20% 50% 0px';
 }
 
 function remove_transform_origin(tree) {
   tree.style['transform-origin'] = 'unset';
+}
+
+function restore_scale_value() {
+  return localStorage.getItem('tree_scale');
+}
+
+function store_scale_value(scale_value) {
+  localStorage.setItem('tree_scale', Number(scale_value).toFixed(2));
+}
+
+function update_buttons_scale_value(input_in, input_out, scale_value) {
+  input_in.dataset.zoomValue = scale_value;
+  input_out.dataset.zoomValue = scale_value;
 }

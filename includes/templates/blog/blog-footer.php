@@ -2,7 +2,7 @@
  <footer class="footer">
     <div class="container">
         <div class="box">
-            <h3><?php echo language('LEADER GROUP') ?></h3>
+            <h3><?php echo lang('LEADER GROUP') ?></h3>
             <ul class="social">
                 <li>
                     <a href="" class="facebook">

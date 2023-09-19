@@ -8,7 +8,7 @@ session_regenerate_id();
 // get language from get method
 $lang = isset($_GET['lang']) ? $_GET['lang'] : "ar";
 // check language
-@$_SESSION['systemLang'] = $lang;
+@$_SESSION['blog']['lang'] = $lang;
 // boolean variable to check if this page is home
 $is_website_pages = true;
 // page title

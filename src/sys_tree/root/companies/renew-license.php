@@ -1,6 +1,6 @@
 <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') { ?>
   <!-- start edit profile page -->
-  <div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
+  <div class="container" dir="<?php echo $page_dir ?>">
     <!-- start header -->
     <header class="header">
       <?php
@@ -64,7 +64,7 @@
           $cmp_obj->renew_license($license_type, $expire_date, $company_id);
 
           // success message
-          $msg = '<div class="alert alert-success text-capitalize fw-bolder">' . language("LICENSE RENEWED SUCCESSFULLY", @$_SESSION['systemLang']) . '</div>';
+          $msg = '<div class="alert alert-success text-capitalize fw-bolder">' . lang("LICENSE RENEWED SUCCESSFULLY", @$_SESSION['sys']['lang']) . '</div>';
           
           // redirect to home page
           redirect_home($msg, 'back');

@@ -30,7 +30,7 @@ function change_company_img(btn) {
 function delete_company_image() {
   company_img.setAttribute("src", '../../../../data/uploads/companies-img/leadergroupegypt.jpg');
 
-  let confirm_delete = confirm('هل انت متأكد من حذف الصورة؟');
+  let confirm_delete = confirm(lang.confirm);
 
   if (confirm_delete) {
     // send request

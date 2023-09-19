@@ -7,10 +7,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $model_name = isset($_POST['new-model-name']) && !empty($_POST['new-model-name']) ? $_POST['new-model-name'] : '';
   // check if company id is not empty
   if (!empty($model_id) && !empty($model_name)) {
-    if (!isset($model_obj)) {
-      // create an object of Model class
-      $model_obj = new Models();
-    }
+    // create an object of Model class
+    $model_obj = !isset($model_obj) ? new Models() : $model_obj;
     // check if name exist or not
     $is_exist_model_id   = $model_obj->is_exist("`model_id`", "`devices_model`", $model_id);
     $is_exist_model_name = $model_obj->count_records("`model_id`", "`devices_model`", "WHERE `model_id` <> $model_id AND `model_name` = $model_name");

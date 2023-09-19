@@ -13,9 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 // get user id
-$userid = $_SESSION['UserID'];
+$userid = $_SESSION['sys']['UserID'];
 // get user type
-$isTech = $_SESSION['isTech'];
+$isTech = $_SESSION['sys']['isTech'];
 // check if tech
 if ($isTech) {
     // get all malfunctions of current technical man

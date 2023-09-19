@@ -1,7 +1,7 @@
 <div class="container">
   <div class="blog">
     <!-- START PAGE TITLE -->
-    <h2 class="main-title"><?php echo language('THE CATEGORIES') ?></h2>
+    <h2 class="main-title"><?php echo lang('THE CATEGORIES') ?></h2>
     <!-- START PAGE TITLE -->
     <div class="row justify-content-between align-items-start g-3">
       <!-- START BLOG CONTENT -->

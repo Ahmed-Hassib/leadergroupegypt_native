@@ -1,37 +1,37 @@
-<?php 
+<?php
 // chekc request method
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // get company id
-  $company_id = isset($_POST['company-id']) && !empty($_POST['company-id']) ? $_POST['company-id'] : '';
+  $company_id = isset($_POST['company-id']) && !empty($_POST['company-id']) ? base64_decode($_POST['company-id']) : '';
   // get device name
   $device_name = isset($_POST['device-name']) && !empty($_POST['device-name']) ? $_POST['device-name'] : '';
   // get device models
   $device_models = isset($_POST['model']) && !empty($_POST['model']) ? $_POST['model'] : '';
   // check if company id is not empty
   if (!empty($company_id) && !empty($device_name)) {
-    if (!isset($dev_company_obj)) {
-      // create an object of PiecesTypes class
-      $dev_company_obj = new Devices();
-    }
+    // create an object of PiecesTypes class
+    $dev_company_obj = !isset($dev_company_obj) ? new Devices() : $dev_company_obj;
     // count condition
-    $count_condition = "LEFT JOIN `manufacture_companies` ON `manufacture_companies`.`man_company_id` = `devices_info`.`device_company_id` WHERE `manufacture_companies`.`company_id` = " . $_SESSION['company_id'] . "AND `devices_info`.`device_name` = $device_name ";
+    $count_condition = "LEFT JOIN `manufacture_companies` ON `manufacture_companies`.`man_company_id` = `devices_info`.`device_company_id` WHERE `manufacture_companies`.`company_id` = " . base64_decode($_SESSION['sys']['company_id']) . "AND `devices_info`.`device_name` = $device_name ";
     // check if name exist or not
     $is_exist = $dev_company_obj->count_records("`device_name`", "`devices_info`", $count_condition);
     // check if type is exist or not
     if ($is_exist > 0) {
-      // echo danger message
-      $msg = '<div class="alert alert-danger text-capitalize" dir=""><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;' . language('THIS NAME IS ALREADY EXIST', @$_SESSION['systemLang']) . '</div>';
+      // prepare flash session variables
+      $_SESSION['flash_message'] = 'NAME EXIST';
+      $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+      $_SESSION['flash_message_class'] = 'danger';
+      $_SESSION['flash_message_status'] = false;
+      $_SESSION['flash_message_lang_file'] = 'global_';
     } else {
       // call insert_new_type function
-      $dev_company_obj->insert_new_devices(array($device_name, get_date_now(), $_SESSION['UserID'], $company_id));
+      $dev_company_obj->insert_new_devices(array($device_name, get_date_now(), base64_decode($_SESSION['sys']['UserID']), $company_id));
       // get current device id 
       $curr_device_id = $dev_company_obj->get_latest_records("`device_id`", "`devices_info`", "", "`device_id`", "1")[0]['device_id'];
       // check model length
       if (!empty($device_models)) {
-        if (!isset($model_obj)) {
-          // create an object of Models class
-          $model_obj = new Models();
-        }
+        // create an object of Models class
+        $model_obj = !isset($model_obj) ? new Models() : $model_obj;
         // is inserted flag for models
         $is_inserted_models = false;
         // loop on models to insert it
@@ -39,27 +39,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           // check model if empty
           if (!empty($model)) {
             // insert model
-            $model_obj->insert_new_model(array($model, get_date_now(), $_SESSION['UserID'], $curr_device_id));
+            $model_obj->insert_new_model(array($model, get_date_now(), base64_decode($_SESSION['sys']['UserID']), $curr_device_id));
             $is_inserted_models = true;
           }
         }
       }
-      // prepare flash session variables
-      $_SESSION['flash_message'][0] = 'DEVICE WAS ADDED SUCCESSFULLY';
-      $_SESSION['flash_message_icon'][0] = 'bi-check-circle-fill';
-      $_SESSION['flash_message_class'][0] = 'success';
-      $_SESSION['flash_message_status'][0] = true;
-      
+
+      // messages
+      $messages = array('DEV INSERTED');
+
       // check model flag
       if (!empty($device_models) && $is_inserted_models) {
+        $messages[] = 'MODELS INSERTED';
+      }
+
+      // loop on message
+      foreach ($messages as $key => $message) {
         // prepare flash session variables
-        $_SESSION['flash_message'][1] = 'MODELS WERE ADDED SUCCESSFULLY';
-        $_SESSION['flash_message_icon'][1] = 'bi-check-circle-fill';
-        $_SESSION['flash_message_class'][1] = 'success';
-        $_SESSION['flash_message_status'][1] = true;
+        $_SESSION['flash_message'][$key] = $message;
+        $_SESSION['flash_message_icon'][$key] = 'bi-check-circle-fill';
+        $_SESSION['flash_message_class'][$key] = 'success';
+        $_SESSION['flash_message_status'][$key] = true;
+        $_SESSION['flash_message_lang_file'][$key] = 'pieces';
       }
     }
-    
+
     // return to the previous page
     redirect_home(null, "back", 0);
   } else {
@@ -69,4 +73,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 } else {
   // include_once permission error module
   include_once $globmod . 'permission-error.php';
-} ?>
+}

@@ -1,10 +1,10 @@
 <?php
 // get documnet root
-$document_root  = $_SERVER['DOCUMENT_ROOT'];
+$document_root = $_SERVER['DOCUMENT_ROOT'];
 // get dir id
-$dir_id = isset($_GET['dir-id']) ? $_GET['dir-id'] : 0;
+$dir_id = isset($_GET['dir-id']) ? base64_decode($_GET['dir-id']) : 0;
 // company id
-$company_id = isset($_GET['company']) ? $_GET['company'] : 0;
+$company_id = isset($_GET['company']) ? $_SESSION['sys']['company_id'] : 0;
 
 // check if arr parameters are entered or not
 if (empty($dir_id) || empty($company_id)) {
@@ -13,22 +13,22 @@ if (empty($dir_id) || empty($company_id)) {
   // create an object of pieces
   $pcs_obj = new Pieces();
   // condition
-  $pcs_condition = "WHERE `is_client` = 0 AND `direction_id` = $dir_id AND `company_id` = $company_id ORDER BY `direction_id` ASC, `id` ASC";
+  $pcs_condition = "WHERE `is_client` = 0 AND `direction_id` = $dir_id AND `company_id` = " . base64_decode($company_id) . " ORDER BY `direction_id` ASC, `id` ASC";
   // get specific columns from pieces table
   $data = $pcs_obj->select_specific_column("`id`, `ip`, `full_name`", "`pieces_info`", $pcs_condition);
   // company name
-  $company_name = $pcs_obj->select_specific_column("`company_name`", "`companies`", "WHERE `company_id` = $company_id")[0]['company_name'];
+  $company_name = $pcs_obj->select_specific_column("`company_name`", "`companies`", "WHERE `company_id` = " . base64_decode($company_id))[0]['company_name'];
   // convert data into json file
   $json_data = json_encode($data);
   // json location
-  $json_location = $document_root . "/data/json/dirs/";
+  $json_location = $document_root . "/app/data/json/dirs/";
   // check if the directory is exist or not
   if (!file_exists($json_location)) {
     // create a directory for the company
     mkdir($json_location);
   }
   // json location
-  $json_location .= "$company_name/";
+  $json_location .= "$company_id/";
   // echo $json_location;
   // check if the directory is exist or not
   if (!file_exists($json_location)) {

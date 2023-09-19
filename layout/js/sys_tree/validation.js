@@ -1,105 +1,3 @@
-/**
- * form_validation function
- * is used to check the required fields in form
- */
-function form_validation(form = null, btn = null) {
-  // error array
-  let errorArray = Array();
-
-  if (form != null) {
-    // get all required inputs in the form
-    var inputs = document.querySelectorAll(`#${form.getAttribute('id')} input`);
-    // get all required select in the form
-    var selects = document.querySelectorAll(`#${form.getAttribute('id')} select`);
-  } else {
-    // get all required inputs in the form
-    var inputs = document.querySelectorAll("input");
-    // get all required select in the form
-    var selects = document.querySelectorAll("select");
-  }
-
-  // loop on inputs
-  inputs.forEach(input => {
-    // check the required
-    if (input.hasAttribute('required')) {
-      // get input type
-      let type = input.getAttribute('type');
-      // check if type of input is text
-      switch (type) {
-        case 'text': case 'email': case 'password': case 'date':
-          // check if empty
-          if (input.value.length == 0 || input.dataset.valid == "false") {
-            errorArray.push(input);
-          } else {
-            input_validation(input);
-          }
-          break;
-      }
-    }
-
-
-    // if (input.getAttribute('type') == "redio") {
-    //   console.log(input.checked);
-    // }
-  })
-
-  // loop on selects
-  selects.forEach(select => {
-    // check the required
-    if (select.hasAttribute('required')) {
-      // check if user not select anything
-      if (select.selectedIndex == 0 || select.dataset.valid == "false") {
-        errorArray.push(select);
-      } else {
-        input_validation(select);
-      }
-    }
-  })
-
-  // check array of the error
-  if (errorArray.length > 0) {
-    // loop on inputs to validate it
-    errorArray.forEach(el => {
-      if ((el.hasAttribute('onkeyup') && el.value.length == 0) || el.dataset.valid != "true") {
-        input_validation(el);
-      } else if (el.hasAttribute('onkeyup') && el.value.length > 0) {
-        el.focus();
-        el.blur();
-      }
-    })
-
-    form.dataset.valid = false
-    // scroll on the top of the page
-    document.body.scrollTo(0, 0);
-  } else {
-    form.dataset.valid = true
-    // no error => check if the form is null
-    // if not null submit it
-    if (btn != null && form != null && form.dataset.valid == "true") {
-      form.submit();
-    }
-  }
-}
-
-
-/**
- * input_validation function
- * is used to check the specific required input in form
- */
-function input_validation(input) {
-
-  if ((input.tagName.toLowerCase() == 'input' && input.value.length == 0) || (input.tagName.toLowerCase() == 'select' && input.selectedIndex == 0)) {
-    // check if have an valid class
-    input.classList.contains('is-valid') ? input.classList.replace('is-valid', 'is-invalid') : input.classList.add('is-invalid');
-    localStorage.getItem('systemLang') == 'ar' ? input.classList.add('is-invalid-left') : input.classList.add('is-invalid-right')
-    input.dataset.valid = "false";
-  } else {
-    input.classList.contains('is-invalid') ? input.classList.replace('is-invalid', 'is-valid') : input.classList.add('is-valid');
-    localStorage.getItem('systemLang') == 'ar' ? input.classList.add('is-valid-left') : input.classList.add('is-valid-right')
-    input.dataset.valid = "true";
-  }
-}
-
 
 
 /**
@@ -135,12 +33,16 @@ function fullname_validation(input, id = null, is_combination = false) {
       if (is_exist == true && counter > 0) {
         // add invalid class to input
         input.classList.contains('is-valid') ? input.classList.replace('is-valid', 'is-invalid') : input.classList.add('is-invalid')
+        localStorage.getItem('lang') == 'ar' ? input.classList.add('is-invalid-left') : input.classList.add('is-invalid-right')
+
         // set boolean variable false
         input.dataset.valid = "false";
         // add alert
         container.appendChild(create_alert('warn', 'الاسم موجود من قبل'))
       } else {
         input.classList.contains('is-invalid') ? input.classList.replace('is-invalid', 'is-valid') : input.classList.add('is-valid')
+        localStorage.getItem('lang') == 'ar' ? input.classList.add('is-valid-left') : input.classList.add('is-valid-right')
+
         // set boolean variable true
         input.dataset.valid = "true";
         // add alert
@@ -198,6 +100,8 @@ function ip_validation(input, id = null) {
           if (is_exist == true && counter > 0) {
             // add invalid class to input
             input.classList.contains('is-valid') ? input.classList.replace('is-valid', 'is-invalid') : input.classList.add('is-invalid')
+            localStorage.getItem('lang') == 'ar' ? input.classList.add('is-invalid-left') : input.classList.add('is-invalid-right')
+
             input.dataset.valid = "false";
             // set boolean variable false
             is_valid = false;
@@ -205,6 +109,8 @@ function ip_validation(input, id = null) {
             container.appendChild(create_alert('warn', 'عنوان بروتوكول الانترنت موجود بالفعل'))
           } else {
             input.classList.contains('is-invalid') ? input.classList.replace('is-invalid', 'is-valid') : input.classList.add('is-valid')
+            localStorage.getItem('lang') == 'ar' ? input.classList.add('is-valid-left') : input.classList.add('is-valid-right')
+
             input.dataset.valid = "true";
             // set boolean variable true
             is_valid = true;
@@ -214,10 +120,14 @@ function ip_validation(input, id = null) {
         });
       } else {
         input.classList.contains('is-invalid') ? input.classList.replace('is-invalid', 'is-valid') : input.classList.add('is-valid')
+        localStorage.getItem('lang') == 'ar' ? input.classList.add('is-valid-left') : input.classList.add('is-valid-right')
+
         input.dataset.valid = "true";
       }
     } else {
       input.classList.contains('is-valid') ? input.classList.replace('is-valid', 'is-invalid') : input.classList.add('is-invalid')
+      localStorage.getItem('lang') == 'ar' ? input.classList.add('is-invalid-left') : input.classList.add('is-invalid-right')
+
       input.dataset.valid = "false";
       // add alert
       container.appendChild(create_alert('warn', 'عنوان بروتوكول الانترنت غير صالح'))
@@ -262,25 +172,31 @@ function mac_validation(input, id = null) {
         if (is_exist == true && counter > 0) {
           // add invalid class to input
           input.classList.contains('is-valid') ? input.classList.replace('is-valid', 'is-invalid') : input.classList.add('is-invalid')
+          localStorage.getItem('lang') == 'ar' ? input.classList.add('is-invalid-left') : input.classList.add('is-invalid-right')
+
           input.dataset.valid = "false";
           // set boolean variable false
           is_valid = false;
           // add alert
-          container.appendChild(create_alert('warn', 'عنوان ماك موجود بالفعل'))
+          container.appendChild(create_alert('warn', 'MAC Address موجود بالفعل'))
         } else {
           input.classList.contains('is-invalid') ? input.classList.replace('is-invalid', 'is-valid') : input.classList.add('is-valid')
+          localStorage.getItem('lang') == 'ar' ? input.classList.add('is-valid-left') : input.classList.add('is-valid-right')
+
           input.dataset.valid = "true";
           // set boolean variable true
           is_valid = true;
           // add alert
-          container.appendChild(create_alert('succ', 'عنوان ماك صالح'))
+          container.appendChild(create_alert('succ', 'MAC Address صالح'))
         }
       });
     } else {
       input.classList.contains('is-valid') ? input.classList.replace('is-valid', 'is-invalid') : input.classList.add('is-invalid')
+      localStorage.getItem('lang') == 'ar' ? input.classList.add('is-invalid-left') : input.classList.add('is-invalid-right')
+
       input.dataset.valid = "false";
       // add alert
-      container.appendChild(create_alert('warn', 'عنوان ماك غير صالح'))
+      container.appendChild(create_alert('warn', 'MAC Address غير صالح'))
     }
   } else {
     input.classList.remove('is-valid', 'is-invalid')
@@ -299,9 +215,13 @@ function double_input_validation(input) {
     // check value
     if (/^\d{0,4}(\.\d{0,2}){0,1}$/.test(value)) {
       input.classList.contains('is-invalid') ? input.classList.replace('is-invalid', 'is-valid') : input.classList.add('is-valid')
+      localStorage.getItem('lang') == 'ar' ? input.classList.add('is-valid-left') : input.classList.add('is-valid-right')
+
       input.dataset.valid = "true";
     } else {
       input.classList.contains('is-valid') ? input.classList.replace('is-valid', 'is-invalid') : input.classList.add('is-invalid')
+      localStorage.getItem('lang') == 'ar' ? input.classList.add('is-invalid-left') : input.classList.add('is-invalid-right')
+
       input.dataset.valid = "false";
     }
   } else {
@@ -319,9 +239,13 @@ function integer_input_validation(input) {
     // check value
     if (/^\d{0,5}$/.test(value)) {
       input.classList.contains('is-invalid') ? input.classList.replace('is-invalid', 'is-valid') : input.classList.add('is-valid')
+      localStorage.getItem('lang') == 'ar' ? input.classList.add('is-valid-left') : input.classList.add('is-valid-right')
+
       input.dataset.valid = "true";
     } else {
       input.classList.contains('is-valid') ? input.classList.replace('is-valid', 'is-invalid') : input.classList.add('is-invalid')
+      localStorage.getItem('lang') == 'ar' ? input.classList.add('is-invalid-left') : input.classList.add('is-invalid-right')
+
       input.dataset.valid = "false";
     }
   } else {
@@ -351,12 +275,16 @@ function check_username(input, id = null) {
       // check data length
       if (is_exist == true && counter > 0) {
         input.classList.contains('is-valid') ? input.classList.replace('is-valid', 'is-invalid') : input.classList.add('is-invalid');
+        localStorage.getItem('lang') == 'ar' ? input.classList.add('is-invalid-left') : input.classList.add('is-invalid-right')
+
         input.dataset.valid = "false";
         input.form.dataset.valid = "false";
         // add alert
         container.appendChild(create_alert('warn', 'اسم المستخدم موجود بالفعل'))
       } else {
         input.classList.contains('is-invalid') ? input.classList.replace('is-invalid', 'is-valid') : input.classList.add('is-valid')
+        localStorage.getItem('lang') == 'ar' ? input.classList.add('is-valid-left') : input.classList.add('is-valid-right')
+
         input.dataset.valid = "true";
         input.form.dataset.valid = "true";
         // add alert
@@ -386,6 +314,7 @@ function direction_validation(input) {
     } else {
       url_content = `../requests/index.php?do=check-direction&direction-name=${value}`;
     }
+
     // get request to check if direction is exits
     $.get(url_content, (res) => {
       // converted res
@@ -398,16 +327,20 @@ function direction_validation(input) {
       // check data length
       if (is_exist == true && counter > 0) {
         input.classList.contains('is-valid') ? input.classList.replace('is-valid', 'is-invalid') : input.classList.add('is-invalid');
+        localStorage.getItem('lang') == 'ar' ? input.classList.add('is-invalid-left') : input.classList.add('is-invalid-right')
+
         input.dataset.valid = "false";
         input.form.dataset.valid = "false";
         // add alert
         container.appendChild(create_alert('warn', 'اسم الاتجاه موجود بالفعل'))
       } else {
         input.classList.contains('is-invalid') ? input.classList.replace('is-invalid', 'is-valid') : input.classList.add('is-valid')
+        localStorage.getItem('lang') == 'ar' ? input.classList.add('is-valid-left') : input.classList.add('is-valid-right')
+
         input.dataset.valid = "true";
         input.form.dataset.valid = "true";
         // add alert
-        container.appendChild(create_alert('succ', 'اسم المستخدم صالح'))
+        container.appendChild(create_alert('succ', 'اسم إتجاه صالح'))
       }
     })
   } else {
@@ -438,6 +371,8 @@ function change_company_alias(input) {
         // check data length
         if (is_exist == true && counter > 0) {
           input.classList.contains('is-valid') ? input.classList.replace('is-valid', 'is-invalid') : input.classList.add('is-invalid');
+          localStorage.getItem('lang') == 'ar' ? input.classList.add('is-invalid-left') : input.classList.add('is-invalid-right')
+
           input.dataset.valid = "false";
         } else {
           if (addon_wrapping != null) {
@@ -446,6 +381,8 @@ function change_company_alias(input) {
           }
           // add valid class to input
           input.classList.contains("is-invalid") ? input.classList.replace("is-invalid", "is-valid") : input.classList.add("is-valid")
+          localStorage.getItem('lang') == 'ar' ? input.classList.add('is-valid-left') : input.classList.add('is-valid-right')
+
           // set valid attribute true
           input.dataset.valid = true;
         }
@@ -453,12 +390,16 @@ function change_company_alias(input) {
     } else {
       // add invalid class to input
       input.classList.contains("is-valid") ? input.classList.replace("is-valid", "is-invalid") : input.classList.add("is-invalid")
+      localStorage.getItem('lang') == 'ar' ? input.classList.add('is-invalid-left') : input.classList.add('is-invalid-right')
+
       // set valid attribute false
       input.dataset.valid = false;
     }
   } else if (value.length > 0 && value.length < 12) {
     // add invalid class
     input.classList.contains("is-valid") ? input.classList.replace("is-valid", "is-invalid") : input.classList.add("is-invalid")
+    localStorage.getItem('lang') == 'ar' ? input.classList.add('is-invalid-left') : input.classList.add('is-invalid-right')
+
   } else {
     if (addon_wrapping != null) {
       // remove company alias from addo wrapping
@@ -494,10 +435,14 @@ function check_combination_client_name(input) {
       if (is_exist == true && counter > 0) {
         // add invalid class to input
         input.classList.contains('is-valid') ? input.classList.replace('is-valid', 'is-invalid') : input.classList.add('is-invalid')
+        localStorage.getItem('lang') == 'ar' ? input.classList.add('is-invalid-left') : input.classList.add('is-invalid-right')
+
         // set boolean variable false
         input.dataset.valid = "false";
       } else {
         input.classList.contains('is-invalid') ? input.classList.replace('is-invalid', 'is-valid') : input.classList.add('is-valid')
+        localStorage.getItem('lang') == 'ar' ? input.classList.add('is-valid-left') : input.classList.add('is-valid-right')
+
         // set boolean variable true
         input.dataset.valid = "true";
       }

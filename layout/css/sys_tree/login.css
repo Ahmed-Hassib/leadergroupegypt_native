@@ -53,7 +53,7 @@
 }
 
 .contentBox .formBox {
-	width: 50%;
+	width: 70%;
 }
 
 .contentBox .formBox .formBoxHeader .h2 {
@@ -70,10 +70,6 @@
 .contentBox .formBox .login-form input,
 .contentBox .formBox .login-form button {
 	border-radius: 6px;
-}
-
-.contentBox .formBox .login-form label {
-	color: rgba(0, 0, 0, 0.4);
 }
 
 

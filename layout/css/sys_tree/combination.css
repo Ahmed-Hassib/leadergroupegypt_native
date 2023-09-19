@@ -1,3 +1,58 @@
+.add-combination-container,
+.combination-info-container {
+  margin-bottom: 1rem;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 20px;
+}
+
+@media (max-width: 992px) {
+
+  .add-combination-container,
+  .combination-info-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.combination-info-container .combination-info-container__row:first-of-type {
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr;
+  gap: 20px 20px;
+}
+
+@media (min-width: 992px) {
+
+  .combination-info-container .combination-info-container__row:nth-child(3),
+  .combination-info-container .combination-info-container__row:last-of-type {
+    grid-column: 1/3;
+  }
+}
+
+.benef-info-container,
+.benef-info-container .benef-info__row {
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr;
+  gap: 20px;
+}
+
+.benef-info-container .benef-info__row {
+  grid-template-columns: 30% 70%;
+}
+
+.date-time-content {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 20px 20px;
+}
+
+.date-time-content .date-time-content__row:last-of-type {
+  grid-column: 1/3;
+}
+
 .media-button {
   position: absolute;
   top: 0;
@@ -15,13 +70,21 @@
   }
 }
 
-.col-media {
+.media-container {
   position: relative;
-  height: 250px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
 }
 
-.col-media img,
-.col-media video {
+.media-content {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+}
+
+.media-content img,
+.media-content video {
   padding: 0px;
   border: 5px solid #0d6efd;
   border-radius: 16px;
@@ -32,15 +95,32 @@
   -webkit-object-fit: contain;
 }
 
-.col-media .control-btn {
-  display: none;
+.media-content:hover::before,
+.media-content:hover::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc(100% - 8px);
+  height: calc(100% - 8px);
+  background-color: #cfcfcf;
+  filter: blur(1.35px);
+  border-radius: 12px;
+}
+
+.media-content .control-btn {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 9999;
+  display: none;
 }
 
-.col-media:hover .control-btn {
-  display: block;
+.media-content:hover .control-btn {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+  gap: 20px 20px;
+  width: 100%;
+  filter: blur(0);
 }

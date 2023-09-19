@@ -1,25 +1,30 @@
-<?php 
+<pre dir="ltr"><?php print_r($_POST) ?></pre>
+<?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // get piece info from the form
-  $mng_id         = $_POST['admin-id'];
-  $tech_id        = $_POST['technical-id'];
-  $client_id      = $_POST['client-id'];
-  $descreption    = $_POST['descreption'];
+  $mng_id         = isset($_POST['admin-id']) ? base64_decode($_POST['admin-id']) : null;
+  $tech_id        = isset($_POST['technical-id']) ? base64_decode($_POST['technical-id']) : null;
+  $client_id      = isset($_POST['client-id']) ? $_POST['client-id'] : null;
+  $descreption    = isset($_POST['descreption']) ?$_POST['descreption']:null;
 
   // validate the form
   $formErorr = array();   // error array 
 
   // validate manager id
-  if (empty($mng_id)) {
-    $formErorr[] = 'manager id cannot be empty';
+  if (empty($mng_id) || $mng_id == null) {
+    $formErorr[] = 'admin null';
   }
   // validate technical id
-  if (empty($tech_id)) {
-    $formErorr[] = 'technical id cannot be empty';
+  if (empty($tech_id) || $tech_id == null) {
+    $formErorr[] = 'tech null';
   }
-  // validate username
-  if (empty($client_id)) {
-    $formErorr[] = 'client id cannot be empty';
+  // validate client
+  if (empty($client_id) || $client_id == null) {
+    $formErorr[] = 'clt null';
+  }
+  // validate descreption
+  if (empty($descreption) || $descreption == null) {
+    $formErorr[] = 'desc null';
   }
 
   // check if empty form error
@@ -27,34 +32,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // array of malfunction information
     $mal_info = array();
     // push info into the array
-    array_push($mal_info, $mng_id, $tech_id, $client_id, $descreption, get_date_now(), get_time_now(), $_SESSION['company_id']);
+    array_push($mal_info, $mng_id, $tech_id, $client_id, $descreption, get_date_now(), get_time_now(), base64_decode($_SESSION['sys']['company_id']));
     
-    if (!isset($mal_obj)) {
-      // create an object of Malfunction class
-      $mal_obj = new Malfunction();
-    }
+    // create an object of Malfunction class
+    $mal_obj = !isset($mal_obj) ? new Malfunction() : $mal_obj;
+
     // call insert function
     $is_inserted = $mal_obj->insert_new_malfunction($mal_info);
     // check if malfunction was inserted or not
     if ($is_inserted) {
       // prepare flash session variables
-      $_SESSION['flash_message'] = 'MALFUNCTION WAS ADDED SUCCESSFULLY';
+      $_SESSION['flash_message'] = 'INSERTED';
       $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
       $_SESSION['flash_message_class'] = 'success';
       $_SESSION['flash_message_status'] = true;
-    } else {    
+      $_SESSION['flash_message_lang_file'] = 'malfunctions';
+    } else {
       // prepare flash session variables
-      $_SESSION['flash_message'] = 'A PROBLEM WAS HAPPENED WHILE DELETING THE MALFUNCTION';
+      $_SESSION['flash_message'] = 'QUERY PROBLEM';
       $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
       $_SESSION['flash_message_class'] = 'danger';
       $_SESSION['flash_message_status'] = false;
+      $_SESSION['flash_message_status'] = 'global_';
     }
   } else {
+    // assign post data to session
+    $_SESSION['sys']['request_data'] = $_POST;
+    // loop on errors
     foreach ($formErorr as $key => $error) {
       $_SESSION['flash_message'][$key] = strtoupper($error);
       $_SESSION['flash_message_icon'][$key] = 'bi-exclamation-triangle-fill';
       $_SESSION['flash_message_class'][$key] = 'danger';
       $_SESSION['flash_message_status'][$key] = false;
+      $_SESSION['flash_message_status'][$key] = 'malfunctions';
     }
   }
   // redirect to the previous page
@@ -63,5 +73,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // include permission error module
   include_once $globmod . 'permission-error.php';
 }
-
-?>

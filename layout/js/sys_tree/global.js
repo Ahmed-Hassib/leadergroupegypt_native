@@ -10,22 +10,18 @@ var altSources = document.getElementById("alternative-sources");
 var cardStats = document.querySelectorAll(".card-stat");
 var cardLinks = document.querySelectorAll("a.stretched-link");
 
-
 var choosePhoto = document.getElementById("photo");
 var suggCompBox = document.getElementById("sugg-comp-box");
 var technicalID = document.getElementById("technical-id");
 var technicalIDVal = document.getElementById("technical-id-value");
 var license_select = document.getElementById("license");
 var license_btn = document.getElementById("renew-license-btn");
-var cardsNums = document.querySelectorAll(".nums .num");
 var ths = document.getElementsByTagName("th");
 var previousBtn = document.getElementById('previousBtn');
 var nextBtn = document.getElementById('nextBtn');
 var tree = document.querySelectorAll(".tree span");
 var reportSections = document.querySelectorAll(".reports .section-header");
 var arrowUpBtn = document.querySelector(".arrow-up");
-
-
 
 // self invoke function .
 (function () {
@@ -41,18 +37,13 @@ var arrowUpBtn = document.querySelector(".arrow-up");
       });
     }
 
-    // check if cards of nums not empty
-    if (cardsNums != null) {
-      cardsNums.forEach((element) => startCount(element));
-    }
-
     // get datatables buttons
     let dataTablesBtns = document.querySelectorAll("#datatables-buttons");
 
     // check if not null
     if (dataTablesBtns != null) {
       dataTablesBtns.forEach(element => {
-        if (localStorage['systemLang'] == 'ar') {
+        if (localStorage['lang'] == 'ar') {
           element.style.direction = 'ltr';
         }
       });
@@ -124,63 +115,40 @@ var arrowUpBtn = document.querySelector(".arrow-up");
   }
 
 
-  // get all ips
-  let ips_elements = document.querySelectorAll(".pcs-ip");
-  let online = 0;
-  let offline = 0;
+  // // get all ips
+  // let ips_elements = document.querySelectorAll(".pcs-ip");
+  // let online = 0;
+  // let offline = 0;
 
-  if (ips_elements.length > 0) {
-    // loop on ips
-    ips_elements.forEach(ip_element => {
-      let ip = ip_element.dataset.pcsIp;
-      let device_status = ip_element.previousElementSibling;
-      let preloader_status = device_status.previousElementSibling;
-      if (ip != '0.0.0.0') {
-        $.get(`../requests/index.php?do=ping&ip=${ip}&c=1`, (data) => {
-          // convert result
-          let ping_res = $.parseJSON(data);
-          // hide preloader
-          preloader_status.remove();
-          // check device status
-          if (ping_res['status'] == 1) {
-            device_status.classList.add('badge', 'bg-danger', 'd-inline-block', 'p-2');
-            device_status.title = "offline";
-            offline++;
-          } else {
-            device_status.classList.add('badge', 'bg-success', 'd-inline-block', 'p-2');
-            device_status.title = "online"
-            online++;
-          }
-          console.log(`online ${online} | offline ${offline}`);
-        })
-      }
-    })
-  }
+  // if (ips_elements.length > 0) {
+  //   // loop on ips
+  //   ips_elements.forEach(ip_element => {
+  //     let ip = ip_element.dataset.pcsIp;
+  //     let device_status = ip_element.previousElementSibling;
+  //     let preloader_status = device_status.previousElementSibling;
+  //     if (ip != '0.0.0.0') {
+  //       $.get(`../requests/index.php?do=ping&ip=${ip}&c=1`, (data) => {
+  //         // convert result
+  //         let ping_res = $.parseJSON(data);
+  //         // hide preloader
+  //         preloader_status.remove();
+  //         // check device status
+  //         if (ping_res['status'] == 1) {
+  //           device_status.classList.add('badge', 'bg-danger', 'd-inline-block', 'p-2');
+  //           device_status.title = "offline";
+  //           offline++;
+  //         } else {
+  //           device_status.classList.add('badge', 'bg-success', 'd-inline-block', 'p-2');
+  //           device_status.title = "online"
+  //           online++;
+  //         }
+  //         console.log(`online ${online} | offline ${offline}`);
+  //       })
+  //     }
+  //   })
+  // }
 
 })();
-
-
-
-/**
- * startCount function
- * start count from 0 to the target goal
- */
-function startCount(el) {
-  let goal = el.dataset.goal;
-  let count = setInterval(() => {
-    // check if goal not equal zero
-    if (goal != 0) {
-      el.textContent++;
-    }
-    // condition to check the stop point
-    if (el.textContent == goal) {
-      clearInterval(count);
-    }
-  }, 250 / goal);
-}
-
-
-
 
 /**
  * show_pass function
@@ -196,36 +164,6 @@ function show_pass(btn) {
   }
 }
 
-/**
- * addAstrisk function
- * this function is used to add astrisk mark on required inputs
- */
-function addAstrisk(inputs) {
-  // loop on inputs
-  for (const input of inputs) {
-    // add astrisk on required field
-    if (input.hasAttribute("required") && !input.hasAttribute("data-no-astrisk")) {
-      // create span
-      let astrisk = document.createElement("span");
-      // add some classes
-      astrisk.classList.add("text-danger", "astrisk");
-      // check system language
-      if (localStorage['systemLang'] == 'ar') {
-        // add some classes
-        astrisk.classList.add("astrisk-left");
-      } else if (localStorage['systemLang'] == 'en') {
-        // add some classes
-        astrisk.classList.add("astrisk-right");
-      } else {
-        // add some classes
-        astrisk.classList.add("astrisk-left");
-      }
-      astrisk.textContent = "*";
-      // append astrisk
-      input.parentElement.appendChild(astrisk);
-    }
-  }
-}
 
 
 
@@ -276,16 +214,14 @@ function put_data_into_select(data, status, box, type, ...fields) {
         } else {
           default_text = `اختر المصدر البديل`;
         }
-        default_option = new Option(default_text, 'default');
-        default_option.setAttribute('disabled', 'disabled');
+        default_option = new Option(default_text, 'default', true, true);
+        // default_option.setAttribute('disabled', 'disabled');
         // append to select box
         select_box.appendChild(default_option);
 
         // check if source data has pieces or not
         if (data.length == 0) {
-          console.log(fields)
-
-          option = new Option(`${fields[0]}`, 0, true, true);
+          option = new Option(`${fields[0]}`, 0, false, false);
           select_box.appendChild(option);
         } else {
           // loop on data result to display the data

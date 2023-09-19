@@ -1,11 +1,11 @@
 
-<?php if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
+<?php if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // get deleted connection type id
-  $conn_id = isset($_POST['deleted-conn-type-id']) && !empty($_POST['deleted-conn-type-id']) ? $_POST['deleted-conn-type-id'] : '';
-  if (!isset($conn_obj)) {
-    // create an object of PiecesConn class
-    $conn_obj = new PiecesConn();
-  }
+  $conn_id = isset($_POST['deleted-conn-type-id']) && !empty($_POST['deleted-conn-type-id']) ? base64_decode($_POST['deleted-conn-type-id']) : '';
+  // check if back is possible
+  $is_back = isset($_GET['back']) && !empty($_GET['back']) ? 'back': null;
+  // create an object of PiecesConn class
+  $conn_obj = !isset($conn_obj) ? new PiecesConn() : $conn_obj;
   // check if id is exist
   $is_exist_id = $conn_obj->is_exist("`id`", "`connection_types`", $conn_id);
   // check if type is exist or not
@@ -16,28 +16,35 @@
     $stmt->execute();
 
     // call delete function
-    $conn_obj->delete_conn_type($conn_id);
-  
-    // echo success message
-    $msg = '<div class="alert alert-success text-capitalize" dir=""><i class="bi bi-check-circle-fill"></i>&nbsp;' . language('CONNECTION TYPE DELETED SUCCESSFULLY', @$_SESSION['systemLang']) . '</div>';
+    $is_deleted = $conn_obj->delete_conn_type($conn_id);
+
+    // check if deleted
+    if ($is_deleted) {
+      // prepare flash session variables
+      $_SESSION['flash_message'] = 'DELETED';
+      $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
+      $_SESSION['flash_message_class'] = 'success';
+      $_SESSION['flash_message_status'] = true;
+      $_SESSION['flash_message_lang_file'] = 'pieces';
+    } else {
+      // prepare flash session variables
+      $_SESSION['flash_message'] = 'QUERY PROBLEM';
+      $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+      $_SESSION['flash_message_class'] = 'danger';
+      $_SESSION['flash_message_status'] = false;
+      $_SESSION['flash_message_lang_file'] = 'global_';
+    }
   } else {
-    $msg  = '<div class="page-error">';
-    $msg .= '<img src="' . $assets .'"images/no-data-founded.svg" class="img-fluid" alt="'. language("NO DATA FOUNDED", @$_SESSION['systemLang']) . '">';
-    $msg .= '</div>';
-    // error message
-    $msg = '<div class="alert alert-danger text-capitalize"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;'. language('NO DATA FOUNDED', @$_SESSION['systemLang']) .'</div>';
+    // prepare flash session variables
+    $_SESSION['flash_message'] = 'NO DATA';
+    $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+    $_SESSION['flash_message_class'] = 'danger';
+    $_SESSION['flash_message_status'] = false;
+    $_SESSION['flash_message_lang_file'] = 'global_';
   }
   // redirect to home page
-  
-?>
-<!-- start pieces type page -->
-<div class="container" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
-  <!-- start header -->
-  <header class="header mb-3">
-    <?php redirect_home($msg, "back"); ?>
-  </header>
-</div>
-<?php } else {
+  redirect_home(null, $is_back, 0);
+} else {
   // include permission error module
   include_once $globmod . 'permission-error.php';
 } ?>

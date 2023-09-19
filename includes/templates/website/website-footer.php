@@ -1,36 +1,42 @@
- <!-- START FOOTER -->
- <footer class="footer">
+<!-- START FOOTER -->
+<footer class="footer">
   <div class="container">
     <div class="box">
-      <h3><?php echo language('LEADER GROUP') ?></h3>
+      <h3>
+        <?php echo lang('SPONSOR') ?>
+      </h3>
       <ul class="social">
         <li>
-          <a href="" class="facebook">
+          <a href="https://www.facebook.com/LeaderGroupEGYPT" target="_blank" class="facebook">
             <i class="bi bi-facebook"></i>
           </a>
         </li>
         <li>
-          <a href="" class="twitter">
-            <i class="bi bi-twitter"></i>
+          <a href="https://www.instagram.com/leadergroupegypt/" target="_blank" class="instagram">
+            <i class="bi bi-instagram"></i>
           </a>
         </li>
         <li>
-          <a href="" class="youtube">
-            <i class="bi bi-youtube"></i>
+          <a href="https://www.linkedin.com/in/leadergroup-egypt-53b371263/" target="_blank" class="linkedin">
+            <i class="bi bi-linkedin"></i>
           </a>
         </li>
       </ul>
-      <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur beatae asperiores officia, ad minus, explicabo sint ratione fugiat</p>
+      <!-- company brief -->
+      <p class="text" dir="<?php echo $page_dir ?>">
+        <?php
+        // create an object of AboutUs class
+        $about_obj = new AboutUs();
+        // get company brief
+        $brief = $about_obj->select_specific_column("*", "`about_us`", "")[0];
+        // display brief
+        echo $page_dir == 'rtl' ? $brief['text_ar'] : $brief['text_en'];
+        ?>
+      </p>
     </div>
-    <div class="box">
-      <ul class="links">
-        <li><a href="#">IMPORTANT LINK 1</a></li>
-        <li><a href="#">IMPORTANT LINK 2</a></li>
-        <li><a href="#">IMPORTANT LINK 3</a></li>
-        <li><a href="#">IMPORTANT LINK 4</a></li>
-        <li><a href="#">IMPORTANT LINK 5</a></li>
-      </ul>
-    </div>
+    <!-- important links -->
+    <?php include_once 'important-links.php' ?>
+    <!-- company info -->
     <div class="box">
       <div class="line">
         <i class="bi bi-geo-alt"></i>
@@ -52,7 +58,8 @@
   <p class="copyright text-uppercase">
     <span>made with&nbsp;</span>
     <span class="text-danger"><i class="bi bi-heart-fill"></i>&nbsp;</span>
-    <span class="fw-bold">by ahmed hassib</span>&nbsp;&amp;&nbsp;<span class="fw-bold">leader group <span class="text-danger">egypt</span></span>
+    <span class="fw-bold">by ahmed hassib</span>&nbsp;&amp;&nbsp;<span class="fw-bold">leader group <span
+        class="text-danger">egypt</span></span>
   </p>
 </footer>
 <!-- START FOOTER -->

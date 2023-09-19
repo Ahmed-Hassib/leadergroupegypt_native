@@ -7,6 +7,8 @@ function put_data_into_modal(btn, type, id, name, will_back = null) {
   // put values
   id_input.value = btn.dataset.id;
 
+  console.log(id_input)
+
   // check type
   switch(type){
     case 'edit':
@@ -123,7 +125,7 @@ function get_devices_models(btn, location) {
         success: function (data, status) {
           put_data_into_select(data, status, 'device-model', 'model');
         },
-        error: function (xhr, textStatus, err) {
+        error: function (_xhr, _textStatus) {
           // for error message
         }
       })

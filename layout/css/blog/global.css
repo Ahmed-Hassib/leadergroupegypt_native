@@ -192,7 +192,7 @@ ul {
   border-bottom: 3px solid var(--main-color);
   z-index: -10000;
   display: none;
-  gap: 40px;
+  gap: 20px;
   top: calc(100% + 50px);
   transition: top var(--main-transition-duration),
     display var(--main-transition-duration),
@@ -278,7 +278,7 @@ ul {
   margin-top: var(--main-padding);
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 40px;
+  gap: 20px;
 }
 
 .footer .box h3 {

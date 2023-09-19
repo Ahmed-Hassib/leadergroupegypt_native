@@ -1,6 +1,6 @@
 <?php
 // check if Get request userid is numeric and get the integer value
-$dir_id = isset($_GET['dir-id']) && is_numeric($_GET['dir-id']) ? intval($_GET['dir-id']) : 0;
+$dir_id = isset($_GET['dir-id']) && !empty($_GET['dir-id']) ? base64_decode($_GET['dir-id']) : 0;
 // check if DIrection class object was created or not
 if (!isset($dir_obj)) {
   $dir_obj = new Direction();
@@ -11,7 +11,7 @@ $dir_name = $dir_obj->select_specific_column("`direction_name`", "`direction`", 
 $q = "SELECT `pieces_info`.`id`, `pieces_info`.`ip`, `pieces_info`.`full_name`, `pieces_info`.`source_id`, `direction`.`direction_name`, `direction`.`direction_id` FROM `pieces_info` LEFT JOIN `direction` ON `direction`.`direction_id` = `pieces_info`.`direction_id` WHERE `pieces_info`.`direction_id` = ? AND `pieces_info`.`is_client` != 1 AND `pieces_info`.`company_id` = ?";
 
 $stmt = $con->prepare($q);          // select all users
-$stmt->execute(array($dir_id, $_SESSION['company_id']));      // execute data
+$stmt->execute(array($dir_id, base64_decode($_SESSION['sys']['company_id'])));      // execute data
 $rows = $stmt->fetchAll();          // assign all data to variable
 $dataCount = $stmt->rowCount();     // count the row data
 
@@ -30,7 +30,7 @@ foreach ($rows as $row) {
 }
 ?>
 <!-- start add new user page -->
-<div class="container" name="showDir" dir="<?php echo @$_SESSION['systemLang'] == 'ar' ? 'rtl' : 'ltr' ?>">
+<div class="container" name="showDir" dir="<?php echo $page_dir ?>">
   <!-- start header -->
   <header class="header">
     <h3 class="h3 text-primary"><?php echo $dir_name ?></h3>
@@ -40,7 +40,7 @@ foreach ($rows as $row) {
 <?php if (count($data) > 0) { ?>
 
   <!-- start showing directions tree -->
-  <div class="genealogy-body genealogy-scroll">
+  <div class="genealogy-body genealogy-scroll" dir="ltr">
     <div class="genealogy-tree text-center" id="direction_tree">
       <?php build_direction_tree($data, 0); ?>
     </div>
@@ -52,7 +52,7 @@ foreach ($rows as $row) {
         <i class="carousel-control-prev-icon"></i>
       </button>
       <!-- scroll right button -->
-      <button type="button" role="button" class="scroll-button scroll-next <?php echo $_SESSION['systemLang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
+      <button type="button" role="button" class="scroll-button scroll-next <?php echo $_SESSION['sys']['lang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
         <i class="carousel-control-next-icon"></i>
       </button>
     </div>

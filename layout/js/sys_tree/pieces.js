@@ -13,4 +13,3 @@ function confirm_delete_piece(btn, will_back = null) {
   deleted_piece_name_in_modal.textContent = `'${piece_name}'`;
   deleted_piece_url_in_modal.href = url;
 }
-
