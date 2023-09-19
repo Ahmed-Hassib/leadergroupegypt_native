@@ -457,10 +457,10 @@ function resize_img($img_location, $img_name)
   // specifying new image size
   $new_width = 580;
   $new_height = 580;
+  // creating a black destination image with the required size
+  $dst = imagecreatetruecolor($new_width, $new_height);
   // check file type
   if ($img_ext == 'png') {
-    // creating a black destination image with the required size
-    $dst = imagecreatetruecolor($new_width, $new_height);
     // loading the image
     $src = imagecreatefrompng($image_filename);
     // making the destination image transparent
@@ -472,8 +472,6 @@ function resize_img($img_location, $img_name)
     // previewing the resized transparent image
     $save = imagepng($dst, $resized_image_filename);
   } else {
-    // creating a black picture
-    $dst = imagecreatetruecolor($new_width, $new_height);
     // loading the source image
     $src = imagecreatefromjpeg($image_filename);
     // creating a thumbnail
