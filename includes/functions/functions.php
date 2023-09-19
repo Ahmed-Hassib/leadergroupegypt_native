@@ -334,7 +334,7 @@ function prepare_pcs_datatables($all_data, $lang_file)
 
         } elseif ($key == 'visit_time' && $value > 0) {
           $res_arr[$key_]['visit_time_name'] = get_visit_time_name($value);
-        
+
         } elseif ($key == 'connection_type' && $value > 0) {
           $res_arr[$key_]['conn_name'] = get_conn_name($value);
         }
@@ -433,4 +433,54 @@ function get_visit_time_name($time_id, $lang_file = 'pieces')
   }
   // get time name
   return $visit_msg;
+}
+
+
+/**
+ * function resize_img v1
+ * is used to resize image
+ */
+function resize_img($img_location, $img_name)
+{
+  // specifying the image
+  $image_filename = $img_location . $img_name;
+  // check resized directory
+  if (!file_exists($img_location . "resized/") && !is_dir($img_location . "resized/")) {
+    mkdir($img_location . "resized/");
+  }
+  // resized file location
+  $resized_image_filename = $img_location . "resized/" . $img_name;
+  // get img ext
+  $img_ext = explode(".", $img_name)[1];
+  // get source image size
+  list($w, $h) = getimagesize($image_filename);
+  // specifying new image size
+  $new_width = 580;
+  $new_height = 580;
+  // check file type
+  if ($img_ext == 'png') {
+    // creating a black destination image with the required size
+    $dst = imagecreatetruecolor($new_width, $new_height);
+    // loading the image
+    $src = imagecreatefrompng($image_filename);
+    // making the destination image transparent
+    imagecolortransparent($dst, imagecolorallocate($dst, 0, 0, 0));
+    imagealphablending($dst, false);
+    imagesavealpha($dst, true);
+    // using the imagecopyresampled function
+    imagecopyresampled($dst, $src, 0, 0, 0, 0, $new_width, $new_height, $w, $h);
+    // previewing the resized transparent image
+    $save = imagepng($dst, $resized_image_filename);
+  } else {
+    // creating a black picture
+    $dst = imagecreatetruecolor($new_width, $new_height);
+    // loading the source image
+    $src = imagecreatefromjpeg($image_filename);
+    // creating a thumbnail
+    imagecopyresampled($dst, $src, 0, 0, 0, 0, $new_width, $new_height, $w, $h);
+    // saving the thumbnail in your current folder
+    $save = imagejpeg($dst, $resized_image_filename);
+  }
+  // return flag
+  return $save ? true : null;
 }
