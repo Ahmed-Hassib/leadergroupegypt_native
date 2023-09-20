@@ -112,7 +112,7 @@
             ?>
             <div class="table-responsive-sm">
               <!-- strst pieces table -->
-              <table class="table table-bordered display compact table-style" style="width:100%">
+              <table class="table table-bordered pcs-data display compact table-style" style="width:100%">
                 <thead class="primary text-capitalize">
                   <tr>
                     <th></th>
@@ -153,7 +153,7 @@
                         <?php } ?>
                         <?php if ($piece['direction_id'] == 0) { ?>
                           <i class="bi bi-exclamation-triangle-fill text-danger fw-bold"
-                            title="<?php echo lang("NO DATA") ?>"></i>
+                            title="<?php echo lang("NOT ASSIGNED") ?>"></i>
                         <?php } ?>
                         <?php if ($piece['added_date'] == date('Y-m-d')) { ?>
                           <span class="badge bg-danger p-1 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-1' : 'ms-1' ?>">
@@ -171,7 +171,7 @@
                           echo trim($addr[0]['address']);
                         } else { ?>
                           <span class="text-danger fs-12 fw-bold">
-                            <?php echo lang('NO DATA') ?>
+                            <?php echo lang('NOT ASSIGNED') ?>
                           </span>
                         <?php } ?>
                       </td>
@@ -185,7 +185,7 @@
                           echo trim($phones[0]['phone']);
                         } else { ?>
                           <span class="text-danger fs-12 fw-bold">
-                            <?php echo lang('NO DATA') ?>
+                            <?php echo lang('NOT ASSIGNED') ?>
                           </span>
                         <?php } ?>
                       </td>
