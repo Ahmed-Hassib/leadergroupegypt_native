@@ -17,22 +17,17 @@
 }
 
 table.dataTable.pcs-data th:not(:nth-of-type(1)),
-table.dataTable.pcs-data th:not(:nth-of-type(2)),
-table.dataTable.pcs-data th:not(:last-of-type),
-table.dataTable.pcs-data td:not(:nth-of-type(1)),
-table.dataTable.pcs-data td:not(:nth-of-type(2)),
-table.dataTable.pcs-data td:not(:last-of-type) {
-  /* white-space: nowrap; */
+table.dataTable.pcs-data td:not(:nth-of-type(1)) {
+  white-space: nowrap;
   /* width: 200px !important; */
   min-width: 150px !important;
   max-width: 300px !important;
 }
 
-table.dataTable.pcs-data th:nth-of-type(1),
-table.dataTable.pcs-data td:nth-of-type(1) {
+table.dataTable th:nth-of-type(1),
+table.dataTable td:nth-of-type(1) {
   min-width: 20px !important;
   max-width: 20px !important;
-
 }
 
 table.dataTable.pcs-data th:nth-of-type(2),
@@ -41,10 +36,18 @@ table.dataTable.pcs-data td:nth-of-type(2) {
   max-width: 30px !important;
 }
 
-table.dataTable.pcs-data th:last-of-type,
-table.dataTable.pcs-data td:last-of-type {
-  min-width: 90px !important;
-  max-width: 100px !important;
+table.dataTable th.big-data,
+table.dataTable td.big-data {
+  min-width: 150px !important;
+  max-width: 150px !important;
+}
+
+table.dataTable th.date-data,
+table.dataTable td.date-data,
+table.dataTable th:last-of-type,
+table.dataTable td:last-of-type {
+  min-width: 100px !important;
+  max-width: 130px !important;
 }
 
 table.dataTable.pcs-data .datatables_row_details {

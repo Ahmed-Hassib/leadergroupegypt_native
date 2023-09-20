@@ -70,6 +70,7 @@ $(document).ready(function () {
     // get the table
     var table = $('table.display').DataTable({
       "scrollX": true,
+      autoWidth: false,
       ordering: true,
       stateSave: true,
       stateDuration: -1,
@@ -84,7 +85,7 @@ $(document).ready(function () {
       ],
       columnDefs: [
         { targets: [0, 1, -1], className: 'noVis' },
-        { className: 'dt-justify', targets: '_all' },
+        { className: 'dt-justify fs-12', targets: '_all' },
       ],
 
       "language": curr_table_arr
