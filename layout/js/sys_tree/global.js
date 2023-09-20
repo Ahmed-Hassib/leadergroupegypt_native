@@ -115,38 +115,38 @@ var arrowUpBtn = document.querySelector(".arrow-up");
   }
 
 
-  // // get all ips
-  // let ips_elements = document.querySelectorAll(".pcs-ip");
-  // let online = 0;
-  // let offline = 0;
+  // get all ips
+  let ips_elements = document.querySelectorAll(".pcs-ip");
+  let online = 0;
+  let offline = 0;
 
-  // if (ips_elements.length > 0) {
-  //   // loop on ips
-  //   ips_elements.forEach(ip_element => {
-  //     let ip = ip_element.dataset.pcsIp;
-  //     let device_status = ip_element.previousElementSibling;
-  //     let preloader_status = device_status.previousElementSibling;
-  //     if (ip != '0.0.0.0') {
-  //       $.get(`../requests/index.php?do=ping&ip=${ip}&c=1`, (data) => {
-  //         // convert result
-  //         let ping_res = $.parseJSON(data);
-  //         // hide preloader
-  //         preloader_status.remove();
-  //         // check device status
-  //         if (ping_res['status'] == 1) {
-  //           device_status.classList.add('badge', 'bg-danger', 'd-inline-block', 'p-2');
-  //           device_status.title = "offline";
-  //           offline++;
-  //         } else {
-  //           device_status.classList.add('badge', 'bg-success', 'd-inline-block', 'p-2');
-  //           device_status.title = "online"
-  //           online++;
-  //         }
-  //         console.log(`online ${online} | offline ${offline}`);
-  //       })
-  //     }
-  //   })
-  // }
+  if (ips_elements.length > 0) {
+    // loop on ips
+    ips_elements.forEach(ip_element => {
+      let ip = ip_element.dataset.pcsIp;
+      let device_status = ip_element.previousElementSibling;
+      let preloader_status = device_status.previousElementSibling;
+      if (ip != '0.0.0.0') {
+        $.get(`../requests/index.php?do=ping&ip=${ip}&c=1`, (data) => {
+          // convert result
+          let ping_res = $.parseJSON(data);
+          // hide preloader
+          preloader_status.remove();
+          // check device status
+          if (ping_res['status'] == 1) {
+            device_status.classList.add('badge', 'bg-danger', 'd-inline-block', 'p-1');
+            device_status.title = "offline";
+            offline++;
+          } else {
+            device_status.classList.add('badge', 'bg-success', 'd-inline-block', 'p-1');
+            device_status.title = "online"
+            online++;
+          }
+          console.log(`online ${online} | offline ${offline}`);
+        })
+      }
+    })
+  }
 
 })();
 
