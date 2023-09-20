@@ -296,7 +296,7 @@
                     <div class="col-sm-4 position-relative">
                       <div class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
                         <input type="text" class="form-control" id="port" name="port" placeholder="port" autocomplete="off" required />
-                        <label for="port">Port</label>
+                        <label for="port"><?php echo lang('PORT') ?></label>
                       </div>
                     </div>
                     <div id="ipHelp" class="form-text text-warning">
