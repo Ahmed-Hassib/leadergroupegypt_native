@@ -5,16 +5,24 @@ $services_obj = new Service();
 $services_info = $services_obj->get_active_services();
 // check if count of images > 0
 if ($services_info != null && count($services_info) > 0) {
-?>
+  ?>
   <!-- START SERVICES -->
   <div class="services" id="services">
-    <h2 class="main-title"><?php echo lang('OUR SERVICES') ?></h2>
+    <h2 class="main-title">
+      <?php echo lang('OUR SERVICES') ?>
+    </h2>
     <div class="container">
       <?php foreach ($services_info as $key => $service) { ?>
-        <?php if ($key >= 9) continue; ?>
+        <?php if ($key >= 9)
+          continue; ?>
         <?php if (file_exists($services_img . $service['service_img'])) { ?>
           <div class="box">
-            <img src="<?php echo $services_img . $service['service_img'] ?>" alt="">
+            <?php $is_resized = resize_img($services_img, $service['service_img']); ?>
+            <img
+              src="<?php echo $is_resized ? $services_img . "resized/" . $service['service_img'] : $services_img . $service['service_img'] ?>"
+              alt="service image #<?php echo $key + 1 ?>">
+
+            <!-- <img src="<?php echo $services_img . $service['service_img'] ?>" alt=""> -->
             <div class="info">
               <?php if ($service['is_active'] != 2) { ?>
                 <?php if (strlen($service['link_1']) > 0) { ?>
@@ -28,7 +36,9 @@ if ($services_info != null && count($services_info) > 0) {
                   </a>
                 <?php } ?>
               <?php } else { ?>
-                <h3 class="badge bg-warning px-3 py-2"><?php echo lang('WAITING') ?>...</h3>
+                <h3 class="badge bg-warning px-3 py-2">
+                  <?php echo lang('WAITING') ?>...
+                </h3>
               <?php } ?>
             </div>
           </div>
