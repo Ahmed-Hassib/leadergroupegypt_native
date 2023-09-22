@@ -1,10 +1,14 @@
 <?php
 // create an object of Gallery class
 $gallery_obj = new Gallery();
+// get section info
+$gallery_info = $gallery_obj->select_specific_column("*", "`sections`", "WHERE `section_id` = '" . $gallery_obj->SECTION_ID . "'");
+// get section status
+$gallery_status = count($gallery_info) > 0 ? boolval($gallery_info[0]['is_active']) : false;
 // get all gallery images
 $gallery_imgs = $gallery_obj->get_active_imgs();
 // check if count of images > 0
-if ($gallery_imgs != null && count($gallery_imgs) > 0) {
+if ($gallery_status && $gallery_imgs != null && count($gallery_imgs) > 0) {
   // get number of displayed content
   $num_displayed = intval($gallery_obj->select_specific_column("`num_content`", "`sections`", "WHERE `section_id` = 2 AND `section_name` = 'gallery'")[0]['num_content'] ?? 9);
   ?>

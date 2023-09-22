@@ -7,6 +7,11 @@ class Gallery extends Database
 {
   // properties
   public $con;
+  // section id
+  public $SECTION_ID = 2;
+  public $SECTION_NAME = 'gallery';
+  public $SECTION_CONTENT_TABLE = 'gallery';
+  public $SECTION_CONTENT_FOLDER = 'gallery';
 
   // constructor
   public function __construct()

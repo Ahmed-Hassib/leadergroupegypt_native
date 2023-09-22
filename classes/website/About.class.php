@@ -7,6 +7,11 @@ class AboutUs extends Database
 {
   // properties
   public $con;
+  // section id
+  public $SECTION_ID = 2;
+  public $SECTION_NAME = 'about_us';
+  public $SECTION_CONTENT_TABLE = 'about_us';
+  public $SECTION_CONTENT_FOLDER = 'about_us';
 
   // constructor
   public function __construct()

@@ -442,6 +442,8 @@ function get_visit_time_name($time_id, $lang_file = 'pieces')
  */
 function resize_img($img_location, $img_name)
 {
+  // allowed images
+  $allowed_types = ['png', 'jpeg', 'jpg'];
   // specifying the image
   $image_filename = $img_location . $img_name;
   // check resized directory
@@ -452,6 +454,7 @@ function resize_img($img_location, $img_name)
   $resized_image_filename = $img_location . "resized/" . $img_name;
   // get img ext
   $img_ext = explode(".", $img_name)[1];
+
   // get source image size
   list($w, $h) = getimagesize($image_filename);
   // specifying new image size
@@ -459,25 +462,31 @@ function resize_img($img_location, $img_name)
   $new_height = 580;
   // creating a black destination image with the required size
   $dst = imagecreatetruecolor($new_width, $new_height);
-  // check file type
-  if ($img_ext == 'png') {
-    // loading the image
-    $src = imagecreatefrompng($image_filename);
-    // making the destination image transparent
-    imagecolortransparent($dst, imagecolorallocate($dst, 0, 0, 0));
-    imagealphablending($dst, false);
-    imagesavealpha($dst, true);
-    // using the imagecopyresampled function
-    imagecopyresampled($dst, $src, 0, 0, 0, 0, $new_width, $new_height, $w, $h);
-    // previewing the resized transparent image
-    $save = imagepng($dst, $resized_image_filename);
+  // check current image in allowed types
+  if (in_array($img_ext, $allowed_types)) {
+    // check file type
+    if ($img_ext == 'png') {
+      // loading the image
+      $src = imagecreatefrompng($image_filename);
+      // making the destination image transparent
+      imagecolortransparent($dst, imagecolorallocate($dst, 0, 0, 0));
+      imagealphablending($dst, false);
+      imagesavealpha($dst, true);
+      // using the imagecopyresampled function
+      imagecopyresampled($dst, $src, 0, 0, 0, 0, $new_width, $new_height, $w, $h);
+      // previewing the resized transparent image
+      $save = imagepng($dst, $resized_image_filename);
+    } else {
+      // loading the source image
+      $src = imagecreatefromjpeg($image_filename);
+      // creating a thumbnail
+      imagecopyresampled($dst, $src, 0, 0, 0, 0, $new_width, $new_height, $w, $h);
+      // saving the thumbnail in your current folder
+      $save = imagejpeg($dst, $resized_image_filename);
+    }
   } else {
-    // loading the source image
-    $src = imagecreatefromjpeg($image_filename);
-    // creating a thumbnail
-    imagecopyresampled($dst, $src, 0, 0, 0, 0, $new_width, $new_height, $w, $h);
-    // saving the thumbnail in your current folder
-    $save = imagejpeg($dst, $resized_image_filename);
+    // false flag
+    $save = false;
   }
   // return flag
   return $save ? true : null;
