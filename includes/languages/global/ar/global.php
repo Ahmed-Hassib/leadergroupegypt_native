@@ -124,6 +124,7 @@ function global_($phrase)
     'REDIRECT AUTO'             => 'سيتم اعادة تحويلك تلقائيا بعد',
     'ACCESS FAILED'             => 'لايمكن الدخول لهذة الصفحة',
     'NO DATA'                   => 'لا توجد بيانات للعرض',
+    'NO DATA FOUNDED'           => 'لم يتم العثور علي بيانات مماثلة',
     'QUERY PROBLEM'             => 'حدثت مشكلة اثناء حفظ البيانات',
     'LOGIN SUCCESS'             => 'تسجيل دخول ناجح',
     'LOGIN FAILED'              => 'تسجيل دخول خاطئ',

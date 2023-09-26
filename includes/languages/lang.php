@@ -48,5 +48,5 @@ foreach ($lang_files as $file) {
 function lang($phrase, $file = 'global_', $lang = "ar")
 {
   // return the word
-  return $file($phrase);
+  return $file(strtoupper($phrase));
 }
