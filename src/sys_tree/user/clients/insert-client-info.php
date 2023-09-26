@@ -7,33 +7,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // get next id
   $id = $latest_id + 1;
   // get piece info from the form
-  $full_name  = isset($_POST['full-name'])  && !empty($_POST['full-name'])  ? trim($_POST['full-name'], ' ')  : '';
-  $ip         = isset($_POST['ip'])         && !empty($_POST['ip'])         ? trim($_POST['ip'], ' ')         : '';
-  $port       = isset($_POST['port'])       && !empty($_POST['port'])       ? trim($_POST['port'], ' ')       : '';
-  $username   = isset($_POST['user-name'])  && !empty($_POST['user-name'])  ? trim($_POST['user-name'], ' ')  : '';
-  $password   = isset($_POST['password'])   && !empty($_POST['password'])   ? trim($_POST['password'], ' ')   : '';
-  $dir_id     = isset($_POST['direction'])  && !empty($_POST['direction'])  ? base64_decode(trim($_POST['direction'], ' '))  : '';
+  $full_name = isset($_POST['full-name']) && !empty($_POST['full-name']) ? trim($_POST['full-name'], ' ') : '';
+  $ip = isset($_POST['ip']) && !empty($_POST['ip']) ? trim($_POST['ip'], ' ') : '';
+  $port = isset($_POST['port']) && !empty($_POST['port']) ? trim($_POST['port'], ' ') : '';
+  $username = isset($_POST['user-name']) && !empty($_POST['user-name']) ? trim($_POST['user-name'], ' ') : '';
+  $password = isset($_POST['password']) && !empty($_POST['password']) ? trim($_POST['password'], ' ') : '';
+  $dir_id = isset($_POST['direction']) && !empty($_POST['direction']) ? base64_decode(trim($_POST['direction'], ' ')) : '';
 
   // make it client
-  $is_client   = 1;
+  $is_client = 1;
   $device_type = 0;
 
   // get source id
-  $source_id        = isset($_POST['source-id']) ? trim($_POST['source-id'], ' ')   : -1;
-  $alt_source_id    = isset($_POST['alt-source-id']) ? trim($_POST['alt-source-id'], ' ')   : -1;
-  $device_id        = isset($_POST['device-id']) ? base64_decode(trim($_POST['device-id'], ' '))   : -1;
-  $model_id         = isset($_POST['device-model']) ? trim($_POST['device-model'], ' ')   : -1;
+  $source_id = isset($_POST['source-id']) ? trim($_POST['source-id'], ' ') : -1;
+  $alt_source_id = isset($_POST['alt-source-id']) ? trim($_POST['alt-source-id'], ' ') : -1;
+  $device_id = isset($_POST['device-id']) ? base64_decode(trim($_POST['device-id'], ' ')) : -1;
+  $model_id = isset($_POST['device-model']) ? trim($_POST['device-model'], ' ') : -1;
 
-  $phone            = trim($_POST['phone-number'], ' ');
-  $address          = trim($_POST['address'], ' ');
-  $conn_type        = isset($_POST['conn-type'])  && !empty($_POST['conn-type']) ? trim($_POST['conn-type'], ' ')  : '';
-  $notes            = empty(trim($_POST['notes'], ' ')) ? 'لا توجد ملاحظات' : trim($_POST['notes'], ' ');
-  $visit_time       = isset($_POST['visit-time']) ? $_POST['visit-time'] : 1;
-  $ssid             = trim($_POST['ssid'], ' ');
-  $pass_conn        = trim($_POST['password-connection'], ' ');
-  $frequency        = trim($_POST['frequency'], ' ');
-  $wave             = trim($_POST['wave'], ' ');
-  $mac_add          = trim($_POST['mac-add'], ' ');
+  $phone = trim($_POST['phone-number'], ' ');
+  $address = trim($_POST['address'], ' ');
+  $conn_type = isset($_POST['conn-type']) && !empty($_POST['conn-type']) ? trim($_POST['conn-type'], ' ') : '';
+  $notes = empty(trim($_POST['notes'], ' ')) ? 'لا توجد ملاحظات' : trim($_POST['notes'], ' ');
+  $visit_time = isset($_POST['visit-time']) ? $_POST['visit-time'] : 1;
+  $ssid = trim($_POST['ssid'], ' ');
+  $pass_conn = trim($_POST['password-connection'], ' ');
+  $frequency = trim($_POST['frequency'], ' ');
+  $wave = trim($_POST['wave'], ' ');
+  $mac_add = trim($_POST['mac-add'], ' ');
+  $internet_source = trim($_POST['internet-source'], ' ');
 
   // validate the form
   $form_error = []; // error array
@@ -47,9 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   }
 
   // check if user is exist in database or not
-  $is_exist_name  = $pcs_obj->count_records("`id`", "`pieces_info`", "WHERE `full_name` = '$full_name' AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
-  $is_exist_mac   = !empty($macAdd) ? $pcs_obj->count_records("`pieces_mac_addr`.`id`", "`pieces_mac_addr`", "LEFT JOIN `pieces_info` ON `pieces_info`.`id` = `pieces_mac_addr`.`id` WHERE `pieces_mac_addr`.`mac_add` = $mac_add AND `pieces_info`.`company_id` = " . base64_decode($_SESSION['sys']['company_id'])) : 0;
-  $is_exist_ip    = $ip == '0.0.0.0' ? 0 : $pcs_obj->count_records("`id`", "`pieces_info`", "WHERE `ip` = '$ip' AND `direction_id` = $dir_id AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
+  $is_exist_name = $pcs_obj->count_records("`id`", "`pieces_info`", "WHERE `full_name` = '$full_name' AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
+  $is_exist_mac = !empty($macAdd) ? $pcs_obj->count_records("`pieces_mac_addr`.`id`", "`pieces_mac_addr`", "LEFT JOIN `pieces_info` ON `pieces_info`.`id` = `pieces_mac_addr`.`id` WHERE `pieces_mac_addr`.`mac_add` = $mac_add AND `pieces_info`.`company_id` = " . base64_decode($_SESSION['sys']['company_id'])) : 0;
+  $is_exist_ip = $ip == '0.0.0.0' ? 0 : $pcs_obj->count_records("`id`", "`pieces_info`", "WHERE `ip` = '$ip' AND `direction_id` = $dir_id AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
 
   // check piece name
   if ($is_exist_name > 0) {

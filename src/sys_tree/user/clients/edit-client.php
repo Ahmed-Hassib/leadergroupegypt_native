@@ -25,27 +25,36 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
   // ));
   $users = [];
   $target_user = !empty($users) && count($users) > 0 ? $users[1] : -1;
-?>
+  ?>
   <!-- start add new user page -->
   <div class="container" dir="<?php echo $page_dir ?>">
     <!-- start form -->
-    <form class="custom-form need-validation" action="?do=update-client-info" method="POST" id="update-client-info" onchange="form_validation(this)">
+    <form class="custom-form need-validation" action="?do=update-client-info" method="POST" id="update-client-info"
+      onchange="form_validation(this)">
       <!-- submit -->
       <div class="hstack gap-3">
         <?php if ($_SESSION['sys']['clients_add'] == 1) { ?>
-          <button type="button" form="update-client-info" class="btn btn-primary text-capitalize bg-gradient fs-12 py-1 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" id="edit-client" onclick="form_validation(this.form, 'submit')">
+          <button type="button" form="update-client-info"
+            class="btn btn-primary text-capitalize bg-gradient fs-12 py-1 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>"
+            id="edit-client" onclick="form_validation(this.form, 'submit')">
             <i class="bi bi-check-all"></i>
             <?php echo lang('SAVE') ?>
           </button>
         <?php } ?>
 
         <?php if ($target_user != -1) { ?>
-          <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2" href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $client_data['ip'] ?>&port=<?php !empty($client_data['port']) || $client_data != 0 ? $client_data['port'] : '443' ?>" target='_blank'><?php echo lang('VISIT DEVICE', $lang_file) ?></a>
+          <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2"
+            href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $client_data['ip'] ?>&port=<?php !empty($client_data['port']) || $client_data != 0 ? $client_data['port'] : '443' ?>"
+            target='_blank'>
+            <?php echo lang('VISIT DEVICE', $lang_file) ?>
+          </a>
         <?php } ?>
 
         <?php if ($_SESSION['sys']['clients_delete'] == 1) { ?>
           <!-- delete button -->
-          <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deleteClientModal" data-client-id="<?php echo base64_encode($client_data['id']) ?>" data-client-name="<?php echo $client_data['full_name'] ?>" onclick="confirm_delete_client(this)">
+          <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal"
+            data-bs-target="#deleteClientModal" data-client-id="<?php echo base64_encode($client_data['id']) ?>"
+            data-client-name="<?php echo $client_data['full_name'] ?>" onclick="confirm_delete_client(this)">
             <i class="bi bi-trash"></i>
             <?php echo lang('DELETE'); ?>
           </button>
@@ -54,7 +63,9 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
       <!-- horzontal stack -->
       <div class="hstack gap-3">
         <h6 class="h6 text-decoration-underline text-capitalize text-danger fw-bold">
-          <span><?php echo lang('*REQUIRED') ?></span>
+          <span>
+            <?php echo lang('*REQUIRED') ?>
+          </span>
         </h6>
       </div>
       <!-- start client info -->
@@ -63,34 +74,55 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
         <div class="col-12">
           <div class="section-block">
             <div class="section-header">
-              <h5><?php echo lang('CLT INFO', $lang_file) ?></h5>
+              <h5>
+                <?php echo lang('CLT INFO', $lang_file) ?>
+              </h5>
               <hr />
             </div>
             <!-- client id -->
             <input type="hidden" name="client-id" id="client-id" value="<?php echo base64_encode($client_data['id']) ?>">
             <!-- full name -->
-            <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-              <input type="text" class="form-control" id="full-name" name="full-name" placeholder="<?php echo lang('CLT NAME', $lang_file) ?>" onblur="fullname_validation(this, <?php echo base64_encode($client_data['id']) ?>)" onblur="fullname_validation(this, <?php echo base64_encode($client_data['id']) ?>)" value="<?php echo $client_data['full_name'] ?>" autocomplete="off" required />
-              <label for="full-name"><?php echo lang('CLT NAME', $lang_file) ?></label>
+            <div
+              class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+              <input type="text" class="form-control" id="full-name" name="full-name"
+                placeholder="<?php echo lang('CLT NAME', $lang_file) ?>"
+                onblur="fullname_validation(this, <?php echo base64_encode($client_data['id']) ?>)"
+                onblur="fullname_validation(this, <?php echo base64_encode($client_data['id']) ?>)"
+                value="<?php echo $client_data['full_name'] ?>" autocomplete="off" required />
+              <label for="full-name">
+                <?php echo lang('CLT NAME', $lang_file) ?>
+              </label>
             </div>
             <!-- address -->
-            <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-              <input type="text" name="address" id="address" class="form-control w-100" value="<?php echo $client_data['address'] ?>" placeholder="<?php echo lang('ADDR', $lang_file) ?>" />
-              <label for="address"><?php echo lang('ADDR', $lang_file) ?></label>
+            <div
+              class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+              <input type="text" name="address" id="address" class="form-control w-100"
+                value="<?php echo $client_data['address'] ?>" placeholder="<?php echo lang('ADDR', $lang_file) ?>" />
+              <label for="address">
+                <?php echo lang('ADDR', $lang_file) ?>
+              </label>
             </div>
             <!-- phone -->
-            <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-              <input type="text" name="phone-number" id="phone-number" class="form-control w-100" placeholder="<?php echo lang('PHONE', $lang_file) ?>" value="<?php echo $client_data['phone'] ?>" />
-              <label for="phone-number"><?php echo lang('PHONE', $lang_file) ?></label>
+            <div
+              class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+              <input type="text" name="phone-number" id="phone-number" class="form-control w-100"
+                placeholder="<?php echo lang('PHONE', $lang_file) ?>" value="<?php echo $client_data['phone'] ?>" />
+              <label for="phone-number">
+                <?php echo lang('PHONE', $lang_file) ?>
+              </label>
             </div>
             <!-- is client -->
             <div class="mb-sm-2 mb-md-3 row">
-              <label for="is-client" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo lang('TYPE', 'pieces') ?></label>
+              <label for="is-client" class="col-sm-12 col-md-4 col-form-label text-capitalize">
+                <?php echo lang('TYPE', 'pieces') ?>
+              </label>
               <div class="mt-2 col-sm-12 col-md-8 position-relative">
                 <!-- CLIENT -->
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="radio" name="is-client" id="client" value="0" <?php echo $client_data['is_client'] == 1 ? 'checked' : '' ?>>
-                  <label class="form-check-label text-capitalize" for="client"><?php echo lang('CLT', $lang_file) ?></label>
+                  <label class="form-check-label text-capitalize" for="client">
+                    <?php echo lang('CLT', $lang_file) ?>
+                  </label>
                 </div>
               </div>
             </div>
@@ -101,34 +133,51 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
         <div class="col-12">
           <div class="section-block">
             <div class="section-header">
-              <h5><?php echo lang('ADD INFO', 'pieces') ?></h5>
+              <h5>
+                <?php echo lang('ADD INFO', 'pieces') ?>
+              </h5>
               <hr />
             </div>
 
             <!-- internet source -->
-            <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-              <input type="text" name="internet-source" id="internet-source" class="form-control" placeholder="<?php echo lang('INTERNET SOURCE', $lang_file) ?>" value="<?php echo $client_data['internet_source']  ?>" />
-              <label for="internet-source"><?php echo lang('INT SRC', 'pieces'); ?></label>
+            <div
+              class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+              <input type="text" name="internet-source" id="internet-source" class="form-control"
+                placeholder="<?php echo lang('INT SRC', 'pieces') ?>"
+                value="<?php echo $client_data['internet_source'] ?>" />
+              <label for="internet-source">
+                <?php echo lang('INT SRC', 'pieces'); ?>
+              </label>
             </div>
-
             <!-- notes -->
-            <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-              <textarea name="notes" id="notes" title="put some notes hete if exist" class="form-control w-100" style="height: 8rem; resize: none; direction: <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'rtl' : 'ltr' ?>" placeholder="<?php echo lang('PUT YOUR NOTES HERE', $lang_file) ?>"><?php echo $client_data['notes']  ?></textarea>
-              <label for="notes"><?php echo lang('NOTE') ?></label>
+            <div
+              class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+              <textarea name="notes" id="notes" title="put some notes hete if exist" class="form-control w-100"
+                style="height: 8rem; resize: none; direction: <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'rtl' : 'ltr' ?>"
+                placeholder="<?php echo lang('PUT YOUR NOTES HERE', $lang_file) ?>"><?php echo $client_data['notes'] ?></textarea>
+              <label for="notes">
+                <?php echo lang('NOTE') ?>
+              </label>
             </div>
             <!-- visit time -->
             <div class="mb-3 row">
-              <label for="visit-time" class="col-sm-12 col-md-4 col-form-label text-capitalize"><?php echo lang('VISIT TIME', 'pieces') ?></label>
+              <label for="visit-time" class="col-sm-12 col-md-4 col-form-label text-capitalize">
+                <?php echo lang('VISIT TIME', 'pieces') ?>
+              </label>
               <div class="mt-2 col-sm-12 col-md-8">
                 <!-- ANY TIME -->
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="radio" name="visit-time" id="visit-time-piece" value="1" <?php echo $client_data['visit_time'] == 1 ? 'checked' : '' ?>>
-                  <label class="form-check-label text-capitalize" for="visit-time-piece"><?php echo lang('ANY TIME', 'pieces') ?></label>
+                  <label class="form-check-label text-capitalize" for="visit-time-piece">
+                    <?php echo lang('ANY TIME', 'pieces') ?>
+                  </label>
                 </div>
                 <!-- ADVANCE CONNECTION -->
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="radio" name="visit-time" id="visit-time-client" value="2" <?php echo $client_data['visit_time'] == 2 ? 'checked' : '' ?>>
-                  <label class="form-check-label text-capitalize" for="visit-time-client"><?php echo lang('ADV CONN', 'pieces') ?></label>
+                  <label class="form-check-label text-capitalize" for="visit-time-client">
+                    <?php echo lang('ADV CONN', 'pieces') ?>
+                  </label>
                 </div>
               </div>
             </div>
@@ -140,9 +189,14 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                   <?php echo lang('CLT MALS', $lang_file); ?>
                 </label>
                 <div class="col-sm-12 col-md-8 position-relative">
-                  <span class="me-5 text-start" dir="<?php echo @$_SESSION['sys']['lang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo $malCounter . " " . ($malCounter > 2 ? lang("MALS", 'malfunctions') : lang("MAL", 'malfunctions')) ?></span>
+                  <span class="me-5 text-start" dir="<?php echo @$_SESSION['sys']['lang'] == "ar" ? "rtl" : "ltr" ?>">
+                    <?php echo $malCounter . " " . ($malCounter > 2 ? lang("MALS", 'malfunctions') : lang("MAL", 'malfunctions')) ?>
+                  </span>
                   <?php if ($_SESSION['sys']['mal_show']) { ?>
-                    <a href="<?php echo $nav_up_level ?>malfunctions/index.php?do=show-pieces-malfunctions&pieceid=<?php echo base64_encode($client_data['id']) ?>" class="mt-2 text-start" dir="<?php echo @$_SESSION['sys']['lang'] == "ar" ? "rtl" : "ltr" ?>"><?php echo lang("DETAILS") ?>&nbsp;<i class="bi bi-arrow-up-left-square"></i></a>
+                    <a href="<?php echo $nav_up_level ?>malfunctions/index.php?do=show-pieces-malfunctions&pieceid=<?php echo base64_encode($client_data['id']) ?>"
+                      class="mt-2 text-start" dir="<?php echo @$_SESSION['sys']['lang'] == "ar" ? "rtl" : "ltr" ?>">
+                      <?php echo lang("DETAILS") ?>&nbsp;<i class="bi bi-arrow-up-left-square"></i>
+                    </a>
                   <?php } ?>
                 </div>
               </div>
@@ -157,7 +211,9 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
         <div class="col-12">
           <div class="section-block">
             <div class="section-header">
-              <h5><?php echo lang('CONN INFO', 'pieces') ?></h5>
+              <h5>
+                <?php echo lang('CONN INFO', 'pieces') ?>
+              </h5>
               <hr />
             </div>
             <div class="row row-cols-sm-1 row-cols-md-2 alignitems-stretch justify-content-start flex-row">
@@ -166,9 +222,13 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                 <div class="row row-cols-sm-1">
                   <!-- direction -->
                   <div class="col-12">
-                    <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-                      <select class="form-select" id="direction" name="direction" required onchange="get_sources(this, <?php echo base64_decode($_SESSION['sys']['company_id']) ?>, '<?php echo $dirs . $_SESSION['sys']['company_name'] ?>', ['sources', 'alternative-sources']);">
-                        <option value="default" disabled><?php echo lang('SELECT DIRECTION', 'directions') ?></option>
+                    <div
+                      class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                      <select class="form-select" id="direction" name="direction" required
+                        onchange="get_sources(this, <?php echo base64_decode($_SESSION['sys']['company_id']) ?>, '<?php echo $dirs . $_SESSION['sys']['company_name'] ?>', ['sources', 'alternative-sources']);">
+                        <option value="default" disabled>
+                          <?php echo lang('SELECT DIRECTION', 'directions') ?>
+                        </option>
                         <?php
                         // get all directions
                         $dirs_data = $pcs_obj->select_specific_column("*", "`direction`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " ORDER BY `direction_name` ASC");
@@ -179,21 +239,27 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                         // check the row dirs_count
                         if ($dirs_count > 0) { ?>
                           <?php foreach ($dir_data as $dir) { ?>
-                            <option value="<?php echo base64_encode($dir['direction_id']) ?>" data-dir-company="<?php echo base64_decode($_SESSION['sys']['company_id']) ?>" <?php echo $client_data['direction_id'] == $dir['direction_id'] ? 'selected' : ''  ?>>
-                              <?php echo  $dir['direction_name'] ?>
+                            <option value="<?php echo base64_encode($dir['direction_id']) ?>"
+                              data-dir-company="<?php echo base64_decode($_SESSION['sys']['company_id']) ?>" <?php echo $client_data['direction_id'] == $dir['direction_id'] ? 'selected' : '' ?>>
+                              <?php echo $dir['direction_name'] ?>
                             </option>
                           <?php } ?>
                         <?php } ?>
                       </select>
-                      <label for="direction"><?php echo lang('DIRECTION', 'directions') ?></label>
+                      <label for="direction">
+                        <?php echo lang('DIRECTION', 'directions') ?>
+                      </label>
                     </div>
                   </div>
 
                   <!-- source -->
                   <div class="col-12">
-                    <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                    <div
+                      class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
                       <select class="form-select" id="sources" name="source-id" required>
-                        <option value="default" disabled><?php echo lang('SELECT SRC', 'pieces') ?></option>
+                        <option value="default" disabled>
+                          <?php echo lang('SELECT SRC', 'pieces') ?>
+                        </option>
                         <?php
                         $condition = "LEFT JOIN `direction` ON `direction`.`direction_id` = `pieces_info`.`direction_id` WHERE `pieces_info`.`direction_id` = " . $client_data['direction_id'] . " AND `pieces_info`.`is_client` = 0 AND `pieces_info`.`company_id` = " . base64_decode($_SESSION['sys']['company_id']);
                         $sources = $pcs_obj->select_specific_column("`pieces_info`.`id`, `pieces_info`.`full_name`, `pieces_info`.`ip`", "`pieces_info`", $condition);
@@ -205,18 +271,21 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                         if ($sources_count) { ?>
                           <?php foreach ($sources_data as $source) { ?>
                             <option value="<?php echo base64_encode($source['id']) ?>" <?php echo $client_data['source_id'] == $source['id'] || ($client_data['source_id'] == 0 && $client_data['ip'] == $source['ip']) ? 'selected' : '' ?>>
-                              <?php echo  $source['full_name'] . " - " . $source['ip'] ?>
+                              <?php echo $source['full_name'] . " - " . $source['ip'] ?>
                             </option>
                           <?php } ?>
                         <?php } ?>
                       </select>
-                      <label for="sources"><?php echo lang('THE SRC', 'pieces') ?></label>
+                      <label for="sources">
+                        <?php echo lang('THE SRC', 'pieces') ?>
+                      </label>
                     </div>
                   </div>
 
                   <!-- alternative source -->
                   <div class="col-12">
-                    <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                    <div
+                      class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
                       <select class="form-select" id="alternative-sources" name="alt-source-id">
                         <option value="default" selected disabled>
                           <?php echo lang('SELECT ALT SRC', 'pieces') ?>
@@ -224,12 +293,14 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                         <?php if ($sources_count) { ?>
                           <?php foreach ($sources_data as $alt_source) { ?>
                             <option value="<?php echo base64_encode($alt_source['id']) ?>" <?php echo $client_data['alt_source_id'] == $alt_source['id'] || ($client_data['alt_source_id'] == 0 && $client_data['ip'] == $alt_source['ip']) ? 'selected' : ''; ?>>
-                              <?php echo  $alt_source['full_name'] . " - " . $alt_source['ip'] ?>
+                              <?php echo $alt_source['full_name'] . " - " . $alt_source['ip'] ?>
                             </option>
                           <?php } ?>
                         <?php } ?>
                       </select>
-                      <label for="alternative-sources"><?php echo lang('ALT SRC', 'pieces') ?></label>
+                      <label for="alternative-sources">
+                        <?php echo lang('ALT SRC', 'pieces') ?>
+                      </label>
                     </div>
                   </div>
                 </div>
@@ -240,15 +311,17 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                 <div class="row row-cols-sm-1">
                   <!-- device type -->
                   <div class="col-12">
-                    <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                    <div
+                      class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
                       <?php
                       $dev_query = "SELECT `devices_info`.*, `manufacture_companies`.`company_id` FROM `devices_info` LEFT JOIN `manufacture_companies` ON `manufacture_companies`.`man_company_id` = `devices_info`.`device_company_id` WHERE `manufacture_companies`.`company_id` = ?;";
                       $stmt = $con->prepare($dev_query);
                       $stmt->execute(array(base64_decode($_SESSION['sys']['company_id'])));
                       $devices_count = $stmt->rowCount();
-                      $devices_data =  $stmt->fetchAll();
+                      $devices_data = $stmt->fetchAll();
                       ?>
-                      <select class="form-select" id="device-id" name="device-id" onchange="get_devices_models(this, '<?php echo $dev_models . $_SESSION['sys']['company_name'] ?>')">
+                      <select class="form-select" id="device-id" name="device-id"
+                        onchange="get_devices_models(this, '<?php echo $dev_models . $_SESSION['sys']['company_name'] ?>')">
                         <option value="default" disabled selected>
                           <?php echo lang('SELECT DEV TYPE', 'pieces') ?>
                         </option>
@@ -260,25 +333,28 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                           <?php } ?>
                         <?php } ?>
                       </select>
-                      <?php if ($devices_count == 0) {  ?>
+                      <?php if ($devices_count == 0) { ?>
                         <div id="emailHelp" class="form-text text-danger">
                           <?php echo lang('NO DATA') ?>
                         </div>
                       <?php } ?>
-                      <label for="device-id"><?php echo lang('DEV TYPE', 'pieces') ?></label>
+                      <label for="device-id">
+                        <?php echo lang('DEV TYPE', 'pieces') ?>
+                      </label>
                     </div>
                   </div>
 
                   <!-- device model -->
                   <div class="col-12">
-                    <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                    <div
+                      class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
                       <?php
                       // get all pieces devices_model
                       $model_query = "SELECT *FROM `devices_model` WHERE `device_id` = ?";
                       $stmt = $con->prepare($model_query);
                       $stmt->execute(array($client_data['device_id']));
                       $model_count = $stmt->rowCount();
-                      $models_data =  $stmt->fetchAll();
+                      $models_data = $stmt->fetchAll();
                       ?>
                       <select class="form-select" name="device-model" id="device-model">
                         <option value="default" disabled selected>
@@ -290,10 +366,12 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                               <?php echo $model['model_name'] ?>
                             </option>
                           <?php } ?>
-                        <?php }  ?>
+                        <?php } ?>
                       </select>
-                      <label for="device-model"><?php echo lang('DEV MODEL', 'pieces') ?></label>
-                      <?php if ($model_count == 0 && $client_data['device_model'] > 0) {  ?>
+                      <label for="device-model">
+                        <?php echo lang('DEV MODEL', 'pieces') ?>
+                      </label>
+                      <?php if ($model_count == 0 && $client_data['device_model'] > 0) { ?>
                         <div id="emailHelp" class="form-text text-danger">
                           <?php echo lang('NO DATA') ?>
                         </div>
@@ -304,7 +382,8 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
 
                   <!-- connection type -->
                   <div class="col-12">
-                    <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                    <div
+                      class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
                       <?php $conn_type_data = $db_obj->select_specific_column("*", "`connection_types`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id'])); ?>
                       <select class="form-select text-uppercase" name="conn-type" id="conn-type">
                         <option value="default" selected disabled>
@@ -316,10 +395,12 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                               <?php echo $conn_type_row['connection_name'] ?>
                             </option>
                           <?php } ?>
-                        <?php }  ?>
+                        <?php } ?>
                       </select>
-                      <label for="conn-type"><?php echo lang('CONN TYPE', 'pieces') ?></label>
-                      <?php if (count($conn_type_data) == 0) {  ?>
+                      <label for="conn-type">
+                        <?php echo lang('CONN TYPE', 'pieces') ?>
+                      </label>
+                      <?php if (count($conn_type_data) == 0) { ?>
                         <div id="emailHelp" class="form-text text-danger">
                           <?php echo lang('NO DATA') ?>
                         </div>
@@ -336,7 +417,9 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
         <div class="col-12">
           <div class="section-block">
             <div class="section-header">
-              <h5><?php echo lang('PCS INFO', 'pieces') ?></h5>
+              <h5>
+                <?php echo lang('PCS INFO', 'pieces') ?>
+              </h5>
               <hr />
             </div>
             <div class="row row-cols-sm-1 row-cols-md-2 align-items-stretch justify-content-start">
@@ -347,49 +430,79 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                   <div class="col-12">
                     <div class="mb-sm-2 mb-md-3 row">
                       <div class="col-sm-8">
-                        <div class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-                          <input type="text" class="form-control" id="ip" name="ip" placeholder="xxx.xxx.xxx.xxx" onblur="ip_validation(this, <?php echo base64_encode($client_data['id']) ?>)" onkeyup="ip_validation(this, <?php echo base64_encode($client_data['id']) ?>)" value="<?php echo $client_data['ip'] ?>" autocomplete="off" required />
-                          <label for="ip"><span class="text-uppercase"><?php echo lang('IP') ?></span></label>
+                        <div
+                          class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                          <input type="text" class="form-control" id="ip" name="ip" placeholder="xxx.xxx.xxx.xxx"
+                            onblur="ip_validation(this, <?php echo base64_encode($client_data['id']) ?>)"
+                            onkeyup="ip_validation(this, <?php echo base64_encode($client_data['id']) ?>)"
+                            value="<?php echo $client_data['ip'] ?>" autocomplete="off" required />
+                          <label for="ip"><span class="text-uppercase">
+                              <?php echo lang('IP') ?>
+                            </span></label>
                         </div>
                       </div>
                       <div class="col-sm-4 position-relative">
-                        <div class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-                          <input type="number" class="form-control" id="port" name="port" placeholder="port" value="<?php echo $client_data['port'] ?>" autocomplete="off" required />
+                        <div
+                          class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                          <input type="number" class="form-control" id="port" name="port" placeholder="port"
+                            value="<?php echo $client_data['port'] ?>" autocomplete="off" required />
                           <label for="port">Port</label>
                         </div>
                       </div>
                       <div id="ipHelp" class="form-text text-warning">
-                        <span><?php echo lang('IP NOTE', 'pieces') ?></span>
+                        <span>
+                          <?php echo lang('IP NOTE', 'pieces') ?>
+                        </span>
                         <span>&nbsp;-&nbsp;</span>
-                        <span><?php echo lang('PORT NOTE', 'pieces') ?></span>
+                        <span>
+                          <?php echo lang('PORT NOTE', 'pieces') ?>
+                        </span>
                       </div>
                     </div>
                   </div>
 
                   <!-- MAC ADD -->
                   <div class="col-12">
-                    <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-                      <input type="text" class="form-control" id="mac-add" name="mac-add" onblur="mac_validation(this, <?php echo base64_encode($client_data['id']) ?>)" onkeyup="mac_validation(this, <?php echo base64_encode($client_data['id']) ?>)" placeholder="<?php echo lang('MAC') ?>" value="<?php echo $client_data['mac_add'] ?>" />
-                      <label for="mac-add"><?php echo lang('MAC') ?></label>
+                    <div
+                      class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                      <input type="text" class="form-control" id="mac-add" name="mac-add"
+                        onblur="mac_validation(this, <?php echo base64_encode($client_data['id']) ?>)"
+                        onkeyup="mac_validation(this, <?php echo base64_encode($client_data['id']) ?>)"
+                        placeholder="<?php echo lang('MAC') ?>" value="<?php echo $client_data['mac_add'] ?>" />
+                      <label for="mac-add">
+                        <?php echo lang('MAC') ?>
+                      </label>
                     </div>
                   </div>
 
                   <!-- user name -->
                   <div class="col-12">
-                    <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-                      <input type="text" class="form-control" id="user-name" name="user-name" placeholder="<?php echo lang('USERNAME') ?>" value="<?php echo $client_data['username'] ?>" autocomplete="off" required />
-                      <label for="user-name"><?php echo lang('USERNAME') ?></label>
+                    <div
+                      class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                      <input type="text" class="form-control" id="user-name" name="user-name"
+                        placeholder="<?php echo lang('USERNAME') ?>" value="<?php echo $client_data['username'] ?>"
+                        autocomplete="off" required />
+                      <label for="user-name">
+                        <?php echo lang('USERNAME') ?>
+                      </label>
                     </div>
                   </div>
 
                   <!-- password -->
                   <div class="col-12">
-                    <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-                      <input type="password" class="form-control" id="password" name="password" placeholder="<?php echo lang('PASSWORD') ?>" value="<?php echo $client_data['password'] ?>" autocomplete="off" required />
-                      <i class="bi bi-eye-slash show-pass <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'show-pass-left' : 'show-pass-right' ?>" onclick="show_pass(this)"></i>
-                      <label for="password"><?php echo lang('PASSWORD') ?></label>
+                    <div
+                      class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                      <input type="password" class="form-control" id="password" name="password"
+                        placeholder="<?php echo lang('PASSWORD') ?>" value="<?php echo $client_data['password'] ?>"
+                        autocomplete="off" required />
+                      <i class="bi bi-eye-slash show-pass <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'show-pass-left' : 'show-pass-right' ?>"
+                        onclick="show_pass(this)"></i>
+                      <label for="password">
+                        <?php echo lang('PASSWORD') ?>
+                      </label>
                       <div id="passHelp" class="form-text text-warning ">
-                        <?php echo lang('PASS NOTE') ?></div>
+                        <?php echo lang('PASS NOTE') ?>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -400,10 +513,16 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                 <div class="row row-cols-sm-1">
                   <!-- password-connection -->
                   <div class="col-12">
-                    <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-                      <input type="password" class="form-control" id="password-connection" name="password-connection" placeholder="<?php echo lang('PASS CONN', 'pieces') ?>" value="<?php echo $client_data['password_connection'] ?>" />
-                      <i class="bi bi-eye-slash show-pass <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'show-pass-left' : 'show-pass-right' ?>" onclick="show_pass(this)"></i>
-                      <label for="password-connection"><?php echo lang('PASS CONN', 'pieces') ?></label>
+                    <div
+                      class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                      <input type="password" class="form-control" id="password-connection" name="password-connection"
+                        placeholder="<?php echo lang('PASS CONN', 'pieces') ?>"
+                        value="<?php echo $client_data['password_connection'] ?>" />
+                      <i class="bi bi-eye-slash show-pass <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'show-pass-left' : 'show-pass-right' ?>"
+                        onclick="show_pass(this)"></i>
+                      <label for="password-connection">
+                        <?php echo lang('PASS CONN', 'pieces') ?>
+                      </label>
                       <div id="passHelp" class="form-text text-warning ">
                         <?php echo lang('PASS NOTE') ?>
                       </div>
@@ -411,23 +530,37 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                   </div>
                   <!-- ssid -->
                   <div class="col-12">
-                    <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-                      <input type="text" class="form-control" id="ssid" name="ssid" placeholder="<?php echo lang('SSID', 'pieces') ?>" value="<?php echo $client_data['ssid'] ?>" />
-                      <label for="ssid"><?php echo lang('SSID', 'pieces') ?></label>
+                    <div
+                      class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                      <input type="text" class="form-control" id="ssid" name="ssid"
+                        placeholder="<?php echo lang('SSID', 'pieces') ?>" value="<?php echo $client_data['ssid'] ?>" />
+                      <label for="ssid">
+                        <?php echo lang('SSID', 'pieces') ?>
+                      </label>
                     </div>
                   </div>
                   <!-- frequency -->
                   <div class="col-12">
-                    <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-                      <input type="text" class="form-control" id="frequency" name="frequency" placeholder="<?php echo lang('FREQ', 'pieces') ?>" value="<?php echo $client_data['frequency'] ?>" onkeyup="integer_input_validation(this)" onblur="integer_input_validation(this)" />
-                      <label for="frequency"><?php echo lang('FREQ', 'pieces') ?></label>
+                    <div
+                      class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                      <input type="text" class="form-control" id="frequency" name="frequency"
+                        placeholder="<?php echo lang('FREQ', 'pieces') ?>" value="<?php echo $client_data['frequency'] ?>"
+                        onkeyup="integer_input_validation(this)" onblur="integer_input_validation(this)" />
+                      <label for="frequency">
+                        <?php echo lang('FREQ', 'pieces') ?>
+                      </label>
                     </div>
                   </div>
                   <!-- wave -->
                   <div class="col-12">
-                    <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-                      <input type="text" class="form-control" id="wave" name="wave" placeholder="<?php echo lang('WAVE', 'pieces') ?>" value="<?php echo $client_data['wave'] ?>" onkeyup="integer_input_validation(this)" onblur="integer_input_validation(this)" />
-                      <label for="wave"><?php echo lang('WAVE', 'pieces') ?></label>
+                    <div
+                      class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                      <input type="text" class="form-control" id="wave" name="wave"
+                        placeholder="<?php echo lang('WAVE', 'pieces') ?>" value="<?php echo $client_data['wave'] ?>"
+                        onkeyup="integer_input_validation(this)" onblur="integer_input_validation(this)" />
+                      <label for="wave">
+                        <?php echo lang('WAVE', 'pieces') ?>
+                      </label>
                     </div>
                   </div>
                 </div>
@@ -440,19 +573,27 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
       <!-- submit -->
       <div class="hstack gap-3">
         <?php if ($_SESSION['sys']['clients_add'] == 1) { ?>
-          <button type="button" form="update-client-info" class="btn btn-primary text-capitalize bg-gradient fs-12 py-1 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" id="edit-client" onclick="form_validation(this.form, 'submit')">
+          <button type="button" form="update-client-info"
+            class="btn btn-primary text-capitalize bg-gradient fs-12 py-1 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>"
+            id="edit-client" onclick="form_validation(this.form, 'submit')">
             <i class="bi bi-check-all"></i>
             <?php echo lang('SAVE') ?>
           </button>
         <?php } ?>
 
         <?php if ($target_user != -1) { ?>
-          <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2" href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $client_data['ip'] ?>&port=<?php echo !empty($client_data['port']) || $client_data['port'] != 0 ? $client_data['port'] : '443' ?>" target='_blank'><?php echo lang('VISIT DEVICE', 'pieces') ?></a>
+          <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2"
+            href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $client_data['ip'] ?>&port=<?php echo !empty($client_data['port']) || $client_data['port'] != 0 ? $client_data['port'] : '443' ?>"
+            target='_blank'>
+            <?php echo lang('VISIT DEVICE', 'pieces') ?>
+          </a>
         <?php } ?>
 
         <?php if ($_SESSION['sys']['clients_delete'] == 1) { ?>
           <!-- delete button -->
-          <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deleteClientModal" data-client-id="<?php echo base64_encode($client_data['id']) ?>" data-client-name="<?php echo $client_data['full_name'] ?>" onclick="confirm_delete_client(this)">
+          <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal"
+            data-bs-target="#deleteClientModal" data-client-id="<?php echo base64_encode($client_data['id']) ?>"
+            data-client-name="<?php echo $client_data['full_name'] ?>" onclick="confirm_delete_client(this)">
             <i class="bi bi-trash"></i>
             <?php echo lang('DELETE'); ?>
           </button>

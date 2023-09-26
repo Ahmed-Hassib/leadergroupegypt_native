@@ -1,37 +1,39 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // get client info from the form
-  $id         = isset($_POST['client-id'])  && !empty($_POST['client-id'])  ? base64_decode(trim($_POST['client-id'], ' ')) : 0;
-  $full_name  = isset($_POST['full-name'])  && !empty($_POST['full-name'])  ? trim($_POST['full-name'], ' ')  : '';
-  $ip         = isset($_POST['ip'])         && !empty($_POST['ip'])         ? trim($_POST['ip'], ' ')         : '';
-  $port       = isset($_POST['port'])       && !empty($_POST['port'])       ? trim($_POST['port'], ' ')       : '';
-  $username   = isset($_POST['user-name'])  && !empty($_POST['user-name'])  ? trim($_POST['user-name'], ' ')  : '';
-  $password   = isset($_POST['password'])   && !empty($_POST['password'])   ? trim($_POST['password'], ' ')   : '';
-  $dir_id     = isset($_POST['direction'])  && !empty($_POST['direction'])  ? base64_decode(trim($_POST['direction'], ' '))  : '';
+  $id = isset($_POST['client-id']) && !empty($_POST['client-id']) ? base64_decode(trim($_POST['client-id'], ' ')) : 0;
+  $full_name = isset($_POST['full-name']) && !empty($_POST['full-name']) ? trim($_POST['full-name'], ' ') : '';
+  $ip = isset($_POST['ip']) && !empty($_POST['ip']) ? trim($_POST['ip'], ' ') : '';
+  $port = isset($_POST['port']) && !empty($_POST['port']) ? trim($_POST['port'], ' ') : '';
+  $username = isset($_POST['user-name']) && !empty($_POST['user-name']) ? trim($_POST['user-name'], ' ') : '';
+  $password = isset($_POST['password']) && !empty($_POST['password']) ? trim($_POST['password'], ' ') : '';
+  $dir_id = isset($_POST['direction']) && !empty($_POST['direction']) ? base64_decode(trim($_POST['direction'], ' ')) : '';
 
   // make it client
-  $is_client   = 1;
+  $is_client = 1;
   $device_type = 0;
 
   // get source id
-  $source_id        = isset($_POST['source-id']) ? base64_decode(trim($_POST['source-id'], ' '))   : -1;
-  $alt_source_id    = isset($_POST['alt-source-id']) ? base64_decode(trim($_POST['alt-source-id'], ' '))   : -1;
-  $device_id        = isset($_POST['device-id']) ? base64_decode(trim($_POST['device-id'], ' '))   : -1;
-  $model_id         = isset($_POST['device-model']) ? trim($_POST['device-model'], ' ')   : -1;
+  $source_id = isset($_POST['source-id']) ? base64_decode(trim($_POST['source-id'], ' ')) : -1;
+  $alt_source_id = isset($_POST['alt-source-id']) ? base64_decode(trim($_POST['alt-source-id'], ' ')) : -1;
+  $device_id = isset($_POST['device-id']) ? base64_decode(trim($_POST['device-id'], ' ')) : -1;
+  $model_id = isset($_POST['device-model']) ? trim($_POST['device-model'], ' ') : -1;
 
-  $phone            = trim($_POST['phone-number'], ' ');
-  $address          = trim($_POST['address'], ' ');
-  $conn_type        = isset($_POST['conn-type'])  && !empty($_POST['conn-type']) ? base64_decode(trim($_POST['conn-type'], ' '))  : '';
-  $notes            = empty(trim($_POST['notes'], ' ')) ? 'لا توجد ملاحظات' : trim($_POST['notes'], ' ');
-  $visit_time       = isset($_POST['visit-time']) ? $_POST['visit-time'] : 1;
-  $ssid             = trim($_POST['ssid'], ' ');
-  $pass_conn        = trim($_POST['password-connection'], ' ');
-  $frequency        = isset($_POST['frequency']) && !empty($_POST['frequency']) ? trim($_POST['frequency'], ' ') : 0;
-  $wave             = isset($_POST['wave'])     && !empty($_POST['wave']) ? trim($_POST['wave'], ' ') : 0;
-  $mac_add          = trim($_POST['mac-add'], ' ');
+  $phone = trim($_POST['phone-number'], ' ');
+  $address = trim($_POST['address'], ' ');
+  $conn_type = isset($_POST['conn-type']) && !empty($_POST['conn-type']) ? base64_decode(trim($_POST['conn-type'], ' ')) : '';
+  $notes = empty(trim($_POST['notes'], ' ')) ? 'لا توجد ملاحظات' : trim($_POST['notes'], ' ');
+  $visit_time = isset($_POST['visit-time']) ? $_POST['visit-time'] : 1;
+  $ssid = trim($_POST['ssid'], ' ');
+  $pass_conn = trim($_POST['password-connection'], ' ');
+  $frequency = isset($_POST['frequency']) && !empty($_POST['frequency']) ? trim($_POST['frequency'], ' ') : 0;
+  $wave = isset($_POST['wave']) && !empty($_POST['wave']) ? trim($_POST['wave'], ' ') : 0;
+  $mac_add = trim($_POST['mac-add'], ' ');
+  $internet_source = trim($_POST['internet-source'], ' ');
 
-  $validIP    = !empty($ip) ? preg_match('/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\z/', $ip) : 1;
-  $validMac   = !empty($macAdd) ? preg_match('/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/', $macAdd) : 1;
+
+  $validIP = !empty($ip) ? preg_match('/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\z/', $ip) : 1;
+  $validMac = !empty($macAdd) ? preg_match('/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/', $macAdd) : 1;
 
   // validate the form
   $form_error = []; // error array
