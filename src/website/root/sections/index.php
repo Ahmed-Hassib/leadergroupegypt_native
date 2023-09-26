@@ -31,12 +31,18 @@ if (isset($_SESSION['website']['username'])) {
   if ($query == 'manage') {
     // check the version
     $file_name = 'dashboard.php';
-  } elseif ($query == 'add-new') {
-    // add new section
-    $file_name = 'add-new.php';
-  } elseif ($query == 'insert-section') {
-    // insert section
-    $file_name = 'insert-section.php';
+  } elseif ($query == 'all') {
+    // all section
+    $file_name = 'all.php';
+    $is_contain_table = true;
+  } elseif ($query == 'activate-section') {
+    // activate section
+    $file_name = 'activate.php';
+    $possible_back = false;
+    $preloader = false;
+  } elseif ($query == 'deactivate-section') {
+    // deactivate section
+    $file_name = 'deactivate.php';
     $possible_back = false;
     $preloader = false;
   } else {

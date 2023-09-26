@@ -8,7 +8,7 @@ class Gallery extends Database
   // properties
   public $con;
   // section id
-  public $SECTION_ID = 2;
+  public $SECTION_ID = 'sec_1002';
   public $SECTION_NAME = 'gallery';
   public $SECTION_CONTENT_TABLE = 'gallery';
   public $SECTION_CONTENT_FOLDER = 'gallery';
@@ -31,7 +31,7 @@ class Gallery extends Database
     $imgs_info = $stmt->fetchAll();
     $count = $stmt->rowCount();
     // check the count
-    return $count > 0 ?  $imgs_info : null;
+    return $count > 0 ? $imgs_info : null;
   }
 
   // function to get all imagesW
@@ -44,7 +44,7 @@ class Gallery extends Database
     $imgs_info = $stmt->fetchAll();
     $count = $stmt->rowCount();
     // check the count
-    return $count > 0 ?  $imgs_info : null;
+    return $count > 0 ? $imgs_info : null;
   }
 
   // function to get all imagesW
@@ -57,7 +57,7 @@ class Gallery extends Database
     $imgs_info = $stmt->fetchAll();
     $count = $stmt->rowCount();
     // check the count
-    return $count > 0 ?  $imgs_info : null;
+    return $count > 0 ? $imgs_info : null;
   }
 
   // function to get all imagesW
@@ -70,7 +70,7 @@ class Gallery extends Database
     $imgs_info = $stmt->fetchAll();
     $count = $stmt->rowCount();
     // check the count
-    return $count > 0 ?  $imgs_info : null;
+    return $count > 0 ? $imgs_info : null;
   }
 
   // function to get all imagesW
@@ -82,7 +82,7 @@ class Gallery extends Database
     $stmt->execute($info);
     $count = $stmt->rowCount();
     // check the count
-    return $count > 0 ?  true : null;
+    return $count > 0 ? true : null;
   }
 
   public function delete_img($id)
@@ -93,7 +93,7 @@ class Gallery extends Database
     $stmt->execute(array($id));
     $count = $stmt->rowCount();
     // check the count
-    return $count > 0 ?  true : null;
+    return $count > 0 ? true : null;
   }
 
   public function update_img($info)
@@ -104,7 +104,7 @@ class Gallery extends Database
     $stmt->execute($info);
     $count = $stmt->rowCount();
     // check the count
-    return $count > 0 ?  true : null;
+    return $count > 0 ? true : null;
   }
 
   public function activate_img($id)
@@ -115,7 +115,7 @@ class Gallery extends Database
     $stmt->execute(array($id));
     $count = $stmt->rowCount();
     // check the count
-    return $count > 0 ?  true : null;
+    return $count > 0 ? true : null;
   }
 
   public function deactivate_img($id)
