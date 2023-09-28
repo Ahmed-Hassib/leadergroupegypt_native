@@ -13,6 +13,7 @@ function dashboard($phrase)
     'IMPORTANT LINKS'   => 'الروابط الهامة',
     'GALLERY'           => 'معرض الصور',
     'ABOUT US'          => 'عن الشركة',
+    'FEATURES'          => 'المميزات',
 
     // large statements
   );

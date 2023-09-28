@@ -15,13 +15,38 @@
     <li>
       <a href="<?php echo $up_level ?>index.php">
         <i class="bi bi-grid"></i>
-        <span class="link-name"><?php echo lang('HOME') ?></span>
+        <span class="link-name">
+          <?php echo lang('HOME') ?>
+        </span>
       </a>
       <!-- start blank sub menu -->
       <ul class="sub-menu blank">
         <li>
           <a href="<?php echo $up_level ?>index.php">
-            <span class="link-name"><?php echo lang('HOME') ?></span>
+            <span class="link-name">
+              <?php echo lang('HOME') ?>
+            </span>
+          </a>
+        </li>
+      </ul>
+      <!-- end blank sub menu -->
+    </li>
+    <!-- end dashboard page link -->
+    <!-- start dashboard page link -->
+    <li>
+      <a href="<?php echo $website_root ?>dashboard/index.php">
+        <i class="bi bi-grid"></i>
+        <span class="link-name">
+          <?php echo lang('DASHBOARD') ?>
+        </span>
+      </a>
+      <!-- start blank sub menu -->
+      <ul class="sub-menu blank">
+        <li>
+          <a href="<?php echo $website_root ?>dashboard/index.php">
+            <span class="link-name">
+              <?php echo lang('DASHBOARD') ?>
+            </span>
           </a>
         </li>
       </ul>
@@ -33,7 +58,9 @@
       <div class="icon-link">
         <section>
           <i class="bi bi-journal-text"></i>
-          <span class="link-name"><?php echo lang('ABOUT US') ?></span>
+          <span class="link-name">
+            <?php echo lang('ABOUT US') ?>
+          </span>
         </section>
         <i class="bi bi-arrow-down-short"></i>
       </div>
@@ -41,12 +68,16 @@
       <ul class="sub-menu">
         <li>
           <a href="<?php echo $website_root ?>about/index.php">
-            <span class="link-name"><?php echo lang('DASHBOARD') ?></span>
+            <span class="link-name">
+              <?php echo lang('DASHBOARD') ?>
+            </span>
           </a>
         </li>
         <li>
           <a href="<?php echo $website_root ?>about/index.php?do=add-new">
-            <span class="link-name"><?php echo lang('ADD NEW', 'about') ?></span>
+            <span class="link-name">
+              <?php echo lang('ADD NEW', 'about') ?>
+            </span>
           </a>
         </li>
       </ul>
@@ -58,7 +89,9 @@
       <div class="icon-link">
         <section>
           <i class="bi bi-tools"></i>
-          <span class="link-name"><?php echo lang('THE SERVICES') ?></span>
+          <span class="link-name">
+            <?php echo lang('THE SERVICES') ?>
+          </span>
         </section>
         <i class="bi bi-arrow-down-short"></i>
       </div>
@@ -66,12 +99,16 @@
       <ul class="sub-menu">
         <li>
           <a href="<?php echo $website_root ?>services/index.php">
-            <span class="link-name"><?php echo lang('DASHBOARD') ?></span>
+            <span class="link-name">
+              <?php echo lang('DASHBOARD') ?>
+            </span>
           </a>
         </li>
         <li>
           <a href="<?php echo $website_root ?>services/index.php?do=add-new">
-            <span class="link-name"><?php echo lang('ADD NEW', 'services') ?></span>
+            <span class="link-name">
+              <?php echo lang('ADD NEW', 'services') ?>
+            </span>
           </a>
         </li>
       </ul>
@@ -85,7 +122,9 @@
       <div class="icon-link">
         <section>
           <i class="bi bi-image"></i>
-          <span class="link-name"><?php echo lang('GALLERY') ?></span>
+          <span class="link-name">
+            <?php echo lang('GALLERY') ?>
+          </span>
         </section>
         <i class="bi bi-arrow-down-short"></i>
       </div>
@@ -94,12 +133,16 @@
       <ul class="sub-menu">
         <li>
           <a href="<?php echo $website_root ?>gallery/index.php">
-            <span class="link-name"><?php echo lang('DASHBOARD') ?></span>
+            <span class="link-name">
+              <?php echo lang('DASHBOARD') ?>
+            </span>
           </a>
         </li>
         <li>
           <a href="<?php echo $website_root ?>gallery/index.php?do=add-new">
-            <span class="link-name"><?php echo lang('ADD NEW', 'gallery') ?></span>
+            <span class="link-name">
+              <?php echo lang('ADD NEW', 'gallery') ?>
+            </span>
           </a>
         </li>
       </ul>
@@ -107,13 +150,47 @@
     </li>
     <!-- end gallery nav link -->
 
+    <!-- start features nav link -->
+    <li>
+      <!-- start link containing sub menu -->
+      <div class="icon-link">
+        <section>
+          <i class="bi bi-stars"></i>
+          <span class="link-name"><?php echo lang('FEATURES') ?></span>
+        </section>
+        <i class="bi bi-arrow-down-short"></i>
+      </div>
+      <!-- end link containing sub menu -->
+      <!-- start sub menu -->
+      <ul class="sub-menu">
+        <li>
+          <a href="<?php echo $website_root ?>features/index.php">
+            <span class="link-name">
+              <?php echo lang('DASHBOARD') ?>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="<?php echo $website_root ?>features/index.php?do=add-new">
+            <span class="link-name">
+              <?php echo lang('ADD NEW', 'features') ?>
+            </span>
+          </a>
+        </li>
+      </ul>
+      <!-- end sub menu -->
+    </li>
+    <!-- end features nav link -->
+
     <!-- start links nav link -->
     <li>
       <!-- start link containing sub menu -->
       <div class="icon-link">
         <section>
           <i class="bi bi-link-45deg"></i>
-          <span class="link-name"><?php echo lang('IMPORTANT LINKS') ?></span>
+          <span class="link-name">
+            <?php echo lang('IMPORTANT LINKS') ?>
+          </span>
         </section>
         <i class="bi bi-arrow-down-short"></i>
       </div>
@@ -122,12 +199,16 @@
       <ul class="sub-menu">
         <li>
           <a href="<?php echo $website_root ?>links/index.php">
-            <span class="link-name"><?php echo lang('DASHBOARD') ?></span>
+            <span class="link-name">
+              <?php echo lang('DASHBOARD') ?>
+            </span>
           </a>
         </li>
         <li>
           <a href="<?php echo $website_root ?>links/index.php?do=add-new">
-            <span class="link-name"><?php echo lang('ADD NEW', 'links') ?></span>
+            <span class="link-name">
+              <?php echo lang('ADD NEW', 'links') ?>
+            </span>
           </a>
         </li>
       </ul>
@@ -138,7 +219,9 @@
     <li>
       <a href="<?php echo $website ?>logout.php">
         <i class="bi bi-box-arrow-right"></i>
-        <span class="link-name"><?php echo lang('LOGOUT') ?></span>
+        <span class="link-name">
+          <?php echo lang('LOGOUT') ?>
+        </span>
       </a>
     </li>
     <!-- start setting nav link -->
@@ -152,7 +235,9 @@
               <img src="<?php echo $uploads . "employees-img/male-avatar.svg" ?>" class="profile-img">
             </div>
             <div class="name-job">
-              <div class="profile-name"><?php echo $_SESSION['website']['username'] ?></div>
+              <div class="profile-name">
+                <?php echo $_SESSION['website']['username'] ?>
+              </div>
               <div class="profile-job">Admin</div>
             </div>
           </a>

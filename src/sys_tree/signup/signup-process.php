@@ -2,9 +2,9 @@
 // create an object of Database class
 $db_obj = new Database("localhost", "jsl_db", "root", "@hmedH@ssib");
 // get next company id and next user id
-$company_id = $db_obj->get_next_id('companies');
-$license_id = $db_obj->get_next_id('license');
-$user_id = $db_obj->get_next_id('users');
+$company_id = $db_obj->get_next_id('jsl_db', 'companies');
+$license_id = $db_obj->get_next_id('jsl_db', 'license');
+$user_id = $db_obj->get_next_id('jsl_db', 'users');
 // get company info
 $company_name   = $_POST['company-name'];
 $company_code   = $_POST['company-code'];

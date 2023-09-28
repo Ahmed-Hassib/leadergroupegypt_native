@@ -13,6 +13,16 @@
     </div>
     <div class="dashboard-card card card-stat <?php echo isset($card_class) ? $card_class : ''; ?> <?php echo isset($card_position) ? $card_position : ''; ?> bg-gradient">
       <div class="card-body">
+        <span class="icon-container <?php echo @$_SESSION['website']['lang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>"><i class="bi bi-stars"></i></span>
+        <span class="d-block">
+          <a href="<?php echo $nav_up_level ?>features/index.php" class="stretched-link text-capitalize">
+            <?php echo lang('FEATURES', $lang_file) ?>
+          </a>
+        </span>
+      </div>
+    </div>
+    <div class="dashboard-card card card-stat <?php echo isset($card_class) ? $card_class : ''; ?> <?php echo isset($card_position) ? $card_position : ''; ?> bg-gradient">
+      <div class="card-body">
         <span class="icon-container <?php echo @$_SESSION['website']['lang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>"><i class="bi bi-journal-text"></i></span>
         <span class="d-block">
           <a href="<?php echo $nav_up_level ?>about/index.php" class="stretched-link text-capitalize">

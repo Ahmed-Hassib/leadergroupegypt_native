@@ -13,7 +13,7 @@ if ($gallery_status && $gallery_imgs != null && count($gallery_imgs) > 0) {
   $num_displayed = intval($gallery_obj->select_specific_column("`num_content`", "`sections`", "WHERE `section_id` = 2 AND `section_name` = 'gallery'")[0]['num_content'] ?? 9);
   ?>
   <!-- START GALLERY -->
-  <div class="gallery <?php echo $active_text == null ? 'no-wave-all' : '' ?>" id="gallery">
+  <div class="gallery <?php echo isset($about_us_status) && $about_us_status == null ? 'no-wave-all' : '' ?>" id="gallery">
     <h2 class="main-title">
       <?php echo lang('GALLERY', $lang_file) ?>
     </h2>

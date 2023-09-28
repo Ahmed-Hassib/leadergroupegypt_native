@@ -124,11 +124,11 @@ class Database extends PDO
    * get_next_id function v1
    * This function is used to get next piece id
    */
-  public function get_next_id($table)
+  public function get_next_id($db, $table)
   {
     // prepare query
-    $stmt = $this->con->prepare("SELECT `AUTO_INCREMENT` AS 'AI' FROM information_schema.TABLES WHERE `TABLE_SCHEMA` = '$this->db_name' AND `TABLE_NAME` = ?");
-    $stmt->execute(array($table));
+    $stmt = $this->con->prepare("SELECT `AUTO_INCREMENT` AS 'AI' FROM information_schema.TABLES WHERE `TABLE_SCHEMA` = ? AND `TABLE_NAME` = ?");
+    $stmt->execute(array($db, $table));
     $rows = $stmt->fetchColumn();
     return $rows;
   }

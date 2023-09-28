@@ -1,22 +1,22 @@
 <?php
-// create an object of Service class
-$services_obj = !isset($services_obj) ? new Service() : $services_obj;
+// create an object of Features class
+$feature_obj = !isset($feature_obj) ? new Features() : $feature_obj;
 
-// get service id
-$service_id = isset($_GET['id']) && !empty($_GET['id']) ? base64_decode($_GET['id']) : null;
+// get feature id
+$feature_id = isset($_GET['id']) && !empty($_GET['id']) ? base64_decode($_GET['id']) : null;
 
-// check if service id exists or not
-if ($services_obj->is_exist("`id`", "`services`", $service_id)) {
-  // deactivate service
-  $is_deactivated = $services_obj->deactivate_service($service_id);
-  // check if service deactivated
-  if ($is_deactivated) {
+// check if feature id exists or not
+if ($feature_obj->is_exist("`id`", "`features`", $feature_id)) {
+  // deactivate feature
+  $is_activated = $feature_obj->activate_feature($feature_id);
+  // check if feature deactivated
+  if ($is_activated) {
     // prepare flash session variables
-    $_SESSION['flash_message'] = 'DEACTIVATED';
+    $_SESSION['flash_message'] = 'ACTIVATED';
     $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
     $_SESSION['flash_message_class'] = 'success';
     $_SESSION['flash_message_status'] = true;
-    $_SESSION['flash_message_lang_file'] = 'services';
+    $_SESSION['flash_message_lang_file'] = 'features';
   } else {
     // prepare flash session variables
     $_SESSION['flash_message'] = 'QUERY PROBLEM';

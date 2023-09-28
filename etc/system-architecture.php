@@ -202,6 +202,21 @@ function get_page_dependencies($page_role, $file_type)
       ],
       'fonts' => []
     ],
+    
+    // for website features
+    'website_features' => [
+      'css' => [
+        '1' => 'features.css'
+      ],
+      'js' => [
+        '1' => 'features.js'
+      ],
+      'node' => [
+        'css' => [],
+        'js' => []
+      ],
+      'fonts' => []
+    ],
 
     // for website signup
     'website_desc' => [

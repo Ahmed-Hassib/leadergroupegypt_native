@@ -45,12 +45,15 @@
             </a>
           </li>
         <?php } ?>
-        <li class="nav-item">
-          <a href="<?php echo $up_level ?>index.php#features" class="nav-link">
-            <i class="bi bi-pie-chart"></i>&nbsp;
-            <?php echo lang('FEATURES', 'index') ?>
-          </a>
-        </li>
+        <?php $num_features = $db_obj->count_records("`id`", "`features`", "WHERE `is_active` = 1"); ?>
+        <?php if ($num_features > 0) { ?>
+          <li class="nav-item">
+            <a href="<?php echo $up_level ?>index.php#features" class="nav-link">
+              <i class="bi bi-pie-chart"></i>&nbsp;
+              <?php echo lang('FEATURES', 'index') ?>
+            </a>
+          </li>
+        <?php } ?>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <?php echo lang('OTHER') ?>

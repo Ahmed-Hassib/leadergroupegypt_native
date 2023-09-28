@@ -79,6 +79,7 @@ $website_uploads_img = $uploads . "website/img/"; // Website uploads
 $website_uploads_vid = $uploads . "website/img/"; // Website uploads
 $gallery_img = $website_uploads_img . "gallery/"; // gallery images
 $services_img = $website_uploads_img . "services/"; // services images
+$features_img = $website_uploads_img . "features/"; // features images
 
 // SYSTREE UPLOADS
 $malfunction_media = $uploads . "malfunctions/";

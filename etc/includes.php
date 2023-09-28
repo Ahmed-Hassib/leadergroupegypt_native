@@ -24,7 +24,7 @@ $systree_classes = [
 // website classes
 $website_classes = [
 	'Login', 'Section', 'Gallery', 'Link',
-	'Service', 'About',
+	'Service', 'About', 'Features',
 	'Session'
 ];
 

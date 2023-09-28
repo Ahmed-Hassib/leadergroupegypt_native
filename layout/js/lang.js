@@ -21,7 +21,9 @@ var ar = {
   username: 'إسم المستخدم',
   ssid: 'SSID',
   freq: 'التردد',
-  wave: 'الموجة'
+  wave: 'الموجة',
+  delete_feature_faild: 'فشل حذف تفاصيل الميزة',
+  delete_feature_succ: 'تم حذف تفاصيل الميزة بنجاح'
 }
 
 // english words
@@ -47,7 +49,9 @@ var en = {
   username: '',
   ssid: '',
   freq: '',
-  wave: ''
+  wave: '',
+  delete_feature_faild: '',
+  delete_feature_succ: ''
 }
 
 // default language

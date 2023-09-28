@@ -3,11 +3,12 @@
 $services_obj = new Service();
 // get all services images
 $services_info = $services_obj->get_active_services();
+// get services status
 // check if count of images > 0
 if ($services_info != null && count($services_info) > 0) {
   ?>
   <!-- START SERVICES -->
-  <div class="services" id="services">
+  <div class="services <?php echo isset($features_status) && $features_status == null ? 'no-wave-all' : '' ?>" id="services">
     <h2 class="main-title">
       <?php echo lang('OUR SERVICES') ?>
     </h2>

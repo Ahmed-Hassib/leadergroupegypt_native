@@ -14,8 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $msg = '';
   $url = "../signup.php";
   // get next company id and next user id
-  $company_id = $db_obj->get_next_id('companies');
-  $user_id = $db_obj->get_next_id('users');
+  $company_id = $db_obj->get_next_id('jsl_db', 'companies');
+  $user_id = $db_obj->get_next_id('jsl_db', 'users');
   // get company info
   $company_name = $_POST['company-name'];
   $company_code = $_POST['company-code'];

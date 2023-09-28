@@ -15,7 +15,7 @@ $global_lang = ['global'];
 $sys_tree_lang = ['login', 'dashboard', 'directions', 'pieces', 'sugg_comp', 'employees', 'pcs_conn', 'clients', 'malfunctions', 'combinations', 'settings'];
 
 // for website
-$website_lang = ['index', 'login', 'dashboard', 'sections', 'gallery', 'about', 'links', 'services', 'description'];
+$website_lang = ['index', 'login', 'dashboard', 'sections', 'gallery', 'about', 'features', 'links', 'services', 'description'];
 
 // check page category
 switch ($page_category) {

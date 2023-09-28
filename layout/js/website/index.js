@@ -68,6 +68,10 @@ function add_new_content(id, container_id) {
   document.querySelector(`#${container_id}`).appendChild(clone);
   // check content length
   show_hide_btn();
+  // check if in features page
+  if (location.href.includes('features')) {
+    show_hide_details_btn();
+  }
 }
 
 function delete_content(btn) {
@@ -79,4 +83,8 @@ function delete_content(btn) {
   content_conteiner.remove();
   // check content length
   show_hide_btn();
+  // check if in features page
+  if (location.href.includes('features')) {
+    show_hide_details_btn();
+  }
 }
