@@ -41,7 +41,7 @@ class Features extends Database
     $select_feature = "SELECT *FROM `features` WHERE `id` = ?;";
     $stmt = $this->con->prepare($select_feature);
     $stmt->execute(array($id));
-    $features_info = $stmt->fetchAll();
+    $features_info = $stmt->fetch();
     $count = $stmt->rowCount();
     // check the count
     return $count > 0 ? $features_info : null;

@@ -84,3 +84,29 @@
   height: 150px !important;
   resize: none;
 }
+
+.feature-list,
+.feature-list li {
+  padding: 1rem 2rem;
+  margin: 1rem auto;
+}
+
+.feature-list.arabic-list {
+  list-style: arabic-indic;
+}
+
+.feature-list.english-list {
+  list-style: decimal-leading-zero;
+}
+
+.feature-list li {
+  padding: 1rem;
+}
+
+.feature-list li::marker {
+  font-size: 1.25rem;
+}
+
+.feature-list .list-header {
+  margin: 1rem 0;
+}

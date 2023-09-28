@@ -9,6 +9,7 @@ function features($phrase)
   // words
   'FEATURE' => 'ميزة',
   'THE FEATURE' => 'الميزة',
+  'FEATURES' => 'المميزات',
   'AR FEATURE NAME' => 'إسم الميزة باللغة العربية',
   'EN FEATURE NAME' => 'إسم الميزة باللغة الإنجليزية',
   'AR DETAIL NAME' => 'إسم النقطة باللغة العربية',

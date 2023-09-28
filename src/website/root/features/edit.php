@@ -6,7 +6,7 @@ $feature_id = isset($_GET['id']) && !empty($_GET['id']) ? base64_decode($_GET['i
 // check if feature id exists or not
 if ($features_obj->is_exist("`id`", "`features`", $feature_id)) {
   // get feature info
-  $feature_info = $features_obj->get_feature($feature_id)[0];
+  $feature_info = $features_obj->get_feature($feature_id);
   ?>
   <div class="container page-container" dir="<?php echo $page_dir ?>">
     <!-- add new feature form -->
@@ -23,6 +23,8 @@ if ($features_obj->is_exist("`id`", "`features`", $feature_id)) {
             <div class="feature-img">
               <div class="img-control">
                 <div class="img-btn-controls">
+                  <!-- feature id -->
+                  <input type="hidden" name="id" value="<?php echo $_GET['id'] ?>">
                   <!-- feature image form -->
                   <input type="file" class="d-none" name="feature-img-input" id="feature-img-input"
                     onchange="change_feature_img(this)" accept="image/*">

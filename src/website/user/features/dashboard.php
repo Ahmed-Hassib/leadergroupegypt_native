@@ -1,3 +1,23 @@
+<!-- START LANDING -->
+<div class="landing">
+  <div class="container">
+    <div class="text">
+      <h1>
+        <?php echo lang('SPONSOR') ?>
+      </h1>
+      <p class="badge bg-warning text-white">
+        <?php echo lang('FEATURES', $lang_file) ?>
+      </p>
+    </div>
+    <div class="image">
+      <img src="<?php echo $assets ?>leadergroupegypt-shadow.png" alt="Leader Group Egypt">
+    </div>
+  </div>
+  <a href="#articles" class="go-down">
+    <i class="bi bi-chevron-double-down"></i>
+  </a>
+</div>
+<!-- END LANDING -->
 <?php
 // create an object of Features class
 $features_obj = new Features();
@@ -13,15 +33,9 @@ if ($features_status && $features_info != null && count($features_info) > 0) {
   $num_displayed = intval($features_obj->select_specific_column("`num_content`", "`sections`", "WHERE `section_id` = '" . $features_obj->SECTION_ID . "' AND `section_name` = 'features'")[0]['num_content'] ?? 9);
   ?>
   <!-- START FEATURES -->
-  <div class="features <?php echo isset($features_status) && $features_status == null ? 'no-wave-all' : '' ?>"
-    id="features">
-    <h2 class="main-title">
-      <?php echo lang('FEATURES', $lang_file) ?>
-    </h2>
+  <div class="features" id="features">
     <div class="container">
       <?php foreach ($features_info as $key => $feature) { ?>
-        <?php if ($key >= $num_displayed)
-          continue; ?>
         <div class="box quality">
           <div class="img-holder">
             <?php if (file_exists($features_img . $feature['feature_img'])) { ?>
@@ -39,17 +53,11 @@ if ($features_status && $features_info != null && count($features_info) > 0) {
           <p>
             <?php echo $page_dir == 'rtl' ? $feature['feature_desc_ar'] : $feature['feature_desc_en'] ?>
           </p>
-          <a href="<?php echo $website_user ?>features/index.php?do=feature-details&id=<?php echo base64_encode($feature['id']) ?>">
+          <a
+            href="<?php echo $website_user ?>features/index.php?do=feature-details&id=<?php echo base64_encode($feature['id']) ?>">
             <?php echo lang('READ MORE') ?>
           </a>
         </div>
-      <?php } ?>
-      <?php if (count($features_info) > $num_displayed) { ?>
-        <a href="<?php echo $website_user ?>features/index.php" class="btn btn-outline-primary mx-auto"
-          style="grid-column: 2/3; height: fit-content; align-self: end;">
-          <i class="bi bi-arrow-up-right-square"></i>
-          <?php echo lang('SHOW MORE') ?>
-        </a>
       <?php } ?>
     </div>
   </div>
