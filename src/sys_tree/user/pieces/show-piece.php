@@ -17,10 +17,23 @@ if ($dir_id != -1 && $src_id != -1) {
   // counter
   $counter = $pieces_info[0];
 
-  // $API->connect($ipRB, $Username, $clave);
-  // $users =  $API->comm("/ip/firewall/nat/print", array(
-  //   "?comment" => "mohamady"
-  // ));
+  // // check if api obj was created && connection to mikrotik
+  // if (isset($api_obj) && $api_obj->connect($mikrotik_ip, $mikrotik_username, $mikrotik_password)) {
+  //   // get users
+  //   $users = $api_obj->comm("/ip/firewall/nat/print", array(
+  //     "?comment" => "mohamady",
+  //     "?disabled" => "false"
+  //   )
+  //   );
+
+
+  //   echo "<pre dir='ltr'>";
+  //   echo lang('MIKROTIK SUCCESS') . "<br>";
+  //   print_r($users);
+  //   echo "</pre>";
+  // } else {
+  //   $users = [];
+  // }
   $users = [];
   $target_user = !empty($users) && count($users) > 0 ? $users[1] : -1;
 
@@ -320,8 +333,11 @@ if ($dir_id != -1 && $src_id != -1) {
                       </span>
                       <span class="ping-status"></span>
                       <span class="pcs-ip" data-pcs-ip="<?php echo $source_ip ?>">
-                        <?php echo $source_name . " <br> " . $source_ip ?>
-                      </span>
+                        <?php echo $source_name ?>
+                      </span><br>
+                      <a href="https:// <?php echo $source_ip ?>" target="_blank">
+                        <?php echo $source_ip ?>
+                      </a>
                     </span>
                     <?php if ($target_user != -1) { ?>
                       <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2"
@@ -365,8 +381,11 @@ if ($dir_id != -1 && $src_id != -1) {
                       </span>
                       <span class="ping-status"></span>
                       <span class="pcs-ip" data-pcs-ip="<?php echo $alt_source_ip ?>">
-                        <?php echo $alt_source_name . " <br> " . $alt_source_ip ?>
-                      </span>
+                        <?php echo $alt_source_name ?>
+                      </span><br>
+                      <a href="https:// <?php echo $source_ip ?>" target="_blank">
+                        <?php echo $alt_source_ip ?>
+                      </a>
                     </span>
                     <?php if ($target_user != -1) { ?>
                       <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2"
@@ -438,7 +457,9 @@ if ($dir_id != -1 && $src_id != -1) {
                       </span>
                       <span class="ping-status"></span>
                       <span class="pcs-ip" data-pcs-ip="<?php echo $piece['ip'] ?>">
-                        <?php echo $piece['ip'] ?>
+                        <a href="https://<?php echo $piece['ip'] ?>" target="_blank">
+                          <?php echo $piece['ip'] ?>
+                        </a>
                       </span>
                     </span>
                     <?php if ($target_user != -1) { ?>

@@ -75,10 +75,23 @@
 
     <?php if ($_SESSION['sys']['clients_show'] == 1) { ?>
       <?php
-      // $API->connect($ipRB, $Username, $clave);
-      // $users =  $API->comm("/ip/firewall/nat/print", array(
-      //   "?comment" => "mohamady"
-      // ));
+        // // check if api obj was created && connection to mikrotik
+        // if (isset($api_obj) && $api_obj->connect($mikrotik_ip, $mikrotik_username, $mikrotik_password)) {
+        //   // get users
+        //   $users = $api_obj->comm("/ip/firewall/nat/print", array(
+        //     "?comment" => "mohamady",
+        //     "?disabled" => "false"
+        //   )
+        //   );
+      
+
+        //   echo "<pre dir='ltr'>";
+        //   echo lang('MIKROTIK SUCCESS') . "<br>";
+        //   print_r($users);
+        //   echo "</pre>";
+        // } else {
+        //   $users = [];
+        // }
       $users = [];
       $target_user = !empty($users) && count($users) > 0 ? $users[1] : -1;
       ?>

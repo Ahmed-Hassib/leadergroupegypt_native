@@ -303,8 +303,11 @@ if ($counter > 0) {
                     </span>
                     <span class="ping-status"></span>
                     <span class="pcs-ip" data-pcs-ip="<?php echo $source_ip ?>">
-                      <?php echo $source_name . " <br> " . $source_ip ?>
-                    </span>
+                      <?php echo $source_name ?>
+                    </span><br>
+                    <a href="https:// <?php echo $source_ip ?>" target="_blank">
+                      <?php echo $source_ip ?>
+                    </a>
                   </span>
                   <?php if ($target_user != -1) { ?>
                     <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2"
@@ -348,8 +351,11 @@ if ($counter > 0) {
                     </span>
                     <span class="ping-status"></span>
                     <span class="pcs-ip" data-pcs-ip="<?php echo $alt_source_ip ?>">
-                      <?php echo $alt_source_name . " <br> " . $alt_source_ip ?>
-                    </span>
+                      <?php echo $alt_source_name ?>
+                    </span><br>
+                    <a href="https:// <?php echo $source_ip ?>" target="_blank">
+                      <?php echo $alt_source_ip ?>
+                    </a>
                   </span>
                   <?php if ($target_user != -1) { ?>
                     <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2"
@@ -421,7 +427,7 @@ if ($counter > 0) {
                     </span>
                     <span class="ping-status"></span>
                     <span class="pcs-ip" data-pcs-ip="<?php echo $piece['ip'] ?>">
-                      <?php echo $piece['ip'] ?>
+                      <a href="https://<?php echo $piece['ip'] ?>" target="_blank"><?php echo $piece['ip'] ?></a>
                     </span>
                   </span>
                   <?php if ($target_user != -1) { ?>

@@ -43,10 +43,23 @@ if ($counter == true) {
   // json data
   $all_data_json = json_encode($all_data);
 
-  // $API->connect($ipRB, $Username, $clave);
-  // $users =  $API->comm("/ip/firewall/nat/print", array(
-  //   "?comment" => "mohamady"
-  // ));
+  // // check if api obj was created && connection to mikrotik
+  // if (isset($api_obj) && $api_obj->connect($mikrotik_ip, $mikrotik_username, $mikrotik_password)) {
+  //   // get users
+  //   $users = $api_obj->comm("/ip/firewall/nat/print", array(
+  //     "?comment" => "mohamady",
+  //     "?disabled" => "false"
+  //   )
+  //   );
+
+
+  //   echo "<pre dir='ltr'>";
+  //   echo lang('MIKROTIK SUCCESS') . "<br>";
+  //   print_r($users);
+  //   echo "</pre>";
+  // } else {
+  //   $users = [];
+  // }
 
   $users = [];
   $target_user = !empty($users) && count($users) > 0 ? $users[1] : -1;
@@ -86,9 +99,9 @@ if ($counter == true) {
             <th>
               <?php echo lang('TYPE', 'pieces') ?>
             </th>
-            <!-- <th>
-                              <?php echo lang('INT SRC', $lang_file) ?>
-                            </th> -->
+            <th>
+              <?php echo lang('INT SRC', 'pieces') ?>
+            </th>
             <th class="big-data">
               <?php echo lang('NOTE') ?>
             </th>
@@ -153,7 +166,7 @@ if ($counter == true) {
               <!-- client name -->
               <td>
                 <?php if ($_SESSION['sys']['pcs_show'] == 1) { ?>
-                  <a href="?do=edit-piece&piece-id=<?php echo base64_encode($client['id']); ?>" target="">
+                  <a href="?do=edit-client&client-id=<?php echo base64_encode($client['id']); ?>" target="">
                     <?php echo trim($client['full_name'], ' ') ?>
                   </a>
                 <?php } else { ?>
@@ -227,19 +240,19 @@ if ($counter == true) {
                 </span>
               </td>
               <!-- internet source -->
-              <!-- <td>
-                  <?php
-                  // get internet source
-                  $internet_source = $pcs_obj->select_specific_column("`internet_source`", "`pieces_internet_source`", "WHERE `id` = " . $client['id']);
-                  // check result
-                  if (!empty($internet_source)) {
-                    echo $internet_source[0]['internet_source'];
-                  } else { ?>
-                    <span class="text-danger fs-12 fw-bold">
-                      <?php echo lang('NOT ASSIGNED') ?>
-                    </span>
-                  <?php } ?>
-                </td> -->
+              <td>
+                <?php
+                // get internet source
+                $internet_source = $pcs_obj->select_specific_column("`internet_source`", "`pieces_internet_source`", "WHERE `id` = " . $client['id']);
+                // check result
+                if (!empty($internet_source)) {
+                  echo $internet_source[0]['internet_source'];
+                } else { ?>
+                  <span class="text-danger fs-12 fw-bold">
+                    <?php echo lang('NOT ASSIGNED') ?>
+                  </span>
+                <?php } ?>
+              </td>
               <!-- notes -->
               <td>
                 <?php echo $client['notes'] ?>
@@ -301,8 +314,11 @@ if ($counter == true) {
                     </span>
                     <span class="ping-status"></span>
                     <span class="pcs-ip" data-pcs-ip="<?php echo $source_ip ?>">
-                      <?php echo $source_name . " <br> " . $source_ip ?>
-                    </span>
+                      <?php echo $source_name ?>
+                    </span><br>
+                    <a href="https://<?php echo $source_ip ?>" target="_blank">
+                      <?php echo $source_ip ?>
+                    </a>
                   </span>
                   <?php if ($target_user != -1) { ?>
                     <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2"
@@ -346,8 +362,11 @@ if ($counter == true) {
                     </span>
                     <span class="ping-status"></span>
                     <span class="pcs-ip" data-pcs-ip="<?php echo $alt_source_ip ?>">
-                      <?php echo $alt_source_name . " <br> " . $alt_source_ip ?>
-                    </span>
+                      <?php echo $alt_source_name ?>
+                    </span><br>
+                    <a href="https://<?php echo $alt_source_ip ?>" target="_blank">
+                      <?php echo $alt_source_ip ?>
+                    </a>
                   </span>
                   <?php if ($target_user != -1) { ?>
                     <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2"
@@ -419,7 +438,9 @@ if ($counter == true) {
                     </span>
                     <span class="ping-status"></span>
                     <span class="pcs-ip" data-pcs-ip="<?php echo $client['ip'] ?>">
-                      <?php echo $client['ip'] ?>
+                      <a href="https://<?php echo $client['ip'] ?>" target="_blank">
+                        <?php echo $client['ip'] ?>
+                      </a>
                     </span>
                   </span>
                   <?php if ($target_user != -1) { ?>
@@ -555,7 +576,7 @@ if ($counter == true) {
               <td>
                 <?php if ($_SESSION['sys']['pcs_show'] == 1) { ?>
                   <a class="btn btn-success text-capitalize fs-12 "
-                    href="?do=edit-piece&piece-id=<?php echo base64_encode($client['id']); ?>" target="_blank">
+                    href="?do=edit-client&client-id=<?php echo base64_encode($client['id']); ?>" target="_blank">
                     <i class="bi bi-pencil-square"></i>
                     <!-- <?php echo lang('EDIT') ?> -->
                   </a>

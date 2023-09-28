@@ -229,8 +229,6 @@ function create_tr_content(content) {
   let wave_span = document.createElement('span');
   wave_span.textContent = `${lang.wave} : ${content['wave'] == 0 || content['wave'] == null ? lang.not_assign : content['wave']}`;
 
-
-  console.log(content)
   // append all spans
   main_span.appendChild(type_span);
   main_span.appendChild(internet_span);

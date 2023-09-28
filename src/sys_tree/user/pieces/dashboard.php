@@ -67,24 +67,29 @@
     </div>
 
     <?php if ($_SESSION['sys']['user_show'] == 1) { ?>
-      <pre dir="ltr">
-                              <?php
-                              // if ($api_obj->connect($mikrotik_ip, $mikrotik_username, $mikrotik_password)) {
-                              //   $users = $api_obj->comm("/ip/firewall/nat/print", array(
-                              //     "?comment" => "mohamady"
-                              //   )
-                              //   );
-                              //   echo "<h2 class='h2 text-success'>" . lang('MIKROTIK SUCCESS') . "</h2>";
-                              // } else {
-                              //   $users = [];
-                              //   echo "<h2 class='h2 text-danger'>" . lang('MIKROTIK FAILED') . "</h2>";
-                              // }
-                              $users = [];
-                              $target_user = !empty($users) && count($users) > 0 ? $users[1] : -1;
-                              // flag for include js code
-                              $is_big_data_ping = true;
-                              ?>
-                            </pre>
+      <?php
+      // // check if api obj was created && connection to mikrotik
+      // if (isset($api_obj) && $api_obj->connect($mikrotik_ip, $mikrotik_username, $mikrotik_password)) {
+      //   // get users
+      //   $users = $api_obj->comm("/ip/firewall/nat/print", array(
+      //     "?comment" => "mohamady",
+      //     "?disabled" => "false"
+      //   )
+      //   );
+    
+
+      //   echo "<pre dir='ltr'>";
+      //   echo lang('MIKROTIK SUCCESS') . "<br>";
+      //   print_r($users);
+      //   echo "</pre>";
+      // } else {
+      //   $users = [];
+      // }
+      $users = [];
+      $target_user = !empty($users) && count($users) > 0 ? $users[1] : -1;
+      // flag for include js code
+      $is_big_data_ping = true;
+      ?>
       <div class="mb-3 row row-cols-1 g-3">
         <!-- latest added pieces -->
         <div class="col-12">
