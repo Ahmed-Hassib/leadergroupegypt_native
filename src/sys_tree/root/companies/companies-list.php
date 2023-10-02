@@ -36,7 +36,7 @@
       </button>
     </div>
     <!-- strst users table -->
-    <table class="table table-bordered  display compact table-style" style="width:100%">
+    <table class="table table-bordered table-striped  display compact table-style" style="width:100%">
       <thead class="primary text-capitalize">
         <tr>
           <th class="d-none">#</th>

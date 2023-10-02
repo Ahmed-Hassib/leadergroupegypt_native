@@ -332,7 +332,7 @@ if ($is_exist_mal == true) {
             <div class="input-group" dir="ltr">
               <span class="input-group-text"><?php echo lang('L.E') ?></span>
               <div class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-                <input type="text" name="cost" id="cost" class="form-control" placeholder="<?php echo lang('MAL COST', $lang_file) ?>" value="<?php echo $mal_info['cost'] ?>" <?php echo $_SESSION['sys']['isTech'] == 0 || $mal_info['mal_status'] == 1 ? 'disabled' : '' ?> onblur="arabic_to_english_nums(this)">
+                <input type="text" name="cost" id="cost" class="form-control" placeholder="<?php echo lang('MAL COST', $lang_file) ?>" value="<?php echo $mal_info['cost'] ?>" <?php echo $_SESSION['sys']['isTech'] == 0 || $mal_info['mal_status'] == 1 ? 'disabled' : '' ?> onblur="arabic_to_english_nums(this)" onkeyup="arabic_to_english_nums(this)">
                 <label for="cost"><?php echo lang('MAL COST', $lang_file) ?></label>
               </div>
             </div>

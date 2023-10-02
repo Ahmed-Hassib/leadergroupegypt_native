@@ -37,35 +37,23 @@ if ($is_exist) {
 
     <!-- start table container -->
     <div class="table-responsive-sm">
-      <?php if (count($all_data) > 10) { ?>
-        <div class="fixed-scroll-btn">
-          <!-- scroll left button -->
-          <button type="button" role="button" class="scroll-button scroll-prev scroll-prev-right">
-            <i class="carousel-control-prev-icon"></i>
-          </button>
-          <!-- scroll right button -->
-          <button type="button" role="button" class="scroll-button scroll-next <?php echo $_SESSION['sys']['lang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
-            <i class="carousel-control-next-icon"></i>
-          </button>
-        </div>
-      <?php } ?>
       <!-- strst pieces table -->
-      <table class="table table-bordered  display compact table-style" style="width:100%">
+      <table class="table table-bordered table-striped  display compact table-style" style="width:100%">
         <thead class="primary text-capitalize">
           <tr>
-            <th style="max-width: 40px">#</th>
-            <th style="min-width: 300px" class="text-uppercase"><?php echo lang('IP') ?></th>
-            <th style="min-width: 150px" class="text-uppercase"><?php echo lang('MAC') ?></th>
-            <th style="min-width: 200px"><?php echo lang('PCS NAME', 'pieces') ?></th>
-            <th style="min-width: 150px"><?php echo lang('USERNAME') ?></th>
-            <th style="min-width: 100px"><?php echo lang('DIRECTION', 'directions') ?></th>
-            <th style="min-width: 300px"><?php echo lang('THE SRC', 'pieces') ?></th>
-            <th style="min-width: 100px"><?php echo lang('TYPE', 'pieces') ?></th>
-            <th style="min-width: 100px"><?php echo lang('DEV TYPE', 'pieces') ?></th>
-            <th style="min-width: 100px"><?php echo lang('DEV MODEL', 'pieces') ?></th>
-            <th style="mx-width: 100px!important"><?php echo lang('CONN TYPE', $lang_file) ?></th>
-            <th style="min-width: 100px"><?php echo lang('ADDED DATE') ?></th>
-            <th style="min-width: 100px"><?php echo lang('CONTROL') ?></th>
+            <th>#</th>
+            <th class="text-uppercase"><?php echo lang('IP') ?></th>
+            <th class="text-uppercase"><?php echo lang('MAC') ?></th>
+            <th><?php echo lang('PCS NAME', 'pieces') ?></th>
+            <th><?php echo lang('USERNAME') ?></th>
+            <th><?php echo lang('DIRECTION', 'directions') ?></th>
+            <th><?php echo lang('THE SRC', 'pieces') ?></th>
+            <th><?php echo lang('TYPE', 'pieces') ?></th>
+            <th><?php echo lang('DEV TYPE', 'pieces') ?></th>
+            <th><?php echo lang('DEV MODEL', 'pieces') ?></th>
+            <th><?php echo lang('CONN TYPE', $lang_file) ?></th>
+            <th><?php echo lang('ADDED DATE') ?></th>
+            <th><?php echo lang('CONTROL') ?></th>
           </tr>
         </thead>
         <tbody id="piecesTbl">
@@ -75,29 +63,29 @@ if ($is_exist) {
               <!-- index -->
               <td><?php echo ++$index; ?></td>
               <!-- piece ip -->
-              <td class="text-capitalize" data-ip="<?php echo convert_ip($piece['ip']) ?>">
-                <?php if ($piece['ip'] == '0.0.0.0') { ?>
-                  <span class="text-danger fw-bold"><?php echo lang("NO DATA") ?></span>
+              <td class="text-capitalize" data-ip="<?php echo convert_ip(trim($piece['ip'], ' \t\n\v')) ?>">
+                <?php if (trim($piece['ip'], ' \t\n\v') == '0.0.0.0') { ?>
+                  <span class="text-danger fw-bold"><?php echo lang("NOT ASSIGNED") ?></span>
                 <?php } else { ?>
-                  <span class="pcs-ip" data-pcs-ip="<?php echo $piece['ip'] ?>"><?php echo $piece['ip'] ?></span>
-                  <button class="btn btn-outline-primary fs-12 px-3 py-1" data-bs-toggle="modal" data-bs-target="#pingModal" onclick="ping('<?php echo $piece['ip'] ?>', <?php echo $_SESSION['sys']['ping_counter'] ?>)">ping</button>
+                  <a href="<?php echo trim($piece['ip'], ' \t\n\v') ?>" class="pcs-ip" data-pcs-ip="<?php echo trim($piece['ip'], ' \t\n\v') ?>"><?php echo trim($piece['ip'], ' \t\n\v') ?></a>
+                  <button class="btn btn-outline-primary fs-12 px-3 py-0" data-bs-toggle="modal" data-bs-target="#pingModal" onclick="ping('<?php echo $piece['ip'] ?>', <?php echo $_SESSION['sys']['ping_counter'] ?>)">ping</button>
                 <?php } ?>
               </td>
               <!-- piece mac address -->
               <td class="text-capitalize <?php echo !empty($piece['mac_add']) ? "" : "text-danger fw-bold" ?>">
-                <?php echo !empty($piece['mac_add']) ? $piece['mac_add'] : lang("NO DATA") ?>
+                <?php echo !empty($piece['mac_add']) ? $piece['mac_add'] : lang("NOT ASSIGNED") ?>
               </td>
               <!-- piece name -->
               <td>
                 <?php if ($_SESSION['sys']['pcs_show'] == 1) { ?>
                   <a href="<?php echo $nav_up_level ?>pieces/index.php?do=edit-piece&piece-id=<?php echo base64_encode($piece['id']); ?>" target="">
-                    <?php echo trim($piece['full_name'], ' ') ?>
+                    <?php echo trim($piece['full_name'], ' \t\n\v') ?>
                   </a>
                 <?php } else { ?>
-                  <span><?php echo trim($piece['full_name'], ' ') ?></span>
+                  <span><?php echo trim($piece['full_name'], ' \t\n\v') ?></span>
                 <?php } ?>
                 <?php if ($piece['direction_id'] == 0) { ?>
-                  <i class="bi bi-exclamation-triangle-fill text-danger fw-bold" title="<?php echo lang("NO DATA") ?>"></i>
+                  <i class="bi bi-exclamation-triangle-fill text-danger fw-bold" title="<?php echo lang("NOT ASSIGNED") ?>"></i>
                 <?php } ?>
                 <?php if ($piece['added_date'] == date('Y-m-d')) { ?>
                   <span class="badge bg-danger p-1 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-1' : 'ms-1' ?>"><?php echo lang('NEW') ?></span>
@@ -123,18 +111,17 @@ if ($is_exist) {
                 <?php } elseif ($_SESSION['sys']['dir_update'] == 0) { ?>
                   <span><?php echo $dir_name ?></span>
                 <?php } else { ?>
-                  <span class="text-danger fs-12 fw-bold"><?php echo lang("NO DATA") ?></span>
+                  <span class="text-danger fs-12 fw-bold"><?php echo lang("NOT ASSIGNED") ?></span>
                 <?php } ?>
               </td>
               <!-- piece source -->
               <?php $source_ip = $piece['source_id'] == 0 ? $piece['ip'] : $db_obj->select_specific_column("`ip`", "`pieces_info`", "WHERE `id` = " . $piece['source_id'])[0]['ip']; ?>
-              <?php $source_port = $piece['source_id'] == 0 ? $piece['ip'] : $db_obj->select_specific_column("`port`", "`pieces_info`", "WHERE `id` = " . $piece['source_id'])[0]['port']; ?>
               <td class="text-capitalize" data-ip="<?php echo convert_ip($source_ip) ?>">
-                <?php if ($source_ip == '0.0.0.0') { ?>
-                  <span class="text-danger fs-12 fw-bold"><?php echo lang("NO DATA") ?></span>
+                <?php if (trim($source_ip, ' \t\n\v') == '0.0.0.0') { ?>
+                  <span class="text-danger fs-12 fw-bold"><?php echo lang("NOT ASSIGNED") ?></span>
                 <?php } else { ?>
-                  <span class="pcs-ip" data-pcs-ip="<?php echo $source_ip ?>"><?php echo $source_ip ?></span>
-                  <button class="btn btn-outline-primary fs-12 px-3 py-1" data-bs-toggle="modal" data-bs-target="#pingModal" onclick="ping('<?php echo $source_ip ?>', <?php echo $_SESSION['sys']['ping_counter'] ?>)">ping</button>
+                  <a href="<?php echo trim($source_ip, ' \t\n\v') ?>" class="pcs-ip" data-pcs-ip="<?php echo trim($source_ip, ' \t\n\v') ?>"><?php echo trim($source_ip, ' \t\n\v') ?></a>
+                  <button class="btn btn-outline-primary fs-12 px-3 py-0" data-bs-toggle="modal" data-bs-target="#pingModal" onclick="ping('<?php echo $source_ip ?>', <?php echo $_SESSION['sys']['ping_counter'] ?>)">ping</button>
                 <?php } ?>
               </td>
               <!-- type -->
@@ -151,11 +138,11 @@ if ($is_exist) {
                     $type = lang('RECEIVER', $lang_file);
                     $type_class = "";
                   } else {
-                    $type = lang('NO DATA');
+                    $type = lang('NOT ASSIGNED');
                     $type_class = "text-danger fs-12 fw-bold";
                   }
                 } else {
-                  $type = lang('NO DATA');
+                  $type = lang('NOT ASSIGNED');
                   $type_class = "text-danger fs-12 fw-bold";
                 }
                 ?>
@@ -166,7 +153,7 @@ if ($is_exist) {
               <td class="text-capitalize">
                 <?php
                 if ($piece['device_id'] <= 0) {
-                  $device_type = lang('NO DATA');
+                  $device_type = lang('NOT ASSIGNED');
                   $device_class = 'text-danger fs-12 fw-bold';
                 } else {
                   $device_type = $db_obj->select_specific_column("`device_name`", "`devices_info`", "WHERE `device_id` = " . $piece['device_id'])[0]['device_name'];
@@ -179,7 +166,7 @@ if ($is_exist) {
               <td>
                 <?php
                 if ($piece['device_model'] <= 0) {
-                  $model_name = lang('NO DATA');
+                  $model_name = lang('NOT ASSIGNED');
                   $model_class = 'text-danger fs-12 fw-bold';
                 } else {
                   $model_name = $db_obj->select_specific_column("`model_name`", "`devices_model`", "WHERE `model_id` = " . $piece['device_model'])[0]['model_name'];
@@ -194,7 +181,7 @@ if ($is_exist) {
               </td>
               <!-- added date -->
               <td>
-                <?php echo $piece['added_date'] == '0000-00-00' ? lang("NO DATA") : $piece['added_date'] ?>
+                <?php echo $piece['added_date'] == '0000-00-00' ? lang("NOT ASSIGNED") : $piece['added_date'] ?>
               </td>
               <!-- control -->
               <td>

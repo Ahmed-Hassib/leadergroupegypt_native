@@ -12,25 +12,19 @@ if ($counter > 0) {
 
   // json data
   $all_data_json = json_encode($all_data);
-  // // check if api obj was created && connection to mikrotik
-  // if (isset($api_obj) && $api_obj->connect($mikrotik_ip, $mikrotik_username, $mikrotik_password)) {
-  //   // get users
-  //   $users = $api_obj->comm("/ip/firewall/nat/print", array(
-  //     "?comment" => "mohamady",
-  //     "?disabled" => "false"
-  //   )
-  //   );
+  // check if api obj was created && connection to mikrotik
+  if (isset($api_obj) && $api_obj->connect($mikrotik_ip, $mikrotik_username, $mikrotik_password)) {
+    // get users
+    $users = $api_obj->comm(
+      "/ip/firewall/nat/print",
+      array(
+        "?comment" => "mohamady",
+      )
+    );
+  } else {
+    $users = [];
+  }
 
-
-  //   echo "<pre dir='ltr'>";
-  //   echo lang('MIKROTIK SUCCESS') . "<br>";
-  //   print_r($users);
-  //   echo "</pre>";
-  // } else {
-  //   $users = [];
-  // }
-
-  $users = [];
   $target_user = !empty($users) && count($users) > 0 ? $users[1] : -1;
   // flag for include js code
   $is_big_data_ping = true;
@@ -71,7 +65,7 @@ if ($counter > 0) {
         </div>
       <?php } ?>
       <!-- strst pieces table -->
-      <table class="table table-bordered display compact table-style" style="width:100%">
+      <table class="table table-bordered table-striped display compact table-style" style="width:100%">
         <thead class="primary text-capitalize">
           <tr>
             <!-- <th></th> -->
@@ -244,7 +238,7 @@ if ($counter > 0) {
               </td>
               <!-- notes -->
               <td>
-                <?php echo $piece['notes'] ?>
+                <?php echo trim($piece['notes'], ' \n\r\t\v') ?>
               </td>
               <!-- visit time -->
               <td>
@@ -283,13 +277,13 @@ if ($counter > 0) {
                 $source_info = $db_obj->select_specific_column("`full_name`, `ip`, `port`", "`pieces_info`", "WHERE `id` = " . $piece['source_id']);
                 // check info
                 if (!empty($source_info)) {
-                  $source_name = $source_info[0]['full_name'];
-                  $source_ip = $source_info[0]['ip'];
-                  $source_port = $source_info[0]['port'];
+                  $source_name = trim($source_info[0]['full_name'], ' ');
+                  $source_ip = trim($source_info[0]['ip'], ' ');
+                  $source_port = trim($source_info[0]['port'], ' ');
                 } elseif ($piece['source_id'] == 0) {
-                  $source_name = $piece['full_name'];
-                  $source_ip = $piece['ip'];
-                  $source_port = $piece['port'];
+                  $source_name = trim($piece['full_name'], ' ');
+                  $source_ip = trim($piece['ip'], ' ');
+                  $source_port = trim($piece['port'], ' ');
                 }
                 ?>
                 <?php if ($source_ip == '0.0.0.0') { ?>
@@ -305,19 +299,19 @@ if ($counter > 0) {
                     <span class="pcs-ip" data-pcs-ip="<?php echo $source_ip ?>">
                       <?php echo $source_name ?>
                     </span><br>
-                    <a href="https:// <?php echo $source_ip ?>" target="_blank">
+                    <a href="<?php echo $source_ip ?>" target="_blank">
                       <?php echo $source_ip ?>
                     </a>
-                  </span>
+                  </span><br>
                   <?php if ($target_user != -1) { ?>
-                    <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2"
-                      href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $source_ip ?>&port=<?php echo $source_port != 0 ? $source_port : '443' ?>"
+                    <a class="btn btn-outline-primary fs-12 py-0 px-3"
+                      href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $source_ip ?>&port=<?php echo $source_port != 0 ? $source_port : 80 ?>"
                       target='_blank'>
                       <?php echo lang('VISIT DEVICE', $lang_file) ?>
                     </a>
                   <?php } ?>
                   <button class="btn btn-outline-primary fs-12 px-3 py-0" data-bs-toggle="modal" data-bs-target="#pingModal"
-                    onclick="ping('<?php echo $source_ip ?>', <?php echo $_SESSION['ping_counter'] ?>)">ping</button>
+                    onclick="ping('<?php echo $source_ip ?>', <?php echo $_SESSION['sys']['ping_counter'] ?>)">ping</button>
                 <?php } ?>
               </td>
               <!-- piece alt source -->
@@ -331,13 +325,13 @@ if ($counter > 0) {
                 $alt_source_port = null;
                 // check info
                 if (!empty($alt_source_info)) {
-                  $alt_source_name = $alt_source_info[0]['full_name'];
-                  $source_ip = $alt_source_info[0]['ip'];
-                  $alt_source_port = $alt_source_info[0]['port'];
+                  $alt_source_name = trim($alt_source_info[0]['full_name'], ' ');
+                  $source_ip = trim($alt_source_info[0]['ip'], ' ');
+                  $alt_source_port = trim($alt_source_info[0]['port'], ' ');
                 } elseif ($piece['source_id'] == 0) {
-                  $alt_source_name = $piece['full_name'];
-                  $alt_source_ip = $piece['ip'];
-                  $alt_source_port = $piece['port'];
+                  $alt_source_name = trim($piece['full_name'], ' ');
+                  $alt_source_ip = trim($piece['ip'], ' ');
+                  $alt_source_port = trim($piece['port'], ' ');
                 }
                 ?>
                 <?php if ($alt_source_ip == null) { ?>
@@ -353,19 +347,19 @@ if ($counter > 0) {
                     <span class="pcs-ip" data-pcs-ip="<?php echo $alt_source_ip ?>">
                       <?php echo $alt_source_name ?>
                     </span><br>
-                    <a href="https:// <?php echo $source_ip ?>" target="_blank">
+                    <a href="<?php echo $source_ip ?>" target="_blank">
                       <?php echo $alt_source_ip ?>
-                    </a>
+                    </a><br>
                   </span>
                   <?php if ($target_user != -1) { ?>
-                    <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2"
-                      href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $alt_source_ip ?>&port=<?php echo $alt_source_port != 0 ? $alt_source_port : '443' ?>"
+                    <a class="btn btn-outline-primary fs-12 px-3 py-0"
+                      href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $alt_source_ip ?>&port=<?php echo $alt_source_port != 0 ? $alt_source_port : 80 ?>"
                       target='_blank'>
                       <?php echo lang('VISIT DEVICE', $lang_file) ?>
                     </a>
                   <?php } ?>
                   <button class="btn btn-outline-primary fs-12 px-3 py-0" data-bs-toggle="modal" data-bs-target="#pingModal"
-                    onclick="ping('<?php echo $alt_source_ip ?>', <?php echo $_SESSION['ping_counter'] ?>)">ping</button>
+                    onclick="ping('<?php echo $alt_source_ip ?>', <?php echo $_SESSION['sys']['ping_counter'] ?>)">ping</button>
                 <?php } ?>
               </td>
               <!-- device type -->
@@ -426,19 +420,21 @@ if ($counter > 0) {
                       <span class="ping-spinner ping-spinner-table spinner-grow spinner-border"></span>
                     </span>
                     <span class="ping-status"></span>
-                    <span class="pcs-ip" data-pcs-ip="<?php echo $piece['ip'] ?>">
-                      <a href="https://<?php echo $piece['ip'] ?>" target="_blank"><?php echo $piece['ip'] ?></a>
+                    <span class="pcs-ip" data-pcs-ip="<?php echo trim($piece['ip'], ' ') ?>">
+                      <a href="https://<?php echo trim($piece['ip'], ' ') ?>" target="_blank">
+                        <?php echo trim($piece['ip'], ' ') ?>
+                      </a>
                     </span>
-                  </span>
+                  </span><br>
                   <?php if ($target_user != -1) { ?>
-                    <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2"
-                      href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $piece['ip'] ?>&port=<?php echo $alt_source_port != 0 ? $alt_source_port : '443' ?>"
+                    <a class="btn btn-outline-primary fs-12 px-3 py-0"
+                      href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo trim($piece['ip'], ' ') ?>&port=<?php echo $alt_source_port != 0 ? $alt_source_port : 80 ?>"
                       target='_blank'>
                       <?php echo lang('VISIT DEVICE', $lang_file) ?>
                     </a>
                   <?php } ?>
                   <button class="btn btn-outline-primary fs-12 px-3 py-0" data-bs-toggle="modal" data-bs-target="#pingModal"
-                    onclick="ping('<?php echo $piece['ip'] ?>', <?php echo $_SESSION['ping_counter'] ?>)">ping</button>
+                    onclick="ping('<?php echo trim($piece['ip'], ' ') ?>', <?php echo $_SESSION['sys']['ping_counter'] ?>)">ping</button>
                 <?php } ?>
               </td>
               <!-- piece port -->

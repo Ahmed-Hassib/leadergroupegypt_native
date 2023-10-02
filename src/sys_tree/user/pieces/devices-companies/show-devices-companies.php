@@ -41,7 +41,7 @@
       <!-- start table container -->
       <div class="table-responsive-sm w-100">
         <!-- strst users table -->
-        <table class="table table-bordered display compact table-style w-100">
+        <table class="table table-bordered table-striped display compact table-style w-100">
           <thead class="primary text-capitalize">
             <tr>
               <th>#</th>

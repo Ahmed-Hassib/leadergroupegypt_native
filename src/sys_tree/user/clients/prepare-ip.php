@@ -32,7 +32,7 @@ if (empty($errors)) {
   ));
 
   // redirect page to url to open device
-  header("refresh:0;url=https://leadergroupegypt.com:5002");
+  header("refresh:0;url=leadergroupegypt.com:5002");
   die;
 } else {
   foreach ($errors as $key => $error) {

@@ -52,6 +52,10 @@ if (empty($errors)) {
       "to-addresses" => $address,
     )
     );
+    // protocol
+    $protocol = $port == 80 ? 'http' : 'https';
+    // url
+    $url = "$protocol://leadergroupegypt.com:$next_port/";
     // change ir in api
     // $users = $api_obj->comm("/ip/firewall/nat/add", array(
     //   "action" => "dst-nat",
@@ -68,10 +72,10 @@ if (empty($errors)) {
     // show success message 
     echo "<h3 class='h3 text-success'>" . lang('MIKROTIK SUCCESS') . "</h3>";
     // target link
-    echo "If not redirect after 3 sec <a href='https://leadergroupegypt.com:$next_port/'>click here</a>";
+    echo "If not redirect after 3 sec <a href='$url'>click here</a>";
     echo "</div>";
     // redirect page to url to open device
-    header("refresh:10;url=https://leadergroupegypt.com:$next_port/");
+    header("refresh:0;url=$url");
     die;
   } else {
     // show success message 

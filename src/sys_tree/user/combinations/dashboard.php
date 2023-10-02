@@ -393,7 +393,7 @@ if ($_SESSION['sys']['comb_show'] == 1 && $_SESSION['sys']['isTech'] == 1) {
             $today_comb = $comb_obj->select_specific_column("*", "`combinations`", "WHERE `added_date` = '" . get_date_now() . "' AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . "  " . $techCondition1 . " ORDER BY `added_date` DESC LIMIT 5");
             ?>
             <div class="table-responsive-sm">
-              <table class="table table-striped table-bordered  display compact w-100">
+              <table class="table table-striped no-index table-bordered  display compact w-100">
                 <thead class="primary text-capitalize">
                   <tr>
                     <th class="text-center"><?php echo lang('BENEFICIARY NAME', $lang_file) ?></th>
@@ -481,7 +481,7 @@ if ($_SESSION['sys']['comb_show'] == 1 && $_SESSION['sys']['isTech'] == 1) {
               <hr>
             </header>
             <div class="table-responsive-sm">
-              <table class="table table-striped table-bordered  display compact w-100">
+              <table class="table table-bordered table-striped table-striped no-index  display compact w-100">
                 <thead class="primary text-capitalize">
                   <tr>
                     <th class="text-center"><?php echo lang('BENEFICIARY NAME', $lang_file) ?></th>

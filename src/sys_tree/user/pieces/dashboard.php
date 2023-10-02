@@ -68,24 +68,23 @@
 
     <?php if ($_SESSION['sys']['user_show'] == 1) { ?>
       <?php
-      // // check if api obj was created && connection to mikrotik
-      // if (isset($api_obj) && $api_obj->connect($mikrotik_ip, $mikrotik_username, $mikrotik_password)) {
-      //   // get users
-      //   $users = $api_obj->comm("/ip/firewall/nat/print", array(
-      //     "?comment" => "mohamady",
-      //     "?disabled" => "false"
-      //   )
-      //   );
-    
+      // check if api obj was created && connection to mikrotik
+      if (isset($api_obj) && $api_obj->connect($mikrotik_ip, $mikrotik_username, $mikrotik_password)) {
+        // get users
+        $users = $api_obj->comm(
+          "/ip/firewall/nat/print",
+          array(
+            "?comment" => "mohamady",
+            // "?disabled" => "false"
+          )
+        );
 
-      //   echo "<pre dir='ltr'>";
-      //   echo lang('MIKROTIK SUCCESS') . "<br>";
-      //   print_r($users);
-      //   echo "</pre>";
-      // } else {
-      //   $users = [];
-      // }
-      $users = [];
+        echo "<div class='alert alert-primary' role='alert'>" . lang('MIKROTIK SUCCESS') . "</div>";
+      } else {
+        echo "<div class='alert alert-danger' role='alert'>" . lang('MIKROTIK FAILED') . "</div>";
+        $users = [];
+      }
+      // $users = [];
       $target_user = !empty($users) && count($users) > 0 ? $users[1] : -1;
       // flag for include js code
       $is_big_data_ping = true;
@@ -117,7 +116,7 @@
             ?>
             <div class="table-responsive-sm">
               <!-- strst pieces table -->
-              <table class="table table-bordered pcs-data display compact table-style" style="width:100%">
+              <table class="table table-bordered table-striped pcs-data display compact table-style" style="width:100%">
                 <thead class="primary text-capitalize">
                   <tr>
                     <th></th>
@@ -164,6 +163,13 @@
                           <span class="badge bg-danger p-1 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-1' : 'ms-1' ?>">
                             <?php echo lang('NEW') ?>
                           </span>
+                        <?php } ?>
+                        <?php if ($target_user != -1) { ?>
+                          <a class="mx-1 btn btn-outline-primary fs-12 px-3 py-0"
+                            href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $piece['ip'] ?>&port=<?php echo $piece['port'] != 0 ? $piece['port'] : '443' ?>"
+                            target='_blank'>
+                            <?php echo lang('VISIT DEVICE', $lang_file) ?>
+                          </a>
                         <?php } ?>
                       </td>
                       <!-- piece address -->

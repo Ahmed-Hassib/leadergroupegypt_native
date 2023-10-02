@@ -3,7 +3,7 @@
 	position: fixed;
 	z-index: 99999;
 	top: 0;
-	height: 100vh;
+	height: 100%;
 	width: 260px;
 	background-color: #fff;
 	transition: all 0.3s ease;
@@ -45,11 +45,12 @@
 }
 
 .sidebar-menu-brand {
+	position: relative;
 	height: 60px;
 	width: 100%;
 	display: flex;
 	align-items: center;
-	position: relative;
+	justify-content: space-between;
 }
 
 .sidebar-menu-brand.website {
@@ -71,17 +72,8 @@
 @media (max-width: 576px) {
 	.sidebar-menu-brand .close-btn {
 		display: block;
-		font-size: 1.75rem;
-		position: absolute;
-		top: 10%;
-	}
-
-	.sidebar-menu-right .sidebar-menu-brand .close-btn {
-		left: 140px;
-	}
-
-	.sidebar-menu-left .sidebar-menu-brand .close-btn {
-		right: 140px;
+		font-size: 2rem;
+		padding: 0.5rem;
 	}
 }
 
@@ -103,6 +95,7 @@
 }
 
 .sidebar-menu.close .sidebar-menu-logo-name {
+	display: none;
 	transition-delay: 0s;
 	opacity: 0;
 	pointer-events: none;
@@ -302,7 +295,7 @@
 
 	.sidebar-menu,
 	.sidebar-menu .profile-details {
-		width: 75%;
+		width: 260px;
 	}
 
 	.sidebar-menu-logo-name {

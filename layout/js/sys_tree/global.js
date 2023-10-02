@@ -125,8 +125,8 @@ var arrowUpBtn = document.querySelector(".arrow-up");
     ips_elements.forEach(ip_element => {
       let ip = ip_element.dataset.pcsIp;
       let device_status = ip_element.previousElementSibling;
-      let preloader_status = device_status.previousElementSibling;
-      if (ip != '0.0.0.0') {
+      let preloader_status = device_status != null ? device_status.previousElementSibling : null;
+      if (ip != '0.0.0.0' && preloader_status != null) {
         $.get(`../requests/index.php?do=ping&ip=${ip}&c=1`, (data) => {
           // convert result
           let ping_res = $.parseJSON(data);
@@ -455,4 +455,6 @@ function arabic_to_english_nums(input) {
   res = res.replace(/[^\w]/g, '');
   // replace input`s value within the new value
   input.value = res;
+
+  console.log(res)
 }

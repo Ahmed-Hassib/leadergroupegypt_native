@@ -285,7 +285,7 @@
             </button>
           </div>
           <!-- strst users table -->
-          <table class="table table-bordered  display compact table-style" id="all-pieces" >
+          <table class="table table-bordered table-striped  display compact table-style" id="all-pieces" >
             <thead class="primary text-capitalize">
               <tr>
                 <th class="d-none">ID</th>
@@ -546,7 +546,7 @@
             </button>
           </div>
           <!-- strst users table -->
-          <table class="table table-bordered  display compact table-style" id="all-pieces" >
+          <table class="table table-bordered table-striped  display compact table-style" id="all-pieces" >
             <thead class="primary text-capitalize">
               <tr>
                 <th class="d-none">ID</th>

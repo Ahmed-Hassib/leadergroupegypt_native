@@ -88,6 +88,8 @@ if ($is_developing == false) {
 
   // include file name
   include_once $file_name;
+  // include ping modal
+  include_once $globmod . 'ping-modal.php';
   // include confirmation delete modal
   include_once 'delete-conn-type-modal.php';
 } else {

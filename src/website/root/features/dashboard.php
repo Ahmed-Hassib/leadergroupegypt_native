@@ -14,7 +14,7 @@ $features_info = $features_obj->get_all_features();
     </a>
   </div>
   <!-- strst pieces table -->
-  <table class="table table-bordered table-striped display compact table-style" style="width:100%">
+  <table class="table table-bordered table-striped table-striped display compact table-style" style="width:100%">
     <thead class="primary text-capitalize">
       <tr>
         <th class="text-center" style="max-width: 40px">#</th>

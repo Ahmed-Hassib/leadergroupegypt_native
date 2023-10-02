@@ -391,10 +391,9 @@ if ($_SESSION['sys']['mal_show'] == 1) {
               $index = 0;
             ?>
               <div class="table-responsive-sm">
-                <table class="table table-bordered  display compact table-style w-100">
+                <table class="table table-bordered table-striped no-index display compact table-style w-100">
                   <thead class="primary text-capitalize">
                     <tr>
-                      <th style="max-width: 50px;">#</th>
                       <th><?php echo lang('NAME', $lang_file) ?></th>
                       <th><?php echo lang('ADDR', $lang_file) ?></th>
                       <th style="max-width: 100px"><?php echo lang('PHONE', $lang_file) ?></th>
@@ -416,7 +415,6 @@ if ($_SESSION['sys']['mal_show'] == 1) {
                       $tech_name    = $mal_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = " . $mal['tech_id'])[0]['UserName'];
                     ?>
                       <tr class="text-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-                        <td><?php echo ++$index; ?></td>
                         <!-- name -->
                         <td style="min-width: 100px">
                           <a href="<?php echo $nav_up_level ?>pieces/index.php?do=edit-piece&piece-id=<?php echo base64_encode($mal['client_id']) ?>">
@@ -523,7 +521,7 @@ if ($_SESSION['sys']['mal_show'] == 1) {
               <hr>
             </header>
             <div class="table-responsive-sm">
-              <table class="table table-bordered  display compact table-style w-100" id="latest-mal">
+              <table class="table table-bordered table-striped no-index display compact table-style w-100" id="latest-mal">
                 <thead class="primary text-capitalize">
                   <tr>
                     <th><?php echo lang('NAME', $lang_file) ?></th>
