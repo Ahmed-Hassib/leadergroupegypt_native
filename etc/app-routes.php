@@ -77,9 +77,11 @@ $dev_models = $json . "devices-models/"; // Devices` Models Directory
 $website_uploads = $uploads . "website/"; // Website uploads
 $website_uploads_img = $uploads . "website/img/"; // Website uploads
 $website_uploads_vid = $uploads . "website/img/"; // Website uploads
+$landing_img = $website_uploads_img . "landing/"; // landing images
 $gallery_img = $website_uploads_img . "gallery/"; // gallery images
 $services_img = $website_uploads_img . "services/"; // services images
 $features_img = $website_uploads_img . "features/"; // features images
+$members_img = $website_uploads_img . "members/"; // members images
 
 // SYSTREE UPLOADS
 $malfunction_media = $uploads . "malfunctions/";

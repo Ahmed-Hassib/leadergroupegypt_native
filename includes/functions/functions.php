@@ -19,7 +19,7 @@ function get_page_tilte($lang_file)
 
 /**
  * redirect_home function v2
- * This function accepts parameters
+ * This function accepts parameters`````` 
  * $msg => echo the error message
  * $seconds => seconds before redirect
  */
@@ -226,7 +226,8 @@ function bg_progress($val)
  */
 function get_time_now($formate = null)
 {
-  $timestamp = strtotime(date('H:i:s')) + 60 * 60;
+  $timestamp = strtotime(date('H:i:s')) + 60 * 60; // for summer time
+  $timestamp = strtotime(date('H:i:s')); // for winter time
   return $formate != null ? date($formate, $timestamp) : date('H:i:s', $timestamp);
 }
 
@@ -490,4 +491,57 @@ function resize_img($img_location, $img_name)
   }
   // return flag
   return $save ? true : null;
+}
+
+/**
+ * facebook_validation function v1
+ * used to facebook link validation
+ */
+function facebook_validation($link)
+{
+  return preg_match('/^(https?|ftp):\/\/(?:www\.)?facebook\.com\/(?:[\w\d]*\/)?(?:profile\.php\?id=)?/i', $link);
+}
+
+/**
+ * instagram_validation function v1
+ * used to instagram link validation
+ */
+function instagram_validation($link)
+{
+  return preg_match('/^(https?|ftp):\/\/(?:www\.)?(instagram\.com|instagr\.am)\/((?:[\w\d_](?:(?:[\w\d_]|(?:\.(?!\.))){0,28}(?:[\w\d_]))?)|p\/([a-zA-Z0-9_](?:(?:[a-zA-Z0-9_]|(?:\.(?!\.))){0,28}(?:[a-zA-Z0-9_]))?))/i', $link);
+}
+
+/**
+ * twitter_validation function v1
+ * used to twitter link validation
+ */
+function twitter_validation($link)
+{
+  return preg_match('/^(https?|ftp):\/\/(?:www\.)?twitter\.com\/([a-zA-Z0-9_]+)$/i', $link);
+}
+
+/**
+ * linkedin_validation function v1
+ * used to linkedin link validation
+ */
+function linkedin_validation($link)
+{
+  return preg_match('/^https:\\/\\/[a-z]{2,3}\\.linkedin\\.com\\/.*$/i', $link);
+}
+
+/**
+ * youtube_validation function v1
+ * used to youtube link validation
+ */
+function youtube_validation($link)
+{
+  return preg_match('/^(?:https?:\/\/)?(?:www\.)?youtube\.com(?:\/watch\?v=[\w-]+|\/v\/[\w-]+|\/embed\/[\w-]+|\/user\/[\w-]+|\/channel\/[\w-]+|\/c\/[\w-]+)$/i', $link);
+}
+
+// Function to check string starting 
+// with given substring 
+function starts_with($string, $startString)
+{
+  $len = strlen($startString);
+  return (substr($string, 0, $len) === $startString);
 }

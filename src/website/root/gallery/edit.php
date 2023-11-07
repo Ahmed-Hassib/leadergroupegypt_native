@@ -23,7 +23,7 @@ if ($gallery_obj->is_exist("`id`", "`gallery`", $img_id)) {
             <div class="img-control">
               <div class="img-btn-controls">
                 <!-- gallery image form -->
-                <input type="file" class="d-none" name="gallery-img-input" id="gallery-img-input" onchange="change_gallery_img(this)" accept="image/*">
+                <input type="file" class="d-none" name="gallery-img-input" id="gallery-img-input" onchange="change_section_img(this)" accept="image/*">
                 <!-- edit image button -->
                 <button type="button" role="button" class="btn btn-outline-primary fs-12 py-1 text-capitalize change" onclick="click_input(this)">
                   <i class="bi bi-image"></i>

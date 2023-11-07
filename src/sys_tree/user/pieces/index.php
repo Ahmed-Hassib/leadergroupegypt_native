@@ -25,6 +25,8 @@ $level = 4;
 $nav_level = 1;
 // flag to determine if current page is sys tree page or not
 $is_sys_tree_page = true;
+// flag if page has a map
+$having_map = false;
 // app status and global includes
 include_once str_repeat("../", $level) . "etc/app-status.php";
 
@@ -49,12 +51,14 @@ if ($is_developing == false) {
       $is_contain_table = true;
     } elseif ($query == 'add-new-piece' && $_SESSION['sys']['pcs_add'] == 1) {
       $file_name = 'add-new-piece.php';
+      $having_map = true;
     } elseif ($query == 'insert-piece-info' && $_SESSION['sys']['pcs_add'] == 1) {
       $file_name = 'insert-piece-info.php';
       $preloader = false;
       $possible_back = false;
     } elseif ($query == 'edit-piece' && ($_SESSION['sys']['pcs_update'] == 1 || $_SESSION['sys']['pcs_show'] == 1)) {
       $file_name = 'edit-piece.php';
+      $having_map = true;
     } elseif ($query == 'update-piece-info' && $_SESSION['sys']['pcs_update'] == 1) {
       $file_name = 'update-piece-info.php';
       $preloader = false;
@@ -92,14 +96,7 @@ if ($is_developing == false) {
     $no_footer = 'all';
   }
 
-  // pre configration of system
-  include_once str_repeat("../", $level) . "etc/pre-conf.php";
-  // initial configration of system
-  include_once str_repeat("../", $level) . "etc/init.php";
-
-  // include file name
-  include_once $file_name;
-
+  
   // check delete permission
   if ($_SESSION['sys']['pcs_delete'] == 1) {
     // include confirmation delete modal
@@ -108,8 +105,15 @@ if ($is_developing == false) {
   // include ping modal
   include_once $globmod . 'ping-modal.php';
 } else {
-  include  $globmod . "under-developing.php";
+  $file_name = $globmod . "under-developing.php";
 }
+// pre configration of system
+include_once str_repeat("../", $level) . "etc/pre-conf.php";
+// initial configration of system
+include_once str_repeat("../", $level) . "etc/init.php";
+
+// include file name
+include_once $file_name;
 // include footer
 include_once $tpl . "footer.php";
 include_once $tpl . "js-includes.php";

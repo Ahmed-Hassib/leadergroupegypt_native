@@ -31,6 +31,11 @@ if (empty($manager_name)) {
   $err_arr[] = 'manager empty';
 }
 
+// check manager name if contains 3 parts
+if (!preg_match('/\w+\s\w+\s\w+/', $manager_name)) {
+  $err_arr[] = 'manager not triple';
+}
+
 // check manager phone
 if (empty($manager_phone)) {
   $err_arr[] = 'phone empty';
@@ -44,6 +49,11 @@ if (empty($country)) {
 // check fullname
 if (empty($fullname)) {
   $err_arr[] = 'fullname empty';
+}
+
+// check manager name if contains 3 parts
+if (!preg_match('/\w+\s\w+\s\w+/', $fullname)) {
+  $err_arr[] = 'admin not triple';
 }
 
 // check username
@@ -139,13 +149,13 @@ if (empty($err_arr)) {
 
   if (!empty($err_arr)) {
     // assign POST variable values to session
-    $_SESSION['sys']['request_data'] = $_POST;
+    $_SESSION['request_data'] = $_POST;
     // assign session flash messages
     assign_message($err_arr, 'bi-exclamation-triangle-fill', 'danger', false, 'global_');
   }
 } else {
   // assign POST variable values to session
-  $_SESSION['sys']['request_data'] = $_POST;
+  $_SESSION['request_data'] = $_POST;
   // assign session flash messages
   assign_message($err_arr, 'bi-exclamation-triangle-fill', 'danger', false, 'login');
 }

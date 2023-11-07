@@ -40,7 +40,7 @@
       <thead class="primary text-capitalize">
         <tr>
           <th class="d-none">#</th>
-          <th style="max-width: 40px">#</th>
+          <th>#</th>
           <th><?php echo lang('STATUS', @$_SESSION['sys']['lang']) ?></th>
           <th><?php echo lang('COMPANY NAME', @$_SESSION['sys']['lang']) ?></th>
           <th><?php echo lang('MANAGER NAME', @$_SESSION['sys']['lang']) ?></th>
@@ -48,8 +48,8 @@
           <th><?php echo lang('APP VERSION', @$_SESSION['sys']['lang']) ?></th>
           <th><?php echo lang('JOINED DATE', @$_SESSION['sys']['lang']) ?></th>
           <th><?php echo lang('EXPIRE DATE', @$_SESSION['sys']['lang']) ?></th>
-          <th style="width: 200px">Progress</th>
-          <th style="min-width: 100px"><?php echo lang('CONTROL', @$_SESSION['sys']['lang']) ?></th>
+          <th>Progress</th>
+          <th><?php echo lang('CONTROL', @$_SESSION['sys']['lang']) ?></th>
         </tr>
       </thead>
       <tbody id="companies-table">

@@ -1,6 +1,8 @@
 <?php
 // create an object of Service class
 $services_obj = new Service();
+// get services section status
+
 // get all services images
 $services_info = $services_obj->get_active_services();
 // get services status
@@ -8,7 +10,8 @@ $services_info = $services_obj->get_active_services();
 if ($services_info != null && count($services_info) > 0) {
   ?>
   <!-- START SERVICES -->
-  <div class="services <?php echo isset($features_status) && $features_status == null ? 'no-wave-all' : '' ?>" id="services">
+  <div class="services <?php echo isset($features_status) && $features_status == null ? 'no-wave-all' : '' ?>"
+    id="services">
     <h2 class="main-title">
       <?php echo lang('OUR SERVICES') ?>
     </h2>
@@ -19,7 +22,7 @@ if ($services_info != null && count($services_info) > 0) {
         <?php if (file_exists($services_img . $service['service_img'])) { ?>
           <div class="box">
             <?php $is_resized = resize_img($services_img, $service['service_img']); ?>
-            <img
+            <img loading="lazy"
               src="<?php echo $is_resized ? $services_img . "resized/" . $service['service_img'] : $services_img . $service['service_img'] ?>"
               alt="service image #<?php echo $key + 1 ?>">
 
@@ -27,12 +30,12 @@ if ($services_info != null && count($services_info) > 0) {
             <div class="info">
               <?php if ($service['is_active'] != 2) { ?>
                 <?php if (strlen($service['link_1']) > 0) { ?>
-                  <a class="btn btn-primary" href="<?php echo $service['link_1'] ?>">
+                  <a class="btn btn-primary fs-12 py-2 px-3" href="<?php echo $service['link_1'] ?>">
                     <?php echo $page_dir == 'rtl' ? $service['link_1_ar'] : $service['link_1_en'] ?>
                   </a>
                 <?php } ?>
                 <?php if (strlen($service['link_2']) > 0) { ?>
-                  <a class="btn btn-outline-success" href="<?php echo $service['link_2'] ?>">
+                  <a class="btn btn-outline-success fs-12 py-2 px-3" href="<?php echo $service['link_2'] ?>">
                     <?php echo $page_dir == 'rtl' ? $service['link_2_ar'] : $service['link_2_en'] ?>
                   </a>
                 <?php } ?>

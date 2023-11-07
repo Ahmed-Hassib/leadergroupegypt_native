@@ -19,7 +19,7 @@ $msg_body .= lang('YOUR ACTIVATION CODE WILL EXPIRE WITHIN 1 MINUTE', @$_SESSION
 // api info
 $ultramsg_token = "xgkn9ejfc8b9ti1a"; // Ultramsg.com token
 $instance_id = "instance46427"; // Ultramsg.com instance id
-$client = new UltraMsg\WhatsAppApi($ultramsg_token, $instance_id);
+$client = new WhatsAppApi($ultramsg_token, $instance_id);
 
 // phone number
 $to = $phone_number;

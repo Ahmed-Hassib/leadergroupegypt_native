@@ -17,5 +17,5 @@ function dashboard($phrase)
     'LOGIN FAILED'      => 'تسجيل دخول خاطئ',
   );
   // return the phrase
-  return $lang[$phrase];
+  return array_key_exists($phrase, $lang) ? $lang[$phrase] : null;
 }

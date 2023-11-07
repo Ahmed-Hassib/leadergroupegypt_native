@@ -1,14 +1,14 @@
-<pre dir="ltr"><?php print_r($_POST) ?></pre>
+<!-- <pre dir="ltr"><?php print_r($_POST) ?></pre> -->
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // get piece info from the form
-  $mng_id         = isset($_POST['admin-id']) ? base64_decode($_POST['admin-id']) : null;
-  $tech_id        = isset($_POST['technical-id']) ? base64_decode($_POST['technical-id']) : null;
-  $client_id      = isset($_POST['client-id']) ? $_POST['client-id'] : null;
-  $descreption    = isset($_POST['descreption']) ?$_POST['descreption']:null;
+  $mng_id = isset($_POST['admin-id']) ? base64_decode($_POST['admin-id']) : null;
+  $tech_id = isset($_POST['technical-id']) ? base64_decode($_POST['technical-id']) : null;
+  $client_id = isset($_POST['client-id']) ? $_POST['client-id'] : null;
+  $descreption = isset($_POST['descreption']) ? $_POST['descreption'] : null;
 
   // validate the form
-  $formErorr = array();   // error array 
+  $formErorr = array(); // error array 
 
   // validate manager id
   if (empty($mng_id) || $mng_id == null) {
@@ -33,20 +33,57 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $mal_info = array();
     // push info into the array
     array_push($mal_info, $mng_id, $tech_id, $client_id, $descreption, get_date_now(), get_time_now(), base64_decode($_SESSION['sys']['company_id']));
-    
+
     // create an object of Malfunction class
-    $mal_obj = !isset($mal_obj) ? new Malfunction() : $mal_obj;
+    $mal_obj = new Malfunction();
+    // get next malfunction id
+    $mal_id = $mal_obj->get_next_id("jsl_db", "malfunctions");
 
     // call insert function
     $is_inserted = $mal_obj->insert_new_malfunction($mal_info);
+    
     // check if malfunction was inserted or not
     if ($is_inserted) {
       // prepare flash session variables
-      $_SESSION['flash_message'] = 'INSERTED';
-      $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
-      $_SESSION['flash_message_class'] = 'success';
-      $_SESSION['flash_message_status'] = true;
-      $_SESSION['flash_message_lang_file'] = 'malfunctions';
+      $_SESSION['flash_message'][0] = 'INSERTED';
+      $_SESSION['flash_message_icon'][0] = 'bi-check-circle-fill';
+      $_SESSION['flash_message_class'][0] = 'success';
+      $_SESSION['flash_message_status'][0] = true;
+      $_SESSION['flash_message_lang_file'][0] = 'malfunctions';
+      // add an new detail record
+      $mal_obj->add_malfunction_updates(array($mal_id, 0, 'insert malfunction', base64_decode($_SESSION['sys']['company_id'])));
+
+      // get admin info
+      $admin_info = $mal_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = $mng_id")[0]['UserName'];
+      // get technical man info
+      $tech_info = $mal_obj->select_specific_column("`UserName`, `phone`, `is_activated_phone`", "`users`", "WHERE `UserID` = $tech_id")[0];
+
+      // create an object of Pieces class
+      $pcs_obj = new Pieces();
+      // get client info
+      $client_info = $pcs_obj->get_spec_piece($client_id)[1];
+      // send a notification to technical man
+      $res = $mal_obj->send_notification($admin_info, $tech_info, $client_info, $descreption, $lang_file);
+      // add an new detail record
+      $mal_obj->add_malfunction_updates(array($mal_id, 0, 'send notification', base64_decode($_SESSION['sys']['company_id'])));
+      // check result of malfunction info notification
+      if ($res['mal_info']) {
+        // prepare flash session variables
+        $_SESSION['flash_message'][1] = 'SEND NOTIFICATION';
+        $_SESSION['flash_message_icon'][1] = 'bi-check-circle-fill';
+        $_SESSION['flash_message_class'][1] = 'success';
+        $_SESSION['flash_message_status'][1] = true;
+        $_SESSION['flash_message_lang_file'][1] = 'malfunctions';
+      }
+      // check result of malfunction info notification
+      if ($res['location_info']) {
+        // prepare flash session variables
+        $_SESSION['flash_message'][2] = 'SEND LOCATION NOTIFICATION';
+        $_SESSION['flash_message_icon'][2] = 'bi-check-circle-fill';
+        $_SESSION['flash_message_class'][2] = 'success';
+        $_SESSION['flash_message_status'][2] = true;
+        $_SESSION['flash_message_lang_file'][2] = 'malfunctions';
+      }
     } else {
       // prepare flash session variables
       $_SESSION['flash_message'] = 'QUERY PROBLEM';
@@ -57,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
   } else {
     // assign post data to session
-    $_SESSION['sys']['request_data'] = $_POST;
+    $_SESSION['request_data'] = $_POST;
     // loop on errors
     foreach ($formErorr as $key => $error) {
       $_SESSION['flash_message'][$key] = strtoupper($error);

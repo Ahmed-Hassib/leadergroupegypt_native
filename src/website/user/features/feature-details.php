@@ -28,7 +28,7 @@ if ($is_exists > 0) {
         </p>
       </div>
       <div class="image">
-        <img src="<?php echo $assets ?>leadergroupegypt-shadow.png" alt="Leader Group Egypt">
+        <img rel="preload" as="image" loading="lazy" src="<?php echo $assets ?>leadergroupegypt-shadow.png" alt="Leader Group Egypt">
       </div>
     </div>
     <a href="#features" class="go-down">

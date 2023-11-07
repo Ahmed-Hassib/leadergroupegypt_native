@@ -6,14 +6,16 @@
       <?php
       $db_obj = !isset($db_obj) ? new Database() : $db_obj;
 
-      $company_img_name_db = $db_obj->select_specific_column("`company_img`", "`companies`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id']))[0]['company_img'];
-      $company_img_name = empty($company_img_name_db) ? 'leadergroupegypt.jpg' : $company_img_name_db;
-      $company_img_path = empty($company_img_name_db) ? $uploads . "companies-img" : $uploads . "companies-img/" . base64_decode($_SESSION['sys']['company_id']);
+      $company_img_name_db = $db_obj->select_specific_column("`company_img`", "`companies`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
+      $company_img_name_db = count($company_img_name_db) > 0 ? $company_img_name_db[0]['company_img'] : null;
+      $company_img_name = empty($company_img_name_db) || $company_img_name_db == null ? 'leadergroupegypt.png' : $company_img_name_db;
+      $company_img_path = empty($company_img_name_db) || $company_img_name_db == null ? $uploads . "companies-img" : $uploads . "companies-img/" . base64_decode($_SESSION['sys']['company_id']);
+      // check if image exists
+      $img_file = file_exists("$company_img_path/$company_img_name") ? "$company_img_path/$company_img_name" : $uploads . "companies-img/leadergroupegypt.png";
       ?>
-      <img src="<?php echo "$company_img_path/$company_img_name" ?>" class="sidebar-menu-logo-img"
+      <img src="<?php echo $img_file ?>" class="sidebar-menu-logo-img" <?php if (empty($company_img_name_db) || $company_img_name_db == null) { ?> style="margin: 1rem !important" <?php } ?>
         alt="<?php echo isset($_SESSION['sys']['company_name']) ? $_SESSION['sys']['company_name'] : lang('NOT ASSIGNED') ?>"
         id="company-img-brand">
-      <!-- <img  src="<?php echo $assets ?>jsl.jpeg" > -->
       <span class="sidebar-menu-logo-name text-uppercase ">
         <?php echo isset($_SESSION['sys']['company_name']) ? $_SESSION['sys']['company_name'] : lang('NOT ASSIGNED') ?>
       </span>

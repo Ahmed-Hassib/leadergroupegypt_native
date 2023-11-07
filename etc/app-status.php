@@ -21,6 +21,7 @@ if ($page_category == 'sys_tree' && isset($_SESSION['sys'])) {
 }
 
 // include routes file
+require_once "check-version.php";
 require_once "app-routes.php";
 require_once "system-architecture.php";
 

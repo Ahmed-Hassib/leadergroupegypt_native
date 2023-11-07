@@ -74,10 +74,28 @@ function global_($phrase)
   'INACTIVE' => 'غير مُفعّل',
   'SHOW MORE' => 'عرض المزيد',
   'ABOUT US' => 'نبذة عن الشركة',
-
+  'ACTIVATE' => 'تفعيل',
+  'DEACTIVATE' => 'إلغاء التفعيل',
+  'ACTIVATE PHONE' => 'تفعيل رقم الهاتف',
+  'ACTIVATION CODE' => 'كود التفعيل',
+  'GOOD MORNING' => 'صباح الخير',
+  'GOOD AFTERNOON' => 'مساء الخير',
+  'JOB TIME' => 'ساعات العمل',
+  'FROM' => 'من',
+  'TO' => 'إلى',
+  'AM' => 'صباحاً',
+  'PM' => 'مساء',
+  'PHONE' => 'رقم التليفون',
+  'DEAR CUSTOMER' => 'عميلنا العزيز',
+  'ACCEPT GREETINGS' => 'تقبل تحياتي',
+  'FORGET PASSWORD' => 'نسيت كلمة السر',
+  'FORGET PASSWORD?' => 'هل نسيت كلمة السر؟',
+  'CHARACTERIZED BY' => 'يتميز بالتالي',
+  'FROM HERE' => 'من هُنا',
 
   // pages title
   'DASHBOARD' => 'لوحة التحكم',
+  'COMPANY INFO' => 'بيانات الشركة المُمولة',
 
   // NAVBAR WORDS
   // website navbar
@@ -118,6 +136,7 @@ function global_($phrase)
   'PASS NOTE' => 'لا تشارك الرقم السرى مع احد',
   'ENG NUM' => 'يجب إدخال الأرقام باللغة الإنجليزية',
   'MEDIA FAILED' => 'فشل تحميل الصورة/الفيديو',
+  'THEN FOLOOW THESE STEPS' => 'ثم إتبع هذة الخطوات التالية',
 
   // global messages
   'NOT ASSIGNED' => 'لم يُحدد',
@@ -144,7 +163,15 @@ function global_($phrase)
   'RATING SUCCESS' => 'شكراً لكم! لقد قمت بتقييم السيستم بنجاح',
   'RATED FAILED' => 'حدث خطأ أثناء إرسال تقييمكم برجاء المحاولة مرة أخرى',
   'RATED BEFORE' => 'شكراً لكم! لقم قمت بتقييم السيستم من قبل',
-
+  'END PACKAGE ALERT' => 'نود تنبيهكم بأن 100% من كمية البيانات المتاحة في باقتكم الحالية قد استهلكت',
+  'END PACKAGE OFFER' => 'لدينا عرض خاص لك لشراء باقة إضافية بحجم 20 جيجا بايت بسعر 40 جنيه فقط',
+  'END PACKAGE INQUIRE' => 'أو يمكنك أيضا الاستفسار عن الباقات الأخرى المتاحة لدينا للاختيار ما يناسب احتياجاتك من استخدام الإنترنت بشكل أفضل',
+  'END PACKAGE SOLUTION' => 'نأمل أن تجد الحل الأمثل لاحتياجاتك لا تتردد في الاتصال بنا في حال احتجت أي مساعدة أو استفسار',
+  'DEADLINE PAYMENT ALERT' => 'نود أن نذكِّرك بأن موعد سداد اشتراك الإنترنت الخاص بك قد انتهي',
+  'DEADLINE PAYMENT RENEW MESSAGE' => 'يُمكنك تجديد الاشتراك عن طريق التحصيل المنزلي مقابل رسوم تحصيل قدرها 15 جنيهًا، أو يُمكنك تحويل المبلغ المستحق فودافون كاش إلى رقم التالي: 01015062539',
+  'DEADLINE PAYMENT RENEW CONFIRM' => 'يرجى ملاحظة أنه سيتم تفعيل الاشتراك الخاص بك فور تلقينا صورة التحويل',
+  'CONTACT US BY PHONES' => 'يُمكنك أيضًا التواصل معنا عبر الهاتف علي',
+  'SENT MSG ERROR' => 'توجد مشكلة أثناء إرسال رسالة بكود إعادة تعيين كلمة السر برجاء المحاولة في وقت آخر',
 
   // tables words
   'NOTE' => 'الملاحظات',
@@ -155,17 +182,20 @@ function global_($phrase)
   'EDIT' => 'تعديل',
   'DELETE' => 'حذف',
   'SHOW' => 'عرض',
+  'SHOW DETAILS' => 'عرض التفاصيل',
   'RATING' => 'تقييم',
   'SAVE' => 'حفظ التغييرات',
   'CLOSE' => 'اغلاق',
   'SEND' => 'ارسال',
+  'SEND CODE' => 'إرسال الكود',
   'DELETE IMG' => 'حذف الصورة',
   'CHANGE IMG' => 'تغيير الصورة',
   'DELETE MEDIA' => 'حذف الصور/الفيديوهات',
   'DOWNLOAD MEDIA' => 'تحميل الصور/الفيديوهات',
   'SELECT LANG' => 'إختر اللغة',
+  'SHOW TREE' => 'رؤية الشجرة',
 
   );
   // return the phrase
-  return $lang[$phrase];
+  return array_key_exists($phrase, $lang) ? $lang[$phrase] : null;
 }

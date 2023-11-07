@@ -36,6 +36,10 @@ switch ($query) {
   case 'delete-detail':
     $file_name = 'delete-detail.php';
     break;
+  
+  case 'link-validation':
+    $file_name = 'link-validation.php';
+    break;
 }
 
 include_once $file_name;

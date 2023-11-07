@@ -49,35 +49,23 @@ function get_page_dependencies($page_role, $file_type)
         'css' => [
           '1' => "datatables.net-bs5/css/dataTables.bootstrap5.min.css",
           '2' => 'datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css',
+          '3' => 'datatables.net-colresize-unofficial/jquery.dataTables.colResize.css'
         ],
         'js' => [
-          '1'   => 'jszip/dist/jszip.min.js',
-          '2'   => 'pdfmake/build/pdfmake.min.js',
-          '3'   => 'pdfmake/build/vfs_fonts.js',
-          '4'   => 'datatables.net/js/jquery.dataTables.min.js',
-          '5'   => 'datatables.net-bs5/js/dataTables.bootstrap5.min.js',
-          '6'   => 'datatables.net-buttons/js/dataTables.buttons.min.js',
-          '7'   => 'datatables.net-buttons/js/buttons.colVis.js',
-          '8'   => 'datatables.net-buttons/js/buttons.html5.min.js',
-          '9'   => 'datatables.net-buttons/js/buttons.print.min.js',
-          '10'  => 'datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js',
+          '1' => 'jszip/dist/jszip.min.js',
+          '2' => 'pdfmake/build/pdfmake.min.js',
+          '3' => 'pdfmake/build/vfs_fonts.js',
+          '4' => 'datatables.net/js/jquery.dataTables.min.js',
+          '5' => 'datatables.net-bs5/js/dataTables.bootstrap5.min.js',
+          '6' => 'datatables.net-buttons/js/dataTables.buttons.min.js',
+          '7' => 'datatables.net-buttons/js/buttons.colVis.js',
+          '8' => 'datatables.net-buttons/js/buttons.html5.min.js',
+          '9' => 'datatables.net-buttons/js/buttons.print.min.js',
+          '10' => 'datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js',
+          '11' => 'datatables.net-colresize-unofficial/jquery.dataTables.colResize.js'
         ]
       ],
       'fonts' => []
-    ],
-
-
-    // for webite files
-    'website' => [
-      'css' => [],
-      'js' => [],
-      'node' => [
-        'css' => [],
-        'js' => []
-      ],
-      'fonts' => [
-        '1' => 'cairo.css'
-      ]
     ],
 
     // for webite global files
@@ -93,7 +81,9 @@ function get_page_dependencies($page_role, $file_type)
         'css' => [],
         'js' => []
       ],
-      'fonts' => [],
+      'fonts' => [
+        '1' => 'cairo.css'
+      ],
       'navbar' => [
         'root' => 'root-navbar.php',
         'user' => 'user-navbar.php'
@@ -115,10 +105,25 @@ function get_page_dependencies($page_role, $file_type)
       'fonts' => []
     ],
 
-    // for website login
-    'website_dash' => [
+    // for website company
+    'website_company' => [
       'css' => [
-        '1' => 'dashboard.css'
+        '1' => 'company.css'
+      ],
+      'js' => [
+        '1' => 'company.js'
+      ],
+      'node' => [
+        'css' => [],
+        'js' => []
+      ],
+      'fonts' => []
+    ],
+
+    // for website gallery
+    'website_gallery' => [
+      'css' => [
+        '1' => 'gallery.css'
       ],
       'js' => [],
       'node' => [
@@ -128,28 +133,26 @@ function get_page_dependencies($page_role, $file_type)
       'fonts' => []
     ],
 
-    // for website login
-    'website_sections' => [
+    // for website services
+    'website_services' => [
       'css' => [
-        '1' => 'sections.css'
+        '1' => 'services.css'
       ],
-      'js' => [
-        '1' => 'sections.js'
-      ],
+      'js' => [],
       'node' => [
         'css' => [],
         'js' => []
       ],
       'fonts' => []
     ],
-    
-    // for website gallery
-    'website_gallery' => [
+
+    // for website features
+    'website_features' => [
       'css' => [
-        '1' => 'gallery.css'
+        '1' => 'features.css'
       ],
       'js' => [
-        '1' => 'gallery.js'
+        '1' => 'features.js'
       ],
       'node' => [
         'css' => [],
@@ -158,58 +161,13 @@ function get_page_dependencies($page_role, $file_type)
       'fonts' => []
     ],
 
-    // for website links
-    'website_links' => [
+    // for website team
+    'website_team' => [
       'css' => [
-        '1' => 'links.css'
+        '1' => 'team.css'
       ],
       'js' => [
-        '1' => 'links.js'
-      ],
-      'node' => [
-        'css' => [],
-        'js' => []
-      ],
-      'fonts' => []
-    ],
-    
-    // for website about
-    'website_about' => [
-      'css' => [
-        // '1' => 'about.css'
-      ],
-      'js' => [
-        '1' => 'about.js'
-      ],
-      'node' => [
-        'css' => [],
-        'js' => []
-      ],
-      'fonts' => []
-    ],
-    
-    // for website services
-    'website_services' => [
-      'css' => [
-        '1' => 'services.css'
-      ],
-      'js' => [
-        '1' => 'services.js'
-      ],
-      'node' => [
-        'css' => [],
-        'js' => []
-      ],
-      'fonts' => []
-    ],
-    
-    // for website features
-    'website_features' => [
-      'css' => [
-        '1' => 'features.css'
-      ],
-      'js' => [
-        '1' => 'features.js'
+        '1' => 'team.js'
       ],
       'node' => [
         'css' => [],
@@ -379,18 +337,6 @@ function get_page_dependencies($page_role, $file_type)
       'fonts' => [],
     ],
 
-    'sys_tree_dash' => [
-      'css' => [
-        '1' => 'dashboard.css'
-      ],
-      'js' => [],
-      'node' => [
-        'css' => [],
-        'js' => []
-      ],
-      'fonts' => [],
-    ],
-
     'sys_tree_settings' => [
       'css' => [
         '1' => 'settings.css'
@@ -398,16 +344,6 @@ function get_page_dependencies($page_role, $file_type)
       'js' => [
         '1' => 'settings.js'
       ],
-      'node' => [
-        'css' => [],
-        'js' => []
-      ],
-      'fonts' => [],
-    ],
-
-    'sys_tree_comp' => [
-      'css' => [],
-      'js' => [],
       'node' => [
         'css' => [],
         'js' => []
@@ -475,18 +411,7 @@ function get_page_dependencies($page_role, $file_type)
       ],
       'fonts' => [],
     ],
-
-    // for blog signup
-    'blog_signup' => [
-      'css' => [],
-      'js' => [],
-      'node' => [
-        'css' => [],
-        'js' => []
-      ],
-      'fonts' => [],
-    ],
   ];
   // returns files of the given page role
-  return $project_files_archeticture[$page_role][$file_type];
+  return key_exists($page_role, $project_files_archeticture) ? $project_files_archeticture[$page_role][$file_type] : null;
 }

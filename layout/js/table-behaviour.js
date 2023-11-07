@@ -70,6 +70,15 @@ $(document).ready(function () {
     // get the table
     var table = $('table.display').DataTable({
       "scrollX": true,
+      colResize: {
+        isEnabled: true,
+        saveState: true,
+        hoverClass: 'dt-colresizable-hover',
+        // hasBoundCheck: true,
+        isResizable: function (column) {
+          return true;
+        },
+      },
       autoWidth: false,
       ordering: true,
       stateSave: true,
@@ -164,7 +173,7 @@ function create_tr_content(content) {
 
   // create a span for internet
   let internet_span = document.createElement('span');
-  internet_span.textContent = `${lang.internet_src} : ${content['internet_source'] == null || content['internet_source'] == '' ? lang.not_assign : content['internet_source']}`;
+  internet_span.textContent = `${lang.internet_src} : ${content['coordinates'] == null || content['coordinates'] == '' ? lang.not_assign : content['coordinates']}`;
 
   // create a span for notes
   let notes_span = document.createElement('span');

@@ -78,16 +78,16 @@ if ($is_developing == false) {
     $no_navbar = 'all';
     $no_footer = 'all';
   }
-  // initial configration of system
-  include_once str_repeat("../", $level) . "etc/pre-conf.php";
-  // initial configration of system
-  include_once str_repeat("../", $level) . "etc/init.php";
-
-  // include file name
-  include_once $file_name;
 } else {
-  include  $globmod . "under-developing.php";
+  $file_name = $globmod . "under-developing.php";
 }
+// initial configration of system
+include_once str_repeat("../", $level) . "etc/pre-conf.php";
+// initial configration of system
+include_once str_repeat("../", $level) . "etc/init.php";
+
+// include file name
+include_once $file_name;
 
 // include footer
 include_once $tpl . "footer.php";

@@ -72,16 +72,19 @@ $num_displayed = intval($gallery_obj->select_specific_column("`num_content`", "`
               <td class="text-center">
                 <?php if ($img['is_active']) { ?>
                   <a href="?do=deactivate-img&id=<?php echo base64_encode($img['id']) ?>" class="btn btn-danger py-0"><i
-                      class="bi bi-x"></i></a>
+                      class="bi bi-x"></i><span>
+                      <?php echo lang('DEACTIVATE') ?>
+                    </span></a>
                 <?php } else { ?>
                   <a href="?do=activate-img&id=<?php echo base64_encode($img['id']) ?>" class="btn btn-primary py-0"><i
-                      class="bi bi-check"></i></a>
+                      class="bi bi-check"></i><span>
+                      <?php echo lang('ACTIVATE') ?>
+                    </span></a>
                 <?php } ?>
                 <a href="?do=edit-img&id=<?php echo base64_encode($img['id']) ?>" class="btn btn-outline-success py-0"><i
                     class="bi bi-pencil-square"></i></a>
                 <button type="button" data-href="?do=delete-img&id=<?php echo base64_encode($img['id']) ?>&back=true"
-                  class="btn btn-outline-danger py-0" onclick="confirm_delete_img(this)"><i
-                    class="bi bi-trash"></i></button>
+                  class="btn btn-outline-danger py-0" onclick="confirm_delete(this)"><i class="bi bi-trash"></i></button>
               </td>
             </tr>
           <?php } ?>

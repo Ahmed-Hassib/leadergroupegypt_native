@@ -81,20 +81,20 @@ if ($is_developing == false) {
     $no_footer = 'all';
   }
 
-  // pre configration of system
-  include_once str_repeat("../", $level) . "etc/pre-conf.php";
-  // initial configration of system
-  include_once str_repeat("../", $level) . "etc/init.php";
-
-  // include file name
-  include_once $file_name;
   // include ping modal
   include_once $globmod . 'ping-modal.php';
   // include confirmation delete modal
   include_once 'delete-conn-type-modal.php';
 } else {
-  include $globmod . "under-developing.php";
+  $file_name = $globmod . "under-developing.php";
 }
+// pre configration of system
+include_once str_repeat("../", $level) . "etc/pre-conf.php";
+// initial configration of system
+include_once str_repeat("../", $level) . "etc/init.php";
+
+// include file name
+include_once $file_name;
 // include footer
 include_once $tpl . "footer.php";
 include_once $tpl . "js-includes.php";

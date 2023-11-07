@@ -8,6 +8,13 @@
   overflow: hidden;
 }
 
+.phone-container {
+  position: relative;
+  display: grid;
+  grid-template-columns: 70% 20%;
+  gap: 10px;
+}
+
 .permissions {
   position: relative;
   display: grid;
@@ -57,3 +64,4 @@
     grid-column: 1/3;
   }
 }
+

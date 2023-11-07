@@ -16,7 +16,7 @@
             <div class="img-control">
               <div class="img-btn-controls">
                 <!-- service image form -->
-                <input type="file" class="d-none" name="service-img-input[]" id="service-img-input" onchange="change_service_img(this)" accept="image/*">
+                <input type="file" class="d-none" name="service-img-input[]" id="service-img-input" onchange="change_section_img(this)" accept="image/*">
                 <!-- edit image button -->
                 <button type="button" role="button" class="btn btn-outline-primary fs-12 py-1 text-capitalize change" onclick="click_input(this)">
                   <i class="bi bi-image"></i>

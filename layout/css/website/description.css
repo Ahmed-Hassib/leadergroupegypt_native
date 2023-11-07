@@ -35,7 +35,7 @@
   border-radius: 6px;
 }
 
-.abstract .section .section-content ul {
+.abstract .section .section-content>ul {
   list-style: inside !important;
   padding: 0 3rem;
   margin-top: 2rem;
@@ -43,12 +43,13 @@
 }
 
 @media (min-width: 576px) {
-  .abstract .section .section-content ul {
+  .abstract .section .section-content>ul {
     padding: 0;
   }
 }
 
-.abstract .section .section-content ul li {
+.abstract .section .section-content>ul>li {
+  margin-bottom: 2rem;
   font-size: 1.25rem;
 }
 
@@ -58,7 +59,7 @@
 
 
 .abstract .section .section-content>p {
-  margin: 2rem auto;
+  margin: 1rem auto;
   line-height: 2rem;
 }
 

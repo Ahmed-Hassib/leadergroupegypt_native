@@ -43,7 +43,7 @@ if ($_SESSION['sys']['comb_add'] == 1) {
                 if (count($usersRows) > 0) {
                   // loop on result ..
                   foreach ($usersRows as $userRow) { ?>
-                    <option value="<?php echo base64_encode($userRow['UserID']) ?>" <?php echo isset($_SESSION['sys']['request_data']) && base64_decode($_SESSION['sys']['request_data']['technical-id']) == $userRow['UserID'] ? 'selected' : '' ?>><?php echo $userRow['UserName']; ?></option>
+                    <option value="<?php echo base64_encode($userRow['UserID']) ?>" <?php echo isset($_SESSION['request_data']) && base64_decode($_SESSION['request_data']['technical-id']) == $userRow['UserID'] ? 'selected' : '' ?>><?php echo $userRow['UserName']; ?></option>
                   <?php } ?>
                 <?php } ?>
               </select>
@@ -58,22 +58,22 @@ if ($_SESSION['sys']['comb_add'] == 1) {
             </div>
             <!-- client-nameme -->
             <div class="mb-3 form-floating">
-              <input type="text" class="form-control" name="client-name" placeholder="<?php echo lang('BENEFICIARY NAME', $lang_file) ?>" value="<?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['client-name'] : '' ?>" required onkeyup="fullname_validation(this, null, true);">
+              <input type="text" class="form-control" name="client-name" placeholder="<?php echo lang('BENEFICIARY NAME', $lang_file) ?>" value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['client-name'] : '' ?>" required onkeyup="fullname_validation(this, null, true);">
               <label for="client-name"><?php echo lang('BENEFICIARY NAME', $lang_file) ?></label>
             </div>
             <!-- phone -->
             <div class="mb-3 form-floating">
-              <input type="text" name="client-phone" id="client-phone" class="form-control w-100" placeholder="<?php echo lang('PHONE', $lang_file) ?>" value="<?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['client-phone'] : '' ?>" required />
+              <input type="text" name="client-phone" id="client-phone" class="form-control w-100" placeholder="<?php echo lang('PHONE', $lang_file) ?>" value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['client-phone'] : '' ?>" required />
               <label for="client-phone"><?php echo lang('PHONE', $lang_file) ?></label>
             </div>
             <!-- address -->
             <div class="mb-3 form-floating">
-              <input type="text" name="client-address" id="client-address" class="form-control w-100" placeholder="<?php echo lang('ADDR', $lang_file) ?>" value="<?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['client-address'] : '' ?>" required />
+              <input type="text" name="client-address" id="client-address" class="form-control w-100" placeholder="<?php echo lang('ADDR', $lang_file) ?>" value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['client-address'] : '' ?>" required />
               <label for="client-address"><?php echo lang('ADDR', $lang_file) ?></label>
             </div>
             <!-- notes -->
             <div class="mb-3 form-floating">
-              <textarea type="text" name="client-notes" id="client-notes" class="form-control w-100" style="resize: none;height:120px;" placeholder="<?php echo lang('NOTE') ?>" style="resize: none; direction: <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'rtl' : 'ltr' ?>" required><?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['client-notes'] : '' ?></textarea>
+              <textarea type="text" name="client-notes" id="client-notes" class="form-control w-100" style="resize: none;height:120px;" placeholder="<?php echo lang('NOTE') ?>" style="resize: none; direction: <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'rtl' : 'ltr' ?>" required><?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['client-notes'] : '' ?></textarea>
               <label for="client-notes"><?php echo lang('NOTE') ?></label>
             </div>
           </div>
@@ -112,7 +112,7 @@ if ($_SESSION['sys']['comb_add'] == 1) {
 }
 
 // remove previous data
-if (isset($_SESSION['sys']['request_data']) && !empty($_SESSION['sys']['request_data'])) {
-  unset($_SESSION['sys']['request_data']);
+if (isset($_SESSION['request_data']) && !empty($_SESSION['request_data'])) {
+  unset($_SESSION['request_data']);
 }
 ?>

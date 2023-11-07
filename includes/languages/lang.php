@@ -9,13 +9,13 @@ if ($page_category == 'website') {
 }
 
 // all language files
-$global_lang = ['global'];
+$global_lang = ['global', 'description'];
 
 // for sys tree
 $sys_tree_lang = ['login', 'dashboard', 'directions', 'pieces', 'sugg_comp', 'employees', 'pcs_conn', 'clients', 'malfunctions', 'combinations', 'settings'];
 
 // for website
-$website_lang = ['index', 'login', 'dashboard', 'sections', 'gallery', 'about', 'features', 'links', 'services', 'description'];
+$website_lang = ['index', 'login', 'dashboard', 'sections', 'gallery', 'company', 'about', 'features', 'links', 'services', 'team'];
 
 // check page category
 switch ($page_category) {
@@ -48,5 +48,5 @@ foreach ($lang_files as $file) {
 function lang($phrase, $file = 'global_', $lang = "ar")
 {
   // return the word
-  return $file(strtoupper($phrase));
+  return $file(strtoupper($phrase)) != null ? $file(strtoupper($phrase)) : $phrase;
 }

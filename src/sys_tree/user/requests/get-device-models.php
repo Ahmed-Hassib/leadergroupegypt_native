@@ -1,10 +1,10 @@
 <?php
 // get documnet root
-$document_root  = $_SERVER['DOCUMENT_ROOT'];
+$document_root = $_SERVER['DOCUMENT_ROOT'];
 // get device id
 $device_id = isset($_GET['device-id']) && !empty($_GET['device-id']) ? $_GET['device-id'] : 0;
 // company_id
-$company_id = $_SESSION['company_id'];
+$company_id = $_SESSION['sys']['company_id'];
 // check if arr parameters are entered or not
 if ($device_id == 0) {
   // if device id not set return false
@@ -20,7 +20,7 @@ if ($device_id == 0) {
   $models_info = $devices_obj->get_all_device_models($device_id);
   $data = $models_info[1];
   // company name
-  $company_name = $devices_obj->select_specific_column("`company_name`", "`companies`", "WHERE `company_id` = $company_id")[0]['company_name'];
+  $company_name = $devices_obj->select_specific_column("`company_name`", "`companies`", "WHERE `company_id` = '" . base64_decode($company_id) . "'")[0]['company_name'];
   // convert data into json file
   $json_data = json_encode($data);
   // json location
@@ -31,7 +31,7 @@ if ($device_id == 0) {
     mkdir($json_location);
   }
   // json location
-  $json_location = $json_location . "devices-models/$company_name/";
+  $json_location = $json_location . "devices-models/$company_id/";
   // check if the directory is exist or not
   if (!file_exists($json_location)) {
     // create a directory for the company

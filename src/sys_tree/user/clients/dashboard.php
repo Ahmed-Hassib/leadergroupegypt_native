@@ -205,16 +205,19 @@
                           <a class="btn btn-success text-capitalize fs-12 "
                             href="?do=edit-client&client-id=<?php echo base64_encode($client['id']); ?>" target="_blank">
                             <i class="bi bi-pencil-square"></i>
-                            <!-- <?php echo lang('EDIT') ?> -->
+                            <?php echo lang('EDIT') ?>
                           </a>
-                        <?php } ?>
-                        <?php if ($_SESSION['sys']['pcs_delete'] == 1) { ?>
-                          <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12"
+                          <?php } ?>
+                          <?php if ($_SESSION['sys']['pcs_delete'] == 1) { ?>
+                            <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12"
                             data-bs-toggle="modal" data-bs-target="#deleteClientModal"
                             id="delete-client-<?php echo ($index + 1) ?>"
                             data-client-id="<?php echo base64_encode($client['id']) ?>"
                             data-client-name="<?php echo $client['full_name'] ?>"
-                            onclick="confirm_delete_client(this, true)"><i class="bi bi-trash"></i></button>
+                            onclick="confirm_delete_client(this, true)">
+                            <i class="bi bi-trash"></i>
+                            <?php echo lang('DELETE') ?>
+                          </button>
                         <?php } ?>
                       </td>
                     </tr>

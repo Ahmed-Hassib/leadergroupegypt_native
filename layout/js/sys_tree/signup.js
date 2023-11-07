@@ -112,35 +112,6 @@ function showing_instruction(input) {
   localStorage.setItem('showing_instruction', is_checked);
 }
 
-function confirm_password(confirm_pass, pass) {
-  // get password value
-  let pass_value = pass.value;
-  // get confirmed pass value
-  let confirmed_pass_value = confirm_pass.value;
-  // select admin info container
-  let admin_info_container = document.querySelector('#admin-info');
-
-  // check if any alerts is added to remove it
-  delete_alerts(admin_info_container);
-  // get value is not empty
-  if (pass_value.length > 0 && confirmed_pass_value.length > 0) {
-    if (pass_value == confirmed_pass_value) {
-      alert = create_alert('success', 'كلمة المرور متطابقة')
-      validate_password(pass, true)
-      validate_password(confirm_pass, true)
-    } else {
-      alert = create_alert('warn', 'كلمة المرور غير متطابقة')
-      validate_password(pass, false)
-      validate_password(confirm_pass, false)
-    }
-    // append alert
-    admin_info_container.appendChild(alert)
-  } else {
-    validate_password(pass)
-    validate_password(confirm_pass)
-  }
-}
-
 function create_alert(type, message, width = 'w-50') {
   // create alert container
   let alert_container = document.createElement('div');
@@ -167,20 +138,6 @@ function create_alert(type, message, width = 'w-50') {
   return alert_container;
 }
 
-function validate_password(input, is_valid = null) {
-  if (input.value.length > 0 && is_valid != null) {
-    if (is_valid) {
-      input.classList.contains('is-invalid') ? input.classList.replace('is-invalid', 'is-valid') : input.classList.add('is-valid');
-      input.dataset.valid = "true";
-    } else {
-      input.classList.contains('is-valid') ? input.classList.replace('is-valid', 'is-invalid') : input.classList.add('is-invalid');
-      input.dataset.valid = "false";
-    }
-  } else {
-    input.classList.remove('is-valid', 'is-invalid')
-    input.dataset.valid = '';
-  }
-}
 
 function delete_alerts(container) {
   let alerts = document.querySelectorAll('div.alert')

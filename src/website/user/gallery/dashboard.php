@@ -34,7 +34,7 @@ if ($gallery_imgs != null && count($gallery_imgs) > 0) {
           <div class="box">
             <div class="image">
               <?php $is_resized = resize_img($gallery_img, $img['img_name']); ?>
-              <img
+              <img loading="lazy"
                 src="<?php echo $is_resized ? $gallery_img . "resized/" . $img['img_name'] : $gallery_img . $img['img_name'] ?>"
                 alt="gallery image #<?php echo $key + 1 ?>">
             </div>

@@ -97,14 +97,17 @@ if ($_SESSION['sys']['system_theme'] == 2) {
                     <div class="row g-1 justify-content-center align-items-start <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
                       <?php if ($_SESSION['sys']['UserID'] == base64_encode($user['UserID']) || $_SESSION['sys']['user_update'] == 1) { ?>
                         <!-- user profile button -->
-                        <div class="col-9">
+                        <div class="col-8">
                           <a href='?do=show-profile&userid=<?php echo base64_encode($user['UserID']) ?>' class='w-100 p-1 btn btn-primary text-capitalize fs-12 fs-10-sm'><?php echo lang('PROFILE') ?> </a>
                         </div>
                       <?php } ?>
                       <?php if ($_SESSION['sys']['user_delete'] == 1 && $users_counter > 1 && $user['TrustStatus'] != 1 && $user['job_title_id'] != 1) { ?>
                         <!-- user delete button -->
-                        <div class="col-3">
-                          <button type="button" data-bs-toggle="modal" data-bs-target="#deleteUserModal" class='w-100 p-1 btn btn-outline-danger text-capitalize fs-12 fs-10-sm' onclick="show_delete_user_modal(this,true)" data-username="<?php echo $user['UserName'] ?>" data-user-id="<?php echo base64_encode($user['UserID']) ?>"><i class="bi bi-trash"></i></button>
+                        <div class="col-4">
+                          <button type="button" data-bs-toggle="modal" data-bs-target="#deleteUserModal" class='w-100 p-1 btn btn-outline-danger text-capitalize fs-12 fs-10-sm' onclick="show_delete_user_modal(this,true)" data-username="<?php echo $user['UserName'] ?>" data-user-id="<?php echo base64_encode($user['UserID']) ?>">
+                          <i class="bi bi-trash"></i>
+                          <?php echo lang('DELETE') ?>
+                        </button>
                         </div>
                       <?php } ?>
                     </div>

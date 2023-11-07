@@ -155,9 +155,9 @@ $malfunction_query = $baseQuery . $company_condition;
 
 // prepaire the query
 $stmt = $con->prepare($malfunction_query);
-$stmt->execute();               // execute query
-$rows = $stmt->fetchAll();      // fetch data
-$count = $stmt->rowCount();     // get row count
+$stmt->execute(); // execute query
+$rows = $stmt->fetchAll(); // fetch data
+$count = $stmt->rowCount(); // get row count
 ?>
 <div class="container mb-0" dir="<?php echo $page_dir ?>">
   <?php if ($_SESSION['sys']['mal_add'] == 1) { ?>
@@ -170,7 +170,9 @@ $count = $stmt->rowCount();     // get row count
   <?php } ?>
   <!-- start header -->
   <header class="header mb-3">
-    <h4 class="h4 text-capitalize"><?php echo lang($title, $lang_file) ?></h4>
+    <h4 class="h4 text-capitalize">
+      <?php echo lang($title, $lang_file) ?>
+    </h4>
   </header>
 </div>
 <!-- start edit profile page -->
@@ -184,7 +186,8 @@ $count = $stmt->rowCount();     // get row count
           <i class="carousel-control-prev-icon"></i>
         </button>
         <!-- scroll right button -->
-        <button type="button" role="button" class="scroll-button scroll-next <?php echo $_SESSION['sys']['lang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
+        <button type="button" role="button"
+          class="scroll-button scroll-next <?php echo $_SESSION['sys']['lang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
           <i class="carousel-control-next-icon"></i>
         </button>
       </div>
@@ -193,23 +196,45 @@ $count = $stmt->rowCount();     // get row count
         <thead class="primary text-capitalize">
           <tr>
             <th class="text-center" style="width: 20px">#</th>
-            <th class="text-center" style="width: 150px"><?php echo lang('ADMIN NAME', $lang_file) ?></th>
-            <th class="text-center" style="width: 150px"><?php echo lang('TECH NAME', $lang_file) ?></th>
-            <th class="text-center" style="width: 250px"><?php echo lang('NAME', $lang_file) ?></th>
-            <th class="text-center" style="width: 200px"><?php echo lang('MAL DESC', $lang_file) ?></th>
-            <th class="text-center" style="width: 200px"><?php echo lang('TECH COMMENT', $lang_file) ?></th>
-            <th class="text-center" style="width: 100px"><?php echo lang('ADDED DATE') ?></th>
-            <th class="text-center" style="width: 100px"><?php echo lang('ADDED TIME') ?></th>
-            <th class="text-center" style="width: 50px"><?php echo lang('STATUS', $lang_file) ?></th>
-            <th class="text-center" style="width: 150px"><?php echo lang('MEDIA', $lang_file) ?></th>
-            <th class="text-center" style="width: 70px;"><?php echo lang('CONTROL') ?></th>
+            <th class="text-center">
+              <?php echo lang('ADMIN NAME', $lang_file) ?>
+            </th>
+            <th class="text-center">
+              <?php echo lang('TECH NAME', $lang_file) ?>
+            </th>
+            <th class="text-center">
+              <?php echo lang('NAME', $lang_file) ?>
+            </th>
+            <th class="text-center">
+              <?php echo lang('MAL DESC', $lang_file) ?>
+            </th>
+            <th class="text-center">
+              <?php echo lang('TECH COMMENT', $lang_file) ?>
+            </th>
+            <th class="text-center">
+              <?php echo lang('ADDED DATE') ?>
+            </th>
+            <th class="text-center">
+              <?php echo lang('ADDED TIME') ?>
+            </th>
+            <th class="text-center">
+              <?php echo lang('STATUS', $lang_file) ?>
+            </th>
+            <th class="text-center">
+              <?php echo lang('MEDIA', $lang_file) ?>
+            </th>
+            <th class="text-center">
+              <?php echo lang('CONTROL') ?>
+            </th>
           </tr>
         </thead>
         <tbody>
           <?php foreach ($rows as $index => $row) { ?>
             <tr>
               <!-- row index -->
-              <td><?php echo ($index + 1) ?></td>
+              <td>
+                <?php echo ($index + 1) ?>
+              </td>
               <!-- admin username -->
               <td>
                 <?php
@@ -218,10 +243,15 @@ $count = $stmt->rowCount();     // get row count
                 // if exist
                 if ($is_exist_admin) {
                   $admin_name = $mal_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = " . $row['mng_id'])[0]['UserName'];
-                ?>
-                  <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo base64_encode($row['mng_id']); ?>"><?php echo $admin_name ?></a>
+                  ?>
+                  <a
+                    href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo base64_encode($row['mng_id']); ?>">
+                    <?php echo $admin_name ?>
+                  </a>
                 <?php } else { ?>
-                  <span class="text-danger"><?php echo lang('WAS DELETED', $lang_file) ?></span>
+                  <span class="text-danger">
+                    <?php echo lang('WAS DELETED', $lang_file) ?>
+                  </span>
                 <?php } ?>
               </td>
               <!-- technical username -->
@@ -232,9 +262,14 @@ $count = $stmt->rowCount();     // get row count
                 // if exist
                 if ($is_exist_tech) {
                   $tech_name = $mal_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = " . $row['tech_id'])[0]['UserName']; ?>
-                  <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo base64_encode($row['tech_id']); ?>"><?php echo $tech_name ?></a>
+                  <a
+                    href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo base64_encode($row['tech_id']); ?>">
+                    <?php echo $tech_name ?>
+                  </a>
                 <?php } else { ?>
-                  <span class="text-danger"><?php echo lang('WAS DELETED', $lang_file) ?></span>
+                  <span class="text-danger">
+                    <?php echo lang('WAS DELETED', $lang_file) ?>
+                  </span>
                 <?php } ?>
               </td>
               <!-- piece/client name -->
@@ -256,56 +291,62 @@ $count = $stmt->rowCount();     // get row count
                   } else {
                     $url = "?do=edit-piece&piece-id=" . base64_encode($row['client_id']);
                   }
-                ?>
-                  <a href="<?php echo $url ?>"><?php echo $name ?></a>
+                  ?>
+                  <a href="<?php echo $url ?>">
+                    <?php echo $name ?>
+                  </a>
                 <?php } else { ?>
-                  <span class="text-danger"><?php echo lang('WAS DELETED', $lang_file) ?></span>
+                  <span class="text-danger">
+                    <?php echo lang('WAS DELETED', $lang_file) ?>
+                  </span>
                 <?php } ?>
               </td>
               <!-- malfunction description -->
               <td>
                 <?php
                 if (strlen($row['descreption']) > 0 && !empty($row['descreption'])) {
-                  if (strlen($row['descreption']) > 40) {
-                    echo trim(substr($row['descreption'], 0, 40), '') . "...";
-                  } else {
-                    echo $row['descreption'];
-                  }
+                  echo $row['descreption'];
                 } else { ?>
-                  <span class="text-danger"><?php echo lang('NO DATA') ?></span>
+                  <span class="text-danger">
+                    <?php echo lang('NO DATA') ?>
+                  </span>
                 <?php } ?>
               </td>
               <!-- technical man comment -->
               <td class="<?php echo empty($row['tech_comment']) ? 'text-danger' : '' ?>">
-                <?php if (!empty($row['tech_comment'])) {
-                  if (strlen($row['tech_comment']) > 40) {
-                    echo trim(substr($row['tech_comment'], 0, 40), '') . "...";
-                  } else {
-                    echo $row['tech_comment'];
-                  }
-                } else {
-                  echo lang('NOT ASSIGNED');
-                } ?>
+                <?php if (!empty($row['tech_comment'])) { ?>
+                  <span>
+                    <?php echo $row['tech_comment']; ?>
+                  </span>
+                <?php } else { ?>
+                  <span class="text-danger">
+                    <?php echo lang('NOT ASSIGNED'); ?>
+                  </span>
+                <?php } ?>
               </td>
               <!-- added date -->
-              <td class="text-center"><?php echo date_format(date_create($row['added_date']), "Y-m-d") ?></td>
+              <td class="text-center">
+                <?php echo date_format(date_create($row['added_date']), "Y-m-d") ?>
+              </td>
               <!-- added time -->
-              <td class="text-center"><?php echo date_format(date_create($row['added_time']), "h:i a") ?></td>
+              <td class="text-center">
+                <?php echo date_format(date_create($row['added_time']), "h:i a") ?>
+              </td>
               <!-- malfunction status -->
               <td class="text-center">
                 <?php
                 if ($row['mal_status'] == 0) {
-                  $iconStatus   = "bi-x-circle-fill text-danger";
-                  $titleStatus  = lang('UNFINISHED', $lang_file);
+                  $iconStatus = "bi-x-circle-fill text-danger";
+                  $titleStatus = lang('UNFINISHED', $lang_file);
                 } elseif ($row['mal_status'] == 1) {
-                  $iconStatus   = "bi-check-circle-fill text-success";
-                  $titleStatus  = lang('FINISHED', $lang_file);
+                  $iconStatus = "bi-check-circle-fill text-success";
+                  $titleStatus = lang('FINISHED', $lang_file);
                 } elseif ($row['mal_status'] == 2) {
-                  $iconStatus   = "bi-exclamation-circle-fill text-warning";
-                  $titleStatus  = lang('DELAYED', $lang_file);
+                  $iconStatus = "bi-exclamation-circle-fill text-warning";
+                  $titleStatus = lang('DELAYED', $lang_file);
                 } else {
-                  $iconStatus   = "bi-dash-circle-fill text-info";
-                  $titleStatus  = lang('NOT ASSIGNED');
+                  $iconStatus = "bi-dash-circle-fill text-info";
+                  $titleStatus = lang('NOT ASSIGNED');
                 }
                 ?>
                 <i class="bi <?php echo $iconStatus ?>" title="<?php echo $titleStatus ?>"></i>
@@ -315,7 +356,7 @@ $count = $stmt->rowCount();     // get row count
                 <?php
                 $have_media = $mal_obj->count_records("`id`", "`malfunctions_media`", "WHERE `mal_id` = " . $row['mal_id']);
                 if ($have_media > 0) {
-                  $icon   = "bi-check-circle-fill text-success";
+                  $icon = "bi-check-circle-fill text-success";
                   $title = lang('HAVE MEDIA', $lang_file);
                 } else {
                   $icon = "bi-x-circle-fill text-danger";
@@ -327,10 +368,19 @@ $count = $stmt->rowCount();     // get row count
               <!-- control buttons -->
               <td class="text-center">
                 <?php if ($_SESSION['sys']['mal_show'] == 1) { ?>
-                  <a href="?do=edit-malfunction-info&malid=<?php echo base64_encode($row['mal_id']) ?>" target="" class="btn btn-outline-primary me-1 fs-12"><i class="bi bi-eye"></i></a>
+                  <a href="?do=edit-malfunction-info&malid=<?php echo base64_encode($row['mal_id']) ?>" target=""
+                    class="btn btn-outline-primary m-1 fs-12">
+                    <i class="bi bi-eye"></i>
+                    <?php echo lang('SHOW DETAILS') ?>
+                  </a>
                 <?php } ?>
                 <?php if ($_SESSION['sys']['comb_delete'] == 1) { ?>
-                  <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#delete-malfunction-modal" id="delete-mal" data-mal-id="<?php echo base64_encode($row['mal_id']) ?>" onclick="put_mal_data_into_modal(this, true)"><i class="bi bi-trash"></i></button>
+                  <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12"
+                    data-bs-toggle="modal" data-bs-target="#delete-malfunction-modal" id="delete-mal"
+                    data-mal-id="<?php echo base64_encode($row['mal_id']) ?>" onclick="put_mal_data_into_modal(this, true)">
+                    <i class="bi bi-trash"></i>
+                    <?php echo lang('DELETE') ?>
+                  </button>
                 <?php } ?>
               </td>
             </tr>

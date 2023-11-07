@@ -19,11 +19,17 @@
         <i class="bi bi-messenger"></i>
         <span>messenger</span>
       </a>
+    </div>
 
-    </div>
-    <div class="image">
-      <img src="<?php echo $assets ?>leadergroupegypt-shadow.png" alt="Leader Group Egypt">
-    </div>
+    <?php $landing_img_name = "leadergroupegypt-shadow.png"; ?>
+    <?php $landing_img_path = $landing_img . "leadergroupegypt-shadow.png"; ?>
+    <?php $landing_resized_img_path = $landing_img . "resized/leadergroupegypt-shadow.png"; ?>
+    <?php if (file_exists($landing_img_path)) { ?>
+      <div class="image">
+        <?php $is_resized = resize_img($landing_img, $landing_img_name); ?>
+        <img src="<?php echo $is_resized ? $landing_resized_img_path : $landing_img_path ?>" alt="Leader Group Egypt">
+      </div>
+    <?php } ?>
   </div>
   <a href="#articles" class="go-down">
     <i class="bi bi-chevron-double-down"></i>

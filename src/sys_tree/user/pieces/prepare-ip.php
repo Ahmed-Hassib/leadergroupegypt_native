@@ -1,16 +1,10 @@
 <?php
 // get data
-$id = isset($_GET['id']) && !empty($_GET['id']) ? base64_decode($_GET['id']) : -1; // get id
 $address = isset($_GET['address']) && !empty($_GET['address']) ? $_GET['address'] : -1; // target ip
 $port = isset($_GET['port']) && !empty($_GET['port']) ? $_GET['port'] : 443; // target port
 
 // empty array for errors
 $errors = array();
-
-// check id
-if ($id == -1 || empty($id)) {
-  $errors[] = 'missing data';
-}
 
 // check address
 if ($address == -1 || empty($address)) {
@@ -41,32 +35,52 @@ if (empty($errors)) {
   // update number of opened port in database
   $company_obj->update_opened_ports(base64_decode($_SESSION['sys']['company_id']), $opened_ports);
   // get next port
-  // $next_port = intval($_SESSION['sys']['company_port']) + $opened_ports + 2;
-  $next_port = 5002;
+  $next_port = intval($_SESSION['sys']['company_port']) + $opened_ports + 1;
   // connect to mikrotik api
   if ($api_obj->connect($mikrotik_ip, $mikrotik_username, $mikrotik_password)) {
-    // change ir in api
-    $users = $api_obj->comm("/ip/firewall/nat/set", array(
-      "numbers" => $id,
-      "to-ports" => $port,
-      "to-addresses" => $address,
-    )
+    // get users
+    $users = $api_obj->comm(
+      "/ip/firewall/nat/print",
+      array(
+        "?comment" => "mohamady",
+        "?disabled" => "false"
+      )
     );
+    // check count of roles
+    if (count($users) < $opened_ports) {
+      // create a new role
+      $users = $api_obj->comm(
+        "/ip/firewall/nat/add",
+        array(
+          "action" => "dst-nat",
+          "chain" => "dstnat",
+          "comment" => "mohamady",
+          "dst-port" => $next_port,
+          "in-interface" => "MANAGEMENT-SYSTEM",
+          "protocol" => "tcp",
+          "to-addressed" => $address,
+          "to-ports" => $port
+        )
+      );
+    } else {
+      // get id
+      $id = $users[0]['.id'];
+      // change ir in api
+      $users = $api_obj->comm(
+        "/ip/firewall/nat/set",
+        array(
+          "numbers" => $id,
+          "to-ports" => $port,
+          "to-addresses" => $address,
+        )
+      );
+    }
+
     // protocol
     $protocol = $port == 80 ? 'http' : 'https';
     // url
     $url = "$protocol://leadergroupegypt.com:$next_port/";
-    // change ir in api
-    // $users = $api_obj->comm("/ip/firewall/nat/add", array(
-    //   "action" => "dst-nat",
-    //   "chain" => "dstnat",
-    //   "comment" => "mohamady",
-    //   "dst-port" => 5003,
-    //   "in-interface" => "MANAGEMENT-SYSTEM",
-    //   "protocol" => "tcp",
-    //   "to-addresses" => "192.168.60.17",
-    //   "to-ports" => 80
-    // ));
+
 
     echo "<div dir='ltr'>";
     // show success message 
@@ -75,8 +89,8 @@ if (empty($errors)) {
     echo "If not redirect after 3 sec <a href='$url'>click here</a>";
     echo "</div>";
     // redirect page to url to open device
-    header("refresh:0;url=$url");
-    die;
+    // header("refresh:0;url=$url");
+    // die;
   } else {
     // show success message 
     echo "<h3 class='h3 text-success'>" . lang('MIKROTIK FAILED') . "</h3>";

@@ -38,7 +38,7 @@
             class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
             <input type="text" class="form-control" id="full-name" name="full-name"
               placeholder="<?php echo lang('CLT NAME', $lang_file) ?>"
-              value="<?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['full-name'] : null ?>"
+              value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['full-name'] : null ?>"
               onblur="fullname_validation(this)" autocomplete="off" required />
             <label for="full-name">
               <?php echo lang('CLT NAME', $lang_file); ?>
@@ -50,7 +50,7 @@
             class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
             <input type="text" name="address" id="address" class="form-control w-100"
               placeholder="<?php echo lang('ADDR', $lang_file) ?>"
-              value="<?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['address'] : null ?>" />
+              value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['address'] : null ?>" />
             <label for="address">
               <?php echo lang('ADDR', $lang_file); ?>
             </label>
@@ -61,7 +61,7 @@
             class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
             <input type="text" name="phone-number" id="phone-number" class="form-control w-100"
               placeholder="<?php echo lang('PHONE', $lang_file) ?>"
-              value="<?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['phone-number'] : null ?>" />
+              value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['phone-number'] : null ?>" />
             <label for="phone-number">
               <?php echo lang('PHONE', $lang_file); ?>
             </label>
@@ -98,9 +98,9 @@
           <div class="mb-3">
             <div class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
               <input type="text" name="internet-source" id="internet-source" class="form-control w-100"
-                placeholder="<?php echo lang('INT SRC', 'pieces') ?>" />
+                placeholder="<?php echo lang('COORDINATES', 'pieces') ?>" />
               <label for="internet-source" class="col-sm-12 col-form-label text-capitalize">
-                <?php echo lang('INT SRC', 'pieces'); ?>
+                <?php echo lang('COORDINATES', 'pieces'); ?>
               </label>
             </div>
           </div>
@@ -111,7 +111,7 @@
             <textarea name="notes" id="notes" title="put some notes hete if exist" class="form-control w-100"
               style="height: 10rem; resize: none; direction: <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'rtl' : 'ltr' ?>"
               placeholder="<?php echo lang('NOTE') ?>">
-              <?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['notes'] : null ?>
+              <?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['notes'] : null ?>
             </textarea>
             <label for="notes">
               <?php echo lang('NOTE') ?>
@@ -125,14 +125,14 @@
             <div class="mt-2 col-sm-12 col-md-8">
               <!-- ANY TIME -->
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="visit-time" id="visit-time-piece" value="1" <?php echo isset($_SESSION['sys']['request_data']) && $_SESSION['sys']['request_data']['visit-time'] == 1 ? 'checked' : null ?>>
+                <input class="form-check-input" type="radio" name="visit-time" id="visit-time-piece" value="1" <?php echo isset($_SESSION['request_data']) && $_SESSION['request_data']['visit-time'] == 1 ? 'checked' : null ?>>
                 <label class="form-check-label text-capitalize" for="visit-time-piece">
                   <?php echo lang('ANY TIME', 'pieces') ?>
                 </label>
               </div>
               <!-- ADVANCE CONNECTION -->
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="visit-time" id="visit-time-client" value="2" <?php echo isset($_SESSION['sys']['request_data']) && $_SESSION['sys']['request_data']['visit-time'] == 2 ? 'checked' : null ?>>
+                <input class="form-check-input" type="radio" name="visit-time" id="visit-time-client" value="2" <?php echo isset($_SESSION['request_data']) && $_SESSION['request_data']['visit-time'] == 2 ? 'checked' : null ?>>
                 <label class="form-check-label text-capitalize" for="visit-time-client">
                   <?php echo lang('ADV CONN', 'pieces') ?>
                 </label>
@@ -179,7 +179,7 @@
                           <?php echo lang('SELECT DIRECTION', 'directions') ?>
                         </option>
                         <?php foreach ($dir_data as $dir) { ?>
-                          <option value="<?php echo base64_encode($dir['direction_id']) ?>" <?php echo isset($_SESSION['sys']['request_data']) && $_SESSION['sys']['request_data']['direction'] == base64_encode($dir['direction_id']) ? 'selected' : null ?> data-dir-company="<?php echo $_SESSION['sys']['company_id'] ?>">
+                          <option value="<?php echo base64_encode($dir['direction_id']) ?>" <?php echo isset($_SESSION['request_data']) && $_SESSION['request_data']['direction'] == base64_encode($dir['direction_id']) ? 'selected' : null ?> data-dir-company="<?php echo $_SESSION['sys']['company_id'] ?>">
                             <?php echo $dir['direction_name'] ?>
                           </option>
                         <?php } ?>
@@ -244,13 +244,13 @@
                     $devices_data = $stmt->fetchAll();
                     ?>
                     <select class="form-select" id="device-id" name="device-id"
-                      onchange="get_devices_models(this, '<?php echo $dev_models . $_SESSION['sys']['company_name'] ?>')">
+                      onchange="get_devices_models(this, '<?php echo $dev_models . $_SESSION['sys']['company_id'] ?>')">
                       <?php if ($devices_count > 0) { ?>
                         <option value="default" disabled selected>
                           <?php echo lang('SELECT DEV TYPE', 'pieces') ?>
                         </option>
                         <?php foreach ($devices_data as $device) { ?>
-                          <option value="<?php echo base64_encode($device['device_id']) ?>" <?php echo isset($_SESSION['sys']['request_data']) && $_SESSION['sys']['request_data']['device-id'] == base64_encode($device['device_id']) ? 'selected' : null ?>>
+                          <option value="<?php echo base64_encode($device['device_id']) ?>" <?php echo isset($_SESSION['request_data']) && $_SESSION['request_data']['device-id'] == base64_encode($device['device_id']) ? 'selected' : null ?>>
                             <?php echo $device['device_name'] ?>
                           </option>
                         <?php } ?>
@@ -337,7 +337,7 @@
                       <div
                         class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
                         <input type="text" class="form-control" id="ip" name="ip" placeholder="xxx.xxx.xxx.xxx"
-                          value="<?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['ip'] : null ?>"
+                          value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['ip'] : null ?>"
                           autocomplete="off" required />
                         <label for="ip"><span class="text-uppercase">
                             <?php echo lang('IP') ?>
@@ -348,7 +348,7 @@
                       <div
                         class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
                         <input type="text" class="form-control" id="port" name="port" placeholder="port"
-                          value="<?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['port'] : null ?>"
+                          value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['port'] : null ?>"
                           autocomplete="off" required />
                         <label for="port">Port</label>
                       </div>
@@ -371,7 +371,7 @@
                     class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
                     <input type="text" class="form-control" id="mac-add" name="mac-add" onblur="mac_validation(this)"
                       placeholder="<?php echo lang('MAC') ?>"
-                      value="<?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['mac-add'] : null ?>" />
+                      value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['mac-add'] : null ?>" />
                     <label for="mac-add">
                       <?php echo lang('MAC') ?>
                     </label>
@@ -384,7 +384,7 @@
                     class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
                     <input type="text" class="form-control" id="user-name" name="user-name"
                       placeholder="<?php echo lang('USERNAME') ?>"
-                      value="<?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['user-name'] : null ?>"
+                      value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['user-name'] : null ?>"
                       autocomplete="off" required />
                     <label for="user-name">
                       <?php echo lang('USERNAME') ?>
@@ -398,7 +398,7 @@
                     class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
                     <input type="password" class="form-control" id="password" name="password"
                       placeholder="<?php echo lang('PASSWORD') ?>"
-                      value="<?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['password'] : null ?>"
+                      value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['password'] : null ?>"
                       autocomplete="off" required />
                     <i class="bi bi-eye-slash show-pass <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'show-pass-left' : 'show-pass-right' ?>"
                       onclick="show_pass(this)"></i>
@@ -422,7 +422,7 @@
                     class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
                     <input type="password" class="form-control" id="password-connection" name="password-connection"
                       placeholder="<?php echo lang('PASS CONN', 'pieces') ?>"
-                      value="<?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['password-connection'] : null ?>" />
+                      value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['password-connection'] : null ?>" />
                     <i class="bi bi-eye-slash show-pass <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'show-pass-left' : 'show-pass-right' ?>"
                       onclick="show_pass(this)"></i>
                     <label for="password-connection">
@@ -439,7 +439,7 @@
                     class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
                     <input type="text" class="form-control" id="ssid" name="ssid"
                       placeholder="<?php echo lang('SSID', 'pieces') ?>"
-                      value="<?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['ssid'] : null ?>" />
+                      value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['ssid'] : null ?>" />
                     <label for="ssid">
                       <?php echo lang('SSID', 'pieces') ?>
                     </label>
@@ -451,7 +451,7 @@
                     class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
                     <input type="text" class="form-control" id="frequency" name="frequency"
                       placeholder="<?php echo lang('FREQ', 'pieces') ?>"
-                      value="<?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['frequency'] : null ?>"
+                      value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['frequency'] : null ?>"
                       onkeyup="integer_input_validation(this)" />
                     <label for="frequency">
                       <?php echo lang('FREQ', 'pieces') ?>
@@ -464,7 +464,7 @@
                     class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
                     <input type="text" class="form-control" id="wave" name="wave"
                       placeholder="<?php echo lang('WAVE', 'pieces') ?>"
-                      value="<?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['wave'] : null ?>"
+                      value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['wave'] : null ?>"
                       onkeyup="integer_input_validation(this)" />
                     <label for="wave">
                       <?php echo lang('WAVE', 'pieces') ?>
@@ -494,7 +494,7 @@
 </div>
 
 <?php
-if (isset($_SESSION['sys']['request_data']) && !empty($_SESSION['sys']['request_data'])) {
-  unset($_SESSION['sys']['request_data']);
+if (isset($_SESSION['request_data']) && !empty($_SESSION['request_data'])) {
+  unset($_SESSION['request_data']);
 }
 ?>

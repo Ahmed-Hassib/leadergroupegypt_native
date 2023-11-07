@@ -8,7 +8,7 @@ $nav_up_level = get_up_level($nav_level);
 // array of used classes to include_once it
 // global classes
 $global_classes = [
-	'Database'
+	'Database', 'Ultramsg'
 ];
 
 // systree classes
@@ -24,8 +24,8 @@ $systree_classes = [
 // website classes
 $website_classes = [
 	'Login', 'Section', 'Gallery', 'Link',
-	'Service', 'About', 'Features',
-	'Session'
+	'Service', 'About', 'Features', 'TeamMember',
+	'Session', 'CompanyInfo'
 ];
 
 switch ($page_category) {

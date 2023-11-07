@@ -15,7 +15,7 @@
               <div class="img-btn-controls">
                 <!-- feature image form -->
                 <input type="file" class="d-none" name="feature-img-input" id="feature-img-input"
-                  onchange="change_feature_img(this)" accept="image/*">
+                  onchange="change_section_img(this)" accept="image/*">
                 <!-- edit image button -->
                 <button type="button" role="button" class="btn btn-outline-primary fs-12 py-1 text-capitalize change"
                   onclick="click_input(this)">

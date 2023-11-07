@@ -53,11 +53,19 @@ $sections_info = $sections_obj->get_all_sections();
               </td>
               <td class="text-center">
                 <?php if ($section['is_active']) { ?>
-                  <a href="?do=deactivate-section&id=<?php echo base64_encode($section['id']) ?>"
-                    class="btn btn-danger py-0"><i class="bi bi-x"></i></a>
+                  <a href="?do=deactivate-section&id=<?php echo base64_encode($section['id']) ?>" class="btn btn-danger py-0">
+                    <i class="bi bi-x"></i>&nbsp;
+                    <span>
+                      <?php echo lang('DEACTIVATE') ?>
+                    </span>
+                  </a>
                 <?php } else { ?>
                   <a href="?do=activate-section&id=<?php echo base64_encode($section['id']) ?>"
-                    class="btn btn-primary py-0"><i class="bi bi-check"></i></a>
+                    class="btn btn-primary py-0"><i class="bi bi-check"></i>&nbsp;
+                    <span>
+                      <?php echo lang('ACTIVATE') ?>
+                    </span>
+                  </a>
                 <?php } ?>
               </td>
             </tr>

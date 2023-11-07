@@ -9,7 +9,7 @@ var modal_content = document.querySelector("#media-modal-content");
 var modal_close_btn = document.querySelector("#media-modal-close");
 
 
-function put_mal_data_into_modal (btn, will_back = null) {
+function put_mal_data_into_modal(btn, will_back = null) {
   let mal_id = btn.dataset.malId;
   href = will_back != null ? `?do=delete-malfunction&mal-id=${mal_id}&back=true` : `?do=delete-malfunction&mal-id=${mal_id}`;
   confirm_delete_malfunction.setAttribute('href', href);
@@ -98,7 +98,7 @@ function show_media_preview(evt) {
         element = create_video_element(src);
         media_type = 'mp4';
         break;
-        
+
       case 'img':
         // create image
         element = document.createElement('img');
@@ -230,7 +230,7 @@ function create_control_buttons(src, type) {
     evt.preventDefault()
     download_media(src, type)
   })
-  
+
   // create delete button
   let show_button = document.createElement('a');
   show_button.type = 'button';
@@ -300,7 +300,7 @@ function open_media(src, type) {
       element = document.createElement('img');
       element.setAttribute('src', src);
       break;
-    
+
     case 'mp4':
       element = create_video_element(src);
       break;
@@ -316,4 +316,40 @@ if (modal_close_btn != null) {
   modal_close_btn.addEventListener('click', (evt) => {
     modal.style.display = "none";
   })
+}
+
+
+
+function change_cost_receipt_img(btn, preview_id) {
+  // get preview el
+  prev_el = document.querySelector(`#${preview_id}`);
+  // uploaded type
+  let type = btn.files[0]['type'].includes('video') ? 'video' : 'img';
+  // get size
+  total_size = btn.files[0]['size'];
+  // create the image src
+  var src = URL.createObjectURL(btn.files[0]);
+  // create image
+  element = document.createElement('img');
+  element.setAttribute('src', src);
+  element.setAttribute('class', 'w-100 h-100');
+  element.style.cursor = 'pointer';
+  element.style.border = '5px solid #0d6efd';
+  element.style.borderRadius = '16px';
+  media_type = 'jpg';
+
+  // add event to delete button
+  element.addEventListener('click', (evt) => {
+    evt.preventDefault()
+    open_media(src, media_type)
+  })
+
+  // check container children counter
+  if (prev_el.childElementCount > 0) {
+    // replace old element with new element
+    prev_el.replaceChild(element, prev_el.children[0])
+  } else {
+    // append img element into preview container
+    prev_el.appendChild(element)
+  }
 }

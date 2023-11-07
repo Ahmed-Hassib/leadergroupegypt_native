@@ -95,7 +95,7 @@ if (empty($err_arr)) {
             </div>
             <!-- notes -->
             <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-              <textarea name="descreption" id="descreption" title="<?php echo lang('MAL DESC', $lang_file) ?>" class="form-control w-100" style="height: 10rem; resize: none; direction: <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'rtl' : 'ltr' ?>" placeholder="<?php echo lang('MAL DESC', $lang_file) ?>" required><?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['descreption'] : '' ?></textarea>
+              <textarea name="descreption" id="descreption" title="<?php echo lang('MAL DESC', $lang_file) ?>" class="form-control w-100" style="height: 10rem; resize: none; direction: <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'rtl' : 'ltr' ?>" placeholder="<?php echo lang('MAL DESC', $lang_file) ?>" required><?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['descreption'] : '' ?></textarea>
               <label for="descreption"><?php echo lang('MAL DESC', $lang_file) ?></label>
             </div>
           </div>

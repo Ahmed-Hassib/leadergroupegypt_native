@@ -3,15 +3,15 @@
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   // get piece info from the form
-  $admin_id        = isset($_POST['admin-id']) && !empty($_POST['admin-id']) ? base64_decode($_POST['admin-id']) : null;
-  $tech_id         = isset($_POST['technical-id']) && !empty($_POST['technical-id']) ? base64_decode($_POST['technical-id']) : null;
-  $client_name     = isset($_POST['client-name']) && !empty($_POST['client-name']) ? $_POST['client-name'] : null;
-  $client_phone    = isset($_POST['client-phone']) && !empty($_POST['client-phone']) ? $_POST['client-phone'] : null;
-  $client_addr     = isset($_POST['client-address']) && !empty($_POST['client-address']) ? $_POST['client-address'] : null;
-  $client_notes    = isset($_POST['client-notes']) && !empty($_POST['client-notes']) ? $_POST['client-notes'] : null;
+  $admin_id = isset($_POST['admin-id']) && !empty($_POST['admin-id']) ? base64_decode($_POST['admin-id']) : null;
+  $tech_id = isset($_POST['technical-id']) && !empty($_POST['technical-id']) ? base64_decode($_POST['technical-id']) : null;
+  $client_name = isset($_POST['client-name']) && !empty($_POST['client-name']) ? $_POST['client-name'] : null;
+  $client_phone = isset($_POST['client-phone']) && !empty($_POST['client-phone']) ? $_POST['client-phone'] : null;
+  $client_addr = isset($_POST['client-address']) && !empty($_POST['client-address']) ? $_POST['client-address'] : null;
+  $client_notes = isset($_POST['client-notes']) && !empty($_POST['client-notes']) ? $_POST['client-notes'] : null;
 
   // validate the form
-  $formErorr = array();   // error array 
+  $formErorr = array(); // error array 
 
   // validate admin id
   if (empty($admin_id) || $admin_id == null) {
@@ -44,7 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $comb_info = array();
 
     // create an object of Combination
-    $comb_obj = !isset($comb_obj) ? new Combination() : $comb_obj;
+    $comb_obj = new Combination();
+    // get next combination id
+    $comb_id = $comb_obj->get_next_id("jsl_db", "combinations");
 
     // push info into the array
     array_push($comb_info, $client_name, $client_phone, $client_addr, get_date_now(), get_time_now(), $client_notes, $tech_id, $admin_id, base64_decode($_SESSION['sys']['company_id']));
@@ -60,9 +62,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $_SESSION['flash_message_class'] = 'success';
       $_SESSION['flash_message_status'] = true;
       $_SESSION['flash_message_lang_file'] = 'combinations';
+      // add an new detail record
+      $comb_obj->add_combination_updates(array($comb_id, $admin_id, 'insert combination', base64_decode($_SESSION['sys']['company_id'])));
+
+      // get admin info
+      $admin_info = $comb_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = $admin_id")[0]['UserName'];
+      // get technical man info
+      $tech_info = $comb_obj->select_specific_column("`UserName`, `phone`, `is_activated_phone`", "`users`", "WHERE `UserID` = $tech_id")[0];
+      // client info
+      $client_info = ["name" => $client_name, "addr" => $client_addr, "phone" => $client_phone, "notes" => $client_notes];
+      // send a notification to technical man
+      $comb_obj->send_notification($admin_info, $tech_info, $client_info, $lang_file);
+      // add an new detail record
+      $comb_obj->add_combination_updates(array($comb_id, 0, 'send notification', base64_decode($_SESSION['sys']['company_id'])));
     } else {
       // assign $_POST values to session
-      $_SESSION['sys']['request_data'] = $_POST;
+      $_SESSION['request_data'] = $_POST;
       // prepare flash session variables
       $_SESSION['flash_message'] = 'QUERY PROBLEM';
       $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
@@ -72,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
   } else {
     // assign $_POST values to session
-    $_SESSION['sys']['request_data'] = $_POST;
+    $_SESSION['request_data'] = $_POST;
     // loop on errors
     foreach ($formErorr as $key => $error) {
       $_SESSION['flash_message'][$key] = strtoupper($error);

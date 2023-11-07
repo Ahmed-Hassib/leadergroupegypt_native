@@ -1,3 +1,4 @@
+<?php $pcs_obj = new Pieces(); ?>
 <!-- start home stats container -->
 <div class="container" dir="<?php echo $page_dir ?>">
   <!-- start stats -->
@@ -20,7 +21,7 @@
     <!-- start new design -->
     <div class="mb-3 row g-3 align-items-stretch justify-content-start">
       <!-- total numbers of pieces/pieces -->
-      <div class="col-sm-12 col-lg-5">
+      <div class="col-sm-12 col-lg-4">
         <div class="section-block">
           <div class="section-header">
             <h5 class="h5 text-capitalize">
@@ -31,8 +32,7 @@
             </p>
             <hr>
           </div>
-          <?php $pcs_obj = !isset($pcs_obj) ? new Pieces() : $pcs_obj; ?>
-          <div class="row row-cols-sm-1 g3">
+          <div class="row row-cols-sm-1 g-3 py-3">
             <div class="col-12">
               <div class="card card-stat bg-primary shadow-sm border border-1">
                 <div class="card-body">
@@ -166,7 +166,7 @@
                         <?php } ?>
                         <?php if ($target_user != -1) { ?>
                           <a class="mx-1 btn btn-outline-primary fs-12 px-3 py-0"
-                            href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $piece['ip'] ?>&port=<?php echo $piece['port'] != 0 ? $piece['port'] : '443' ?>"
+                            href="?do=prepare-ip&address=<?php echo $piece['ip'] ?>&port=<?php echo $piece['port'] != 0 ? $piece['port'] : '443' ?>"
                             target='_blank'>
                             <?php echo lang('VISIT DEVICE', $lang_file) ?>
                           </a>
@@ -207,13 +207,15 @@
                           <a class="btn btn-success text-capitalize fs-12 "
                             href="?do=edit-piece&piece-id=<?php echo base64_encode($piece['id']); ?>" target="_blank">
                             <i class="bi bi-pencil-square"></i>
-                            <!-- <?php echo lang('EDIT') ?> -->
+                            <?php echo lang('EDIT') ?>
                           </a>
                         <?php } ?>
                         <?php if ($piece['is_client'] == 0 && $_SESSION['sys']['pcs_show'] == 1) { ?>
                           <a class="btn btn-outline-primary text-capitalize fs-12"
                             href="?do=show-piece&dir-id=<?php echo base64_encode($piece['direction_id']) ?>&src-id=<?php echo base64_encode($piece['id']) ?>"><i
-                              class="bi bi-eye"></i></a>
+                              class="bi bi-eye"></i>
+                            <?php echo lang('SHOW DETAILS') ?>
+                          </a>
                         <?php } ?>
                         <?php if ($_SESSION['sys']['pcs_delete'] == 1) { ?>
                           <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12"
@@ -221,7 +223,9 @@
                             id="delete-piece-<?php echo ($index + 1) ?>"
                             data-piece-id="<?php echo base64_encode($piece['id']) ?>"
                             data-piece-name="<?php echo $piece['full_name'] ?>" onclick="confirm_delete_piece(this, true)"><i
-                              class="bi bi-trash"></i></button>
+                              class="bi bi-trash"></i>
+                            <?php echo lang('DELETE') ?>
+                          </button>
                         <?php } ?>
                       </td>
                     </tr>

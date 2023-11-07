@@ -29,5 +29,5 @@ function pcs_conn($phrase)
     'ADD NEW'     => 'add new connection',
   );
   // return the phrase
-  return $lang[$phrase];
+  return array_key_exists($phrase, $lang) ? $lang[$phrase] : null;
 }

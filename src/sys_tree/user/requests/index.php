@@ -1,6 +1,6 @@
 <?php
 // set the default timezone to use.
-date_default_timezone_set('Africa/Cairo'); 
+date_default_timezone_set('Africa/Cairo');
 // start output buffering
 ob_start();
 // start session
@@ -21,6 +21,7 @@ $lang_file = "";
 $level = 4;
 // nav level
 $nav_level = 1;
+
 $possible_back = false;
 // app status and global includes
 include_once str_repeat("../", $level) . "etc/app-status.php";
@@ -33,7 +34,7 @@ include_once str_repeat('../', $level) . 'etc/init.php';
 $query = isset($_GET['do']) ? $_GET['do'] : '';
 
 switch ($query) {
-  case'get-source':
+  case 'get-source':
     $file_name = 'get-sources.php';
     break;
 
@@ -60,7 +61,7 @@ switch ($query) {
   case 'check-piece-fullname':
     $file_name = 'check-piece-fullname.php';
     break;
-  
+
   case 'check-combination-client-name':
     $file_name = 'check-combination-client-name.php';
     break;
@@ -80,7 +81,7 @@ switch ($query) {
   case 'check-direction':
     $file_name = 'check-direction-name.php';
     break;
-  
+
   case 'delete-malfunction-media':
     $file_name = 'delete-malfunction-media.php';
     break;
@@ -88,11 +89,11 @@ switch ($query) {
   case 'delete-combination-media':
     $file_name = 'delete-combination-media.php';
     break;
-  
+
   case 'delete-profile-img':
     $file_name = 'delete-profile-img.php';
     break;
-    
+
   case 'delete-company-img':
     $file_name = 'delete-company-img.php';
     break;
@@ -107,7 +108,9 @@ switch ($query) {
 
   case 'ping':
     $file_name = 'ping.php';
+
+  case 'check-mikrotik-info':
+    $file_name = 'check-mikrotik-info.php';
 }
 
 include_once $file_name;
-

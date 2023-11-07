@@ -34,7 +34,7 @@ class Devices extends Database {
         `manufacture_companies`.`company_id` 
     FROM 
         `devices_info` 
-        LEFT JOIN `manufacture_companies` ON `manufacture_companies`.`company_id` = `devices_info`.`device_company_id` 
+        LEFT JOIN `manufacture_companies` ON `manufacture_companies`.`man_company_id` = `devices_info`.`device_company_id` 
         WHERE `manufacture_companies`.`company_id` = ?;";
     $stmt = $this->con->prepare($dev_query);
     $stmt->execute(array($company_id));

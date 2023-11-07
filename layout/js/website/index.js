@@ -66,6 +66,8 @@ function add_new_content(id, container_id) {
   let clone = container_content.cloneNode(true);
   // append clone
   document.querySelector(`#${container_id}`).appendChild(clone);
+  // check cloned element
+  check_clone_element(clone)
   // check content length
   show_hide_btn();
   // check if in features page
@@ -87,4 +89,68 @@ function delete_content(btn) {
   if (location.href.includes('features')) {
     show_hide_details_btn();
   }
+}
+
+function check_clone_element(clone) {
+  // loop on cloned content
+  for (let i = 0; i < clone.children.length; i++) {
+    // select current element
+    const element = clone.children[i];
+    // element tag name
+    const el_tag_name = element.tagName.toLowerCase();
+    // array of inputs
+    let input_arr = ['input', 'textarea'];
+    // check tag name of current element
+    if (input_arr.includes(el_tag_name)) {
+      element.value = '';
+
+    } else if (el_tag_name == 'img') {
+      element.src = '../../../../assets/leadergroupegypt-shadow.png';
+
+    } else if (element.children.length > 0) {
+      check_clone_element(element);
+    }
+  }
+}
+
+function confirm_delete(btn) {
+  if (!confirm(lang.delete_confirm)) return;
+  // create new link
+  let new_link = `${location.origin}${location.pathname}${btn.dataset.href}`;
+  // redirect page
+  location.href = new_link;
+}
+
+/**
+ * function to click file input to choose new image
+ */
+function click_input(btn) {
+  // get target input
+  let target_input = btn.previousElementSibling;
+  // click input
+  target_input.click();
+}
+
+/**
+ * function to change displayed image after choose new one
+ */
+function change_section_img(btn) {
+  // get target image
+  let target_img = btn.parentElement.parentElement.nextElementSibling.children[0];
+  // get image path
+  let img_path = URL.createObjectURL(btn.files[0]);
+  // check if target image exists
+  if (target_img == null) return;
+  // upload image
+  target_img.setAttribute("src", img_path);
+}
+
+/**
+ * function to delete image
+*/
+function delete_section_image(btn) {
+  // get target image
+  let target_img = btn.parentElement.parentElement.nextElementSibling.children[0];
+  // reset image
+  target_img.setAttribute("src", '../../../../data/uploads/companies-img/leadergroupegypt.jpg');
 }

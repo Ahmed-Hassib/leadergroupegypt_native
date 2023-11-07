@@ -11,12 +11,14 @@ $manufacture_companies = $dev_comp_obj->get_all_man_companies(base64_decode($_SE
   <!-- buttons section -->
   <div class="mb-3 hstack gap-3">
     <?php if ($_SESSION['sys']['pcs_add'] == 1) { ?>
-      <button type="button" class="btn btn-outline-primary shadow-sm py-1 fs-12" data-bs-toggle="modal" data-bs-target="#addNewDevCompanyModal">
+      <button type="button" class="btn btn-outline-primary shadow-sm py-1 fs-12" data-bs-toggle="modal"
+        data-bs-target="#addNewDevCompanyModal">
         <i class="bi bi-file-plus"></i>
         <?php echo lang("ADD COMPANY", $lang_file) ?>
       </button>
 
-      <button type="button" class="btn btn-outline-primary py-1 fs-12" data-bs-toggle="modal" data-bs-target="#addNewDevice">
+      <button type="button" class="btn btn-outline-primary py-1 fs-12" data-bs-toggle="modal"
+        data-bs-target="#addNewDevice">
         <i class="bi bi-plus"></i>
         <?php echo lang('ADD DEVICE', $lang_file) ?>
       </button>
@@ -31,43 +33,81 @@ $manufacture_companies = $dev_comp_obj->get_all_man_companies(base64_decode($_SE
         <thead class="primary text-capitalize">
           <tr>
             <th>#</th>
-            <th><?php echo lang('COMPANY NAME', $lang_file) ?></th>
-            <th><?php echo lang('#DEVICES', $lang_file) ?></th>
-            <th><?php echo lang('ADDED BY') ?></th>
-            <th><?php echo lang('ADDED DATE') ?></th>
-            <th><?php echo lang('CONTROL') ?></th>
+            <th>
+              <?php echo lang('COMPANY NAME', $lang_file) ?>
+            </th>
+            <th>
+              <?php echo lang('#DEVICES', $lang_file) ?>
+            </th>
+            <th>
+              <?php echo lang('ADDED BY') ?>
+            </th>
+            <th>
+              <?php echo lang('ADDED DATE') ?>
+            </th>
+            <th>
+              <?php echo lang('CONTROL') ?>
+            </th>
           </tr>
         </thead>
         <tbody id="devices-companies">
           <?php foreach ($manufacture_companies as $key => $company) { ?>
             <tr>
-              <td><?php echo ++$key ?></td>
+              <td>
+                <?php echo ++$key ?>
+              </td>
               <!-- device`s company name -->
-              <td><?php echo $company['man_company_name'] ?></td>
+              <td>
+                <?php echo $company['man_company_name'] ?>
+              </td>
               <!-- total number of devices in this company -->
-              <td><?php echo $dev_comp_obj->count_records("`device_id`", "`devices_info`", "WHERE `device_company_id` = " . $company['man_company_id']) ?></td>
+              <td>
+                <?php echo $dev_comp_obj->count_records("`device_id`", "`devices_info`", "WHERE `device_company_id` = " . $company['man_company_id']) ?>
+              </td>
               <!-- added by -->
               <td>
                 <?php
                 // get username that add company
-                $added_by_name =  $dev_comp_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = " . $company['added_by'])[0]['UserName'];
+                $added_by_name = $dev_comp_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = " . $company['added_by'])[0]['UserName'];
                 // check permission
                 if ($_SESSION['sys']['user_update'] == 1) { ?>
-                  <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo base64_encode($company['added_by']) ?>"><?php echo $added_by_name ?></a>
+                  <a
+                    href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo base64_encode($company['added_by']) ?>">
+                    <?php echo $added_by_name ?>
+                  </a>
                 <?php } else { ?>
-                  <span><?php echo $added_by_name ?></span>
+                  <span>
+                    <?php echo $added_by_name ?>
+                  </span>
                 <?php } ?>
               </td>
               <!-- added date -->
-              <td><?php echo $company['added_date'] ?></td>
+              <td>
+                <?php echo $company['added_date'] ?>
+              </td>
               <!-- control buttons -->
               <td>
                 <!-- edit button -->
-                <button type="button" class="btn btn-outline-success py-1 fs-12" data-bs-toggle="modal" data-bs-target="#editDevCompanyModal" data-name="<?php echo $company['man_company_name'] ?>" data-id="<?php echo base64_encode($company['man_company_id']) ?>" onclick="put_data_into_modal(this, 'edit', 'updated-company-id', 'old-company-name')"><i class="bi bi-pencil-square"></i></button>
+                <button type="button" class="btn btn-outline-success py-1 fs-12" data-bs-toggle="modal"
+                  data-bs-target="#editDevCompanyModal" data-name="<?php echo $company['man_company_name'] ?>"
+                  data-id="<?php echo base64_encode($company['man_company_id']) ?>"
+                  onclick="put_data_into_modal(this, 'edit', 'updated-company-id', 'old-company-name')">
+                  <i class="bi bi-pencil-square"></i>
+                  <?php echo lang('EDIT') ?>
+                </button>
                 <!-- show all devices button -->
-                <a href="?do=devices-companies&action=show-devices&dev-company-id=<?php echo base64_encode($company['man_company_id']) ?>" class="btn btn-outline-primary py-1 fs-12" style="width: 50px"><?php echo lang('PIECES') ?></a>
+                <a href="?do=devices-companies&action=show-devices&dev-company-id=<?php echo base64_encode($company['man_company_id']) ?>"
+                  class="btn btn-outline-primary py-1 fs-12" style="width: 50px">
+                  <?php echo lang('PIECES') ?>
+                </a>
                 <!-- edit button -->
-                <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deleteDevCompanyModal" data-name="<?php echo $company['man_company_name'] ?>" data-id="<?php echo base64_encode($company['man_company_id']) ?>" onclick="put_data_into_modal(this, 'delete', 'deleted-company-id', 'deleted-company-name')"><i class="bi bi-trash"></i></button>
+                <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal"
+                  data-bs-target="#deleteDevCompanyModal" data-name="<?php echo $company['man_company_name'] ?>"
+                  data-id="<?php echo base64_encode($company['man_company_id']) ?>"
+                  onclick="put_data_into_modal(this, 'delete', 'deleted-company-id', 'deleted-company-name')">
+                  <i class="bi bi-trash"></i>
+                  <?php echo lang('DELETE') ?>
+                </button>
               </td>
             </tr>
           <?php } ?>

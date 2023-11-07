@@ -9,15 +9,22 @@ session_start();
 session_regenerate_id();
 
 // no header
-$noHeader = true;
+$no_header = true;
 // no navbar
-$noNavBar = "any";
+$no_navbar = true;
 // page title
 $page_title = "";
+// lang file
+$lang_file = "";
+// page category
+$page_category = "sys_tree";
+
 // level
 $level = 3;
 // nav level
 $nav_level = 1;
+// app status and global includes
+include_once str_repeat("../", $level) . "etc/app-status.php";
 // pre configration of system
 include_once str_repeat("../", $level) . "etc/pre-conf.php";
 // initial configration of system

@@ -1,8 +1,15 @@
 <?php
+
 // get data
-$id = isset($_GET['id']) && !empty($_GET['id']) ? base64_decode($_GET['id']) : -1; // get id
-$address = isset($_GET['address']) && !empty($_GET['address']) ? $_GET['address'] : -1;  // target ip
+$address = isset($_GET['address']) && !empty($_GET['address']) ? $_GET['address'] : -1; // target ip
 $port = isset($_GET['port']) && !empty($_GET['port']) ? $_GET['port'] : 443; // target port
+
+// get users
+$users = $api_obj->comm("/ip/firewall/nat/print", array(
+  "?comment" => "mohamady",
+  "?disabled" => "false"
+)
+);
 
 // empty array for errors
 $errors = array();
@@ -25,11 +32,14 @@ if ($port == -1 || empty($port)) {
 // check if array of erros is empty or not
 if (empty($errors)) {
   // change ir in api
-  $users = $API->comm("/ip/firewall/nat/set", array(
-    "numbers" => $id,
-    "to-ports" => $port,
-    "to-addresses" => $address,
-  ));
+  $users = $API->comm(
+    "/ip/firewall/nat/set",
+    array(
+      "numbers" => $id,
+      "to-ports" => $port,
+      "to-addresses" => $address,
+    )
+  );
 
   // redirect page to url to open device
   header("refresh:0;url=leadergroupegypt.com:5002");

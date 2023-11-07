@@ -6,12 +6,12 @@
 
 <!-- INCLUDE GLOBAL JS FILES -->
 <?php foreach ($global_js_files as $global_js_file) { ?>
-  <script src="<?php echo $js . $global_js_file; ?>"></script>
+  <script src="<?php echo $js . $global_js_file; ?>" defer></script>
 <?php } ?>
 
 <!-- INCLUDE GLOBAL JS FILES -->
 <?php foreach ($global_node_js_files as $global_node_js_file) { ?>
-  <script src="<?php echo $node . $global_node_js_file; ?>"></script>
+  <script src="<?php echo $node . $global_node_js_file; ?>" defer></script>
 <?php } ?>
 
 <!-- CHECK IF PAGE CONTAIIN TABLES -->
@@ -23,12 +23,12 @@
 
   <!-- INCLUDE ALL TABLES NODE JS FILES -->
   <?php foreach ($tables_node_js_files as $tables_node_js_file) { ?>
-    <script src="<?php echo $node . $tables_node_js_file; ?>"></script>
+    <script src="<?php echo $node . $tables_node_js_file; ?>" defer></script>
   <?php } ?>
 
   <!-- INCLUDE ALL TABLE CUSTOM JS FILES -->
   <?php foreach ($table_js_files as $table_js_file) { ?>
-    <script src="<?php echo $js . $table_js_file; ?>"></script>
+    <script src="<?php echo $js . $table_js_file; ?>" defer></script>
   <?php } ?>
 <?php } ?>
 
@@ -38,14 +38,15 @@
   <?php $global_web_js_files = get_page_dependencies("" . $page_category . "_global", 'js'); ?>
 
   <?php foreach ($global_web_js_files as $js_file) { ?>
-    <script src="<?php echo $js . $dependencies_folder . $js_file; ?>"></script>
+    <script src="<?php echo $js . $dependencies_folder . $js_file; ?>" defer></script>
   <?php } ?>
 <?php } ?>
 
 <?php $page_role_js_files = get_page_dependencies($page_role, 'js'); ?>
-
-<?php foreach ($page_role_js_files as $js_file) { ?>
-  <script src="<?php echo $js . $dependencies_folder . $js_file; ?>"></script>
+<?php if ($page_role_js_files != null) { ?>
+  <?php foreach ($page_role_js_files as $js_file) { ?>
+    <script src="<?php echo $js . $dependencies_folder . $js_file; ?>" defer></script>
+  <?php } ?>
 <?php } ?>
 
 
@@ -59,7 +60,7 @@ if ($is_developing == false && $page_category == 'sys_tree' && $page_role != 'sy
 
   if ($_SESSION['sys']['connection_add'] == 1) {
     // include add new connection type modal
-    include_once  $nav_up_level . 'pieces-connection/add-conn-type-modal.php';
+    include_once $nav_up_level . 'pieces-connection/add-conn-type-modal.php';
   }
 
   // include edit connection type modal
@@ -81,7 +82,7 @@ if ($is_developing == false && $page_category == 'sys_tree' && $page_role != 'sy
 
 
 <?php if (isset($backup_flag) && $backup_flag == false && $db_backup_file_name != null && $backup_location_file != null) { ?>
-  <script src="<?php echo $js ?>backup.js"></script>
+  <script src="<?php echo $js ?>backup.js" defer></script>
 <?php } ?>
 
 <script>
@@ -100,10 +101,11 @@ if ($is_developing == false && $page_category == 'sys_tree' && $page_role != 'sy
 <?php } ?>
 
 <?php if (isset($preloader) && $preloader == true) { ?>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-    $(document).ready(function() {
-      $(".spinner").fadeOut(1000, function() {
-        $(this).parent('.preloader').fadeOut(1200, function() {
+    $(window).on('load', function () {
+      $(".spinner").fadeOut(1000, function () {
+        $(this).parent('.preloader').fadeOut(1200, function () {
           $("body").css('overflow-x', 'visible');
         });
       });
@@ -111,20 +113,19 @@ if ($is_developing == false && $page_category == 'sys_tree' && $page_role != 'sy
   </script>
 <?php } else { ?>
   <script>
-    $(document).ready(function() {
+    $(window).on('load', function () {
       $("body").css('overflow-x', 'visible');
     })
   </script>
 <?php } ?>
+
 
 </body>
 
 </html>
 
 <?php
-if ($page_category == 'website' && isset($_SESSION['website']['request_data'])) {
-  unset($_SESSION['website']['request_data']);
-} elseif ($page_category == 'sys_tree' && isset($_SESSION['sys']['request_data'])) {
-  unset($_SESSION['sys']['request_data']);
+if (isset($_SESSION['request_data'])) {
+  unset($_SESSION['request_data']);
 }
 ?>

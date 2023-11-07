@@ -25,5 +25,5 @@ function sugg_comp($phrase)
     'THE COMPS & SUGGS'   => 'الشكاوى والإقتراحات',
   );
   // return the phrase
-  return $lang[$phrase];
+  return array_key_exists($phrase, $lang) ? $lang[$phrase] : null;
 }

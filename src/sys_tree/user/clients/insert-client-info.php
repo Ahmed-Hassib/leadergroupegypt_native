@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $frequency = trim($_POST['frequency'], ' ');
   $wave = trim($_POST['wave'], ' ');
   $mac_add = trim($_POST['mac-add'], ' ');
-  $internet_source = trim($_POST['internet-source'], ' ');
+  $coordinates = trim($_POST['internet-source'], ' ');
 
   // validate the form
   $form_error = []; // error array
@@ -124,10 +124,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // check internet source
-    if (!empty($internet_source)) {
+    if (!empty($coordinates)) {
       // echo "<br>* internet source is not empty<br>";
       // insert internet source
-      $pcs_obj->insert_internet_source($id, $internet_source);
+      $pcs_obj->insert_coordinates($id, $coordinates);
     }
 
     // check if inserted
@@ -140,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $_SESSION['flash_message_lang_file'] = 'clients';
     } else {
       // assign POST request data to session
-      $_SESSION['sys']['request_data'] = $_POST;
+      $_SESSION['request_data'] = $_POST;
       // prepare flash session variables
       $_SESSION['flash_message'] = 'QUERY PROBLEM';
       $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
@@ -150,7 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
   } else {
     // assign POST request data to session
-    $_SESSION['sys']['request_data'] = $_POST;
+    $_SESSION['request_data'] = $_POST;
     // loop on errors
     foreach ($form_error as $key => $error) {
       // prepare flash session variables

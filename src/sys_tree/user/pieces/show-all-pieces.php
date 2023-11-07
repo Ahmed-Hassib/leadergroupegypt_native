@@ -6,7 +6,7 @@ $all_pieces_data = $pcs_obj->get_all_pieces(base64_decode($_SESSION['sys']['comp
 // get counter flag
 $counter = $all_pieces_data[0];
 // check counter
-if ($counter > 0) {
+if ($counter == true) {
   // get data
   $all_data = prepare_pcs_datatables($all_pieces_data[1], $lang_file);
 
@@ -19,13 +19,14 @@ if ($counter > 0) {
       "/ip/firewall/nat/print",
       array(
         "?comment" => "mohamady",
+        "?disabled"
       )
     );
   } else {
     $users = [];
   }
 
-  $target_user = !empty($users) && count($users) > 0 ? $users[1] : -1;
+  $target_user = !empty($users) && count($users) > 0 ? $users[0] : -1;
   // flag for include js code
   $is_big_data_ping = true;
   ?>
@@ -65,7 +66,7 @@ if ($counter > 0) {
         </div>
       <?php } ?>
       <!-- strst pieces table -->
-      <table class="table table-bordered table-striped display compact table-style" style="width:100%">
+      <table class="table table-bordered table-striped display compact table-style nowrap" style="width:100%">
         <thead class="primary text-capitalize">
           <tr>
             <!-- <th></th> -->
@@ -83,7 +84,7 @@ if ($counter > 0) {
               <?php echo lang('TYPE', $lang_file) ?>
             </th>
             <th>
-              <?php echo lang('INT SRC', $lang_file) ?>
+              <?php echo lang('COORDINATES', $lang_file) ?>
             </th>
             <th class="big-data">
               <?php echo lang('NOTE') ?>
@@ -226,10 +227,10 @@ if ($counter > 0) {
               <td>
                 <?php
                 // get internet source
-                $internet_source = $pcs_obj->select_specific_column("`internet_source`", "`pieces_internet_source`", "WHERE `id` = " . $piece['id']);
+                $coordinates = $pcs_obj->select_specific_column("`coordinates`", "`pieces_Coordinates`", "WHERE `id` = " . $piece['id']);
                 // check result
-                if (!empty($internet_source)) {
-                  echo $internet_source[0]['internet_source'];
+                if (!empty($coordinates)) {
+                  echo $coordinates[0]['coordinates'];
                 } else { ?>
                   <span class="text-danger fs-12 fw-bold">
                     <?php echo lang('NOT ASSIGNED') ?>
@@ -305,7 +306,7 @@ if ($counter > 0) {
                   </span><br>
                   <?php if ($target_user != -1) { ?>
                     <a class="btn btn-outline-primary fs-12 py-0 px-3"
-                      href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $source_ip ?>&port=<?php echo $source_port != 0 ? $source_port : 80 ?>"
+                      href="?do=prepare-ip&address=<?php echo $source_ip ?>&port=<?php echo $source_port != 0 ? $source_port : 80 ?>"
                       target='_blank'>
                       <?php echo lang('VISIT DEVICE', $lang_file) ?>
                     </a>
@@ -353,7 +354,7 @@ if ($counter > 0) {
                   </span>
                   <?php if ($target_user != -1) { ?>
                     <a class="btn btn-outline-primary fs-12 px-3 py-0"
-                      href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $alt_source_ip ?>&port=<?php echo $alt_source_port != 0 ? $alt_source_port : 80 ?>"
+                      href="?do=prepare-ip&address=<?php echo $alt_source_ip ?>&port=<?php echo $alt_source_port != 0 ? $alt_source_port : 80 ?>"
                       target='_blank'>
                       <?php echo lang('VISIT DEVICE', $lang_file) ?>
                     </a>
@@ -428,7 +429,7 @@ if ($counter > 0) {
                   </span><br>
                   <?php if ($target_user != -1) { ?>
                     <a class="btn btn-outline-primary fs-12 px-3 py-0"
-                      href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo trim($piece['ip'], ' ') ?>&port=<?php echo $alt_source_port != 0 ? $alt_source_port : 80 ?>"
+                      href="?do=prepare-ip&address=<?php echo trim($piece['ip'], ' ') ?>&port=<?php echo $alt_source_port != 0 ? $alt_source_port : 80 ?>"
                       target='_blank'>
                       <?php echo lang('VISIT DEVICE', $lang_file) ?>
                     </a>
@@ -561,20 +562,24 @@ if ($counter > 0) {
                   <a class="btn btn-success text-capitalize fs-12 "
                     href="?do=edit-piece&piece-id=<?php echo base64_encode($piece['id']); ?>" target="_blank">
                     <i class="bi bi-pencil-square"></i>
-                    <!-- <?php echo lang('EDIT') ?> -->
+                    <?php echo lang('EDIT') ?>
                   </a>
                 <?php } ?>
                 <?php if ($piece['is_client'] == 0 && $_SESSION['sys']['pcs_show'] == 1) { ?>
                   <a class="btn btn-outline-primary text-capitalize fs-12"
                     href="?do=show-piece&dir-id=<?php echo base64_encode($piece['direction_id']) ?>&src-id=<?php echo base64_encode($piece['id']) ?>"><i
-                      class="bi bi-eye"></i></a>
+                      class="bi bi-eye"></i>
+                    <?php echo lang('SHOW DETAILS') ?>
+                    </a>
                 <?php } ?>
                 <?php if ($_SESSION['sys']['pcs_delete'] == 1) { ?>
                   <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12"
                     data-bs-toggle="modal" data-bs-target="#deletePieceModal" id="delete-piece-<?php echo ($index + 1) ?>"
                     data-piece-id="<?php echo base64_encode($piece['id']) ?>"
                     data-piece-name="<?php echo $piece['full_name'] ?>" onclick="confirm_delete_piece(this, true)"><i
-                      class="bi bi-trash"></i></button>
+                      class="bi bi-trash"></i>
+                    <?php echo lang('DELETE') ?>
+                    </button>
                 <?php } ?>
               </td>
             </tr>

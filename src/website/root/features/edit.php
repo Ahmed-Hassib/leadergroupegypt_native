@@ -27,7 +27,7 @@ if ($features_obj->is_exist("`id`", "`features`", $feature_id)) {
                   <input type="hidden" name="id" value="<?php echo $_GET['id'] ?>">
                   <!-- feature image form -->
                   <input type="file" class="d-none" name="feature-img-input" id="feature-img-input"
-                    onchange="change_feature_img(this)" accept="image/*">
+                    onchange="change_section_img(this)" accept="image/*">
                   <!-- edit image button -->
                   <button type="button" role="button" class="btn btn-outline-primary fs-12 py-1 text-capitalize change"
                     onclick="click_input(this)">
@@ -239,7 +239,7 @@ if ($features_obj->is_exist("`id`", "`features`", $feature_id)) {
       </div>
       <!-- submit button -->
       <div class="dashboard-buttons" dir="<?php echo $page_dir == 'rtl' ? 'ltr' : 'rtl' ?>">
-        <button type="button" class="btn btn-danger" onclick="confirm_delete_feature(this)" data-href="?do=delete-feature&id=<?php echo $_GET['id'] ?>">
+        <button type="button" class="btn btn-danger" onclick="confirm_delete(this)" data-href="?do=delete-feature&id=<?php echo $_GET['id'] ?>">
           <i class="bi bi-trash"></i>
           <?php echo lang('DELETE') ?>
         </button>

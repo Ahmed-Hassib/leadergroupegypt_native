@@ -11,13 +11,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // get service id
   $service_id = isset($_POST['id']) && !empty($_POST['id']) ? base64_decode($_POST['id']) : null;
   // get service info
-  $link_1_ar  = $_POST['name-1-ar'];
-  $link_1_en  = $_POST['name-1-en'];
-  $link_1     = $_POST['link-1'];
-  $link_2_ar  = $_POST['name-2-ar'];
-  $link_2_en  = $_POST['name-2-en'];
-  $link_2     = $_POST['link-2'];
-  $is_active  = $_POST['is-active'];
+  $link_1_ar = $_POST['name-1-ar'];
+  $link_1_en = $_POST['name-1-en'];
+  $link_1 = $_POST['link-1'];
+  $link_2_ar = $_POST['name-2-ar'];
+  $link_2_en = $_POST['name-2-en'];
+  $link_2 = $_POST['link-2'];
+  $is_active = $_POST['is-active'];
   $is_active = isset($_POST['is-active']) ? $_POST['is-active'] : null;
 
   if (empty($service_id) || $service_id == null) {
@@ -117,11 +117,11 @@ function update_image($obj, $img_info, $id)
   $is_updated = false;
 
   // get service image info
-  $file_name        = $img_info['service-img-input']['name'];
-  $file_type        = $img_info['service-img-input']['type'];
-  $file_error       = $img_info['service-img-input']['error'];
-  $file_size        = $img_info['service-img-input']['size'];
-  $files_tmp_name   = $img_info['service-img-input']['tmp_name'];
+  $file_name = $img_info['service-img-input']['name'];
+  $file_type = $img_info['service-img-input']['type'];
+  $file_error = $img_info['service-img-input']['error'];
+  $file_size = $img_info['service-img-input']['size'];
+  $files_tmp_name = $img_info['service-img-input']['tmp_name'];
 
   // check if company image changed
   if ($file_error > 0 && $file_size <= 0) {
@@ -155,7 +155,8 @@ function update_image($obj, $img_info, $id)
       // get old name
       $old_name = $obj->select_specific_column("`service_img`", "`services`", "WHERE `id` = $id")[0]['service_img'];
       // check if old image was exist to delete it
-      if (file_exists($GLOBALS['services_img'] . $old_name)) unlink($GLOBALS['services_img'] . $old_name);
+      if (file_exists($GLOBALS['services_img'] . $old_name))
+        unlink($GLOBALS['services_img'] . $old_name);
       $media_temp = explode('.', $file_name);
       $media_temp[0] = 'services_' . date('dmY') . '_' . rand(00000000, 99999999);
       $media_name = join('.', $media_temp);

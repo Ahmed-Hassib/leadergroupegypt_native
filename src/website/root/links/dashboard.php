@@ -76,15 +76,19 @@ $links_info = $link_obj->get_all_links();
               <td class="text-center">
                 <?php if ($link['is_active']) { ?>
                   <a href="?do=deactivate-link&id=<?php echo base64_encode($link['id']) ?>" class="btn btn-danger py-0"><i
-                      class="bi bi-x"></i></a>
+                      class="bi bi-x"></i><span>
+                      <?php echo lang('DEACTIVATE') ?>
+                    </span></a>
                 <?php } else { ?>
                   <a href="?do=activate-link&id=<?php echo base64_encode($link['id']) ?>" class="btn btn-primary py-0"><i
-                      class="bi bi-check"></i></a>
+                      class="bi bi-check"></i><span>
+                      <?php echo lang('ACTIVATE') ?>
+                    </span></a>
                 <?php } ?>
                 <a href="?do=edit-link&id=<?php echo base64_encode($link['id']) ?>" class="btn btn-outline-success py-0"><i
                     class="bi bi-pencil-square"></i></a>
                 <button type="button" data-href="?do=delete-link&id=<?php echo base64_encode($link['id']) ?>&back=true"
-                  class="btn btn-outline-danger py-0" onclick="confirm_delete_link(this)"><i
+                  class="btn btn-outline-danger py-0" onclick="confirm_delete(this)"><i
                     class="bi bi-trash"></i></button>
               </td>
             </tr>

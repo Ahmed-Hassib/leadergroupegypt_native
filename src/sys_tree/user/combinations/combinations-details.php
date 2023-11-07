@@ -157,9 +157,9 @@ $combination_query = $baseQuery . $company_condition;
 
 // prepaire the query
 $stmt = $con->prepare($combination_query);
-$stmt->execute();               // execute query
-$rows = $stmt->fetchAll();      // fetch data
-$count = $stmt->rowCount();     // get row count
+$stmt->execute(); // execute query
+$rows = $stmt->fetchAll(); // fetch data
+$count = $stmt->rowCount(); // get row count
 
 ?>
 <!-- start edit profile page -->
@@ -174,10 +174,12 @@ $count = $stmt->rowCount();     // get row count
   <?php } ?>
   <!-- start header -->
   <header class="header mb-3">
-    <h4 class="h4 text-capitalize"><?php echo lang($title, $lang_file); ?></h4>
+    <h4 class="h4 text-capitalize">
+      <?php echo lang($title, $lang_file); ?>
+    </h4>
   </header>
 </div>
-<?php if ($count > 0) {  ?>
+<?php if ($count > 0) { ?>
   <div class="container" dir="<?php echo $page_dir ?>">
     <!-- start table container -->
     <div class="table-responsive-sm">
@@ -187,7 +189,8 @@ $count = $stmt->rowCount();     // get row count
           <i class="carousel-control-prev-icon"></i>
         </button>
         <!-- scroll right button -->
-        <button type="button" role="button" class="scroll-button scroll-next <?php echo $_SESSION['sys']['lang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
+        <button type="button" role="button"
+          class="scroll-button scroll-next <?php echo $_SESSION['sys']['lang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
           <i class="carousel-control-next-icon"></i>
         </button>
       </div>
@@ -197,22 +200,44 @@ $count = $stmt->rowCount();     // get row count
           <tr>
             <th class="d-none">id</th>
             <th class="text-center" style="width: 20px">#</th>
-            <th class="text-center" style="width: 150px"><?php echo lang('ADMIN NAME', $lang_file) ?></th>
-            <th class="text-center" style="width: 150px"><?php echo lang('TECH NAME', $lang_file) ?></th>
-            <th class="text-center" style="width: 200px"><?php echo lang('BENEFICIARY NAME', $lang_file) ?></th>
-            <th class="text-center" style="width: 200px"><?php echo lang('ADDR', $lang_file) ?></th>
-            <th class="text-center" style="width: 100px"><?php echo lang('PHONE', $lang_file) ?></th>
-            <th class="text-center" style="width: 300px"><?php echo lang('TECH COMMENT', $lang_file) ?></th>
-            <th class="text-center" style="width: 50px"><?php echo lang('STATUS', $lang_file) ?></th>
-            <th class="text-center" style="width: 200px"><?php echo lang('MEDIA', $lang_file) ?></th>
-            <th class="text-center" style="width: 70px;"><?php echo lang('CONTROL') ?></th>
+            <th class="text-center">
+              <?php echo lang('ADMIN NAME', $lang_file) ?>
+            </th>
+            <th class="text-center">
+              <?php echo lang('TECH NAME', $lang_file) ?>
+            </th>
+            <th class="text-center">
+              <?php echo lang('BENEFICIARY NAME', $lang_file) ?>
+            </th>
+            <th class="text-center">
+              <?php echo lang('ADDR', $lang_file) ?>
+            </th>
+            <th class="text-center">
+              <?php echo lang('PHONE', $lang_file) ?>
+            </th>
+            <th class="text-center">
+              <?php echo lang('TECH COMMENT', $lang_file) ?>
+            </th>
+            <th class="text-center">
+              <?php echo lang('STATUS', $lang_file) ?>
+            </th>
+            <th class="text-center">
+              <?php echo lang('MEDIA', $lang_file) ?>
+            </th>
+            <th class="text-center">
+              <?php echo lang('CONTROL') ?>
+            </th>
           </tr>
         </thead>
         <tbody>
           <?php foreach ($rows as $index => $row) { ?>
             <tr>
-              <td class="d-none"><?php echo $row['comb_id'] ?></td>
-              <td class="text-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>"><?php echo ($index + 1) ?></td>
+              <td class="d-none">
+                <?php echo $row['comb_id'] ?>
+              </td>
+              <td class="text-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                <?php echo ($index + 1) ?>
+              </td>
               <!-- admin username -->
               <td>
                 <?php
@@ -221,10 +246,15 @@ $count = $stmt->rowCount();     // get row count
                 // if exist
                 if ($is_exist_admin) {
                   $admin_name = $comb_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = " . $row['addedBy'])[0]['UserName'];
-                ?>
-                  <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo base64_encode($row['addedBy']); ?>"><?php echo $admin_name ?></a>
+                  ?>
+                  <a
+                    href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo base64_encode($row['addedBy']); ?>">
+                    <?php echo $admin_name ?>
+                  </a>
                 <?php } else { ?>
-                  <span class="text-danger"><?php echo lang('WAS DELETED', $lang_file) ?></span>
+                  <span class="text-danger">
+                    <?php echo lang('WAS DELETED', $lang_file) ?>
+                  </span>
                 <?php } ?>
               </td>
               <!-- technical username -->
@@ -235,51 +265,65 @@ $count = $stmt->rowCount();     // get row count
                 // if exist
                 if ($is_exist_tech) {
                   $tech_name = $comb_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = " . $row['UserID'])[0]['UserName']; ?>
-                  <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo base64_encode($row['UserID']); ?>"><?php echo $tech_name ?></a>
+                  <a
+                    href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo base64_encode($row['UserID']); ?>">
+                    <?php echo $tech_name ?>
+                  </a>
                 <?php } else { ?>
-                  <span class="text-danger"><?php echo lang('WAS DELETED', $lang_file) ?></span>
+                  <span class="text-danger">
+                    <?php echo lang('WAS DELETED', $lang_file) ?>
+                  </span>
                 <?php } ?>
               </td>
-              
-              <td class="text-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>"><?php echo $row['client_name'] ?></td>
+
               <td class="text-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-                <?php $client_addr = $row['address'];
-                if (!empty($client_addr) && strlen($client_addr) > 50) {
-                  echo trim(substr($client_addr, 0, 50), '') . "...";
-                } else {
-                  echo $client_addr;
-                }
-                ?>
+                <?php echo $row['client_name'] ?>
               </td>
               <td class="text-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-                <?php $client_phone = $row['phone'];
-                if (!empty($client_phone) && strlen($client_phone) > 50) {
-                  echo trim(substr($$client_phone, 0, 11), '') . "...";
-                } else {
-                  echo $client_phone;
-                }
-                ?>
+                <?php if (!empty($row['address'])) { ?>
+                  <span>
+                    <?php echo $row['address'] ?>
+                  </span>
+                <?php } else { ?>
+                  <span class="text-danger">
+                    <?php echo lang('NO DATA') ?>
+                  </span>
+                <?php } ?>
               </td>
-              <td class="text-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?> <?php echo empty($row['tech_comment']) ? 'text-danger ' : '' ?>">
-                <?php $tech_comment = !empty($row['tech_comment']) ? $row['tech_comment'] : lang('NO DATA');
-                if (!empty($tech_comment) && strlen($tech_comment) > 60) {
-                  echo trim(substr($tech_comment, 0, 60), '') . "...";
-                } else {
-                  echo $tech_comment;
-                }
-                ?>
+              <td class="text-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+                <?php if (!empty($row['phone'])) { ?>
+                  <span>
+                    <?php echo $row['phone'] ?>
+                  </span>
+                <?php } else { ?>
+                  <span class="text-danger">
+                    <?php echo lang('NO DATA') ?>
+                  </span>
+                <?php } ?>
+              </td>
+              <td
+                class="text-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?> <?php echo empty($row['tech_comment']) ? 'text-danger ' : '' ?>">
+                <?php if (!empty($row['tech_comment'])) { ?>
+                  <span>
+                    <?php echo $row['tech_comment'] ?>
+                  </span>
+                <?php } else { ?>
+                  <span class="text-danger">
+                    <?php echo lang('NO DATA') ?>
+                  </span>
+                <?php } ?>
               </td>
               <td class="text-center">
                 <?php
                 if ($row['isFinished'] == 0) {
-                  $icon   = "bi-x-circle-fill text-danger";
-                  $title  = lang('UNFINISHED', $lang_file);
+                  $icon = "bi-x-circle-fill text-danger";
+                  $title = lang('UNFINISHED', $lang_file);
                 } elseif ($row['isFinished'] == 1) {
-                  $icon   = "bi-check-circle-fill text-success";
-                  $title  = lang('FINISHED', $lang_file);
+                  $icon = "bi-check-circle-fill text-success";
+                  $title = lang('FINISHED', $lang_file);
                 } else {
-                  $icon   = "bi-dash-circle-fill text-info";
-                  $title  = lang('NOT ASSIGNED');
+                  $icon = "bi-dash-circle-fill text-info";
+                  $title = lang('NOT ASSIGNED');
                 }
                 ?>
                 <i class="bi <?php echo $icon ?>" title="<?php echo $title ?>"></i>
@@ -288,7 +332,7 @@ $count = $stmt->rowCount();     // get row count
                 <?php
                 $have_media = $comb_obj->count_records("`id`", "`combinations_media`", "WHERE `comb_id` = " . $row['comb_id']);
                 if ($have_media > 0) {
-                  $icon   = "bi-check-circle-fill text-success";
+                  $icon = "bi-check-circle-fill text-success";
                   $title = lang('HAVE MEDIA', $lang_file);
                 } else {
                   $icon = "bi-x-circle-fill text-danger";
@@ -300,10 +344,20 @@ $count = $stmt->rowCount();     // get row count
               <td>
                 <?php if ($_SESSION['sys']['comb_show'] == 1 || $_SESSION['sys']['comb_delete'] == 1) { ?>
                   <?php if ($_SESSION['sys']['comb_show'] == 1) { ?>
-                    <a href="?do=edit-combination&combid=<?php echo base64_encode($row['comb_id']) ?>" class="btn btn-outline-primary fs-12"><i class="bi bi-eye"></i></a>
+                    <a href="?do=edit-combination&combid=<?php echo base64_encode($row['comb_id']) ?>"
+                      class="btn btn-outline-primary m-1 fs-12">
+                      <i class="bi bi-eye"></i>
+                      <?php echo lang('SHOW DETAILS') ?>
+                    </a>
                   <?php } ?>
                   <?php if ($_SESSION['sys']['comb_delete'] == 1) { ?>
-                    <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb" data-comb-id="<?php echo base64_encode($row['comb_id']) ?>" onclick="put_comb_data_into_modal(this, true)"><i class="bi bi-trash"></i></button>
+                    <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12"
+                      data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb"
+                      data-comb-id="<?php echo base64_encode($row['comb_id']) ?>"
+                      onclick="put_comb_data_into_modal(this, true)">
+                      <i class="bi bi-trash"></i>
+                      <?php echo lang('DELETE') ?>
+                    </button>
                   <?php } ?>
                 <?php } ?>
               </td>

@@ -79,13 +79,6 @@ if ($is_developing == false) {
     $no_navbar = 'all';
     $no_footer = 'all';
   }
-  // pre configration of system
-  include_once str_repeat("../", $level) . "etc/pre-conf.php";
-  // initial configration of system
-  include_once str_repeat("../", $level) . "etc/init.php";
-
-  // include file name
-  include_once $file_name;
   // check delete permission
   if ($_SESSION['sys']['clients_delete'] == 1) {
     // include confirmation delete modal
@@ -94,8 +87,16 @@ if ($is_developing == false) {
   // include ping modal
   include_once $globmod . 'ping-modal.php';
 } else {
-  include  $globmod . "under-developing.php";
+  $file_name = $globmod . "under-developing.php";
 }
+
+// pre configration of system
+include_once str_repeat("../", $level) . "etc/pre-conf.php";
+// initial configration of system
+include_once str_repeat("../", $level) . "etc/init.php";
+
+// include file name
+include_once $file_name;
 
 // include footer
 include_once $tpl . "footer.php";

@@ -2,7 +2,8 @@
 <div class="container" dir="<?php echo $page_dir ?>">
   <div class="mb-3 hstack gap-3">
     <?php if ($_SESSION['sys']['pcs_add'] == 1) { ?>
-      <button type="button" class="btn btn-outline-primary py-1 fs-12" data-bs-toggle="modal" data-bs-target="#addNewDevice">
+      <button type="button" class="btn btn-outline-primary py-1 fs-12" data-bs-toggle="modal"
+        data-bs-target="#addNewDevice">
         <i class="bi bi-plus"></i>
         <?php echo lang('ADD DEVICE', $lang_file) ?>
       </button>
@@ -34,7 +35,9 @@
         <h4 class="h4 mx-auto">
           <?php echo lang('ALL DEV COMP', $lang_file) ?>
           <span>:&nbsp;</span>
-          <span class="badge bg-primary"><?php echo $dev_company_name ?></span>
+          <span class="badge bg-primary">
+            <?php echo $dev_company_name ?>
+          </span>
         </h4>
       </div>
       <!-- start company name displaying -->
@@ -45,52 +48,85 @@
           <thead class="primary text-capitalize">
             <tr>
               <th>#</th>
-              <th><?php echo lang('DEVICE NAME', $lang_file) ?></th>
-              <th><?php echo lang('#MODELS', $lang_file) ?></th>
-              <th><?php echo lang('ADDED BY') ?></th>
-              <th><?php echo lang('ADDED DATE') ?></th>
-              <th><?php echo lang('CONTROL') ?></th>
+              <th>
+                <?php echo lang('DEVICE NAME', $lang_file) ?>
+              </th>
+              <th>
+                <?php echo lang('#MODELS', $lang_file) ?>
+              </th>
+              <th>
+                <?php echo lang('ADDED BY') ?>
+              </th>
+              <th>
+                <?php echo lang('ADDED DATE') ?>
+              </th>
+              <th>
+                <?php echo lang('CONTROL') ?>
+              </th>
             </tr>
           </thead>
           <tbody id="devices-info">
             <?php foreach ($devices_data as $key => $device) { ?>
               <tr>
-                <td><?php echo ++$key ?></td>
+                <td>
+                  <?php echo ++$key ?>
+                </td>
                 <!-- display company name -->
-                <td><?php echo $device['device_name'] ?></td>
+                <td>
+                  <?php echo $device['device_name'] ?>
+                </td>
                 <!-- display total number of models -->
                 <td>
-                  <?php echo $dev_obj->count_records("`model_id`", "`devices_model`", "WHERE `device_id` = " .  $device['device_id']) ?>
+                  <?php echo $dev_obj->count_records("`model_id`", "`devices_model`", "WHERE `device_id` = " . $device['device_id']) ?>
                 </td>
                 <!-- display added by account -->
                 <td>
                   <?php
                   // get username that add device
-                  $added_by_name =  $dev_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = " . $device['added_by'])[0]['UserName'];
+                  $added_by_name = $dev_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = " . $device['added_by'])[0]['UserName'];
                   // check permission
                   if ($_SESSION['sys']['user_update'] == 1) { ?>
-                    <a href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo base64_encode($device['added_by']) ?>"><?php echo $added_by_name ?></a>
+                    <a
+                      href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo base64_encode($device['added_by']) ?>">
+                      <?php echo $added_by_name ?>
+                    </a>
                   <?php } else { ?>
-                    <span><?php echo $added_by_name ?></span>
+                    <span>
+                      <?php echo $added_by_name ?>
+                    </span>
                   <?php } ?>
                 </td>
                 <!-- display added date -->
-                <td><?php echo $device['added_date'] ?></td>
+                <td>
+                  <?php echo $device['added_date'] ?>
+                </td>
                 <!-- controls buttons -->
                 <td>
                   <?php if ($_SESSION['sys']['pcs_update'] == 1) { ?>
                     <!-- edit button -->
-                    <a class="btn btn-success text-capitalize fs-12" href="?do=devices-companies&action=show-device&device-id=<?php echo base64_encode($device['device_id']); ?>" target=""><i class="bi bi-pencil-square"></i></a>
+                    <a class="btn btn-success text-capitalize fs-12"
+                      href="?do=devices-companies&action=show-device&device-id=<?php echo base64_encode($device['device_id']); ?>"
+                      target="">
+                      <i class="bi bi-pencil-square"></i>
+                      <?php echo lang('EDIT') ?>
+                    </a>
                   <?php } ?>
                   <!-- delete device info -->
-                  <button type="button" class="btn btn-outline-danger text-capitalize bg-gradient fs-12 p-1" data-bs-toggle="modal" data-bs-target="#deleteDeviceModal" data-id="<?php echo base64_encode($device['device_id']) ?>" data-name="<?php echo $device['device_name'] ?>" onclick="put_data_into_modal(this, 'delete', 'deleted-device-id', 'deleted-device-name', true);"><i class="bi bi-trash"></i></button>
+                  <button type="button" class="btn btn-outline-danger text-capitalize bg-gradient fs-12 p-1"
+                    data-bs-toggle="modal" data-bs-target="#deleteDeviceModal"
+                    data-id="<?php echo base64_encode($device['device_id']) ?>"
+                    data-name="<?php echo $device['device_name'] ?>"
+                    onclick="put_data_into_modal(this, 'delete', 'deleted-device-id', 'deleted-device-name', true);">
+                    <i class="bi bi-trash"></i>
+                    <?php echo lang('DELETE') ?>
+                  </button>
                 </td>
               </tr>
             <?php } ?>
           </tbody>
         </table>
       </div>
-  <?php
+      <?php
     } else {
       // include no data founded
       include_once $globmod . 'no-data-founded-no-redirect.php';

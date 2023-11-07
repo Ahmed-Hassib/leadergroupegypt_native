@@ -11,6 +11,7 @@ class Database extends PDO
   protected $username;
   protected $password;
   public $con;
+  public $max_file_size = 26214400;  // (25MB = 26214400B in binary) is max file size
 
 
   /** CONSTANT */

@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $frequency        = trim($_POST['frequency'], ' ');
   $wave             = trim($_POST['wave'], ' ');
   $mac_add          = trim($_POST['mac-add'], ' ');
-  $internet_source  = trim($_POST['internet-source'], ' ');
+  $coordinates  = trim($_POST['internet-source'], ' ');
 
   // validate the form
   $form_error = []; // error array
@@ -143,9 +143,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // check internet source
-    if (!empty($internet_source)) {
+    if (!empty($coordinates)) {
       // insert internet source
-      $pcs_obj->insert_internet_source($id, $internet_source);
+      $pcs_obj->insert_coordinates($id, $coordinates);
     }
 
     if ($is_inserted) {

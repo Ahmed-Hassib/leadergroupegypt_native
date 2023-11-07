@@ -87,15 +87,6 @@ a.stretched-link {
 }
 
 /************/
-.fs-12 {
-	font-size: 12px;
-}
-
-.fs-16 {
-	font-size: 16px;
-}
-
-/************/
 
 .pagination-right .page-item:first-child .page-link {
 	border-radius: 0 0.25rem 0.25rem 0;
@@ -294,57 +285,17 @@ body::-webkit-scrollbar-thumb:hover,
 	background-color: #009800;
 }
 
-.bg-1 h5,
-.bg-2 h5,
-.bg-3 h5,
-.bg-4 h5,
-.bg-5 h5,
-.bg-6 h5,
-.bg-7 h5,
-.bg-8 h5,
-.bg-9 h5,
-.bg-1 i,
-.bg-2 i,
-.bg-3 i,
-.bg-4 i,
-.bg-5 i,
-.bg-6 i,
-.bg-7 i,
-.bg-8 i,
-.bg-9 i,
-.bg-1 a.stretched-link,
-.bg-2 a.stretched-link,
-.bg-3 a.stretched-link,
-.bg-4 a.stretched-link,
-.bg-5 a.stretched-link,
-.bg-6 a.stretched-link,
-.bg-7 a.stretched-link,
-.bg-8 a.stretched-link,
-.bg-9 a.stretched-link {
+
+
+:is(.bg-1, .bg-2, .bg-3, .bg-4, .bg-5, .bg-6, .bg-7, .bg-8, .bg-9) h5,
+:is(.bg-1, .bg-2, .bg-3, .bg-4, .bg-5, .bg-6, .bg-7, .bg-8, .bg-9) i,
+:is(.bg-1, .bg-2, .bg-3, .bg-4, .bg-5, .bg-6, .bg-7, .bg-8, .bg-9) a.stretched-link {
 	color: rgba(0, 0, 0, 1) !important;
 }
 
-.bg-total h5,
-.bg-add h5,
-.bg-primary h5,
-.bg-danger h5,
-.bg-success h5,
-.bg-warning h5,
-.bg-info h5,
-.bg-total i,
-.bg-add i,
-.bg-primary i,
-.bg-danger i,
-.bg-success i,
-.bg-warning i,
-.bg-info i,
-.bg-total a.stretched-link,
-.bg-add a.stretched-link,
-.bg-primary a.stretched-link,
-.bg-danger a.stretched-link,
-.bg-success a.stretched-link,
-.bg-warning a.stretched-link,
-.bg-info a.stretched-link {
+:is(.bg-total, .bg-add, .bg-primary, .bg-danger, .bg-success, .bg-warning, .bg-info) h5,
+:is(.bg-total, .bg-add, .bg-primary, .bg-danger, .bg-success, .bg-warning, .bg-info) i,
+:is(.bg-total, .bg-add, .bg-primary, .bg-danger, .bg-success, .bg-warning, .bg-info) a.stretched-link {
 	color: rgba(255, 255, 255, 1) !important;
 }
 
@@ -539,8 +490,8 @@ thead.primary {
 
 .table tbody td:last-child .btn,
 .list-group-item .btn {
-	padding: 3px 0;
-	width: 25px;
+	padding: 3px 5px;
+	width: auto;
 	height: 25px;
 }
 
@@ -634,8 +585,7 @@ thead.primary {
 	font-weight: bold;
 }
 
-.section-header h5,
-.section-header p {
+.section-header :where(h5, p) {
 	margin-bottom: 0;
 	font-weight: 600;
 }
@@ -907,4 +857,11 @@ ul.clients-names li:last-child {
 .rating-form input#rating-5:checked~label {
 	color: #fe7;
 	text-shadow: 0 0 20px rgb(133, 78, 36);
+}
+
+.dashboard-content {
+	position: relative;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+	gap: 40px 20px;
 }

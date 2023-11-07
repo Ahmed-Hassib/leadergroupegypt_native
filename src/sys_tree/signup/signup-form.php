@@ -14,7 +14,7 @@
           <div class="mb-3 row row-cols-sm-1 row-cols-lg-2 g-3">
             <!-- company name -->
             <div class="form-floating">
-              <input class="form-control w-100" type="text" name="company-name" id="company-name" placeholder="<?php echo lang("COMPANY NAME", $lang_file) ?>" value="<?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['company-name'] : '' ?>" onblur="is_valid(this, 'company');" required>
+              <input class="form-control w-100" type="text" name="company-name" id="company-name" placeholder="<?php echo lang("COMPANY NAME", $lang_file) ?>" value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['company-name'] : '' ?>" onblur="is_valid(this, 'company');" required>
               <label for="company-name"><?php echo lang("COMPANY NAME", $lang_file) ?></label>
             </div>
             <?php
@@ -34,12 +34,12 @@
             ?>
             <!-- company code -->
             <div class="form-floating">
-              <input class="form-control w-100" type="text" name="company-code" id="company-code-id" value="<?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['company-code'] : $company_code; ?>" placeholder="<?php echo lang("COMPANY CODE", $lang_file) ?>" readonly>
+              <input class="form-control w-100" type="text" name="company-code" id="company-code-id" value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['company-code'] : $company_code; ?>" placeholder="<?php echo lang("COMPANY CODE", $lang_file) ?>" readonly>
               <label for="company-code"><?php echo lang("COMPANY CODE", $lang_file) ?></label>
             </div>
             <!-- manager name -->
             <div class="form-floating">
-              <input class="form-control w-100" type="text" name="manager-name" id="manager-name" placeholder="<?php echo lang("MANAGER NAME", $lang_file) ?>" value="<?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['manager-name'] : '' ?>" required>
+              <input class="form-control w-100" type="text" name="manager-name" id="manager-name" placeholder="<?php echo lang("MANAGER NAME", $lang_file) ?>" value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['manager-name'] : '' ?>" required>
               <label for="manager-name"><?php echo lang("MANAGER NAME", $lang_file) ?></label>
             </div>
             <!-- company country -->
@@ -69,12 +69,12 @@
             </div>
             <!-- address -->
             <div class="form-floating">
-              <input class="form-control w-100" type="text" name="address" id="address" placeholder="<?php echo lang("ADDRESS", $lang_file) ?>" value="<?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['address'] : '' ?>" required>
+              <input class="form-control w-100" type="text" name="address" id="address" placeholder="<?php echo lang("ADDRESS", $lang_file) ?>" value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['address'] : '' ?>" required>
               <label for="address"><?php echo lang("ADDRESS", $lang_file) ?></label>
             </div>
             <!-- manager phone -->
             <div class="form-floating">
-              <input class="form-control w-100" type="text" name="manager-phone" id="manager-phone" placeholder="<?php echo lang("PHONE", $lang_file) ?>" value="<?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['manager-phone'] : '' ?>" required>
+              <input class="form-control w-100" type="text" name="manager-phone" id="manager-phone" placeholder="<?php echo lang("PHONE", $lang_file) ?>" value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['manager-phone'] : '' ?>" required>
               <label for="manager-phone"><?php echo lang("PHONE", $lang_file) ?></label>
             </div>
           </div>
@@ -88,18 +88,18 @@
             <div class="col">
               <!-- admin username -->
               <div class="mb-3 form-floating">
-                <input class="form-control w-100" type="text" name="username" id="username" placeholder="<?php echo lang("USERNAME", $lang_file) ?>" value="<?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['username'] : '' ?>" onblur="is_valid(this, 'username');" required>
+                <input class="form-control w-100" type="text" name="username" id="username" placeholder="<?php echo lang("USERNAME", $lang_file) ?>" value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['username'] : '' ?>" onblur="is_valid(this, 'username');" required>
                 <label for="username"><?php echo lang("USERNAME", $lang_file) ?></label>
               </div>
               <!-- admin password -->
               <div class="mb-3 form-floating">
-                <input class="form-control w-100" type="password" name="password" id="password" placeholder="<?php echo lang("PASSWORD", $lang_file) ?>" value="<?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['password'] : '' ?>" onblur="confirm_password(confirm_pass, this)" data-no-validation="true" required>
+                <input class="form-control w-100" type="password" name="password" id="password" placeholder="<?php echo lang("PASSWORD", $lang_file) ?>" value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['password'] : '' ?>" onblur="confirm_password(confirm_pass, this, 'admin-info')" data-no-validation="true" required>
                 <i class="bi bi-eye-slash show-pass show-pass-left text-dark" id="show-pass" onclick="show_pass(this)"></i>
                 <label for="password"><?php echo lang("PASSWORD", $lang_file) ?></label>
               </div>
               <!-- confirm_pass -->
               <div class="mb-3 form-floating">
-                <input class="form-control w-100" type="password" name="confirm_pass" id="confirm_pass" placeholder="<?php echo lang("CONFIRM PASSWORD", $lang_file) ?>" onblur="confirm_password(this, password)" data-no-validation="true" required>
+                <input class="form-control w-100" type="password" name="confirm_pass" id="confirm_pass" placeholder="<?php echo lang("CONFIRM PASSWORD", $lang_file) ?>" onblur="confirm_password(this, password, 'admin-info')" data-no-validation="true" required>
                 <i class="bi bi-eye-slash show-pass show-pass-left text-dark" id="show-pass" onclick="show_pass(this)"></i>
                 <label for="confirm_pass"><?php echo lang("CONFIRM PASSWORD", $lang_file) ?></label>
               </div>
@@ -107,7 +107,7 @@
             <div class="col">
               <!-- admin fullname -->
               <div class="mb-3 form-floating">
-                <input class="form-control w-100" type="text" name="fullname" id="fullname" placeholder="<?php echo lang("FULLNAME", $lang_file) ?>" value="<?php echo isset($_SESSION['sys']['request_data']) ? $_SESSION['sys']['request_data']['fullname'] : '' ?>" required>
+                <input class="form-control w-100" type="text" name="fullname" id="fullname" placeholder="<?php echo lang("FULLNAME", $lang_file) ?>" value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['fullname'] : '' ?>" required>
                 <label for="fullname"><?php echo lang("FULLNAME", $lang_file) ?></label>
               </div>
               <!-- admin gender -->

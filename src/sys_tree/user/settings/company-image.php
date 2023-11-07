@@ -15,7 +15,7 @@
     <img src="<?php echo "$company_img_path/$company_img_name" ?>" class="company-img" alt="" id="company-img">
     <form action="?do=change-company-img" method="POST" id="change-company-image" enctype="multipart/form-data">
       <!-- company image form -->
-      <input type="file" class="d-none" name="company-img-input" id="company-img-input" onchange="change_company_img(this)" accept="image/*">
+      <input type="file" class="d-none" name="company-img-input" id="company-img-input" onchange="change_section_img(this)" accept="image/*">
     </form>
     <?php if (empty($_SESSION['sys']['company_img'])) { ?>
       <span class="text-center text-muted" id="company-img-status"><?php echo lang('DEFAULT IMG', $lang_file) ?></span>

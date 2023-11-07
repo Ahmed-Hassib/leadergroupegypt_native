@@ -1,3 +1,12 @@
+/************/
+.fs-12 {
+  font-size: 12px !important;
+}
+
+.fs-16 {
+  font-size: 16px !important;
+}
+
 /* under developing section */
 .under-developing {
   position: absolute;
@@ -144,7 +153,7 @@
   top: 10px !important;
   right: 0;
   width: auto !important;
-  z-index: 99999 !important;
+  z-index: 999 !important;
   transition: all 0.3s ease;
 }
 
@@ -172,8 +181,9 @@
   right: 0 !important;
   height: 5px !important;
   width: 100%;
-  background: #0d6efd !important;
+  background: #333 !important;
   transition: all .5s linear !important;
+  opacity: .1;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -242,7 +252,7 @@ input[type=number] {
 }
 
 .form-floating>textarea.form-control {
-  height: 120px !important;
+  height: 180px !important;
 }
 
 .form-floating>.form-control-plaintext:focus,
@@ -325,4 +335,33 @@ input[type=number] {
 .order-9,
 .order-last {
   order: 9 !important;
+}
+
+span.spinner-border {
+  width: 1rem !important;
+  height: 1rem !important;
+}
+
+.video-loader-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/************/
+/* page error */
+.page-error {
+  margin: 3rem auto;
+}
+
+.page-error>img.img-fluid {
+  width: 500px;
+  height: 300px;
+}
+
+@media (max-width: 576px) {
+  .page-error>img.img-fluid {
+    width: 300px;
+  }
 }

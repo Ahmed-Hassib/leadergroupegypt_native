@@ -6,9 +6,6 @@ function put_data_into_modal(btn, type, id, name, will_back = null) {
 
   // put values
   id_input.value = btn.dataset.id;
-
-  console.log(id_input)
-
   // check type
   switch(type){
     case 'edit':

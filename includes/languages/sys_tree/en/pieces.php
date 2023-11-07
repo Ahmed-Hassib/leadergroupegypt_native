@@ -20,7 +20,7 @@ function pieces($phrase)
     'TRANSMITTER'         => 'إرسال',
     'RECEIVER'            => 'إستقبال',
     'ADD INFO'            => 'بيانات إضافية',
-    'INT SRC'             => 'مصدر الإنترنت',
+    'COORDINATES'             => 'مصدر الإنترنت',
     'VISIT TIME'          => 'وقت الزيارة',
     'ANY TIME'            => 'أي وقت',
     'ADV CONN'            => 'إتصال مسبق',
@@ -108,5 +108,5 @@ function pieces($phrase)
 
   );
   // return the phrase
-  return $lang[$phrase];
+  return array_key_exists($phrase, $lang) ? $lang[$phrase] : null;
 }

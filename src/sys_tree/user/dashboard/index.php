@@ -50,20 +50,20 @@ if ($is_developing == false) {
       // license file
       $file_name = 'license-ended.php';
     }
-    // pre configration of system
-    include_once str_repeat("../", $level) . "etc/pre-conf.php";
-    // initial configration of system
-    include_once str_repeat("../", $level) . "etc/init.php";
-
-    // include file name
-    include_once $file_name;
   } else {
     header("Location: ../../logout.php");
     exit();
   }
 } else {
-  include  $globmod . "under-developing.php";
+  $file_name = $globmod . "under-developing.php";
 }
+// pre configration of system
+include_once str_repeat("../", $level) . "etc/pre-conf.php";
+// initial configration of system
+include_once str_repeat("../", $level) . "etc/init.php";
+
+// include file name
+include_once $file_name;
 // footer
 include_once $tpl . "footer.php";
 include_once $tpl . "js-includes.php";

@@ -39,12 +39,11 @@
             <span><?php echo lang("DON`T HAVE ACCOUNT", $lang_file) ?>&nbsp;</span>
             <a href="signup.php" class="text-capitalize" style="border-radius: 6px"><?php echo lang('SIGNUP', $lang_file) ?></a>
           </div>
-          <!-- <div class="me-auto">
-            <a href="<?php echo $website ?>desc/index.php?do=systree" class="text-capitalize" style="border-radius: 6px">
-              <span><?php echo lang("SYS TREE DESC") ?>&nbsp;</span>
-              <i class="bi bi-arrow-up-left-square"></i>
+          <div class="me-auto">
+            <a href="?d=<?php echo base64_encode('forget-password') ?>" class="text-capitalize" style="border-radius: 6px">
+              <span><?php echo lang("FORGET PASSWORD?") ?></span>
             </a>
-          </div> -->
+          </div>
         </div>
       </form>
       <hr>

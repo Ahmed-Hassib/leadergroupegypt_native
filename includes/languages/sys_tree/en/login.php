@@ -51,5 +51,5 @@ function login($phrase)
     'ADMIN INSERTED'    => 'تم إضافة بيانات مدير الشركة بنجاح',
   );
   // return the phrase
-  return $lang[$phrase];
+  return array_key_exists($phrase, $lang) ? $lang[$phrase] : null;
 }

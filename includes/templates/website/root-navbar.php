@@ -14,7 +14,7 @@
     <!-- start dashboard page link -->
     <li>
       <a href="<?php echo $up_level ?>index.php">
-        <i class="bi bi-grid"></i>
+        <i class="bi bi-house-door"></i>
         <span class="link-name">
           <?php echo lang('HOME') ?>
         </span>
@@ -149,6 +149,38 @@
       <!-- end sub menu -->
     </li>
     <!-- end gallery nav link -->
+
+    <!-- start team nav link -->
+    <li>
+      <!-- start link containing sub menu -->
+      <div class="icon-link">
+        <section>
+          <i class="bi bi-people"></i>
+          <span class="link-name"><?php echo lang('TEAM MEMBERS') ?></span>
+        </section>
+        <i class="bi bi-arrow-down-short"></i>
+      </div>
+      <!-- end link containing sub menu -->
+      <!-- start sub menu -->
+      <ul class="sub-menu">
+        <li>
+          <a href="<?php echo $website_root ?>team/index.php">
+            <span class="link-name">
+              <?php echo lang('DASHBOARD') ?>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="<?php echo $website_root ?>team/index.php?do=add-new">
+            <span class="link-name">
+              <?php echo lang('ADD NEW', 'team') ?>
+            </span>
+          </a>
+        </li>
+      </ul>
+      <!-- end sub menu -->
+    </li>
+    <!-- end features nav link -->
 
     <!-- start features nav link -->
     <li>

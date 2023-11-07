@@ -68,15 +68,19 @@ $features_info = $features_obj->get_all_features();
             <td class="text-center">
               <?php if ($feature['is_active']) { ?>
                 <a href="?do=deactivate-feature&id=<?php echo base64_encode($feature['id']) ?>" class="btn btn-danger py-0"><i
-                    class="bi bi-x"></i></a>
+                    class="bi bi-x"></i><span>
+                      <?php echo lang('DEACTIVATE') ?>
+                    </span></a>
               <?php } else { ?>
                 <a href="?do=activate-feature&id=<?php echo base64_encode($feature['id']) ?>" class="btn btn-primary py-0"><i
-                    class="bi bi-check"></i></a>
+                    class="bi bi-check"></i><span>
+                      <?php echo lang('ACTIVATE') ?>
+                    </span></a>
               <?php } ?>
               <a href="?do=edit-feature&id=<?php echo base64_encode($feature['id']) ?>"
                 class="btn btn-outline-success py-0"><i class="bi bi-pencil-square"></i></a>
               <button type="button" data-href="?do=delete-feature&id=<?php echo base64_encode($feature['id']) ?>&back=true"
-                class="btn btn-outline-danger py-0" onclick="confirm_delete_feature(this)"><i
+                class="btn btn-outline-danger py-0" onclick="confirm_delete(this)"><i
                   class="bi bi-trash"></i></button>
             </td>
           </tr>

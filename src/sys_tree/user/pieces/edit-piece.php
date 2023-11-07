@@ -40,7 +40,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
         <?php } ?>
 
         <?php if ($target_user != -1) { ?>
-          <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2" href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $piece_data['ip'] ?>&port=<?php echo $piece_data['port'] != 0 ? $piece_data['port'] : '443' ?>" target='_blank'><?php echo lang('VISIT DEVICE', $lang_file) ?></a>
+          <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2" href="?do=prepare-ip&address=<?php echo $piece_data['ip'] ?>&port=<?php echo $piece_data['port'] != 0 ? $piece_data['port'] : '443' ?>" target='_blank'><?php echo lang('VISIT DEVICE', $lang_file) ?></a>
         <?php } ?>
 
         <?php if ($_SESSION['sys']['pcs_delete'] == 1) { ?>
@@ -120,9 +120,9 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
 
             <!-- internet source -->
             <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-              <input type="text" name="internet-source" id="internet-source" class="form-control" placeholder="<?php echo lang('INT SRC', $lang_file) ?>" value="<?php echo $piece_data['internet_source']  ?>" />
+              <input type="text" name="internet-source" id="internet-source" class="form-control" placeholder="<?php echo lang('COORDINATES', $lang_file) ?>" value="<?php echo $piece_data['coordinates']  ?>" />
               <label for="internet-source">
-                <?php echo lang('INT SRC', $lang_file); ?>
+                <?php echo lang('COORDINATES', $lang_file); ?>
               </label>
             </div>
 
@@ -182,7 +182,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
                   <!-- direction -->
                   <div class="col-12">
                     <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-                      <select class="form-select" id="direction" name="direction" required onchange="get_sources(this, <?php echo base64_decode($_SESSION['sys']['company_id']) ?>, '<?php echo $dirs . $_SESSION['sys']['company_name'] ?>', ['sources', 'alternative-sources']);">
+                      <select class="form-select" id="direction" name="direction" required onchange="get_sources(this, <?php echo base64_decode($_SESSION['sys']['company_id']) ?>, '<?php echo $dirs . $_SESSION['sys']['company_id'] ?>', ['sources', 'alternative-sources']);">
                         <option value="default" disabled><?php echo lang('SELECT DIRECTION', 'directions') ?></option>
                         <?php
                         // get all directions
@@ -263,7 +263,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
                       $devices_count = $stmt->rowCount();
                       $devices_data =  $stmt->fetchAll();
                       ?>
-                      <select class="form-select" id="device-id" name="device-id" onchange="get_devices_models(this, '<?php echo $dev_models . $_SESSION['sys']['company_name'] ?>')">
+                      <select class="form-select" id="device-id" name="device-id" onchange="get_devices_models(this, '<?php echo $dev_models . $_SESSION['sys']['company_id'] ?>')">
                         <option value="default" disabled selected>
                           <?php echo lang('SELECT DEV TYPE', $lang_file) ?>
                         </option>
@@ -461,7 +461,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
         <?php } ?>
 
         <?php if ($target_user != -1) { ?>
-          <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2" href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $piece_data['ip'] ?>&port=<?php echo $piece_data['port'] != 0 || !empty($piece_data['port']) ? $piece_data['port'] : '443' ?>" target='_blank'><?php echo lang('VISIT DEVICE', $lang_file) ?></a>
+          <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2" href="?do=prepare-ip&address=<?php echo $piece_data['ip'] ?>&port=<?php echo $piece_data['port'] != 0 || !empty($piece_data['port']) ? $piece_data['port'] : '443' ?>" target='_blank'><?php echo lang('VISIT DEVICE', $lang_file) ?></a>
         <?php } ?>
 
         <?php if ($_SESSION['sys']['pcs_delete'] == 1) { ?>

@@ -50,14 +50,15 @@ if ($is_developing == false) {
     // include signup form
     $file_name = 'signup-form.php';
   }
-  // pre configration of system
-  include_once str_repeat("../", $level) . "etc/pre-conf.php";
-  // initial configration of system
-  include_once str_repeat("../", $level) . "etc/init.php";
-  // include file
-  include_once "signup/$file_name";
+  $file_name = "signup/$file_name";
 } else {
-  include_once $globmod . "under-developing.php";
+  $file_name = $globmod . "under-developing.php";
 }
-
+// pre configration of system
+include_once str_repeat("../", $level) . "etc/pre-conf.php";
+// initial configration of system
+include_once str_repeat("../", $level) . "etc/init.php";
+// include file
+include_once $file_name;
+// include js files
 include_once $tpl . "js-includes.php";

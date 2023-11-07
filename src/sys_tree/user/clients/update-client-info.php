@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $frequency = isset($_POST['frequency']) && !empty($_POST['frequency']) ? trim($_POST['frequency'], ' ') : 0;
   $wave = isset($_POST['wave']) && !empty($_POST['wave']) ? trim($_POST['wave'], ' ') : 0;
   $mac_add = trim($_POST['mac-add'], ' ');
-  $internet_source = trim($_POST['internet-source'], ' ');
+  $coordinates = trim($_POST['internet-source'], ' ');
 
 
   $validIP = !empty($ip) ? preg_match('/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\z/', $ip) : 1;
@@ -141,13 +141,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // check if wave was inserted befor
-    $is_exist_internet_source = $pcs_obj->is_exist("`id`", "`pieces_internet_source`", $id);
-    if ($is_exist_internet_source == true) {
+    $is_exist_coordinates = $pcs_obj->is_exist("`id`", "`pieces_Coordinates`", $id);
+    if ($is_exist_coordinates == true) {
       // update internet source
-      $pcs_obj->update_internet_source($id, $internet_source);
-    } elseif (!$is_exist_internet_source == true && !empty($internet_source)) {
+      $pcs_obj->update_coordinates($id, $coordinates);
+    } elseif (!$is_exist_coordinates == true && !empty($coordinates)) {
       // insert internet source
-      $pcs_obj->insert_internet_source($id, $internet_source);
+      $pcs_obj->insert_coordinates($id, $coordinates);
     }
 
     // check type of current piece

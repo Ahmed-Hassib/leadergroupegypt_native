@@ -5,14 +5,8 @@ ob_start();
 session_start();
 // regenerate session id
 session_regenerate_id();
-// get language from get method
-$lang = isset($_GET['lang']) ? $_GET['lang'] : "ar";
-// check language
-$_SESSION['lang'] = $lang;
-// boolean variable to check if this page is home
-$is_website_pages = true;
-// page title
-$page_title = "SPONSOR";
+// title page
+$page_title = "sys tree desc";
 // page category
 $page_category = "website";
 // page role
@@ -25,19 +19,24 @@ $lang_file = "description";
 $level = 3;
 // nav level
 $nav_level = 1;
-// pre configration of system
-include_once str_repeat("../", $level) . "etc/pre-conf.php";
-// initial configration of system
-include_once str_repeat("../", $level) . "etc/init.php";
+// app status and global includes
+include_once str_repeat("../", $level) . "etc/app-status.php";
 
 // get query value
-$query = isset($_GET['do']) && !empty($_GET['do']) ? $_GET['do']: null;
+$query = isset($_GET['d']) && !empty($_GET['d']) ? base64_decode($_GET['d']) : null;
 
 // check query
 if ($query == 'systree') {
   $file_name = 'abstract.php';
+} else {
+  // include permission error module
+  $file_name = $globmod . 'no-data-founded-no-redirect.php';
 }
 
+// pre configration of system
+include_once str_repeat("../", $level) . "etc/pre-conf.php";
+// initial configration of system
+include_once str_repeat("../", $level) . "etc/init.php";
 // include file name
 include_once $file_name;
 

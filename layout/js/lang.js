@@ -23,7 +23,11 @@ var ar = {
   freq: 'التردد',
   wave: 'الموجة',
   delete_feature_faild: 'فشل حذف تفاصيل الميزة',
-  delete_feature_succ: 'تم حذف تفاصيل الميزة بنجاح'
+  delete_feature_succ: 'تم حذف تفاصيل الميزة بنجاح',
+  connected: 'تم تحقيق الاتصال بميكروتيك الخاص بك بنجاح!',
+  failed_connection: 'فشل تحقيق الإتصال بميكروتيك الخاص بك!',
+  phone_number: 'رقم التليفون',
+  max_num_phones: 'لقد تخطيت الحد الأقصى من عدد التليفونات..!',
 }
 
 // english words
@@ -51,7 +55,11 @@ var en = {
   freq: '',
   wave: '',
   delete_feature_faild: '',
-  delete_feature_succ: ''
+  delete_feature_succ: '',
+  connected: '',
+  faild_connection: '',
+  phone_number: '',
+  max_num_phones: '',
 }
 
 // default language

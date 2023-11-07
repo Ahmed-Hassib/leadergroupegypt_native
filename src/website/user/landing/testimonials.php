@@ -1,5 +1,5 @@
 <!-- START TESTIMONIALS -->
-<div class="testimonials" id="testimonials">
+<div class="testimonials <?php echo (isset($members_status) && $members_status == null) || $members_info == null ? 'no-wave-all' : '' ?>" id="testimonials">
     <h2 class="main-title"><?php echo lang('TESTIMONIALS') ?></h2>
     <div class="container">
         <div class="box">

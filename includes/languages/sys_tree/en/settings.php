@@ -40,5 +40,5 @@ function settings($phrase)
 
   );
   // return the phrase
-  return $lang[$phrase];
+  return array_key_exists($phrase, $lang) ? $lang[$phrase] : null;
 }

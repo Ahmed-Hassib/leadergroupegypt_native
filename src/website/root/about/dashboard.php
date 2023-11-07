@@ -74,15 +74,21 @@ $text_info = $about_obj->get_all_texts();
               <td class="text-center">
                 <?php if ($text['is_active']) { ?>
                   <a href="?do=deactivate-text&id=<?php echo base64_encode($text['id']) ?>" class="btn btn-danger py-0"><i
-                      class="bi bi-x"></i></a>
+                      class="bi bi-x"></i>
+                    <span>
+                      <?php echo lang('DEACTIVATE') ?>
+                    </span></a>
                 <?php } else { ?>
                   <a href="?do=activate-text&id=<?php echo base64_encode($text['id']) ?>" class="btn btn-primary py-0"><i
-                      class="bi bi-check"></i></a>
+                      class="bi bi-check"></i>
+                    <span>
+                      <?php echo lang('ACTIVATE') ?>
+                    </span></a>
                 <?php } ?>
                 <a href="?do=edit-text&id=<?php echo base64_encode($text['id']) ?>" class="btn btn-outline-success py-0"><i
                     class="bi bi-pencil-square"></i></a>
                 <button type="button" data-href="?do=delete-text&id=<?php echo base64_encode($text['id']) ?>&back=true"
-                  class="btn btn-outline-danger py-0" onclick="confirm_delete_text(this)">
+                  class="btn btn-outline-danger py-0" onclick="confirm_delete(this)">
                   <i class="bi bi-trash"></i></button>
               </td>
             </tr>

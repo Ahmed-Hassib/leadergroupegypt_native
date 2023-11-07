@@ -30,5 +30,5 @@ function pcs_conn($phrase)
     'ADD NEW'     => 'إضافة نوع إتصال جديد',
   );
   // return the phrase
-  return $lang[$phrase];
+  return array_key_exists($phrase, $lang) ? $lang[$phrase] : null;
 }

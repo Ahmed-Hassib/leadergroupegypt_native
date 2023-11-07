@@ -56,7 +56,7 @@ if ($about_obj->is_exist("`id`", "`about_us`", $text_id)) {
       <!-- submit button -->
       <div class="dashboard-buttons" dir="<?php echo $page_dir == 'rtl' ? 'ltr' : 'rtl' ?>">
         <button type="button" data-href="?do=delete-text&id=<?php echo base64_encode($text_info['id']) ?>&back=true"
-          class="btn btn-outline-danger py-0" onclick="confirm_delete_text(this)">
+          class="btn btn-outline-danger py-0" onclick="confirm_delete(this)">
           <i class="bi bi-trash"></i>
           <?php echo lang('DELETE') ?>
         </button>

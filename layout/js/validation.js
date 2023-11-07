@@ -68,7 +68,7 @@ function form_validation(form = null, btn = null) {
       }
     })
 
-    form.dataset.valid = false
+    form.dataset.valid = false;
     // scroll on the top of the page
     document.body.scrollTo(0, 0);
   } else {
@@ -91,12 +91,49 @@ function input_validation(input) {
   if ((input.tagName.toLowerCase() == 'input' && input.value.length == 0) || (input.tagName.toLowerCase() == 'select' && input.selectedIndex == 0)) {
     // check if have an valid class
     input.classList.contains('is-valid') ? input.classList.replace('is-valid', 'is-invalid') : input.classList.add('is-invalid');
-    localStorage.getItem('lang') == 'ar' ? input.classList.add('is-invalid-left') : input.classList.add('is-invalid-right')
+    localStorage.getItem('lang') == 'ar' && input.getAttribute('dir') != 'ltr' ? input.classList.add('is-invalid-left') : input.classList.add('is-invalid-right')
     input.dataset.valid = "false";
   } else {
     input.classList.contains('is-invalid') ? input.classList.replace('is-invalid', 'is-valid') : input.classList.add('is-valid');
-    localStorage.getItem('lang') == 'ar' ? input.classList.add('is-valid-left') : input.classList.add('is-valid-right')
+    localStorage.getItem('lang') == 'ar' && input.getAttribute('dir') != 'ltr' ? input.classList.add('is-valid-left') : input.classList.add('is-valid-right')
     input.dataset.valid = "true";
   }
 }
 
+/**
+ * invalid_input function
+ * used to make input invalid
+*/
+function invalid_input(input) {
+  // check if have an valid class
+  input.classList.contains('is-valid') ? input.classList.replace('is-valid', 'is-invalid') : input.classList.add('is-invalid');
+  localStorage.getItem('lang') == 'ar' && input.getAttribute('dir') != 'ltr' ? input.classList.add('is-invalid-left') : input.classList.add('is-invalid-right')
+  input.dataset.valid = "false";
+}
+
+/**
+ * valid_input function
+ * used to make input valid
+*/
+function valid_input(input) {
+  // check if have an valid class
+  input.classList.contains('is-invalid') ? input.classList.replace('is-invalid', 'is-valid') : input.classList.add('is-valid');
+  localStorage.getItem('lang') == 'ar' && input.getAttribute('dir') != 'ltr' ? input.classList.add('is-valid-left') : input.classList.add('is-valid-right')
+  input.dataset.valid = "true";
+}
+
+
+function validate_password(input, is_valid = null) {
+  if (input.value.length > 0 && is_valid != null) {
+    if (is_valid) {
+      input.classList.contains('is-invalid') ? input.classList.replace('is-invalid', 'is-valid') : input.classList.add('is-valid');
+      input.dataset.valid = "true";
+    } else {
+      input.classList.contains('is-valid') ? input.classList.replace('is-valid', 'is-invalid') : input.classList.add('is-invalid');
+      input.dataset.valid = "false";
+    }
+  } else {
+    input.classList.remove('is-valid', 'is-invalid')
+    input.dataset.valid = '';
+  }
+}

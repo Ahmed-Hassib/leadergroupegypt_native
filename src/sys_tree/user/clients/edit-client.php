@@ -44,7 +44,7 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
 
         <?php if ($target_user != -1) { ?>
           <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2"
-            href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $client_data['ip'] ?>&port=<?php !empty($client_data['port']) || $client_data != 0 ? $client_data['port'] : '443' ?>"
+            href="?do=prepare-ip&address=<?php echo $client_data['ip'] ?>&port=<?php !empty($client_data['port']) || $client_data != 0 ? $client_data['port'] : '443' ?>"
             target='_blank'>
             <?php echo lang('VISIT DEVICE', $lang_file) ?>
           </a>
@@ -143,10 +143,10 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
             <div
               class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
               <input type="text" name="internet-source" id="internet-source" class="form-control"
-                placeholder="<?php echo lang('INT SRC', 'pieces') ?>"
-                value="<?php echo $client_data['internet_source'] ?>" />
+                placeholder="<?php echo lang('COORDINATES', 'pieces') ?>"
+                value="<?php echo $client_data['coordinates'] ?>" />
               <label for="internet-source">
-                <?php echo lang('INT SRC', 'pieces'); ?>
+                <?php echo lang('COORDINATES', 'pieces'); ?>
               </label>
             </div>
             <!-- notes -->
@@ -321,7 +321,7 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                       $devices_data = $stmt->fetchAll();
                       ?>
                       <select class="form-select" id="device-id" name="device-id"
-                        onchange="get_devices_models(this, '<?php echo $dev_models . $_SESSION['sys']['company_name'] ?>')">
+                        onchange="get_devices_models(this, '<?php echo $dev_models . $_SESSION['sys']['company_id'] ?>')">
                         <option value="default" disabled selected>
                           <?php echo lang('SELECT DEV TYPE', 'pieces') ?>
                         </option>
@@ -583,7 +583,7 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
 
         <?php if ($target_user != -1) { ?>
           <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2"
-            href="?do=prepare-ip&id=<?php echo base64_encode($target_user['.id']) ?>&address=<?php echo $client_data['ip'] ?>&port=<?php echo !empty($client_data['port']) || $client_data['port'] != 0 ? $client_data['port'] : '443' ?>"
+            href="?do=prepare-ip&address=<?php echo $client_data['ip'] ?>&port=<?php echo !empty($client_data['port']) || $client_data['port'] != 0 ? $client_data['port'] : '443' ?>"
             target='_blank'>
             <?php echo lang('VISIT DEVICE', 'pieces') ?>
           </a>
