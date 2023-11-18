@@ -11,8 +11,15 @@
 .phone-container {
   position: relative;
   display: grid;
-  grid-template-columns: 70% 20%;
+  grid-template-columns: 70% 25%;
   gap: 10px;
+  justify-content: space-between;
+}
+
+@media (max-width: 576px) {
+  .phone-container {
+    grid-template-columns: 1fr;
+  }
 }
 
 .permissions {
@@ -64,4 +71,3 @@
     grid-column: 1/3;
   }
 }
-

@@ -10,7 +10,6 @@ This is the first largest project I worked on untill now
 - MySQL
 
 ## Services
-- Sys Tree
-  -- Main Idea
-    --- build a tree represent connected group of devices.
-    --- 
+### Sys Tree
+- Main Idea
+You can enter your company info like: company name, logo, company manager name, phone, and you can also enter you employees data and control there permissions in system and you can also enter your network data like transmitters and receivers devices and customers connected on them.

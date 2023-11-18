@@ -566,7 +566,7 @@ if ($_SESSION['sys']['comb_show'] == 1 && $_SESSION['sys']['isTech'] == 1) {
                             <a href="?do=edit-combination&combid=<?php echo base64_encode($comb['comb_id']) ?>" target=""
                               class="btn btn-outline-primary me-1 fs-12">
                               <i class="bi bi-eye"></i>
-                              <?php echo lang('EDIT') ?>
+                              <?php echo lang('SHOW DETAILS') ?>
                             </a>
                           <?php } ?>
                           <?php if ($_SESSION['sys']['comb_delete'] == 1) { ?>
@@ -691,7 +691,7 @@ if ($_SESSION['sys']['comb_show'] == 1 && $_SESSION['sys']['isTech'] == 1) {
                             <a href="?do=edit-combination&combid=<?php echo base64_encode($comb['comb_id']) ?>" target=""
                               class="btn btn-outline-primary m-1 fs-12">
                               <i class="bi bi-eye"></i>
-                              <?php echo lang('EDIT') ?>
+                              <?php echo lang('SHOW DETAILS') ?>
                             </a>
                           <?php } ?>
                           <?php if ($_SESSION['sys']['comb_delete'] == 1) { ?>

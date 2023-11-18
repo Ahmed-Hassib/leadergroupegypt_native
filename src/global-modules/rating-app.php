@@ -4,7 +4,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="ratingAppModalLabel"><?php echo lang('RATE APP') ?></h1>
-        <button type="button" class="btn-close btn-close-<?php echo $_SESSION['lang'] == 'ar' ? 'left' : 'right' ?>" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close btn-close-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'left' : 'right' ?>" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" style="background-color: rgba(0,0,0,0.01)">
         <div class="rating-form-container">

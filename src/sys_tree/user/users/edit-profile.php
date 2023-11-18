@@ -163,11 +163,12 @@ if ($user_id == base64_decode($_SESSION['sys']['UserID']) || $_SESSION['sys']['u
                 <!-- end address field -->
                 <!-- strat phone field -->
                 <div class="mb-3">
-                  <div class="phone-container" <?php if ($user['is_activated_phone'] == 1 && !empty($user['phone'])) { ?>style="grid-template-columns: 1fr!important" <?php } ?>>
+                  <div class="phone-container" <?php if (empty($user['phone'])) { ?>style="grid-template-columns: 1fr!important" <?php } ?>>
                     <div
                       class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
                       <input type="text" maxlength="11" class="form-control" name="phone" id="phone"
-                        placeholder="<?php echo lang('NO DATA') ?>" value="<?php echo $user['phone'] ?>" <?php echo $_SESSION['sys']['user_update'] == 0 && base64_decode($_SESSION['sys']['UserID']) != $user['UserID'] ? 'readonly' : '' ?>>
+                        placeholder="<?php echo lang('NO DATA') ?>"
+                        value="<?php echo empty($user['phone']) ? '' : $user['phone'] ?>" <?php echo $_SESSION['sys']['user_update'] == 0 && base64_decode($_SESSION['sys']['UserID']) != $user['UserID'] ? 'readonly' : '' ?>>
                       <label for="phone">
                         <?php echo lang('PHONE', $lang_file) ?>
                       </label>
@@ -178,16 +179,18 @@ if ($user_id == base64_decode($_SESSION['sys']['UserID']) || $_SESSION['sys']['u
                       </a>
                     <?php } ?>
                   </div>
-                  <?php if ($user['is_activated_phone'] == 0 && !empty($user['phone'])) { ?>
-                    <div id="passHelp" class="form-text text-danger">
-                      <i class="bi bi-exclamation-triangle-fill"></i>
-                      <?php echo lang('PHONE NOT ACTIVATED', $lang_file) ?>
-                    </div>
-                  <?php } else { ?>
-                    <div id="passHelp" class="form-text text-success">
-                      <i class="bi bi-check-circle-fill"></i>
-                      <?php echo lang('MOBILE ACTIVATED', $lang_file) ?>
-                    </div>
+                  <?php if (!empty($user['phone'])) { ?>
+                    <?php if ($user['is_activated_phone'] == 1) { ?>
+                      <div id="passHelp" class="form-text text-success">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <?php echo lang('MOBILE ACTIVATED', $lang_file) ?>
+                      </div>
+                    <?php } else { ?>
+                      <div id="passHelp" class="form-text text-danger">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <?php echo lang('PHONE NOT ACTIVATED', $lang_file) ?>
+                      </div>
+                    <?php } ?>
                   <?php } ?>
                 </div>
                 <!-- end phone field -->

@@ -46,45 +46,78 @@ if ($license_info != null && count($license_info) > 0) {
   // get the rest
   $rest = round(($diffrence->days / $total_days->days) * 100, 2);
 
-?>
+  ?>
   <div class="section-block">
     <!-- section header -->
     <div class="section-header">
-      <h5 class="text-capitalize "><?php echo lang('SYSTEM INFO', $lang_file) ?></h5>
+      <h5 class="text-capitalize ">
+        <?php echo lang('SYSTEM INFO', $lang_file) ?>
+      </h5>
       <hr />
     </div>
     <div class="company-info">
       <span class="company-info__row">
-        <span class="company-info__row-label pe-2"><?php echo lang('COMPANY NAME', $lang_file) ?></span>
-        <span class="company-info__row-info"><?php echo $_SESSION['sys']['company_name'] ?></span>
-      </span>
-      <span class="company-info__row">
-        <span class="company-info__row-label pe-2"><?php echo lang('COMPANY CODE', $lang_file) ?></span>
-        <span class="company-info__row-info"><?php echo $_SESSION['sys']['company_code'] ?></span>
-      </span>
-      <span class="company-info__row">
-        <span class="company-info__row-label pe-2"><?php echo lang('APP VERSION', $lang_file) ?></span>
-        <span class="company-info__row-info"><?php echo $_SESSION['sys']['curr_version_name'] ?></span>
-      </span>
-      <span class="company-info__row">
-        <span class="company-info__row-label pe-2"><?php echo lang('LICENSE', $lang_file) ?></span>
-        <span class="company-info__row-info <?php echo $license_info['isTrial'] == 1 ? 'badge bg-danger' : '' ?>"><?php echo $type ?></span>
-      </span>
-      <span class="company-info__row">
-        <span class="company-info__row-label pe-2"><?php echo lang('EXPIRY', $lang_file) ?></span>
-        <span class="company-info__row-info"><?php echo $license_info['expire_date'] ?></span>
-      </span>
-      <span class="company-info__row">
-        <span class="company-info__row-label"></span>
-        <span class="company-info__row-info progress">
-          <?php if ($rest < 15) { ?>
-            <div class="progress-bar <?php echo bg_progress($rest) ?>" role="progressbar" style="width: <?php echo $rest ?>%" aria-valuenow="<?php echo $diffrence->days ?>" aria-valuemin="10" aria-valuemax="<?php echo $total_days->days ?>"></div>
-            <div class="progress-value"><?php echo $rest ?>%</div>
-          <?php } else { ?>
-            <div class="progress-bar <?php echo bg_progress($rest) ?>" role="progressbar" style="width: <?php echo $rest ?>%" aria-valuenow="<?php echo $diffrence->days ?>" aria-valuemin="10" aria-valuemax="<?php echo $total_days->days ?>"><?php echo $rest ?>%</div>
-          <?php } ?>
+        <span class="company-info__row-label pe-2">
+          <?php echo lang('COMPANY NAME', $lang_file) ?>
+        </span>
+        <span class="company-info__row-info">
+          <?php echo $_SESSION['sys']['company_name'] ?>
         </span>
       </span>
+      <span class="company-info__row">
+        <span class="company-info__row-label pe-2">
+          <?php echo lang('COMPANY CODE', $lang_file) ?>
+        </span>
+        <span class="company-info__row-info">
+          <?php echo $_SESSION['sys']['company_code'] ?>
+        </span>
+      </span>
+      <span class="company-info__row">
+        <span class="company-info__row-label pe-2">
+          <?php echo lang('APP VERSION', $lang_file) ?>
+        </span>
+        <span class="company-info__row-info">
+          <?php echo $_SESSION['sys']['curr_version_name'] ?>
+        </span>
+      </span>
+
+      <?php if ($_SESSION['sys']['isTech'] == 0) { ?>
+        <span class="company-info__row">
+          <span class="company-info__row-label pe-2">
+            <?php echo lang('LICENSE', $lang_file) ?>
+          </span>
+          <span class="company-info__row-info <?php echo $license_info['isTrial'] == 1 ? 'badge bg-danger' : '' ?>">
+            <?php echo $type ?>
+          </span>
+        </span>
+        <span class="company-info__row">
+          <span class="company-info__row-label pe-2">
+            <?php echo lang('EXPIRY', $lang_file) ?>
+          </span>
+          <span class="company-info__row-info">
+            <?php echo $license_info['expire_date'] ?>
+          </span>
+        </span>
+        <span class="company-info__row">
+          <span class="company-info__row-label"></span>
+          <span class="company-info__row-info progress">
+            <?php if ($rest < 15) { ?>
+              <div class="progress-bar <?php echo bg_progress($rest) ?>" role="progressbar"
+                style="width: <?php echo $rest ?>%" aria-valuenow="<?php echo $diffrence->days ?>" aria-valuemin="10"
+                aria-valuemax="<?php echo $total_days->days ?>"></div>
+              <div class="progress-value">
+                <?php echo $rest ?>%
+              </div>
+            <?php } else { ?>
+              <div class="progress-bar <?php echo bg_progress($rest) ?>" role="progressbar"
+                style="width: <?php echo $rest ?>%" aria-valuenow="<?php echo $diffrence->days ?>" aria-valuemin="10"
+                aria-valuemax="<?php echo $total_days->days ?>">
+                <?php echo $rest ?>%
+              </div>
+            <?php } ?>
+          </span>
+        </span>
+      <?php } ?>
     </div>
   </div>
 <?php } ?>

@@ -20,8 +20,6 @@ function clients($phrase)
     'ALL CLTS'        => 'جميع العملاء',
     'CLT MALS'        => 'أعطال العميل',
     'DIR CLTS'        => 'عملاء إتجاه',
-    '' => '',
-    '' => '',
 
     // large words
     'CLT NOTE'    => 'يُعرض هنا بعض الأرقام والإحصائيات عن العملاء',

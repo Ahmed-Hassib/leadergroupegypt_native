@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           $path = $uploads . "malfunctions/";
           // check who is doing the updates
           if ($update_owner_id == $tech_id && $mal_info['mal_status'] != 1) {
-            $is_updated = do_technical_updates($_POST, count($_FILES) && $_FILES['cost-receipt']['size'] != 0 ? $_FILES['cost-receipt'] : null, $path);
+            $is_updated = do_technical_updates($_POST, count($_FILES) && $_FILES['cost-receipt']['size'] > 0 && $_FILES['cost-receipt']['error'] == 0 ? $_FILES['cost-receipt'] : null, $path);
             // check status updates
             if ($is_updated['status']) {
               // get updates
@@ -156,9 +156,10 @@ function do_technical_updates($info, $cost_media, $media_path)
   $tech_comment_status = isset($info['tech-status-comment']) ? $info['tech-status-comment'] : '';
   // get malfunction cost
   $cost = $_POST['cost'];
-  // media cost name
-  $media_name = '';
-
+  // get malfunctions cost receipt 
+  $mal_info = $mal_obj->select_specific_column("`cost_receipt`", "`malfunctions`", "WHERE `mal_id` = $mal_id");
+  $cost_receipt_name = count($mal_info) > 0 ? $mal_info[0]['cost_receipt'] : null;
+  
   if ($cost_media !== null) {
     // file names
     $file_name = $cost_media['name'];
@@ -170,35 +171,36 @@ function do_technical_updates($info, $cost_media, $media_path)
     $file_error = $cost_media['error'];
     // file size
     $file_size = $cost_media['size'];
-
+    
     // check file size
-    if ($file_size <= $mal_obj->max_file_size) {
+    if ($file_size > 0 && $file_error == 0 && $file_size <= $mal_obj->max_file_size) {
       if (!file_exists($media_path) && !is_dir($media_path)) {
         mkdir($media_path);
       }
-
+      
       $media_path .= base64_decode($_SESSION['sys']['company_id']) . "/";
-
+      
       if (!file_exists($media_path) && !is_dir($media_path)) {
         mkdir($media_path);
       }
 
       // media temp
       $media_temp = [];
+
       // check if not empty
       if (!empty($file_name) && $file_error == 0) {
+        // check if malfunctions has a receipt 
+        if ($cost_receipt_name != null) {
+          unlink($media_path . $cost_receipt_name);
+        }
+        // process new receipt
         $media_temp = explode('.', $file_name);
         $media_temp[0] = 'receipt_' . date('dmY') . '_' . $mal_id . '_' . rand(00000000, 99999999);
         $media_name = join('.', $media_temp);
         move_uploaded_file($file_tmp_name, $media_path . $media_name);
+        $cost_receipt_name = $media_name;
       }
-      // check if malfunctions has a receipt 
-      $mal_info = $mal_obj->select_specific_column("`cost_receipt`", "`malfunctions`", "WHERE `mal_id` = $mal_id");
-      $img_name = count($mal_info) ? $mal_info[0]['cost_receipt'] : null;
-      // check img name
-      if ($img_name != null) {
-        unlink($media_path . $img_name);
-      }
+
       $updates[] = 'add receipt';
     } else {
       $updates[] = 'media out range';
@@ -206,7 +208,7 @@ function do_technical_updates($info, $cost_media, $media_path)
   }
 
   // get updated status
-  $is_updated = $mal_obj->update_malfunction_tech(array($mal_status, $cost, $media_name, get_date_now(), get_time_now(), $tech_comment, $tech_comment_status, $tech_status, $mal_id));
+  $is_updated = $mal_obj->update_malfunction_tech(array($mal_status, $cost, $cost_receipt_name, get_date_now(), get_time_now(), $tech_comment, $tech_comment_status, $tech_status, $mal_id));
   // updates details
   $updates[] = 'update malfunction';
   // return status
@@ -312,5 +314,5 @@ function add_updates_details($mal_id, $updated_by, $updates, $company_id)
   // create an object of Malfunction
   $comb_obj = new Malfunction();
   // add an new detail record
-  $comb_obj->add_malfunction_updates(array($mal_id, $updated_by, $updates, $company_id));
+  $comb_obj->add_malfunction_updates(array($mal_id, $updated_by, get_date_now('Y-m-d H:i:s'), $updates, $company_id));
 }

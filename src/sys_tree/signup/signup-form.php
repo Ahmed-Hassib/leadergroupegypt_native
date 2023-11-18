@@ -4,7 +4,7 @@
       <div class="formBoxHeader">
         <h2 class="h2"><?php echo lang('SIGNUP', $lang_file) ?></h2>
       </div>
-      <!-- login form -->
+      <!-- signup form -->
       <form class="signup-form needs-validation" id="signup-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
         <!-- first row that contain company info -->
         <div class="row row-cols-sm-1">
@@ -85,7 +85,7 @@
             <h4 class="h4"><?php echo lang("ADMIN LOGIN INFO", $lang_file) ?></h4>
           </div>
           <div class="row row-cols-sm-1 row-cols-lg-2 g-3">
-            <div class="col">
+            <div class="col-12">
               <!-- admin username -->
               <div class="mb-3 form-floating">
                 <input class="form-control w-100" type="text" name="username" id="username" placeholder="<?php echo lang("USERNAME", $lang_file) ?>" value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['username'] : '' ?>" onblur="is_valid(this, 'username');" required>
@@ -104,7 +104,7 @@
                 <label for="confirm_pass"><?php echo lang("CONFIRM PASSWORD", $lang_file) ?></label>
               </div>
             </div>
-            <div class="col">
+            <div class="col-12">
               <!-- admin fullname -->
               <div class="mb-3 form-floating">
                 <input class="form-control w-100" type="text" name="fullname" id="fullname" placeholder="<?php echo lang("FULLNAME", $lang_file) ?>" value="<?php echo isset($_SESSION['request_data']) ? $_SESSION['request_data']['fullname'] : '' ?>" required>

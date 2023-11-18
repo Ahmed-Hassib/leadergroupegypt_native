@@ -545,3 +545,30 @@ function starts_with($string, $startString)
   $len = strlen($startString);
   return (substr($string, 0, $len) === $startString);
 }
+
+
+/**
+ * is_triple_parts_name function v1
+ * used to check if name is triple parts or not
+ * accepts one param is name
+ */
+function is_triple_parts_name($name)
+{
+  // Split the name into separate words.
+  $words = explode(' ', $name);
+
+  // Check if the name has three words.
+  if (count($words) !== 3) {
+    return false;
+  }
+
+  // // Check if each word is in Arabic or English.
+  // foreach ($words as $word) {
+  //   if (!preg_match('/^[\p{Arabic}\p{Latin}]+$/u', $word)) {
+  //     return false;
+  //   }
+  // }
+
+  // The name is in triple parts in either Arabic or English.
+  return true;
+}

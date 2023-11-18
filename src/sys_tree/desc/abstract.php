@@ -73,7 +73,7 @@
             foreach ($service_advantages as $key => $advantage) {
               ?>
               <li>
-                <?php echo lang($advantage, $lang_file) ?>
+                <?php echo lang($advantage, $lang_file) ?>:
                 <ul>
                   <li>
                     <?php echo lang($advantage . ' DESC', $lang_file) ?>

@@ -31,8 +31,12 @@ if (empty($manager_name)) {
   $err_arr[] = 'manager empty';
 }
 
-// check manager name if contains 3 parts
-if (!preg_match('/\w+\s\w+\s\w+/', $manager_name)) {
+// // check manager name if contains 3 parts
+// if (!preg_match('/^\w+\s+\w+\s+\w+$/', $manager_name)) {
+//   $err_arr[] = 'manager not triple';
+// }
+
+if (!is_triple_parts_name($manager_name)) {
   $err_arr[] = 'manager not triple';
 }
 
@@ -51,10 +55,10 @@ if (empty($fullname)) {
   $err_arr[] = 'fullname empty';
 }
 
-// check manager name if contains 3 parts
-if (!preg_match('/\w+\s\w+\s\w+/', $fullname)) {
-  $err_arr[] = 'admin not triple';
-}
+// // check manager name if contains 3 parts
+// if (!preg_match('/\w+\s\w+\s\w+/', $fullname)) {
+//   $err_arr[] = 'admin not triple';
+// }
 
 // check username
 if (empty($username)) {
@@ -174,3 +178,4 @@ function assign_message($arr, $icon, $class, $flag, $lang)
     $_SESSION['flash_message_lang_file'][$key] = $lang;
   }
 }
+  

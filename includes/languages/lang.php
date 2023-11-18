@@ -12,7 +12,10 @@ if ($page_category == 'website') {
 $global_lang = ['global', 'description'];
 
 // for sys tree
-$sys_tree_lang = ['login', 'dashboard', 'directions', 'pieces', 'sugg_comp', 'employees', 'pcs_conn', 'clients', 'malfunctions', 'combinations', 'settings'];
+$sys_tree_lang = [
+  'user' => ['login', 'dashboard', 'directions', 'pieces', 'sugg_comp', 'employees', 'pcs_conn', 'clients', 'malfunctions', 'combinations', 'settings'],
+  'root' => ['companies']
+];
 
 // for website
 $website_lang = ['index', 'login', 'dashboard', 'sections', 'gallery', 'company', 'about', 'features', 'links', 'services', 'team'];
@@ -39,9 +42,17 @@ foreach ($global_lang as $file) {
 }
 
 // loop on language files
-foreach ($lang_files as $file) {
-  // include file
-  include_once "$page_category/$lang/$file.php";
+foreach ($lang_files as $key => $file) {
+  // check vlaue if array 
+  if (gettype($file) == 'array') {
+    // loop on files
+    foreach ($file as $k => $f) {
+      include_once "$page_category/$lang/$key/$f.php";
+    }
+  } else {
+    // include file
+    include_once "$page_category/$lang/$file.php";
+  }
 }
 
 // language function

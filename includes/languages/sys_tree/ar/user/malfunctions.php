@@ -45,7 +45,7 @@ function malfunctions($phrase)
   'COST REVIEW' => 'مراجعة التكلفة',
   'WAS DELETED' => 'تم حذفه',
   'COST RECEIPT' => 'إيصال التكلفة',
-  'MAL UPDATES' => 'التعديلات الخاصة بالتركيبة',
+  'MAL UPDATES' => 'التعديلات الخاصة بالعطل',
   'UPDATED BY' => 'تم التعديل بواسطة',
   'UPDATED AT' => 'وقت التعديل',
   'UPDATES' => 'التعديلات',

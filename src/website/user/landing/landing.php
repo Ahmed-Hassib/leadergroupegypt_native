@@ -21,12 +21,13 @@
       </a>
     </div>
 
-    <?php $landing_img_name = "leadergroupegypt-shadow.png"; ?>
+    <?php $landing_img_name = "leadergroupegypt-shxadow.png"; ?>
     <?php $landing_img_path = $landing_img . "leadergroupegypt-shadow.png"; ?>
     <?php $landing_resized_img_path = $landing_img . "resized/leadergroupegypt-shadow.png"; ?>
     <?php if (file_exists($landing_img_path)) { ?>
       <div class="image">
-        <?php $is_resized = resize_img($landing_img, $landing_img_name); ?>
+        <?php # $is_resized = resize_img($landing_img, $landing_img_name); ?>
+        <?php $is_resized = false; ?>
         <img src="<?php echo $is_resized ? $landing_resized_img_path : $landing_img_path ?>" alt="Leader Group Egypt">
       </div>
     <?php } ?>

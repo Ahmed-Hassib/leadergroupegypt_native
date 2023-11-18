@@ -4,7 +4,7 @@ $developerName = "ahmed hassib";
 // sponsor company
 $sponsorCompany = "leader group";
 // company name
-$appName = "sys tree";
+$appName = $conf['app_name'];
 
 // check if sys tree pages
 if ($is_developing == false && isset($is_sys_tree_page) && $is_sys_tree_page == true) {

@@ -54,17 +54,19 @@
       </div>
 
       <div class="hstack gap-3">
-        <!-- check mikrotik info -->
-        <button type="button" form="mikrotik-settings" class="me-auto btn btn-outline-primary text-capitalize fs-12 py-1"
-          onclick="check_mikrotik_info(this, this.form)" data-bs-toggle="modal"
-          data-bs-target="#mikrotikCheckInfoModal">
-          <span class="button-content">
-            <i class="bi bi-arrow-clockwise"></i>
-            <?php echo lang('CHECK CONNECTION', $lang_file) ?>
-          </span>
-
-          <span class="spinner-border d-none" role="status"></span>
-        </button>
+        <?php if (isset($_SESSION['sys']['mikrotik']) && !empty($_SESSION['sys']['mikrotik']['ip']) && !empty($_SESSION['sys']['mikrotik']['port']) && !empty($_SESSION['sys']['mikrotik']['username']) && !empty($_SESSION['sys']['mikrotik']['password'])) { ?>
+          <!-- check mikrotik info -->
+          <button type="button" form="mikrotik-settings"
+            class="me-auto btn btn-outline-primary text-capitalize fs-12 py-1"
+            onclick="check_mikrotik_info(this, this.form)" data-bs-toggle="modal"
+            data-bs-target="#mikrotikCheckInfoModal">
+            <span class="button-content">
+              <i class="bi bi-arrow-clockwise"></i>
+              <?php echo lang('CHECK CONNECTION', $lang_file) ?>
+            </span>
+            <span class="spinner-border d-none" role="status"></span>
+          </button>
+        <?php } ?>
         <!-- submit button -->
         <button type="submit" form="mikrotik-settings" class="btn btn-primary text-capitalize fs-12 py-1">
           <i class="bi bi-check-all me-1"></i>

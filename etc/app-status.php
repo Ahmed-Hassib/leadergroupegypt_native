@@ -1,7 +1,6 @@
 <?php
 
 // connect to database from configration file
-// require_once 'server-conf.php';
 require_once 'local-conf.php';
 // is app suspended
 $is_developing = $db_obj->select_specific_column("`is_developing`", "`settings`", "LIMIT 1")[0]['is_developing'];

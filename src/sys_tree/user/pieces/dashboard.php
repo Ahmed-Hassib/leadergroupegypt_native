@@ -84,8 +84,9 @@
         echo "<div class='alert alert-danger' role='alert'>" . lang('MIKROTIK FAILED') . "</div>";
         $users = [];
       }
+      print_r($users);
       // $users = [];
-      $target_user = !empty($users) && count($users) > 0 ? $users[1] : -1;
+      $target_user = !empty($users) && count($users) > 0 ? $users[0] : -1;
       // flag for include js code
       $is_big_data_ping = true;
       ?>
@@ -242,7 +243,7 @@
 </div>
 <!-- end home stats container -->
 
-<?php if (count($latest_added_pcs) > 0) { ?>
+<?php if (isset($latest_added_pcs) && count($latest_added_pcs) > 0) { ?>
   <script>
     var pcs_data_tables = <?php echo $all_data_json ?>;
   </script>

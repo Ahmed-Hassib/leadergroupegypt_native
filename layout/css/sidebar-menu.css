@@ -86,21 +86,34 @@
 	}
 }
 
+.brand-container {
+	position: relative;
+	display: grid;
+	grid-template-columns: 40% 55%;
+	gap: 10px;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.sidebar-menu.close .brand-container {
+	grid-template-columns: 1fr;
+}
+
 .sidebar-menu-logo-img {
 	background: white;
 	height: 50px;
-	width: auto;
+	width: max(20vw, max-content);
 	text-align: center;
 	line-height: 50px;
-	margin: 1rem 0;
+	margin: 1rem;
 	border-radius: 12px;
 }
 
 .sidebar-menu-logo-name {
-	font-size: 22px;
+	font-size: 12px;
 	font-weight: 600;
 	transition: 0.3s ease;
-	transition-delay: 0.1s;
+	transition-delay: 0s;
 }
 
 .sidebar-menu.close .sidebar-menu-logo-name {
@@ -306,10 +319,6 @@
 	.sidebar-menu,
 	.sidebar-menu .profile-details {
 		width: 260px;
-	}
-
-	.sidebar-menu-logo-name {
-		font-size: 18px;
 	}
 }
 

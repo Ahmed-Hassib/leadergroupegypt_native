@@ -30,7 +30,7 @@ if ($is_exist == true) {
       id="edit-combination-info">
       <!-- submit -->
       <div class="mb-3 hstack gap-2">
-        <?php if ($_SESSION['sys']['comb_update'] == 1 || (base64_decode($_SESSION['sys']['UserID']) == $comb_info['UserID'] && $_SESSION['sys']['isTech'] == 1)) { ?>
+        <?php if ($_SESSION['sys']['comb_update'] == 1) { ?>
           <div class="<?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
             <button type="button" class="btn btn-primary text-capitalize form-control bg-gradient py-1 fs-12" id=""
               onclick="form_validation(this.form, 'submit')">
@@ -120,7 +120,7 @@ if ($is_exist == true) {
             <!-- combination status -->
             <div
               class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-              <select class="form-select" name="comb-status" id="comb-status" required <?php echo ($_SESSION['sys']['comb_update'] != 1 && $_SESSION['sys']['isTech'] != 1) || $comb_info['isFinished'] == 1 ? 'disabled' : ''; ?>   <?php echo $_SESSION['sys']['isTech'] == 0 ? 'disabled' : ''; ?>>
+              <select class="form-select" name="comb-status" id="comb-status" required <?php echo $_SESSION['sys']['comb_update'] != 1 || $_SESSION['sys']['isTech'] != 1 || $comb_info['isFinished'] == 1 ? 'disabled' : ''; ?>   <?php echo $_SESSION['sys']['isTech'] == 0 ? 'disabled' : ''; ?>>
                 <option value="default" disabled>
                   <?php echo lang("SELECT STATUS", $lang_file) ?>
                 </option>
@@ -377,7 +377,7 @@ if ($is_exist == true) {
           <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
             <textarea name="comment" id="comment" title="describe the combination" class="form-control w-100"
               style="height: 7rem; resize: none; direction: <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'rtl' : 'ltr' ?>"
-              <?php echo $_SESSION['sys']['isTech'] == 0 || $comb_info['isFinished'] == 1 ? 'disabled' : '' ?>><?php echo empty($comb_info['tech_comment']) && $comb_info['isFinished'] ? "لا يوجد تعليق من الفني" : $comb_info['tech_comment']; ?></textarea>
+              <?php echo $_SESSION['sys']['comb_update'] == 0 || $_SESSION['sys']['isTech'] == 0 || $comb_info['isFinished'] == 1 ? 'disabled' : '' ?>><?php echo empty($comb_info['tech_comment']) && $comb_info['isFinished'] ? "لا يوجد تعليق من الفني" : $comb_info['tech_comment']; ?></textarea>
             <label for="comment">
               <?php echo lang('TECH COMMENT', $lang_file) ?>
             </label>
@@ -389,8 +389,8 @@ if ($is_exist == true) {
                 <?php echo lang('L.E') ?>
               </span>
               <div class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-                <input type="text" name="cost" id="cost" class="form-control"
-                  placeholder="<?php echo lang('COMB COST', $lang_file) ?>" value="<?php echo $comb_info['cost'] ?>" <?php echo $_SESSION['sys']['isTech'] == 0 || $comb_info['isFinished'] == 1 ? 'disabled' : '' ?>
+                <input type="text" name="cost" id="cost" class="form-control "
+                  placeholder="<?php echo lang('COMB COST', $lang_file) ?>" value="<?php echo $comb_info['cost'] ?>" <?php echo $_SESSION['sys']['comb_update'] == 0 || $_SESSION['sys']['isTech'] == 0 || $comb_info['isFinished'] == 1 ? 'disabled' : '' ?>
                   onblur="arabic_to_english_nums(this)" onkeyup="arabic_to_english_nums(this)">
                 <label for="cost">
                   <?php echo lang('COMB COST', $lang_file) ?>
@@ -402,14 +402,14 @@ if ($is_exist == true) {
               <?php echo lang('ENG NUM') ?>
             </div>
           </div>
-          <?php if ($_SESSION['sys']['isTech'] == 1 && $_SESSION['sys']['mal_update'] == 1) { ?>
+          <?php if ($_SESSION['sys']['isTech'] == 1 && $_SESSION['sys']['comb_update'] == 1) { ?>
             <!-- cost receipt -->
             <div class="input-group mb-3" dir="ltr">
+              <input type="file" class="form-control form-control-<?php echo $page_dir == 'rtl' ? 'left' : 'right' ?>" id="cost-receipt" name="cost-receipt" accept="image/*"
+                onchange="change_cost_receipt_img(this, 'cost-image-preview')">
               <label class="input-group-text" for="cost-receipt">
                 <?php echo lang('COST RECEIPT', $lang_file) ?>
               </label>
-              <input type="file" class="form-control" id="cost-receipt" name="cost-receipt" accept="image/*"
-                onchange="change_cost_receipt_img(this, 'cost-image-preview')">
             </div>
           <?php } ?>
 
@@ -672,7 +672,7 @@ if ($is_exist == true) {
 
       <!-- submit -->
       <div class="hstack gap-2">
-        <?php if ($_SESSION['sys']['comb_update'] == 1 || (base64_decode($_SESSION['sys']['UserID']) == $comb_info['UserID'] && $_SESSION['sys']['isTech'] == 1)) { ?>
+        <?php if ($_SESSION['sys']['comb_update'] == 1) { ?>
           <div class="<?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
             <button type="button" class="btn btn-primary text-capitalize form-control bg-gradient py-1 fs-12" id=""
               onclick="form_validation(this.form, 'submit')">

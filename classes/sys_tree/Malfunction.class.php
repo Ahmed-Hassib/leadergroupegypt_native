@@ -167,7 +167,7 @@ class Malfunction extends Database
   public function add_malfunction_updates($info)
   {
     // insert info query
-    $insert_query = "INSERT INTO `malfunctions_updates`(`mal_id`, `updated_by`, `updated_at`, `updates`, `company_id`) VALUES (?, ?, now(), ?, ?)";
+    $insert_query = "INSERT INTO `malfunctions_updates`(`mal_id`, `updated_by`, `updated_at`, `updates`, `company_id`) VALUES (?, ?, ?, ?, ?)";
     // prepare query
     $stmt = $this->con->prepare($insert_query);
     $stmt->execute($info);

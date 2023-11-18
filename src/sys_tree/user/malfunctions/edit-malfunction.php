@@ -34,7 +34,7 @@ if ($is_exist_mal == true) {
       id="edit-malfunction-info">
       <!-- submit -->
       <div class="mb-3 hstack gap-2">
-        <?php if ($_SESSION['sys']['mal_update'] == 1 || (base64_decode($_SESSION['sys']['UserID']) == $mal_info['tech_id'] && $_SESSION['sys']['isTech'] == 1)) { ?>
+        <?php if ($_SESSION['sys']['mal_update'] == 1) { ?>
           <div class="<?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
             <button type="submit" form="edit-malfunction-info"
               class="btn btn-primary text-capitalize form-control bg-gradient fs-12 py-1" id="update-malfunctions">
@@ -119,7 +119,7 @@ if ($is_exist_mal == true) {
             <!-- status -->
             <div
               class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-              <select name="mal-status" id="mal-status" class="form-select" <?php echo $_SESSION['sys']['isTech'] == 0 || $mal_info['mal_status'] == 1 ? 'disabled' : '' ?>>
+              <select name="mal-status" id="mal-status" class="form-select" <?php echo $_SESSION['sys']['mal_update'] == 0 || $_SESSION['sys']['isTech'] == 0 || $mal_info['mal_status'] == 1 ? 'disabled' : '' ?>>
                 <option value="default" disabled>
                   <?php echo lang("SELECT STATUS", $lang_file) ?>
                 </option>
@@ -358,7 +358,7 @@ if ($is_exist_mal == true) {
                 <?php echo $mal_info['mal_status'] == 1 && $mal_info['isAccepted'] != 2 ? lang('FINISHED DATE') : lang('DELAYED DATE'); ?>
               </label>
               <div class="position-relative">
-                <?php if ($mal_info['mal_status']) { ?>
+                <?php if ($mal_info['mal_status'] != 0) { ?>
                   <span class="text-primary" dir='ltr'>
                     <?php echo date_format(date_create($mal_info['repaired_date']), 'd/m/Y') ?>
                   </span>
@@ -375,7 +375,7 @@ if ($is_exist_mal == true) {
                 <?php echo $mal_info['mal_status'] == 1 && $mal_info['isAccepted'] != 2 ? lang('FINISHED TIME') : lang('DELAYED TIME'); ?>
               </label>
               <div class="position-relative">
-                <?php if ($mal_info['mal_status'] == 1) { ?>
+                <?php if ($mal_info['mal_status'] != 0) { ?>
                   <span class="text-primary" dir='ltr'>
                     <?php echo date_format(date_create($mal_info['repaired_time']), 'h:i:s a') ?>
                   </span>
@@ -445,7 +445,7 @@ if ($is_exist_mal == true) {
           <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
             <textarea name="comment" id="comment" class="form-control w-100"
               style="height: 5rem; resize: none; direction: <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'rtl' : 'ltr' ?>"
-              <?php echo $_SESSION['sys']['isTech'] == 0 || $mal_info['mal_status'] == 1 ? 'disabled' : '' ?>><?php echo empty($mal_info['tech_comment']) && $mal_info['mal_status'] == 1 ? "لا يوجد تعليق من الفني" : $mal_info['tech_comment']; ?></textarea>
+              <?php echo $_SESSION['sys']['mal_update'] == 0 || $_SESSION['sys']['isTech'] == 0 || $mal_info['mal_status'] == 1 ? 'disabled' : '' ?>><?php echo empty($mal_info['tech_comment']) && $mal_info['mal_status'] == 1 ? "لا يوجد تعليق من الفني" : $mal_info['tech_comment']; ?></textarea>
             <label for="comment">
               <?php echo lang('TECH COMMENT', $lang_file) ?>
             </label>
@@ -458,7 +458,7 @@ if ($is_exist_mal == true) {
               </span>
               <div class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
                 <input type="text" name="cost" id="cost" class="form-control"
-                  placeholder="<?php echo lang('MAL COST', $lang_file) ?>" value="<?php echo $mal_info['cost'] ?>" <?php echo $_SESSION['sys']['isTech'] == 0 || $mal_info['mal_status'] == 1 ? 'disabled' : '' ?>
+                  placeholder="<?php echo lang('MAL COST', $lang_file) ?>" value="<?php echo $mal_info['cost'] ?>" <?php echo $_SESSION['sys']['mal_update'] == 0 || $_SESSION['sys']['isTech'] == 0 || $mal_info['mal_status'] == 1 ? 'disabled' : '' ?>
                   onblur="arabic_to_english_nums(this)" onkeyup="arabic_to_english_nums(this)">
                 <label for="cost">
                   <?php echo lang('MAL COST', $lang_file) ?>
@@ -473,11 +473,11 @@ if ($is_exist_mal == true) {
           <?php if ($_SESSION['sys']['isTech'] == 1 && $_SESSION['sys']['mal_update'] == 1) { ?>
             <!-- cost receipt -->
             <div class="input-group mb-3" dir="ltr">
+              <input type="file" class="form-control form-control-<?php echo $page_dir == 'rtl' ? 'left' : 'right' ?>" id="cost-receipt" name="cost-receipt" accept="image/*"
+                onchange="change_cost_receipt_img(this, 'cost-image-preview')">
               <label class="input-group-text" for="cost-receipt">
                 <?php echo lang('COST RECEIPT', $lang_file) ?>
               </label>
-              <input type="file" class="form-control" id="cost-receipt" name="cost-receipt" accept="image/*"
-                onchange="change_cost_receipt_img(this, 'cost-image-preview')">
             </div>
           <?php } ?>
 
@@ -734,7 +734,7 @@ if ($is_exist_mal == true) {
       </div>
       <!-- submit -->
       <div class="mt-3 hstack gap-2">
-        <?php if ($_SESSION['sys']['mal_update'] == 1 || (base64_decode($_SESSION['sys']['UserID']) == $mal_info['tech_id'] && $_SESSION['sys']['isTech'] == 1)) { ?>
+        <?php if ($_SESSION['sys']['mal_update'] == 1) { ?>
           <div class="<?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
             <button type="submit" form="edit-malfunction-info"
               class="btn btn-primary text-capitalize form-control bg-gradient fs-12 py-1" id="update-malfunctions">

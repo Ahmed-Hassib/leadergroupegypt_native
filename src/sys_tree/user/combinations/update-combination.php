@@ -160,8 +160,9 @@ function do_technical_updates($info, $cost_media, $media_path)
   $tech_comment = isset($info['comment']) ? $info['comment'] : '';
   // get combination cost
   $cost = $_POST['cost'];
-  // media cost name
-  $media_name = '';
+  // check if combination has a receipt 
+  $comb_info = $comb_obj->select_specific_column("`cost_receipt`", "`combinations`", "WHERE `comb_id` = $comb_id");
+  $cost_receipt_name = count($comb_info) ? $comb_info[0]['cost_receipt'] : null;
 
   if ($cost_media !== null) {
     // file names
@@ -191,25 +192,25 @@ function do_technical_updates($info, $cost_media, $media_path)
       $media_temp = [];
       // check if not empty
       if (!empty($file_name) && $file_error == 0) {
+        // check img name
+        if ($cost_receipt_name != null) {
+          unlink($media_path . $cost_receipt_name);
+        }
+        // process ne receipt
         $media_temp = explode('.', $file_name);
         $media_temp[0] = 'receipt_' . date('dmY') . '_' . $comb_id . '_' . rand(00000000, 99999999);
         $media_name = join('.', $media_temp);
         move_uploaded_file($file_tmp_name, $media_path . $media_name);
+        $cost_receipt_name = $media_name;
       }
-      // check if combination has a receipt 
-      $comb_info = $comb_obj->select_specific_column("`cost_receipt`", "`combinations`", "WHERE `comb_id` = $comb_id");
-      $img_name = count($comb_info) ? $comb_info[0]['cost_receipt'] : null;
-      // check img name
-      if ($img_name != null) {
-        unlink($media_path . $img_name);
-      }
+
       $updates[] = 'add receipt';
     } else {
       $updates[] = 'media out range';
     }
   }
   // get updated status
-  $is_updated = $comb_obj->update_combination_tech(array($is_finished, $tech_status, get_date_now(), get_time_now(), get_date_now(), get_time_now(), $cost, $media_name, $tech_comment, $comb_id));
+  $is_updated = $comb_obj->update_combination_tech(array($is_finished, $tech_status, get_date_now(), get_time_now(), get_date_now(), get_time_now(), $cost, $cost_receipt_name, $tech_comment, $comb_id));
   // updates detail
   $updates[] = 'update combination';
   // return status

@@ -365,3 +365,16 @@ span.spinner-border {
     width: 300px;
   }
 }
+
+
+/************/
+.footer-image {
+  margin: auto;
+  width: max(75px, 80px) !important;
+}
+
+.footer-image>img {
+  width: 100%;
+}
+
+/************/

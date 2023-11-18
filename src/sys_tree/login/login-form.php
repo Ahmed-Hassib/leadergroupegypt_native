@@ -1,7 +1,8 @@
 <div class="loginPageContainer">
   <div class="imgBox">
     <div class="hero-content">
-      <img src="<?php echo $assets ?>images/login-2.svg" alt="" />
+      <!-- <img src="<?php echo $assets ?>images/login-2.svg" alt="" /> -->
+      <img src="<?php echo $systree_assets ?>systree.jpg" alt="" />
     </div>
   </div>
   <div class="contentBox" dir="rtl">

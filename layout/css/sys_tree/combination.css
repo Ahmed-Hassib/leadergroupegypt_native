@@ -1,3 +1,7 @@
+.card-title {
+  font-size: 12px !important;
+}
+
 .add-combination-container,
 .combination-info-container {
   margin-bottom: 1rem;

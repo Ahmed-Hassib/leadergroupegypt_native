@@ -8,12 +8,14 @@
 
       $company_img_name_db = $db_obj->select_specific_column("`company_img`", "`companies`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
       $company_img_name_db = count($company_img_name_db) > 0 ? $company_img_name_db[0]['company_img'] : null;
-      $company_img_name = empty($company_img_name_db) || $company_img_name_db == null ? 'leadergroupegypt.png' : $company_img_name_db;
-      $company_img_path = empty($company_img_name_db) || $company_img_name_db == null ? $uploads . "companies-img" : $uploads . "companies-img/" . base64_decode($_SESSION['sys']['company_id']);
+      $company_img_name = empty($company_img_name_db) || $company_img_name_db == null ? 'systree.png' : $company_img_name_db;
+      $company_img_path = empty($company_img_name_db) || $company_img_name_db == null ? $systree_assets : $uploads . "companies-img/" . base64_decode($_SESSION['sys']['company_id']);
       // check if image exists
-      $img_file = file_exists("$company_img_path/$company_img_name") ? "$company_img_path/$company_img_name" : $uploads . "companies-img/leadergroupegypt.png";
+      $img_file = file_exists("$company_img_path/$company_img_name") ? "$company_img_path/$company_img_name" : $systree_assets . "systree.png";
+      // resize company image
+      $is_resized = resize_img($company_img_path."/", $company_img_name);
       ?>
-      <img src="<?php echo $img_file ?>" class="sidebar-menu-logo-img" <?php if (empty($company_img_name_db) || $company_img_name_db == null) { ?> style="margin: 1rem !important" <?php } ?>
+      <img src="<?php echo $is_resized ? "$company_img_path/resized/$company_img_name" : "$company_img_path/$company_img_name" ?>" class="sidebar-menu-logo-img" <?php if (empty($company_img_name_db) || $company_img_name_db == null) { ?> style="" <?php } ?>
         alt="<?php echo isset($_SESSION['sys']['company_name']) ? $_SESSION['sys']['company_name'] : lang('NOT ASSIGNED') ?>"
         id="company-img-brand">
       <span class="sidebar-menu-logo-name text-uppercase ">
