@@ -24,7 +24,7 @@ etc/local-conf.php
 etc/server-conf.php
 
 # ignoring Database class
-classes/Database.class.php
+Database.class.php
 
 # ignoring spare_files folder
 spare_files/
