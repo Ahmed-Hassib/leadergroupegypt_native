@@ -1,11 +1,8 @@
 <?php
 // create an object of Service class
 $services_obj = new Service();
-// get services section status
-
 // get all services images
 $services_info = $services_obj->get_active_services();
-// get services status
 // check if count of images > 0
 if ($services_info != null && count($services_info) > 0) {
   ?>

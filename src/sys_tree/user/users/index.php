@@ -79,6 +79,8 @@ if ($is_developing == false) {
 include_once str_repeat("../", $level) . "etc/pre-conf.php";
 // initial configration of system
 include_once str_repeat("../", $level) . "etc/init.php";
+// alerts of system
+include_once str_repeat("../", $level) . "etc/system-alerts.php";
 
 // include file name
 include_once $file_name;

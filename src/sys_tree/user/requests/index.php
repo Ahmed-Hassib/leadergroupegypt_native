@@ -108,9 +108,11 @@ switch ($query) {
 
   case 'ping':
     $file_name = 'ping.php';
+    break;
 
   case 'check-mikrotik-info':
     $file_name = 'check-mikrotik-info.php';
+    break;
 }
 
 include_once $file_name;

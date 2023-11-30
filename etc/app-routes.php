@@ -20,7 +20,7 @@ $func = $includes . "functions/"; // Functions Directory
 
 // Libraries Directory
 $lib = $includes . "libraries/";
-$charts = $lib . "phpchart_lite/"; // php chart lite Directory
+$php_chart = $lib . "phpChart/"; // pChart Directory
 
 // LAYOUT DIRECTORY
 $layout = $up_level . "layout/"; // layout directory

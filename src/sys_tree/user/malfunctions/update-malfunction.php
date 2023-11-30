@@ -1,7 +1,7 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // create an object of Malfunction class
-  $mal_obj = !isset($mal_obj) ? new Malfunction() : $mal_obj;
+  $mal_obj = new Malfunction();
   // get update owner id
   $update_owner_id = base64_decode($_SESSION['sys']['UserID']);
   // get update owner type

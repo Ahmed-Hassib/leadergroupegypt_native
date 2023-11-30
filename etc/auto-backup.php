@@ -12,7 +12,7 @@ if (isset($_SESSION['sys']) || isset($_SESSION['website'])) {
     // database backup file
     $db_backup_file_name = "db_backup_" . get_date_now('dmY') . ".sql";
     // get backup
-    require_once $func . "autobackup.php";
+    require_once $func . "global/autobackup.php";
   } else {
     // make flag true
     $backup_flag = true;

@@ -75,16 +75,13 @@
           "/ip/firewall/nat/print",
           array(
             "?comment" => "mohamady",
-            // "?disabled" => "false"
           )
         );
-
         echo "<div class='alert alert-primary' role='alert'>" . lang('MIKROTIK SUCCESS') . "</div>";
       } else {
         echo "<div class='alert alert-danger' role='alert'>" . lang('MIKROTIK FAILED') . "</div>";
         $users = [];
       }
-      print_r($users);
       // $users = [];
       $target_user = !empty($users) && count($users) > 0 ? $users[0] : -1;
       // flag for include js code

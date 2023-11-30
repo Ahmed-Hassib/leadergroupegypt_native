@@ -2,7 +2,7 @@
 // get piece / client id
 $pieceid = isset($_GET['pieceid']) && !empty($_GET['pieceid']) ? base64_decode($_GET['pieceid']) : 0;
 // create an object of Malfunction class
-$mal_obj = !isset($mal_obj) ? new Malfunction() : $mal_obj;
+$mal_obj = new Malfunction();
 // check the piece id 
 $is_exist_piece = $mal_obj->is_exist("`id`", "`pieces_info`", $pieceid);
 // check if there are malfunctions of this piece / client
@@ -64,7 +64,7 @@ if ($is_exist_piece) {
   <?php if ($is_exist_mal == true) { ?>
     <?php
     // if current emp is technical man
-    $tech_condition = $_SESSION['sys']['isTech'] == 1 ? 'AND `tech_id` = ' . $_SESSION['sys']['UserID'] : '';
+    $tech_condition = $_SESSION['sys']['isTech'] == 1 ? 'AND `tech_id` = ' . base64_decode($_SESSION['sys']['UserID']) : '';
     $query = "SELECT *FROM `malfunctions` WHERE `client_id` = $pieceid $tech_condition";
     // prepaire the query
     $stmt = $con->prepare($query);
@@ -75,17 +75,6 @@ if ($is_exist_piece) {
 
     <!-- start table container -->
     <div class="table-responsive-sm">
-      <div class="fixed-scroll-btn">
-        <!-- scroll left button -->
-        <button type="button" role="button" class="scroll-button scroll-prev scroll-prev-right">
-          <i class="carousel-control-prev-icon"></i>
-        </button>
-        <!-- scroll right button -->
-        <button type="button" role="button"
-          class="scroll-button scroll-next <?php echo $_SESSION['sys']['lang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
-          <i class="carousel-control-next-icon"></i>
-        </button>
-      </div>
       <!-- strst malfunctions table -->
       <table class="table table-striped table-bordered display compact table-style" id="malfunctions">
         <thead class="primary text-capitalize">

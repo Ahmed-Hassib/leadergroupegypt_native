@@ -1,137 +1,116 @@
 <?php
 // set the default timezone to use.
-date_default_timezone_set('Africa/Cairo'); 
+date_default_timezone_set('Africa/Cairo');
 // start output buffering
 ob_start();
 // start session
 session_start();
 // regenerate session id
 session_regenerate_id();
-
 // no header
-$noHeader = true;
+$no_header = true;
 // no navbar
-$noNavBar = true;
+$no_navbar = true;
+// page category
+$page_category = "sys_tree";
 // page title
 $page_title = "";
+// lang file
+$lang_file = "";
 // level
 $level = 4;
 // nav level
 $nav_level = 1;
+
+$possible_back = false;
+// app status and global includes
+include_once str_repeat("../", $level) . "etc/app-status.php";
+// pre configration of system
+include_once str_repeat('../', $level) . 'etc/pre-conf.php';
 // initial configration of system
-include_once str_repeat("../", $level) . "etc/init.php";
+include_once str_repeat('../', $level) . 'etc/init.php';
 
 // check if Get request do is set or not
 $query = isset($_GET['do']) ? $_GET['do'] : '';
 
-global $con;
+switch ($query) {
+  case 'get-source':
+    $file_name = 'get-sources.php';
+    break;
 
-// check if the $_GET is set
-if ($query == 'ping') {
-  // get piece ip
-  $ip = $_GET['ip'];
-  // do ping command 
-  $ping = getPing($ip);
-  // convert the result into json format
-  echo json_encode($ping);
+  case 'search':
+    $file_name = 'search-clients.php';
+    break;
 
-} elseif ($query == 'get-source') {
-  // get dir id
-  $dirId = $_GET['dir-id'];
-  // select all pieces in this dir
-  $q = "SELECT `pieces`.`id`, `pieces`.`piece_ip`, `pieces`.`piece_name` FROM `pieces` WHERE `pieces`.`type_id` <> 4 AND `pieces`.`direction_id` = ? ORDER BY `pieces`.`direction_id` ASC, `pieces`.`id` ASC";
-  // prepare the query
-  $stmt = $con->prepare($q);
-  $stmt->execute(array($dirId));      // execute query
-  $rows = $stmt->fetchAll();          // fetch data
-  // convert the result into json format
-  echo json_encode($rows);
+  case 'get-device-models':
+    $file_name = 'get-device-models.php';
+    break;
 
-} elseif ($query == "search") {
-  // get client name
-  $clientName = $_GET['client-name'];
-  // query statement
-  $query = "SELECT `id`, `piece_name` FROM `pieces` WHERE `piece_name` LIKE :keysearch";
-  // prepare statement
-  $stmt = $con->prepare($query);
-  $stmt->bindValue('keysearch', '%' . $clientName . '%');
-  $stmt->execute();
-  // get all rows
-  $result = $stmt->fetchAll();
-  // send the result as a json formate
-  echo json_encode($result);
+  case 'get-user-info':
+    $file_name = 'get-user-info.php';
+    break;
 
-} elseif ($query == "changeLang") {
-  // get user id
-  $userid = isset($_POST['id']) ? intval($_POST['id']) : 0; 
-  if (!isset($user_obj)) {
-    // create an object of User class
-    $user_obj = new User();
-  }
-  // check user if exist or not
-  $check = $user_obj->is_exist("`UserID`", "`users`", $userid);
-  // check
-  if ($check == true) {
-    // get language
-    $lang = isset($_POST['language']) ? intval($_POST['language']) : 0;
-    // call change_user_langugae
-    $is_changed = $user_obj->change_user_language($lang, $userid);
-    // check if language is changed
-    if ($is_changed) {
-      if (!isset($session_obj)) {
-        // create an object of Session class
-        $session_obj = new Session();
-      }
-      // get user info
-      $user_details = $session_obj->get_user_info($userid);
-      // check if exist
-      if ($user_details[0] == true) {
-        $session_obj->set_user_session($user_details[1]);
-      }
-    }
-    // redirect to home page
-    redirect_home("", 'back', 0);
-  }
+  case 'update-session':
+    $file_name = 'update-session.php';
+    break;
 
+  case 'upgrade-version':
+    $file_name = 'upgrade-version.php';
+    break;
 
-} elseif ($query == "getSuggComp") {
-  // get sugg or comp id
-  $id = intval($_GET['id']);
-  // select it
-  $query = "SELECT *FROM `comp_sugg` WHERE `id` = ?";
-  $stmt = $con->prepare($query);
-  $stmt->execute(array($id));
-  $rows = $stmt->fetch();
-  // return data
-  echo json_encode($rows);
+  case 'check-piece-fullname':
+    $file_name = 'check-piece-fullname.php';
+    break;
 
-} elseif ($query == "updateSession") {
-  // include update session file
-  include_once 'update-session.php';
+  case 'check-combination-client-name':
+    $file_name = 'check-combination-client-name.php';
+    break;
 
-} else if ($query == "noti") {
+  case 'check-piece-ip':
+    $file_name = 'check-piece-ip.php';
+    break;
 
-  // select it
-  $query = "SELECT COUNT(`mal_id`) FROM `malfunctions` WHERE `added_date` = CURRENT_DATE";
-  $stmt = $con->prepare($query);
-  $stmt->execute();
-  $rows = $stmt->fetch();
-  // return data
-  echo json_encode($rows);
+  case 'check-piece-macadd':
+    $file_name = 'check-piece-macadd.php';
+    break;
 
-} else if ($query == "backup") {
-  
-  // get backup
-  include_once $func . 'autobackup.php';
+  case 'check-username':
+    $file_name = 'check-username.php';
+    break;
 
-} else if ($query == "updateBackupInfo") {
-  
+  case 'check-direction':
+    $file_name = 'check-direction-name.php';
+    break;
 
-} else if ($query == "versionControl") {
-  // get theme id
-  $version = isset($_POST['version']) && !empty($_POST['version']) ? $_POST['version'] : "v1.0.2";
-  // 
-  $curr_version = $version; 
-  // redirect to previous page
-  redirect_home("", "back", 0);
+  case 'delete-malfunction-media':
+    $file_name = 'delete-malfunction-media.php';
+    break;
+
+  case 'delete-combination-media':
+    $file_name = 'delete-combination-media.php';
+    break;
+
+  case 'delete-profile-img':
+    $file_name = 'delete-profile-img.php';
+    break;
+
+  case 'delete-company-img':
+    $file_name = 'delete-company-img.php';
+    break;
+
+  case 'activate-phone-number':
+    $file_name = 'activate-phone-number.php';
+    break;
+
+  case 'rating-app':
+    $file_name = 'rating-app.php';
+    break;
+
+  case 'ping':
+    $file_name = 'ping.php';
+
+  case 'check-mikrotik-info':
+    $file_name = 'check-mikrotik-info.php';
 }
+
+include_once $file_name;

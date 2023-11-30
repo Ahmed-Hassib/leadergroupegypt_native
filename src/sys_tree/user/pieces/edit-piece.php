@@ -40,7 +40,7 @@ if ($piece_id != 0 && $is_exist_id && $is_exist_data) {
         <?php } ?>
 
         <?php if ($target_user != -1) { ?>
-          <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2" href="?do=prepare-ip&address=<?php echo $piece_data['ip'] ?>&port=<?php echo $piece_data['port'] != 0 ? $piece_data['port'] : '443' ?>" target='_blank'><?php echo lang('VISIT DEVICE', $lang_file) ?></a>
+          <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2" href="?do=prepare-ip&address=<?php echo $piece_data['ip'] ?>&port=<?php echo !empty($piece_data['port']) ? $piece_data['port'] : '' ?>" target='_blank'><?php echo lang('VISIT DEVICE', $lang_file) ?></a>
         <?php } ?>
 
         <?php if ($_SESSION['sys']['pcs_delete'] == 1) { ?>

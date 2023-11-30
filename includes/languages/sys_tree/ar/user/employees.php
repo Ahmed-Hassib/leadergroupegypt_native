@@ -7,6 +7,10 @@ function employees($phrase)
 {
   static $lang = array(
   // employees words
+  'EMPLOYEE' => 'موظف',
+  'EMPLOYEES' => 'موظفين',
+  'THE EMPLOYEE' => 'الموظف',
+  'THE EMPLOYEES' => 'الموظفين',
   'ADD NEW' => 'اضافة موظف جديد',
   'EDIT' => 'تعديل موظف',
   'GENERAL INFO' => 'المعلومات العامة',

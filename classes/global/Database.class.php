@@ -15,20 +15,20 @@ class Database extends PDO
 
 
   /** CONSTANT */
-  const OPTIONS = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',);
+  const OPTIONS = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8', );
 
 
   /** METHODS */
   // constructor
-  public function __construct($host = "localhost", $name = "leadergroup_website", $user =  "root", $pass = "@hmedH@ssib")
+  public function __construct($host = "localhost", $name = "leadergroup_website", $user = "root", $pass = "@hmedH@ssib")
   {
     if (!$this->is_empty($name) && !$this->is_empty($user) && !$this->is_empty($pass)) {
-      $this->db_name  = $name;
-      $this->host     = $host;
-      $this->dsn      = "mysql:host=$this->host;dbname=$this->db_name";
+      $this->db_name = $name;
+      $this->host = $host;
+      $this->dsn = "mysql:host=$this->host;dbname=$this->db_name";
       $this->username = $user;
       $this->password = $pass;
-      $this->con      = new PDO($this->dsn, $this->username, $this->password, self::OPTIONS);
+      $this->con = new PDO($this->dsn, $this->username, $this->password, self::OPTIONS);
     }
   }
 
@@ -179,18 +179,28 @@ class Database extends PDO
     $insert_query = "INSERT INTO `$db_name`.`backups` (`file_name`, `backup_date`, `backup_time`, `status`) VALUES (?, ?, ?, ?);";
     $stmt = $this->con->prepare($insert_query);
     $stmt->execute($info);
-    $query_count =  $stmt->rowCount();       // count effected rows
+    $query_count = $stmt->rowCount();       // count effected rows
     // return result
     return $query_count > 0 ? true : null;
   }
-  
+
   public function update_backup_info($db_name, $info)
   {
     $insert_query = "UPDATE `$db_name`.`backups` SET `backup_time` = ? WHERE `id` = ?;";
     $stmt = $this->con->prepare($insert_query);
     $stmt->execute($info);
-    $query_count =  $stmt->rowCount();       // count effected rows
+    $query_count = $stmt->rowCount();       // count effected rows
     // return result
     return $query_count > 0 ? true : null;
+  }
+
+  public function set_next_remote_ip($remote_ip)
+  {
+    $select_stmt = "UPDATE `settings` SET `next_remote_ip` = ? WHERE 1";
+    $stmt = $this->con->prepare($select_stmt);
+    $stmt->execute(array($remote_ip));
+    $count = $stmt->rowCount();     // get number of effected rows
+    // return
+    return $count > 0 ? "updated" : false;
   }
 }

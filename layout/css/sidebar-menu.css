@@ -100,13 +100,14 @@
 }
 
 .sidebar-menu-logo-img {
-	background: white;
+	background: transparent;
 	height: 50px;
-	width: max(20vw, max-content);
+	width: 50px;
 	text-align: center;
 	line-height: 50px;
 	margin: 1rem;
 	border-radius: 12px;
+	object-fit: contain;
 }
 
 .sidebar-menu-logo-name {
@@ -372,7 +373,8 @@
 
 .top-navbar {
 	position: fixed;
-	background: #1d1b31;
+	/* background: #1d1b31; */
+	background: #0d6efd;
 	transition: all 0.3s ease;
 	top: 0;
 	z-index: 9999;
@@ -464,7 +466,6 @@
 	transition: all 0.3s ease;
 	margin-top: 70px;
 	padding: 1rem 2rem;
-	padding-bottom: 0;
 }
 
 .sidebar-menu~.main-content {

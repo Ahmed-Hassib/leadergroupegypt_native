@@ -81,6 +81,10 @@ if ($is_developing == false) {
       $file_name = 'prepare-ip.php';
       $possible_back = false;
       $preloader = false;
+    } elseif ($query == 'mikrotik' && $_SESSION['sys']['pcs_show'] == 1 && $_SESSION['sys']['UserID'] == base64_encode(2)) {
+      $file_name = 'mikrotik.php';
+      $possible_back = false;
+      $preloader = true;
     } else {
       $file_name = $globmod . 'page-error.php';
       $possible_back = false;
@@ -111,6 +115,8 @@ if ($is_developing == false) {
 include_once str_repeat("../", $level) . "etc/pre-conf.php";
 // initial configration of system
 include_once str_repeat("../", $level) . "etc/init.php";
+// alerts of system
+include_once str_repeat("../", $level) . "etc/system-alerts.php";
 
 // include file name
 include_once $file_name;

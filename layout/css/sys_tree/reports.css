@@ -1,0 +1,16 @@
+.reports-container,
+.reports-container .report-form {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.reports-container .report-form {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 250px));
+  gap: 10px;
+}
+
+.direction-list ::marker {
+  font-size: 24px;
+}

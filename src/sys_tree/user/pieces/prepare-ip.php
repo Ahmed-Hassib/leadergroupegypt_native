@@ -1,111 +1,52 @@
-<?php
-// get data
-$address = isset($_GET['address']) && !empty($_GET['address']) ? $_GET['address'] : -1; // target ip
-$port = isset($_GET['port']) && !empty($_GET['port']) ? $_GET['port'] : 443; // target port
+<?php if (isset($_GET['address']) && !empty($_GET['address'])) { ?>
+  <!-- start add new user page -->
+  <div class="container" dir="<?php echo $page_dir ?>">
+    <section class="section-block">
+      <header class="section-header">
+        <h2>
+          <?php echo lang('PREPARING MIKROTIK CONFIRM') ?>
+        </h2>
+        <hr>
+      </header>
 
-// empty array for errors
-$errors = array();
+      <section class="prepare-ips-section">
+        <div class="card text-center">
+          <div class="card-header">
+            port 1
+          </div>
+          <div class="card-body">
+            <!-- confirmation form -->
+            <form action="?do=mikrotik" method="post" onchange="form_validation(this)">
+              <div class="row row-cols-sm-1 g-3 mb-3">
+                <div class="col-12 form-floating form-floating-right mb-3">
+                  <input type="text" class="form-control" id="device-ip" name="ip"
+                    value="<?php echo trim($_GET['address'], "\n\r\t\v\x") ?>" placeholder="name@example.com" required>
+                  <label for="device-ip">
+                    <?php echo lang('IP') ?>
+                  </label>
+                </div>
+                <div class="col-12 form-floating form-floating-right">
+                  <input type="text" class="form-control" id="device-port" name="port"
+                    value="<?php echo isset($_GET['port']) && !empty($_GET['port']) ? trim($_GET['port'], "\n\r\t\v\x") : '' ?>"
+                    placeholder="text" required>
+                  <label for="device-port">
+                    <?php echo lang('PORT') ?>
+                  </label>
+                </div>
+                <div class="col-12">
+                  <button type="button" class="btn btn-primary w-100" onclick="form_validation(this.form, 'submit')">
+                    <?php echo lang('CONFIRM') ?>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer text-body-secondary">
+            status
+          </div>
+        </div>
 
-// check address
-if ($address == -1 || empty($address)) {
-  $errors[] = 'ip null';
-}
-
-// check port
-if ($port <= 0 || empty($port)) {
-  $errors[] = 'port null';
-}
-
-// check if array of erros is empty or not
-if (empty($errors)) {
-  // create an object of Pieces class
-  $pcs_obj = new Pieces();
-  // create an object of Company class
-  $company_obj = new Company();
-  // check number of opened port from database
-  $opened_ports = intval($pcs_obj->select_specific_column("`opened_ports`", "`companies`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id']))[0]['opened_ports']);
-  // check number of opened ports
-  if ($opened_ports >= 10) {
-    // reset opened ports
-    $opened_ports = 0;
-  } else {
-    // increase opened ports
-    $opened_ports += 1;
-  }
-  // update number of opened port in database
-  $company_obj->update_opened_ports(base64_decode($_SESSION['sys']['company_id']), $opened_ports);
-  // get next port
-  $next_port = intval($_SESSION['sys']['company_port']) + $opened_ports + 1;
-  // connect to mikrotik api
-  if ($api_obj->connect($mikrotik_ip, $mikrotik_username, $mikrotik_password)) {
-    // get users
-    $users = $api_obj->comm(
-      "/ip/firewall/nat/print",
-      array(
-        "?comment" => "mohamady",
-        "?disabled" => "false"
-      )
-    );
-    // check count of roles
-    if (count($users) < $opened_ports) {
-      // create a new role
-      $users = $api_obj->comm(
-        "/ip/firewall/nat/add",
-        array(
-          "action" => "dst-nat",
-          "chain" => "dstnat",
-          "comment" => "mohamady",
-          "dst-port" => $next_port,
-          "in-interface" => "MANAGEMENT-SYSTEM",
-          "protocol" => "tcp",
-          "to-addressed" => $address,
-          "to-ports" => $port
-        )
-      );
-    } else {
-      // get id
-      $id = $users[0]['.id'];
-      // change ir in api
-      $users = $api_obj->comm(
-        "/ip/firewall/nat/set",
-        array(
-          "numbers" => $id,
-          "to-ports" => $port,
-          "to-addresses" => $address,
-        )
-      );
-    }
-
-    // protocol
-    $protocol = $port == 80 ? 'http' : 'https';
-    // url
-    $url = "$protocol://leadergroupegypt.com:$next_port/";
-
-
-    echo "<div dir='ltr'>";
-    // show success message 
-    echo "<h3 class='h3 text-success'>" . lang('MIKROTIK SUCCESS') . "</h3>";
-    // target link
-    echo "If not redirect after 3 sec <a href='$url'>click here</a>";
-    echo "</div>";
-    // redirect page to url to open device
-    // header("refresh:0;url=$url");
-    // die;
-  } else {
-    // show success message 
-    echo "<h3 class='h3 text-success'>" . lang('MIKROTIK FAILED') . "</h3>";
-    // redirect to the previous page
-    redirect_home(null, "back", 5);
-  }
-} else {
-  foreach ($errors as $key => $error) {
-    // prepare flash session variables
-    $_SESSION['flash_message'][$key] = strtoupper($error);
-    $_SESSION['flash_message_icon'][$key] = 'bi-exclamation-triangle-fill';
-    $_SESSION['flash_message_class'][$key] = 'danger';
-    $_SESSION['flash_message_status'][$key] = false;
-    $_SESSION['flash_message_lang_file'][$key] = 'global_';
-  }
-  // redirect to the previous page
-  redirect_home(null, "back", 0);
-}
+      </section>
+    </section>
+  </div>
+<?php } ?>

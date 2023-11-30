@@ -7,17 +7,17 @@
         <!-- Button trigger modal -->
         <a class="btn btn-outline-primary fs-12 py-1" href="?do=add-new-company">
           <i class="bi bi-pencil d-sm-block d-md-none"></i>
-          <span class="d-none d-md-block"><?php echo lang("ADD NEW COMPANY", @$_SESSION['sys']['lang']) ?></span>
+          <span class="d-none d-md-block"><?php echo lang("ADD NEW COMPANY", $lang_file) ?></span>
         </a>
       </div>
       <div class="hstack gap-2">
         <div>
           <span class="badge bg-danger p-2 d-inline-block"></span>
-          <span><?php echo lang('LICENSE EXPIRED', @$_SESSION['sys']['lang']) ?></span>
+          <span><?php echo lang('LICENSE EXPIRED', $lang_file) ?></span>
         </div>
         <div>
           <span class="badge bg-success p-2 d-inline-block"></span>
-          <span><?php echo lang('LICENSE ACTIVATED', @$_SESSION['sys']['lang']) ?></span>
+          <span><?php echo lang('LICENSE ACTIVATED', $lang_file) ?></span>
         </div>
       </div>
     </div>
@@ -36,20 +36,20 @@
       </button>
     </div>
     <!-- strst users table -->
-    <table class="table table-bordered table-striped  display compact table-style" style="width:100%">
+    <table class="table table-bordered table-striped display compact table-style" style="width:100%">
       <thead class="primary text-capitalize">
         <tr>
           <th class="d-none">#</th>
           <th>#</th>
-          <th><?php echo lang('STATUS', @$_SESSION['sys']['lang']) ?></th>
-          <th><?php echo lang('COMPANY NAME', @$_SESSION['sys']['lang']) ?></th>
-          <th><?php echo lang('MANAGER NAME', @$_SESSION['sys']['lang']) ?></th>
-          <th><?php echo lang('PHONE', @$_SESSION['sys']['lang']) ?></th>
-          <th><?php echo lang('APP VERSION', @$_SESSION['sys']['lang']) ?></th>
-          <th><?php echo lang('JOINED DATE', @$_SESSION['sys']['lang']) ?></th>
-          <th><?php echo lang('EXPIRE DATE', @$_SESSION['sys']['lang']) ?></th>
+          <th><?php echo lang('STATUS', $lang_file) ?></th>
+          <th><?php echo lang('COMPANY NAME', $lang_file) ?></th>
+          <th><?php echo lang('MANAGER NAME', $lang_file) ?></th>
+          <th><?php echo lang('PHONE', $lang_file) ?></th>
+          <th><?php echo lang('APP VERSION', $lang_file) ?></th>
+          <th><?php echo lang('JOINED DATE', $lang_file) ?></th>
+          <th><?php echo lang('EXPIRE DATE', $lang_file) ?></th>
           <th>Progress</th>
-          <th><?php echo lang('CONTROL', @$_SESSION['sys']['lang']) ?></th>
+          <th><?php echo lang('CONTROL', $lang_file) ?></th>
         </tr>
       </thead>
       <tbody id="companies-table">
@@ -87,9 +87,9 @@
             <td><?php echo ++$key; ?></td>
             <td class="text-center">
               <?php if ($is_ended == true) { ?>
-                <span class="badge bg-danger p-2 d-inline-block" title="<?php echo lang('LICENSE EXPIRED', @$_SESSION['sys']['lang']) ?>"></span>
+                <span class="badge bg-danger p-2 d-inline-block" title="<?php echo lang('LICENSE EXPIRED', $lang_file) ?>"></span>
               <?php } else { ?>
-                <span class="badge bg-success p-2 d-inline-block" title="<?php echo lang('LICENSE ACTIVATED', @$_SESSION['sys']['lang']) ?>"></span>
+                <span class="badge bg-success p-2 d-inline-block" title="<?php echo lang('LICENSE ACTIVATED', $lang_file) ?>"></span>
               <?php }?>
             </td>
             <!-- company name -->
@@ -100,14 +100,14 @@
             <td><?php echo $company['company_manager'] ?></td>
             <!-- company phone -->
             <td class="<?php echo !empty($company['company_phone']) ? '' : 'text-danger fw-bold' ?>">
-              <?php echo !empty($company['company_phone']) ? $company['company_phone'] : lang('NOT ASSIGNED', @$_SESSION['sys']['lang']) ?>
+              <?php echo !empty($company['company_phone']) ? $company['company_phone'] : lang('NOT ASSIGNED', $lang_file) ?>
             </td>
             <!-- company version -->
             <td>
               <?php echo $comp_obj->select_specific_column("`v_name`", "`versions`", "WHERE `v_id` = " . $company['version'])[0]['v_name']; ?>
             </td>
             <!-- company joined date -->
-            <td><?php echo !empty($company['joined_date']) ? $company['joined_date'] : lang('NOT ASSIGNED', @$_SESSION['sys']['lang']) ?></td>
+            <td><?php echo !empty($company['joined_date']) ? $company['joined_date'] : lang('NOT ASSIGNED', $lang_file) ?></td>
             <!-- company expire date -->
             <td>
               <?php echo $expire; ?>

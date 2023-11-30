@@ -51,9 +51,9 @@ if ($is_exist == true) {
         <?php } ?>
       </div>
 
-      <div class="combination-info-container">
+      <div class="edit-comb-content">
         <!-- resbonsible for combination -->
-        <div class="combination-info-container__row">
+        <div class="edit-comb-content__subinfo">
           <div class="section-block">
             <div class="section-header">
               <h5>
@@ -142,7 +142,7 @@ if ($is_exist == true) {
         </div>
 
         <!-- client info -->
-        <div class="combination-info-container__row section-block">
+        <div class="section-block">
           <div class="section-header">
             <h5>
               <?php echo lang('BENEFICIARY INFO', $lang_file) ?>
@@ -179,8 +179,10 @@ if ($is_exist == true) {
             <!-- notes -->
             <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
               <textarea type="text" name="client-notes" id="client-notes" class="form-control w-100"
-                style="resize: none; height: 120px;" placeholder="<?php echo lang('NOTE') ?>"
-                style="resize: none; direction: <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'rtl' : 'ltr' ?>" <?php echo $comb_info['isFinished'] == 1 ? 'disabled' : '' ?> required><?php echo $comb_info['comment'] ?></textarea>
+                placeholder="<?php echo lang('NOTE') ?>"
+                style="<?php echo strlen($comb_info['comment']) < 250 ? 'height: auto !important; overflow: hidden;' : 'height: 180px !important;' ?> resize: none; direction: <?php echo $page_dir ?>"
+                <?php echo $comb_info['isFinished'] == 1 ? 'disabled' : '' ?>
+                required><?php echo $comb_info['comment'] ?></textarea>
               <label for="client-notes">
                 <?php echo lang('NOTE') ?>
               </label>
@@ -228,7 +230,7 @@ if ($is_exist == true) {
         </div>
 
         <!-- Combination date and time -->
-        <div class="combination-info-container__row section-block">
+        <div class="section-block section-block_row">
           <div class="section-header">
             <h5>
               <?php echo lang('DATE & TIME INFO', $lang_file) ?>
@@ -366,7 +368,7 @@ if ($is_exist == true) {
         </div>
 
         <!-- additional info -->
-        <div class="combination-info-container__row section-block">
+        <div class="section-block">
           <div class="section-header">
             <h5>
               <?php echo lang('ADD INFO', 'pieces') ?>
@@ -376,12 +378,23 @@ if ($is_exist == true) {
           <!-- technical man comment -->
           <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
             <textarea name="comment" id="comment" title="describe the combination" class="form-control w-100"
-              style="height: 7rem; resize: none; direction: <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'rtl' : 'ltr' ?>"
+              style="<?php echo strlen($comb_info['tech_comment']) < 250 ? 'height: auto !important; overflow: hidden;' : 'height: 180px !important;' ?> resize: none; direction: <?php echo $page_dir ?>"
               <?php echo $_SESSION['sys']['comb_update'] == 0 || $_SESSION['sys']['isTech'] == 0 || $comb_info['isFinished'] == 1 ? 'disabled' : '' ?>><?php echo empty($comb_info['tech_comment']) && $comb_info['isFinished'] ? "لا يوجد تعليق من الفني" : $comb_info['tech_comment']; ?></textarea>
             <label for="comment">
               <?php echo lang('TECH COMMENT', $lang_file) ?>
             </label>
           </div>
+        </div>
+
+        <!-- cost receipt -->
+        <div class="section-block">
+          <div class="section-header">
+            <h5>
+              <?php echo lang('COST RECEIPT', $lang_file) ?>
+            </h5>
+            <hr />
+          </div>
+
           <!-- cost -->
           <div class="mb-3">
             <div class="input-group" dir="ltr">
@@ -390,8 +403,7 @@ if ($is_exist == true) {
               </span>
               <div class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
                 <input type="text" name="cost" id="cost" class="form-control "
-                  placeholder="<?php echo lang('COMB COST', $lang_file) ?>" value="<?php echo $comb_info['cost'] ?>" <?php echo $_SESSION['sys']['comb_update'] == 0 || $_SESSION['sys']['isTech'] == 0 || $comb_info['isFinished'] == 1 ? 'disabled' : '' ?>
-                  onblur="arabic_to_english_nums(this)" onkeyup="arabic_to_english_nums(this)">
+                  placeholder="<?php echo lang('COMB COST', $lang_file) ?>" value="<?php echo $comb_info['cost'] ?>" <?php echo $_SESSION['sys']['comb_update'] == 0 || $_SESSION['sys']['isTech'] == 0 || $comb_info['isFinished'] == 1 ? 'disabled' : '' ?> onblur="arabic_to_english_nums(this)" onkeyup="arabic_to_english_nums(this)">
                 <label for="cost">
                   <?php echo lang('COMB COST', $lang_file) ?>
                 </label>
@@ -402,30 +414,52 @@ if ($is_exist == true) {
               <?php echo lang('ENG NUM') ?>
             </div>
           </div>
+
           <?php if ($_SESSION['sys']['isTech'] == 1 && $_SESSION['sys']['comb_update'] == 1) { ?>
             <!-- cost receipt -->
-            <div class="input-group mb-3" dir="ltr">
-              <input type="file" class="form-control form-control-<?php echo $page_dir == 'rtl' ? 'left' : 'right' ?>" id="cost-receipt" name="cost-receipt" accept="image/*"
+            <!-- cost receipt -->
+            <label for="cost-receipt" class="custum-file-upload">
+              <div class="icon">
+                <svg viewBox="0 0 24 24" fill="" xmlns="http://www.w3.org/2000/svg">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M10 1C9.73478 1 9.48043 1.10536 9.29289 1.29289L3.29289 7.29289C3.10536 7.48043 3 7.73478 3 8V20C3 21.6569 4.34315 23 6 23H7C7.55228 23 8 22.5523 8 22C8 21.4477 7.55228 21 7 21H6C5.44772 21 5 20.5523 5 20V9H10C10.5523 9 11 8.55228 11 8V3H18C18.5523 3 19 3.44772 19 4V9C19 9.55228 19.4477 10 20 10C20.5523 10 21 9.55228 21 9V4C21 2.34315 19.6569 1 18 1H10ZM9 7H6.41421L9 4.41421V7ZM14 15.5C14 14.1193 15.1193 13 16.5 13C17.8807 13 19 14.1193 19 15.5V16V17H20C21.1046 17 22 17.8954 22 19C22 20.1046 21.1046 21 20 21H13C11.8954 21 11 20.1046 11 19C11 17.8954 11.8954 17 13 17H14V16V15.5ZM16.5 11C14.142 11 12.2076 12.8136 12.0156 15.122C10.2825 15.5606 9 17.1305 9 19C9 21.2091 10.7909 23 13 23H20C22.2091 23 24 21.2091 24 19C24 17.1305 22.7175 15.5606 20.9844 15.122C20.7924 12.8136 18.858 11 16.5 11Z"
+                      fill=""></path>
+                  </g>
+                </svg>
+              </div>
+              <div class="text">
+                <span>
+                  <?php echo lang('UPLOAD COST RECEIPT', 'malfunctions') ?>
+                </span>
+              </div>
+              <input type="file" id="cost-receipt" name="cost-receipt" accept="image/*"
+                onchange="change_cost_receipt_img(this, 'cost-image-preview')">
+            </label>
+
+            <!-- <div class="input-group mb-3" dir="ltr">
+                  <input type="file" class="form-control form-control-<?php echo $page_dir == 'rtl' ? 'left' : 'right' ?>" id="cost-receipt" name="cost-receipt" accept="image/*"
                 onchange="change_cost_receipt_img(this, 'cost-image-preview')">
               <label class="input-group-text" for="cost-receipt">
                 <?php echo lang('COST RECEIPT', $lang_file) ?>
-              </label>
-            </div>
-          <?php } ?>
-
-          <?php $cost_media_path = $uploads . "combinations/" . base64_decode($_SESSION['sys']['company_id']) . "/" . $comb_info['cost_receipt']; ?>
-          <?php if (!empty($comb_info['cost_receipt']) && file_exists($cost_media_path)) { ?>
-            <div id="cost-image-preview" class="w-100">
-              <img src="<?php echo $cost_media_path ?>" alt="<?php echo lang('COST RECEIPT', $lang_file) ?>"
-                style="border: 5px solid #0d6efd; border-radius: 1rem; max-width: 100%; cursor: pointer;"
-                onclick="open_media(this.src, 'jpg')">
+              </label> -->
+            <?php $cost_media_path = $uploads . "combinations/" . base64_decode($_SESSION['sys']['company_id']) . "/" . $comb_info['cost_receipt']; ?>
+            <div id="cost-image-preview"
+              class="cost-image-preview w-100 <?php echo empty($comb_info['cost_receipt']) || !file_exists($cost_media_path) ? "d-none" : '' ?>">
+              <?php if (!empty($comb_info['cost_receipt']) && file_exists($cost_media_path)) { ?>
+                <img src="<?php echo $cost_media_path ?>" alt="<?php echo lang('COST RECEIPT', $lang_file) ?>"
+                  style="border: 5px solid #0d6efd; border-radius: 1rem; max-width: 100%; cursor: pointer;"
+                  onclick="open_media(this.src, 'jpg')">
+              <?php } ?>
             </div>
           <?php } ?>
         </div>
 
         <?php if ($comb_info['isFinished'] == 1) { ?>
           <!-- combination review -->
-          <div class="combination-info-container__row section-block">
+          <div class="section-block">
             <div class="section-header">
               <h5>
                 <?php echo lang('COMB REVIEW', $lang_file) ?>
@@ -537,7 +571,7 @@ if ($is_exist == true) {
         <?php } ?>
 
         <!-- the malfunctions media -->
-        <div class="combination-info-container__row section-block">
+        <div class="section-block section-block_row">
           <div class="section-header media-section">
             <h5 style="<?php echo $_SESSION['sys']['isTech'] == 0 ? 'padding-bottom: 0!important' : ''; ?>">
               <?php echo lang('MEDIA', $lang_file) ?>
@@ -611,7 +645,7 @@ if ($is_exist == true) {
         // check combinations updates details
         if ($comb_updates != null && count($comb_updates) > 0) {
           ?>
-          <div class="combination-info-container__row section-block">
+          <div class="section-block section-block_row">
             <div class="section-header">
               <h5>
                 <?php echo lang('COMB UPDATES', $lang_file) ?>
@@ -670,6 +704,7 @@ if ($is_exist == true) {
         <?php } ?>
       </div>
 
+
       <!-- submit -->
       <div class="hstack gap-2">
         <?php if ($_SESSION['sys']['comb_update'] == 1) { ?>
@@ -700,7 +735,9 @@ if ($is_exist == true) {
 
     <!-- media modal -->
     <div id="media-modal" class="media-modal">
-      <span class="close" id="media-modal-close">&times;</span>
+      <span class="close" id="media-modal-close">
+        <i class="bi bi-x-lg"></i>
+      </span>
       <div id="media-modal-content"></div>
     </div>
   </div>

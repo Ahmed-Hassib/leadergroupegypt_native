@@ -30,7 +30,7 @@ if ($dir_id != -1 && $src_id != -1) {
   } else {
     $users = [];
   }
-
+  $users = [];
   $target_user = !empty($users) && count($users) > 0 ? $users[0] : -1;
 
   // flag for include js code

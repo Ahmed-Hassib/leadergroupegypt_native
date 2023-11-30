@@ -27,6 +27,7 @@
   border: 5px solid #0d6efd;
   border-radius: 1rem;
   overflow: hidden;
+  object-fit: contain;
 }
 
 @media (max-width: 425px) {

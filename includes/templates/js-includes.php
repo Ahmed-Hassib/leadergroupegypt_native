@@ -5,14 +5,15 @@
 <?php $global_node_js_files = get_page_dependencies('global', 'node')['js']; ?>
 
 <!-- INCLUDE GLOBAL JS FILES -->
+<?php foreach ($global_node_js_files as $global_node_js_file) { ?>
+  <script src="<?php echo $node . $global_node_js_file; ?>" defer></script>
+<?php } ?>
+
+<!-- INCLUDE GLOBAL JS FILES -->
 <?php foreach ($global_js_files as $global_js_file) { ?>
   <script src="<?php echo $js . $global_js_file; ?>" defer></script>
 <?php } ?>
 
-<!-- INCLUDE GLOBAL JS FILES -->
-<?php foreach ($global_node_js_files as $global_node_js_file) { ?>
-  <script src="<?php echo $node . $global_node_js_file; ?>" defer></script>
-<?php } ?>
 
 <!-- CHECK IF PAGE CONTAIIN TABLES -->
 <?php if (isset($is_contain_table) && $is_contain_table == true) { ?>
@@ -31,6 +32,8 @@
     <script src="<?php echo $js . $table_js_file; ?>" defer></script>
   <?php } ?>
 <?php } ?>
+
+
 
 
 <!-- GET ALL GLOBAL CSS FILES DEPENDING ON PAGE CATEGORY -->
@@ -79,7 +82,6 @@ if ($is_developing == false && $page_category == 'sys_tree' && $page_role != 'sy
   echo "<script>localStorage.removeItem('sidebarMenuClosed');</script>";
 }
 ?>
-
 
 <?php if (isset($backup_flag) && $backup_flag == false && $db_backup_file_name != null && $backup_location_file != null) { ?>
   <script src="<?php echo $js ?>backup.js" defer></script>

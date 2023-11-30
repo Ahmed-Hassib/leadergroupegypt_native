@@ -527,10 +527,14 @@ if ($_SESSION['sys']['mal_show'] == 1) {
                       <tr class="text-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
                         <!-- name -->
                         <td style="min-width: 100px">
-                          <a
-                            href="<?php echo $nav_up_level ?>pieces/index.php?do=edit-piece&piece-id=<?php echo base64_encode($mal['client_id']) ?>">
+                          <?php if ($_SESSION['sys']['clients_show'] == 1) { ?>
+                            <a
+                              href="<?php echo $nav_up_level ?>pieces/index.php?do=edit-piece&piece-id=<?php echo base64_encode($mal['client_id']) ?>">
+                              <?php echo !empty($client_name) ? $client_name : lang('NO DATA') ?>
+                            </a>
+                          <?php } else { ?>
                             <?php echo !empty($client_name) ? $client_name : lang('NO DATA') ?>
-                          </a>
+                          <?php } ?>
                         </td>
                         <!-- address -->
                         <td style="min-width: 100px"
@@ -687,10 +691,14 @@ if ($_SESSION['sys']['mal_show'] == 1) {
                     <tr class="text-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
                       <!-- name -->
                       <td style="min-width: 100px">
-                        <a
-                          href="<?php echo $nav_up_level ?>pieces/index.php?do=edit-piece&piece-id=<?php echo base64_encode($mal['client_id']) ?>">
+                        <?php if ($_SESSION['sys']['clients_show'] == 1) { ?>
+                          <a
+                            href="<?php echo $nav_up_level ?>pieces/index.php?do=edit-piece&piece-id=<?php echo base64_encode($mal['client_id']) ?>">
+                            <?php echo !empty($client_name) ? $client_name : lang('NO DATA') ?>
+                          </a>
+                        <?php } else { ?>
                           <?php echo !empty($client_name) ? $client_name : lang('NO DATA') ?>
-                        </a>
+                        <?php } ?>
                       </td>
                       <!-- address -->
                       <td style="min-width: 100px"

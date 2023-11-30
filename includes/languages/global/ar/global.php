@@ -92,6 +92,10 @@ function global_($phrase)
   'FORGET PASSWORD?' => 'هل نسيت كلمة السر؟',
   'CHARACTERIZED BY' => 'يتميز بالتالي',
   'FROM HERE' => 'من هُنا',
+  'SYSTEM STATUS' => 'حالة النظام',
+  'AND' => 'و',
+  'OR' => 'أو',
+  'PREPARING MIKROTIK CONFIRM' => 'تأكيد بيانات اتصال ميكروتيك',
 
   // pages title
   'DASHBOARD' => 'لوحة التحكم',
@@ -123,8 +127,8 @@ function global_($phrase)
   'COMBS' => 'التركيبات',
   'CONNECTION TYPES' => 'أنواع الإتصال',
   'COMBINATIONS' => 'التركيبات',
+  'REPORTS' => 'التقارير',
   'SETTINGS' => 'الإعدادات',
-
 
   // large global words
   'SYS UNDER DEVELOPING' => 'نعتذر منكم! السيستم الآن تحت التطوير',
@@ -146,6 +150,7 @@ function global_($phrase)
   'NO DATA' => 'لا توجد بيانات للعرض',
   'NO DATA FOUNDED' => 'لم يتم العثور علي بيانات مماثلة',
   'QUERY PROBLEM' => 'حدثت مشكلة اثناء حفظ البيانات',
+  'PROCESS ERROR' => 'حدث خطأ أثناء معالجة البيانات',
   'LOGIN SUCCESS' => 'تسجيل دخول ناجح',
   'LOGIN FAILED' => 'تسجيل دخول خاطئ',
   'MISSING DATA' => 'يوجد خطأ او فقد في بعض البيانات',

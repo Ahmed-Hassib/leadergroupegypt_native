@@ -7,6 +7,10 @@ function pieces($phrase)
 {
   static $lang = array(
   // words
+  'DEVICE' => 'جهاز',
+  'DEVICES' => 'أجهزة',
+  'THE DEVICE' => 'الجهاز',
+  'THE DEVICES' => 'الأجهزة',
   'LIST' => 'قائمة الأجهزة',
   'PCS TYPES' => 'أنواع الأجهزة',
   'MNG PCS TYPES' => 'إدارة أنواع الأجهزة',
@@ -18,7 +22,9 @@ function pieces($phrase)
   'AGENT PHONE' => 'رقم تليفون المسئول',
   'TYPE' => 'النوع',
   'TRANSMITTER' => 'إرسال',
+  'TRANS DEV' => 'جهاز إرسال',
   'RECEIVER' => 'إستقبال',
+  'RECE DEV' => 'جهاز إستقبال',
   'ADD INFO' => 'بيانات إضافية',
   'COORDINATES' => 'الإحداثيات',
   'VISIT TIME' => 'وقت الزيارة',

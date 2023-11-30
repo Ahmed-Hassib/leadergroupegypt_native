@@ -8,24 +8,53 @@ $nav_up_level = get_up_level($nav_level);
 // array of used classes to include_once it
 // global classes
 $global_classes = [
-	'Database', 'Ultramsg'
+	'Database',
+	'Ultramsg'
+];
+
+// libraries classes
+$lib_classes = [
+	'pChart' => [
+		'content_folder' => 'class',
+		'classes' => [
+			'pDraw',
+			'pImage',
+			'pData'
+		]
+	]
 ];
 
 // systree classes
 $systree_classes = [
-	'Login', 'User', 'Direction', 'Registration',
-	'ManufuctureCompanies', 'Devices', 'Models',
-	'Pieces', 'PiecesConn',
-	'Malfunction', 'Combination',
-	'Companies', 'Session', 'CompSugg',
+	'Login',
+	'User',
+	'Direction',
+	'Registration',
+	'ManufuctureCompanies',
+	'Devices',
+	'Models',
+	'Pieces',
+	'PiecesConn',
+	'Malfunction',
+	'Combination',
+	'Companies',
+	'Session',
+	'CompSugg',
 	'Countries'
 ];
 
 // website classes
 $website_classes = [
-	'Login', 'Section', 'Gallery', 'Link',
-	'Service', 'About', 'Features', 'TeamMember',
-	'Session', 'CompanyInfo'
+	'Login',
+	'Section',
+	'Gallery',
+	'Link',
+	'Service',
+	'About',
+	'Features',
+	'TeamMember',
+	'Session',
+	'CompanyInfo'
 ];
 
 switch ($page_category) {
@@ -42,6 +71,22 @@ switch ($page_category) {
 foreach ($global_classes as $class) {
 	// include_once classes
 	include_once $up_level . "classes/global/$class.class.php";
+}
+
+// loop on classes
+foreach ($lib_classes as $key => $lib) {
+	$lib_name = trim($key, "\n\r\t\v\x00"); // library name
+	$classes_folder = $lib['content_folder']; // classes folder
+	$classes = $lib['classes']; // classes
+	// loop on classes
+	foreach ($classes as $key => $class) {
+		// class path
+		$class_path = $up_level . "includes/libraries/$lib_name/$classes_folder/$class.class.php";
+		// check if exist to include
+		if (file_exists($class_path)) {
+			include_once $class_path;
+		}
+	}
 }
 
 // loop on classes

@@ -30,6 +30,8 @@ function get_page_dependencies($page_role, $file_type)
         'js' => [
           '1' => 'jquery/dist/jquery.min.js',
           '2' => 'bootstrap/dist/js/bootstrap.bundle.min.js',
+          '3' => 'progresspiesvg/js/min/jquery-progresspiesvg-min.js',
+          '4' => 'progresspiesvg/js/min/progresspiesvgAppl-min.js',
         ]
       ],
       'fonts' => [
@@ -63,6 +65,23 @@ function get_page_dependencies($page_role, $file_type)
           '9' => 'datatables.net-buttons/js/buttons.print.min.js',
           '10' => 'datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js',
           '11' => 'datatables.net-colresize-unofficial/jquery.dataTables.colResize.js'
+        ]
+      ],
+      'fonts' => []
+    ],
+
+    // for charts files
+    'charts' => [
+      'css' => [
+        '1' => 'charts.css',
+      ],
+      'js' => [
+        '1' => 'charts.js',
+      ],
+      'node' => [
+        'css' => [],
+        'js' => [
+          '1' => 'chart.js/dist/chart.umd.js'
         ]
       ],
       'fonts' => []
@@ -310,7 +329,7 @@ function get_page_dependencies($page_role, $file_type)
     'sys_tree_malfunction' => [
       'css' => [
         '1' => 'malfunction.css',
-        '2' => 'malfunction-media.css'
+        '2' => 'media-preview.css'
       ],
       'js' => [
         '1' => 'malfunction.js',
@@ -325,10 +344,24 @@ function get_page_dependencies($page_role, $file_type)
     'sys_tree_combination' => [
       'css' => [
         '1' => 'combination.css',
-        '2' => 'combination-media.css'
+        '2' => 'media-preview.css'
       ],
       'js' => [
         '1' => 'combination.js'
+      ],
+      'node' => [
+        'css' => [],
+        'js' => []
+      ],
+      'fonts' => [],
+    ],
+
+    'sys_tree_reports' => [
+      'css' => [
+        '1' => 'reports.css'
+      ],
+      'js' => [
+        // '1' => 'reports.js'
       ],
       'node' => [
         'css' => [],

@@ -46,9 +46,11 @@ if ($is_developing == false) {
     } elseif ($query == "change-company-img" && $_SESSION['sys']['change_company_img']) {
       // include change company file
       $file_name = "change-company-img.php";
+
     } elseif ($query == "change-mikrotik" && $_SESSION['sys']['change_mikrotik']) {
       // include change mikrotik settings file
       $file_name = "change-mikrotik.php";
+
     } elseif ($query == "others") {
       // include change other settings file
       $file_name = "change-others.php";
@@ -67,10 +69,15 @@ if ($is_developing == false) {
 } else {
   $file_name = $globmod . "under-developing.php";
 }
+
+
 // pre configration of system
 include_once str_repeat("../", $level) . "etc/pre-conf.php";
 // initial configration of system
 include_once str_repeat("../", $level) . "etc/init.php";
+// alerts of system
+include_once str_repeat("../", $level) . "etc/system-alerts.php";
+
 // include file name
 include_once $file_name;
 

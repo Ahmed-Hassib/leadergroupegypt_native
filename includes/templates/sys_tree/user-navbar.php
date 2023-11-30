@@ -8,10 +8,10 @@
 
       $company_img_name_db = $db_obj->select_specific_column("`company_img`", "`companies`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
       $company_img_name_db = count($company_img_name_db) > 0 ? $company_img_name_db[0]['company_img'] : null;
-      $company_img_name = empty($company_img_name_db) || $company_img_name_db == null ? 'systree.png' : $company_img_name_db;
+      $company_img_name = empty($company_img_name_db) || $company_img_name_db == null ? 'systree.jpg' : $company_img_name_db;
       $company_img_path = empty($company_img_name_db) || $company_img_name_db == null ? $systree_assets : $uploads . "companies-img/" . base64_decode($_SESSION['sys']['company_id']);
       // check if image exists
-      $img_file = file_exists("$company_img_path/$company_img_name") ? "$company_img_path/$company_img_name" : $systree_assets . "systree.png";
+      $img_file = file_exists("$company_img_path/$company_img_name") ? "$company_img_path/$company_img_name" : $systree_assets . "systree.jpg";
       // resize company image
       $is_resized = resize_img($company_img_path."/", $company_img_name);
       ?>
@@ -360,26 +360,28 @@
       </li>
       <!-- end combinations nav link -->
     <?php } ?>
-    <!-- <li>
-      <div class="icon-link">
-        <section>
-          <i class="bi bi-lightbulb"></i>
-          <span class="link-name" style="font-size: 12px!important;"><?php echo lang('COMPLAINTS & SUGGESTIONS') ?></span>
-        </section>
-      </div>
-      <ul class="sub-menu">
+    <?php if (base64_decode($_SESSION['sys']['job_title_id']) == 1) { ?>
+    <!-- start report nav link -->
+    <li>
+      <a href="<?php echo $nav_up_level ?>reports/index.php">
+        <i class="bi bi-graph-up"></i>
+        <span class="link-name">
+          <?php echo lang('REPORTS') ?>
+        </span>
+      </a>
+      <!-- start blank sub menu -->
+      <ul class="sub-menu blank">
         <li>
-          <a href="<?php echo $nav_up_level ?>comp-sugg/index.php">
-            <span class="link-name"><?php echo lang('DASHBOARD') ?></span>
-          </a>
-        </li>
-        <li>
-          <a href="<?php echo $nav_up_level ?>comp-sugg/index.php?do=add-comp-sugg">
-            <span class="link-name"><?php echo lang('ADD COMPLAINT OR SUGGESTION') ?></span>
+          <a href="<?php echo $nav_up_level ?>reports/index.php">
+            <span class="link-name">
+              <?php echo lang('REPORTS') ?>
+            </span>
           </a>
         </li>
       </ul>
-    </li> -->
+      <!-- end blank sub menu -->
+    </li>
+    <?php } ?>
     <!-- start setting nav link -->
     <li>
       <a href="<?php echo $nav_up_level ?>settings/index.php">

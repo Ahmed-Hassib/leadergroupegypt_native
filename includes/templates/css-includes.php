@@ -38,9 +38,38 @@
   <?php } ?>
 <?php } ?>
 
+<?php if (isset($is_contain_chart) && $is_contain_chart == true) { ?>
+  <!-- GET ALL CSS CHARTS STYLE -->
+  <?php $charts_css_files = get_page_dependencies('charts', 'css') ?>
+  <?php foreach ($charts_css_files as $css_file) { ?>
+    <link rel="stylesheet" href="<?php echo $css . $css_file; ?>">
+  <?php } ?>
 
-<!-- GET ALL GLOBAL CSS FILES DEPENDING ON PAGE CATEGORY -->
+  <!-- GET ALL CSS CHARTS STYLE -->
+  <?php $charts_css_node_files = get_page_dependencies('charts', 'node')['css'] ?>
+  <?php foreach ($charts_css_node_files as $css_file) { ?>
+    <link rel="stylesheet" href="<?php echo $node . $css_file; ?>">
+  <?php } ?>
+
+  <!-- GET ALL CHART CUSTOM JS FILES -->
+  <?php $chart_js_files = get_page_dependencies('charts', 'js'); ?>
+  <!-- GET ALL CHARTS NODE JS FILES -->
+  <?php $charts_node_js_files = get_page_dependencies('charts', 'node')['js']; ?>
+
+  <!-- INCLUDE ALL CHARTS NODE JS FILES -->
+  <?php foreach ($charts_node_js_files as $charts_node_js_file) { ?>
+    <script type="text/javascript" src="<?php echo $node . $charts_node_js_file; ?>"></script>
+  <?php } ?>
+
+  <!-- INCLUDE ALL CHART CUSTOM JS FILES -->
+  <?php foreach ($chart_js_files as $chart_js_file) { ?>
+    <script type="text/javascript" src="<?php echo $js . $chart_js_file; ?>"></script>
+  <?php } ?>
+<?php } ?>
+
+
 <?php if (isset($page_category)) { ?>
+  <!-- GET ALL GLOBAL CSS FILES DEPENDING ON PAGE CATEGORY -->
   <?php $global_web_css_files = get_page_dependencies("" . $page_category . "_global", 'css'); ?>
 
   <?php if ($global_web_css_files != null) { ?>

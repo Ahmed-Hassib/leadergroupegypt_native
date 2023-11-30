@@ -28,7 +28,7 @@ function change_company_img(btn) {
 }
 
 function delete_company_image() {
-  company_img.setAttribute("src", '../../../../data/uploads/companies-img/leadergroupegypt.jpg');
+  company_img.setAttribute("src", '../../../../data/uploads/assets/systree.jpg');
 
   let confirm_delete = confirm(lang.confirm);
 
@@ -80,7 +80,7 @@ function check_mikrotik_info(evt, form) {
   evt.children[0].classList.add('d-none');
   evt.children[1].classList.remove('d-none');
 
-  $.get(`../requests/index.php?do=check-mikrotik-info&data=${JSON.stringify(data)}`, function (response) {
+  $.get(`../requests/index.php?do=check-mikrotik-info&data[]=${JSON.stringify(data)}`, function (response) {
     // convert response
     let is_connected = JSON.parse(response);
     // hide loader

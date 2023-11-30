@@ -13,8 +13,8 @@ $global_lang = ['global', 'description'];
 
 // for sys tree
 $sys_tree_lang = [
-  'user' => ['login', 'dashboard', 'directions', 'pieces', 'sugg_comp', 'employees', 'pcs_conn', 'clients', 'malfunctions', 'combinations', 'settings'],
-  'root' => ['companies']
+  'user' => ['login', 'dashboard', 'directions', 'pieces', 'sugg_comp', 'employees', 'pcs_conn', 'clients', 'malfunctions', 'combinations', 'reports', 'settings'],
+  'root' => ['dashboard_root', 'companies_root']
 ];
 
 // for website

@@ -25,5 +25,5 @@ require_once "app-routes.php";
 require_once "system-architecture.php";
 
 // include_once the important files
-include_once $func . "functions.php";
+include_once $func . "func-conf.php";
 include_once $lan . "lang.php";

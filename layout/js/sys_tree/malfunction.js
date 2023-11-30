@@ -131,7 +131,7 @@ function show_media_preview(evt) {
 function create_video_element(video_src) {
   // create video
   let video_element = document.createElement('video');
-  video_element.classList.add('w-100', 'h-100');
+  // video_element.classList.add('w-100', 'h-100');
   video_element.autoplay = 'autoplay';
   video_element.muted = true;
   video_element.controls = true;
@@ -315,6 +315,12 @@ function open_media(src, type) {
 if (modal_close_btn != null) {
   modal_close_btn.addEventListener('click', (evt) => {
     modal.style.display = "none";
+    // check type
+    if (type == 'mp4') {
+      // element.pause();
+
+      console.log('mp4')
+    }
   })
 }
 
@@ -322,7 +328,8 @@ if (modal_close_btn != null) {
 
 function change_cost_receipt_img(btn, preview_id) {
   // get preview el
-  prev_el = document.querySelector(`#${preview_id}`);
+  let prev_el = document.querySelector(`#${preview_id}`);
+
   // uploaded type
   let type = btn.files[0]['type'].includes('video') ? 'video' : 'img';
   // get size
@@ -330,16 +337,16 @@ function change_cost_receipt_img(btn, preview_id) {
   // create the image src
   var src = URL.createObjectURL(btn.files[0]);
   // create image
-  element = document.createElement('img');
-  element.setAttribute('src', src);
-  element.setAttribute('class', 'w-100 h-100');
-  element.style.cursor = 'pointer';
-  element.style.border = '5px solid #0d6efd';
-  element.style.borderRadius = '16px';
+  let img_element = document.createElement('img');
+  img_element.setAttribute('src', src);
+  img_element.setAttribute('class', 'w-100 h-100');
+  img_element.style.cursor = 'pointer';
+  img_element.style.borderRadius = '16px';
+  img_element.style.objectFit = 'contain';
   media_type = 'jpg';
 
   // add event to delete button
-  element.addEventListener('click', (evt) => {
+  img_element.addEventListener('click', (evt) => {
     evt.preventDefault()
     open_media(src, media_type)
   })
@@ -347,9 +354,13 @@ function change_cost_receipt_img(btn, preview_id) {
   // check container children counter
   if (prev_el.childElementCount > 0) {
     // replace old element with new element
-    prev_el.replaceChild(element, prev_el.children[0])
+    prev_el.replaceChild(img_element, prev_el.children[0])
   } else {
     // append img element into preview container
-    prev_el.appendChild(element)
+    prev_el.appendChild(img_element)
+  }
+
+  if (prev_el.classList.contains('d-none')) {
+    prev_el.classList.remove('d-none')
   }
 }
