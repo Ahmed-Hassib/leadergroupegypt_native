@@ -105,6 +105,7 @@ function pieces($phrase)
   'MODELS UPDATED' => 'تم تعديل جميع بيانات الموديلات بنجاح',
   'MODELS DELETED' => 'تم حذف جميع بيانات الموديلات بنجاح',
   'MALS FAILED' => 'توجد بعض لأعطال التي لا يمكن أن تراها',
+  'MIKROTIK VPN CODE' => 'إنسخ الكود التالى وقم بوضعة في شاشة terminal جديده داخل winbox وتفعيله مره واحده فقط',
 
   // buttons words
   'ADD NEW' => 'إضافة جهاز جديد',

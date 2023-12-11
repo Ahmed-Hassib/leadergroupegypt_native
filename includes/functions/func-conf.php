@@ -7,7 +7,7 @@ $global_func = ['functions'];
 $website_func = [];
 
 // systre functions
-$systree_func = ['send-whatsapp-msg', 'next_ip'];
+$systree_func = ['send-whatsapp-msg', 'next_ip', 'location'];
 
 // get db info depending on page category
 switch ($page_category) {

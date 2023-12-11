@@ -12,21 +12,7 @@ if ($counter == true) {
 
   // json data
   $all_data_json = json_encode($all_data);
-  // check if api obj was created && connection to mikrotik
-  if (isset($api_obj) && $api_obj->connect($mikrotik_ip, $mikrotik_username, $mikrotik_password)) {
-    // get users
-    $users = $api_obj->comm(
-      "/ip/firewall/nat/print",
-      array(
-        "?comment" => "mohamady",
-        // "?disabled" => "false"
-      )
-    );
-  } else {
-    $users = [];
-  }
-  $users = [];
-  $target_user = !empty($users) && count($users) > 0 ? $users[0] : -1;
+
   // flag for include js code
   $is_big_data_ping = true;
   ?>
@@ -41,12 +27,10 @@ if ($counter == true) {
 
     <div class="mb-3 hstack gap-3">
       <?php if ($_SESSION['sys']['pcs_add'] == 1) { ?>
-        <div>
-          <a href="?do=add-new-piece" class="btn btn-outline-primary py-1 fs-12">
-            <i class="bi bi-plus"></i>
-            <?php echo lang('ADD NEW', $lang_file) ?>
-          </a>
-        </div>
+        <a href="?do=add-new-piece" class="btn btn-outline-primary py-1 fs-12">
+          <i class="bi bi-plus"></i>
+          <?php echo lang('ADD NEW', $lang_file) ?>
+        </a>
       <?php } ?>
     </div>
 
@@ -304,9 +288,9 @@ if ($counter == true) {
                       <?php echo $source_ip ?>
                     </a>
                   </span><br>
-                  <?php if ($target_user != -1) { ?>
-                    <a class="btn btn-outline-primary fs-12 py-0 px-3"
-                      href="?do=prepare-ip&address=<?php echo $source_ip ?>&port=<?php echo $source_port != 0 ? $source_port : 80 ?>"
+                  <?php if (isset($source_ip) && $source_ip != '0.0.0.0') { ?>
+                    <a class="mx-1 btn btn-outline-primary fs-12 px-3 py-0"
+                      href="?do=mikrotik&ip=<?php echo $source_ip ?>&port=<?php echo $source_port == '80' ? '80' : '443' ?>"
                       target='_blank'>
                       <?php echo lang('VISIT DEVICE', $lang_file) ?>
                     </a>
@@ -352,9 +336,9 @@ if ($counter == true) {
                       <?php echo $alt_source_ip ?>
                     </a><br>
                   </span>
-                  <?php if ($target_user != -1) { ?>
-                    <a class="btn btn-outline-primary fs-12 px-3 py-0"
-                      href="?do=prepare-ip&address=<?php echo $alt_source_ip ?>&port=<?php echo $alt_source_port != 0 ? $alt_source_port : 80 ?>"
+                  <?php if (isset($alt_source_ip) && $alt_source_ip != '0.0.0.0') { ?>
+                    <a class="mx-1 btn btn-outline-primary fs-12 px-3 py-0"
+                      href="?do=mikrotik&ip=<?php echo $alt_source_ip ?>&port=<?php echo $alt_source_port == '80' ? '80' : '443' ?>"
                       target='_blank'>
                       <?php echo lang('VISIT DEVICE', $lang_file) ?>
                     </a>
@@ -427,9 +411,9 @@ if ($counter == true) {
                       </a>
                     </span>
                   </span><br>
-                  <?php if ($target_user != -1) { ?>
-                    <a class="btn btn-outline-primary fs-12 px-3 py-0"
-                      href="?do=prepare-ip&address=<?php echo trim($piece['ip'], ' ') ?>&port=<?php echo $alt_source_port != 0 ? $alt_source_port : 80 ?>"
+                  <?php if (isset($piece['ip']) && $piece['ip'] != '0.0.0.0') { ?>
+                    <a class="mx-1 btn btn-outline-primary fs-12 px-3 py-0"
+                      href="?do=mikrotik&ip=<?php echo $piece['ip'] ?>&port=<?php echo $piece['port'] == '80' ? '80' : '443' ?>"
                       target='_blank'>
                       <?php echo lang('VISIT DEVICE', $lang_file) ?>
                     </a>
@@ -570,7 +554,7 @@ if ($counter == true) {
                     href="?do=show-piece&dir-id=<?php echo base64_encode($piece['direction_id']) ?>&src-id=<?php echo base64_encode($piece['id']) ?>"><i
                       class="bi bi-eye"></i>
                     <?php echo lang('SHOW DETAILS') ?>
-                    </a>
+                  </a>
                 <?php } ?>
                 <?php if ($_SESSION['sys']['pcs_delete'] == 1) { ?>
                   <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12"
@@ -579,7 +563,7 @@ if ($counter == true) {
                     data-piece-name="<?php echo $piece['full_name'] ?>" onclick="confirm_delete_piece(this, true)"><i
                       class="bi bi-trash"></i>
                     <?php echo lang('DELETE') ?>
-                    </button>
+                  </button>
                 <?php } ?>
               </td>
             </tr>

@@ -139,7 +139,7 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
               <hr />
             </div>
 
-            <!-- internet source -->
+            <!-- coordinates -->
             <div
               class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
               <input type="text" name="internet-source" id="internet-source" class="form-control"
@@ -149,6 +149,17 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
                 <?php echo lang('COORDINATES', 'pieces'); ?>
               </label>
             </div>
+            <!-- coordinates link -->
+            <div
+              class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+              <input type="text" name="coordinates-link" id="coordinates-link" class="form-control"
+                placeholder="<?php echo lang('COORDINATES LINK', 'pieces') ?>"
+                value="<?php echo $client_data['coordinates_link'] ?>" />
+              <label for="coordinates-link">
+                <?php echo lang('COORDINATES LINK', 'pieces'); ?>
+              </label>
+            </div>
+
             <!-- notes -->
             <div
               class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
@@ -413,7 +424,6 @@ if ($client_id != 0 && $is_exist_id && $is_exist_data) {
           </div>
         </div>
 
-        <!-- second column -->
         <div class="col-12">
           <div class="section-block">
             <div class="section-header">

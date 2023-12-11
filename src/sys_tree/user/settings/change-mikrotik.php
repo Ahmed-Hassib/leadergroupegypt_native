@@ -118,7 +118,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $_SESSION['flash_message_status'][$key] = false;
       $_SESSION['flash_message_lang_file'][$key] = 'settings';
     }
-
     // log message
     $logMsg = "mikrotik was not updated because there is a problem while updating it";
   }

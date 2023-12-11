@@ -437,4 +437,26 @@ span.spinner-border {
 }
 
 /************/
+.code-snippet {
+  background-color: #f8f8f8;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  padding: 15px;
+  font-family: Consolas, Menlo, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.code-snippet pre {
+  margin: 0;
+  direction: ltr;
+  text-wrap: balance;
+}
+
+.code-snippet code {
+  padding: 0;
+  color: #333;
+}
+
+/************/
 /************/

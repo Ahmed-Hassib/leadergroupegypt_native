@@ -77,8 +77,8 @@ if ($is_developing == false) {
       // cehck if action is set or not
       $action = isset($_GET['action']) & !empty($_GET['action']) ? $_GET['action'] : 'manage';
       $file_name = include_once 'devices-companies.php';
-    } elseif ($query == 'prepare-ip' && $_SESSION['sys']['pcs_show'] == 1) {
-      $file_name = 'prepare-ip.php';
+    } elseif ($query == 'available-ports' && $_SESSION['sys']['pcs_show'] == 1) {
+      $file_name = 'available-ports.php';
       $possible_back = false;
       $preloader = false;
     } elseif ($query == 'mikrotik' && $_SESSION['sys']['pcs_show'] == 1 && $_SESSION['sys']['UserID'] == base64_encode(2)) {

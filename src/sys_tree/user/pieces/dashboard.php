@@ -70,20 +70,10 @@
       <?php
       // check if api obj was created && connection to mikrotik
       if (isset($api_obj) && $api_obj->connect($mikrotik_ip, $mikrotik_username, $mikrotik_password)) {
-        // get users
-        $users = $api_obj->comm(
-          "/ip/firewall/nat/print",
-          array(
-            "?comment" => "mohamady",
-          )
-        );
         echo "<div class='alert alert-primary' role='alert'>" . lang('MIKROTIK SUCCESS') . "</div>";
       } else {
         echo "<div class='alert alert-danger' role='alert'>" . lang('MIKROTIK FAILED') . "</div>";
-        $users = [];
       }
-      // $users = [];
-      $target_user = !empty($users) && count($users) > 0 ? $users[0] : -1;
       // flag for include js code
       $is_big_data_ping = true;
       ?>
@@ -162,9 +152,9 @@
                             <?php echo lang('NEW') ?>
                           </span>
                         <?php } ?>
-                        <?php if ($target_user != -1) { ?>
+                        <?php if (isset($piece['ip']) && $piece['ip'] !== '0.0.0.0') { ?>
                           <a class="mx-1 btn btn-outline-primary fs-12 px-3 py-0"
-                            href="?do=prepare-ip&address=<?php echo $piece['ip'] ?>&port=<?php echo $piece['port'] != 0 ? $piece['port'] : '443' ?>"
+                            href="?do=mikrotik&ip=<?php echo $piece['ip'] ?>&port=<?php echo $piece['port'] == '80' ? '80' : '443' ?>"
                             target='_blank'>
                             <?php echo lang('VISIT DEVICE', $lang_file) ?>
                           </a>

@@ -37,7 +37,7 @@ if ($_SESSION['sys']['comb_show'] == 1 && $_SESSION['sys']['isTech'] == 1) {
     <?php if (in_array($_SESSION['sys']['job_title_id'], $conf['allowed_visit_device'])) { ?>
       <div class="dashboard-content">
         <div
-          class="dashboard-card card card-stats <?php echo isset($card_class) ? $card_class : ''; ?> <?php echo isset($card_position) ? $card_position : ''; ?> bg-gradient">
+          class="dashboard-card card card-stat <?php echo isset($card_class) ? $card_class : ''; ?> <?php echo isset($card_position) ? $card_position : ''; ?> bg-gradient">
           <div class="card-body">
             <span
               class="icon-container <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>"><i
@@ -46,7 +46,7 @@ if ($_SESSION['sys']['comb_show'] == 1 && $_SESSION['sys']['isTech'] == 1) {
               <?php echo lang('AVAILABLE PORTS') ?>
             </h5>
           </div>
-          <!-- <a href="<?php echo $nav_up_level ?>" class="stretched-link text-capitalize"></a> -->
+          <a href="<?php echo $nav_up_level ?>pieces/index.php?do=available-ports" class="stretched-link text-capitalize"></a>
           <div class="card-footer">
             <span>
               <?php echo $conf['available_ports'] ?>

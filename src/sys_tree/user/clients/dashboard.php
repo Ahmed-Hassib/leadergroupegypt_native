@@ -1,16 +1,3 @@
-<?php
-// // change ir in api
-// $users = $API->comm("/ip/firewall/nat/add", array(
-//   "action" => "dst-nat",
-//   "chain" => "dstnat",
-//   "comment" => "hassib",
-//   "dst-port" => "5003",
-//   "in-interface" => "MANAGEMENT-SYSTEM",
-//   "protocol" => "tcp",
-//   "to-addressed" => "192.168.60.17",
-//   "to-ports" => "80"
-// ));
-?>
 <!-- start home stats container -->
 <div class="container" dir="<?php echo $page_dir ?>">
   <!-- start stats -->
@@ -75,25 +62,14 @@
 
     <?php if ($_SESSION['sys']['clients_show'] == 1) { ?>
       <?php
-        // // check if api obj was created && connection to mikrotik
-        // if (isset($api_obj) && $api_obj->connect($mikrotik_ip, $mikrotik_username, $mikrotik_password)) {
-        //   // get users
-        //   $users = $api_obj->comm("/ip/firewall/nat/print", array(
-        //     "?comment" => "mohamady",
-        //     "?disabled" => "false"
-        //   )
-        //   );
-      
-
-        //   echo "<pre dir='ltr'>";
-        //   echo lang('MIKROTIK SUCCESS') . "<br>";
-        //   print_r($users);
-        //   echo "</pre>";
-        // } else {
-        //   $users = [];
-        // }
-      $users = [];
-      $target_user = !empty($users) && count($users) > 0 ? $users[1] : -1;
+      // check if api obj was created && connection to mikrotik
+      if (isset($api_obj) && $api_obj->connect($mikrotik_ip, $mikrotik_username, $mikrotik_password)) {
+        echo "<div class='alert alert-primary' role='alert'>" . lang('MIKROTIK SUCCESS') . "</div>";
+      } else {
+        echo "<div class='alert alert-danger' role='alert'>" . lang('MIKROTIK FAILED') . "</div>";
+      }
+      // flag for include js code
+      $is_big_data_ping = true;
       ?>
       <!-- latest added clients -->
       <div class="mb-3 row row-cols-1 g-3">
@@ -111,15 +87,15 @@
             <!-- get latest added clients -->
             <?php $latest_added_clients = $pcs_obj->get_latest_records("*", "`pieces_info`", "WHERE `is_client` = 1 AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']), "`id`", 10); ?>
             <?php
-              if (count($latest_added_clients) > 0) {
-                // get data
-                $all_data = prepare_pcs_datatables($latest_added_clients, $lang_file);
-                // json data
-                $all_data_json = json_encode($all_data);
-              } else {
-                $all_data = [];
-              }
-              ?>
+            if (count($latest_added_clients) > 0) {
+              // get data
+              $all_data = prepare_pcs_datatables($latest_added_clients, $lang_file);
+              // json data
+              $all_data_json = json_encode($all_data);
+            } else {
+              $all_data = [];
+            }
+            ?>
             <div class="table-responsive-sm">
               <!-- strst pieces table -->
               <table class="table table-bordered table-striped pcs-data display compact table-style" style="width:100%">
@@ -169,6 +145,13 @@
                             <?php echo lang('NEW') ?>
                           </span>
                         <?php } ?>
+                        <?php if (isset($client['ip']) && $client['ip'] !== '0.0.0.0') { ?>
+                          <a class="mx-1 btn btn-outline-primary fs-12 px-3 py-0"
+                            href="<?php echo $nav_up_level ?>pieces/index.php?do=mikrotik&ip=<?php echo $client['ip'] ?>&port=<?php echo $client['port'] == '80' ? '80' : '443' ?>"
+                            target='_blank'>
+                            <?php echo lang('VISIT DEVICE', $lang_file) ?>
+                          </a>
+                        <?php } ?>
                       </td>
                       <!-- client address -->
                       <td>
@@ -207,14 +190,13 @@
                             <i class="bi bi-pencil-square"></i>
                             <?php echo lang('EDIT') ?>
                           </a>
-                          <?php } ?>
-                          <?php if ($_SESSION['sys']['pcs_delete'] == 1) { ?>
-                            <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12"
+                        <?php } ?>
+                        <?php if ($_SESSION['sys']['pcs_delete'] == 1) { ?>
+                          <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12"
                             data-bs-toggle="modal" data-bs-target="#deleteClientModal"
                             id="delete-client-<?php echo ($index + 1) ?>"
                             data-client-id="<?php echo base64_encode($client['id']) ?>"
-                            data-client-name="<?php echo $client['full_name'] ?>"
-                            onclick="confirm_delete_client(this, true)">
+                            data-client-name="<?php echo $client['full_name'] ?>" onclick="confirm_delete_client(this, true)">
                             <i class="bi bi-trash"></i>
                             <?php echo lang('DELETE') ?>
                           </button>

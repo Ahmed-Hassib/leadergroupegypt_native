@@ -13,26 +13,8 @@ if ($counter > 0) {
   // json data
   $all_data_json = json_encode($all_data);
 
-  // // check if api obj was created && connection to mikrotik
-  // if (isset($api_obj) && $api_obj->connect($mikrotik_ip, $mikrotik_username, $mikrotik_password)) {
-  //   // get users
-  //   $users = $api_obj->comm("/ip/firewall/nat/print", array(
-  //     "?comment" => "mohamady",
-  //     "?disabled" => "false"
-  //   )
-  //   );
-
-
-  //   echo "<pre dir='ltr'>";
-  //   echo lang('MIKROTIK SUCCESS') . "<br>";
-  //   print_r($users);
-  //   echo "</pre>";
-  // } else {
-  //   $users = [];
-  // }
-  $users = [];
-  $target_user = !empty($users) && count($users) > 0 ? $users[1] : -1;
-
+  // flag for include js code
+  $is_big_data_ping = true;
   ?>
   <!-- start edit profile page -->
   <div class="container" dir="<?php echo $page_dir ?>">
@@ -280,7 +262,7 @@ if ($counter > 0) {
                 if (!empty($source_info)) {
                   $source_name = trim($source_info[0]['full_name'], ' \t\n\v');
                   $source_ip = trim($source_info[0]['ip'], ' \t\n\v');
-                  $source_port =trim( $source_info[0]['port'], ' \t\n\v');
+                  $source_port = trim($source_info[0]['port'], ' \t\n\v');
                 } elseif ($client['source_id'] == 0) {
                   $source_name = trim($client['full_name'], ' \t\n\v');
                   $source_ip = trim($client['ip'], ' \t\n\v');
@@ -304,9 +286,9 @@ if ($counter > 0) {
                       <?php echo $source_ip ?>
                     </a>
                   </span><br>
-                  <?php if ($target_user != -1) { ?>
-                    <a class="btn btn-outline-primary fs-12 px-3 py-0"
-                      href="?do=prepare-ip&address=<?php echo $source_ip ?>&port=<?php echo $source_port != 0 ? $source_port : 80 ?>"
+                  <?php if (isset($source_ip) && $source_ip != '0.0.0.0') { ?>
+                    <a class="mx-1 btn btn-outline-primary fs-12 px-3 py-0"
+                      href="<?php echo $nav_up_level ?>pieces/index.php?do=mikrotik&ip=<?php echo $source_ip ?>&port=<?php echo $source_port == '80' ? '80' : '443' ?>"
                       target='_blank'>
                       <?php echo lang('VISIT DEVICE', $lang_file) ?>
                     </a>
@@ -348,11 +330,13 @@ if ($counter > 0) {
                     <span class="pcs-ip" data-pcs-ip="<?php echo $alt_source_ip ?>">
                       <?php echo $alt_source_name ?>
                     </span><br>
-                    <a href="<?php echo $alt_source_ip ?>" target="_blank"><?php echo $alt_source_ip ?></a>
+                    <a href="<?php echo $alt_source_ip ?>" target="_blank">
+                      <?php echo $alt_source_ip ?>
+                    </a>
                   </span><br>
-                  <?php if ($target_user != -1) { ?>
-                    <a class="btn btn-outline-primary fs-12 px-3 py-0"
-                      href="?do=prepare-ip&address=<?php echo $alt_source_ip ?>&port=<?php echo $alt_source_port != 0 ? $alt_source_port : 80 ?>"
+                  <?php if (isset($alt_source_ip) && $alt_source_ip != '0.0.0.0') { ?>
+                    <a class="mx-1 btn btn-outline-primary fs-12 px-3 py-0"
+                      href="<?php echo $nav_up_level ?>pieces/index.php?do=mikrotik&ip=<?php echo $alt_source_ip ?>&port=<?php echo $source_port == '80' ? '80' : '443' ?>"
                       target='_blank'>
                       <?php echo lang('VISIT DEVICE', $lang_file) ?>
                     </a>
@@ -420,12 +404,14 @@ if ($counter > 0) {
                     </span>
                     <span class="ping-status"></span>
                     <span class="pcs-ip" data-pcs-ip="<?php echo trim($client['ip'], ' \t\n\v') ?>">
-                      <a href="<?php echo trim($client['ip'], ' \t\n\v') ?>" target="_blank"><?php echo trim($client['ip'], ' \t\n\v') ?></a>
+                      <a href="<?php echo trim($client['ip'], ' \t\n\v') ?>" target="_blank">
+                        <?php echo trim($client['ip'], ' \t\n\v') ?>
+                      </a>
                     </span>
                   </span><br>
-                  <?php if ($target_user != -1) { ?>
-                    <a class="btn btn-outline-primary fs-12 px-3 py-0"
-                      href="?do=prepare-ip&address=<?php echo trim($client['ip'], ' \t\n\v') ?>&port=<?php echo $alt_source_port != 0 ? $alt_source_port : 80 ?>"
+                  <?php if (isset($client['ip']) && $client['ip'] != '0.0.0.0') { ?>
+                    <a class="mx-1 btn btn-outline-primary fs-12 px-3 py-0"
+                      href="<?php echo $nav_up_level ?>pieces/index.php?do=mikrotik&ip=<?php echo $client['ip'] ?>&port=<?php echo $source_port == '80' ? '80' : '443' ?>"
                       target='_blank'>
                       <?php echo lang('VISIT DEVICE', $lang_file) ?>
                     </a>
@@ -560,22 +546,22 @@ if ($counter > 0) {
                     <i class="bi bi-pencil-square"></i>
                     <?php echo lang('EDIT') ?>
                   </a>
-                  <?php } ?>
-                  <?php if ($client['is_client'] == 0 && $_SESSION['sys']['pcs_show'] == 1) { ?>
-                    <a class="btn btn-outline-primary text-capitalize fs-12"
+                <?php } ?>
+                <?php if ($client['is_client'] == 0 && $_SESSION['sys']['pcs_show'] == 1) { ?>
+                  <a class="btn btn-outline-primary text-capitalize fs-12"
                     href="?do=show-piece&dir-id=<?php echo base64_encode($client['direction_id']) ?>&src-id=<?php echo base64_encode($client['id']) ?>"><i
-                    class="bi bi-eye"></i>
+                      class="bi bi-eye"></i>
                     <?php echo lang('SHOW DETAILS') ?>
                   </a>
-                  <?php } ?>
-                  <?php if ($_SESSION['sys']['pcs_delete'] == 1) { ?>
-                    <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12"
+                <?php } ?>
+                <?php if ($_SESSION['sys']['pcs_delete'] == 1) { ?>
+                  <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12"
                     data-bs-toggle="modal" data-bs-target="#deletePieceModal" id="delete-piece-<?php echo ($index + 1) ?>"
                     data-piece-id="<?php echo base64_encode($client['id']) ?>"
                     data-piece-name="<?php echo $client['full_name'] ?>" onclick="confirm_delete_piece(this, true)"><i
-                    class="bi bi-trash"></i>
+                      class="bi bi-trash"></i>
                     <?php echo lang('DELETE') ?>
-                    </button>
+                  </button>
                 <?php } ?>
               </td>
             </tr>

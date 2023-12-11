@@ -22,7 +22,9 @@ function global_($phrase)
   'UNDER DEVELOPING' => 'تحت التطوير',
   'SPONSOR' => 'LEADER GROUP EGYPT',
   'SYS TREE' => 'SYS TREE',
+  'SYS TREE MSG' => 'هذه الرسالة صادرة من النظام',
   'SYS TREE DESC' => 'شرح السيستم',
+  'DEV MSG' => 'هذه الرسالة صادرة من مبرمج النظام',
   'TRIAL' => 'نسخة تجريبية',
   'REFRESH SESSION' => 'تحديث الجلسة',
   'REFRESH PAGE' => 'إعادة تحميل الصفحة',
@@ -96,6 +98,7 @@ function global_($phrase)
   'AND' => 'و',
   'OR' => 'أو',
   'PREPARING MIKROTIK CONFIRM' => 'تأكيد بيانات اتصال ميكروتيك',
+  'ATTENTION PLEASE' => 'برجاء الإنتباه',
 
   // pages title
   'DASHBOARD' => 'لوحة التحكم',

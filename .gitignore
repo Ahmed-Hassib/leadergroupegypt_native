@@ -8,7 +8,7 @@ wla_yhmk/
 docs/
 
 # ignoring all data directory content
-data/
+data*/
 
 # ignoring node_modules directory
 layout/node_modules/
@@ -16,18 +16,12 @@ layout/node_modules/
 # ignoring plugins directory
 layout/plugins/
 
-# ignoring sql directory
-sql/
-
 # ignoring local configration file
 etc/local-conf.php
 etc/server-conf.php
 
 # ignoring Database class
 Database.class.php
-
-# ignoring spare_files folder
-spare_files/
 
 # ignore libraries
 includes/libraries/

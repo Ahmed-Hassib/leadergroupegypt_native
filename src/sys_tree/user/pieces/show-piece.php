@@ -17,22 +17,6 @@ if ($dir_id != -1 && $src_id != -1) {
   // counter
   $counter = $pieces_info[0];
 
-  // check if api obj was created && connection to mikrotik
-  if (isset($api_obj) && $api_obj->connect($mikrotik_ip, $mikrotik_username, $mikrotik_password)) {
-    // get users
-    $users = $api_obj->comm(
-      "/ip/firewall/nat/print",
-      array(
-        "?comment" => "mohamady",
-        "?disabled" => "false"
-      )
-    );
-  } else {
-    $users = [];
-  }
-  $users = [];
-  $target_user = !empty($users) && count($users) > 0 ? $users[0] : -1;
-
   // flag for include js code
   $is_big_data_ping = true;
   ?>
@@ -57,13 +41,12 @@ if ($dir_id != -1 && $src_id != -1) {
         <?php } ?>
         <?php $src_ip = $db_obj->select_specific_column("`ip`", "`pieces_info`", "WHERE `id` = $src_id")[0]['ip'] ?>
         <?php $src_port = $db_obj->select_specific_column("`port`", "`pieces_info`", "WHERE `id` = $src_id")[0]['port'] ?>
-        <?php if ($src_ip !== '0.0.0.0' && $target_user != -1) { ?>
+        <?php if (isset($src_ip) && $src_ip !== '0.0.0.0') { ?>
           <div>
             <!-- Button trigger modal -->
-            <a class="btn btn-outline-primary fs-12 py-1"
-              href="?do=prepare-ip&address=<?php echo $src_ip ?>&port=<?php echo $src_port != 0 ? $src_port : 80 ?>"
-              target="_blank">
-              <i class="bi bi-box-arrow-in-up-right d-sm-block d-md-none"></i>
+            <a class="mx-1 btn btn-outline-primary fs-12 px-3 py-0"
+              href="?do=mikrotik&ip=<?php echo $src_ip ?>&port=<?php echo $src_port == '80' ? '80' : '443' ?>"
+              target='_blank'>
               <?php echo lang('VISIT DEVICE', $lang_file) ?>
             </a>
           </div>
@@ -335,9 +318,9 @@ if ($dir_id != -1 && $src_id != -1) {
                         <?php echo $source_ip ?>
                       </a>
                     </span><br>
-                    <?php if ($target_user != -1) { ?>
-                      <a class="btn btn-outline-primary fs-12 py-0 px-3"
-                        href="?do=prepare-ip&address=<?php echo $source_ip ?>&port=<?php echo $source_port != 0 ? $source_port : 80 ?>"
+                    <?php if (isset($source_ip) && $source_ip != '0.0.0.0') { ?>
+                      <a class="mx-1 btn btn-outline-primary fs-12 px-3 py-0"
+                        href="?do=mikrotik&ip=<?php echo $source_ip ?>&port=<?php echo $source_port == '80' ? '80' : '443' ?>"
                         target='_blank'>
                         <?php echo lang('VISIT DEVICE', $lang_file) ?>
                       </a>
@@ -383,7 +366,7 @@ if ($dir_id != -1 && $src_id != -1) {
                         <?php echo $alt_source_ip ?>
                       </a><br>
                     </span>
-                    <?php if ($target_user != -1) { ?>
+                    <?php if (isset($alt_source_ip) && $alt_source_ip != '0.0.0.0') { ?>
                       <a class="btn btn-outline-primary fs-12 px-3 py-0"
                         href="?do=prepare-ip&address=<?php echo $alt_source_ip ?>&port=<?php echo $alt_source_port != 0 ? $alt_source_port : 80 ?>"
                         target='_blank'>
@@ -458,9 +441,9 @@ if ($dir_id != -1 && $src_id != -1) {
                         </a>
                       </span>
                     </span><br>
-                    <?php if ($target_user != -1) { ?>
+                    <?php if (isset($piece['ip']) && $piece['ip'] != '0.0.0.0') { ?>
                       <a class="btn btn-outline-primary fs-12 px-3 py-0"
-                        href="?do=prepare-ip&address=<?php echo trim($piece['ip'], ' ') ?>&port=<?php echo $alt_source_port != 0 ? $alt_source_port : 80 ?>"
+                        href="?do=prepare-ip&address=<?php echo $piece['ip'] ?>&port=<?php echo $piece['port'] != 0 ? $piece['port'] : 80 ?>"
                         target='_blank'>
                         <?php echo lang('VISIT DEVICE', $lang_file) ?>
                       </a>
