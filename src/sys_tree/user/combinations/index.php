@@ -10,7 +10,7 @@ session_start();
 // regenerate session id
 session_regenerate_id();
 // page title
-$page_title = "combinations";
+$page_title = "the combs";
 // page category
 $page_category = "sys_tree";
 // page role
@@ -29,49 +29,58 @@ include_once str_repeat("../", $level) . "etc/app-status.php";
 // some page flages
 $possible_back = true;
 $preloader = true;
-$is_contain_table = false;
 // refere to that this page have tables
 $is_contain_table = false;
 
 // check system if under developing or not
 if ($is_developing == false) {
   // check username in SESSION variable
-  if (isset($_SESSION['sys']['UserName']) && $_SESSION['sys']['isLicenseExpired'] == 0) {
+
+  if (isset($_SESSION['sys']['username'])) {
     // check if Get request do is set or not
     $query = isset($_GET['do']) ? $_GET['do'] : 'manage';
     // start manage page
+
     if ($query == "manage" && $_SESSION['sys']['comb_show'] == 1) { // manage page
       // include combination dashboard
       $file_name = 'dashboard.php';
+      $page_subtitle = "dashboard";
       $is_contain_table = true;
     } elseif ($query == "show-combination-details" && $_SESSION['sys']['comb_show'] == 1) {
       // include combination details page
       $file_name = 'combinations-details.php';
+      $page_subtitle = "combs details";
       $is_contain_table = true;
-    } elseif ($query == "add-new-combination" && $_SESSION['sys']['comb_add'] == 1) {
+    } elseif ($query == "add-new-combination" && $_SESSION['sys']['comb_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
       // include add combination page
       $file_name = 'add-combination.php';
-    } elseif ($query == "insert-combination-info" && $_SESSION['sys']['comb_add'] == 1) { // edit piece page
+      $page_subtitle = "add new";
+      $is_contain_table = true;
+    } elseif ($query == "insert-combination-info" && $_SESSION['sys']['comb_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { // edit piece page
       // include isert combination page
       $file_name = 'insert-combination.php';
+      $page_subtitle = "add new";
       $possible_back = false;
       $preloader = false;
     } elseif ($query == 'edit-combination' && $_SESSION['sys']['comb_show'] == 1) {
       // include edit combination page
       $file_name = 'edit-combination.php';
-    } elseif ($query == 'update-combination-info') {
+      $page_subtitle = "edit";
+    } elseif ($query == 'update-combination-info' && $_SESSION['sys']['isLicenseExpired'] == 0) {
       // include update combination page
       $file_name = 'update-combination.php';
+      $page_subtitle = "edit";
       $possible_back = false;
       $preloader = false;
-    } elseif ($query == 'delete-combination' && $_SESSION['sys']['comb_delete'] == 1) {
+    } elseif ($query == 'delete-combination' && $_SESSION['sys']['comb_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
       // include delete combination page
       $file_name = 'delete-combination.php';
+      $page_subtitle = "delete comb";
       $possible_back = false;
       $preloader = false;
     } else {
       // include page error module
-      $file_name = $globmod . 'page-error.php';
+      $file_name = $globmod . 'page-permission-error.php';
       $possible_back = false;
       $preloader = false;
       $no_navbar = 'all';
@@ -94,6 +103,12 @@ include_once str_repeat("../", $level) . "etc/pre-conf.php";
 include_once str_repeat('../', $level) . 'etc/init.php';
 // alerts of system
 include_once str_repeat("../", $level) . "etc/system-alerts.php";
+
+// check if license was ended
+if (isset($_SESSION['sys']['isLicenseExpired']) && $_SESSION['sys']['isLicenseExpired'] == 1 && !isset($no_navbar)) {
+  // license file
+  include_once $globmod . 'systree-license-ended.php';
+}
 
 // include file name
 include_once $file_name;

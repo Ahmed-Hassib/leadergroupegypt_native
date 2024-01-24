@@ -6,11 +6,11 @@ $company_id = $db_obj->get_next_id('jsl_db', 'companies');
 $license_id = $db_obj->get_next_id('jsl_db', 'license');
 $user_id = $db_obj->get_next_id('jsl_db', 'users');
 // get company info
-$company_name   = $_POST['company-name'];
-$company_code   = $_POST['company-code'];
-$manager_name   = $_POST['manager-name'];
-$manager_phone  = $_POST['manager-phone'];
-$country        = $_POST['country'];
+$company_name = $_POST['company-name'];
+$company_code = $_POST['company-code'];
+$manager_name = $_POST['manager-name'];
+$manager_phone = $_POST['manager-phone'];
+$country = $_POST['country'];
 // admin of this company info
 $fullname = $_POST['fullname'];
 $username = $_POST['username'];
@@ -30,11 +30,6 @@ if (empty($company_name)) {
 if (empty($manager_name)) {
   $err_arr[] = 'manager empty';
 }
-
-// // check manager name if contains 3 parts
-// if (!preg_match('/^\w+\s+\w+\s+\w+$/', $manager_name)) {
-//   $err_arr[] = 'manager not triple';
-// }
 
 if (!is_triple_parts_name($manager_name)) {
   $err_arr[] = 'manager not triple';
@@ -85,7 +80,7 @@ if (empty($err_arr)) {
     // create an object of Registration class
     $reg_obj = !isset($reg_obj) ? new Registration() : $reg_obj;
     // add new company
-    $is_inserted_company = $reg_obj->add_new_company(array($company_name, $company_code, $manager_name, $manager_phone, get_date_now()));
+    $is_inserted_company = $reg_obj->add_new_company(array($company_name, $company_code, $manager_name, $manager_phone, $country, get_date_now()));
     // check if company was added
     if ($is_inserted_company) {
       // add a success message
@@ -178,4 +173,3 @@ function assign_message($arr, $icon, $class, $flag, $lang)
     $_SESSION['flash_message_lang_file'][$key] = $lang;
   }
 }
-  

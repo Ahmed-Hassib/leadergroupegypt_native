@@ -58,8 +58,8 @@ $(document).ready(function () {
     }
   } else if (location.pathname.includes('sys_tree')) {
     // get language
-    if (localStorage['systemLang'] != null) {
-      lang = localStorage['systemLang'] == 'ar' ? 'ar' : 'en';
+    if (localStorage['system_lang'] != null) {
+      lang = localStorage['system_lang'] == 'ar' ? 'ar' : 'en';
     }
   }
   // check lang
@@ -70,15 +70,15 @@ $(document).ready(function () {
     // get the table
     var table = $('table.display').DataTable({
       "scrollX": true,
-      colResize: {
-        isEnabled: true,
-        saveState: true,
-        hoverClass: 'dt-colresizable-hover',
-        // hasBoundCheck: true,
-        isResizable: function (column) {
-          return true;
-        },
-      },
+      // colResize: {
+      //   isEnabled: true,
+      //   saveState: true,
+      //   hoverClass: 'dt-colresizable-hover',
+      //   hasBoundCheck: true,
+      //   isResizable: function (column) {
+      //     return true;
+      //   },
+      // },
       autoWidth: false,
       ordering: true,
       stateSave: true,
@@ -93,8 +93,8 @@ $(document).ready(function () {
         { extend: 'colvis', className: 'btn btn-outline-primary fs-12 py-1', columns: ':not(.noVis)', text: curr_btn_arr.colVis }
       ],
       columnDefs: [
-        { targets: [0, 1, -1], className: 'noVis' },
-        { className: 'dt-justify fs-12', targets: '_all' },
+        { className: 'noVis', targets: [0, 1, -1] },
+        { className: 'fs-12', targets: '_all' },
       ],
 
       "language": curr_table_arr

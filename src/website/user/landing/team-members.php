@@ -24,9 +24,9 @@ if ($members_status && $members_info != null && count($members_info) > 0) {
         <div class="box">
           <div class="data">
             <?php if (!empty($member['img']) && file_exists($members_img . $member['img'])) { ?>
-              <img loading="lazy" src="<?php echo $members_img . $member['img'] ?>" alt="">
+              <img loading="lazy" loading="lazy" src="<?php echo $members_img . $member['img'] ?>" alt="">
             <?php } else { ?>
-              <img loading="lazy" src="<?php echo $website_assets ?>team-01.jpg" alt="">
+              <img loading="lazy" loading="lazy" src="<?php echo $website_assets ?>team-01.jpg" alt="">
             <?php } ?>
             <div class="social">
               <?php if (!empty($member['facebook']) && facebook_validation($member['facebook'])) { ?>

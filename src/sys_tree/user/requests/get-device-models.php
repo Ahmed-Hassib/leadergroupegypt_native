@@ -2,7 +2,7 @@
 // get documnet root
 $document_root = $_SERVER['DOCUMENT_ROOT'];
 // get device id
-$device_id = isset($_GET['device-id']) && !empty($_GET['device-id']) ? $_GET['device-id'] : 0;
+$device_id = isset($_GET['device-id']) && !empty($_GET['device-id']) ? base64_decode($_GET['device-id']) : 0;
 // company_id
 $company_id = $_SESSION['sys']['company_id'];
 // check if arr parameters are entered or not
@@ -23,8 +23,14 @@ if ($device_id == 0) {
   $company_name = $devices_obj->select_specific_column("`company_name`", "`companies`", "WHERE `company_id` = '" . base64_decode($company_id) . "'")[0]['company_name'];
   // convert data into json file
   $json_data = json_encode($data);
-  // json location
-  $json_location = $document_root . "/data/json/";
+  // check server name
+  if ($_SERVER['SERVER_NAME'] == 'leadergroupegypt.com') {
+    // json location
+    $json_location = $document_root . "/app/data/json/";
+  } else {
+    // json location
+    $json_location = $document_root . "/data/json/";
+  }
   // check if the directory is exist or not
   if (!file_exists($json_location)) {
     // create a directory for the company

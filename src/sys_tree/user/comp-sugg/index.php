@@ -33,7 +33,7 @@ include_once str_repeat("../", $level) . "etc/app-status.php";
 // check system if under developing or not
 if ($is_developing == false) {
   // check username in SESSION variable
-  if (isset($_SESSION['sys']['UserName']) && $_SESSION['sys']['isLicenseExpired'] == 0) {
+  if (isset($_SESSION['sys']['username']) && $_SESSION['sys']['isLicenseExpired'] == 0) {
     // check if Get request do is set or not
     $query = isset($_GET['do']) ? $_GET['do'] : 'manage';
     // start manage page
@@ -87,6 +87,13 @@ include_once str_repeat("../", $level) . "etc/pre-conf.php";
 include_once str_repeat("../", $level) . "etc/init.php";
 // alerts of system
 include_once str_repeat("../", $level) . "etc/system-alerts.php";
+
+// check if license was ended
+if ($_SESSION['sys']['isLicenseExpired'] == 1) {
+  // license file
+  include_once $globmod . 'systree-license-ended.php';
+}
+
 // include file name
 include_once $file_name;
 

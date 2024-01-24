@@ -30,15 +30,15 @@ if (empty($errors)) {
       break;
 
     case 'today':
-      $condition = "`added_date` = '".get_date_now()."'";
+      $condition = "`added_date` = '" . get_date_now() . "'";
       break;
 
     case 'month':
-      $start_date = Date('Y-m-1'); 
+      $start_date = Date('Y-m-1');
       $end_date   = Date('Y-m-31');
       $condition = "`added_date` BETWEEN '$start_date' AND '$end_date'";
       break;
-    
+
     default:
       $condition = null;
       break;
@@ -49,37 +49,37 @@ if (empty($errors)) {
   // check data count
   if ($data != null && count($data) > 0) {
 ?>
-<div class="container" dir="<?php echo $page_dir ?>">
-  <!-- start table container -->
-  <div class="table-responsive-sm">
-    <!-- strst malfunctions table -->
-    <table class="table table-striped table-bordered display compact table-style w-100" id="malfunctions">
-      <thead class="primary text-capitalize">
-        <tr>
-          <th class="text-center" style="width: 20px">#</th>
-          <th class="text-center"><?php echo lang('THE TYPE', @$_SESSION['sys']['lang']) ?></th>
-          <th class="text-center"><?php echo lang('THE COMMENT', @$_SESSION['sys']['lang']) ?></th>
-          <th class="text-center"><?php echo lang('ADDED DATE', @$_SESSION['sys']['lang']) ?></th>
-          <th class="text-center"><?php echo lang('ADDED TIME', @$_SESSION['sys']['lang']) ?></th>
-          <th class="text-center"><?php echo lang('CONTROL', @$_SESSION['sys']['lang']) ?></th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php foreach ($data as $index => $row) { ?>
-          <tr>
-            <td><?php echo ++$index; ?></td>
-            <td><?php echo $row['type'] == 0 ? lang('COMPLAINT', @$_SESSION['sys']['lang']) : lang('SUGGESTION', @$_SESSION['sys']['lang']) ?></td>
-            <td><?php echo $row['message'] ?></td>
-            <td><?php echo $row['added_date'] ?></td>
-            <td><?php echo date_format(date_create($row['added_time']), 'h:i a') ?></td>
-            <td><?php echo lang('CONTROL', @$_SESSION['sys']['lang']) ?></td>
-          </tr>
-        <?php } ?>
-      </tbody>
-    </table>
-  </div>
-</div>
-<?php 
+    <div class="container" dir="<?php echo $page_dir ?>">
+      <!-- start table container -->
+      <div class="table-responsive-sm">
+        <!-- strst malfunctions table -->
+        <table class="table table-striped table-bordered display display-big-data compact table-style w-100" id="malfunctions">
+          <thead class="primary text-capitalize">
+            <tr>
+              <th class="text-center" style="width: 20px">#</th>
+              <th class="text-center"><?php echo lang('THE TYPE', @$_SESSION['sys']['lang']) ?></th>
+              <th class="text-center"><?php echo lang('THE COMMENT', @$_SESSION['sys']['lang']) ?></th>
+              <th class="text-center"><?php echo lang('ADDED DATE', @$_SESSION['sys']['lang']) ?></th>
+              <th class="text-center"><?php echo lang('ADDED TIME', @$_SESSION['sys']['lang']) ?></th>
+              <th class="text-center"><?php echo lang('CONTROL', @$_SESSION['sys']['lang']) ?></th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($data as $index => $row) { ?>
+              <tr>
+                <td><?php echo ++$index; ?></td>
+                <td><?php echo $row['type'] == 0 ? lang('COMPLAINT', @$_SESSION['sys']['lang']) : lang('SUGGESTION', @$_SESSION['sys']['lang']) ?></td>
+                <td><?php echo $row['message'] ?></td>
+                <td><?php echo $row['added_date'] ?></td>
+                <td><?php echo date_format(date_create($row['added_time']), 'h:i a') ?></td>
+                <td><?php echo lang('CONTROL', @$_SESSION['sys']['lang']) ?></td>
+              </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+<?php
   } else {
     // include permission error module
     include_once $globmod . 'no-data-founded.php';

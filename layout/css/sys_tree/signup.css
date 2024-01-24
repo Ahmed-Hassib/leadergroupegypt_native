@@ -132,4 +132,14 @@
   float: none;
 }
 
+.signup-alert {
+  width: 50%;
+}
+
+@media (max-width: 768px) {
+  .signup-alert {
+    width: 70%!important;
+  }
+}
+
 /* End Login Form */

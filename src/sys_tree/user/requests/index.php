@@ -113,6 +113,10 @@ switch ($query) {
   case 'check-mikrotik-info':
     $file_name = 'check-mikrotik-info.php';
     break;
+
+  case 'get-encoded-id':
+    $file_name = 'get-encoded-id.php';
+    break;
 }
 
 include_once $file_name;

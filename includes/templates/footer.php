@@ -1,5 +1,5 @@
 <?php
-if ($is_developing == false && isset($page_category) && !isset($no_footer)) {
+if (isset($page_category) && !isset($no_footer)) {
   // switch case to include the specific footer of given page category
   switch ($page_category) {
     case 'website':
@@ -10,13 +10,19 @@ if ($is_developing == false && isset($page_category) && !isset($no_footer)) {
 
     case 'sys_tree':
       // check session of user
-      if (isset($_SESSION['sys']['UserID']) && $_SESSION['sys']['isRoot']) {
+      if (isset($_SESSION['sys']['UserID']) && $_SESSION['sys']['is_root']) {
         $sys_tree_footer = get_page_dependencies("" . $page_category . "_global", 'footer')['root'];
       } else {
-        $sys_tree_footer = get_page_dependencies("" . $page_category . "_global", 'footer')['user'];
+        if ($is_developing == false) {
+          $sys_tree_footer = get_page_dependencies("" . $page_category . "_global", 'footer')['user'];
+        }
       }
-      // include footer
-      include_once $sys_tree_tpl . $sys_tree_footer;
+
+      // check if footer set
+      if (isset($sys_tree_footer)) {
+        // include footer
+        include_once $sys_tree_tpl . $sys_tree_footer;
+      }
       break;
 
     case 'blog':

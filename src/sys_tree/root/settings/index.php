@@ -22,7 +22,7 @@ $nav_level = 1;
 // initial configration of system
 include_once str_repeat("../", $level) . "etc/init.php";
 // check username in SESSION variable
-if (isset($_SESSION['sys']['UserName']))  {
+if (isset($_SESSION['sys']['username']))  {
 
     // start dashboard page
     // check if Get request do is set or not
@@ -91,7 +91,7 @@ if (isset($_SESSION['sys']['UserName']))  {
                                 <!-- <span></span>  -->
                             </p>
                         <?php } else { ?>
-                            <?php if (!$_SESSION['sys']['isRoot']) { ?>
+                            <?php if (!$_SESSION['sys']['is_root']) { ?>
                                 <h5 class="h5 text-danger"><?php echo lang("LICENSE EXPIRED SINCE", @$_SESSION['sys']['lang']) . " " . $diff->days . " " . lang("DAY", @$_SESSION['sys']['lang']) ?></h5>
                                 <h5 class="h5 text-danger"><?php echo lang("PLEASE, TRY TO CALL TECHNICAL SUPPORT", @$_SESSION['sys']['lang']) ?></h5>
                                 <h5 class="h5 text-secondary"><i class="bi bi-telephone"></i> => 01028680375</h5>
@@ -115,7 +115,7 @@ if (isset($_SESSION['sys']['UserName']))  {
                                     <!-- strat submit -->
                                     <div class="mb-4 row">
                                         <div class="col-sm-10">
-                                            <button type="button" id="renewLicenseBtn" data-bs-toggle="modal" data-bs-target="#warningMsg" class='my-1 me-1 btn btn-success text-capitalize fs-12 <?php if ($_SESSION['sys']['isRoot'] == 0) {echo 'disabled';} ?>'><i class='bi bi-arrow-clockwise me-1'></i>&nbsp;<?php echo lang('RENEW LICENSE', @$_SESSION['sys']['lang']) ?></button>
+                                            <button type="button" id="renewLicenseBtn" data-bs-toggle="modal" data-bs-target="#warningMsg" class='my-1 me-1 btn btn-success text-capitalize fs-12 <?php if ($_SESSION['sys']['is_root'] == 0) {echo 'disabled';} ?>'><i class='bi bi-arrow-clockwise me-1'></i>&nbsp;<?php echo lang('RENEW LICENSE', @$_SESSION['sys']['lang']) ?></button>
                                         </div>
                                     </div>
                                     <!-- end submit -->
@@ -138,7 +138,7 @@ if (isset($_SESSION['sys']['UserName']))  {
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary fs-12" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" form="renewLicenseForm" class="btn btn-success text-capitalize fs-12 <?php if ($_SESSION['sys']['isRoot'] == 0) {echo 'disabled';} ?>"><i class="bi bi-check-all"></i>&nbsp;<?php echo lang('CONFIRM', @$_SESSION['sys']['lang']) ?></button>
+                                                <button type="submit" form="renewLicenseForm" class="btn btn-success text-capitalize fs-12 <?php if ($_SESSION['sys']['is_root'] == 0) {echo 'disabled';} ?>"><i class="bi bi-check-all"></i>&nbsp;<?php echo lang('CONFIRM', @$_SESSION['sys']['lang']) ?></button>
                                             </div>
                                         </div>
                                     </div>
@@ -337,7 +337,7 @@ if (isset($_SESSION['sys']['UserName']))  {
                 ?>
             </div>
         </div>
-    <?php } elseif ($query == "renewLicense" && $_SESSION['sys']['isRoot'] == 1) { ?>
+    <?php } elseif ($query == "renewLicense" && $_SESSION['sys']['is_root'] == 1) { ?>
         <!-- start home stats container -->
         <div class="container ">
             <!-- start header -->
@@ -350,7 +350,7 @@ if (isset($_SESSION['sys']['UserName']))  {
                             $pass = sha1($_POST['pass']);
                             $licenseType = intval($_POST['license']);
                             // get root password
-                            $rootPass = selectSpecificColumn("`Pass`", "`users`", "WHERE `UserID` = 1")[0]['Pass'];
+                            $rootPass = selectSpecificColumn("`password`", "`users`", "WHERE `UserID` = 1")[0]['password'];
                             // check if the same password
                             if ($pass == $rootPass) {
                                 switch ($licenseType) {

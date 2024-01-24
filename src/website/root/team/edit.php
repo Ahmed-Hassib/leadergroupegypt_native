@@ -56,9 +56,9 @@ if ($member_obj->is_exist("`id`", "`team_members`", $member_id)) {
               <!-- image preview -->
               <div class="img-container-preview">
                 <?php if (!empty($member_info['img']) && file_exists($members_img . $member_info['img'])) { ?>
-                  <img src="<?php echo $members_img . $member_info['img'] ?>" alt="image">
+                  <img loading="lazy" src="<?php echo $members_img . $member_info['img'] ?>" alt="image">
                 <?php } else { ?>
-                  <img src="<?php echo $assets ?>leadergroupegypt-shadow.png" alt="default image">
+                  <img loading="lazy" src="<?php echo $assets ?>leadergroupegypt-shadow.png" alt="default image">
                 <?php } ?>
               </div>
             </div>

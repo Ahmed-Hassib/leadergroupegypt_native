@@ -196,7 +196,7 @@ class Malfunction extends Database
       // send separate message
       $mal_info = $whatsapp_obj->sendChatMessage($to, str_repeat("=", 30));
       // prepare message
-      $msg = ($time_period == 'am' ? lang('GOOD MORNING') : lang('GOOD AFTERNOON')) . " " . $tech['UserName'] . "\n";
+      $msg = ($time_period == 'am' ? lang('GOOD MORNING') : lang('GOOD AFTERNOON')) . " " . $tech['username'] . "\n";
       $msg .= " " . lang('ASSIGNED', $lang_file) . " " . $admin_name;
       $msg .= " " . lang('ASSIGN MALFUNCTION TO YOU', $lang_file) . "\n";
       $msg .= "\t*" . lang('NAME', $lang_file) . ": " . $client['full_name'] . "\n";

@@ -58,12 +58,12 @@
 
   <!-- INCLUDE ALL CHARTS NODE JS FILES -->
   <?php foreach ($charts_node_js_files as $charts_node_js_file) { ?>
-    <script type="text/javascript" src="<?php echo $node . $charts_node_js_file; ?>"></script>
+    <script type="text/javascript" src="<?php echo $node . $charts_node_js_file; ?>" defer></script>
   <?php } ?>
 
   <!-- INCLUDE ALL CHART CUSTOM JS FILES -->
   <?php foreach ($chart_js_files as $chart_js_file) { ?>
-    <script type="text/javascript" src="<?php echo $js . $chart_js_file; ?>"></script>
+    <script type="text/javascript" src="<?php echo $js . $chart_js_file; ?>" defer></script>
   <?php } ?>
 <?php } ?>
 
@@ -89,6 +89,21 @@
     <?php } ?>
   <?php } ?>
 <?php } ?>
+
+<?php if (isset($is_contain_map) && $is_contain_map) { ?>
+  <!-- GET ALL JS FILES DEPENDING ON MAP IN CURRENT CATEGORY -->
+  <?php $map_js_files = get_page_dependencies($page_category . '_map', 'js'); ?>
+
+  <?php if ($map_js_files != null) { ?>
+    <?php foreach ($map_js_files as $js_file) { ?>
+      <script type="text/javascript" src="<?php echo $js . $dependencies_folder . $js_file; ?>" defer></script>
+    <?php } ?>
+  <?php } ?>
+<?php } ?>
+
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+<script src="<?php echo $node ?>jquery/dist/jquery.min.js"></script>
+
 
 
 <!-- PAGE ICON -->

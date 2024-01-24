@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
       $_SESSION['flash_message_class'] = 'success';
       $_SESSION['flash_message_status'] = true;
-      $_SESSION['flash_message_lang_file'] = 'settings';
+      $_SESSION['flash_message_lang_file'] = $lang_file;
 
       // create an object of Session class
       $session_obj = !isset($session_obj)?new Session():$session_obj;
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // prepare flash session variables
     $_SESSION['flash_message'] = 'NO CHANGES';
     $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
-    $_SESSION['flash_message_class'] = 'primary';
+    $_SESSION['flash_message_class'] = 'info';
     $_SESSION['flash_message_status'] = false;
     $_SESSION['flash_message_lang_file'] = 'global_';
   }

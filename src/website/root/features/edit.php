@@ -56,11 +56,11 @@ if ($features_obj->is_exist("`id`", "`features`", $feature_id)) {
               <div class="img-container-preview">
                 <?php if (file_exists($features_img . $feature_info['feature_img'])) { ?>
                   <?php $is_resized = resize_img($features_img, $feature_info['feature_img']); ?>
-                  <img
+                  <img loading="lazy"
                     src="<?php echo $is_resized ? $features_img . "resized/" . $feature_info['feature_img'] : $features_img . $feature_info['feature_img'] ?>"
                     alt="image">
                 <?php } else { ?>
-                  <img src="<?php echo $assets ?>leadergroupegypt-shadow.png" alt="default image">
+                  <img loading="lazy" src="<?php echo $assets ?>leadergroupegypt-shadow.png" alt="default image">
                 <?php } ?>
               </div>
             </div>

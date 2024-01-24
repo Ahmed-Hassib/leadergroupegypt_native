@@ -11,14 +11,14 @@
     <?php
     $company_img_name_db = $db_obj->select_specific_column("`company_img`", "`companies`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
     $company_img_name_db = count($company_img_name_db) > 0 ? $company_img_name_db[0]['company_img'] : null;
-    $company_img_name = empty($company_img_name_db) || $company_img_name_db == null ? 'systree.jpg' : $company_img_name_db;
+    $company_img_name = empty($company_img_name_db) || $company_img_name_db == null ? 'treenet.jpg' : $company_img_name_db;
     $company_img_path = empty($company_img_name_db) || $company_img_name_db == null ? $systree_assets : $uploads . "companies-img/" . base64_decode($_SESSION['sys']['company_id']);
     // check if image exists
-    $img_file = file_exists("$company_img_path/$company_img_name") ? "$company_img_path/$company_img_name" : $systree_assets . "systree.jpg";
+    $img_file = file_exists("$company_img_path/$company_img_name") ? "$company_img_path/$company_img_name" : $systree_assets . "treenet.jpg";
     // resize company image
     $is_resized = resize_img($company_img_path . "/", $company_img_name);
     ?>
-    <img
+    <img loading="lazy"
       src="<?php echo $is_resized ? "$company_img_path/$company_img_name" : "$company_img_path/$company_img_name" ?>"
       class="company-img" id="company-img"
       alt="<?php echo isset($_SESSION['sys']['company_name']) ? "Image of " . $_SESSION['sys']['company_name'] : lang('NOT ASSIGNED') ?>">

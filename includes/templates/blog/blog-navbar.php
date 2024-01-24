@@ -9,7 +9,7 @@
                 <!-- START MEGA MENU -->
                 <div class="mega-menu">
                     <div class="image">
-                        <img src="<?php echo $website_images ?>megamenu.png" alt="">
+                        <img loading="lazy" src="<?php echo $website_images ?>megamenu.png" alt="">
                     </div>
                     <ul class="links">
                         <li>

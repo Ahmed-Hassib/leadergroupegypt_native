@@ -4,7 +4,7 @@
   <header class="header">
     <!-- start page not found 404 -->
     <div class="page-error">
-      <img src="<?php echo $assets ?>images/no-data-founded.svg" class="img-fluid" alt="<?php echo lang("NO DATA") ?>">
+      <img loading="lazy" src="<?php echo $assets ?>images/no-data-founded.svg" class="img-fluid" alt="<?php echo lang("NO DATA") ?>">
       <h5 class="mt-4 h5 text-danger">
         <?php echo lang("NO DATA") ?>
       </h5>

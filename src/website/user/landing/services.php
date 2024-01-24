@@ -19,11 +19,11 @@ if ($services_info != null && count($services_info) > 0) {
         <?php if (file_exists($services_img . $service['service_img'])) { ?>
           <div class="box">
             <?php $is_resized = resize_img($services_img, $service['service_img']); ?>
-            <img loading="lazy"
+            <img loading="lazy" loading="lazy"
               src="<?php echo $is_resized ? $services_img . "resized/" . $service['service_img'] : $services_img . $service['service_img'] ?>"
               alt="service image #<?php echo $key + 1 ?>">
 
-            <!-- <img src="<?php echo $services_img . $service['service_img'] ?>" alt=""> -->
+            <!-- <img loading="lazy" src="<?php echo $services_img . $service['service_img'] ?>" alt=""> -->
             <div class="info">
               <?php if ($service['is_active'] != 2) { ?>
                 <?php if (strlen($service['link_1']) > 0) { ?>

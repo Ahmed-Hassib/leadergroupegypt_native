@@ -1,84 +1,94 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  // create an object of Malfunction class
-  $mal_obj = new Malfunction();
-  // get update owner id
-  $update_owner_id = base64_decode($_SESSION['sys']['UserID']);
-  // get update owner type
-  $update_owner_type = $_SESSION['sys']['isTech'];
-  // get update owner job_id
-  $update_owner_job_id = base64_decode($_SESSION['sys']['job_title_id']);
-  // get malfunction id
-  $mal_id = isset($_POST['mal-id']) && !empty($_POST['mal-id']) ? base64_decode($_POST['mal-id']) : 0;
-  // check if malfunction is exist or not
-  if ($mal_obj->is_exist("`mal_id`", "`malfunctions`", $mal_id)) {
-    // get malfunction basics info
-    $stored_basics_info = $mal_obj->get_spec_malfunction($mal_id, base64_decode($_SESSION['sys']['company_id']));
-    // get is exist boolean value
-    $is_exist = $stored_basics_info[0];
-    // check if exist again
-    if ($is_exist) {
-      // get info
-      $mal_info = $stored_basics_info[1][0];
-      // get new malfunction info
-      $manager_id = base64_decode($_POST['admin-id']);
-      $tech_id = base64_decode($_POST['technical-id-value']);
+  // check license
+  if ($_SESSION['sys']['isLicenseExpired'] == 0) {
+    // create an object of Malfunction class
+    $mal_obj = new Malfunction();
+    // get update owner id
+    $update_owner_id = base64_decode($_SESSION['sys']['UserID']);
+    // get update owner type
+    $update_owner_type = $_SESSION['sys']['is_tech'];
+    // get update owner job_id
+    $update_owner_job_id = base64_decode($_SESSION['sys']['job_title_id']);
+    // get malfunction id
+    $mal_id = isset($_POST['mal-id']) && !empty($_POST['mal-id']) ? base64_decode($_POST['mal-id']) : 0;
+    // check if malfunction is exist or not
+    if ($mal_obj->is_exist("`mal_id`", "`malfunctions`", $mal_id)) {
+      // get malfunction basics info
+      $stored_basics_info = $mal_obj->get_spec_malfunction($mal_id, base64_decode($_SESSION['sys']['company_id']));
+      // get is exist boolean value
+      $is_exist = $stored_basics_info[0];
+      // check if exist again
+      if ($is_exist) {
+        // get info
+        $mal_info = $stored_basics_info[1][0];
+        // get new malfunction info
+        $manager_id = base64_decode($_POST['admin-id']);
+        $tech_id = base64_decode($_POST['technical-id-value']);
 
-      // check who is doing the update
-      switch ($update_owner_job_id) {
-        /**
-         * updates for:
-         * [1] The Manager
-         * [2] Customer Services
-         */
-        case 1:
-        case 3:
-        case 4:
-          if ($mal_info['mal_status'] != 1) {
-            $is_updated = do_manager_updates($_POST);
-          } else {
-            $is_updated = do_after_sales_updates($_POST);
-          }
+        // check who is doing the update
+        switch ($update_owner_job_id) {
+          /**
+           * updates for:
+           * [1] The Manager
+           * [2] Customer Services
+           */
+          case 1:
+          case 3:
+          case 4:
+            if ($mal_info['mal_status'] != 1) {
+              $is_updated = do_manager_updates($_POST);
+            } else {
+              $is_updated = do_after_sales_updates($_POST);
+            }
 
-          // check status updates
-          if ($is_updated['status']) {
-            // add malfunction updates info
-            add_updates_details($mal_id, $update_owner_id, $is_updated['updates'], base64_decode($_SESSION['sys']['company_id']));
-          }
-          break;
-        /**
-         * updates for:
-         * [1] Technical Man
-         */
-        case 2:
-          $path = $uploads . "malfunctions/";
-          // check who is doing the updates
-          if ($update_owner_id == $tech_id && $mal_info['mal_status'] != 1) {
-            $is_updated = do_technical_updates($_POST, count($_FILES) && $_FILES['cost-receipt']['size'] > 0 && $_FILES['cost-receipt']['error'] == 0 ? $_FILES['cost-receipt'] : null, $path);
             // check status updates
             if ($is_updated['status']) {
-              // get updates
-              $updates = $is_updated['updates'];
-              // loop on it
-              foreach ($updates as $key => $update) {
-                // add alfunction updates info
-                add_updates_details($mal_id, $update_owner_id, $update, base64_decode($_SESSION['sys']['company_id']));
+              // add malfunction updates info
+              add_updates_details($mal_id, $update_owner_id, $is_updated['updates'], base64_decode($_SESSION['sys']['company_id']));
+            }
+            break;
+          /**
+           * updates for:
+           * [1] Technical Man
+           */
+          case 2:
+            $path = $uploads . "malfunctions/";
+            // check who is doing the updates
+            if ($update_owner_id == $tech_id && $mal_info['mal_status'] != 1) {
+              $is_updated = do_technical_updates($_POST, count($_FILES) && $_FILES['cost-receipt']['size'] > 0 && $_FILES['cost-receipt']['error'] == 0 ? $_FILES['cost-receipt'] : null, $path);
+              // check status updates
+              if ($is_updated['status']) {
+                // get updates
+                $updates = $is_updated['updates'];
+                // loop on it
+                foreach ($updates as $key => $update) {
+                  // add alfunction updates info
+                  add_updates_details($mal_id, $update_owner_id, $update, base64_decode($_SESSION['sys']['company_id']));
+                }
               }
             }
-          }
 
-          // check if upload media
-          if (count($_FILES) > 0 && key_exists('mal-media', $_FILES)) {
-            upload_malfunction_media($_FILES, $mal_id, $path);
-          }
-          break;
+            // check if upload media
+            if (count($_FILES) > 0 && key_exists('mal-media', $_FILES)) {
+              upload_malfunction_media($_FILES, $mal_id, $path);
+            }
+            break;
+        }
+        // prepare flash session variables
+        $_SESSION['flash_message'] = 'UPDATED';
+        $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
+        $_SESSION['flash_message_class'] = 'success';
+        $_SESSION['flash_message_status'] = true;
+        $_SESSION['flash_message_lang_file'] = $lang_file;
+      } else {
+        // prepare flash session variables
+        $_SESSION['flash_message'] = 'NO DATA';
+        $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+        $_SESSION['flash_message_class'] = 'danger';
+        $_SESSION['flash_message_status'] = false;
+        $_SESSION['flash_message_lang_file'] = 'global_';
       }
-      // prepare flash session variables
-      $_SESSION['flash_message'] = 'UPDATED';
-      $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
-      $_SESSION['flash_message_class'] = 'success';
-      $_SESSION['flash_message_status'] = true;
-      $_SESSION['flash_message_lang_file'] = 'malfunctions';
     } else {
       // prepare flash session variables
       $_SESSION['flash_message'] = 'NO DATA';
@@ -89,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
   } else {
     // prepare flash session variables
-    $_SESSION['flash_message'] = 'NO DATA';
+    $_SESSION['flash_message'] = 'FEATURE NOT AVAILABLE';
     $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
     $_SESSION['flash_message_class'] = 'danger';
     $_SESSION['flash_message_status'] = false;
@@ -159,7 +169,7 @@ function do_technical_updates($info, $cost_media, $media_path)
   // get malfunctions cost receipt 
   $mal_info = $mal_obj->select_specific_column("`cost_receipt`", "`malfunctions`", "WHERE `mal_id` = $mal_id");
   $cost_receipt_name = count($mal_info) > 0 ? $mal_info[0]['cost_receipt'] : null;
-  
+
   if ($cost_media !== null) {
     // file names
     $file_name = $cost_media['name'];
@@ -171,15 +181,15 @@ function do_technical_updates($info, $cost_media, $media_path)
     $file_error = $cost_media['error'];
     // file size
     $file_size = $cost_media['size'];
-    
+
     // check file size
     if ($file_size > 0 && $file_error == 0 && $file_size <= $mal_obj->max_file_size) {
       if (!file_exists($media_path) && !is_dir($media_path)) {
         mkdir($media_path);
       }
-      
+
       $media_path .= base64_decode($_SESSION['sys']['company_id']) . "/";
-      
+
       if (!file_exists($media_path) && !is_dir($media_path)) {
         mkdir($media_path);
       }

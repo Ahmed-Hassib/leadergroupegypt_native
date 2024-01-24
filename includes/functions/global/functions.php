@@ -9,12 +9,19 @@
 function get_page_tilte($lang_file)
 {
   global $page_title; // page title
+  global $page_subtitle; // page title
   // check if set or not
   if (isset($page_title)) {
-    echo strtoupper(lang(strtoupper($page_title)));
+    $title = strtoupper(lang(strtoupper($page_title), $lang_file));
+    // check sub title
+    if (isset($page_subtitle) && !empty($page_subtitle)) {
+      $title .= " | " . strtoupper(lang(strtoupper($page_subtitle), $lang_file));
+    }
   } else {
-    echo lang('NOT ASSIGNED');
+    $title = lang('NOT ASSIGNED');
   }
+  // display title
+  echo $title;
 }
 
 /**
@@ -169,7 +176,14 @@ function create_logs($username, $msg, $type = 1)
   $log = "[" . $username . "@" . Date('d/m/Y h:ia') . " ~ " . $typeName . " msg]:" . $msg . ".\n";
   // location
   $DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
-  $fileLocation = $DOCUMENT_ROOT . "/app/data/log/";
+
+  // check file location
+  if (file_exists($DOCUMENT_ROOT . "/app/data/log/") && is_dir($DOCUMENT_ROOT . "/app/data/log/")) {
+    $fileLocation = $DOCUMENT_ROOT . "/app/data/log/";
+  } elseif (file_exists($DOCUMENT_ROOT . "data/log/") && is_dir($DOCUMENT_ROOT . "data/log/")) {
+    $fileLocation = $DOCUMENT_ROOT . "data/log/";
+  }
+
   // check the fileLocation
   if (!file_exists($fileLocation) && !is_dir($fileLocation)) {
     mkdir($fileLocation);
@@ -266,29 +280,29 @@ function generate_random_string($length = 5)
 }
 
 
-// ping to an ip and read ping result line by line
-function ping($ip, $c = 1)
-{
-  // Set the maximum execution time to 5 minutes
-  set_time_limit(300);
+// // ping to an ip and read ping result line by line
+// function ping($ip, $c = 1)
+// {
+//   // Set the maximum execution time to 5 minutes
+//   set_time_limit(300);
 
-  // check operating system
-  if (strtolower(PHP_OS) == 'winnt') {
-    $ping_cmd = "ping -n $c $ip";
-  } else {
-    $ping_cmd = "ping -c $c $ip";
-  }
+//   // check operating system
+//   if (strtolower(PHP_OS) == 'winnt') {
+//     $ping_cmd = "ping -n $c $ip";
+//   } else {
+//     $ping_cmd = "ping -c $c $ip";
+//   }
 
-  // execute the ping command
-  $ping = exec($ping_cmd, $output, $status);
+//   // execute the ping command
+//   $ping = exec($ping_cmd, $output, $status);
 
-  // return result
-  return array(
-    "ping" => $ping,
-    "output" => $output,
-    "status" => $status
-  );
-}
+//   // return result
+//   return array(
+//     "ping" => $ping,
+//     "output" => $output,
+//     "status" => $status
+//   );
+// }
 
 /**
  * function prepare_pcs_datatables v1
@@ -572,3 +586,18 @@ function is_triple_parts_name($name)
   // The name is in triple parts in either Arabic or English.
   return true;
 }
+
+/**
+ * str_replace_whitespace function
+ * used to replace all white spaces with dash "-" 
+ */
+function str_replace_whitespace($string)
+{
+  $words = preg_split('/\s+/', $string);
+  $words = array_map(function ($word) {
+    return str_replace(' ', '-', $word);
+  }, $words);
+  $result = implode('-', $words);
+  return $result;
+}
+

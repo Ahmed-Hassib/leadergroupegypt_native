@@ -28,8 +28,8 @@ include_once str_repeat("../", $level) . "etc/app-status.php";
 // check if app is developing now or not
 if ($is_developing == false || (isset($_GET['rt']) && base64_decode(trim($_GET['rt'], "\n\r\t\v\x00")) == 'root-login')) {
   // check username in SESSION variable
-  if (isset($_SESSION['sys']['UserName'])) {
-    if ($_SESSION['sys']['isRoot'] == 1) {
+  if (isset($_SESSION['sys']['username'])) {
+    if ($_SESSION['sys']['is_root'] == 1) {
       // redirect to admin page
       header("Location: root/dashboard/index.php");
       exit();
@@ -45,6 +45,8 @@ if ($is_developing == false || (isset($_GET['rt']) && base64_decode(trim($_GET['
 
   // check query value 
   if ($query == null) {
+    // additional query param
+    $query_params = isset($_GET['rt']) && base64_decode(trim($_GET['rt'], "\n\r\t\v\x00")) == 'root-login' ? '?rt=' . $_GET['rt'] : null;
     // check if user comming from http request ..
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
       // include process login form
@@ -69,6 +71,7 @@ if ($is_developing == false || (isset($_GET['rt']) && base64_decode(trim($_GET['
   }
   // include file
   $file_name = "login/$file_name";
+} elseif (isset($_SESSION['sys']['username']) && $_SESSION['sys']['is_root']) {
 } else {
   $file_name = $globmod . "under-developing.php";
 }

@@ -7,7 +7,7 @@ session_start();
 // regenerate session id
 session_regenerate_id();
 // title page
-$page_title = "Dashboard";
+$page_title = "dashboard";
 // page category
 $page_category = "sys_tree";
 // page role
@@ -26,29 +26,31 @@ include_once str_repeat("../", $level) . "etc/app-status.php";
 // check system if under developing or not
 if ($is_developing == false) {
   // check username in SESSION variable
-  if (isset($_SESSION['sys']['UserName'])) {
-    // check if license was ended
-    if ($_SESSION['sys']['isLicenseExpired'] == 0) {
-      // check if app under developing
-      // check the request
-      $query = isset($_GET['do']) ? $_GET['do'] : 'manage';
-      $possible_back = true;
-      $preloader = true;
-      // check
-      if ($query == 'manage') {
-        // check the version
-        $file_name = 'dashboard.php';
-      } elseif ($query == 'version-info') {
-        // check the version
-        $file_name = 'version-info.php';
-      } else {
-        $file_name = $globmod . 'page-error.php';
-        $no_navbar = 'all';
-        $no_footer = 'all';
-      }
+  if (isset($_SESSION['sys']['username'])) {
+    // check the request
+    if (isset($_GET['do'])) {
+      $query = !empty($_GET['do']) ? trim($_GET['do']) : 'manage';
+    } elseif (isset($_GET['search'])) {
+      $query = 'search';
     } else {
-      // license file
-      $file_name = 'license-ended.php';
+      $query = 'manage';
+    }
+
+    $possible_back = true;
+    $preloader = true;
+    // check
+    if ($query == 'manage') {
+      // check the version
+      $file_name = 'dashboard.php';
+    } elseif ($query == 'version-info') {
+      // check the version
+      $file_name = 'version-info.php';
+    } elseif ($query == 'search') {
+      $file_name = 'search.php';
+    } else {
+      $file_name = $globmod . 'page-error.php';
+      $no_navbar = 'all';
+      $no_footer = 'all';
     }
   } else {
     header("Location: ../../logout.php");
@@ -63,6 +65,13 @@ include_once str_repeat("../", $level) . "etc/pre-conf.php";
 include_once str_repeat("../", $level) . "etc/init.php";
 // alerts of system
 include_once str_repeat("../", $level) . "etc/system-alerts.php";
+
+// check if license was ended
+if ($_SESSION['sys']['isLicenseExpired'] == 1) {
+  // license file
+  include_once $globmod . 'systree-license-ended.php';
+}
+
 // include file name
 include_once $file_name;
 // footer

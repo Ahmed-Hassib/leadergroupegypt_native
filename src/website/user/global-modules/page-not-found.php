@@ -2,7 +2,7 @@
 <div class="page-error">
     <div class="container">
         <!-- 404 IMAGE -->
-        <img src="<?php echo $assets ?>images/page-not-found.svg" class="img-fluid" style="width: 400px" alt="<?php echo lang("NO PAGE WITH THIS NAME", @$_SESSION['lang']) ?>">
+        <img loading="lazy" src="<?php echo $assets ?>images/page-not-found.svg" class="img-fluid" style="width: 400px" alt="<?php echo lang("NO PAGE WITH THIS NAME", @$_SESSION['lang']) ?>">
         <!-- TEXT INFO BOX -->
         <div class="my-2">
             <h5 class="h5 text-danger text-capitalize">

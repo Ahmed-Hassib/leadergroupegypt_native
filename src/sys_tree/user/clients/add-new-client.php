@@ -97,9 +97,9 @@
           <!-- internet source -->
           <div class="mb-3">
             <div class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-              <input type="text" name="internet-source" id="internet-source" class="form-control w-100"
+              <input type="text" name="coordinates" id="coordinates" class="form-control w-100"
                 placeholder="<?php echo lang('COORDINATES', 'pieces') ?>" />
-              <label for="internet-source" class="col-sm-12 col-form-label text-capitalize">
+              <label for="coordinates" class="col-sm-12 col-form-label text-capitalize">
                 <?php echo lang('COORDINATES', 'pieces'); ?>
               </label>
             </div>
@@ -480,7 +480,7 @@
 
     <!-- submit -->
     <div class="hstack gap-3">
-      <?php if ($_SESSION['sys']['clients_add'] == 1) { ?>
+      <?php if ($_SESSION['sys']['clients_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
         <button type="button" form="addClient"
           class="btn btn-primary text-capitalize bg-gradient fs-12 p-1 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>"
           id="add-clt-2" onclick="form_validation(this.form, 'submit')">

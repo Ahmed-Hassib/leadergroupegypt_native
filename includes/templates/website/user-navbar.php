@@ -5,8 +5,7 @@
     <a href="<?php echo $up_level ?>index.php" class="navbar-brand">
       <?php echo lang('SPONSOR') ?>
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
@@ -27,13 +26,30 @@
         </li>
         <?php $num_services = $db_obj->count_records("`id`", "`services`", "WHERE `is_active` = 1"); ?>
         <?php if ($num_services > 0) { ?>
-          <li class="nav-item">
-            <a href="<?php echo $up_level ?>index.php#services" class="nav-link">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="bi bi-tools"></i>
-              <span class="me-1">
-                <?php echo lang('OUR SERVICES') ?>
-              </span>
+              <?php echo lang('OUR SERVICES') ?>
             </a>
+            <ul class="dropdown-menu <?php echo $page_dir == 'rtl' ? 'dropdown-menu-end' : 'dropdown-menu-start' ?>">
+              <?php $last_3_services = $db_obj->get_latest_records("*", "`services`", "WHERE `is_active` = 1", "`id`", "3"); ?>
+              <?php foreach ($last_3_services as $key => $service) { ?>
+                <li class="<?php echo $page_dir == 'rtl' ? 'text-end' : 'text-start' ?>">
+                  <a href="<?php echo $service['link_2'] ?>" class="dropdown-item">
+                    <span>
+                      <?php echo $page_dir == 'rtl' ? $service['service_name_ar'] . " - " . $service['link_2_ar'] : $service['service_name_en'] . " - " . $service['link_2_en'] ?>
+                    </span>
+                  </a>
+                </li>
+                <?php } ?>
+                <li class="<?php echo $page_dir == 'rtl' ? 'text-end' : 'text-start' ?>">
+                  <a href="#services" class="dropdown-item">
+                    <span>
+                      <?php echo lang('OUR SERVICES') ?>
+                    </span>
+                  </a>
+                </li>
+            </ul>
           </li>
         <?php } ?>
         <?php $num_imgs = $db_obj->count_records("`id`", "`gallery`", "WHERE `is_active` = 1"); ?>
@@ -58,8 +74,8 @@
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <?php echo lang('OTHER') ?>
           </a>
-          <ul class="dropdown-menu dropdown-menu-start">
-            <li class="<?php echo $page_dir == 'rtl' ? 'text-end' : 'text-start' ?>">
+          <ul class="dropdown-menu <?php echo $page_dir == 'rtl' ? 'dropdown-menu-end' : 'dropdown-menu-start' ?>">
+            <li class=" <?php echo $page_dir == 'rtl' ? 'text-end' : 'text-start' ?>">
               <a href="<?php echo $up_level ?>index.php#team-members" class="dropdown-item">
                 <i class="bi bi-people"></i>&nbsp;
                 <span>
@@ -67,14 +83,14 @@
                 </span>
               </a>
             </li>
-            <li class="<?php echo $page_dir == 'rtl' ? 'text-end' : 'text-start' ?>">
+            <!-- <li class="<?php echo $page_dir == 'rtl' ? 'text-end' : 'text-start' ?>">
               <a href="<?php echo $up_level ?>index.php#testimonials" class="dropdown-item">
                 <i class="bi bi-chat"></i>&nbsp;
                 <span>
                   <?php echo lang('TESTIMONIALS') ?>
                 </span>
               </a>
-            </li>
+            </li> -->
           </ul>
         </li>
         <?php if (!isset($_SESSION['website']['user_id'])) { ?>

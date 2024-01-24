@@ -15,7 +15,7 @@ class Database extends PDO
 
 
   /** CONSTANT */
-  const OPTIONS = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8', );
+  const OPTIONS = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',);
 
 
   /** METHODS */
@@ -159,6 +159,30 @@ class Database extends PDO
   }
 
   /**
+   * activate_license function v1
+   */
+  public function add_license($company_id, $type, $start_date, $expire_date, $is_trial, $plan_id)
+  {
+    $select_query = "INSERT INTO `license`(`company_id`, `type`, `start_date`, `expire_date`, `isEnded`, `isTrial`, `plan_id`) VALUES (?, ?, ?, ?, 1, ?, ?);";
+    $stmt = $this->con->prepare($select_query);
+    $stmt->execute(array($company_id, $type, $start_date, $expire_date, $is_trial, $plan_id));
+    $license_count = $stmt->rowCount();
+    return $license_count > 0 ? true : false;
+  }
+
+  /**
+   * deactivate_license function v1
+   */
+  public function deactivate_license($license_id, $company_id)
+  {
+    $select_query = "UPDATE `license` SET `isEnded`= 1 WHERE `ID` =  AND `company_id` = ?";
+    $stmt = $this->con->prepare($select_query);
+    $stmt->execute(array($license_id, $company_id));
+    $license_count = $stmt->rowCount();
+    return $license_count > 0 ? true : false;
+  }
+
+  /**
    * is_expired function v1
    * accepts 1 parameter
    */
@@ -197,6 +221,16 @@ class Database extends PDO
   public function set_next_remote_ip($remote_ip)
   {
     $select_stmt = "UPDATE `settings` SET `next_remote_ip` = ? WHERE 1";
+    $stmt = $this->con->prepare($select_stmt);
+    $stmt->execute(array($remote_ip));
+    $count = $stmt->rowCount();     // get number of effected rows
+    // return
+    return $count > 0 ? "updated" : false;
+  }
+
+  public function set_next_ip_list($remote_ip)
+  {
+    $select_stmt = "UPDATE `settings` SET `next_ip_list` = ? WHERE 1";
     $stmt = $this->con->prepare($select_stmt);
     $stmt->execute(array($remote_ip));
     $count = $stmt->rowCount();     // get number of effected rows

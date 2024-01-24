@@ -2,29 +2,26 @@
   <!-- start header -->
   <header class="header mb-3">
     <div class="hstack gap-2">
-      <div class="hstack gap-2">
-        <div>
-          <span class="badge bg-danger p-2 d-inline-block"></span>
-          <span>
-            <?php echo lang('LICENSE EXPIRED', $lang_file) ?>
-          </span>
-        </div>
-        <div>
-          <span class="badge bg-success p-2 d-inline-block"></span>
-          <span>
-            <?php echo lang('LICENSE ACTIVATED', $lang_file) ?>
-          </span>
-        </div>
+      <div>
+        <span class="badge bg-danger p-2 d-inline-block"></span>
+        <span>
+          <?php echo lang('LICENSE EXPIRED', $lang_file) ?>
+        </span>
+      </div>
+      <div>
+        <span class="badge bg-success p-2 d-inline-block"></span>
+        <span>
+          <?php echo lang('LICENSE ACTIVE', $lang_file) ?>
+        </span>
       </div>
     </div>
   </header>
   <!-- start companies list container -->
   <div class="table-responsive-sm">
     <!-- strst users table -->
-    <table class="table table-bordered table-striped display compact table-style" style="width:100%">
+    <table class="table table-bordered table-striped display display-big-data compact table-style" style="width:100%">
       <thead class="primary text-capitalize">
         <tr>
-          <th class="d-none">#</th>
           <th>#</th>
           <th>
             <?php echo lang('STATUS', $lang_file) ?>
@@ -58,14 +55,20 @@
       <tbody id="companies-table">
         <?php
         // create an object of Company class
-        $comp_obj = new Company();
+        $company_obj = new Company();
         // get all companies
-        $all_companies = $comp_obj->get_all_companies();
+        $all_companies = $company_obj->get_all_companies();
         // loop on data
         foreach ($all_companies as $key => $company) { ?>
           <?php
+          // company_id
+          $company_id = $company['company_id'];
+          // company current license id
+          $company_license_id = $company_obj->get_license_id($company_id);
+          // company current license info
+          $company_license_info = $company_obj->get_license_info($company_license_id, $company_id);
           // get company dates
-          $dates = $comp_obj->select_specific_column("`start_date`, `expire_date`", "`license`", "WHERE `isEnded` = 0 AND `company_id` = " . $company['company_id']);
+          $dates = $company_obj->select_specific_column("`start_date`, `expire_date`", "`license`", "WHERE `isEnded` = 0 AND `company_id` = " . $company_id);
           // check the value
           if (count($dates) > 0) {
             $start_date = date_create($dates[0]['start_date']);
@@ -75,26 +78,20 @@
           } else {
             $is_ended = true;
             // get company dates
-            $expire = $comp_obj->select_specific_column("`expire_date`", "`license`", "WHERE `isEnded` = 1 AND `company_id` = " . $company['company_id'] . " ORDER BY `expire_date` DESC LIMIT 1");
+            $expire = $company_obj->select_specific_column("`expire_date`", "`license`", "WHERE `isEnded` = 1 AND `company_id` = " . $company_id . " ORDER BY `expire_date` DESC LIMIT 1");
             $expire = !empty($expire) ? $expire[0]['expire_date'] : '';
           }
           ?>
           <tr>
-            <!-- index -->
-            <td class="d-none">
-              <?php echo $company['company_id'] ?>
-            </td>
             <!-- index -->
             <td>
               <?php echo ++$key; ?>
             </td>
             <td class="text-center">
               <?php if ($is_ended == true) { ?>
-                <span class="badge bg-danger p-2 d-inline-block"
-                  title="<?php echo lang('LICENSE EXPIRED', $lang_file) ?>"></span>
+                <span class="badge bg-danger p-2 d-inline-block" title="<?php echo lang('LICENSE EXPIRED', $lang_file) ?>"></span>
               <?php } else { ?>
-                <span class="badge bg-success p-2 d-inline-block"
-                  title="<?php echo lang('LICENSE ACTIVATED', $lang_file) ?>"></span>
+                <span class="badge bg-success p-2 d-inline-block" title="<?php echo lang('LICENSE ACTIVATED', $lang_file) ?>"></span>
               <?php } ?>
             </td>
             <!-- company name -->
@@ -111,7 +108,7 @@
             </td>
             <!-- company version -->
             <td>
-              <?php echo $comp_obj->select_specific_column("`v_name`", "`versions`", "WHERE `v_id` = " . $company['version'])[0]['v_name']; ?>
+              <?php echo $company_obj->select_specific_column("`v_name`", "`versions`", "WHERE `v_id` = " . $company['version'])[0]['v_name']; ?>
             </td>
             <!-- company joined date -->
             <td>
@@ -145,19 +142,14 @@
                 $rest = 0;
               }
               ?>
-              <div class="progress"
-                title="<?php echo (isset($is_minus) && $is_minus == true) || !isset($diffrence) ? 0 : $diffrence->days ?> days">
+              <div class="progress" title="<?php echo (isset($is_minus) && $is_minus == true) || !isset($diffrence) ? 0 : $diffrence->days ?> days">
                 <?php if ($rest < 15) { ?>
-                  <div class="progress-bar <?php echo bg_progress($rest) ?>" role="progressbar"
-                    style="width: <?php echo $rest ?>%" aria-valuenow="<?php echo $diffrence->days ?>" aria-valuemin="10"
-                    aria-valuemax="<?php echo $total_days->days ?>"></div>
+                  <div class="progress-bar <?php echo bg_progress($rest) ?>" role="progressbar" style="width: <?php echo $rest ?>%" aria-valuenow="<?php echo $diffrence->days ?>" aria-valuemin="10" aria-valuemax="<?php echo $total_days->days ?>"></div>
                   <div class="progress-value">
                     <?php echo $rest ?>%
                   </div>
                 <?php } else { ?>
-                  <div class="progress-bar <?php echo bg_progress($rest) ?>" role="progressbar"
-                    style="width: <?php echo $rest ?>%" aria-valuenow="<?php echo $diffrence->days ?>" aria-valuemin="10"
-                    aria-valuemax="<?php echo $total_days->days ?>">
+                  <div class="progress-bar <?php echo bg_progress($rest) ?>" role="progressbar" style="width: <?php echo $rest ?>%" aria-valuenow="<?php echo $diffrence->days ?>" aria-valuemin="10" aria-valuemax="<?php echo $total_days->days ?>">
                     <?php echo $rest ?>%
                   </div>
                 <?php } ?>
@@ -165,9 +157,12 @@
             </td>
             <!-- control -->
             <td>
-              <badge class="badge bg-info p-2 fs-12">
-                <?php echo lang('UNDER DEVELOPING') ?>
-              </badge>
+              <div class="hstack gap-2">
+                <a href="?do=details&company-id=<?php echo base64_encode($company_id) ?>" class="btn btn-outline-primary">
+                  <i class="bi bi-eye"></i>
+                  <?php echo lang('show') ?>
+                </a>
+              </div>
             </td>
           </tr>
         <?php } ?>

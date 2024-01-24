@@ -51,6 +51,8 @@ if (empty($errors)) {
     $_SESSION['flash_message_icon'][$key] = 'bi-exclamation-triangle-fill';
     $_SESSION['flash_message_class'][$key] = 'danger';
     $_SESSION['flash_message_status'][$key] = false;
+    $_SESSION['flash_message_lang_file'][$key] = $lang_file;
+
   }
   // redirect to the previous page
   redirect_home(null, "back", 0);

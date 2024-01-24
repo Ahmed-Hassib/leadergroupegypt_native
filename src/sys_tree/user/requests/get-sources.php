@@ -20,8 +20,14 @@ if (empty($dir_id) || empty($company_id)) {
   $company_name = $pcs_obj->select_specific_column("`company_name`", "`companies`", "WHERE `company_id` = " . base64_decode($company_id))[0]['company_name'];
   // convert data into json file
   $json_data = json_encode($data);
-  // json location
-  $json_location = $document_root . "/app/data/json/dirs/";
+  // check server name
+  if ($_SERVER['SERVER_NAME'] == 'leadergroupegypt.com') {
+    // json location
+    $json_location = $document_root . "/app/data/json/dirs/";
+  } else {
+    // json location
+    $json_location = $document_root . "data/json/dirs/";
+  }
   // check if the directory is exist or not
   if (!file_exists($json_location)) {
     // create a directory for the company

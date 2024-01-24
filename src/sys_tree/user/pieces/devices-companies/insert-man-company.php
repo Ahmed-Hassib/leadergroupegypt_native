@@ -15,21 +15,41 @@
       $_SESSION['flash_message_status'] = false;
       $_SESSION['flash_message_lang_file'] = 'global_';
     } else {
-      // call insert_new_type function
-      $dev_company_obj->insert_new_man_company(array($company_name, get_date_now(), base64_decode($_SESSION['sys']['UserID']), base64_decode($_SESSION['sys']['company_id'])));
-      // prepare flash session variables
-      $_SESSION['flash_message'] = 'COMPANY INSERTED';
-      $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
-      $_SESSION['flash_message_class'] = 'success';
-      $_SESSION['flash_message_status'] = true;
-      $_SESSION['flash_message_lang_file'] = 'pieces';
+      // check license
+      if ($_SESSION['sys']['isLicenseExpired'] == 0) {
+        // call insert_new_type function
+        $is_inserted = $dev_company_obj->insert_new_man_company(array($company_name, get_date_now(), base64_decode($_SESSION['sys']['UserID']), base64_decode($_SESSION['sys']['company_id'])));
+        // check if inserted
+        if ($is_inserted) {
+          // prepare flash session variables
+          $_SESSION['flash_message'] = 'COMPANY INSERTED';
+          $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
+          $_SESSION['flash_message_class'] = 'success';
+          $_SESSION['flash_message_status'] = true;
+    $_SESSION['flash_message_lang_file'] = $lang_file;
+        } else {
+          // prepare flash session variables
+          $_SESSION['flash_message'] = 'QUERY PROBLEM';
+          $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+          $_SESSION['flash_message_class'] = 'danger';
+          $_SESSION['flash_message_status'] = true;
+          $_SESSION['flash_message_lang_file'] = 'global_';
+        }
+      } else {
+        // prepare flash session variables
+        $_SESSION['flash_message'] = 'FEATURE NOT AVAILABLE';
+        $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+        $_SESSION['flash_message_class'] = 'danger';
+        $_SESSION['flash_message_status'] = false;
+        $_SESSION['flash_message_lang_file'] = 'global_';
+      }
     }
   } else {
     $_SESSION['flash_message'] = 'TYPE NULL';
     $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
     $_SESSION['flash_message_class'] = 'danger';
     $_SESSION['flash_message_status'] = false;
-    $_SESSION['flash_message_lang_file'] = 'pieces';
+    $_SESSION['flash_message_lang_file'] = $lang_file;
   }
 
   // return to the previous page

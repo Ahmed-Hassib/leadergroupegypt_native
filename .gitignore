@@ -1,3 +1,6 @@
+#igone api folder
+api/
+
 # ignoring all text files
 *.txt
 
@@ -16,12 +19,18 @@ layout/node_modules/
 # ignoring plugins directory
 layout/plugins/
 
+# ignoring sql directory
+sql/
+
 # ignoring local configration file
 etc/local-conf.php
 etc/server-conf.php
 
 # ignoring Database class
 Database.class.php
+
+# ignoring pay file
+pay.php
 
 # ignore libraries
 includes/libraries/

@@ -15,8 +15,7 @@ $num_displayed = intval($gallery_obj->select_specific_column("`num_content`", "`
         <?php echo lang('ADD NEW', $lang_file) ?>
       </span>
     </a>
-    <button type="button" data-bs-toggle="modal" data-bs-target="#changeDisplayedImgNum"
-      class="btn btn-outline-primary text-capitalize py-1 fs-12">
+    <button type="button" data-bs-toggle="modal" data-bs-target="#changeDisplayedImgNum" class="btn btn-outline-primary text-capitalize py-1 fs-12">
       <i class="bi bi-gear"></i>
       <span>
         <?php echo lang('SETTINGS') ?>
@@ -25,7 +24,7 @@ $num_displayed = intval($gallery_obj->select_specific_column("`num_content`", "`
   </div>
   <div class="table-responsive-sm">
     <!-- strst pieces table -->
-    <table class="table table-bordered table-striped table-striped display compact table-style" style="width:100%">
+    <table class="table table-bordered table-striped table-striped display display-big-data compact table-style" style="width:100%">
       <thead class="primary text-capitalize">
         <tr>
           <th class="text-center" style="max-width: 40px">#</th>
@@ -49,7 +48,7 @@ $num_displayed = intval($gallery_obj->select_specific_column("`num_content`", "`
               </td>
               <td class="text-center">
                 <?php if (file_exists($gallery_img . $img['img_name'])) { ?>
-                  <img src="<?php echo $gallery_img . $img['img_name'] ?>" class="img-thumbnail" alt="">
+                  <img loading="lazy" src="<?php echo $gallery_img . $img['img_name'] ?>" class="img-thumbnail" alt="">
                 <?php } else { ?>
                   <span class="text-danger">
                     <?php echo lang('NO DATA') ?>
@@ -71,20 +70,16 @@ $num_displayed = intval($gallery_obj->select_specific_column("`num_content`", "`
               </td>
               <td class="text-center">
                 <?php if ($img['is_active']) { ?>
-                  <a href="?do=deactivate-img&id=<?php echo base64_encode($img['id']) ?>" class="btn btn-danger py-0"><i
-                      class="bi bi-x"></i><span>
+                  <a href="?do=deactivate-img&id=<?php echo base64_encode($img['id']) ?>" class="btn btn-danger py-0"><i class="bi bi-x"></i><span>
                       <?php echo lang('DEACTIVATE') ?>
                     </span></a>
                 <?php } else { ?>
-                  <a href="?do=activate-img&id=<?php echo base64_encode($img['id']) ?>" class="btn btn-primary py-0"><i
-                      class="bi bi-check"></i><span>
+                  <a href="?do=activate-img&id=<?php echo base64_encode($img['id']) ?>" class="btn btn-primary py-0"><i class="bi bi-check"></i><span>
                       <?php echo lang('ACTIVATE') ?>
                     </span></a>
                 <?php } ?>
-                <a href="?do=edit-img&id=<?php echo base64_encode($img['id']) ?>" class="btn btn-outline-success py-0"><i
-                    class="bi bi-pencil-square"></i></a>
-                <button type="button" data-href="?do=delete-img&id=<?php echo base64_encode($img['id']) ?>&back=true"
-                  class="btn btn-outline-danger py-0" onclick="confirm_delete(this)"><i class="bi bi-trash"></i></button>
+                <a href="?do=edit-img&id=<?php echo base64_encode($img['id']) ?>" class="btn btn-outline-success py-0"><i class="bi bi-pencil-square"></i></a>
+                <button type="button" data-href="?do=delete-img&id=<?php echo base64_encode($img['id']) ?>&back=true" class="btn btn-outline-danger py-0" onclick="confirm_delete(this)"><i class="bi bi-trash"></i></button>
               </td>
             </tr>
           <?php } ?>
@@ -106,8 +101,7 @@ $num_displayed = intval($gallery_obj->select_specific_column("`num_content`", "`
       <div class="modal-body">
         <form action="?do=update-settings" method="POST" id="update-gallery-settings" onchange="form_validation(this)">
           <div class="form-floating">
-            <input type="text" class="form-control" name="num-of-img" id="num-of-img"
-              value="<?php echo $num_displayed ?>" placeholder="<?php echo lang('#DISPLAYED IMG', $lang_file) ?>">
+            <input type="text" class="form-control" name="num-of-img" id="num-of-img" value="<?php echo $num_displayed ?>" placeholder="<?php echo lang('#DISPLAYED IMG', $lang_file) ?>">
             <label for="num-of-img">
               <?php echo lang('#DISPLAYED IMG', $lang_file) ?>
             </label>
@@ -115,8 +109,7 @@ $num_displayed = intval($gallery_obj->select_specific_column("`num_content`", "`
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary py-1" form="update-gallery-settings"
-          onclick="form_validation(this.form, this)">
+        <button type="button" class="btn btn-primary py-1" form="update-gallery-settings" onclick="form_validation(this.form, this)">
           <i class="bi bi-check-all"></i>
           <span>
             <?php echo lang('SAVE') ?>

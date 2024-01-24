@@ -25,7 +25,7 @@ if ($check == true) {
   $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
   $_SESSION['flash_message_class'] = 'success';
   $_SESSION['flash_message_status'] = true;
-  $_SESSION['flash_message_lang_file'] = 'settings';
+  $_SESSION['flash_message_lang_file'] = $lang_file;
   // redirect to home page
   redirect_home(null, 'back', 0);
 }

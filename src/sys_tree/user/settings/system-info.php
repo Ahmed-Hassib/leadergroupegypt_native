@@ -1,6 +1,6 @@
 <?php
 // check if Database object was created or not
-$db_obj = !isset($db_obj) ? new Database() : $db_obj;
+$db_obj = new Database();
 // get license info
 $license_info = $db_obj->get_license_info(base64_decode($_SESSION['sys']['license_id']), base64_decode($_SESSION['sys']['company_id']));
 // check if license not null
@@ -20,15 +20,8 @@ if ($license_info != null && count($license_info) > 0) {
       case 1:
         $type = lang('MONTHLY', $lang_file);
         break;
-      case 2:
-        $type = lang('3 MONTHS', $lang_file);
-        break;
-      case 3:
-        $type = lang('6 MONTHS', $lang_file);
-        break;
-      case 4:
-        $type = lang('YEARLY', $lang_file);
-        break;
+      default:
+        $type = lang('NO DATA');
     }
   } else {
     $type = lang('TRIAL', $lang_file);
@@ -44,8 +37,7 @@ if ($license_info != null && count($license_info) > 0) {
   // get diffrence between today and expire date
   $diffrence = date_diff($to_day, $expire_date);
   // get the rest
-  $rest = round(($diffrence->days / $total_days->days) * 100, 2);
-
+  $rest = $diffrence->invert ? 0 : round(($diffrence->days / $total_days->days) * 100, 2);
   ?>
   <div class="section-block">
     <!-- section header -->
@@ -81,13 +73,27 @@ if ($license_info != null && count($license_info) > 0) {
         </span>
       </span>
 
-      <?php if ($_SESSION['sys']['isTech'] == 0) { ?>
+      <?php if ($_SESSION['sys']['is_tech'] == 0) { ?>
         <span class="company-info__row">
           <span class="company-info__row-label pe-2">
             <?php echo lang('LICENSE', $lang_file) ?>
           </span>
           <span class="company-info__row-info <?php echo $license_info['isTrial'] == 1 ? 'badge bg-danger' : '' ?>">
-            <?php echo $type ?>
+            <?php
+            // plan id
+            $plan_id = base64_decode($_SESSION['sys']['plan_id']);
+            // check plan id
+            if ($plan_id != 0) {
+              // get plan data
+              $plan_data = $db_obj->select_specific_column("`name_ar`, `name_en`", "`pricing_plans`", "WHERE `id` = {$plan_id}")[0];
+              // prepare plan name
+              $plan_data = $_SESSION['sys']['lang'] == 'ar' ? $plan_data['name_ar'] : $plan_data['name_en'];
+              // display plan 
+              echo "{$plan_data}/{$type}";
+            } else {
+              echo $type;
+            }
+            ?>
           </span>
         </span>
         <span class="company-info__row">
@@ -96,6 +102,18 @@ if ($license_info != null && count($license_info) > 0) {
           </span>
           <span class="company-info__row-info">
             <?php echo $license_info['expire_date'] ?>
+            <?php if ($rest <= 0) { ?>
+              <span class="badge bg-danger fs-12">
+                <?php echo lang('EXPIRED') ?>
+              </span>
+            <?php } ?>
+            <?php if ($rest <= 3) { ?>
+              <a href="<?php echo $nav_up_level ?>payments/index.php?do=pricing"
+                class="btn btn-outline-primary fs-12 mt-1 py-1">
+                <i class="bi bi-arrow-clockwise"></i>
+                <?php echo lang('RENEW LICENSE') ?>
+              </a>
+            <?php } ?>
           </span>
         </span>
         <span class="company-info__row">

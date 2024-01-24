@@ -1,7 +1,7 @@
 <!-- start sidebar menu -->
 <div class="sidebar-menu sidebar-menu-<?php echo @$_SESSION['website']['lang'] == 'ar' ? 'right' : 'left' ?> close">
   <!-- start sidebar menu brand -->
-  <div class="sidebar-menu-brand website" href="<?php echo $up_level ?>index.php" <?php echo !isset($_SESSION['website']['UserName']) ? "style='margin: auto'" : "" ?>>
+  <div class="sidebar-menu-brand website" href="<?php echo $up_level ?>index.php" <?php echo !isset($_SESSION['website']['username']) ? "style='margin: auto'" : "" ?>>
     <span class="sidebar-menu-logo-name text-uppercase ">
       <?php echo lang('SPONSOR') ?>
     </span>
@@ -264,7 +264,7 @@
         <div class="profile-details">
           <a href="">
             <div class="profile-content">
-              <img src="<?php echo $uploads . "employees-img/male-avatar.svg" ?>" class="profile-img">
+              <img loading="lazy" src="<?php echo $uploads . "employees-img/male-avatar.svg" ?>" class="profile-img">
             </div>
             <div class="name-job">
               <div class="profile-name">

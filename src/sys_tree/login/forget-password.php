@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $reset_code = generate_random_string(3) . random_digits(3);
 
     // prepare message
-    $msg = ($time_period == 'am' ? lang('GOOD MORNING') : lang('GOOD AFTERNOON')) . " " . $is_exist_data['UserName'] . " " . lang('DEAR CUSTOMER') . "\n";
+    $msg = ($time_period == 'am' ? lang('GOOD MORNING') : lang('GOOD AFTERNOON')) . " " . $is_exist_data['username'] . " " . lang('DEAR CUSTOMER') . "\n";
     $msg .= $reset_code;
     $msg .= " " . lang('PASSWORD RESET CODE MSG', $lang_file) . " " . lang('SYS TREE') . ", ";
     $msg .= " " . lang('PASSWORD RESET CODE ALERT', $lang_file) . "... ";
@@ -131,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <div class="loginPageContainer">
     <div class="imgBox">
       <div class="hero-content">
-        <img src="<?php echo $assets ?>images/login-2.svg" alt="" />
+        <img loading="lazy" src="<?php echo $assets ?>images/login-2.svg" alt="" />
       </div>
     </div>
     <div class="contentBox" dir="rtl">

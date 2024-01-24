@@ -10,7 +10,7 @@
             <div class="row justify-content-center align-items-center g-3">
               <div class="col-3">
                 <a href="">
-                  <img class="box-image" src="<?php echo $assets ?>loco.jpg" alt="">
+                  <img loading="lazy" class="box-image" src="<?php echo $assets ?>loco.jpg" alt="">
                 </a>
               </div>
               <div class="col-9">
@@ -23,7 +23,7 @@
             <div class="row justify-content-center align-items-center g-3">
               <div class="col-3">
                 <a href="">
-                  <img class="box-image" src="<?php echo $assets ?>loco.jpg" alt="">
+                  <img loading="lazy" class="box-image" src="<?php echo $assets ?>loco.jpg" alt="">
                 </a>
               </div>
               <div class="col-9">
@@ -36,7 +36,7 @@
             <div class="row justify-content-center align-items-center g-3">
               <div class="col-3">
                 <a href="">
-                  <img class="box-image" src="<?php echo $assets ?>loco.jpg" alt="">
+                  <img loading="lazy" class="box-image" src="<?php echo $assets ?>loco.jpg" alt="">
                 </a>
               </div>
               <div class="col-9">
@@ -49,7 +49,7 @@
             <div class="row justify-content-center align-items-center g-3">
               <div class="col-3">
                 <a href="">
-                  <img class="box-image" src="<?php echo $assets ?>loco.jpg" alt="">
+                  <img loading="lazy" class="box-image" src="<?php echo $assets ?>loco.jpg" alt="">
                 </a>
               </div>
               <div class="col-9">

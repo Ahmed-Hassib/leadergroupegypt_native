@@ -1,14 +1,14 @@
 <div class="loginPageContainer">
   <div class="imgBox">
     <div class="hero-content">
-      <!-- <img src="<?php echo $assets ?>images/login-2.svg" alt="" /> -->
-      <img src="<?php echo $systree_assets ?>systree.jpg" alt="" />
+      <!-- <img loading="lazy" src="<?php echo $assets ?>images/login-2.svg" alt="" /> -->
+      <img loading="lazy" src="<?php echo $systree_assets ?>treenet.jpg" alt="" />
     </div>
   </div>
   <div class="contentBox" dir="rtl">
     <div class="formBox">
       <!-- login form -->
-      <form class="login-form" id="login-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+      <form class="login-form" id="login-form" action="<?php echo $_SERVER['PHP_SELF'] . $query_params; ?>" method="POST">
         <div class="mb-3 form-floating">
           <input type="text" class="form-control" id="username" name="username" placeholder="<?php echo lang('USERNAME') ?>" value="<?php echo isset($_GET['username']) && isset($_GET['password']) && isset($_GET['company-code']) ? $username : "" ?>" data-no-astrisk="true" required>
           <label for="username"><?php echo lang('USERNAME') ?></label>
@@ -40,11 +40,11 @@
             <span><?php echo lang("DON`T HAVE ACCOUNT", $lang_file) ?>&nbsp;</span>
             <a href="signup.php" class="text-capitalize" style="border-radius: 6px"><?php echo lang('SIGNUP', $lang_file) ?></a>
           </div>
-          <div class="me-auto">
+          <!-- <div class="me-auto">
             <a href="?d=<?php echo base64_encode('forget-password') ?>" class="text-capitalize" style="border-radius: 6px">
               <span><?php echo lang("FORGET PASSWORD?") ?></span>
             </a>
-          </div>
+          </div> -->
         </div>
       </form>
       <hr>

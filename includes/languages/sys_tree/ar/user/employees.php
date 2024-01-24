@@ -32,6 +32,7 @@ function employees($phrase)
   'PERMISSIONS' => 'الصلاحيات',
   'LIST' => 'قائمة الموظفين',
   'CONFIRM DELETE' => 'تأكيد الحذف',
+  'PROFILE' => 'الصفحة الشخصية',
 
 
   // employees job title

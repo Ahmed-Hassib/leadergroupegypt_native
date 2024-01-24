@@ -24,7 +24,7 @@ $nav_level = 1;
 include_once str_repeat("../", $level) . "etc/app-status.php";
 
 // check username in SESSION variable
-if (isset($_SESSION['sys']['UserName'])) {
+if (isset($_SESSION['sys']['username'])) {
   // check the request
   $query = isset($_GET['do']) && !empty($_GET['do']) ? $_GET['do'] : 'manage';
   $possible_back = true;
@@ -33,6 +33,8 @@ if (isset($_SESSION['sys']['UserName'])) {
   if ($query == 'manage') {
     // check the version
     $file_name = 'dashboard.php';
+  } elseif ($query == 'system-status') {
+    $file_name = 'change-system-status.php';
   } else {
     $file_name = $globmod . 'page-error.php';
     $no_navbar = 'all';

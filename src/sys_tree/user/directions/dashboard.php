@@ -13,7 +13,7 @@ $directions_info = $directions[1];
 <!-- start add new user page -->
 <div class="container" dir="<?php echo $page_dir ?>">
   <div class="mb-3 hstack gap-3">
-    <?php if ($_SESSION['sys']['dir_add'] == 1) { ?>
+    <?php if ($_SESSION['sys']['dir_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
       <!-- add new direction -->
       <button type="button" class="btn btn-outline-primary py-1 fs-12" data-bs-toggle="modal"
         data-bs-target="#addNewDirectionModal">
@@ -23,7 +23,7 @@ $directions_info = $directions[1];
     <?php } ?>
 
     <?php if (!empty($directions_info) || $directions_counter != 0) { ?>
-      <?php if ($_SESSION['sys']['dir_update'] == 1) { ?>
+      <?php if ($_SESSION['sys']['dir_update'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
         <!-- edit direction -->
         <button type="button" class="btn btn-outline-primary py-1 fs-12" data-bs-toggle="modal"
           data-bs-target="#editDirectionModal">
@@ -32,7 +32,7 @@ $directions_info = $directions[1];
         </button>
       <?php } ?>
 
-      <?php if ($_SESSION['sys']['dir_delete'] == 1) { ?>
+      <?php if ($_SESSION['sys']['dir_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
         <!-- delete direction -->
         <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal"
           data-bs-target="#deleteDirectionModal">
@@ -47,7 +47,7 @@ $directions_info = $directions[1];
   <div class="mb-3">
     <?php if (empty($directions_info) || $directions_counter == 0) { ?>
       <div class="page-error text-center">
-        <img src="<?php echo $assets ?>images/no-data-founded.svg" class="img-fluid" alt="<?php echo lang('NO DATA') ?>">
+        <img loading="lazy" src="<?php echo $assets ?>images/no-data-founded.svg" class="img-fluid" alt="<?php echo lang('NO DATA') ?>">
       </div>
       <h5 class='h5 text-center text-danger '>
         <?php echo lang('NO DATA') ?>
@@ -121,59 +121,62 @@ $directions_info = $directions[1];
                   <!-- horizontal rule -->
                   <hr>
                 </div>
-                <?php if ($clients > 0 || $pieces > 0) { ?>
-                  <!-- vstack for some statistics -->
-                  <div class="vstack gap-1 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'text-end' : 'text-start' ?>">
-                    <p class="mb-0 card-text text-capitalize text-danger  fs-12">
-                      <i class="bi bi-exclamation-triangle-fill"></i>&nbsp;
-                      <?php echo lang('CANNOT DELETE', "directions") ?>
-                    </p>
-                    <!-- horizontal rule -->
-                    <hr>
-                  </div>
-                <?php } ?>
                 <!-- hstack for buttons -->
                 <div class="vstack gap-1">
                   <!-- added date -->
                   <p
-                    class="card-text text-secondary text-capitalize mt-3 mb-0 fs-12 fs-10-sm <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'ms-auto' : 'me-auto' ?>">
+                    class="card-text text-secondary text-capitalize mb-0 fs-12 fs-10-sm <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'ms-auto' : 'me-auto' ?>">
                     <?php echo lang('ADDED DATE') . " " . $row['added_date'] ?>
                   </p>
                   <!--  -->
-                  <div class="hstack gap-1 align-items-baseline me-auto">
-                    <?php if ($_SESSION['sys']['dir_update'] == 1) { ?>
-                      <!-- edit direction -->
-                      <button type="button" data-bs-toggle="modal" data-bs-target="#editDirectionModal"
-                        class='py-1 btn btn-primary text-capitalize fs-12 fs-10-sm' onclick="put_dir_info(this, 'update')"
-                        data-direction-id="<?php echo base64_encode($row['direction_id']) ?>"
-                        data-direction-name="<?php echo $row['direction_name'] ?>"
-                        data-direction-ip="<?php echo $row['direction_ip'] ?>">
-                        <i class="bi bi-pencil-square p-1"></i>
-                        <?php echo lang('EDIT') ?>
-                      </button>
+                  <div class="row row-cols-sm-1 row-cols-md-2 g-2 align-items-baseline">
+                    <?php if ($_SESSION['sys']['dir_update'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
+                      <div class="col-6">
+                        <!-- edit direction -->
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#editDirectionModal"
+                          class='py-1 w-100 btn btn-primary text-capitalize fs-12 fs-10-sm'
+                          onclick="put_dir_info(this, 'update')"
+                          data-direction-id="<?php echo base64_encode($row['direction_id']) ?>"
+                          data-direction-name="<?php echo $row['direction_name'] ?>"
+                          data-direction-ip="<?php echo $row['direction_ip'] ?>">
+                          <i class="bi bi-pencil-square p-1"></i>
+                          <?php echo lang('EDIT') ?>
+                        </button>
+                      </div>
                     <?php } ?>
 
-                    <?php if ($_SESSION['sys']['dir_delete'] == 1 && $clients < 1 && $pieces < 1 && $unkown < 1) { ?>
-                      <!-- delete direction -->
-                      <button type="button" data-bs-toggle="modal" data-bs-target="#deleteDirectionModal"
-                        class='btn btn-outline-danger text-capitalize py-1 fs-12 fs-10-sm'
-                        style="<?php echo $_SESSION['sys']['user_delete'] == 0 || $clients > 0 || $pieces > 0 ? 'cursor: not-allowed' : '' ?>"
-                        onclick="put_dir_info(this, 'delete')"
-                        data-direction-id="<?php echo base64_encode($row['direction_id']) ?>">
-                        <i class="bi bi-trash p-1"></i>
-                        <?php echo lang('DELETE') ?>
-                      </button>
+                    <?php if ($_SESSION['sys']['dir_delete'] == 1 && $clients < 1 && $pieces < 1 && $unkown < 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
+                      <div class="col-6">
+                        <!-- delete direction -->
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#deleteDirectionModal"
+                          class='w-100 btn btn-outline-danger text-capitalize py-1 fs-12 fs-10-sm'
+                          style="<?php echo $_SESSION['sys']['user_delete'] == 0 || $clients > 0 || $pieces > 0 ? 'cursor: not-allowed' : '' ?>"
+                          onclick="put_dir_info(this, 'delete')"
+                          data-direction-id="<?php echo base64_encode($row['direction_id']) ?>">
+                          <i class="bi bi-trash p-1"></i>
+                          <?php echo lang('DELETE') ?>
+                        </button>
+                      </div>
                     <?php } ?>
 
                     <?php if ($_SESSION['sys']['dir_show'] == 1) { ?>
-                      <!-- show direction tree -->
-                      <a href="?do=show-direction-tree&dir-id=<?php echo base64_encode($row["direction_id"]) ?>"
-                        class="btn btn-outline-primary p-1 fs-12 fs-10-sm">
-                        <i class="bi bi-diagram-3 p-1"></i>
-                        <?php echo lang('SHOW TREE') ?>
-                      </a>
+                      <div class="col-6">
+                        <!-- show direction tree -->
+                        <a href="?do=show-direction-tree&dir-id=<?php echo base64_encode($row["direction_id"]) ?>"
+                          class="w-100 btn btn-outline-primary p-1 fs-12 fs-10-sm">
+                          <i class="bi bi-diagram-3 p-1"></i>
+                          <?php echo lang('SHOW TREE') ?>
+                        </a>
+                      </div>
                     <?php } ?>
                   </div>
+                  <?php if ($_SESSION['sys']['isLicenseExpired'] == 0) { ?>
+                    <a href="?do=direction-map&dir-id=<?php echo base64_encode($row['direction_id']) ?>"
+                      class="w-100 btn btn-outline-primary p-1 fs-12 fs-10-sm">
+                      <i class="bi bi-geo-alt"></i>
+                      <?php echo lang('DIRECTION MAP') ?>
+                    </a>
+                  <?php } ?>
                 </div>
               </div>
             </div>

@@ -32,7 +32,7 @@
             </div>
           </div>
           <!-- image preview -->
-          <div class="img-container-preview"><img src="<?php echo $assets ?>leadergroupegypt-shadow.png" alt="default image"></div>
+          <div class="img-container-preview"><img loading="lazy" src="<?php echo $assets ?>leadergroupegypt-shadow.png" alt="default image"></div>
           <!-- button to delete section -->
           <button type="button" class="btn btn-outline-danger delete-content" onclick="delete_content(this)">
             <i class="bi bi-trash"></i>

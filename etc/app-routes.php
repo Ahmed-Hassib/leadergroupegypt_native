@@ -83,7 +83,7 @@ $services_img = $website_uploads_img . "services/"; // services images
 $features_img = $website_uploads_img . "features/"; // features images
 $members_img = $website_uploads_img . "members/"; // members images
 
-// SYSTREE UPLOADS
+// TREENET UPLOADS
 $systree_assets = $uploads . "assets/";
 $malfunction_media = $uploads . "malfunctions/";
 $combination_media = $uploads . "combinations/";

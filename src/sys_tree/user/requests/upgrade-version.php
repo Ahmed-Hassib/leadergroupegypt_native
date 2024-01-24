@@ -1,14 +1,12 @@
 <?php 
 // check permission
-if (isset($_SESSION['sys']) && $_SESSION['sys']['isTech'] == 0) {
+if (isset($_SESSION['sys']) && $_SESSION['sys']['is_tech'] == 0) {
   // get new version id
   $new_version_id = $_GET['new-version-id'];
   // compare between current version and new version
   if ($new_version_id != $_SESSION['sys']['curr_version_id']) {
-    if (!isset($cmp_obj)) {
-      // create an object of Companies class
-      $cmp_obj = new Company();
-    }
+    // create an object of Companies class
+    $cmp_obj = new Company();
     // call upgrade version function
     $upgrade_info = $cmp_obj->upgrade_version($new_version_id, base64_decode($_SESSION['sys']['company_id']));
     // is_upgraded

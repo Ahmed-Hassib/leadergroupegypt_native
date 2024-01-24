@@ -212,18 +212,13 @@ function get_page_dependencies($page_role, $file_type)
     'sys_tree_global' => [
       'css' => [
         '1' => 'global.css',
-        '3' => 'footer.css',
+        '2' => 'footer.css',
       ],
       'js' => [
         '1' => 'global.js',
-        '3' => 'validation.js',
-        '4' => 'history.js',
+        '2' => 'validation.js',
+        '3' => 'history.js',
       ],
-      'node' => [
-        'css' => [],
-        'js' => []
-      ],
-      'fonts' => [],
       'footer' => [
         'user' => 'user-footer.php',
         'root' => 'root-footer.php'
@@ -234,17 +229,20 @@ function get_page_dependencies($page_role, $file_type)
       ]
     ],
 
+    'sys_tree_map' => [
+      'css' => [],
+      'js' => [
+        '1' => 'treenet_map.js'
+      ],
+      'node' => [],
+    ],
+
     // for blog login
     'sys_tree_login' => [
       'css' => [
         '1' => 'login.css'
       ],
       'js' => [],
-      'node' => [
-        'css' => [],
-        'js' => []
-      ],
-      'fonts' => [],
     ],
 
     'sys_tree_signup' => [
@@ -254,11 +252,13 @@ function get_page_dependencies($page_role, $file_type)
       'js' => [
         '1' => 'signup.js'
       ],
-      'node' => [
-        'css' => [],
-        'js' => []
+    ],
+
+    'sys_tree_dash' => [
+      'css' => [
+        '1' => 'dashboard.css',
       ],
-      'fonts' => [],
+      'js' => [],
     ],
 
     'sys_tree_user' => [
@@ -268,11 +268,6 @@ function get_page_dependencies($page_role, $file_type)
       'js' => [
         '1' => 'users.js',
       ],
-      'node' => [
-        'css' => [],
-        'js' => []
-      ],
-      'fonts' => [],
     ],
 
     'sys_tree_devices' => [
@@ -280,11 +275,6 @@ function get_page_dependencies($page_role, $file_type)
       'js' => [
         '1' => 'devices.js',
       ],
-      'node' => [
-        'css' => [],
-        'js' => []
-      ],
-      'fonts' => [],
     ],
 
     'sys_tree_pieces' => [
@@ -293,11 +283,6 @@ function get_page_dependencies($page_role, $file_type)
         '1' => 'pieces.js',
         '2' => 'devices.js',
       ],
-      'node' => [
-        'css' => [],
-        'js' => []
-      ],
-      'fonts' => [],
     ],
 
     'sys_tree_clients' => [
@@ -305,11 +290,6 @@ function get_page_dependencies($page_role, $file_type)
       'js' => [
         '1' => 'clients.js',
       ],
-      'node' => [
-        'css' => [],
-        'js' => []
-      ],
-      'fonts' => [],
     ],
 
     'sys_tree_dir' => [
@@ -317,13 +297,8 @@ function get_page_dependencies($page_role, $file_type)
         '1' => 'hierarchical-chart.css',
       ],
       'js' => [
-        '1' => 'directions.js'
+        '1' => 'directions.js',
       ],
-      'node' => [
-        'css' => [],
-        'js' => []
-      ],
-      'fonts' => [],
     ],
 
     'sys_tree_malfunction' => [
@@ -334,11 +309,6 @@ function get_page_dependencies($page_role, $file_type)
       'js' => [
         '1' => 'malfunction.js',
       ],
-      'node' => [
-        'css' => [],
-        'js' => []
-      ],
-      'fonts' => [],
     ],
 
     'sys_tree_combination' => [
@@ -349,11 +319,6 @@ function get_page_dependencies($page_role, $file_type)
       'js' => [
         '1' => 'combination.js'
       ],
-      'node' => [
-        'css' => [],
-        'js' => []
-      ],
-      'fonts' => [],
     ],
 
     'sys_tree_reports' => [
@@ -363,11 +328,6 @@ function get_page_dependencies($page_role, $file_type)
       'js' => [
         // '1' => 'reports.js'
       ],
-      'node' => [
-        'css' => [],
-        'js' => []
-      ],
-      'fonts' => [],
     ],
 
     'sys_tree_settings' => [
@@ -377,11 +337,15 @@ function get_page_dependencies($page_role, $file_type)
       'js' => [
         '1' => 'settings.js'
       ],
-      'node' => [
-        'css' => [],
-        'js' => []
+    ],
+
+    'sys_tree_services' => [
+      'css' => [
+        '1' => 'services.css'
       ],
-      'fonts' => [],
+      'js' => [
+        '1' => 'services.js'
+      ],
     ],
 
     'sys_tree_root' => [
@@ -389,11 +353,6 @@ function get_page_dependencies($page_role, $file_type)
       'js' => [
         '1' => 'root-global.js'
       ],
-      'node' => [
-        'css' => [],
-        'js' => []
-      ],
-      'fonts' => [],
     ],
 
 
@@ -405,11 +364,6 @@ function get_page_dependencies($page_role, $file_type)
       'js' => [
         '1' => 'global.js'
       ],
-      'node' => [
-        'css' => [],
-        'js' => []
-      ],
-      'fonts' => [],
       'navbar' => 'blog-navbar.php',
       'footer' => 'blog-footer.php'
     ],
@@ -423,11 +377,6 @@ function get_page_dependencies($page_role, $file_type)
       'js' => [
         '1' => 'articles.js'
       ],
-      'node' => [
-        'css' => [],
-        'js' => []
-      ],
-      'fonts' => [],
     ],
 
     // for blog login
@@ -438,11 +387,6 @@ function get_page_dependencies($page_role, $file_type)
       'js' => [
         '1' => 'login.js',
       ],
-      'node' => [
-        'css' => [],
-        'js' => []
-      ],
-      'fonts' => [],
     ],
   ];
   // returns files of the given page role

@@ -12,7 +12,7 @@ session_regenerate_id();
 // flag to determine if current page is sys tree page or not
 $is_sys_tree_page = true;
 // page title
-$page_title = "directions";
+$page_title = "the directions";
 // page category
 $page_category = "sys_tree";
 // page role
@@ -34,26 +34,41 @@ $preloader = false;
 // check system if under developing or not
 if ($is_developing == false) {
   // check username in SESSION variable
-  if (isset($_SESSION['sys']['UserName']) && $_SESSION['sys']['isLicenseExpired'] == 0) {
+  if (isset($_SESSION['sys']['username'])) {
     // check if Get request do is set or not
     $query = isset($_GET['do']) ? $_GET['do'] : 'manage';
 
     if ($query == 'manage' && $_SESSION['sys']['dir_show'] == 1) {
       $file_name = 'dashboard.php';
+      $page_subtitle = "list";
       $possible_back = true;
-    } elseif ($query == 'insert-new-direction' && $_SESSION['sys']['dir_add'] == 1) {
+    } elseif ($query == 'insert-new-direction' && $_SESSION['sys']['dir_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
       $file_name = 'insert-direction.php';
+      $page_subtitle = "add new";
     } elseif ($query == 'show-direction-tree' && $_SESSION['sys']['dir_show'] == 1) {
       $file_name = 'show-direction.php';
+      $page_subtitle = "show tree";
       $no_footer = true;
       $preloader = true;
       $possible_back = true;
-    } elseif ($query == 'update-direction-info' && $_SESSION['sys']['dir_update'] == 1) {
+    } elseif ($query == 'direction-map' && $_SESSION['sys']['dir_show'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
+      $file_name = 'direction-map.php';
+      $page_subtitle = "directions map";
+      $preloader = true;
+      $possible_back = true;
+      $is_contain_map = true;
+    } elseif ($query == 'update-direction-info' && $_SESSION['sys']['dir_update'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
       $file_name = 'update-direction.php';
-    } elseif ($query == 'delete-direction' && $_SESSION['sys']['dir_delete'] == 1) {
+      $page_subtitle = "edit";
+    } elseif ($query == 'delete-direction' && $_SESSION['sys']['dir_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
       $file_name = 'delete-direction.php';
+      $page_subtitle = "delete";
+    } elseif ($query == 'update-coordinates') {
+      $file_name = "update-coordinates.php";
+      $page_subtitle = "update coordinates";
+
     } else {
-      $file_name = $globmod . 'page-error.php';
+      $file_name = $globmod . 'page-permission-error.php';
       $no_navbar = 'all';
       $no_footer = 'all';
     }
@@ -72,6 +87,13 @@ include_once str_repeat('../', $level) . 'etc/pre-conf.php';
 include_once str_repeat('../', $level) . 'etc/init.php';
 // alerts of system
 include_once str_repeat("../", $level) . "etc/system-alerts.php";
+
+// check if license was ended
+if ($_SESSION['sys']['isLicenseExpired'] == 1) {
+  // license file
+  include_once $globmod . 'systree-license-ended.php';
+}
+
 // include file name
 include_once $file_name;
 // check if contains no footer variables or not

@@ -7,6 +7,7 @@ function settings($phrase)
 {
   static $lang = array(
   // words
+  'SETTINGS' => 'الاعدادات',
   'COMPANY BRAND' => 'شعار الشركة',
   'CHANGE IMG' => 'تغيير الصورة',
   'OTHER' => 'أخرى',
@@ -17,16 +18,14 @@ function settings($phrase)
   '3 MONTH' => '3 أشهر',
   '6 MONTH' => '6 أشهر',
   'YEARLY' => 'سنوى',
+  'ACTIVE' => 'نشط',
   'TRIAL' => 'نسخة تجريبية',
   'COMPANY NAME' => 'إسم الشركة',
   'COMPANY CODE' => 'كود الشركة',
   'APP VERSION' => 'إصدار البرنامج',
-  'LICENSE' => 'نوع الترخيص',
+  'LICENSE' => 'نوع الاشتراك',
   'EXPIRY' => 'تاريخ الإنتهاء',
   'SYSTEM LANG' => 'لغة النظام',
-  'MIKROTIK INFO' => 'بيانات ميكروتك',
-  'CHECK CONNECTION' => 'فحص الإتصال',
-  'MIKROTIK CONNECTION STATUS' => 'حالة الإتصال بميكروتيك الخاص بك',
 
   // large words
   'DEFAULT IMG' => 'هذة الصورة الإفتراضية للنظام',
@@ -34,11 +33,6 @@ function settings($phrase)
   // messages
   'IMG UPDATED' => 'تم تغيير صورة الشركة بنجاح',
   'SETTINGS UPDATED' => 'تم حفظ الإعدادات بنجاح',
-  'IP EMPTY' => 'عنوان IP فارغ',
-  'PORT EMPTY' => 'Port فارغ',
-  'USERNAME EMPTY' => 'إسم المستخدم فارغ',
-  'PASSWORD EMPTY' => 'الرقم السري فارغ',
-  'MIKROTIK UPDATED' => 'تم تعديل بيانات ميكروتيك بنجاح',
 
   );
   // return the phrase

@@ -28,7 +28,7 @@
       <div class="image">
         <?php # $is_resized = resize_img($landing_img, $landing_img_name); ?>
         <?php $is_resized = false; ?>
-        <img src="<?php echo $is_resized ? $landing_resized_img_path : $landing_img_path ?>" alt="Leader Group Egypt">
+        <img loading="lazy" src="<?php echo $is_resized ? $landing_resized_img_path : $landing_img_path ?>" alt="Leader Group Egypt">
       </div>
     <?php } ?>
   </div>

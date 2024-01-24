@@ -7,6 +7,8 @@ $period = isset($_GET['period']) && !empty($_GET['period']) ? $_GET['period'] : 
 $combStatus = isset($_GET['combStatus']) && !empty($_GET['combStatus']) ? $_GET['combStatus'] : '-1';
 // is accept status of combination
 $accepted = isset($_GET['accepted']) && !empty($_GET['accepted']) ? $_GET['accepted'] : '-1';
+// get target year
+$target_year = isset($_GET['year']) && !empty($_GET['year']) && filter_var(trim($_GET['year'], ""), FILTER_VALIDATE_INT) !== false ? trim($_GET['year'], "") : Date('Y');
 
 // title
 $title = "COMBS";
@@ -73,11 +75,11 @@ switch ($period) {
     $conditionPeriod = " `added_date` BETWEEN '$startDate' AND '$endDate'";
     break;
   default:
-    $conditionPeriod = "";
+    $conditionPeriod = " YEAR(`added_date`) = '{$target_year}'";
 }
 
 // switch case for the logged user is tech or not
-$userCondition = $_SESSION['sys']['isTech'] == 1 ? "`UserID` = " . base64_decode($_SESSION['sys']['UserID']) : "";
+$userCondition = $_SESSION['sys']['is_tech'] == 1 ? "`UserID` = " . base64_decode($_SESSION['sys']['UserID']) : "";
 
 // check the combination status condition
 if (!empty($conditionStatus)) {
@@ -164,10 +166,10 @@ $count = $stmt->rowCount(); // get row count
 ?>
 <!-- start edit profile page -->
 <div class="container" dir="<?php echo $page_dir ?>">
-  <?php if ($_SESSION['sys']['comb_add'] == 1) { ?>
+  <?php if ($_SESSION['sys']['comb_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
     <div class="mb-3">
       <a href="?do=add-new-combination" class="btn btn-outline-primary py-1 shadow-sm fs-12">
-        <span class="bi bi-plus"></span>
+        <i class="bi bi-plus"></i>
         <?php echo lang("ADD NEW", $lang_file) ?>
       </a>
     </div>
@@ -175,7 +177,8 @@ $count = $stmt->rowCount(); // get row count
   <!-- start header -->
   <header class="header mb-3">
     <h4 class="h4 text-capitalize">
-      <?php echo lang($title, $lang_file); ?>
+      <?php $title = $target_year != Date('Y') ? lang($title . " OF THE YEAR", $lang_file) . " {$target_year}" : lang($title, $lang_file) ?>
+      <?php echo $title; ?>
     </h4>
   </header>
 </div>
@@ -183,19 +186,7 @@ $count = $stmt->rowCount(); // get row count
   <div class="container" dir="<?php echo $page_dir ?>">
     <!-- start table container -->
     <div class="table-responsive-sm">
-      <div class="fixed-scroll-btn">
-        <!-- scroll left button -->
-        <button type="button" role="button" class="scroll-button scroll-prev scroll-prev-right">
-          <i class="carousel-control-prev-icon"></i>
-        </button>
-        <!-- scroll right button -->
-        <button type="button" role="button"
-          class="scroll-button scroll-next <?php echo $_SESSION['sys']['lang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
-          <i class="carousel-control-next-icon"></i>
-        </button>
-      </div>
-      <!-- strst users table -->
-      <table class="table table-striped table-bordered display compact table-style" id="combinations">
+      <table class="table table-striped table-bordered display display-big-data compact table-style" id="combinations">
         <thead class="primary text-capitalize">
           <tr>
             <th class="d-none">id</th>
@@ -245,10 +236,9 @@ $count = $stmt->rowCount(); // get row count
                 $is_exist_admin = $comb_obj->is_exist("`UserID`", "`users`", $row['addedBy']);
                 // if exist
                 if ($is_exist_admin) {
-                  $admin_name = $comb_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = " . $row['addedBy'])[0]['UserName'];
-                  ?>
-                  <a
-                    href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo base64_encode($row['addedBy']); ?>">
+                  $admin_name = $comb_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $row['addedBy'])[0]['username'];
+                ?>
+                  <a href="<?php echo $nav_up_level ?>employees/index.php?do=edit-user-info&userid=<?php echo base64_encode($row['addedBy']); ?>">
                     <?php echo $admin_name ?>
                   </a>
                 <?php } else { ?>
@@ -264,9 +254,8 @@ $count = $stmt->rowCount(); // get row count
                 $is_exist_tech = $comb_obj->is_exist("`UserID`", "`users`", $row['UserID']);
                 // if exist
                 if ($is_exist_tech) {
-                  $tech_name = $comb_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = " . $row['UserID'])[0]['UserName']; ?>
-                  <a
-                    href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo base64_encode($row['UserID']); ?>">
+                  $tech_name = $comb_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $row['UserID'])[0]['username']; ?>
+                  <a href="<?php echo $nav_up_level ?>employees/index.php?do=edit-user-info&userid=<?php echo base64_encode($row['UserID']); ?>">
                     <?php echo $tech_name ?>
                   </a>
                 <?php } else { ?>
@@ -301,8 +290,7 @@ $count = $stmt->rowCount(); // get row count
                   </span>
                 <?php } ?>
               </td>
-              <td
-                class="text-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?> <?php echo empty($row['tech_comment']) ? 'text-danger ' : '' ?>">
+              <td class="text-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?> <?php echo empty($row['tech_comment']) ? 'text-danger ' : '' ?>">
                 <?php if (!empty($row['tech_comment'])) { ?>
                   <span>
                     <?php echo $row['tech_comment'] ?>
@@ -344,17 +332,13 @@ $count = $stmt->rowCount(); // get row count
               <td>
                 <?php if ($_SESSION['sys']['comb_show'] == 1 || $_SESSION['sys']['comb_delete'] == 1) { ?>
                   <?php if ($_SESSION['sys']['comb_show'] == 1) { ?>
-                    <a href="?do=edit-combination&combid=<?php echo base64_encode($row['comb_id']) ?>"
-                      class="btn btn-outline-primary m-1 fs-12">
+                    <a href="?do=edit-combination&combid=<?php echo base64_encode($row['comb_id']) ?>" class="btn btn-outline-primary m-1 fs-12">
                       <i class="bi bi-eye"></i>
                       <?php echo lang('SHOW DETAILS') ?>
                     </a>
                   <?php } ?>
-                  <?php if ($_SESSION['sys']['comb_delete'] == 1) { ?>
-                    <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12"
-                      data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb"
-                      data-comb-id="<?php echo base64_encode($row['comb_id']) ?>"
-                      onclick="put_comb_data_into_modal(this, true)">
+                  <?php if ($_SESSION['sys']['comb_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
+                    <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb" data-comb-id="<?php echo base64_encode($row['comb_id']) ?>" onclick="put_comb_data_into_modal(this, true)">
                       <i class="bi bi-trash"></i>
                       <?php echo lang('DELETE') ?>
                     </button>
@@ -367,7 +351,7 @@ $count = $stmt->rowCount(); // get row count
       </table>
     </div>
     <!-- delete combination modal -->
-    <?php if ($_SESSION['sys']['comb_delete'] == 1) {
+    <?php if ($_SESSION['sys']['comb_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
       include_once 'delete-combination-modal.php';
     } ?>
   </div>

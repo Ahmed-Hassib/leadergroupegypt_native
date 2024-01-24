@@ -6,6 +6,7 @@
         <h5 class="m-auto modal-title h5 " id="staticBackdropLabel"><?php echo lang("DELETE CONN", 'pcs_conn') ?></h5>
       </div>
       <div class="modal-body">
+        <?php if ($_SESSION['sys']['isLicenseExpired'] == 0) { ?>
         <form action="<?php echo $nav_up_level ?>pieces-connection/index.php?do=delete-piece-conn-type&back=true" method="POST" id="deletePieceConnType" onchange="form_validation(this)">
           <!-- type id -->
           <input type="hidden" name="deleted-conn-type-id" id="deleted-conn-type-id">
@@ -28,9 +29,16 @@
           </div>
           <!-- end type name -->
         </form>
+        <?php } else {?>
+          <p class="lead text-danger">
+            <?php echo lang('FEATURE NOT AVAILABLE') ?>
+          </p>
+        <?php } ?>
       </div>
       <div class="modal-footer">
+        <?php if ($_SESSION['sys']['isLicenseExpired'] == 0) { ?>
         <button type="button" class="btn btn-danger py-1 fs-12" form="deletePieceConnType" onclick="form_validation(this.form, 'submit')"><i class="bi bi-trash"></i>&nbsp;<?php echo lang("DELETE") ?></button>
+        <?php } ?>
         <button type="button" class="btn btn-outline-secondary py-1 px-3 fs-12" data-bs-dismiss="modal"><?php echo lang("CLOSE") ?></button>
       </div>
     </div>

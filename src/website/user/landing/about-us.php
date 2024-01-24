@@ -17,7 +17,7 @@ if ($about_us_status && $active_text != null && count($active_text) > 0) {
     <div class="container">
       <!-- about us image -->
       <div class="about-us-img">
-        <img src="<?php echo $website_assets ?>about_us.svg" alt="">
+        <img loading="lazy" src="<?php echo $website_assets ?>about_us.svg" alt="">
       </div>
       <!-- about us text -->
       <!-- display about text from 1 to 3 -->

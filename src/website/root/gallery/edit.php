@@ -42,9 +42,9 @@ if ($gallery_obj->is_exist("`id`", "`gallery`", $img_id)) {
             <!-- image preview -->
             <div class="img-container-preview">
               <?php if (file_exists($gallery_img . $img_info['img_name'])) { ?>
-                <img src="<?php echo $gallery_img . $img_info['img_name'] ?>" alt="image">
+                <img loading="lazy" src="<?php echo $gallery_img . $img_info['img_name'] ?>" alt="image">
               <?php } else { ?>
-                <img src="<?php echo $assets ?>leadergroupegypt-shadow.png" alt="default image">
+                <img loading="lazy" src="<?php echo $assets ?>leadergroupegypt-shadow.png" alt="default image">
               <?php } ?>
             </div>
             <!-- button to delete section -->

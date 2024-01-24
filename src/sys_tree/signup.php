@@ -29,8 +29,8 @@ include_once str_repeat("../", $level) . "etc/app-status.php";
 // check if app is developing now or not
 if ($is_developing == false) {
   // check username in SESSION variable
-  if (isset($_SESSION['sys']['UserName'])) {
-    if ($_SESSION['sys']['isRoot'] == 1) {
+  if (isset($_SESSION['sys']['username'])) {
+    if ($_SESSION['sys']['is_root'] == 1) {
       // redirect to admin page
       header("Location: root/dashboard/index.php");
       exit();

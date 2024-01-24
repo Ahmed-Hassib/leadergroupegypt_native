@@ -28,6 +28,7 @@ var ar = {
   failed_connection: 'فشل تحقيق الإتصال بميكروتيك الخاص بك!',
   phone_number: 'رقم التليفون',
   max_num_phones: 'لقد تخطيت الحد الأقصى من عدد التليفونات..!',
+  ip_null: 'لم يتم تحديد عنوان IP',
 }
 
 // english words
@@ -69,5 +70,5 @@ var lang = ar;
 if (location.pathname.includes('website')) {
   lang = localStorage['lang'] == 'ar' ? ar : en;
 } else if (location.pathname.includes('sys_tree')) {
-  lang = localStorage['systemLang'] == 'ar' ? ar : en;
+  lang = localStorage['system_lang'] == 'ar' ? ar : en;
 }

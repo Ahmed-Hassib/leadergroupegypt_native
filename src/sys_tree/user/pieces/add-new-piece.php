@@ -3,7 +3,7 @@
   <!-- start form -->
   <form class="custom-form" action="?name=<?php echo $page_title ?>&do=insert-piece-info" method="POST" id="addPiece"
     onchange="form_validation(this)">
-    <?php if ($_SESSION['sys']['pcs_add'] == 1) { ?>
+    <?php if ($_SESSION['sys']['pcs_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
       <!-- submit -->
       <div class="hstack gap-3">
         <button type="button" form="addPiece"
@@ -105,9 +105,9 @@
           <!-- internet source -->
           <div class="mb-3">
             <div class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-              <input type="text" name="internet-source" id="internet-source" class="form-control w-100"
+              <input type="text" name="coordinates" id="coordinates" class="form-control w-100"
                 placeholder="<?php echo lang('COORDINATES', $lang_file) ?>" />
-              <label for="internet-source" class="col-sm-12 col-form-label text-capitalize">
+              <label for="coordinates" class="col-sm-12 col-form-label text-capitalize">
                 <?php echo lang('COORDINATES', $lang_file); ?>
               </label>
             </div>
@@ -474,7 +474,7 @@
         </div>
       </div>
     </div>
-    <?php if ($_SESSION['sys']['pcs_add'] == 1) { ?>
+    <?php if ($_SESSION['sys']['pcs_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
       <!-- submit -->
       <div class="hstack gap-3">
         <button type="button" form="addPiece"

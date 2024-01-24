@@ -13,7 +13,7 @@ $global_lang = ['global', 'description'];
 
 // for sys tree
 $sys_tree_lang = [
-  'user' => ['login', 'dashboard', 'directions', 'pieces', 'sugg_comp', 'employees', 'pcs_conn', 'clients', 'malfunctions', 'combinations', 'reports', 'settings'],
+  'user' => ['login', 'dashboard', 'directions', 'pieces', 'sugg_comp', 'employees', 'pcs_conn', 'clients', 'malfunctions', 'combinations', 'reports', 'settings', 'payment', 'services', 'deletes'],
   'root' => ['dashboard_root', 'companies_root']
 ];
 
@@ -47,11 +47,16 @@ foreach ($lang_files as $key => $file) {
   if (gettype($file) == 'array') {
     // loop on files
     foreach ($file as $k => $f) {
-      include_once "$page_category/$lang/$key/$f.php";
+      // get file name
+      $lang_file_name = "{$page_category}/{$lang}/{$key}/{$f}.php";
+      // include file
+      include_once $lang_file_name;
     }
   } else {
+    // get file name
+    $lang_file_name = "{$page_category}/{$lang}/{$file}.php";
     // include file
-    include_once "$page_category/$lang/$file.php";
+    include_once $lang_file_name;
   }
 }
 
@@ -59,5 +64,5 @@ foreach ($lang_files as $key => $file) {
 function lang($phrase, $file = 'global_', $lang = "ar")
 {
   // return the word
-  return $file(strtoupper($phrase)) != null ? $file(strtoupper($phrase)) : $phrase;
+  return function_exists($file) && $file(strtoupper($phrase)) != null ? $file(strtoupper($phrase)) : $phrase;
 }

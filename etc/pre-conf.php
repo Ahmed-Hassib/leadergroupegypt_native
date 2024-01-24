@@ -8,11 +8,10 @@ $appName = $conf['app_name'];
 
 // check if sys tree pages
 if ($is_developing == false && isset($_SESSION['sys']) && $page_category != 'website') {
+  // include mikrotic api
+  include_once $func . "{$page_category}/api.php";
   // check mikrotik info
-  if (isset($_SESSION['sys']['mikrotik']) && !empty($_SESSION['sys']['mikrotik']['ip']) && !empty($_SESSION['sys']['mikrotik']['port']) && !empty($_SESSION['sys']['mikrotik']['username']) && !empty($_SESSION['sys']['mikrotik']['password'])) {
-    // include mikrotic api
-    include_once $func . "{$page_category}/api.php";
-    
+  if (isset($_SESSION['sys']['mikrotik']) && !empty($_SESSION['sys']['mikrotik']['ip']) && !empty($_SESSION['sys']['mikrotik']['username']) && !empty($_SESSION['sys']['mikrotik']['password'])) {
     // get mikrotek data
     $mikrotik_ip = $_SESSION['sys']['mikrotik']['ip'];
     $mikrotik_port = $_SESSION['sys']['mikrotik']['port'];

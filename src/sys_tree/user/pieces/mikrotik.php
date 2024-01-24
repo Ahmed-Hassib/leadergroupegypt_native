@@ -11,6 +11,10 @@ if (isset($_SESSION['sys']['UserID'])) {
     $ip = isset($_GET['ip']) && !empty($_GET['ip']) ? trim($_GET['ip'], "\n\r\t\v\x") : null; // target ip
     $port = isset($_GET['port']) && !empty($_GET['port']) ? trim($_GET['port'], "\n\r\t\v\x") : null; // target port
   }
+
+  // company name
+  $company_name = str_replace_whitespace($_SESSION['sys']['company_name']);
+
   // empty array for errors
   $errors = array();
 
@@ -49,13 +53,16 @@ if (isset($_SESSION['sys']['UserID'])) {
 
     do {
       // get next port
-      $next_port = intval($_SESSION['sys']['company_port']) + $opened_ports;
+      $next_port = intval($_SESSION['sys']['mikrotik']['company_port']) + $opened_ports;
     } while (in_array($next_port, $refused_ports));
 
-    echo "opened port => {$opened_ports} & next port => {$next_port}<br>";
+    // echo "opened port => {$opened_ports} & next port => {$next_port}<br>";
+
+    // create an object of RouterosAPI
+    $api_opj = new RouterosAPI();
 
     // connect to mikrotik api
-    if ($api_obj->connect($mikrotik_ip, $mikrotik_username, $mikrotik_password)) {
+    if ($api_obj->connect($_SESSION['sys']['mikrotik']['remote_ip'], $_SESSION['sys']['mikrotik']['username'], $_SESSION['sys']['mikrotik']['password'])) {
       // get user_roles
       $user_roles = $api_obj->comm(
         "/ip/firewall/nat/print",
@@ -75,7 +82,7 @@ if (isset($_SESSION['sys']['UserID'])) {
             "chain" => "dstnat",
             "comment" => "mohamady",
             "dst-port" => "{$next_port}",
-            "in-interface" => "MANAGEMENT-SYSTEM",
+            "in-interface" => $company_name . '-eoip',
             "protocol" => "tcp",
             "to-addresses" => "{$ip}",
             "to-ports" => "{$port}",
@@ -105,7 +112,7 @@ if (isset($_SESSION['sys']['UserID'])) {
       $server_roles = $api_server_obj->comm(
         "/ip/firewall/nat/print",
         array(
-          "?comment" => "{$_SESSION['sys']['company_name']}",
+          "?comment" => "{$company_name}",
           "?disabled" => "false"
         )
       );
@@ -117,11 +124,11 @@ if (isset($_SESSION['sys']['UserID'])) {
           array(
             "action" => "dst-nat",
             "chain" => "dstnat",
-            "comment" => "{$_SESSION['sys']['company_name']}",
+            "comment" => "{$company_name}",
             "dst-port" => $next_port,
             "in-interface" => "ether1",
             "protocol" => "tcp",
-            "to-addresses" => $_SESSION['sys']['remote_ip'],
+            "to-addresses" => $_SESSION['sys']['mikrotik']['remote_ip'],
             "to-ports" => $next_port,
             "disabled" => "false"
           )
@@ -158,7 +165,7 @@ if (isset($_SESSION['sys']['UserID'])) {
       $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
       $_SESSION['flash_message_class'] = 'danger';
       $_SESSION['flash_message_status'] = false;
-      $_SESSION['flash_message_lang_file'] = '_global';
+      $_SESSION['flash_message_lang_file'] = 'global_';
       // redirect to the previous page
       redirect_home(null, "back", 0);
     }

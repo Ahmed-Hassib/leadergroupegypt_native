@@ -6,7 +6,7 @@
 	"html.suggest.html5": true,
 	"html.autoClosingTags": true,
 	"[php]": {
-		"editor.defaultFormatter": "DEVSENSE.phptools-vscode"
+		"editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
 	},
 	"[css]": {
 		"editor.defaultFormatter": "vscode.css-language-features"
@@ -18,7 +18,7 @@
 		"editor.defaultFormatter": "adpyke.vscode-sql-formatter"
 	},
 	"[xml]": {
-		"editor.defaultFormatter": "redhat.vscode-xml"
+		"editor.defaultFormatter": "DotJoshJohnson.xml"
 	},
 	"editor.tabSize": 2,
 	"[markdown]": {

@@ -10,7 +10,7 @@
       </p>
     </div>
     <div class="image">
-      <img src="<?php echo $assets ?>leadergroupegypt-shadow.png" alt="Leader Group Egypt">
+      <img loading="lazy" src="<?php echo $assets ?>leadergroupegypt-shadow.png" alt="Leader Group Egypt">
     </div>
   </div>
   <a href="#articles" class="go-down">
@@ -34,7 +34,7 @@ if ($gallery_imgs != null && count($gallery_imgs) > 0) {
           <div class="box">
             <div class="image">
               <?php $is_resized = resize_img($gallery_img, $img['img_name']); ?>
-              <img loading="lazy"
+              <img loading="lazy" loading="lazy"
                 src="<?php echo $is_resized ? $gallery_img . "resized/" . $img['img_name'] : $gallery_img . $img['img_name'] ?>"
                 alt="gallery image #<?php echo $key + 1 ?>">
             </div>

@@ -28,7 +28,7 @@ $preloader = false;
 // check system if under developing or not
 if ($is_developing == false) {
   // check username in SESSION variable
-  if (isset($_SESSION['sys']['UserName'])) {
+  if (isset($_SESSION['sys']['username'])) {
     // start dashboard page
     // check if Get request do is set or not
     $query = isset($_GET['do']) ? $_GET['do'] : 'manage';
@@ -40,20 +40,36 @@ if ($is_developing == false) {
       $possible_back = true;
       $is_stored = true;
       $preloader = true;
+
     } elseif ($query == "change-lang") {
       // include change-language file
       $file_name = "change-language.php";
+
+      
     } elseif ($query == "change-company-img" && $_SESSION['sys']['change_company_img']) {
       // include change company file
       $file_name = "change-company-img.php";
 
+      
+    } elseif ($query == "change-company-info" && base64_decode($_SESSION['sys']['job_title_id']) == 1) {
+      // include change company file
+      $file_name = "change-company-info.php";
+
+      
     } elseif ($query == "change-mikrotik" && $_SESSION['sys']['change_mikrotik']) {
       // include change mikrotik settings file
       $file_name = "change-mikrotik.php";
 
+      
+    } elseif ($query == "change-mikrotik-status" && $_SESSION['sys']['change_mikrotik']) {
+      // include change mikrotik settings file
+      $file_name = "change-mikrotik-status.php";
+
+      
     } elseif ($query == "others") {
       // include change other settings file
       $file_name = "change-others.php";
+
     } else {
       // include page not founded module
       $file_name = $globmod . 'page-error.php';
@@ -70,13 +86,18 @@ if ($is_developing == false) {
   $file_name = $globmod . "under-developing.php";
 }
 
-
 // pre configration of system
 include_once str_repeat("../", $level) . "etc/pre-conf.php";
 // initial configration of system
 include_once str_repeat("../", $level) . "etc/init.php";
 // alerts of system
 include_once str_repeat("../", $level) . "etc/system-alerts.php";
+
+// check if license was ended
+if (isset($_SESSION['sys']['isLicenseExpired']) && $_SESSION['sys']['isLicenseExpired'] == 1 && !isset($no_navbar)) {
+  // license file
+  include_once $globmod . 'systree-license-ended.php';
+}
 
 // include file name
 include_once $file_name;

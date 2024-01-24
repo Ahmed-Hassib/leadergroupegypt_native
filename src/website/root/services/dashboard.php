@@ -14,7 +14,7 @@ $services_info = $services_obj->get_all_services();
     </a>
   </div>
   <!-- strst pieces table -->
-  <table class="table table-bordered table-striped table-striped display compact table-style" style="width:100%">
+  <table class="table table-bordered table-striped table-striped display display-big-data compact table-style" style="width:100%">
     <thead class="primary text-capitalize">
       <tr>
         <th class="text-center" style="max-width: 40px">#</th>
@@ -56,7 +56,7 @@ $services_info = $services_obj->get_all_services();
             </td>
             <td class="text-center">
               <?php if (file_exists($services_img . $service['service_img'])) { ?>
-                <img src="<?php echo $services_img . $service['service_img'] ?>" class="img-thumbnail" alt="">
+                <img loading="lazy" src="<?php echo $services_img . $service['service_img'] ?>" class="img-thumbnail" alt="">
               <?php } else { ?>
                 <span class="text-danger">
                   <?php echo lang('NO DATA') ?>
@@ -129,20 +129,16 @@ $services_info = $services_obj->get_all_services();
             </td>
             <td class="text-center">
               <?php if ($service['is_active'] == 1) { ?>
-                <a href="?do=deactivate-service&id=<?php echo base64_encode($service['id']) ?>" class="btn btn-danger py-0"><i
-                    class="bi bi-x"></i><span>
+                <a href="?do=deactivate-service&id=<?php echo base64_encode($service['id']) ?>" class="btn btn-danger py-0"><i class="bi bi-x"></i><span>
                     <?php echo lang('DEACTIVATE') ?>
                   </span></a>
               <?php } else { ?>
-                <a href="?do=activate-service&id=<?php echo base64_encode($service['id']) ?>" class="btn btn-primary py-0"><i
-                    class="bi bi-check"></i><span>
+                <a href="?do=activate-service&id=<?php echo base64_encode($service['id']) ?>" class="btn btn-primary py-0"><i class="bi bi-check"></i><span>
                     <?php echo lang('ACTIVATE') ?>
                   </span></a>
               <?php } ?>
-              <a href="?do=edit-service&id=<?php echo base64_encode($service['id']) ?>"
-                class="btn btn-outline-success py-0"><i class="bi bi-pencil-square"></i></a>
-              <button type="button" data-href="?do=delete-service&id=<?php echo base64_encode($service['id']) ?>&back=true"
-                class="btn btn-outline-danger py-0" onclick="confirm_delete(this)"><i class="bi bi-trash"></i></button>
+              <a href="?do=edit-service&id=<?php echo base64_encode($service['id']) ?>" class="btn btn-outline-success py-0"><i class="bi bi-pencil-square"></i></a>
+              <button type="button" data-href="?do=delete-service&id=<?php echo base64_encode($service['id']) ?>&back=true" class="btn btn-outline-danger py-0" onclick="confirm_delete(this)"><i class="bi bi-trash"></i></button>
             </td>
           </tr>
         <?php } ?>

@@ -15,10 +15,10 @@
       </h1>
       <p>
         <span class="badge bg-primary">
-          <?php echo lang('SYS TREE') ?>
+          <?php echo lang('TREE NET') ?>
         </span>
         <span>
-          <?php echo '&nbsp;' . lang('SYSTREE DESC', $lang_file) ?>
+          <?php echo '&nbsp;' . lang('TREENET DESC', $lang_file) ?>
         </span>
       </p>
     </div>
@@ -37,9 +37,8 @@
     <div class="clearfix">
       <div class="col-sm-12 col-md-4 float-md-start mb-3 me-md-3">
         <div class="overflow-hidden">
-          <img src="<?php echo $assets ?>systree-1.jpg" class="mb-2 w-100" style="scale: 1.5;" alt="...">
+          <img loading="lazy" src="<?php echo $systree_assets ?>treenet.jpg" class="mb-2 w-100" style="scale: 1.5;" alt="...">
         </div>
-        <!-- <img src="<?php echo $assets ?>leadergroupegypt.jpg" class="my-2 w-100" alt="..."> -->
       </div>
 
       <div class="section">
@@ -50,7 +49,7 @@
         </div>
         <div class="section-content">
           <p class="lead">
-            <?php echo lang('SYSTREE NAME DESC', $lang_file) ?>.
+            <?php echo lang('TREENET NAME DESC', $lang_file) ?>.
           </p>
         </div>
       </div>
@@ -63,7 +62,7 @@
         </div>
         <div class="section-content">
           <p class="lead">
-            <?php echo lang('SYSTREE ADV DESC', $lang_file) . " " . lang('CHARACTERIZED BY') . ":" ?>
+            <?php echo lang('TREENET ADV DESC', $lang_file) . " " . lang('CHARACTERIZED BY') . ":" ?>
           </p>
           <ul>
             <?php
@@ -84,7 +83,7 @@
           </ul>
 
           <p class="lead">
-            <?php echo lang('SYSTREE ADV DESC 2', $lang_file) ?>
+            <?php echo lang('TREENET ADV DESC 2', $lang_file) ?>
           </p>
         </div>
       </div>

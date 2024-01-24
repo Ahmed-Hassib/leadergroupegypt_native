@@ -40,7 +40,15 @@ $systree_classes = [
 	'Companies',
 	'Session',
 	'CompSugg',
-	'Countries'
+	'Countries',
+	'Pricing',
+	'PaymentMethods',
+	'Transaction',
+	'Mikrotik',
+	'Whatsapp',
+	'ClientsDeletes',
+	'PiecesDeletes',
+	'SystemSettings'
 ];
 
 // website classes

@@ -57,7 +57,7 @@ if (empty($err_arr)) {
   <div class="loginPageContainer">
     <div class="imgBox">
       <div class="hero-content">
-        <img src="<?php echo $assets ?>images/login-2.svg" alt="" />
+        <img loading="lazy" src="<?php echo $assets ?>images/login-2.svg" alt="" />
       </div>
     </div>
     <div class="contentBox" dir="rtl">

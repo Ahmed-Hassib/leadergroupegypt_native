@@ -1,4 +1,4 @@
 <?php
 
 // current version
-$sys_curr_version = "1.3v";
+$sys_curr_version = "v1.1.3";

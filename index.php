@@ -31,7 +31,7 @@ $nav_level = 0;
 include_once str_repeat("../", $level) . "etc/app-status.php";
 
 // get query param value
-$query = isset($_GET['d']) && !empty($_GET['d']) ? base64_decode(trim($_GET['d'], "\n\r\t\v")) : null;
+$query = isset($_GET['d']) && !empty($_GET['d']) ? base64_decode(trim($_GET['d'], "")) : null;
 // check query if set
 if ($query != null) {
   // no navbar
@@ -45,8 +45,12 @@ if ($query != null) {
   } elseif ($query == 'deadline') {
     // include payment deadline module
     $file_name = $globmod . "deadline-payment.php";
+  } else{
+    $file_name = $globmod . "missing-data-no-redirect.php";
   }
 } else {
+  // page subtitle
+  $page_subtitle = "home";
   // website files
   $file_name = [
     "landing" => [
@@ -102,7 +106,6 @@ switch ($file_name_type) {
     break;
     
   case 'array':
-  default:
     // loop on file name array to include all modules
     foreach ($file_name as $key => $file) {
       // check status of file
@@ -111,6 +114,7 @@ switch ($file_name_type) {
       }
     }
     break;
+  default:
 }
 
 // include js files

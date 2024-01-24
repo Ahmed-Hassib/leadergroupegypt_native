@@ -19,7 +19,7 @@ class Registration extends Database
   public function add_new_company($info)
   {
     // insertion query for company data
-    $company_query = "INSERT INTO `companies` (`company_name`, `company_code`, `company_manager`, `company_phone`, `version`, `joined_date`) VALUES (?, ?, ?, ?, 3, ?)";
+    $company_query = "INSERT INTO `companies` (`company_name`, `company_code`, `company_manager`, `company_phone`,`country_id`, `version`, `joined_date`) VALUES (?, ?, ?, ?, ?, 3, ?)";
     $company_stmt = $this->con->prepare($company_query);
     $company_stmt->execute($info);
     $count = $company_stmt->rowCount();
@@ -63,7 +63,7 @@ class Registration extends Database
   public function add_company_admin($info)
   {
     // insert admin info
-    $admin_info_query = "INSERT INTO `users` (`company_id`, `UserName`, `Pass`, `Fullname`, `isTech`, `job_title_id`, `gender`, `TrustStatus`, `addedBy`,  `joinedDate`, `systemLang`) VALUES (?, ?, ?, ?, 0, 1, ?, 1, 1, ?, 0)";
+    $admin_info_query = "INSERT INTO `users` (`company_id`, `username`, `password`, `fullname`, `is_tech`, `job_title_id`, `gender`, `trust_status`, `added_by`,  `joined_at`, `system_lang`) VALUES (?, ?, ?, ?, 0, 1, ?, 1, 1, ?, 0)";
     $admin_info_stmt = $this->con->prepare($admin_info_query);
     $admin_info_stmt->execute($info);
     $count = $admin_info_stmt->rowCount();

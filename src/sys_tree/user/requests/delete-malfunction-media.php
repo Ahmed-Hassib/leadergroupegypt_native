@@ -1,8 +1,6 @@
 <?php
-if (!isset($mal_obj)) {
-  // create an object of Malfunction class
-  $mal_obj = new Malfunction();
-}
+// create an object of Malfunction class
+$mal_obj = new Malfunction();
 // get media id
 $media_id = isset($_GET['media-id']) && !empty($_GET['media-id']) ? $_GET['media-id'] : 0;
 // check media id

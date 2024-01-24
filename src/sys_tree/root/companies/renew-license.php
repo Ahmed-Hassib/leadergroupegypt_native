@@ -19,7 +19,7 @@
       }
 
       // root password
-      $root_password = $cmp_obj->select_specific_column("`Pass`", "`users`", "WHERE `UserID` = 1")[0]['Pass'];
+      $root_password = $cmp_obj->select_specific_column("`password`", "`users`", "WHERE `UserID` = 1")[0]['password'];
 
       // check root password
       $is_correct_pass =  $root_password == $root_password_input ? true : false;

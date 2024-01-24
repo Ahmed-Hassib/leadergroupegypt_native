@@ -44,9 +44,9 @@ if ($service_obj->is_exist("`id`", "`services`", $service_id)) {
               <!-- image preview -->
               <div class="img-container-preview">
                 <?php if (file_exists($services_img . $service_info['service_img'])) { ?>
-                  <img src="<?php echo $services_img . $service_info['service_img'] ?>" alt="image">
+                  <img loading="lazy" src="<?php echo $services_img . $service_info['service_img'] ?>" alt="image">
                 <?php } else { ?>
-                  <img src="<?php echo $assets ?>leadergroupegypt-shadow.png" alt="default image">
+                  <img loading="lazy" src="<?php echo $assets ?>leadergroupegypt-shadow.png" alt="default image">
                 <?php } ?>
               </div>
             </div>

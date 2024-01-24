@@ -22,7 +22,7 @@
       </div>
     </div>
   </header>
-    
+
   <!-- start table container -->
   <div class="table-responsive-sm">
     <div class="fixed-scroll-btn">
@@ -36,7 +36,7 @@
       </button>
     </div>
     <!-- strst users table -->
-    <table class="table table-bordered table-striped display compact table-style" style="width:100%">
+    <table class="table table-bordered table-striped display display-big-data compact table-style" style="width:100%">
       <thead class="primary text-capitalize">
         <tr>
           <th class="d-none">#</th>
@@ -64,20 +64,20 @@
         $companies = $all_companies[1];
         // loop on data
         foreach ($companies as $key => $company) { ?>
-          <?php 
+          <?php
           // get company dates
-          $dates = $comp_obj->select_specific_column("`start_date`, `expire_date`", "`license`", "WHERE `isEnded` = 0 AND `company_id` = " . $company['company_id']);  
+          $dates = $comp_obj->select_specific_column("`start_date`, `expire_date`", "`license`", "WHERE `isEnded` = 0 AND `company_id` = " . $company['company_id']);
           // check the value
           if (count($dates) > 0) {
-              $start_date = date_create($dates[0]['start_date']);
-              $expire_date = date_create($dates[0]['expire_date']);
-              $expire = $dates[0]['expire_date'];
-              $is_ended = $expire < date("Y-m-d");
+            $start_date = date_create($dates[0]['start_date']);
+            $expire_date = date_create($dates[0]['expire_date']);
+            $expire = $dates[0]['expire_date'];
+            $is_ended = $expire < date("Y-m-d");
           } else {
-              $is_ended = true;
-              // get company dates
-              $expire = $comp_obj->select_specific_column("`expire_date`", "`license`", "WHERE `isEnded` = 1 AND `company_id` = " . $company['company_id'] . " ORDER BY `expire_date` DESC LIMIT 1");
-              $expire = !empty($expire) ? $expire[0]['expire_date'] : '';
+            $is_ended = true;
+            // get company dates
+            $expire = $comp_obj->select_specific_column("`expire_date`", "`license`", "WHERE `isEnded` = 1 AND `company_id` = " . $company['company_id'] . " ORDER BY `expire_date` DESC LIMIT 1");
+            $expire = !empty($expire) ? $expire[0]['expire_date'] : '';
           }
           ?>
           <tr>
@@ -90,7 +90,7 @@
                 <span class="badge bg-danger p-2 d-inline-block" title="<?php echo lang('LICENSE EXPIRED', $lang_file) ?>"></span>
               <?php } else { ?>
                 <span class="badge bg-success p-2 d-inline-block" title="<?php echo lang('LICENSE ACTIVATED', $lang_file) ?>"></span>
-              <?php }?>
+              <?php } ?>
             </td>
             <!-- company name -->
             <td>
@@ -142,7 +142,7 @@
                   <div class="progress-value"><?php echo $rest ?>%</div>
                 <?php } else { ?>
                   <div class="progress-bar <?php echo bg_progress($rest) ?>" role="progressbar" style="width: <?php echo $rest ?>%" aria-valuenow="<?php echo $diffrence->days ?>" aria-valuemin="10" aria-valuemax="<?php echo $total_days->days ?>"><?php echo $rest ?>%</div>
-                <?php }?>
+                <?php } ?>
               </div>
             </td>
             <!-- control -->

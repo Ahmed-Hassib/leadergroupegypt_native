@@ -10,7 +10,7 @@
         <ul class="blog-articles">
           <li class="article row justify-content-between align-items-center gx-3">
             <div class="col-3">
-              <img src="<?php echo $assets ?>loco.jpg" alt="">
+              <img loading="lazy" src="<?php echo $assets ?>loco.jpg" alt="">
             </div>
             <div class="col-9">
               <a href="">
@@ -21,7 +21,7 @@
           </li>
           <li class="article row justify-content-between align-items-center gx-3">
             <div class="col-3">
-              <img src="<?php echo $assets ?>loco.jpg" alt="">
+              <img loading="lazy" src="<?php echo $assets ?>loco.jpg" alt="">
             </div>
             <div class="col-9">
               <a href="">
@@ -32,7 +32,7 @@
           </li>
           <li class="article row justify-content-between align-items-center gx-3">
             <div class="col-3">
-              <img src="<?php echo $assets ?>loco.jpg" alt="">
+              <img loading="lazy" src="<?php echo $assets ?>loco.jpg" alt="">
             </div>
             <div class="col-9">
               <a href="">
@@ -43,7 +43,7 @@
           </li>
           <li class="article row justify-content-between align-items-center gx-3">
             <div class="col-3">
-              <img src="<?php echo $assets ?>loco.jpg" alt="">
+              <img loading="lazy" src="<?php echo $assets ?>loco.jpg" alt="">
             </div>
             <div class="col-9">
               <a href="">
@@ -54,7 +54,7 @@
           </li>
           <li class="article row justify-content-between align-items-center gx-3">
             <div class="col-3">
-              <img src="<?php echo $assets ?>loco.jpg" alt="">
+              <img loading="lazy" src="<?php echo $assets ?>loco.jpg" alt="">
             </div>
             <div class="col-9">
               <a href="">
@@ -65,7 +65,7 @@
           </li>
           <li class="article row justify-content-between align-items-center gx-3">
             <div class="col-3">
-              <img src="<?php echo $assets ?>loco.jpg" alt="">
+              <img loading="lazy" src="<?php echo $assets ?>loco.jpg" alt="">
             </div>
             <div class="col-9">
               <a href="">

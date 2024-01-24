@@ -6,11 +6,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // create an object of Company class
   $company_obj = !isset($company_obj) ? new Company() : $company_obj;
   // get company image info
-  $file_name        = $_FILES['company-img-input']['name'];
-  $file_type        = $_FILES['company-img-input']['type'];
-  $file_error       = $_FILES['company-img-input']['error'];
-  $file_size        = $_FILES['company-img-input']['size'];
-  $files_tmp_name   = $_FILES['company-img-input']['tmp_name'];
+  $file_name = $_FILES['company-img-input']['name'];
+  $file_type = $_FILES['company-img-input']['type'];
+  $file_error = $_FILES['company-img-input']['error'];
+  $file_size = $_FILES['company-img-input']['size'];
+  $files_tmp_name = $_FILES['company-img-input']['tmp_name'];
 
   // check if company image changed
   if ($file_error == 0 && $file_size > 0) {
@@ -39,10 +39,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
       $_SESSION['flash_message_class'] = 'success';
       $_SESSION['flash_message_status'] = true;
-      $_SESSION['flash_message_lang_file'] = 'settings';
+      $_SESSION['flash_message_lang_file'] = $lang_file;
 
       // log message
-      $logMsg = "company image was updated successfully by " . $_SESSION['sys']['UserName'] . " at " . date('D d/m/Y h:i a');
+      $log_msg = "company image was updated successfully by " . $_SESSION['sys']['username'] . " at " . date('D d/m/Y h:i a');
       if (!isset($session_obj)) {
         // create an object of Session class
         $session_obj = new Session();
@@ -62,20 +62,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $_SESSION['flash_message_status'] = false;
       $_SESSION['flash_message_lang_file'] = 'global_';
       // log message
-      $logMsg = "company image was not updated because there is a problem while updating it";
+      $log_msg = "company image was not updated because there is a problem while updating it";
     }
   } else {
     // prepare flash session variables
     $_SESSION['flash_message'] = 'NO CHANGES';
     $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
-    $_SESSION['flash_message_class'] = 'danger';
+    $_SESSION['flash_message_class'] = 'info';
     $_SESSION['flash_message_status'] = false;
     $_SESSION['flash_message_lang_file'] = 'global_';
     // log message
-    $logMsg = "there is no images was added to update company image";
+    $log_msg = "there is no images was added to update company image";
   }
   // create a log
-  create_logs($_SESSION['sys']['UserName'], $logMsg);
+  create_logs($_SESSION['sys']['username'], $log_msg);
   // redirect home
   redirect_home(null, 'back', 0);
 } else {

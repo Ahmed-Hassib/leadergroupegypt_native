@@ -42,7 +42,7 @@
             </div>
             <!-- image preview -->
             <div class="img-container-preview">
-              <img src="<?php echo $assets ?>leadergroupegypt-shadow.png" alt="default image">
+              <img loading="lazy" src="<?php echo $assets ?>leadergroupegypt-shadow.png" alt="default image">
             </div>
           </div>
           <!-- feature name in arabic -->

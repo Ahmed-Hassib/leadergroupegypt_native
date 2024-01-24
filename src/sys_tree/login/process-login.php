@@ -1,5 +1,4 @@
 <?php
-
 // get request info
 $username       = $_POST["username"];
 $password       = $_POST["password"];
@@ -50,7 +49,7 @@ if (empty($err_arr)) {
     @$_SESSION['sys']['lang'] = $_POST['language'];
     $lang = $_POST['language'] == 'ar' ? 0 : 1;
     // create an object of User class
-    $user_obj = !isset($user_obj) ? new User() : $user_obj;
+    $user_obj =  new User();
     // call change_user_langugae
     $is_changed = $user_obj->change_user_language($lang, $_SESSION['sys']['UserID']);
 
@@ -61,7 +60,7 @@ if (empty($err_arr)) {
     $_SESSION['flash_message_status'] = true;
     $_SESSION['flash_message_lang_file'] = 'global_';
     // check logined user
-    if ($_SESSION['sys']['isRoot'] == 1) {
+    if ($_SESSION['sys']['is_root'] == 1) {
       // redirect to admin page
       header("Location: root/dashboard/index.php");
       exit();

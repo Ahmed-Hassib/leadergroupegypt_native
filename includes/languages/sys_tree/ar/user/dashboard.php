@@ -6,15 +6,19 @@
 function dashboard($phrase)
 {
   static $lang = array(
-    'LOGIN'             => 'تسجيل الدخول',
-    'SIGNUP'            => 'تسجيل جديد',
+    'DASHBOARD' => 'لوحة التحكم',
+    'LOGIN' => 'تسجيل الدخول',
+    'SIGNUP' => 'تسجيل جديد',
+    'SEARCH FEATURE' => 'خاصية البحث',
 
     // large global words
-    'DON`T HAVE ACCOUNT'  => 'لا تمتلك حساب',
+    'SEARCH HERE' => 'ابحث عن ما تريد هنا',
+    'GO TO INTRO VIDEO' => 'الذهاب لفيديو التعريف',
+    'SEARCH FEATURE NOTE' => 'يتيح لك البرنامج امكانية البحث عن ما تريد حيث يعتمد البحث في البرنامج علي البحث في كافة اقسام النظام مما يسهل علي المستخدم الوصول السريع لما يريد.',
 
     // global messages
-    'LOGIN SUCCESS'     => 'تسجيل دخول ناجح',
-    'LOGIN FAILED'      => 'تسجيل دخول خاطئ',
+    'LOGIN SUCCESS' => 'تسجيل دخول ناجح',
+    'LOGIN FAILED' => 'تسجيل دخول خاطئ',
   );
   // return the phrase
   return array_key_exists($phrase, $lang) ? $lang[$phrase] : null;

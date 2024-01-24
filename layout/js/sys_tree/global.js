@@ -65,7 +65,6 @@ var arrowUpBtn = document.querySelector(".arrow-up");
           // remove btn-secondary class
           el.classList.replace('btn-secondary', 'btn-outline-primary')
           el.classList.add('fs-12', 'py-1')
-
         }
       }
     }
@@ -127,27 +126,14 @@ var arrowUpBtn = document.querySelector(".arrow-up");
       let device_status = ip_element.previousElementSibling;
       let preloader_status = device_status != null ? device_status.previousElementSibling : null;
       if (ip != '0.0.0.0' && preloader_status != null) {
-        $.get(`../requests/index.php?do=ping&ip=${ip}&c=1`, (data) => {
-          // convert result
-          let ping_res = $.parseJSON(data);
-          // hide preloader
-          preloader_status.remove();
-          // check device status
-          if (ping_res['status'] == 1) {
-            device_status.classList.add('badge', 'bg-danger', 'd-inline-block', 'p-1');
-            device_status.title = "offline";
-            offline++;
-          } else {
-            device_status.classList.add('badge', 'bg-success', 'd-inline-block', 'p-1');
-            device_status.title = "online"
-            online++;
-          }
-          console.log(`online ${online} | offline ${offline}`);
-        })
+        // check ip connection
+        check_ip_connection(ip, preloader_status, device_status)
+        setInterval(() => {
+          check_ip_connection(ip, preloader_status, device_status)
+        }, 600000);
       }
     })
   }
-
 })();
 
 /**
@@ -164,10 +150,27 @@ function show_pass(btn) {
   }
 }
 
+function check_ip_connection(ip, preloader_status, device_status) {
 
+  $.get(`../requests/index.php?do=ping&ip=${ip}&c=1`, (data) => {
+    // convert result
+    let ping_res = $.parseJSON(data);
 
-
-
+    // hide preloader
+    preloader_status.remove();
+    // check device status
+    if (ping_res.status == 'success' && ping_res.data.length > 7) {
+      device_status.classList.add('badge', 'bg-success', 'd-inline-block', 'p-1');
+      device_status.title = "online"
+    } else if (ping_res.status == 'success' && ping_res.data.length <= 7) {
+      device_status.classList.add('badge', 'bg-danger', 'd-inline-block', 'p-1');
+      device_status.title = "offline";
+    } else {
+      device_status.classList.add('badge', 'bg-danger', 'd-inline-block', 'p-1');
+      device_status.title = "offline";
+    }
+  });
+}
 
 function get_sources(dir_select, company_id, location, box) {
   // get direction id
@@ -218,7 +221,6 @@ function put_data_into_select(data, status, box, type, ...fields) {
         // default_option.setAttribute('disabled', 'disabled');
         // append to select box
         select_box.appendChild(default_option);
-
         // check if source data has pieces or not
         if (data.length == 0) {
           option = new Option(`${fields[0]}`, 0, false, false);
@@ -262,14 +264,30 @@ function ping(ip, ping_counter = null) {
   $.get(`../requests/index.php?do=ping&ip=${ip}&c=${ping_counter}`, (data) => {
     // convert result
     let ping_res = $.parseJSON(data);
-    // hide preloader
-    document.querySelector(".ping-preloader").classList.add('d-none');
+    // final result
+    let final_result = '';
     // display result of ping
-    ping_res['output'].forEach(line => {
-      if (line.length > 0) {
-        document.querySelector('#ping-status').innerHTML += `${line}<br>`;
-      }
-    });
+    if (ping_res.status == 'success' && ping_res.data.length > 7) {
+      final_result = `IP ADDRESS: ${ping_res.data[2].split('=')[2]}<br>`;
+      final_result += `ttl: ${ping_res.data[4].split('=')[2]}<br>`;
+      final_result += `time: ${ping_res.data[5].split('=')[2]}<br>`;
+      final_result += `number of sent messages: ${ping_res.data[6].split('=')[2]}, number of received messages: ${ping_res.data[7].split('=')[2]}<br>`;
+      final_result += `packet loss: ${ping_res.data[8].split('=')[2]}<br>`;
+      final_result += `min rtt: ${ping_res.data[9].split('=')[2]}, avg rtt: ${ping_res.data[10].split('=')[2]}, avg rtt: ${ping_res.data[11].split('=')[2]}<br>`;
+      final_result += `<hr>Request created at: ${ping_res.created_at}<br>`;
+    } else if (ping_res.status == 'success' && ping_res.data.length <= 7) {
+      final_result = `Status: ${ping_res.data[2].split('=')[2]}<br>`;
+      final_result += `number of sent messages: ${ping_res.data[3].split('=')[2]}, number of received messages: ${ping_res.data[4].split('=')[2]}<br>`;
+      final_result += `packet loss: ${ping_res.data[5].split('=')[2]}<br>`;
+      final_result += `<hr>Request created at: ${ping_res.created_at}<br>`;
+    } else {
+      final_result = "<span class='text-danger'>Request Error...<span><br>";
+    }
+    // display result
+    document.querySelector(".modal-body .ping-preloader").classList.add('d-none');
+
+    // hide preloader
+    document.querySelector('#ping-status').innerHTML = final_result;
   })
 }
 
@@ -348,8 +366,6 @@ function showSuggCompDetails(id) {
   // get request to get backup of data
   $.get(`../requests/index.php?do=getSuggComp&id=${id}`, (data) => {
     let suggComp = $.parseJSON(data);
-
-
     document.getElementById("sugg-comp-id").value = suggComp['id'];
     if (suggComp['type'] == 0) {
       document.getElementById("suggDetails").setAttribute("checked", "checked");
@@ -457,4 +473,40 @@ function arabic_to_english_nums(input) {
   input.value = res;
 
   console.log(res)
+}
+
+
+/**
+ * show_display_side_btns function
+ * used to show or hide fixed side buttons
+ */
+function show_display_side_btns(clicked_btn) {
+  // get side buttons
+  let side_btn = document.querySelector('.fixed-scroll-btn');
+  // get icon child
+  let icon = clicked_btn.querySelector('i.bi');
+  // toggle status
+  side_btn.classList.toggle('d-none')
+  // toggle icon
+  icon.classList.toggle('bi-eye')
+  icon.classList.toggle('bi-eye-slash')
+}
+
+
+// function to get latitude and langitude
+function getLatLong(coordinateString) {
+  // Split the string by comma to separate latitude and longitude
+  const coordinates = coordinateString.split(',');
+
+  // check coordinates
+  if (coordinates.length == 2) {
+    // Assuming the first value is latitude and second is longitude
+    const lat = parseFloat(coordinates[0]);
+    const lng = parseFloat(coordinates[1]);
+    // Return an object containing latitude and longitude
+    return { lat, lng };
+  }
+
+  // return null if not valid coordinates
+  return null;
 }

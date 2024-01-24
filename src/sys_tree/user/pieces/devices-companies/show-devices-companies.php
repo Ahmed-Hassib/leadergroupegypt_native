@@ -1,9 +1,8 @@
 <!-- start edit profile page -->
 <div class="container" dir="<?php echo $page_dir ?>">
   <div class="mb-3 hstack gap-3">
-    <?php if ($_SESSION['sys']['pcs_add'] == 1) { ?>
-      <button type="button" class="btn btn-outline-primary py-1 fs-12" data-bs-toggle="modal"
-        data-bs-target="#addNewDevice">
+    <?php if ($_SESSION['sys']['pcs_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
+      <button type="button" class="btn btn-outline-primary py-1 fs-12" data-bs-toggle="modal" data-bs-target="#addNewDevice">
         <i class="bi bi-plus"></i>
         <?php echo lang('ADD DEVICE', $lang_file) ?>
       </button>
@@ -44,7 +43,7 @@
       <!-- start table container -->
       <div class="table-responsive-sm w-100">
         <!-- strst users table -->
-        <table class="table table-bordered table-striped display compact table-style w-100">
+        <table class="table table-bordered table-striped display display-big-data compact table-style w-100">
           <thead class="primary text-capitalize">
             <tr>
               <th>#</th>
@@ -83,11 +82,10 @@
                 <td>
                   <?php
                   // get username that add device
-                  $added_by_name = $dev_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = " . $device['added_by'])[0]['UserName'];
+                  $added_by_name = $dev_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $device['added_by'])[0]['username'];
                   // check permission
                   if ($_SESSION['sys']['user_update'] == 1) { ?>
-                    <a
-                      href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo base64_encode($device['added_by']) ?>">
+                    <a href="<?php echo $nav_up_level ?>employees/index.php?do=edit-user-info&userid=<?php echo base64_encode($device['added_by']) ?>">
                       <?php echo $added_by_name ?>
                     </a>
                   <?php } else { ?>
@@ -104,29 +102,25 @@
                 <td>
                   <?php if ($_SESSION['sys']['pcs_update'] == 1) { ?>
                     <!-- edit button -->
-                    <a class="btn btn-success text-capitalize fs-12"
-                      href="?do=devices-companies&action=show-device&device-id=<?php echo base64_encode($device['device_id']); ?>"
-                      target="">
+                    <a class="btn btn-success text-capitalize fs-12" href="?do=devices-companies&action=show-device&device-id=<?php echo base64_encode($device['device_id']); ?>" target="">
                       <i class="bi bi-pencil-square"></i>
                       <?php echo lang('EDIT') ?>
                     </a>
                   <?php } ?>
-                  <!-- delete device info -->
-                  <button type="button" class="btn btn-outline-danger text-capitalize bg-gradient fs-12 p-1"
-                    data-bs-toggle="modal" data-bs-target="#deleteDeviceModal"
-                    data-id="<?php echo base64_encode($device['device_id']) ?>"
-                    data-name="<?php echo $device['device_name'] ?>"
-                    onclick="put_data_into_modal(this, 'delete', 'deleted-device-id', 'deleted-device-name', true);">
-                    <i class="bi bi-trash"></i>
-                    <?php echo lang('DELETE') ?>
-                  </button>
+                  <?php if ($_SESSION['sys']['isLicenseExpired'] == 0) { ?>
+                    <!-- delete device info -->
+                    <button type="button" class="btn btn-outline-danger text-capitalize bg-gradient fs-12 p-1" data-bs-toggle="modal" data-bs-target="#deleteDeviceModal" data-id="<?php echo base64_encode($device['device_id']) ?>" data-name="<?php echo $device['device_name'] ?>" onclick="put_data_into_modal(this, 'delete', 'deleted-device-id', 'deleted-device-name', true);">
+                      <i class="bi bi-trash"></i>
+                      <?php echo lang('DELETE') ?>
+                    </button>
+                  <?php } ?>
                 </td>
               </tr>
             <?php } ?>
           </tbody>
         </table>
       </div>
-      <?php
+  <?php
     } else {
       // include no data founded
       include_once $globmod . 'no-data-founded-no-redirect.php';
@@ -137,11 +131,13 @@
   } ?>
 </div>
 
-<?php if ($_SESSION['sys']['pcs_add'] == 1) {
+<?php if ($_SESSION['sys']['pcs_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
+  # include add new device modal 
   include_once 'add-device-modal.php';
-} # include add new device modal 
-?>
-<?php if ($_SESSION['sys']['pcs_delete'] == 1) {
+}
+
+if ($_SESSION['sys']['pcs_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
+  # include delete device model modal 
   include_once 'delete-device-modal.php';
-} # include delete device model modal 
+}
 ?>

@@ -1,6 +1,6 @@
 <?php $db_obj = new Database("localhost", "jsl_db") ?>
 <!-- start home stats container -->
-<div class="container" dir="<?php # echo $page_dir ?>">
+<div class="container" dir="<?php echo $page_dir ?>">
   <!-- start stats -->
   <div class="stats">
     <div class="dashboard-content">
@@ -16,15 +16,22 @@
           <h5 class="card-title text-capitalize">
             <?php echo lang('SYSTEM STATUS') ?>
           </h5>
-          <span
-            class="bg-primary icon-container <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+          <span class="bg-primary icon-container <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
             <i class="bi bi-patch-question"></i>
           </span>
-          <p class="card-text">
-            <span
-              class="badge p-2 d-inline-block <?php echo $system_status == '0' ? 'bg-success' : 'bg-danger' ?>"></span>
-            <?php echo $system_status == '0' ? lang('WORKING', $lang_file) : lang('UNDER DEVELOPING') ?>
-          </p>
+          <form action="?do=system-status" method="post">
+            <div class="form-check form-switch <?php echo $page_dir == 'rtl' ? 'form-check-reverse' : '' ?>" style="width: fit-content;margin: auto;">
+              <label class="form-check-label" for="system_status"><?php echo $system_status == '0' ? lang('ACTIVE', $lang_file) : lang('UNDER DEVELOPING') ?></label>
+              <input class="form-check-input" style="width: 2rem; height: 1rem; cursor: pointer;" type="checkbox" name="system_status_switch" role="switch" id="system_status_switch" <?php echo $system_status == '0' ? 'checked' : '' ?> onclick="document.querySelector('#system_status').value = check_switch_value(this); this.form.submit()">
+              <input type="hidden" id="system_status" name="system_status" value="<?php echo $system_status ?>">
+
+              <script>
+                function check_switch_value(switch_btn) {
+                  return switch_btn.checked ? 0 : 1;
+                }
+              </script>
+            </div>
+          </form>
         </div>
       </div>
 
@@ -34,8 +41,7 @@
           <h5 class="card-title text-capitalize">
             <?php echo lang('#REGISTERED COMPANIES', $lang_file) ?>
           </h5>
-          <span
-            class="bg-primary icon-container <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
+          <span class="bg-primary icon-container <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>">
             <i class="bi bi-building-exclamation"></i>
           </span>
           <p class="card-text nums">
@@ -49,3 +55,4 @@
   <!-- end stats -->
 </div>
 <!-- end dashboard page -->
+

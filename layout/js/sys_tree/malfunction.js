@@ -309,20 +309,21 @@ function open_media(src, type) {
   modal.style.display = "block";
   element.classList.add('media-modal-content');
   modal_content.appendChild(element);
+  
+  if (modal_close_btn != null) {
+    modal_close_btn.addEventListener('click', (evt) => {
+      modal.style.display = "none";
+      // check type
+      if (type == 'mp4') {
+        // element.pause();
+  
+        console.log('mp4')
+      }
+    })
+  }
 }
 
 
-if (modal_close_btn != null) {
-  modal_close_btn.addEventListener('click', (evt) => {
-    modal.style.display = "none";
-    // check type
-    if (type == 'mp4') {
-      // element.pause();
-
-      console.log('mp4')
-    }
-  })
-}
 
 
 

@@ -7,6 +7,8 @@ $action = isset($_GET['period']) && !empty($_GET['period']) ? $_GET['period'] : 
 $malStatus = isset($_GET['malStatus']) && !empty($_GET['malStatus']) ? $_GET['malStatus'] : '-1';
 // is accept status of combination
 $accepted = isset($_GET['accepted']) && !empty($_GET['accepted']) ? $_GET['accepted'] : '-1';
+// get target year
+$target_year = isset($_GET['year']) && !empty($_GET['year']) && filter_var(trim($_GET['year'], ""), FILTER_VALIDATE_INT) !== false ? trim($_GET['year'], "") : Date('Y');
 
 // title
 $title = "MALS";
@@ -73,11 +75,11 @@ switch ($action) {
     $conditionPeriod = " `added_date` BETWEEN '$startDate' AND '$endDate'";
     break;
   default:
-    $conditionPeriod = "";
+    $conditionPeriod = " YEAR(`added_date`) = '{$target_year}'";
 }
 
 // check the logged user is tech or not
-$userCondition = $_SESSION['sys']['isTech'] == 1 ? "`tech_id` = " . base64_decode($_SESSION['sys']['UserID']) : "";
+$userCondition = $_SESSION['sys']['is_tech'] == 1 ? "`tech_id` = " . base64_decode($_SESSION['sys']['UserID']) : "";
 // check the combination status condition
 if (!empty($conditionStatus)) {
   // append combination status condition
@@ -160,7 +162,7 @@ $rows = $stmt->fetchAll(); // fetch data
 $count = $stmt->rowCount(); // get row count
 ?>
 <div class="container mb-0" dir="<?php echo $page_dir ?>">
-  <?php if ($_SESSION['sys']['mal_add'] == 1) { ?>
+  <?php if ($_SESSION['sys']['mal_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
     <div class="mb-3">
       <a href="?do=add-new-malfunction" class="btn btn-outline-primary py-1 fs-12 shadow-sm">
         <i class="bi bi-plus"></i>
@@ -171,7 +173,8 @@ $count = $stmt->rowCount(); // get row count
   <!-- start header -->
   <header class="header mb-3">
     <h4 class="h4 text-capitalize">
-      <?php echo lang($title, $lang_file) ?>
+      <?php $title = $target_year != Date('Y') ? lang($title . " OF THE YEAR", $lang_file) . " {$target_year}" : lang($title, $lang_file) ?>
+      <?php echo $title; ?>
     </h4>
   </header>
 </div>
@@ -180,19 +183,8 @@ $count = $stmt->rowCount(); // get row count
   <div class="container" dir="<?php echo $page_dir ?>">
     <!-- start table container -->
     <div class="table-responsive-sm">
-      <div class="fixed-scroll-btn">
-        <!-- scroll left button -->
-        <button type="button" role="button" class="scroll-button scroll-prev scroll-prev-right">
-          <i class="carousel-control-prev-icon"></i>
-        </button>
-        <!-- scroll right button -->
-        <button type="button" role="button"
-          class="scroll-button scroll-next <?php echo $_SESSION['sys']['lang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
-          <i class="carousel-control-next-icon"></i>
-        </button>
-      </div>
       <!-- strst malfunctions table -->
-      <table class="table table-striped table-bordered display compact table-style" id="malfunctions">
+      <table class="table table-striped table-bordered display display-big-data compact table-style" id="malfunctions">
         <thead class="primary text-capitalize">
           <tr>
             <th class="text-center" style="width: 20px">#</th>
@@ -242,10 +234,9 @@ $count = $stmt->rowCount(); // get row count
                 $is_exist_admin = $mal_obj->is_exist("`UserID`", "`users`", $row['mng_id']);
                 // if exist
                 if ($is_exist_admin) {
-                  $admin_name = $mal_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = " . $row['mng_id'])[0]['UserName'];
-                  ?>
-                  <a
-                    href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo base64_encode($row['mng_id']); ?>">
+                  $admin_name = $mal_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $row['mng_id'])[0]['username'];
+                ?>
+                  <a href="<?php echo $nav_up_level ?>employees/index.php?do=edit-user-info&userid=<?php echo base64_encode($row['mng_id']); ?>">
                     <?php echo $admin_name ?>
                   </a>
                 <?php } else { ?>
@@ -261,9 +252,8 @@ $count = $stmt->rowCount(); // get row count
                 $is_exist_tech = $mal_obj->is_exist("`UserID`", "`users`", $row['tech_id']);
                 // if exist
                 if ($is_exist_tech) {
-                  $tech_name = $mal_obj->select_specific_column("`UserName`", "`users`", "WHERE `UserID` = " . $row['tech_id'])[0]['UserName']; ?>
-                  <a
-                    href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo base64_encode($row['tech_id']); ?>">
+                  $tech_name = $mal_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $row['tech_id'])[0]['username']; ?>
+                  <a href="<?php echo $nav_up_level ?>employees/index.php?do=edit-user-info&userid=<?php echo base64_encode($row['tech_id']); ?>">
                     <?php echo $tech_name ?>
                   </a>
                 <?php } else { ?>
@@ -291,12 +281,12 @@ $count = $stmt->rowCount(); // get row count
                   } else {
                     $url = "?do=edit-piece&piece-id=" . base64_encode($row['client_id']);
                   }
-                  ?>
+                ?>
                   <a href="<?php echo $url ?>">
                     <?php echo $name ?>
                   </a>
                 <?php } else { ?>
-                  <span class="text-danger">
+                  <span class="text-danger fs-12">
                     <?php echo lang('WAS DELETED', $lang_file) ?>
                   </span>
                 <?php } ?>
@@ -307,19 +297,17 @@ $count = $stmt->rowCount(); // get row count
                 if (strlen($row['descreption']) > 0 && !empty($row['descreption'])) {
                   echo $row['descreption'];
                 } else { ?>
-                  <span class="text-danger">
+                  <span class="text-danger fs-12">
                     <?php echo lang('NO DATA') ?>
                   </span>
                 <?php } ?>
               </td>
               <!-- technical man comment -->
-              <td class="<?php echo empty($row['tech_comment']) ? 'text-danger' : '' ?>">
+              <td>
                 <?php if (!empty($row['tech_comment'])) { ?>
-                  <span>
-                    <?php echo $row['tech_comment']; ?>
-                  </span>
+                  <?php echo $row['tech_comment']; ?>
                 <?php } else { ?>
-                  <span class="text-danger">
+                  <span class="text-danger fs-12">
                     <?php echo lang('NOT ASSIGNED'); ?>
                   </span>
                 <?php } ?>
@@ -352,7 +340,7 @@ $count = $stmt->rowCount(); // get row count
                 <i class="bi <?php echo $iconStatus ?>" title="<?php echo $titleStatus ?>"></i>
               </td>
               <!-- malfunction media status -->
-              <td style="width: 50px" class="text-center">
+              <td class="text-center">
                 <?php
                 $have_media = $mal_obj->count_records("`id`", "`malfunctions_media`", "WHERE `mal_id` = " . $row['mal_id']);
                 if ($have_media > 0) {
@@ -368,16 +356,13 @@ $count = $stmt->rowCount(); // get row count
               <!-- control buttons -->
               <td class="text-center">
                 <?php if ($_SESSION['sys']['mal_show'] == 1) { ?>
-                  <a href="?do=edit-malfunction-info&malid=<?php echo base64_encode($row['mal_id']) ?>" target=""
-                    class="btn btn-outline-primary m-1 fs-12">
+                  <a href="?do=edit-malfunction-info&malid=<?php echo base64_encode($row['mal_id']) ?>" target="" class="btn btn-outline-primary m-1 fs-12">
                     <i class="bi bi-eye"></i>
                     <?php echo lang('SHOW DETAILS') ?>
                   </a>
                 <?php } ?>
-                <?php if ($_SESSION['sys']['comb_delete'] == 1) { ?>
-                  <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12"
-                    data-bs-toggle="modal" data-bs-target="#delete-malfunction-modal" id="delete-mal"
-                    data-mal-id="<?php echo base64_encode($row['mal_id']) ?>" onclick="put_mal_data_into_modal(this, true)">
+                <?php if ($_SESSION['sys']['comb_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
+                  <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#delete-malfunction-modal" id="delete-mal" data-mal-id="<?php echo base64_encode($row['mal_id']) ?>" onclick="put_mal_data_into_modal(this, true)">
                     <i class="bi bi-trash"></i>
                     <?php echo lang('DELETE') ?>
                   </button>
@@ -390,7 +375,7 @@ $count = $stmt->rowCount(); // get row count
     </div>
   </div>
   <!-- delete malfunction modal -->
-  <?php if ($count > 0 && $_SESSION['sys']['mal_delete'] == 1) {
+  <?php if ($count > 0 && $_SESSION['sys']['mal_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
     include_once 'delete-malfunction-modal.php';
   } ?>
 <?php } else {

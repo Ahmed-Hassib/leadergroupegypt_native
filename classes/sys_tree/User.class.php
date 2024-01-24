@@ -1,4 +1,5 @@
 <?php
+
 /**
  * User class
  */
@@ -20,7 +21,7 @@ class User extends Database
   public function get_user_id($username)
   {
     // get user id by user name
-    $user_id = $this->select_specific_column("`UserID`", "`users`", "WHERE `UserName` = '$username'")[0]['UserID'];
+    $user_id = $this->select_specific_column("`UserID`", "`users`", "WHERE `username` = '{$username}'")[0]['UserID'];
     // return
     return $user_id;
   }
@@ -29,21 +30,21 @@ class User extends Database
   public function get_all_users($company_id)
   {
     // select user info query
-    $users_info_query = "SELECT *FROM `users` WHERE `UserID` != 1 AND `company_id` = ? ORDER BY `TrustStatus` DESC, `isTech` ASC";
+    $users_info_query = "SELECT *FROM `users` WHERE `UserID` != 1 AND `company_id` = ? ORDER BY `trust_status` DESC, `is_tech` ASC";
     // prepare the query
     $stmt = $this->con->prepare($users_info_query); // select all users
     $stmt->execute(array($company_id)); // execute data
     $rows = $stmt->fetchAll(); // assign all data to variable
     $count = $stmt->rowCount(); // all count of data
     // return
-    return $count > 0 ? [$count, $rows] : [0, null];
+    return $count > 0 ? $rows : null;
   }
 
   // function to get all users of specific company
   public function get_user_info($user_id, $company_id)
   {
     // select user info query
-    $user_info_query = "SELECT *FROM `users` WHERE `UserID` != 1 AND `UserID` = ? AND `company_id` = ? ORDER BY `TrustStatus` DESC, `isTech` ASC LIMIT 1";
+    $user_info_query = "SELECT *FROM `users` WHERE `UserID` != 1 AND `UserID` = ? AND `company_id` = ? ORDER BY `trust_status` DESC, `is_tech` ASC LIMIT 1";
     // prepare the query
     $stmt = $this->con->prepare($user_info_query); // select all users
     $stmt->execute(array($user_id, $company_id)); // execute data
@@ -62,7 +63,7 @@ class User extends Database
   public function get_user_info_reset_password($phone, $company_code)
   {
     // select user info query
-    $user_info_query = "SELECT `users`.`UserID`, `users`.`UserName`, `users`.`phone`, `companies`.`company_name`, `companies`.`company_code` FROM `users` LEFT JOIN `companies` ON `companies`.`company_id` = `users`.`company_id` WHERE `users`.`phone` = ? AND `companies`.`company_code` = ? LIMIT 1";
+    $user_info_query = "SELECT `users`.`UserID`, `users`.`username`, `users`.`phone`, `companies`.`company_name`, `companies`.`company_code` FROM `users` LEFT JOIN `companies` ON `companies`.`company_id` = `users`.`company_id` WHERE `users`.`phone` = ? AND `companies`.`company_code` = ? LIMIT 1";
     // prepare the query
     $stmt = $this->con->prepare($user_info_query); // select specific users
     $stmt->execute(array($phone, $company_code)); // execute data
@@ -96,7 +97,7 @@ class User extends Database
   public function insert_user_info($info)
   {
     // query to insert the new user in `users` table
-    $insertInfoQuery = "INSERT INTO `users` (`company_id`, `UserName`, `Pass`, `Email`, `Fullname`, `isTech`, `job_title_id`, `gender`, `address`, `phone`, `date_of_birth`, `TrustStatus`, `addedBy`, `joinedDate`, `twitter`, `facebook`) ";
+    $insertInfoQuery = "INSERT INTO `users` (`company_id`, `username`, `password`, `email`, `fullname`, `is_tech`, `job_title_id`, `gender`, `address`, `phone`, `date_of_birth`, `trust_status`, `added_by`, `joined_at`, `twitter`, `facebook`) ";
     $insertInfoQuery .= "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     // insert user info in database
     $stmt = $this->con->prepare($insertInfoQuery);
@@ -110,7 +111,7 @@ class User extends Database
   public function insert_user_permissions($permissions)
   {
     // query to insert permissions in `users_permissions` table
-    $insertPermissionsQuery = "INSERT INTO `users_permissions` (`UserID`, `user_add`, `user_update`, `user_delete`, `user_show`, `mal_add`, `mal_update`, `mal_delete`, `mal_show`, `mal_review`, `mal_media_delete`, `mal_media_download`, `comb_add`, `comb_update`, `comb_delete`, `comb_show`, `comb_review`, `comb_media_delete`, `comb_media_download`, `pcs_add`, `pcs_update`, `pcs_delete`, `pcs_show`, `clients_add`, `clients_update`, `clients_delete`, `clients_show`, `dir_add`, `dir_update`, `dir_delete`, `dir_show`, `connection_add`, `connection_update`, `connection_delete`, `connection_show`, `permission_update`, `permission_show`,`change_mikrotik`, `change_company_img`)";
+    $insertPermissionsQuery = "INSERT INTO `users_permissions` (`UserID`, `user_add`, `user_update`, `user_delete`, `user_show`, `mal_add`, `mal_update`, `mal_delete`, `mal_show`, `mal_review`, `mal_media_delete`, `mal_media_download`, `comb_add`, `comb_update`, `comb_delete`, `comb_show`, `comb_review`, `comb_media_delete`, `comb_media_download`, `pcs_add`, `pcs_update`, `pcs_delete`, `pcs_show`, `clients_add`, `clients_update`, `clients_delete`, `clients_show`, `dir_add`, `dir_update`, `dir_delete`, `dir_show`, `connection_add`, `connection_update`, `connection_delete`, `connection_show`, `permission_update`, `permission_show`, `change_mikrotik`, `change_company_img`)";
     $insertPermissionsQuery .= "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     // execute the query to insert the permissions into the table
     $stmt = $this->con->prepare($insertPermissionsQuery);
@@ -124,10 +125,10 @@ class User extends Database
   public function delete_user($userid)
   {
     // query for delete all user info, permissions, points, columns
-    $q = "DELETE FROM `users`                  WHERE `UserID` = ?;";
-    $q .= "DELETE FROM `users_permissions`      WHERE `UserID` = ?;";
-    $q .= "DELETE FROM `users_pieces_columns`   WHERE `UserID` = ?;";
-    $q .= "DELETE FROM `users_points`           WHERE `UserID` = ?;";
+    $q = "DELETE FROM `users`WHERE `UserID` = ?;";
+    $q .= "DELETE FROM `users_permissions`WHERE `UserID` = ?;";
+    $q .= "DELETE FROM `users_pieces_columns`WHERE `UserID` = ?;";
+    $q .= "DELETE FROM `users_points`WHERE `UserID` = ?;";
     // prepare the query
     $stmt = $this->con->prepare($q);
     $stmt->execute(array($userid, $userid, $userid, $userid)); // execute the query
@@ -140,7 +141,7 @@ class User extends Database
   public function update_user_info($info)
   {
     // update personal info
-    $update_info_query = "UPDATE `users` SET `UserName` = ?, `Pass` = ?, `Email` = ?, `Fullname` = ?, `isTech` = ?, `job_title_id` = ?, `gender` = ?, `address` = ?, `phone` = ?, `date_of_birth` = ?, `TrustStatus` = ?,`twitter` = ?, `facebook` = ? WHERE `UserID` = ?";
+    $update_info_query = "UPDATE `users` SET `username` = ?, `password` = ?, `email` = ?, `fullname` = ?, `is_tech` = ?, `job_title_id` = ?, `gender` = ?, `address` = ?, `phone` = ?, `date_of_birth` = ?, `trust_status` = ?,`twitter` = ?, `facebook` = ? WHERE `UserID` = ?";
     // update the database with this info
     $stmt = $this->con->prepare($update_info_query);
     $stmt->execute($info);
@@ -272,7 +273,7 @@ class User extends Database
     // return
     return $rows_counter;
   }
-  
+
   // function to store password_reset code 
   public function add_password_reset_code($info)
   {
@@ -315,7 +316,7 @@ class User extends Database
   public function reset_password($password, $user_id)
   {
     // activate phone query
-    $other_settings_query = "UPDATE `users` SET `Pass` = ? WHERE `UserID` = ?";
+    $other_settings_query = "UPDATE `users` SET `password` = ? WHERE `UserID` = ?";
     // prepare statement
     $stmt = $this->con->prepare($other_settings_query);
     $stmt->execute(array($password, $user_id));
@@ -324,4 +325,36 @@ class User extends Database
     return $count > 0 ? true : null;
   }
 
+  // search for employee
+  public function search($search_stmt, $company_id)
+  {
+    // activate phone query
+    $search_query = "SELECT `UserID`, `fullname`, `username`, `email`, `is_tech`, `job_title_id`, `address`, `phone` FROM `users` WHERE (`fullname` LIKE '%{$search_stmt}%' OR `username` LIKE '%{$search_stmt}%' OR `email` LIKE '%{$search_stmt}%' OR `is_tech` LIKE '%{$search_stmt}%' OR `job_title_id` LIKE '%{$search_stmt}%' OR `address` LIKE '%{$search_stmt}%' OR `phone` LIKE '%{$search_stmt}%') AND `company_id` = ?;";
+    // prepare statement
+    $stmt = $this->con->prepare($search_query);
+    $stmt->execute(array($company_id));
+    $count = $stmt->rowCount(); // get number of effected rows
+    $serach_res = $stmt->fetchAll(); // all count of data
+    // empty response
+    $response = [];
+    // loop on data
+    foreach ($serach_res as $key => $search) {
+      // extract
+      extract($search);
+      // prepare response
+      $response[] = [
+        'userid' => $UserID,
+        'fullname' => $fullname,
+        'username' => $username,
+        'email' => $email,
+        'is_tech' => $is_tech,
+        'job_title_id' => $job_title_id,
+        'address' => $address,
+        'phone' => $phone,
+      ];
+    }
+
+    // return
+    return $count > 0 ?  $response : null;
+  }
 }

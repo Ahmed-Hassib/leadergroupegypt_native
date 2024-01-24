@@ -6,7 +6,7 @@ session_start();
 // regenerate session id
 session_regenerate_id();
 // title page
-$page_title = "sys tree desc";
+$page_title = "treenet";
 // page category
 $page_category = "website";
 // page role
@@ -28,6 +28,7 @@ $query = isset($_GET['d']) && !empty($_GET['d']) ? base64_decode($_GET['d']) : n
 // check query
 if ($query == 'systree') {
   $file_name = 'abstract.php';
+  $page_subtitle = "abstract";
 } else {
   // include permission error module
   $file_name = $globmod . 'no-data-founded-no-redirect.php';

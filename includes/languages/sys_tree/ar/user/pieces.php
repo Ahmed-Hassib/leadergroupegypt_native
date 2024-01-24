@@ -7,13 +7,14 @@ function pieces($phrase)
 {
   static $lang = array(
   // words
+  'DASHBOARD' => 'لوحة التحكم',
   'DEVICE' => 'جهاز',
   'DEVICES' => 'أجهزة',
   'THE DEVICE' => 'الجهاز',
   'THE DEVICES' => 'الأجهزة',
   'LIST' => 'قائمة الأجهزة',
   'PCS TYPES' => 'أنواع الأجهزة',
-  'MNG PCS TYPES' => 'إدارة أنواع الأجهزة',
+  'MNG PCS TYPES' => 'أنواع الأجهزة',
   'PCS STATISTICS' => 'إحصائيات الأجهزة',
   'LATEST ADDED' => 'أحدث الأجهزة المضافة',
   'PCS INFO' => 'بيانات الجهاز',
@@ -73,18 +74,29 @@ function pieces($phrase)
   'DELETE MODEL INFO' => 'حذف بيانات الموديل',
   'PCS MALS' => 'أعطال الجهاز',
   'VISIT DEVICE' => 'زيارة الجهاز',
-  '' => '',
+  'SENDER POINT' => 'نقطة إرسال',
+  'RECEIVER POINT' => 'نقطة إستقبال',
+  'CONNECTED PIECE' => 'المتصلين بجهاز',
+  'DIR PIECES' => 'أجهزة إتجاه',
+  'MIKROTIK SERVICE' => 'خدمة ميكروتيك',
+  'COMPANY`S DEVICES' => 'أجهزة شركة',
+  'NEARBY DEVICES' => 'فحص الأجهزة القريبة',
+  'NEARBY DEVICES RESULT' => 'نتيجة فحص الأجهزة القريبة',
 
   // large words
   'PCS STATISTICS STMT' => 'يُعرض هنا بعض احصائيات الأجهزة',
   'LATEST ADDED STMT' => 'يٌعرض هنا آخر 10 أجهزة مُضافة',
   'IP NOTE' => 'اذا لا يمتلك IP ادخل 0.0.0.0',
   'PORT NOTE' => 'اذا لا يمتلك PORT ادخل 0',
+  'CONFIRM DELETE PIECE' => 'تأكيد حذف جهاز',
+  'CONFIRM DELETE PIECE NOTE' => 'برجاء الإنتباه والحذر أن هذا الجهاز يتصل به اكثر من جهاز او عميل، لذا، لتأكيد الحذف برجاء اختيار النقطة البديلة لنقل كل الأجهزة والعملاء عليها',
 
   // messages
   'INSERTED' => 'تم إضافة بيانات الجهاز بنجاح',
   'UPDATED' => 'تم تعديل بيانات الجهاز بنجاح',
   'DELETED' => 'تم حذف بيانات الجهاز بنجاح',
+  'TEMPORARY DELETED' => 'تم حذف بيانات الجهاز بشكل مؤقت',
+  'PERMANENT DELETED' => 'تم حذف بيانات الجهاز بشكل دائم',
   'CANNOT DELETE' => 'لا يمكن حذف هذا الجهاز لوجود أكثر من جهاز أو عميل عليه',
   'IP NULL' => 'IP لا يمكن أن يكون فارغاً',
   'PORT NULL' => 'PORT لا يمكن أن يكون فارغاً',
@@ -109,9 +121,12 @@ function pieces($phrase)
 
   // buttons words
   'ADD NEW' => 'إضافة جهاز جديد',
+  'EDIT PCS' => 'تعديل بيانات جهاز',
   'EDIT CURR PCS' => 'تعديل الجهاز الحالى',
   'ADD COMPANY' => 'إضافة شركة جديدة',
   'ADD DEVICE' => 'إضافة جهاز جديد',
+  'EDIT DEVICE' => 'تعديل بيانات جهاز',
+  'DELETE DEVICE' => 'حذف بيانات جهاز',
   'ADD MODEL' => 'إضافة موديل جديد',
 
   );

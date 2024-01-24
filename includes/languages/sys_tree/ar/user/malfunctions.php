@@ -7,6 +7,7 @@ function malfunctions($phrase)
 {
   static $lang = array(
   // words
+  'DASHBOARD' => 'لوحة التحكم',
   'MAL' => 'عطل',
   'MALS' => 'أعطال',
   'THE MAL' => 'العطل',
@@ -16,7 +17,9 @@ function malfunctions($phrase)
   'UNFINISHED' => 'لم ينتهي',
   'DELAYED' => 'مؤجل',
   'TOTAL MAL' => 'إجمالى الأعطال',
+  'TOTAL MAL OF THE YEAR' => 'إجمالى الأعطال لسنة',
   'MALS RATING' => 'تقييم الأعطال',
+  'MALS RATING OF THE YEAR' => 'تقييم الأعطال لسنة',
   'SOME MALS TODAY' => 'بعض أعطال اليوم',
   'LATEST MALS' => 'آخر الأعطال المُضافة',
   'NAME' => 'إسم المتضرر',
@@ -32,7 +35,6 @@ function malfunctions($phrase)
   'HAVE MEDIA' => 'تم الإرفاق',
   'RESP MAL' => 'المسئول عن العطل',
   'MAL DESC' => 'وصف العطل',
-  'DELETE MAL' => 'حذف عطل',
   'VICTIM INFO' => 'بيانات المتضرر',
   'MAL REVIEW' => 'تقييم العطل',
   'DATE & TIME INFO' => 'معلومات الوقت والتاريخ',
@@ -51,8 +53,9 @@ function malfunctions($phrase)
   'UPDATED AT' => 'وقت التعديل',
   'UPDATES' => 'التعديلات',
   'ASSIGNED' => 'قام',
-
-
+  'MALS DETAILS' => 'تفاصيل الاعطال',
+  
+  
   // large words
   'CONFIRM DELETE' => 'هل أنت متأكد من حذف العطل',
   'TODAY NOTE' => 'إحصائيات عن أعطال اليوم',
@@ -62,9 +65,10 @@ function malfunctions($phrase)
   'MALS RATING NOTE' => 'يعتمد تقييم الأعطال على المقارنة بين الأعطال المنتهية وغير المنتهية والمتأخرة وجميع الأعطال',
   'SOME MALS NOTE' => 'يتم عرض بعض الأعطال المضافة اليوم',
   'LATEST MALS NOTE' => 'يتم عرض آخر 10 أعطال مضافة حديثاً',
-  'MALS FINISHED' => 'أعطال إنتهت',
-  'MALS UNFINISHED' => 'أعطال لم تنتهي',
-  'MALS DELAYED' => 'أعطال مؤجلة',
+  'MALS OF THE YEAR' => 'إجمالى الأعطال لسنة',
+  'MALS FINISHED OF THE YEAR' => 'أعطال إنتهت لسنة',
+  'MALS UNFINISHED OF THE YEAR' => 'أعطال لم تنتهي لسنة',
+  'MALS DELAYED OF THE YEAR' => 'أعطال مؤجلة لسنة',
   'MALS TODAY' => 'أعطال اليوم',
   'MALS FINISHED TODAY' => 'أعطال إنتهت اليوم',
   'MALS UNFINISHED TODAY' => 'أعطال لم تنتهي اليوم',
@@ -86,8 +90,8 @@ function malfunctions($phrase)
   'ADD RECEIPT' => 'إضافة إيصال التكلفة',
   'SEND NOTIFICATION' => 'تم إرسال اشعار الي الفني بتفاصيل العطل',
   'SEND LOCATION NOTIFICATION' => 'تم إرسال اشعار الي الفني بتفاصيل العنوان',
-
-
+  
+  
   // messages
   '*TECH REQUIRED' => 'لا يمكنك إضافة أى عطل لأنك لم تقُم بإضافة أى فنى',
   '*CLTS & PCS' => 'لا يمكنك إضافة أى عطل لأنك لم تقُم بإضافة أى جهاز أو عميل',
@@ -102,6 +106,8 @@ function malfunctions($phrase)
   // buttons words
   'ADD NEW' => 'إضافة عطل جديد',
   'ADD MEDIA' => 'إضافة صورة/فيديو',
+  'EDIT' => 'تعديل بيانات عطل',
+  'DELETE MAL' => 'حذف عطل',
   );
   // return the phrase
   return array_key_exists($phrase, $lang) ? $lang[$phrase] : null;

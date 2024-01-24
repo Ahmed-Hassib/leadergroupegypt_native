@@ -1,83 +1,93 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  // create an object of Combination
-  $comb_obj = !isset($comb_obj) ? new Combination() : $comb_obj;
-  // get update owner id
-  $update_owner_id = base64_decode($_SESSION['sys']['UserID']);
-  // get update owner type
-  $update_owner_type = $_SESSION['sys']['isTech'];
-  // get update owner job_id
-  $update_owner_job_id = base64_decode($_SESSION['sys']['job_title_id']);
-  // get combination id
-  $comb_id = isset($_POST['comb-id']) && !empty($_POST['comb-id']) ? base64_decode($_POST['comb-id']) : 0;
-  // check if combination is exist or not
-  if ($comb_obj->is_exist("`comb_id`", "`combinations`", $comb_id)) {
-    // get combination basics info
-    $stored_basics_info = $comb_obj->get_spec_combination($comb_id, base64_decode($_SESSION['sys']['company_id']));
-    // get is exist boolean value
-    $is_exist = $stored_basics_info[0];
-    // check if exist again
-    if ($is_exist) {
-      // get info
-      $comb_info = $stored_basics_info[1][0];
-      // get new malfunction info
-      $manager_id = base64_decode($_POST['admin-id']);
-      $tech_id = base64_decode($_POST['technical-id']);
+  // check license
+  if ($_SESSION['sys']['isLicenseExpired'] == 0) {
+    // create an object of Combination
+    $comb_obj = !isset($comb_obj) ? new Combination() : $comb_obj;
+    // get update owner id
+    $update_owner_id = base64_decode($_SESSION['sys']['UserID']);
+    // get update owner type
+    $update_owner_type = $_SESSION['sys']['is_tech'];
+    // get update owner job_id
+    $update_owner_job_id = base64_decode($_SESSION['sys']['job_title_id']);
+    // get combination id
+    $comb_id = isset($_POST['comb-id']) && !empty($_POST['comb-id']) ? base64_decode($_POST['comb-id']) : 0;
+    // check if combination is exist or not
+    if ($comb_obj->is_exist("`comb_id`", "`combinations`", $comb_id)) {
+      // get combination basics info
+      $stored_basics_info = $comb_obj->get_spec_combination($comb_id, base64_decode($_SESSION['sys']['company_id']));
+      // get is exist boolean value
+      $is_exist = $stored_basics_info[0];
+      // check if exist again
+      if ($is_exist) {
+        // get info
+        $comb_info = $stored_basics_info[1][0];
+        // get new malfunction info
+        $manager_id = base64_decode($_POST['admin-id']);
+        $tech_id = base64_decode($_POST['technical-id']);
 
-      // check who is doing the update
-      switch ($update_owner_job_id) {
-        /**
-         * updates for:
-         * [1] The Manager
-         * [2] Customer Services
-         */
-        case 1:
-        case 3:
-        case 4:
-          if ($comb_info['isFinished'] != 1) {
-            $is_updated = do_manager_updates($_POST);
-          } else {
-            $is_updated = do_after_sales_updates($_POST);
-          }
+        // check who is doing the update
+        switch ($update_owner_job_id) {
+            /**
+           * updates for:
+           * [1] The Manager
+           * [2] Customer Services
+           */
+          case 1:
+          case 3:
+          case 4:
+            if ($comb_info['isFinished'] != 1) {
+              $is_updated = do_manager_updates($_POST);
+            } else {
+              $is_updated = do_after_sales_updates($_POST);
+            }
 
-          // check status updates
-          if ($is_updated['status']) {
-            // add combination updates info
-            add_updates_details($comb_id, $update_owner_id, $is_updated['updates'], base64_decode($_SESSION['sys']['company_id']));
-          }
-          break;
-        /**
-         * updates for:
-         * [1] Technical Man
-         */
-        case 2:
-          $path = $uploads . "combinations/";
-          // check who is doing the updates
-          if ($update_owner_id == $tech_id && $comb_info['isFinished'] != 1) {
-            $is_updated = do_technical_updates($_POST, count($_FILES) && $_FILES['cost-receipt']['size'] != 0 ? $_FILES['cost-receipt'] : null, $path);
             // check status updates
             if ($is_updated['status']) {
-              // get updates
-              $updates = $is_updated['updates'];
-              // loop on updates
-              foreach ($updates as $key => $update) {
-                // add combination updates info
-                add_updates_details($comb_id, $update_owner_id, $update, base64_decode($_SESSION['sys']['company_id']));
+              // add combination updates info
+              add_updates_details($comb_id, $update_owner_id, $is_updated['updates'], base64_decode($_SESSION['sys']['company_id']));
+            }
+            break;
+            /**
+             * updates for:
+             * [1] Technical Man
+             */
+          case 2:
+            $path = $uploads . "combinations/";
+            // check who is doing the updates
+            if ($update_owner_id == $tech_id && $comb_info['isFinished'] != 1) {
+              $is_updated = do_technical_updates($_POST, count($_FILES) && $_FILES['cost-receipt']['size'] != 0 ? $_FILES['cost-receipt'] : null, $path);
+              // check status updates
+              if ($is_updated['status']) {
+                // get updates
+                $updates = $is_updated['updates'];
+                // loop on updates
+                foreach ($updates as $key => $update) {
+                  // add combination updates info
+                  add_updates_details($comb_id, $update_owner_id, $update, base64_decode($_SESSION['sys']['company_id']));
+                }
               }
             }
-          }
-          // check if upload media
-          if (count($_FILES) > 0 && key_exists('comb-media', $_FILES)) {
-            upload_combination_media($_FILES, $comb_id, $path);
-          }
-          break;
+            // check if upload media
+            if (count($_FILES) > 0 && key_exists('comb-media', $_FILES)) {
+              upload_combination_media($_FILES, $comb_id, $path);
+            }
+            break;
+        }
+        // prepare flash session variables
+        $_SESSION['flash_message'] = 'UPDATED';
+        $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
+        $_SESSION['flash_message_class'] = 'success';
+        $_SESSION['flash_message_status'] = true;
+        $_SESSION['flash_message_lang_file'] = $lang_file;
+      } else {
+        // prepare flash session variables
+        $_SESSION['flash_message'] = 'NO DATA';
+        $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
+        $_SESSION['flash_message_class'] = 'danger';
+        $_SESSION['flash_message_status'] = false;
+        $_SESSION['flash_message_lang_file'] = 'global_';
       }
-      // prepare flash session variables
-      $_SESSION['flash_message'] = 'UPDATED';
-      $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
-      $_SESSION['flash_message_class'] = 'success';
-      $_SESSION['flash_message_status'] = true;
-      $_SESSION['flash_message_lang_file'] = 'combinations';
     } else {
       // prepare flash session variables
       $_SESSION['flash_message'] = 'NO DATA';
@@ -88,10 +98,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
   } else {
     // prepare flash session variables
-    $_SESSION['flash_message'] = 'NO DATA';
+    $_SESSION['flash_message'] = 'FEATURE NOT AVAILABLE';
     $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
     $_SESSION['flash_message_class'] = 'danger';
-    $_SESSION['flash_message_status'] = false;
+    $_SESSION['flash_message_status'] = true;
     $_SESSION['flash_message_lang_file'] = 'global_';
   }
   // return to the previous page
@@ -122,12 +132,14 @@ function do_manager_updates($info)
   $client_address = $info['client-address'];
   // get combination description
   $comment = $_POST['client-notes'];
+  // get combination coordinates
+  $coordinates = $_POST['coordinates'];
   // get previous combination tecnical id
   $prev_tech_id = $comb_obj->select_specific_column("`UserID`", "`combinations`", "WHERE `comb_id` = $comb_id")[0]['UserID'];
   // compare new tech with the old
   if ($tech_id == $prev_tech_id) {
     // update all compination info
-    $is_updated = $comb_obj->update_compination_mng(array($client_name, $client_phone, $client_address, $comment, $tech_id, get_date_now(), get_time_now(), $comb_id));
+    $is_updated = $comb_obj->update_compination_mng(array($client_name, $client_phone, $client_address, $coordinates, $comment, $tech_id, get_date_now(), get_time_now(), $comb_id));
     $updates = 'update combination';
   } else {
     // reset compination info
@@ -160,6 +172,8 @@ function do_technical_updates($info, $cost_media, $media_path)
   $tech_comment = isset($info['comment']) ? $info['comment'] : '';
   // get combination cost
   $cost = $_POST['cost'];
+  // get combination coordinates
+  $coordinates = $_POST['coordinates'];
   // check if combination has a receipt 
   $comb_info = $comb_obj->select_specific_column("`cost_receipt`", "`combinations`", "WHERE `comb_id` = $comb_id");
   $cost_receipt_name = count($comb_info) ? $comb_info[0]['cost_receipt'] : null;
@@ -210,7 +224,7 @@ function do_technical_updates($info, $cost_media, $media_path)
     }
   }
   // get updated status
-  $is_updated = $comb_obj->update_combination_tech(array($is_finished, $tech_status, get_date_now(), get_time_now(), get_date_now(), get_time_now(), $cost, $cost_receipt_name, $tech_comment, $comb_id));
+  $is_updated = $comb_obj->update_combination_tech(array($coordinates, $is_finished, $tech_status, get_date_now(), get_time_now(), get_date_now(), get_time_now(), $cost, $cost_receipt_name, $tech_comment, $comb_id));
   // updates detail
   $updates[] = 'update combination';
   // return status

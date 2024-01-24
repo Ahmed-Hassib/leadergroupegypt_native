@@ -28,7 +28,7 @@
   top: 40px;
   right: 150px;
   color: #f1f1f1;
-  font-size: 40px;
+  font-size: 40px !important;
   font-weight: bold;
   transition: 0.3s;
 }

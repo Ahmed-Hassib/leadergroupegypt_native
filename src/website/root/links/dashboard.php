@@ -15,7 +15,7 @@ $links_info = $link_obj->get_all_links();
   </div>
   <div class="table-responsive-sm">
     <!-- strst pieces table -->
-    <table class="table table-bordered table-striped table-striped display compact table-style" style="width:100%">
+    <table class="table table-bordered table-striped table-striped display display-big-data compact table-style" style="width:100%">
       <thead class="primary text-capitalize">
         <tr>
           <th class="text-center" style="max-width: 40px">#</th>
@@ -75,21 +75,16 @@ $links_info = $link_obj->get_all_links();
               </td>
               <td class="text-center">
                 <?php if ($link['is_active']) { ?>
-                  <a href="?do=deactivate-link&id=<?php echo base64_encode($link['id']) ?>" class="btn btn-danger py-0"><i
-                      class="bi bi-x"></i><span>
+                  <a href="?do=deactivate-link&id=<?php echo base64_encode($link['id']) ?>" class="btn btn-danger py-0"><i class="bi bi-x"></i><span>
                       <?php echo lang('DEACTIVATE') ?>
                     </span></a>
                 <?php } else { ?>
-                  <a href="?do=activate-link&id=<?php echo base64_encode($link['id']) ?>" class="btn btn-primary py-0"><i
-                      class="bi bi-check"></i><span>
+                  <a href="?do=activate-link&id=<?php echo base64_encode($link['id']) ?>" class="btn btn-primary py-0"><i class="bi bi-check"></i><span>
                       <?php echo lang('ACTIVATE') ?>
                     </span></a>
                 <?php } ?>
-                <a href="?do=edit-link&id=<?php echo base64_encode($link['id']) ?>" class="btn btn-outline-success py-0"><i
-                    class="bi bi-pencil-square"></i></a>
-                <button type="button" data-href="?do=delete-link&id=<?php echo base64_encode($link['id']) ?>&back=true"
-                  class="btn btn-outline-danger py-0" onclick="confirm_delete(this)"><i
-                    class="bi bi-trash"></i></button>
+                <a href="?do=edit-link&id=<?php echo base64_encode($link['id']) ?>" class="btn btn-outline-success py-0"><i class="bi bi-pencil-square"></i></a>
+                <button type="button" data-href="?do=delete-link&id=<?php echo base64_encode($link['id']) ?>&back=true" class="btn btn-outline-danger py-0" onclick="confirm_delete(this)"><i class="bi bi-trash"></i></button>
               </td>
             </tr>
           <?php } ?>

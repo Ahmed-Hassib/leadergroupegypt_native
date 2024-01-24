@@ -1,21 +1,21 @@
 <!-- start sidebar menu -->
 <div class="sidebar-menu sidebar-menu-<?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?> close">
   <!-- start sidebar menu brand -->
-  <div class="sidebar-menu-brand" href="dashboard.php" <?php echo !isset($_SESSION['sys']['UserName']) ? "style='margin: auto'" : "" ?>>
+  <div class="sidebar-menu-brand" href="dashboard.php" <?php echo !isset($_SESSION['sys']['username']) ? "style='margin: auto'" : "" ?>>
     <div class="brand-container" style="align-self: center;">
       <?php
       $db_obj = !isset($db_obj) ? new Database() : $db_obj;
 
       $company_img_name_db = $db_obj->select_specific_column("`company_img`", "`companies`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
       $company_img_name_db = count($company_img_name_db) > 0 ? $company_img_name_db[0]['company_img'] : null;
-      $company_img_name = empty($company_img_name_db) || $company_img_name_db == null ? 'systree.jpg' : $company_img_name_db;
+      $company_img_name = empty($company_img_name_db) || $company_img_name_db == null ? 'treenet.jpg' : $company_img_name_db;
       $company_img_path = empty($company_img_name_db) || $company_img_name_db == null ? $systree_assets : $uploads . "companies-img/" . base64_decode($_SESSION['sys']['company_id']);
       // check if image exists
-      $img_file = file_exists("$company_img_path/$company_img_name") ? "$company_img_path/$company_img_name" : $systree_assets . "systree.jpg";
+      $img_file = file_exists("$company_img_path/$company_img_name") ? "$company_img_path/$company_img_name" : $systree_assets . "treenet.jpg";
       // resize company image
       $is_resized = resize_img($company_img_path . "/", $company_img_name);
       ?>
-      <img
+      <img loading="lazy"
         src="<?php echo $is_resized ? "$company_img_path/resized/$company_img_name" : "$company_img_path/$company_img_name" ?>"
         class="sidebar-menu-logo-img" <?php if (empty($company_img_name_db) || $company_img_name_db == null) { ?> style=""
         <?php } ?>
@@ -60,7 +60,7 @@
         <section>
           <i class="bi bi-building"></i>
           <span class="link-name">
-            <?php echo lang('COMPANIES') ?>
+            <?php echo lang('THE COMPANIES', 'companies_root') ?>
           </span>
         </section>
         <i class="bi bi-arrow-down-short"></i>
@@ -71,7 +71,7 @@
         <li>
           <a href="<?php echo $nav_up_level ?>companies/index.php?do=list">
             <span class="link-name">
-              <?php echo lang('LIST') ?>
+              <?php echo lang('LIST','companies_root') ?>
             </span>
           </a>
         </li>
@@ -109,21 +109,21 @@
       </a>
     </li>
     <!-- start setting nav link -->
-    <?php if (isset($_SESSION['sys']['UserName'])) { ?>
+    <?php if (isset($_SESSION['sys']['username'])) { ?>
       <!-- start profile details nav link -->
       <li>
         <!-- start profile details -->
         <div class="profile-details">
           <a href="">
-            <!-- href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $_SESSION['sys']['UserID']; ?>"> -->
+            <!-- href="<?php echo $nav_up_level ?>employees/index.php?do=edit-user-info&userid=<?php echo $_SESSION['sys']['UserID']; ?>"> -->
             <div class="profile-content">
               <?php $profile_img_name = empty($_SESSION['sys']['profile_img']) || !file_exists($uploads . "employees-img/" . base64_decode($_SESSION['sys']['company_id']) . "/" . $_SESSION['sys']['profile_img']) ? "male-avatar.svg" : base64_decode($_SESSION['sys']['company_id']) . "/" . $_SESSION['sys']['profile_img']; ?>
               <?php $profile_img_path = $uploads . "employees-img/" . $profile_img_name; ?>
-              <img src="<?php echo $profile_img_path ?>" class="profile-img">
+              <img loading="lazy" src="<?php echo $profile_img_path ?>" class="profile-img">
             </div>
             <div class="name-job">
               <div class="profile-name">
-                <?php echo $_SESSION['sys']['UserName'] ?>
+                <?php echo $_SESSION['sys']['username'] ?>
               </div>
               <?php if (!empty($_SESSION['sys']['job_title_id'])) { ?>
                 <div class="profile-job">

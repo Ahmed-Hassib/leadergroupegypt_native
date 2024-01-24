@@ -15,7 +15,7 @@ function dashboard($phrase)
   'ABOUT US' => 'عن الشركة',
   'FEATURES' => 'المميزات',
   'TEAM MEMBERS' => 'أعضاء الفريق',
-  'COMPANY INFO' => 'بيانات الشركة المُمولة',
+  'SPONSOR COMPANY INFO' => 'بيانات الشركة المُمولة',
 
   // large statements
   );

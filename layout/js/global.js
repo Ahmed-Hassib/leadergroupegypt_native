@@ -63,6 +63,7 @@ function addAstrisk(inputs) {
       let astrisk = document.createElement("span");
       // add some classes
       astrisk.classList.add("text-danger", "astrisk");
+      astrisk.textContent = "*";
       // check system language
       if (localStorage['lang'] == 'ar') {
         if (input.hasAttribute('dir') && input.getAttribute('dir') == 'ltr') {
@@ -80,7 +81,7 @@ function addAstrisk(inputs) {
         // add some classes
         astrisk.classList.add("astrisk-left");
       }
-      astrisk.textContent = "*";
+
       // append astrisk
       input.parentElement.appendChild(astrisk);
     }

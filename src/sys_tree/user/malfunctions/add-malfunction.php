@@ -42,7 +42,7 @@ if (empty($err_arr)) {
             <!-- Administrator name -->
             <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
               <input type="hidden" class="form-control" id="admin-id" name="admin-id" value="<?php echo $_SESSION['sys']['UserID'] ?>" autocomplete="off" required />
-              <input type="text" class="form-control" id="admin-name" name="admin-name" placeholder="administrator name" value="<?php echo $_SESSION['sys']['UserName'] ?>" autocomplete="off" required readonly />
+              <input type="text" class="form-control" id="admin-name" name="admin-name" placeholder="administrator name" value="<?php echo $_SESSION['sys']['username'] ?>" autocomplete="off" required readonly />
               <label for="admin-name"><?php echo lang('ADMIN NAME', $lang_file) ?></label>
             </div>
             <!-- Technical name -->
@@ -52,14 +52,14 @@ if (empty($err_arr)) {
                   <option value="default" disabled selected><?php echo lang('SELECT TECH NAME', $lang_file) ?></option>
                   <?php
                   // get Employees ID and Names
-                  $usersRows = $db_obj->select_specific_column("`UserID`, `UserName`", "`users`", "WHERE `isTech` = 1 AND `job_title_id` = 2 AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
+                  $usersRows = $db_obj->select_specific_column("`UserID`, `username`, `fullname`", "`users`", "WHERE `is_tech` = 1 AND `job_title_id` = 2 AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
                   // check the length of result
                   if (count($usersRows) > 0) {
                     // loop on result ..
                     foreach ($usersRows as $userRow) { ?>
                       <!-- get all information of pieces -->
                       <option value="<?php echo base64_encode($userRow['UserID']) ?>">
-                        <?php echo $userRow['UserName']; ?>
+                        <?php echo $userRow['fullname'] . " (" . $userRow['username'] . ")"; ?>
                       </option>
                     <?php } ?>
                   <?php } ?>
@@ -103,7 +103,7 @@ if (empty($err_arr)) {
       </div>
 
       <!-- submit -->
-      <?php if ($_SESSION['sys']['mal_add'] == 1 && $emp_counter >= 1 && $pcs_counter >= 1) { ?>
+      <?php if ($_SESSION['sys']['mal_add'] == 1 && $emp_counter >= 1 && $pcs_counter >= 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
         <div class="hstack gap-3">
           <div class="<?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
             <button type="button" form="add-malfunction" class="btn btn-primary text-capitalize form-control bg-gradient fs-12" style="width: 150px" id="add-malfunctions" onclick="form_validation(this.form, 'submit')">

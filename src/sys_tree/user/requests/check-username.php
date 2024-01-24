@@ -2,7 +2,7 @@
 // user name
 $username = isset($_GET['username']) ? $_GET['username'] : '';
 // query statement
-$query = "SELECT count(`UserID`) FROM `users` WHERE `UserName` = ? AND `company_id` = ?";
+$query = "SELECT count(`UserID`) FROM `users` WHERE `username` = ? AND `company_id` = ?";
 // prepare statement
 $stmt = $con->prepare($query);
 $stmt->execute(array($username, base64_decode($_SESSION['sys']['company_id'])));

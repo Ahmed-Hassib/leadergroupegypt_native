@@ -19,20 +19,24 @@ if (isset($page_category) && !isset($no_navbar)) {
       break;
 
     case 'sys_tree':
-      // check developing
-      if ($is_developing == false) {
-        // include_once check version script
-        include_once 'check-version.php';
-        // check session
-        if (isset($_SESSION['sys']['UserID'])) {
-          // check if root
-          if ($_SESSION['sys']['isRoot'] == 1) {
-            // get root navbar
-            $navbar = get_page_dependencies("" . $page_category . "_global", 'navbar')['root'];
-          } else {
+      // include_once check version script
+      include_once 'check-version.php';
+      // check session
+      if (isset($_SESSION['sys']['UserID'])) {
+        // check if root
+        if ($_SESSION['sys']['is_root'] == 1) {
+          // get root navbar
+          $navbar = get_page_dependencies("" . $page_category . "_global", 'navbar')['root'];
+        } else {
+          // check developing
+          if ($is_developing == false) {
             // get user navbar
             $navbar = get_page_dependencies("" . $page_category . "_global", 'navbar')['user'];
           }
+        }
+
+        // check if navbar was set
+        if (isset($navbar)) {
           // include navbar
           include_once $sys_tree_tpl . $navbar;
         }
@@ -49,11 +53,10 @@ if (isset($page_category) && !isset($no_navbar)) {
 }
 ?>
 
-<?php if ($is_developing == false) { ?>
+<?php if ($is_developing == false || (isset($_SESSION['sys']['username']) && $_SESSION['sys']['is_root'])) { ?>
   <?php if (isset($_SESSION['flash_message']) && isset($_SESSION['flash_message_icon']) && isset($_SESSION['flash_message_class']) && isset($_SESSION['flash_message_status'])) { ?>
     <div class="m-0 container">
-      <div class="alert-flash-container alert-flash-<?php echo $page_category != 'sys_tree' ? 'web' : 'sys' ?>"
-        dir="<?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'rtl' : 'ltr' ?>">
+      <div class="alert-flash-container alert-flash-<?php echo $page_category != 'sys_tree' ? 'web' : 'sys' ?>" dir="<?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'rtl' : 'ltr' ?>">
         <?php if (is_array($_SESSION['flash_message'])) { ?>
           <?php foreach ($_SESSION['flash_message'] as $key => $message) { ?>
             <div class="alert alert-<?php echo $_SESSION['flash_message_class'][$key]; ?> alert-flash-status" dir="rtl">
@@ -96,7 +99,7 @@ if (isset($page_category) && !isset($no_navbar)) {
         flash_alert.forEach(alert => {
           alert.remove();
         });
-      }, 10300);
+      }, 16300);
     </script>
 
     <?php unset($_SESSION['flash_message']); ?>

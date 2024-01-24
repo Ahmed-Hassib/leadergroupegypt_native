@@ -1,26 +1,19 @@
 <!-- start sidebar menu -->
-<div class="sidebar-menu sidebar-menu-<?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?> close">
+<div class="sidebar-menu sidebar-menu-<?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
   <!-- start sidebar menu brand -->
-  <div class="sidebar-menu-brand" href="dashboard.php" <?php echo !isset($_SESSION['sys']['UserName']) ? "style='margin: auto'" : "" ?>>
+  <div class="sidebar-menu-brand" href="dashboard.php" <?php echo !isset($_SESSION['sys']['username']) ? "style='margin: auto'" : "" ?>>
     <div class="brand-container" style="align-self: center;">
-      <?php
-      $db_obj = !isset($db_obj) ? new Database() : $db_obj;
-
-      $company_img_name_db = $db_obj->select_specific_column("`company_img`", "`companies`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
-      $company_img_name_db = count($company_img_name_db) > 0 ? $company_img_name_db[0]['company_img'] : null;
-      $company_img_name = empty($company_img_name_db) || $company_img_name_db == null ? 'systree.jpg' : $company_img_name_db;
-      $company_img_path = empty($company_img_name_db) || $company_img_name_db == null ? $systree_assets : $uploads . "companies-img/" . base64_decode($_SESSION['sys']['company_id']);
-      // check if image exists
-      $img_file = file_exists("$company_img_path/$company_img_name") ? "$company_img_path/$company_img_name" : $systree_assets . "systree.jpg";
-      // resize company image
-      $is_resized = resize_img($company_img_path."/", $company_img_name);
-      ?>
-      <img src="<?php echo $is_resized ? "$company_img_path/resized/$company_img_name" : "$company_img_path/$company_img_name" ?>" class="sidebar-menu-logo-img" <?php if (empty($company_img_name_db) || $company_img_name_db == null) { ?> style="" <?php } ?>
-        alt="<?php echo isset($_SESSION['sys']['company_name']) ? $_SESSION['sys']['company_name'] : lang('NOT ASSIGNED') ?>"
-        id="company-img-brand">
-      <span class="sidebar-menu-logo-name text-uppercase ">
-        <?php echo isset($_SESSION['sys']['company_name']) ? $_SESSION['sys']['company_name'] : lang('NOT ASSIGNED') ?>
-      </span>
+      <?php $brand_img_name = "treenet.png"; ?>
+      <?php $brand_img_path = $systree_assets . "{$brand_img_name}"; ?>
+      <?php $brand_resized_img_path = $systree_assets . "resized/{$brand_img_name}"; ?>
+      <?php if (file_exists($brand_img_path)) { ?>
+        <?php $is_resized = resize_img($systree_assets, $brand_img_name); ?>
+        <img class="brand-img" loading="lazy" src="<?php echo $is_resized ? $brand_resized_img_path : $brand_img_path ?>" alt="Tree Net App ">
+      <?php } else { ?>
+        <h3 class="fw-bold sidebar-menu-logo-name">
+          <?php echo lang('SYS TREE') ?>
+        </h3>
+      <?php } ?>
     </div>
     <!-- close icon displayed in small screens -->
     <span class="close-btn"><i class="bi bi-x"></i></span>
@@ -28,6 +21,38 @@
   <!-- end sidebar menu brand -->
   <!-- start sidebar menu content -->
   <ul class="nav-links">
+    <!-- start user profile link -->
+    <?php if (isset($_SESSION['sys']['username'])) { ?>
+      <!-- start profile details nav link -->
+      <li class="profile-details">
+        <!-- start profile details -->
+        <a href="<?php echo $nav_up_level ?>employees/index.php?do=edit-user-info&userid=<?php echo $_SESSION['sys']['UserID']; ?>">
+          <div class="profile-content">
+            <?php $profile_img_name = empty($_SESSION['sys']['profile_img']) || !file_exists($uploads . "employees-img/" . base64_decode($_SESSION['sys']['company_id']) . "/" . $_SESSION['sys']['profile_img']) ? "male-avatar.svg" : base64_decode($_SESSION['sys']['company_id']) . "/" . $_SESSION['sys']['profile_img']; ?>
+            <?php $profile_img_path = $uploads . "employees-img/" . $profile_img_name; ?>
+            <img loading="lazy" src="<?php echo $profile_img_path ?>" class="profile-img">
+          </div>
+          <div class="name-job">
+            <div class="profile-name">
+              <?php echo $_SESSION['sys']['username'] ?>
+            </div>
+            <?php if (!empty($_SESSION['sys']['job_title_id'])) { ?>
+              <div class="profile-job">
+                <?php
+                $db_obj = !isset($db_obj) ? new Database() : $db_obj;
+                // get job title
+                $job_title = $db_obj->select_specific_column("`job_title_name`", "`users_job_title`", "WHERE `job_title_id` = " . base64_decode($_SESSION['sys']['job_title_id']))[0]['job_title_name'];
+                // display job title
+                echo lang($job_title, 'employees');
+                ?>
+              </div>
+            <?php } ?>
+          </div>
+        </a>
+        <!-- end profile details -->
+      </li>
+      <!-- start profile details nav link -->
+    <?php } ?>
     <!-- start dashboard page link -->
     <li>
       <a href="<?php echo $nav_up_level ?>dashboard/index.php">
@@ -68,16 +93,16 @@
         <ul class="sub-menu">
           <?php if ($_SESSION['sys']['user_show'] == 1) { ?>
             <li>
-              <a href="<?php echo $nav_up_level ?>users/index.php">
+              <a href="<?php echo $nav_up_level ?>employees/index.php">
                 <span class="link-name">
                   <?php echo lang('LIST', 'employees') ?>
                 </span>
               </a>
             </li>
           <?php } ?>
-          <?php if ($_SESSION['sys']['user_add'] == 1) { ?>
+          <?php if ($_SESSION['sys']['user_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
             <li>
-              <a href="<?php echo $nav_up_level ?>users/index.php?do=add-new-user">
+              <a href="<?php echo $nav_up_level ?>employees/index.php?do=add-new-user">
                 <span class="link-name">
                   <?php echo lang('ADD NEW', 'employees') ?>
                 </span>
@@ -112,8 +137,20 @@
                 </span>
               </a>
             </li>
+            <?php if ($_SESSION['sys']['isLicenseExpired'] == 0) { ?>
+              <li>
+                <a href="<?php echo $nav_up_level ?>directions/index.php?do=direction-map">
+                  <span class="link-name">
+                    <?php echo lang('DIRECTIONS MAP') ?>
+                    <span class="badge bg-danger">
+                      <?php echo lang('NEW FEATURE') ?>
+                    </span>
+                  </span>
+                </a>
+              </li>
+            <?php } ?>
           <?php } ?>
-          <?php if ($_SESSION['sys']['dir_add'] == 1) { ?>
+          <?php if ($_SESSION['sys']['dir_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
             <li>
               <a href="#" data-bs-toggle="modal" data-bs-target="#addNewDirectionModal">
                 <span class="link-name">
@@ -165,7 +202,7 @@
               </a>
             </li>
           <?php } ?>
-          <?php if ($_SESSION['sys']['pcs_add'] == 1) { ?>
+          <?php if ($_SESSION['sys']['pcs_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
             <li>
               <a href="<?php echo $nav_up_level ?>pieces/index.php?do=add-new-piece">
                 <span class="link-name">
@@ -201,7 +238,7 @@
               </span>
             </a>
           </li>
-          <?php if ($_SESSION['sys']['connection_add'] == 1) { ?>
+          <?php if ($_SESSION['sys']['connection_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
             <li>
               <a href="#" data-bs-toggle="modal" data-bs-target="#addNewPieceConnTypeModal">
                 <span class="link-name">
@@ -216,7 +253,7 @@
           // get all connections 
           $conn_data_types = $pcs_conn_obj->count_records("`id`", "`connection_types`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
           ?>
-          <?php if ($_SESSION['sys']['connection_update'] == 1 && $conn_data_types > 0) { ?>
+          <?php if ($_SESSION['sys']['connection_update'] == 1 && $conn_data_types > 0 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
             <li>
               <a href="#" data-bs-toggle="modal" data-bs-target="#editPieceConnTypeModal">
                 <span class="link-name">
@@ -225,7 +262,7 @@
               </a>
             </li>
           <?php } ?>
-          <?php if ($_SESSION['sys']['connection_delete'] == 1 && $conn_data_types > 0) { ?>
+          <?php if ($_SESSION['sys']['connection_delete'] == 1 && $conn_data_types > 0 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
             <li>
               <a href="#" data-bs-toggle="modal" data-bs-target="#deletePieceConnTypeModal">
                 <span class="link-name">
@@ -270,7 +307,7 @@
               </a>
             </li>
           <?php } ?>
-          <?php if ($_SESSION['sys']['clients_add'] == 1) { ?>
+          <?php if ($_SESSION['sys']['clients_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
             <li>
               <a href="<?php echo $nav_up_level ?>clients/index.php?do=add-new-client">
                 <span class="link-name">
@@ -308,7 +345,7 @@
               </a>
             </li>
           <?php } ?>
-          <?php if ($_SESSION['sys']['mal_add'] == 1) { ?>
+          <?php if ($_SESSION['sys']['mal_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
             <li>
               <a href="<?php echo $nav_up_level ?>malfunctions/index.php?do=add-new-malfunction">
                 <span class="link-name">
@@ -320,133 +357,207 @@
         </ul>
         <!-- end sub menu -->
       <?php } ?>
-    </li>
-    <!-- end malfunctions nav link -->
+      </li>
+      <!-- end malfunctions nav link -->
 
-    <?php if ($_SESSION['sys']['comb_show'] == 1 || $_SESSION['sys']['comb_add'] == 1) { ?>
-      <!-- start combinations nav link -->
+      <?php if ($_SESSION['sys']['comb_show'] == 1 || $_SESSION['sys']['comb_add'] == 1) { ?>
+        <!-- start combinations nav link -->
+        <li>
+          <div class="icon-link">
+            <section>
+              <i class="bi bi-braces-asterisk"></i>
+              <span class="link-name">
+                <?php echo lang('COMBS') ?>
+              </span>
+            </section>
+            <i class="bi bi-arrow-down-short"></i>
+          </div>
+          <!-- start sub menu -->
+          <ul class="sub-menu">
+            <?php if ($_SESSION['sys']['comb_show'] == 1) { ?>
+              <li>
+                <a href="<?php echo $nav_up_level ?>combinations/index.php">
+                  <span class="link-name">
+                    <?php echo lang('DASHBOARD') ?>
+                  </span>
+                </a>
+              </li>
+            <?php } ?>
+            <?php if ($_SESSION['sys']['comb_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
+              <li>
+                <a href="<?php echo $nav_up_level ?>combinations/index.php?do=add-new-combination">
+                  <span class="link-name">
+                    <?php echo lang('ADD NEW', 'combinations') ?>
+                  </span>
+                </a>
+              </li>
+            <?php } ?>
+          </ul>
+          <!-- end sub menu -->
+        </li>
+        <!-- end combinations nav link -->
+      <?php } ?>
+      <?php if (base64_decode($_SESSION['sys']['job_title_id']) == 1) { ?>
+        <!-- start services nav link -->
+        <li>
+          <div class="icon-link">
+            <a href="<?php echo $nav_up_level ?>services/index.php">
+              <i class="bi bi-tools"></i>
+              <span class="link-name">
+                <?php echo lang('THE SERVICES') ?>
+              </span>
+            </a>
+          </div>
+          <!-- start sub menu -->
+          <ul class="sub-menu blank">
+            <li>
+              <a href="<?php echo $nav_up_level ?>services/index.php">
+                <span class="link-name">
+                  <?php echo lang('THE SERVICES') ?>
+                </span>
+              </a>
+            </li>
+          </ul>
+          <!-- end sub menu -->
+        </li>
+        <!-- end services nav link -->
+      <?php } ?>
+      <?php if (base64_decode($_SESSION['sys']['job_title_id']) == 1 && 0) { ?>
+        <!-- start pricing nav link -->
+        <li>
+          <div class="icon-link">
+            <section>
+              <i class="bi bi-currency-dollar"></i>
+              <span class="link-name">
+                <?php echo lang('PAYMENTS') ?>
+              </span>
+            </section>
+            <i class="bi bi-arrow-down-short"></i>
+          </div>
+          <!-- start sub menu -->
+          <ul class="sub-menu">
+            <li>
+              <a href="<?php echo $nav_up_level ?>payments/index.php?do=pricing">
+                <span class="link-name">
+                  <?php echo lang('PRICING PLANS') ?>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="<?php echo $nav_up_level ?>payments/index.php?do=transactions">
+                <span class="link-name">
+                  <?php echo lang('TRANSACTIONS') ?>
+                </span>
+              </a>
+            </li>
+          </ul>
+          <!-- end sub menu -->
+        </li>
+        <!-- end pricing nav link -->
+      <?php } ?>
+      <!-- start temporary deletes nav link -->
       <li>
         <div class="icon-link">
           <section>
-            <i class="bi bi-braces-asterisk"></i>
+            <i class="bi bi-trash"></i>
             <span class="link-name">
-              <?php echo lang('COMBS') ?>
+              <?php echo lang('TRASH') ?>
             </span>
           </section>
           <i class="bi bi-arrow-down-short"></i>
         </div>
         <!-- start sub menu -->
         <ul class="sub-menu">
-          <?php if ($_SESSION['sys']['comb_show'] == 1) { ?>
-            <li>
-              <a href="<?php echo $nav_up_level ?>combinations/index.php">
-                <span class="link-name">
-                  <?php echo lang('DASHBOARD') ?>
-                </span>
-              </a>
-            </li>
-          <?php } ?>
-          <?php if ($_SESSION['sys']['comb_add'] == 1) { ?>
-            <li>
-              <a href="<?php echo $nav_up_level ?>combinations/index.php?do=add-new-combination">
-                <span class="link-name">
-                  <?php echo lang('ADD NEW', 'combinations') ?>
-                </span>
-              </a>
-            </li>
-          <?php } ?>
+          <li>
+            <a href="<?php echo $nav_up_level ?>temporary-deletes/index.php?do=clients">
+              <span class="link-name">
+                <?php echo lang('DELETED CLIENTS', 'deletes') ?>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="<?php echo $nav_up_level ?>temporary-deletes/index.php?do=pieces">
+              <span class="link-name">
+                <?php echo lang('DELETED PIECES', 'deletes') ?>
+              </span>
+            </a>
+          </li>
         </ul>
         <!-- end sub menu -->
       </li>
-      <!-- end combinations nav link -->
-    <?php } ?>
-    <?php if (base64_decode($_SESSION['sys']['job_title_id']) == 1) { ?>
-    <!-- start report nav link -->
-    <li>
-      <a href="<?php echo $nav_up_level ?>reports/index.php">
-        <i class="bi bi-graph-up"></i>
-        <span class="link-name">
-          <?php echo lang('REPORTS') ?>
-        </span>
-      </a>
-      <!-- start blank sub menu -->
-      <ul class="sub-menu blank">
+      <!-- end temporary deletes nav link -->
+      <?php if (base64_decode($_SESSION['sys']['job_title_id']) == 1 && 0) { ?>
+        <!-- start report nav link -->
         <li>
           <a href="<?php echo $nav_up_level ?>reports/index.php">
+            <i class="bi bi-graph-up"></i>
             <span class="link-name">
               <?php echo lang('REPORTS') ?>
             </span>
           </a>
+          <!-- start blank sub menu -->
+          <ul class="sub-menu blank">
+            <li>
+              <a href="<?php echo $nav_up_level ?>reports/index.php">
+                <span class="link-name">
+                  <?php echo lang('REPORTS') ?>
+                </span>
+              </a>
+            </li>
+          </ul>
+          <!-- end blank sub menu -->
         </li>
-      </ul>
-      <!-- end blank sub menu -->
-    </li>
-    <?php } ?>
-    <!-- start setting nav link -->
-    <li>
-      <a href="<?php echo $nav_up_level ?>settings/index.php">
-        <i class="bi bi-gear"></i>
-        <span class="link-name">
-          <?php echo lang('SETTINGS') ?>
-        </span>
-      </a>
-      <!-- start blank sub menu -->
-      <ul class="sub-menu blank">
-        <li>
-          <a href="<?php echo $nav_up_level ?>settings/index.php">
-            <span class="link-name">
-              <?php echo lang('SETTINGS') ?>
-            </span>
-          </a>
-        </li>
-      </ul>
-      <!-- end blank sub menu -->
-    </li>
-    <li>
-      <a href="<?php echo $sys_tree ?>logout.php">
-        <i class="bi bi-box-arrow-right"></i>
-        <span class="link-name">
-          <?php echo lang('LOGOUT') ?>
-        </span>
-      </a>
-    </li>
-    <!-- start setting nav link -->
-    <?php if (isset($_SESSION['sys']['UserName'])) { ?>
-      <!-- start profile details nav link -->
+      <?php } ?>
+      <!-- start setting nav link -->
       <li>
-        <!-- start profile details -->
-        <div class="profile-details">
-          <a
-            href="<?php echo $nav_up_level ?>users/index.php?do=edit-user-info&userid=<?php echo $_SESSION['sys']['UserID']; ?>">
-            <div class="profile-content">
-              <?php $profile_img_name = empty($_SESSION['sys']['profile_img']) || !file_exists($uploads . "employees-img/" . base64_decode($_SESSION['sys']['company_id']) . "/" . $_SESSION['sys']['profile_img']) ? "male-avatar.svg" : base64_decode($_SESSION['sys']['company_id']) . "/" . $_SESSION['sys']['profile_img']; ?>
-              <?php $profile_img_path = $uploads . "employees-img/" . $profile_img_name; ?>
-              <img src="<?php echo $profile_img_path ?>" class="profile-img">
-            </div>
-            <div class="name-job">
-              <div class="profile-name">
-                <?php echo $_SESSION['sys']['UserName'] ?>
-              </div>
-              <?php if (!empty($_SESSION['sys']['job_title_id'])) { ?>
-                <div class="profile-job">
-                  <?php
-                  $db_obj = !isset($db_obj) ? new Database() : $db_obj;
-                  // get job title
-                  $job_title = $db_obj->select_specific_column("`job_title_name`", "`users_job_title`", "WHERE `job_title_id` = " . base64_decode($_SESSION['sys']['job_title_id']))[0]['job_title_name'];
-                  // display job title
-                  echo lang($job_title, 'employees');
-                  ?>
-                </div>
-              <?php } ?>
-            </div>
-          </a>
-        </div>
-        <!-- end profile details -->
+        <a href="<?php echo $nav_up_level ?>settings/index.php">
+          <i class="bi bi-gear"></i>
+          <span class="link-name">
+            <?php echo lang('SETTINGS') ?>
+          </span>
+        </a>
+        <!-- start blank sub menu -->
+        <ul class="sub-menu blank">
+          <li>
+            <a href="<?php echo $nav_up_level ?>settings/index.php">
+              <span class="link-name">
+                <?php echo lang('SETTINGS') ?>
+              </span>
+            </a>
+          </li>
+        </ul>
+        <!-- end blank sub menu -->
       </li>
-      <!-- start profile details nav link -->
-    <?php } ?>
+      <li>
+        <a href="<?php echo $sys_tree ?>logout.php">
+          <i class="bi bi-box-arrow-right"></i>
+          <span class="link-name">
+            <?php echo lang('LOGOUT') ?>
+          </span>
+        </a>
+      </li>
   </ul>
   <!-- end sidebar menu content -->
+
+  <!-- advertisements small card -->
+  <div class="small-card-adv card card-adv-light">
+    <div class="card-img-top-container card-img-top-container-light">
+      <img src="<?php echo $systree_assets . "wallet-arrow-left.svg" ?>" alt="">
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"><?php echo lang('LIKE TO BE A PARTNER') ?></h5>
+    </div>
+
+    <div class="card-link-container" style="border-radius: 20px;">
+      <div class="card-link-container_content card-link-container_content-light">
+        <a href="" class="card-link">
+          <?php $contact_stmt = explode(' ', lang('CONTACT US NOW')); ?>
+          <span class="fs-12"><?php echo $contact_stmt[0] . " " . $contact_stmt[1] ?></span><br>
+          <span><?php echo $contact_stmt[2] ?></span>
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- end sidebar menu -->
 
@@ -462,15 +573,12 @@
     <?php } ?>
 
     <?php if (isset($possible_back) && $possible_back == true) { ?>
-      <a href="<?php echo $nav_up_level ?>requests/index.php?do=update-session&user-id=<?php echo $_SESSION['sys']['UserID'] ?>"
-        class="btn btn-outline-light py-1 fs-12 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-auto' : 'ms-auto' ?> mx-3">
+      <a href="<?php echo $nav_up_level ?>requests/index.php?do=update-session&user-id=<?php echo $_SESSION['sys']['UserID'] ?>" class="btn btn-outline-light py-1 fs-12 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-auto' : 'ms-auto' ?> mx-3">
         <span>
           <?php echo lang('REFRESH SESSION') ?>
         </span>
       </a>
-      <button
-        class="btn btn-outline-light text-capitalize py-1 fs-12 <?php echo $_SESSION['sys']['lang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>"
-        onclick="history_control()">
+      <button class="btn btn-outline-light text-capitalize py-1 fs-12 <?php echo $_SESSION['sys']['lang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" onclick="history_control()">
         <i class="bi bi-arrow-return-left"></i>
       </button>
     <?php } ?>

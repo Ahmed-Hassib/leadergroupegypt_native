@@ -24,10 +24,10 @@ table.dataTable.pcs-data td:not(:nth-of-type(1)) {
   max-width: 300px !important;
 }
 
-table.dataTable:not(.no-index) th:nth-of-type(1),
-table.dataTable:not(.no-index) td:nth-of-type(1) {
-  min-width: 20px !important;
-  max-width: 20px !important;
+table.dataTable:not(.no-index) th:nth-of-type(1):not(.d-none),
+table.dataTable:not(.no-index) td:nth-of-type(1):not(.d-none) {
+  min-width: 5px !important;
+  max-width: 5px !important;
 }
 
 table.dataTable.pcs-data th:nth-of-type(2),
@@ -36,8 +36,8 @@ table.dataTable.pcs-data td:nth-of-type(2) {
   max-width: 30px !important;
 }
 
-table.dataTable th:last-of-type,
-table.dataTable td:last-of-type {
+table:not(.customize-td-space).dataTable th:last-of-type,
+table:not(.customize-td-space).dataTable td:last-of-type {
   min-width: 150px !important;
 }
 
@@ -63,4 +63,8 @@ table.dataTable.pcs-data .datatables_row_details {
 table.dataTable thead th.dt-colresizable-hover {
   cursor: col-resize !important;
   background-color: rgba(255, 0, 0, .3) !important;
+}
+
+.btn-group span {
+  font-size: 12px!important;
 }

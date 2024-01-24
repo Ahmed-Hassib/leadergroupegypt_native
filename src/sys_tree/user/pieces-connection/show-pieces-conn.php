@@ -27,7 +27,7 @@ $is_exist = $pieces_info[0];
 $all_data = $pieces_info[1];
 // check is_exist
 if ($is_exist) {
-  ?>
+?>
   <!-- start edit profile page -->
   <div class="container" dir="<?php echo $page_dir ?>">
     <!-- start header -->
@@ -40,7 +40,7 @@ if ($is_exist) {
     <!-- start table container -->
     <div class="table-responsive-sm">
       <!-- strst pieces table -->
-      <table class="table table-bordered table-striped  display compact table-style" style="width:100%">
+      <table class="table table-bordered table-striped  display display-big-data compact table-style" style="width:100%">
         <thead class="primary text-capitalize">
           <tr>
             <th>#</th>
@@ -97,12 +97,12 @@ if ($is_exist) {
                     <?php echo lang("NOT ASSIGNED") ?>
                   </span>
                 <?php } else { ?>
-                  <a href="<?php echo trim($piece['ip'], ' \t\n\v') ?>" class="pcs-ip"
-                    data-pcs-ip="<?php echo trim($piece['ip'], ' \t\n\v') ?>">
+                  <a href="<?php echo trim($piece['ip'], ' \t\n\v') ?>" class="pcs-ip" data-pcs-ip="<?php echo trim($piece['ip'], ' \t\n\v') ?>">
                     <?php echo trim($piece['ip'], ' \t\n\v') ?>
                   </a>
-                  <button class="btn btn-outline-primary fs-12 px-3 py-0" data-bs-toggle="modal" data-bs-target="#pingModal"
-                    onclick="ping('<?php echo $piece['ip'] ?>', <?php echo $_SESSION['sys']['ping_counter'] ?>)">ping</button>
+                  <?php if ($_SESSION['sys']['isLicenseExpired'] == 0) { ?>
+                    <button class="btn btn-outline-primary fs-12 px-3 py-0" data-bs-toggle="modal" data-bs-target="#pingModal" onclick="ping('<?php echo $piece['ip'] ?>', <?php echo $_SESSION['sys']['ping_counter'] ?>)">ping</button>
+                  <?php } ?>
                 <?php } ?>
               </td>
               <!-- piece mac address -->
@@ -112,8 +112,7 @@ if ($is_exist) {
               <!-- piece name -->
               <td>
                 <?php if ($_SESSION['sys']['pcs_show'] == 1) { ?>
-                  <a href="<?php echo $nav_up_level ?>pieces/index.php?do=edit-piece&piece-id=<?php echo base64_encode($piece['id']); ?>"
-                    target="">
+                  <a href="<?php echo $nav_up_level ?>pieces/index.php?do=edit-piece&piece-id=<?php echo base64_encode($piece['id']); ?>" target="">
                     <?php echo trim($piece['full_name'], ' \t\n\v') ?>
                   </a>
                 <?php } else { ?>
@@ -122,8 +121,7 @@ if ($is_exist) {
                   </span>
                 <?php } ?>
                 <?php if ($piece['direction_id'] == 0) { ?>
-                  <i class="bi bi-exclamation-triangle-fill text-danger fw-bold"
-                    title="<?php echo lang("NOT ASSIGNED") ?>"></i>
+                  <i class="bi bi-exclamation-triangle-fill text-danger fw-bold" title="<?php echo lang("NOT ASSIGNED") ?>"></i>
                 <?php } ?>
                 <?php if ($piece['added_date'] == date('Y-m-d')) { ?>
                   <span class="badge bg-danger p-1 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-1' : 'ms-1' ?>">
@@ -134,8 +132,7 @@ if ($is_exist) {
               <!-- piece username -->
               <td class="text-capitalize">
                 <?php if ($_SESSION['sys']['pcs_show'] == 1) { ?>
-                  <a
-                    href="<?php echo $nav_up_level ?>pieces/index.php?do=edit-piece&piece-id=<?php echo base64_encode($piece['id']); ?>">
+                  <a href="<?php echo $nav_up_level ?>pieces/index.php?do=edit-piece&piece-id=<?php echo base64_encode($piece['id']); ?>">
                     <?php echo $piece['username']; ?>
                   </a>
                 <?php } else { ?>
@@ -148,8 +145,7 @@ if ($is_exist) {
               <td class="text-capitalize">
                 <?php $dir_name = $db_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = " . $piece['direction_id'])[0]['direction_name']; ?>
                 <?php if ($piece['direction_id'] != 0 && $_SESSION['sys']['dir_update'] == 1) { ?>
-                  <a
-                    href="<?php echo $nav_up_level ?>directions/index.php?do=show-direction-tree&dir-id=<?php echo base64_encode($piece['direction_id']); ?>">
+                  <a href="<?php echo $nav_up_level ?>directions/index.php?do=show-direction-tree&dir-id=<?php echo base64_encode($piece['direction_id']); ?>">
                     <?php echo $dir_name ?>
                   </a>
                 <?php } elseif ($_SESSION['sys']['dir_update'] == 0) { ?>
@@ -170,26 +166,26 @@ if ($is_exist) {
                     <?php echo lang("NOT ASSIGNED") ?>
                   </span>
                 <?php } else { ?>
-                  <a href="<?php echo trim($source_ip, ' \t\n\v') ?>" class="pcs-ip"
-                    data-pcs-ip="<?php echo trim($source_ip, ' \t\n\v') ?>">
+                  <a href="<?php echo trim($source_ip, ' \t\n\v') ?>" class="pcs-ip" data-pcs-ip="<?php echo trim($source_ip, ' \t\n\v') ?>">
                     <?php echo trim($source_ip, ' \t\n\v') ?>
                   </a>
-                  <button class="btn btn-outline-primary fs-12 px-3 py-0" data-bs-toggle="modal" data-bs-target="#pingModal"
-                    onclick="ping('<?php echo $source_ip ?>', <?php echo $_SESSION['sys']['ping_counter'] ?>)">ping</button>
+                  <?php if ($_SESSION['sys']['isLicenseExpired'] == 0) { ?>
+                    <button class="btn btn-outline-primary fs-12 px-3 py-0" data-bs-toggle="modal" data-bs-target="#pingModal" onclick="ping('<?php echo $source_ip ?>', <?php echo $_SESSION['sys']['ping_counter'] ?>)">ping</button>
+                  <?php } ?>
                 <?php } ?>
               </td>
               <!-- type -->
               <td class="text-capitalize">
                 <?php
                 if ($piece['is_client'] == 1) {
-                  $type = lang("CLIENTS");
+                  $type = lang("CLT", 'clients');
                   $type_class = "";
                 } elseif ($piece['is_client'] == 0) {
                   if ($piece['device_type'] == 1) {
-                    $type = lang('TRANSMITTER', $lang_file);
+                    $type = lang('TRANSMITTER', 'pieces');
                     $type_class = "";
                   } elseif ($piece['device_type'] == 2) {
-                    $type = lang('RECEIVER', $lang_file);
+                    $type = lang('RECEIVER', 'pieces');
                     $type_class = "";
                   } else {
                     $type = lang('NOT ASSIGNED');
@@ -246,25 +242,19 @@ if ($is_exist) {
               <!-- control -->
               <td>
                 <?php if ($_SESSION['sys']['pcs_show'] == 1) { ?>
-                  <a class="btn btn-success text-capitalize fs-12 "
-                    href="<?php echo $nav_up_level ?>pieces/index.php?do=edit-piece&piece-id=<?php echo base64_encode($piece['id']); ?>"
-                    target="_blank">
+                  <a class="btn btn-success text-capitalize fs-12 " href="<?php echo $nav_up_level ?>pieces/index.php?do=edit-piece&piece-id=<?php echo base64_encode($piece['id']); ?>" target="_blank">
                     <i class="bi bi-pencil-square"></i>
                     <?php echo lang('EDIT') ?>
                   </a>
                 <?php } ?>
                 <?php if ($piece['is_client'] == 0 && $_SESSION['sys']['pcs_show'] == 1) { ?>
-                  <a class="btn btn-outline-primary text-capitalize fs-12"
-                    href="?do=show-piece&dir-id=<?php echo base64_encode($piece['direction_id']) ?>&src-id=<?php echo base64_encode($piece['id']) ?>">
+                  <a class="btn btn-outline-primary text-capitalize fs-12" href="<?php echo $nav_up_level ?>?do=show-piece&dir-id=<?php echo base64_encode($piece['direction_id']) ?>&src-id=<?php echo base64_encode($piece['id']) ?>">
                     <i class="bi bi-eye"></i>
                     <?php echo lang('SHOW DETAILS') ?>
                   </a>
                 <?php } ?>
-                <?php if ($_SESSION['sys']['pcs_delete'] == 1) { ?>
-                  <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12"
-                    data-bs-toggle="modal" data-bs-target="#deletePieceModal" id="delete-piece"
-                    data-piece-id="<?php echo base64_encode($piece['id']) ?>"
-                    data-piece-name="<?php echo $piece['full_name'] ?>" onclick="confirm_delete_piece(this, true)">
+                <?php if ($_SESSION['sys']['pcs_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
+                  <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deletePieceModal" id="delete-piece" data-piece-id="<?php echo base64_encode($piece['id']) ?>" data-piece-name="<?php echo $piece['full_name'] ?>" onclick="confirm_delete_piece(this, true)">
                     <i class="bi bi-trash"></i>
                     <?php echo lang('DELETE') ?>
                   </button>

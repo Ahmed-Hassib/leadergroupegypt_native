@@ -17,7 +17,7 @@ class Company extends Database
     $this->con = $db_obj->con;
   }
 
-  // function to get all companies of specific company
+  // function to get all companies
   public function get_all_companies()
   {
     // get all companies data
@@ -29,6 +29,34 @@ class Company extends Database
     // return
     return $count > 0 ? $companies_data : null;
   }
+  
+  // function to get company info
+  public function get_company_info($company_id)
+  {
+    // get company info data
+    $select_all = "SELECT *FROM `$this->table_name` WHERE `company_id` = ? AND `company_id` != 1 LIMIT 1";
+    $stmt = $this->con->prepare($select_all);
+    $stmt->execute(array($company_id));
+    $company_data = $stmt->fetch();
+    $count = $stmt->rowCount();    // all count of data
+    // return
+    return $count > 0 ? $company_data : null;
+  }
+  
+  // function to get company employees
+  public function get_company_employees($company_id)
+  {
+    // get company employees data
+    $select_all = "SELECT *FROM `users` WHERE `company_id` = ? AND `company_id` != 1";
+    $stmt = $this->con->prepare($select_all);
+    $stmt->execute(array($company_id));
+    $company_emps = $stmt->fetchAll();
+    $count = $stmt->rowCount();    // all count of data
+    // return
+    return $count > 0 ? $company_emps : null;
+  }
+
+
 
   // function to upgrade company version
   public function upgrade_version($new_version_id, $company_id)
@@ -46,12 +74,12 @@ class Company extends Database
   }
 
   // function to renew company license
-  public function renew_license($license_type, $expire_date, $company_id)
+  public function renew_license($license_type, $expire_date, $company_id, $plan_id, $is_trial = 1)
   {
-    $inset_query = "INSERT INTO `license` (`company_id`, `type`, `start_date`, `expire_date`) VALUES (?, ?, now(), ?);";
+    $inset_query = "INSERT INTO `license` (`company_id`, `type`, `start_date`, `expire_date`, `isTrial`, `plan_id`) VALUES (?, ?, now(), ?, ?, ?);";
     // update the database with this info
     $stmt = $this->con->prepare($inset_query);
-    $stmt->execute(array($company_id, $license_type, $expire_date));
+    $stmt->execute(array($company_id, $license_type, $expire_date, $is_trial, $plan_id));
     // count
     $count = $stmt->rowCount();    // all count of data
     // return
@@ -68,12 +96,12 @@ class Company extends Database
     $stmt = $this->con->prepare($update_query);
     $stmt->execute(array($company_id));
     // count
-    $count = $stmt->rowCount();    // all count of data
+    $count = $stmt->rowCount();
     // return
     return $count > 0 ? true : false;
   }
 
-  function upload_company_img($info)
+  public function upload_company_img($info)
   {
     // update query
     $upload_company_img_query = "UPDATE `$this->table_name` SET `company_img` = ? WHERE `company_id` = ?";
@@ -108,17 +136,7 @@ class Company extends Database
     // return
     return $count > 0 ? true : false;
   }
-  public function update_mikrotik($info)
-  {
-    // update query
-    $mikrotik_query = "UPDATE `$this->table_name` SET `mikrotik_ip` = ?, `mikrotik_port` = ?, `mikrotik_username` = ?, `mikrotik_password` = ? WHERE `company_id` = ?";
-    // update the database with this info
-    $stmt = $this->con->prepare($mikrotik_query);
-    $stmt->execute($info);
-    $count = $stmt->rowCount();     // get number of effected rows
-    // return
-    return $count > 0 ? true : false;
-  }
+  
 
   public function update_opened_ports($company_id, $value)
   {
@@ -149,5 +167,28 @@ class Company extends Database
     $count = $stmt->rowCount();     // get number of effected rows
     // return
     return $count > 0 ? true : false;
+  }
+  
+  public function get_ip_list($company_id) {
+    $select_stmt = "SELECT `ip_list` FROM `$this->table_name` WHERE `company_id` = ?";
+    $stmt = $this->con->prepare($select_stmt);
+    $stmt->execute(array($company_id));
+    $result = $stmt->fetchAll();
+    $count = $stmt->rowCount();     // get number of effected rows
+    // return
+    return $count > 0 ? $result[0]["ip_list"] : false;
+  }
+  
+  public function set_ip_list($company_id, $ip_list) {
+    $select_stmt = "UPDATE `$this->table_name` SET `ip_list` = ? WHERE `company_id` = ?";
+    $stmt = $this->con->prepare($select_stmt);
+    $stmt->execute(array($ip_list, $company_id));
+    $count = $stmt->rowCount();     // get number of effected rows
+    // return
+    return $count > 0 ? true : false;
+  }
+
+  public function delete_company_info($company_id) {
+    
   }
 }

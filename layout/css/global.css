@@ -2,13 +2,39 @@ html {
   scroll-behavior: smooth;
 }
 
-/************/
 .fs-12 {
   font-size: 12px !important;
 }
 
 .fs-16 {
   font-size: 16px !important;
+}
+.preloader {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: #e1e1e1;
+  z-index: 999999;
+}
+
+
+.preloader>.preloader-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.preloader .spinner-grow {
+  background: #0d6efd;
+}
+
+.preloader .spinner-border {
+  border: 0.25rem solid transparent;
+  border-right-color: #0d6efd;
 }
 
 /* under developing section */
@@ -20,112 +46,6 @@ html {
   width: 80%;
 }
 
-/* start dashboard */
-.card {
-  text-align: center;
-  position: relative;
-  height: 100%;
-  border: none;
-  border-radius: 10px;
-  background: #ffffffc9;
-  transition: 0.2s all ease-in-out;
-  /* box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5); */
-}
-
-.card.card-stat:hover {
-  transform: scale(1.05);
-}
-
-.card-effect-right::before {
-  border-radius: 0 10px 10px 0;
-}
-
-.card-effect-left::before {
-  border-radius: 10px 0 0 10px;
-}
-
-.card-effect::before {
-  content: "";
-  position: absolute;
-  height: 100%;
-  border-right: 10px solid #0d6efd;
-}
-
-.card-effect.card-mal::before {
-  border-right: 10px solid rgb(220, 53, 69);
-}
-
-.card-effect.card-comb::before {
-  border-right: 10px solid rgb(25, 135, 84);
-}
-
-.card-header {
-  text-align: left;
-}
-
-.card-title {
-  font-size: 1.25rem !important;
-}
-
-.card-body {
-  position: relative;
-}
-
-.stats .card-body {
-  display: grid;
-  grid-template-columns: 1fr;
-  justify-content: center;
-  align-items: center;
-  padding-top: 4rem;
-}
-
-.card-body>i {
-  position: relative;
-  font-size: 4rem;
-  display: block;
-}
-
-.card-body>i::after {
-  content: "";
-  position: relative;
-  margin-bottom: 2rem;
-}
-
-.card span a.stretched-link {
-  text-decoration: none;
-  font-size: 1.25rem;
-}
-
-.card-footer {
-  margin: auto;
-  width: 80%;
-  background-color: unset;
-  color: #fff;
-}
-
-.icon-container {
-  font-size: 1.5rem;
-  padding: .5rem 1rem;
-  background: #0d6efd;
-  border-radius: 16px;
-  width: 80px;
-  height: 50px;
-  position: absolute;
-  top: -15px;
-  color: #fff;
-}
-
-.icon-container .num {
-  font-size: 20px;
-}
-
-.icon-container-left {
-  left: 15px;
-}
-
-.icon-container-right {
-  right: 15px;
-}
 
 /************/
 
@@ -299,7 +219,7 @@ input[type=number] {
 /* for floating buttons */
 .floating-button {
   position: absolute;
-  top: 0;
+  top: -5px;
 }
 
 .floating-button-right {
@@ -312,16 +232,16 @@ input[type=number] {
 
 .astrisk {
   position: absolute;
-  top: 10px;
+  top: -15px;
   font-weight: 800;
 }
 
 .astrisk-left {
-  left: 30px;
+  left: 15px;
 }
 
 .astrisk-right {
-  right: 50px;
+  right: 15px;
 }
 
 /* for orders */

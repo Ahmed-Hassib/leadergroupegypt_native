@@ -19,7 +19,7 @@ class Session extends Database
     // set user permission columns
     $this->users_permission_columns = "`users_permissions`.`user_add`,`users_permissions`.`user_update`,`users_permissions`.`user_delete`,`users_permissions`.`user_show`,`users_permissions`.`mal_add`,`users_permissions`.`mal_update`,`users_permissions`.`mal_delete`,`users_permissions`.`mal_show`,`users_permissions`.`mal_review`,`users_permissions`.`mal_media_delete`,`users_permissions`.`mal_media_download`,`users_permissions`.`comb_add`,`users_permissions`.`comb_update`,`users_permissions`.`comb_delete`,`users_permissions`.`comb_show`,`users_permissions`.`comb_review`,`users_permissions`.`comb_media_delete`,`users_permissions`.`comb_media_download`,`users_permissions`.`pcs_add`,`users_permissions`.`pcs_update`,`users_permissions`.`pcs_delete`,`users_permissions`.`pcs_show`,`users_permissions`.`clients_add`,`users_permissions`.`clients_update`,`users_permissions`.`clients_delete`,`users_permissions`.`clients_show`,`users_permissions`.`dir_add`,`users_permissions`.`dir_update`,`users_permissions`.`dir_delete`,`users_permissions`.`dir_show`,`users_permissions`.`sugg_replay`,`users_permissions`.`sugg_delete`,`users_permissions`.`sugg_show`,`users_permissions`.`points_add`,`users_permissions`.`points_delete`,`users_permissions`.`points_show`,`users_permissions`.`reports_show`,`users_permissions`.`archive_show`,`users_permissions`.`take_backup`,`users_permissions`.`restore_backup`,`users_permissions`.`connection_add`,`users_permissions`.`connection_update`,`users_permissions`.`connection_delete`,`users_permissions`.`connection_show`,`users_permissions`.`permission_update`,`users_permissions`.`permission_show`,`users_permissions`.`change_mikrotik`,`users_permissions`.`change_company_img`";
     // get company info
-    $this->company_info_columns = "`companies`.`company_name`, `companies`.`company_code`, `companies`.`company_img`, `companies`.`remote_ip`, `companies`.`company_port`, `companies`.`mikrotik_ip`, `companies`.`mikrotik_port`, `companies`.`mikrotik_username`, `companies`.`mikrotik_password`";
+    $this->company_info_columns = "`companies`.`company_name`, `companies`.`company_code`, `companies`.`company_img`, `companies`.`remote_ip`, `companies`.`ip_list`, `companies`.`company_port`, `mikrotik_settings`.`mikrotik_ip`, `mikrotik_settings`.`mikrotik_port`, `mikrotik_settings`.`mikrotik_username`, `mikrotik_settings`.`mikrotik_password`, `mikrotik_settings`.`status`,`whatsapp_settings`.`whatsapp_number`, `whatsapp_settings`.`whatsapp_status`";
   }
 
   // function to get all user`s info
@@ -33,6 +33,8 @@ class Session extends Database
         FROM `users` 
         LEFT JOIN  `users_permissions` ON `users`.`UserID` = `users_permissions`.`UserID`
         LEFT JOIN `companies` ON `companies`.`company_id` = `users`.`company_id`
+        LEFT JOIN `mikrotik_settings` ON `mikrotik_settings`.`company_id` = `users`.`company_id`
+        LEFT JOIN `whatsapp_settings` ON `whatsapp_settings`.`company_id` = `users`.`company_id`
         WHERE `users`.`UserID` = ? LIMIT 1";
 
     // check if user exist in database
@@ -54,22 +56,26 @@ class Session extends Database
     $_SESSION['sys']['company_id'] = base64_encode($info['company_id']);       // assign company id to session
     $_SESSION['sys']['company_name'] = $info['company_name'];                    // assign company name to session
     $_SESSION['sys']['company_code'] = $info['company_code'];                    // assign company code to session
-    $_SESSION['sys']['UserName'] = $info['UserName'];                        // assign username to session
+    $_SESSION['sys']['username'] = $info['username'];                        // assign username to session
     $_SESSION['sys']['job_title_id'] = base64_encode($info['job_title_id']);     // assign job title to session
-    $_SESSION['sys']['isTech'] = $info['isTech'];                          // is technical man or not (0 -> not || 1 -> technical)
-    $_SESSION['sys']['isRoot'] = $info['isRoot'];                          // is root (0 -> all || 1 -> ahmed hassib only)
-    $_SESSION['sys']['lang'] = $info['systemLang'] == 0 ? 'ar' : 'en';  // assign system display type
+    $_SESSION['sys']['is_tech'] = $info['is_tech'];                          // is technical man or not (0 -> not || 1 -> technical)
+    $_SESSION['sys']['is_root'] = $info['is_root'];                          // is root (0 -> all || 1 -> ahmed hassib only)
+    $_SESSION['sys']['lang'] = $info['system_lang'] == 0 ? 'ar' : 'en';  // assign system display type
     $_SESSION['sys']['system_theme'] = $info['system_theme'];                    // assign system display type
     $_SESSION['sys']['log'] = isset($_SESSION['sys']['log']) && $_SESSION['sys']['log'] != 0 ? $_SESSION['sys']['log'] : 0;  // to create a login log
     $_SESSION['sys']['phone'] = $info['phone'];
     $_SESSION['sys']['is_activated_phone'] = $info['is_activated_phone'];
     $_SESSION['sys']['ping_counter'] = $info['ping_counter'];
-    $_SESSION['sys']['remote_ip'] = $info['remote_ip'];                    // assign company port to session
-    $_SESSION['sys']['company_port'] = $info['company_port'];                    // assign company port to session
+    $_SESSION['sys']['mikrotik']['remote_ip'] = $info['remote_ip'];                    //
+    $_SESSION['sys']['mikrotik']['ip_list'] = $info['ip_list'];                    // 
+    $_SESSION['sys']['mikrotik']['company_port'] = $info['company_port'];                    // assign company port to session
     $_SESSION['sys']['mikrotik']['ip'] = $info['mikrotik_ip'];
     $_SESSION['sys']['mikrotik']['port'] = $info['mikrotik_port'];
     $_SESSION['sys']['mikrotik']['username'] = $info['mikrotik_username'];
     $_SESSION['sys']['mikrotik']['password'] = $info['mikrotik_password'];
+    $_SESSION['sys']['mikrotik']['status'] = $info['status'];
+    $_SESSION['sys']['whatsapp_number'] = $info['whatsapp_number'];
+    $_SESSION['sys']['whatsapp_status'] = $info['whatsapp_status'];
     // additional info
     $license_id = $this->get_license_id($info['company_id']);
     $_SESSION['sys']['license_id'] = base64_encode($license_id);
@@ -77,6 +83,7 @@ class Session extends Database
     $_SESSION['sys']['expire_date'] = $this->select_specific_column("`expire_date`", "`license`", "WHERE `ID` = $license_id")[0]['expire_date'];
     $_SESSION['sys']['isLicenseExpired'] = $this->is_expired($expire_date);
     $_SESSION['sys']['isTrial'] = $this->select_specific_column("`isTrial`", "`license`", "WHERE `ID` = $license_id")[0]['isTrial'];
+    $_SESSION['sys']['plan_id'] = base64_encode($this->select_specific_column("`plan_id`", "`license`", "WHERE `ID` = $license_id")[0]['plan_id']);
     // set version info into session
     $this->set_version_info($info['company_id'], $info['UserID']);
 

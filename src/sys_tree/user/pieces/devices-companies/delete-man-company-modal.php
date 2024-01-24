@@ -6,6 +6,7 @@
         <h5 class="m-auto modal-title h5 " id="staticBackdropLabel"><?php echo lang("DELETE COMPANY INFO", $lang_file) ?></h5>
       </div>
       <div class="modal-body">
+        <?php if ($_SESSION['sys']['isLicenseExpired'] == 0) { ?>
         <form action="?do=devices-companies&action=delete-man-company&back=true" method="POST" id="delete-man-company">
           <input type="hidden" name="company-id" id="deleted-company-id">
           <!-- start company name -->
@@ -14,9 +15,16 @@
           </div>
           <!-- end company name -->
         </form>
+        <?php } else { ?>
+          <p class="lead text-danger">
+            <?php echo lang('FEATURE NOT AVAILABLE') ?>
+          </p>
+        <?php } ?>
       </div>
       <div class="modal-footer">
+        <?php if ($_SESSION['sys']['isLicenseExpired'] == 0) { ?>
         <button type="button" class="btn btn-danger py-1 px-5 fs-12" form="delete-man-company" onclick="form_validation(this.form, 'submit')"><?php echo lang("DELETE") ?></button>
+        <?php } ?>
         <button type="button" class="btn btn-outline-secondary py-1 px-3 fs-12" data-bs-dismiss="modal"><?php echo lang("CLOSE") ?></button>
       </div>
     </div>

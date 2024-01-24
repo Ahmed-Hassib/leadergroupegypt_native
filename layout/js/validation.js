@@ -127,13 +127,15 @@ function validate_password(input, is_valid = null) {
   if (input.value.length > 0 && is_valid != null) {
     if (is_valid) {
       input.classList.contains('is-invalid') ? input.classList.replace('is-invalid', 'is-valid') : input.classList.add('is-valid');
+      put_correct_class_validation(input, true);
       input.dataset.valid = "true";
     } else {
       input.classList.contains('is-valid') ? input.classList.replace('is-valid', 'is-invalid') : input.classList.add('is-invalid');
+      put_correct_class_validation(input, false);
       input.dataset.valid = "false";
     }
   } else {
-    input.classList.remove('is-valid', 'is-invalid')
+    input.classList.remove('is-valid*', 'is-invalid*')
     input.dataset.valid = '';
   }
 }

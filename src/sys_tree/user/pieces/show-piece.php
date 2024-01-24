@@ -19,42 +19,37 @@ if ($dir_id != -1 && $src_id != -1) {
 
   // flag for include js code
   $is_big_data_ping = true;
-  ?>
+?>
   <!-- start edit profile page -->
   <div class="container" dir="<?php echo $page_dir ?>">
     <!-- start header -->
     <header class="header mb-3">
       <div class="hstack gap-2">
-        <?php if ($_SESSION['sys']['pcs_update'] == 1) { ?>
-          <!-- edit current piece -->
-          <div>
-            <!-- Button trigger modal -->
-            <a class="btn btn-outline-success fs-12 py-1"
-              href="?do=edit-piece&piece-id=<?php echo base64_encode($src_id); ?>">
-              <i class="bi bi-pencil d-sm-block d-md-none"></i>
-              <span class="d-none d-md-block">
-                <?php echo lang("EDIT CURR PCS", $lang_file) ?>
-              </span>
-            </a>
-          </div>
-          <!-- edit current piece -->
-        <?php } ?>
         <?php $src_ip = $db_obj->select_specific_column("`ip`", "`pieces_info`", "WHERE `id` = $src_id")[0]['ip'] ?>
         <?php $src_port = $db_obj->select_specific_column("`port`", "`pieces_info`", "WHERE `id` = $src_id")[0]['port'] ?>
-        <?php if (isset($src_ip) && $src_ip !== '0.0.0.0') { ?>
-          <div>
-            <!-- Button trigger modal -->
-            <a class="mx-1 btn btn-outline-primary fs-12 px-3 py-0"
-              href="?do=mikrotik&ip=<?php echo $src_ip ?>&port=<?php echo $src_port == '80' ? '80' : '443' ?>"
-              target='_blank'>
-              <?php echo lang('VISIT DEVICE', $lang_file) ?>
-            </a>
-          </div>
+        <?php if ($_SESSION['sys']['mikrotik']['status'] && isset($src_ip) && $src_ip !== '0.0.0.0') { ?>
+          <!-- visit current device -->
+          <a class="mx-1 btn btn-outline-primary fs-12 px-3 py-1" href="?do=mikrotik&ip=<?php echo $src_ip ?>&port=<?php echo $src_port == '80' ? '80' : '443' ?>" target='_blank'>
+            <?php echo lang('VISIT DEVICE', $lang_file) ?>
+          </a>
+        <?php } ?>
+        <?php if ($counter == true && count($pieces_info[1]) > 10) { ?>
+          <button class="btn btn-primary fs-12 py-1" onclick="show_display_side_btns(this)">
+            <i class="bi bi-eye-slash"></i>
+            <?php echo lang('SHOW/HIDE SCROLL BUTTONS') ?>
+          </button>
         <?php } ?>
       </div>
-
-      <h4 class="h4">
-        <?php echo $current_piece_name ?>
+      <h4 class="h4 mt-1">
+        <span>
+          <?php echo $current_piece_name ?>
+        </span>
+        <?php if ($_SESSION['sys']['pcs_update'] == 1) { ?>
+          <!-- edit current piece -->
+          <a class="btn btn-outline-success fs-12 py-1" href="?do=edit-piece&piece-id=<?php echo base64_encode($src_id); ?>">
+            <i class="bi bi-pencil-square"></i>
+          </a>
+        <?php } ?>
       </h4>
     </header>
     <?php if ($counter == true) { ?>
@@ -73,14 +68,13 @@ if ($dir_id != -1 && $src_id != -1) {
               <i class="carousel-control-prev-icon"></i>
             </button>
             <!-- scroll right button -->
-            <button type="button" role="button"
-              class="scroll-button scroll-next <?php echo $_SESSION['systemLang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
+            <button type="button" role="button" class="scroll-button scroll-next <?php echo $_SESSION['system_lang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
               <i class="carousel-control-next-icon"></i>
             </button>
           </div>
         <?php } ?>
         <!-- strst pieces table -->
-        <table class="table table-bordered table-striped display compact table-style" style="width:100%">
+        <table class="table table-bordered table-striped display display-big-data compact table-style" style="width:100%">
           <thead class="primary text-capitalize">
             <tr>
               <!-- <th></th> -->
@@ -173,8 +167,7 @@ if ($dir_id != -1 && $src_id != -1) {
                     </span>
                   <?php } ?>
                   <?php if ($piece['direction_id'] == 0) { ?>
-                    <i class="bi bi-exclamation-triangle-fill text-danger fw-bold"
-                      title="<?php echo lang("NOT ASSIGNED") ?>"></i>
+                    <i class="bi bi-exclamation-triangle-fill text-danger fw-bold" title="<?php echo lang("NOT ASSIGNED") ?>"></i>
                   <?php } ?>
                   <?php if ($piece['added_date'] == date('Y-m-d')) { ?>
                     <span class="badge bg-danger p-1 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-1' : 'ms-1' ?>">
@@ -271,8 +264,7 @@ if ($dir_id != -1 && $src_id != -1) {
                 <td class="text-capitalize">
                   <?php $dir_name = $db_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = " . $piece['direction_id'])[0]['direction_name']; ?>
                   <?php if ($piece['direction_id'] != 0 && $_SESSION['sys']['dir_update'] == 1) { ?>
-                    <a
-                      href="<?php echo $nav_up_level ?>directions/index.php?do=show-direction-tree&dir-id=<?php echo base64_encode($piece['direction_id']); ?>">
+                    <a href="<?php echo $nav_up_level ?>directions/index.php?do=show-direction-tree&dir-id=<?php echo base64_encode($piece['direction_id']); ?>">
                       <?php echo $dir_name ?>
                     </a>
                   <?php } elseif ($_SESSION['sys']['dir_update'] == 0) { ?>
@@ -318,15 +310,12 @@ if ($dir_id != -1 && $src_id != -1) {
                         <?php echo $source_ip ?>
                       </a>
                     </span><br>
-                    <?php if (isset($source_ip) && $source_ip != '0.0.0.0') { ?>
-                      <a class="mx-1 btn btn-outline-primary fs-12 px-3 py-0"
-                        href="?do=mikrotik&ip=<?php echo $source_ip ?>&port=<?php echo $source_port == '80' ? '80' : '443' ?>"
-                        target='_blank'>
+                    <?php if ($_SESSION['sys']['mikrotik']['status'] && isset($source_ip) && $source_ip != '0.0.0.0') { ?>
+                      <a class="mx-1 btn btn-outline-primary fs-12 px-3 py-0" href="?do=mikrotik&ip=<?php echo $source_ip ?>&port=<?php echo $source_port == '80' ? '80' : '443' ?>" target='_blank'>
                         <?php echo lang('VISIT DEVICE', $lang_file) ?>
                       </a>
+                      <button class="btn btn-outline-primary fs-12 px-3 py-0" data-bs-toggle="modal" data-bs-target="#pingModal" onclick="ping('<?php echo $source_ip ?>', <?php echo $_SESSION['sys']['ping_counter'] ?>)">ping</button>
                     <?php } ?>
-                    <button class="btn btn-outline-primary fs-12 px-3 py-0" data-bs-toggle="modal" data-bs-target="#pingModal"
-                      onclick="ping('<?php echo $source_ip ?>', <?php echo $_SESSION['sys']['ping_counter'] ?>)">ping</button>
                   <?php } ?>
                 </td>
                 <!-- piece alt source -->
@@ -366,15 +355,12 @@ if ($dir_id != -1 && $src_id != -1) {
                         <?php echo $alt_source_ip ?>
                       </a><br>
                     </span>
-                    <?php if (isset($alt_source_ip) && $alt_source_ip != '0.0.0.0') { ?>
-                      <a class="btn btn-outline-primary fs-12 px-3 py-0"
-                        href="?do=prepare-ip&address=<?php echo $alt_source_ip ?>&port=<?php echo $alt_source_port != 0 ? $alt_source_port : 80 ?>"
-                        target='_blank'>
+                    <?php if ($_SESSION['sys']['mikrotik']['status'] && isset($alt_source_ip) && $alt_source_ip != '0.0.0.0') { ?>
+                      <a class="btn btn-outline-primary fs-12 px-3 py-0" href="?do=prepare-ip&address=<?php echo $alt_source_ip ?>&port=<?php echo $alt_source_port != 0 ? $alt_source_port : 80 ?>" target='_blank'>
                         <?php echo lang('VISIT DEVICE', $lang_file) ?>
                       </a>
+                      <button class="btn btn-outline-primary fs-12 px-3 py-0" data-bs-toggle="modal" data-bs-target="#pingModal" onclick="ping('<?php echo $alt_source_ip ?>', <?php echo $_SESSION['sys']['ping_counter'] ?>)">ping</button>
                     <?php } ?>
-                    <button class="btn btn-outline-primary fs-12 px-3 py-0" data-bs-toggle="modal" data-bs-target="#pingModal"
-                      onclick="ping('<?php echo $alt_source_ip ?>', <?php echo $_SESSION['sys']['ping_counter'] ?>)">ping</button>
                   <?php } ?>
                 </td>
                 <!-- device type -->
@@ -441,15 +427,12 @@ if ($dir_id != -1 && $src_id != -1) {
                         </a>
                       </span>
                     </span><br>
-                    <?php if (isset($piece['ip']) && $piece['ip'] != '0.0.0.0') { ?>
-                      <a class="btn btn-outline-primary fs-12 px-3 py-0"
-                        href="?do=prepare-ip&address=<?php echo $piece['ip'] ?>&port=<?php echo $piece['port'] != 0 ? $piece['port'] : 80 ?>"
-                        target='_blank'>
+                    <?php if ($_SESSION['sys']['mikrotik']['status'] && isset($piece['ip']) && $piece['ip'] != '0.0.0.0') { ?>
+                      <a class="btn btn-outline-primary fs-12 px-3 py-0" href="?do=prepare-ip&address=<?php echo $piece['ip'] ?>&port=<?php echo $piece['port'] != 0 ? $piece['port'] : 80 ?>" target='_blank'>
                         <?php echo lang('VISIT DEVICE', $lang_file) ?>
                       </a>
+                      <button class="btn btn-outline-primary fs-12 px-3 py-0" data-bs-toggle="modal" data-bs-target="#pingModal" onclick="ping('<?php echo trim($piece['ip'], ' ') ?>', <?php echo $_SESSION['sys']['ping_counter'] ?>)">ping</button>
                     <?php } ?>
-                    <button class="btn btn-outline-primary fs-12 px-3 py-0" data-bs-toggle="modal" data-bs-target="#pingModal"
-                      onclick="ping('<?php echo trim($piece['ip'], ' ') ?>', <?php echo $_SESSION['sys']['ping_counter'] ?>)">ping</button>
                   <?php } ?>
                 </td>
                 <!-- piece port -->
@@ -573,25 +556,18 @@ if ($dir_id != -1 && $src_id != -1) {
                 <!-- control -->
                 <td>
                   <?php if ($_SESSION['sys']['pcs_show'] == 1) { ?>
-                    <a class="btn btn-success text-capitalize fs-12 "
-                      href="?do=edit-piece&piece-id=<?php echo base64_encode($piece['id']); ?>" target="_blank">
+                    <a class="btn btn-success text-capitalize fs-12 " href="?do=edit-piece&piece-id=<?php echo base64_encode($piece['id']); ?>" target="_blank">
                       <i class="bi bi-pencil-square"></i>
                       <?php echo lang('EDIT') ?>
                     </a>
                   <?php } ?>
                   <?php if ($piece['is_client'] == 0 && $_SESSION['sys']['pcs_show'] == 1) { ?>
-                    <a class="btn btn-outline-primary text-capitalize fs-12"
-                      href="?do=show-piece&dir-id=<?php echo base64_encode($piece['direction_id']) ?>&src-id=<?php echo base64_encode($piece['id']) ?>"><i
-                        class="bi bi-eye"></i>
+                    <a class="btn btn-outline-primary text-capitalize fs-12" href="?do=show-piece&dir-id=<?php echo base64_encode($piece['direction_id']) ?>&src-id=<?php echo base64_encode($piece['id']) ?>"><i class="bi bi-eye"></i>
                       <?php echo lang('SHOW DETAILS') ?>
                     </a>
                   <?php } ?>
-                  <?php if ($_SESSION['sys']['pcs_delete'] == 1) { ?>
-                    <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12"
-                      data-bs-toggle="modal" data-bs-target="#deletePieceModal" id="delete-piece-<?php echo ($index + 1) ?>"
-                      data-piece-id="<?php echo base64_encode($piece['id']) ?>"
-                      data-piece-name="<?php echo $piece['full_name'] ?>" onclick="confirm_delete_piece(this, true)"><i
-                        class="bi bi-trash"></i>
+                  <?php if ($_SESSION['sys']['pcs_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
+                    <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deletePieceModal" id="delete-piece-<?php echo ($index + 1) ?>" data-piece-id="<?php echo base64_encode($piece['id']) ?>" data-piece-name="<?php echo $piece['full_name'] ?>" onclick="confirm_delete_piece(this, true)"><i class="bi bi-trash"></i>
                       <?php echo lang('DELETE') ?>
                     </button>
                   <?php } ?>
@@ -606,7 +582,7 @@ if ($dir_id != -1 && $src_id != -1) {
       include_once $globmod . 'no-data-founded-no-redirect.php';
     } ?>
   </div>
-  <?php
+<?php
 } else {
   // include data error
   include_once $globmod . 'data-error.php';

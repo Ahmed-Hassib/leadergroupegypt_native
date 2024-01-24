@@ -2,7 +2,9 @@
 // create an object of RouterosAPI
 $api_opj = new RouterosAPI();
 // connect to mikrotik api
-$is_connected = $api_obj->connect($_SESSION['sys']['mikrotik']['ip'], $_SESSION['sys']['mikrotik']['username'], $_SESSION['sys']['mikrotik']['password']);
+$is_connected = $api_obj->connect($_SESSION['sys']['mikrotik']['remote_ip'], $_SESSION['sys']['mikrotik']['username'], $_SESSION['sys']['mikrotik']['password']);
+// company name
+$company_name = str_replace_whitespace($_SESSION['sys']['company_name']);
 // check connection to get roles
 if ($is_connected) {
   // get roles from api
@@ -20,14 +22,13 @@ if ($is_connected) {
   <section class="section-block">
     <header class="section-header">
       <h2>
-        <?php # echo lang('PREPARING MIKROTIK CONFIRM') ?>
+        <?php # echo lang('PREPARING MIKROTIK CONFIRM') 
+        ?>
         <?php echo lang('AVAILABLE PORTS') ?>
       </h2>
       <hr>
       <?php if ($is_connected && count($available_roles) < 10) { ?>
-        <button type="button"
-          class="btn btn-outline-primary py-1 floating-button floating-button-<?php echo $page_dir == 'rtl' ? 'left' : 'right' ?>"
-          onclick="add_new_port('.card.available_ports_card', 'prepare-ips-section', this)">
+        <button type="button" class="btn btn-outline-primary py-0 floating-button floating-button-<?php echo $page_dir == 'rtl' ? 'left' : 'right' ?>" onclick="add_new_port('.card.available_ports_card', 'prepare-ips-section', this)">
           <i class="bi bi-plus"></i>
           <span>
             <?php echo lang('OPEN NEW') ?>
@@ -62,25 +63,20 @@ if ($is_connected) {
                     <input type="hidden" name="id" value="<?php echo base64_encode($available_roles[$i]['.id']) ?>">
                     <div class="row row-cols-sm-1 g-3 mb-3">
                       <div class="col-12 form-floating form-floating-right mb-3">
-                        <input type="text" class="form-control" id="device-ip" name="ip"
-                          value="<?php echo trim($available_roles[$i]['to-addresses'], "\n\r\t\v\x") ?>"
-                          placeholder="xxx.xxx.xxx.xxx" required>
+                        <input type="text" class="form-control" id="device-ip" name="ip" value="<?php echo trim($available_roles[$i]['to-addresses'], "\n\r\t\v\x") ?>" placeholder="xxx.xxx.xxx.xxx" required>
                         <label for="device-ip">
                           <?php echo lang('IP') ?>
                         </label>
                       </div>
                       <div class="col-12 form-floating form-floating-right">
-                        <input type="text" class="form-control" id="device-port" name="port"
-                          value="<?php echo trim($available_roles[$i]['to-ports'], "\n\r\t\v\x") ?>" placeholder="text"
-                          required>
+                        <input type="text" class="form-control" id="device-port" name="port" value="<?php echo trim($available_roles[$i]['to-ports'], "\n\r\t\v\x") ?>" placeholder="text" required>
                         <label for="device-port">
                           <?php echo lang('PORT') ?>
                         </label>
                       </div>
                       <div class="col-12">
                         <div class="row g-1">
-                          <button type="button" class="col-sm-12 btn btn-primary"
-                            onclick="form_validation(this.form, 'submit')">
+                          <button type="button" class="col-sm-12 btn btn-primary" onclick="form_validation(this.form, 'submit')">
                             <?php echo lang('CONFIRM') ?>
                           </button>
                         </div>
@@ -90,8 +86,7 @@ if ($is_connected) {
                 </div>
                 <div class="card-footer text-body-secondary">
                   you can open this device from
-                  <a href="<?php echo trim($available_roles[$i]['to-ports'], "\n\r\t\v\x") == '80' ? 'http' : 'https' ?>://leadergroupegypt.com:<?php echo $available_roles[$i]['dst-port'] ?>"
-                    target="_blank">here</a>
+                  <a href="<?php echo trim($available_roles[$i]['to-ports'], "\n\r\t\v\x") == '80' ? 'http' : 'https' ?>://leadergroupegypt.com:<?php echo $available_roles[$i]['dst-port'] ?>" target="_blank">here</a>
                 </div>
               </div>
             <?php } ?>
@@ -118,8 +113,7 @@ if ($is_connected) {
                   </div>
                   <div class="col-12">
                     <div class="row g-1">
-                      <button type="button" class="col-sm-12 btn btn-primary"
-                        onclick="form_validation(this.form, 'submit')">
+                      <button type="button" class="col-sm-12 btn btn-primary" onclick="form_validation(this.form, 'submit')">
                         <?php echo lang('CONFIRM') ?>
                       </button>
                     </div>

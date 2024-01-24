@@ -55,7 +55,7 @@
 
 <?php
 // CHECK PAGE CATEGORY IF EQUAL 'sys_tree'
-if ($is_developing == false && $page_category == 'sys_tree' && $page_role != 'sys_tree_login' && $page_role != 'sys_tree_signup' && isset($_SESSION['sys']['UserID']) && $_SESSION['sys']['isRoot'] == 0) {
+if (isset($_SESSION['sys']['isLicenseExpired']) && $_SESSION['sys']['isLicenseExpired'] == 0 && $is_developing == false && $page_category == 'sys_tree' && $page_role != 'sys_tree_login' && $page_role != 'sys_tree_signup' && isset($_SESSION['sys']['UserID']) && $_SESSION['sys']['is_root'] == 0) {
   if ($_SESSION['sys']['dir_add'] == 1) {
     // INCLUDE ADD DIERCTION MODAL
     include_once $nav_up_level . 'directions/add-direction-modal.php';
@@ -91,7 +91,7 @@ if ($is_developing == false && $page_category == 'sys_tree' && $page_role != 'sy
   if (location.pathname.includes('website')) {
     localStorage['lang'] = '<?php echo $page_dir == 'rtl' ? 'ar' : 'en' ?>';
   } else if (location.pathname.includes('sys_tree')) {
-    localStorage['systemLang'] = '<?php echo $page_dir == 'rtl' ? 'ar' : 'en' ?>';
+    localStorage['system_lang'] = '<?php echo $page_dir == 'rtl' ? 'ar' : 'en' ?>';
   }
 </script>
 
@@ -103,10 +103,9 @@ if ($is_developing == false && $page_category == 'sys_tree' && $page_role != 'sy
 <?php } ?>
 
 <?php if (isset($preloader) && $preloader == true) { ?>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(window).on('load', function () {
-      $(".spinner").fadeOut(1000, function () {
+      $(".preloader-container").fadeOut(1000, function () {
         $(this).parent('.preloader').fadeOut(1200, function () {
           $("body").css('overflow-x', 'visible');
         });
@@ -129,5 +128,9 @@ if ($is_developing == false && $page_category == 'sys_tree' && $page_role != 'sy
 <?php
 if (isset($_SESSION['request_data'])) {
   unset($_SESSION['request_data']);
+}
+
+if (isset($_SESSION['sys']['plan_id_purchase'])) {
+  unset($_SESSION['plan_id_purchase']);
 }
 ?>

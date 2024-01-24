@@ -1,4 +1,4 @@
-.card-title {
+.card-stat .card-title {
   font-size: 12px !important;
 }
 
@@ -101,6 +101,7 @@
   height: 100%;
   object-fit: contain;
   -webkit-object-fit: contain;
+  transition: all .2s linear;
 }
 
 .media-content:hover::before {
@@ -110,9 +111,11 @@
   left: 4px;
   width: calc(100% - 8px);
   height: calc(100% - 8px);
-  background-color: #0d6efd;
-  filter: brightness(0.2);
   border-radius: 12px;
+}
+
+.media-content:hover img {
+  filter: blur(1px);
 }
 
 .media-content .control-btn {

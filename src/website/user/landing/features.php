@@ -26,11 +26,11 @@ if ($features_status && $features_info != null && count($features_info) > 0) {
           <div class="img-holder">
             <?php if (file_exists($features_img . $feature['feature_img'])) { ?>
               <?php $is_resized = resize_img($features_img, $feature['feature_img']); ?>
-              <img
+              <img loading="lazy"
                 src="<?php echo $is_resized ? $features_img . "resized/" . $feature['feature_img'] : $features_img . $feature['feature_img'] ?>"
                 alt="image">
             <?php } else { ?>
-              <img src="<?php echo $assets ?>leadergroupegypt-shadow.png" alt="default image">
+              <img loading="lazy" src="<?php echo $assets ?>leadergroupegypt-shadow.png" alt="default image">
             <?php } ?>
           </div>
           <h2 class="text-uppercase">

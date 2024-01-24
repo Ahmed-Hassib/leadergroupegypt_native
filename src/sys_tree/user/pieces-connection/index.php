@@ -9,7 +9,7 @@ session_start();
 // regenerate session id
 session_regenerate_id();
 // page title
-$page_title = 'connection types';
+$page_title = 'conn types';
 // page category
 $page_category = "sys_tree";
 // page role
@@ -33,13 +33,14 @@ $is_contain_table = false;
 // check system if under developing or not
 if ($is_developing == false) {
   // check username in SESSION variable
-  if (isset($_SESSION['sys']['UserName']) && $_SESSION['sys']['isLicenseExpired'] == 0) {
+  if (isset($_SESSION['sys']['username'])) {
     // check if Get request do is set or not
     $query = isset($_GET['do']) ? $_GET['do'] : 'manage';
 
     // start manage page
     if ($query == 'manage' && $_SESSION['sys']['connection_show'] == 1) {
       $file_name = 'dashboard.php';
+      $page_subtitle = 'dashboard';
       $preloader = true;
       $is_sorted = true;
 
@@ -53,16 +54,19 @@ if ($is_developing == false) {
       $preloader = true;
       $is_stored = true;
 
-    } elseif ($query == 'insert-piece-conn-type' && $_SESSION['sys']['connection_add'] == 1) {
+    } elseif ($query == 'insert-piece-conn-type' && $_SESSION['sys']['connection_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
       $file_name = 'insert-conn-type.php';
+      $page_subtitle = "add new";
       $possible_back = false;
-
-    } elseif ($query == 'update-piece-conn-type' && $_SESSION['sys']['connection_update'] == 1) {
+      
+    } elseif ($query == 'update-piece-conn-type' && $_SESSION['sys']['connection_update'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
       $file_name = 'update-conn-type.php';
+      $page_subtitle = "edit conn";
       $possible_back = false;
-
-    } elseif ($query == 'delete-piece-conn-type' && $_SESSION['sys']['connection_delete'] == 1) {
+      
+    } elseif ($query == 'delete-piece-conn-type' && $_SESSION['sys']['connection_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
       $file_name = 'delete-conn-type.php';
+      $page_subtitle = "delete conn";
       $possible_back = false;
 
     } else {
@@ -81,10 +85,12 @@ if ($is_developing == false) {
     $no_footer = 'all';
   }
 
-  // include ping modal
-  include_once $globmod . 'ping-modal.php';
-  // include confirmation delete modal
-  include_once 'delete-conn-type-modal.php';
+  if ($_SESSION['sys']['isLicenseExpired'] == 0) {
+    // include ping modal
+    include_once $globmod . 'ping-modal.php';
+    // include confirmation delete modal
+    include_once 'delete-conn-type-modal.php';
+  }
 } else {
   $file_name = $globmod . "under-developing.php";
 }
@@ -94,6 +100,12 @@ include_once str_repeat("../", $level) . "etc/pre-conf.php";
 include_once str_repeat("../", $level) . "etc/init.php";
 // alerts of system
 include_once str_repeat("../", $level) . "etc/system-alerts.php";
+
+// check if license was ended
+if (isset($_SESSION['sys']['isLicenseExpired']) && $_SESSION['sys']['isLicenseExpired'] == 1 && !isset($no_navbar)) {
+  // license file
+  include_once $globmod . 'systree-license-ended.php';
+}
 
 // include file name
 include_once $file_name;

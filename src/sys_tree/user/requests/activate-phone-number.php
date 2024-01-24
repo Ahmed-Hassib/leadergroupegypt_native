@@ -6,7 +6,7 @@ $phone_number = '+2'.$_SESSION['sys']['phone'];
 // activation code
 $activation_code = random_digits(4);
 // message body
-$msg_body  = lang('HI', @$_SESSION['sys']['lang']) . ' ' . $_SESSION['sys']['UserName'] . ' ';
+$msg_body  = lang('HI', @$_SESSION['sys']['lang']) . ' ' . $_SESSION['sys']['username'] . ' ';
 $msg_body .= lang('SYS TREE APP TEAM GREATE YOU', @$_SESSION['sys']['lang']) . '. ';
 $msg_body .= lang('YOUR ACTIVATION CODE IS', @$_SESSION['sys']['lang']) . ' ';
 $msg_body .= " _*$activation_code*_, ";

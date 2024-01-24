@@ -55,7 +55,7 @@ class Combination extends Database
   public function insert_new_combination($comb_info)
   {
     // INSERT INTO combinations
-    $insert_query = "INSERT INTO `combinations` (`client_name`, `phone`, `address`, `added_date`, `added_time`, `isFinished`, `comment`, `UserID`, `addedBy`, `company_id`) VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?);";
+    $insert_query = "INSERT INTO `combinations` (`client_name`, `phone`, `address`, `coordinates`, `added_date`, `added_time`, `isFinished`, `comment`, `UserID`, `addedBy`, `company_id`) VALUES (?, ?, ?, ?, ?, ?, 0, ?, ?, ?, ?);";
     // insert user info in database
     $stmt = $this->con->prepare($insert_query);
     $stmt->execute($comb_info);
@@ -69,7 +69,7 @@ class Combination extends Database
   public function update_compination_mng($comb_info)
   {
     // review query
-    $review_query = "UPDATE `combinations` SET `client_name` = ?, `phone` = ?, `address` = ?, `comment` = ?, `UserID` = ?, `lastEditDate`= ?, `lastEditTime` = ? WHERE `comb_id` = ?";
+    $review_query = "UPDATE `combinations` SET `client_name` = ?, `phone` = ?, `address` = ?, `coordinates` = ?, `comment` = ?, `UserID` = ?, `lastEditDate`= ?, `lastEditTime` = ? WHERE `comb_id` = ?";
     // prepare the query
     $stmt = $this->con->prepare($review_query);
     $stmt->execute($comb_info);
@@ -82,7 +82,7 @@ class Combination extends Database
   public function update_combination_tech($comb_info)
   {
     // review query
-    $review_query = "UPDATE `combinations` SET `isFinished` = ?, `isAccepted` = ?, `finished_date` = ?, `finished_time` = ?, `lastEditDate` = ?, `lastEditTime` = ?, `cost` = ?, `cost_receipt` = ?, `tech_comment` = ? WHERE `comb_id` = ?";
+    $review_query = "UPDATE `combinations` SET `coordinates` = ?, `isFinished` = ?, `isAccepted` = ?, `finished_date` = ?, `finished_time` = ?, `lastEditDate` = ?, `lastEditTime` = ?, `cost` = ?, `cost_receipt` = ?, `tech_comment` = ? WHERE `comb_id` = ?";
     // prepare the query
     $stmt = $this->con->prepare($review_query);
     $stmt->execute($comb_info);
@@ -203,7 +203,7 @@ class Combination extends Database
 
     if ($tech['is_activated_phone'] && key_exists('status', $is_whatsapp_account) && $is_whatsapp_account['status'] == 'valid') {
       // prepare message
-      $msg = ($time_period == 'am' ? lang('GOOD MORNING') : lang('GOOD AFTERNOON')) . " " . $tech['UserName'] . "\n";
+      $msg = ($time_period == 'am' ? lang('GOOD MORNING') : lang('GOOD AFTERNOON')) . " " . $tech['username'] . "\n";
       $msg .= " " . lang('ASSIGNED', $lang_file) . " " . $admin_name;
       $msg .= " " . lang('ASSIGN COMBINATION TO YOU', $lang_file) . "\n";
       $msg .= "\t*" . lang('NAME', $lang_file) . ": " . $client['name'] . "\n";

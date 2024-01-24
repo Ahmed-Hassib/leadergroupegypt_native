@@ -1,9 +1,10 @@
+<?php $pcs_obj = new Pieces(); ?>
 <!-- start home stats container -->
 <div class="container" dir="<?php echo $page_dir ?>">
   <!-- start stats -->
   <div class="stats">
     <div class="mb-3 hstack gap-3">
-      <?php if ($_SESSION['sys']['clients_add'] == 1) { ?>
+      <?php if ($_SESSION['sys']['clients_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
         <a href="?do=add-new-client" class="btn btn-outline-primary py-1 fs-12">
           <i class="bi bi-person-plus"></i>
           <?php echo lang('ADD NEW', $lang_file) ?>
@@ -12,64 +13,35 @@
     </div>
 
     <!-- start new design -->
-    <div class="mb-3 row g-3 align-items-stretch justify-content-start">
+    <div class="mb-3 row row-cols-sm-1 row-cols-md-3 row-cols-lg-4 g-3 align-items-stretch justify-content-start">
       <!-- total numbers of clients -->
-      <div class="col-sm-12 col-lg-5">
-        <div class="section-block">
-          <div class="section-header">
-            <h5 class="h5 text-capitalize">
-              <?php echo lang("CLT STATISTICS", $lang_file) ?>
+      <div class="col-12">
+        <div class="card card-white shadow-sm border border-1">
+          <img class="card-img <?php echo $page_dir == 'ltr' ? 'card-img-right' : 'card-img-left' ?>" src="<?php echo $systree_assets . "people.svg" ?>" style="scale: 1.5" loading="lazy" alt="">
+          <div class="card-body">
+            <?php $clients = $pcs_obj->count_records('`id`', '`pieces_info`', 'WHERE `is_client` = 1 AND `company_id` = ' . base64_decode($_SESSION['sys']['company_id'])); ?>
+            <h5 class="card-title text-capitalize">
+              <?php echo lang('CLIENTS') ?>
             </h5>
-            <p class="text-muted ">
-              <?php echo lang("CLT NOTE", $lang_file) ?>
-            </p>
-            <hr>
+            <h5 class="h5 text-capitalize">(<?php echo $clients; ?>)</h5>
+            <?php
+            // get clients counter
+            $new_clients_counter = $db_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 1 AND `added_date` = CURRENT_DATE AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
+            // check the counter
+            if ($new_clients_counter > 0) {
+              echo "<h5>(" . ($new_pcs_counter) . " " . lang('NEW') . ")</h5>";
+            }
+            ?>
           </div>
-          <?php $pcs_obj = !isset($pcs_obj) ? new Pieces() : $pcs_obj; ?>
-          <div class="row row-cols-sm-1 gx-3 gy-5">
-            <div class="col-12">
-              <div class="card card-stat bg-primary shadow-sm border border-1">
-                <div class="card-body">
-                  <?php $clients = $pcs_obj->count_records('`id`', '`pieces_info`', 'WHERE `is_client` = 1 AND `company_id` = ' . base64_decode($_SESSION['sys']['company_id'])); ?>
-                  <h5 class="card-title text-capitalize">
-                    <?php echo lang('CLIENTS') ?>
-                  </h5>
-                  <span
-                    class="bg-info icon-container <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'icon-container-left' : 'icon-container-right' ?>"><i
-                      class="bi bi-people"></i></span>
-                </div>
-                <div class="card-footer">
-                  <span class="nums">
-                    <a href="?do=show-all-clients" class="num stretched-link text-black"
-                      data-goal="<?php echo $clients; ?>">0</a>
-                  </span>
-                </div>
-                <?php $newPcsCounter = $db_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 1 AND `added_date` = CURRENT_DATE AND `company_id` = " . base64_decode($_SESSION['sys']['company_id'])); ?>
-                <?php if ($newPcsCounter > 0) { ?>
-                  <span
-                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
-                    <span>
-                      <?php echo $newPcsCounter . ' ' . lang('NEW') ?>
-                    </span>
-                  </span>
-                <?php } ?>
-              </div>
-            </div>
-          </div>
+          <a href="?do=show-all-clients" class="num stretched-link"></a>
         </div>
       </div>
     </div>
 
     <?php if ($_SESSION['sys']['clients_show'] == 1) { ?>
-      <?php
-      // check if api obj was created && connection to mikrotik
-      if (isset($api_obj) && $api_obj->connect($mikrotik_ip, $mikrotik_username, $mikrotik_password)) {
-        echo "<div class='alert alert-primary' role='alert'>" . lang('MIKROTIK SUCCESS') . "</div>";
-      } else {
-        echo "<div class='alert alert-danger' role='alert'>" . lang('MIKROTIK FAILED') . "</div>";
-      }
-      // flag for include js code
-      $is_big_data_ping = true;
+      <?php $is_connected_mikrotik = false; // flag for mikrotik connection 
+      ?>
+      <?php $is_big_data_ping = true; // flag for include js code 
       ?>
       <!-- latest added clients -->
       <div class="mb-3 row row-cols-1 g-3">
@@ -98,7 +70,7 @@
             ?>
             <div class="table-responsive-sm">
               <!-- strst pieces table -->
-              <table class="table table-bordered table-striped pcs-data display compact table-style" style="width:100%">
+              <table class="table table-bordered table-striped pcs-data display display-big-data compact table-style" style="width:100%">
                 <thead class="primary text-capitalize">
                   <tr>
                     <th></th>
@@ -137,18 +109,15 @@
                           </span>
                         <?php } ?>
                         <?php if ($client['direction_id'] == 0) { ?>
-                          <i class="bi bi-exclamation-triangle-fill text-danger fw-bold"
-                            title="<?php echo lang("NOT ASSIGNED") ?>"></i>
+                          <i class="bi bi-exclamation-triangle-fill text-danger fw-bold" title="<?php echo lang("NOT ASSIGNED") ?>"></i>
                         <?php } ?>
                         <?php if ($client['added_date'] == date('Y-m-d')) { ?>
                           <span class="badge bg-danger p-1 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-1' : 'ms-1' ?>">
                             <?php echo lang('NEW') ?>
                           </span>
                         <?php } ?>
-                        <?php if (isset($client['ip']) && $client['ip'] !== '0.0.0.0') { ?>
-                          <a class="mx-1 btn btn-outline-primary fs-12 px-3 py-0"
-                            href="<?php echo $nav_up_level ?>pieces/index.php?do=mikrotik&ip=<?php echo $client['ip'] ?>&port=<?php echo $client['port'] == '80' ? '80' : '443' ?>"
-                            target='_blank'>
+                        <?php if ($_SESSION['sys']['mikrotik']['status'] && $is_connected_mikrotik && isset($client['ip']) && $client['ip'] !== '0.0.0.0') { ?>
+                          <a class="mx-1 btn btn-outline-primary fs-12 px-3 py-0" href="<?php echo $nav_up_level ?>pieces/index.php?do=mikrotik&ip=<?php echo $client['ip'] ?>&port=<?php echo $client['port'] == '80' ? '80' : '443' ?>" target='_blank'>
                             <?php echo lang('VISIT DEVICE', $lang_file) ?>
                           </a>
                         <?php } ?>
@@ -185,18 +154,13 @@
                       <!-- control -->
                       <td>
                         <?php if ($_SESSION['sys']['pcs_show'] == 1) { ?>
-                          <a class="btn btn-success text-capitalize fs-12 "
-                            href="?do=edit-client&client-id=<?php echo base64_encode($client['id']); ?>" target="_blank">
+                          <a class="btn btn-success text-capitalize fs-12 " href="?do=edit-client&client-id=<?php echo base64_encode($client['id']); ?>" target="_blank">
                             <i class="bi bi-pencil-square"></i>
                             <?php echo lang('EDIT') ?>
                           </a>
                         <?php } ?>
-                        <?php if ($_SESSION['sys']['pcs_delete'] == 1) { ?>
-                          <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12"
-                            data-bs-toggle="modal" data-bs-target="#deleteClientModal"
-                            id="delete-client-<?php echo ($index + 1) ?>"
-                            data-client-id="<?php echo base64_encode($client['id']) ?>"
-                            data-client-name="<?php echo $client['full_name'] ?>" onclick="confirm_delete_client(this, true)">
+                        <?php if ($_SESSION['sys']['pcs_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
+                          <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deleteClientModal" id="delete-client-<?php echo ($index + 1) ?>" data-client-id="<?php echo base64_encode($client['id']) ?>" data-client-name="<?php echo $client['full_name'] ?>" onclick="confirm_delete_client(this, true)">
                             <i class="bi bi-trash"></i>
                             <?php echo lang('DELETE') ?>
                           </button>
